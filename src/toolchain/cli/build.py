@@ -2,9 +2,15 @@
 MAPHEAD.WL1 / GAMEMAPS.WL1.
 
 This is the reverse of extract.py's Tiled export and relies on the exact
-same schema: GID == plane0 tile value directly (tileset firstgid=1, so no
-lookup table is needed), and player-start markers are `PlayerStart` point
-objects carrying a `facing` (N/E/S/W) property on a `markers` object layer.
+same schema:
+- plane0: GID == tile value directly (plane0_tileset.tsx, firstgid=1).
+- plane1 actors/items/pushwall: GID == tile value + that tileset's
+  (firstgid - 1) (plane1_tileset.tsx; firstgid read from the .tmx itself,
+  not hard-coded, so it tolerates the tileset growing/shrinking).
+- plane1 player-start markers (values 19-22): NOT in the plane1 tile layer
+  (extract.py always zeroes those cells there) -- instead a `PlayerStart`
+  point object with a `facing` (N/E/S/W) property on a `markers` object
+  layer.
 
 Note: this only compiles the map data. VSWAP.WL1/VGA*.WL1 etc. still need
 to be copied alongside the output from orig/data/ for the result to be a
@@ -28,6 +34,34 @@ FACING_TO_PLAYER_START = {"N": 19, "E": 20, "S": 21, "W": 22}
 LEVEL_FILENAME_RE = re.compile(r"level_(\d+)\.tmx$")
 
 
+def _parse_tile_layer(root: ET.Element, path: str, name: str, width: int, height: int
+                       ) -> list[list[int]]:
+    layer = root.find(f"./layer[@name='{name}']")
+    if layer is None:
+        raise ValueError(f"{path}: missing '{name}' tile layer")
+    data_el = layer.find("data")
+    if data_el is None or data_el.get("encoding") != "csv":
+        raise ValueError(f"{path}: '{name}' layer must use CSV encoding")
+    rows = [row.strip() for row in data_el.text.strip().splitlines()]
+    if len(rows) != height:
+        raise ValueError(f"{path}: expected {height} '{name}' rows, got {len(rows)}")
+    grid = []
+    for y, row in enumerate(rows):
+        values = [int(v) for v in row.split(",") if v]
+        if len(values) != width:
+            raise ValueError(f"{path}: '{name}' row {y} has {len(values)} tiles, "
+                              f"expected {width}")
+        grid.append(values)
+    return grid
+
+
+def _tileset_firstgid(root: ET.Element, path: str, source_contains: str) -> int:
+    for tileset in root.findall("tileset"):
+        if source_contains in (tileset.get("source") or ""):
+            return int(tileset.get("firstgid"))
+    raise ValueError(f"{path}: no <tileset> referencing '{source_contains}'")
+
+
 def _parse_level_tmx(path: str) -> tuple[int, mapfile.Level]:
     match = LEVEL_FILENAME_RE.search(os.path.basename(path))
     if not match:
@@ -41,36 +75,36 @@ def _parse_level_tmx(path: str) -> tuple[int, mapfile.Level]:
         raise ValueError(f"{path}: expected {mapfile.MAP_WIDTH}x{mapfile.MAP_HEIGHT} "
                           f"tiles, got {width}x{height}")
 
-    tileset = root.find("tileset")
-    if tileset is not None and tileset.get("firstgid") != "1":
-        raise ValueError(f"{path}: expected tileset firstgid=1 (GID == plane0 "
-                          f"tile value directly), got {tileset.get('firstgid')}")
+    plane0_firstgid = _tileset_firstgid(root, path, "plane0_tileset")
+    if plane0_firstgid != 1:
+        raise ValueError(f"{path}: expected plane0_tileset firstgid=1 (GID == "
+                          f"plane0 tile value directly), got {plane0_firstgid}")
+    plane1_firstgid = _tileset_firstgid(root, path, "plane1_tileset")
 
     name = f"Level {index}"
     for prop in root.findall("./properties/property"):
         if prop.get("name") == "levelName":
             name = prop.get("value")
 
-    layer = root.find("./layer[@name='plane0']")
-    if layer is None:
-        raise ValueError(f"{path}: missing 'plane0' tile layer")
-    data_el = layer.find("data")
-    if data_el is None or data_el.get("encoding") != "csv":
-        raise ValueError(f"{path}: 'plane0' layer must use CSV encoding")
-    rows = [row.strip() for row in data_el.text.strip().splitlines()]
-    if len(rows) != height:
-        raise ValueError(f"{path}: expected {height} plane0 rows, got {len(rows)}")
-    plane0 = []
-    for y, row in enumerate(rows):
-        values = [int(v) for v in row.split(",") if v]
-        if len(values) != width:
-            raise ValueError(f"{path}: row {y} has {len(values)} tiles, expected {width}")
-        if any(v == 0 for v in values):
-            raise ValueError(f"{path}: row {y} has an empty (GID 0) plane0 tile -- "
+    plane0 = _parse_tile_layer(root, path, "plane0", width, height)
+    for y, row in enumerate(plane0):
+        if any(v == 0 for v in row):
+            raise ValueError(f"{path}: plane0 row {y} has an empty (GID 0) tile -- "
                               f"every cell needs a real wall/door/floor value")
-        plane0.append(values)
 
+    plane1_gids = _parse_tile_layer(root, path, "plane1", width, height)
     plane1 = [[0] * width for _ in range(height)]
+    for y, row in enumerate(plane1_gids):
+        for x, gid in enumerate(row):
+            if gid == 0:
+                continue
+            value = gid - plane1_firstgid + 1
+            if 19 <= value <= 22:
+                raise ValueError(f"{path}: plane1 tile at ({x},{y}) is a raw "
+                                  f"player-start code ({value}) -- use a PlayerStart "
+                                  f"object on the 'markers' layer instead")
+            plane1[y][x] = value
+
     markers = root.find("./objectgroup[@name='markers']")
     if markers is not None:
         for obj in markers.findall("object"):
@@ -85,6 +119,10 @@ def _parse_level_tmx(path: str) -> tuple[int, mapfile.Level]:
                                   f"facing property: {facing!r}")
             tile_x = int(float(obj.get("x"))) // 64
             tile_y = int(float(obj.get("y"))) // 64
+            if plane1[tile_y][tile_x] != 0:
+                raise ValueError(f"{path}: cell ({tile_x},{tile_y}) has both a "
+                                  f"PlayerStart object and a plane1 actor/item "
+                                  f"tile -- a cell can only hold one plane1 value")
             plane1[tile_y][tile_x] = FACING_TO_PLAYER_START[facing]
 
     header = mapfile.LevelHeader(

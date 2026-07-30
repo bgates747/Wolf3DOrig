@@ -1,6 +1,7 @@
 """Round-trip test for the Tiled export/import pair: extract.py's Tiled
 export -> build.py's compiler should reproduce the original decoded
-plane0/plane1 grids exactly, against the real shareware WL1 data under
+plane0/plane1 grids (including actors/items/pushwalls, not just the
+player-start marker) exactly, against the real shareware WL1 data under
 orig/data/ (gitignored; present locally, per project setup docs)."""
 import os
 
@@ -42,13 +43,5 @@ def test_extract_then_build_reproduces_original_level_grids(tmp_path):
         orig_level = mapfile.read_level(orig_gamemaps, orig_maphead, index)
         rebuilt_level = mapfile.read_level(rebuilt_gamemaps, rebuilt_maphead, index)
         assert rebuilt_level.plane0 == orig_level.plane0
+        assert rebuilt_level.plane1 == orig_level.plane1
         assert rebuilt_level.header.name == orig_level.header.name
-
-        # Only player-start markers round-trip through plane1 today -- other
-        # actor/item/pushwall codes aren't part of the Tiled schema yet, so
-        # compare just the player-start positions rather than full plane1 grids.
-        orig_starts = [(x, y, v) for y, row in enumerate(orig_level.plane1)
-                       for x, v in enumerate(row) if 19 <= v <= 22]
-        rebuilt_starts = [(x, y, v) for y, row in enumerate(rebuilt_level.plane1)
-                          for x, v in enumerate(row) if 19 <= v <= 22]
-        assert rebuilt_starts == orig_starts

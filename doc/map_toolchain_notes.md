@@ -275,38 +275,62 @@ Grounded in `orig/src/WOLFSRC/ID_PM.C` / `WL_DRAW.C`:
     now, since doors pick their real texture by lock type at runtime rather
     than having one fixed per-tile texture, and area codes only affect
     sound/area connectivity, not appearance.
-  - **Plane 1 → a Tiled object layer**, not a tile layer, since it's sparse
-    markers rather than dense tiles. Currently only the player-start marker
-    (tiles 19-22) is emitted, as a point object
-    (`type="PlayerStart"`, `x`/`y` in pixels, a `facing` property of
-    `N`/`E`/`S`/`W` per `WL_DEF.H`'s `NORTH=0/EAST=1/SOUTH=2/WEST=3` and
-    `WL_GAME.C`'s `SpawnPlayer(x, y, NORTH + tile - 19)`).
+  - **Plane 1 → two representations**, split by how sparse/dense each part
+    is:
+    - The **player-start marker** (tiles 19-22) is sparse, so it becomes a
+      Tiled **object layer** (`markers`) point object
+      (`type="PlayerStart"`, `x`/`y` in pixels, a `facing` property of
+      `N`/`E`/`S`/`W` per `WL_DEF.H`'s `NORTH=0/EAST=1/SOUTH=2/WEST=3` and
+      `WL_GAME.C`'s `SpawnPlayer(x, y, NORTH + tile - 19)`).
+    - Everything else in plane1 (enemies at all three difficulty tiers,
+      bosses, static items/decorations, the secret-pushwall marker) is
+      dense enough to be a second Tiled **tile layer** (`plane1`), grounded
+      directly against `WL_GAME.C`'s `ScanInfoPlane()` switch (non-`SPEAR`
+      branch only — this project targets the original WL1/WL6 episodes,
+      not Spear of Destiny). `PLANE1_MAX_VALUE=259` (highest code: hard
+      mutant patrol, 256-259). Since a Tiled map has one shared GID
+      namespace across all its tilesets, this layer can't reuse `firstgid=1`
+      like plane0 does — its tileset (`plane1_tileset.tsx`) instead starts
+      at `firstgid = PLANE0_MAX_VALUE + 1 = 144`, so
+      **GID = plane1 value + (firstgid - 1)**, a single fixed additive
+      offset rather than a per-value lookup table. Cells holding a
+      player-start code are always written as GID 0 here (that data lives
+      solely in the `PlayerStart` object) to avoid two disagreeing sources
+      of truth for the same cell.
+    - Since decoding VSWAP's sprite-chunk format (column-sparse, masked,
+      distinct from the flat 64×64 wall-texture format) is a substantially
+      bigger task, plane1 tiles are rendered as **category-colored,
+      number-stamped placeholders** (green=static item, orange=pushwall,
+      dark red=enemy any tier, purple=unique boss, pink=ghost, gray=unused
+      code) rather than real sprite art — full-fidelity data, placeholder
+      visuals. Real sprite rendering remains a possible future enhancement.
   - **Validated two ways**: `flatpak run org.mapeditor.Tiled --export-map
     level_00.tmx level_00_check.json` round-trips through Tiled's own parser
-    with no errors and preserves the `PlayerStart` object/property exactly;
-    and the file opens and renders correctly in the Tiled GUI itself
-    (confirmed visually — recognizable, structurally sound level layout).
+    with no errors and preserves both tile layers, both tilesets' GID
+    ranges, and the `PlayerStart` object/property exactly; and the file
+    opens and renders correctly in the Tiled GUI itself (confirmed visually
+    — recognizable, structurally sound level layout).
   - `propertyTypes` in `wolf3dmaps.tiled-project` is still deliberately
     empty — `PlayerStart`'s `facing` property works fine as a plain string
     for now; a proper Tiled custom "class" type is only worth adding once
     `build.py` needs to validate/constrain it, or once door lock-type needs
     representing too.
-- `src/toolchain/cli/build.py` (Tiled → WL1 direction) — done (first pass).
-  Parses each `level_NN.tmx` (stdlib `xml.etree`, no new dependency),
-  validates it against the schema above (64x64, `firstgid=1`, no empty/GID-0
-  plane0 cells), rebuilds plane0 directly from the CSV GIDs, rebuilds the
-  player-start plane1 marker from the `markers` object layer's `PlayerStart`
-  object + `facing` property, and recovers the level name from a `levelName`
-  map property extract.py now writes. Calls `mapfile.build_gamemaps` and
-  writes `MAPHEAD.WL1`/`GAMEMAPS.WL1` to `build/wl1/`. Round-trip tested
+- `src/toolchain/cli/build.py` (Tiled → WL1 direction) — done. Parses each
+  `level_NN.tmx` (stdlib `xml.etree`, no new dependency), reading each
+  tileset's `firstgid` from the file itself rather than hard-coding it (so
+  the plane1 tileset can grow/shrink without breaking the parser).
+  Validates the schema above (64×64, plane0 `firstgid=1`, no empty/GID-0
+  plane0 cells, no raw player-start codes leaking into the generic plane1
+  tile layer, no cell claimed by both a `PlayerStart` object and a plane1
+  tile), rebuilds plane0 and plane1 (actors/items/pushwall codes *and* the
+  player-start marker) fully, and recovers the level name from a
+  `levelName` map property extract.py writes. Calls `mapfile.build_gamemaps`
+  and writes `MAPHEAD.WL1`/`GAMEMAPS.WL1` to `build/wl1/`. Round-trip tested
   (`tests/test_build.py`): extract → build reproduces the original plane0
-  grid and player-start position/facing exactly for all 10 shareware levels.
-  **Scope gap, not yet closed**: only the player-start plane1 marker
-  round-trips -- other plane1 codes (enemies, items, pushwalls, etc.) are
-  silently dropped, since they're not yet part of the Tiled schema. Also,
-  `build.py` only compiles map data; `VSWAP.WL1`/`VGA*.WL1`/etc. must still
-  be copied from `orig/data/` alongside its output for a complete, runnable
-  game directory.
+  grid *and full plane1 grid* (not just player-start) exactly, for all 10
+  shareware levels. `build.py` only compiles map data; `VSWAP.WL1`/
+  `VGA*.WL1`/etc. must still be copied from `orig/data/` alongside its
+  output for a complete, runnable game directory.
 - `tests/test_formats.py` — done. Round-trip tests for RLEW/Carmack/plane
   codecs, plus ground-truth checks against the real shareware
   `MAPHEAD.WL1`/`GAMEMAPS.WL1`/`VSWAP.WL1` (10 levels, all 64×64, each with

@@ -15,7 +15,7 @@ import json
 import os
 from xml.sax.saxutils import escape
 
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 
 from toolchain.formats import mapfile, vswap
 
@@ -31,6 +31,45 @@ PLANE0_MAX_VALUE = AREA_TILE + NUM_AREAS - 1  # 143
 # Plane1 player-start tiles -> facing, per WL_GAME.C's
 # SpawnPlayer(x, y, NORTH + tile - 19) and WL_DEF.H's NORTH=0/EAST=1/SOUTH=2/WEST=3.
 PLAYER_START_FACING = {19: "N", 20: "E", 21: "S", 22: "W"}
+
+# All other plane1 codes (actors/items/pushwall marker), grounded against
+# WL_GAME.C's ScanInfoPlane() (non-SPEAR branch: this project targets the
+# original WL1/WL6 episodes, not Spear of Destiny). These are rendered as
+# generic, category-colored placeholders (not real sprite art -- decoding
+# VSWAP's sprite chunk format, distinct from the flat wall-texture format,
+# is a bigger task deferred for later) stamped with the raw tile number, so
+# a level is still fully editable/inspectable without inventing per-monster
+# assets. GID == plane1 value + PLANE1_GID_OFFSET (tileset firstgid ==
+# PLANE0_MAX_VALUE + 1, so the two tilesets' GID ranges don't collide).
+PLANE1_MAX_VALUE = 259  # highest code used: hard mutant patrol (256-259)
+PLANE1_TILESET_COLUMNS = 16
+PLANE1_GID_OFFSET = PLANE0_MAX_VALUE
+PUSHWALL_TILE = 98
+STATIC_MIN, STATIC_MAX = 23, 74
+DEAD_GUARD_TILE = 124
+GHOST_MIN, GHOST_MAX = 224, 227
+# guard/officer/ss/dog stand+patrol blocks, repeated at +36 per difficulty tier
+# (easy/medium/hard); mutant blocks repeated at +18 per tier instead.
+ENEMY_RANGES = [(108, 141), (144, 177), (180, 213), (216, 223), (234, 241), (252, 259)]
+BOSS_TILES = {214, 197, 215, 179, 196, 160, 178}  # Hans/Gretel/Otto/Fat/Schabbs/fake+real Hitler
+
+
+def _plane1_category_color(value: int) -> tuple[int, int, int]:
+    if PLAYER_START_FACING.get(value):
+        return (255, 215, 0)  # player start (also its own object; rare to render as a tile)
+    if value == PUSHWALL_TILE:
+        return (230, 140, 20)  # secret pushwall marker
+    if STATIC_MIN <= value <= STATIC_MAX:
+        return (60, 160, 60)  # static item/decoration
+    if value == DEAD_GUARD_TILE:
+        return (110, 90, 80)  # dead guard (decorative)
+    if value in BOSS_TILES:
+        return (140, 0, 170)  # unique boss
+    if GHOST_MIN <= value <= GHOST_MAX:
+        return (255, 105, 180)  # spectre ghosts
+    if any(lo <= value <= hi for lo, hi in ENEMY_RANGES):
+        return (150, 30, 30)  # guard/officer/ss/dog/mutant, any difficulty tier
+    return (80, 80, 80)  # unused/unknown code
 
 
 def extract_tileset(vswap_path: str, out_dir: str) -> int:
@@ -130,11 +169,67 @@ def build_plane0_tileset(vswap_path: str, out_dir: str) -> tuple[str, str]:
     return tsx_path, png_path
 
 
+def _plane1_tile_image(size: int, font: ImageFont.ImageFont, value: int) -> Image.Image:
+    tile = Image.new("RGB", (size, size), _plane1_category_color(value))
+    draw = ImageDraw.Draw(tile)
+    label = str(value)
+    bbox = draw.textbbox((0, 0), label, font=font)
+    pos = ((size - (bbox[2] - bbox[0])) // 2 - bbox[0], (size - (bbox[3] - bbox[1])) // 2 - bbox[1])
+    shadow = (pos[0] + 1, pos[1] + 1)
+    draw.text(shadow, label, fill=(0, 0, 0), font=font)
+    draw.text(pos, label, fill=(255, 255, 255), font=font)
+    return tile
+
+
+def build_plane1_tileset(out_dir: str) -> tuple[str, str]:
+    """Build a Tiled tileset (.tsx + backing .png) of category-colored,
+    number-stamped placeholders for plane1 actor/item/pushwall codes (see
+    the PLANE1_* constants above for the grounding and the real-sprite-art
+    caveat). GID == plane1 value + PLANE1_GID_OFFSET (tileset firstgid ==
+    PLANE0_MAX_VALUE + 1), so its GIDs never collide with the plane0 tileset
+    sharing the same map."""
+    size = vswap.TEXTURE_SIZE
+    columns = PLANE1_TILESET_COLUMNS
+    rows = (PLANE1_MAX_VALUE + columns - 1) // columns
+    font = ImageFont.load_default()
+    sheet = Image.new("RGB", (columns * size, rows * size), (255, 0, 255))
+    for value in range(1, PLANE1_MAX_VALUE + 1):
+        local_id = value - 1
+        x, y = (local_id % columns) * size, (local_id // columns) * size
+        sheet.paste(_plane1_tile_image(size, font, value), (x, y))
+
+    os.makedirs(out_dir, exist_ok=True)
+    png_path = os.path.join(out_dir, "plane1_tileset.png")
+    sheet.save(png_path)
+
+    firstgid = PLANE1_GID_OFFSET + 1
+    tsx_path = os.path.join(out_dir, "plane1_tileset.tsx")
+    with open(tsx_path, "w") as f:
+        f.write(
+            '<?xml version="1.0" encoding="UTF-8"?>\n'
+            f'<tileset version="1.10" tiledversion="1.12.2" name="wolf3d_plane1" '
+            f'tilewidth="{size}" tileheight="{size}" tilecount="{PLANE1_MAX_VALUE}" '
+            f'columns="{columns}">\n'
+            f' <image source="plane1_tileset.png" width="{columns * size}" '
+            f'height="{rows * size}"/>\n'
+            '</tileset>\n')
+    return tsx_path, png_path
+
+
 def build_level_tmx(gamemaps: bytes, maphead: mapfile.MapHead, index: int, out_dir: str) -> str:
     level = mapfile.read_level(gamemaps, maphead, index)
     width, height = mapfile.MAP_WIDTH, mapfile.MAP_HEIGHT
 
-    csv_data = ",\n".join(",".join(str(v) for v in row) for row in level.plane0)
+    plane0_csv = ",\n".join(",".join(str(v) for v in row) for row in level.plane0)
+
+    def plane1_gid(value: int) -> int:
+        # Player-start codes are represented exclusively by the PlayerStart
+        # object below, so they're omitted (0) from this generic tile layer.
+        if value == 0 or value in PLAYER_START_FACING:
+            return 0
+        return value + PLANE1_GID_OFFSET
+
+    plane1_csv = ",\n".join(",".join(str(plane1_gid(v)) for v in row) for row in level.plane1)
 
     objects = []
     obj_id = 1
@@ -156,15 +251,19 @@ def build_level_tmx(gamemaps: bytes, maphead: mapfile.MapHead, index: int, out_d
         '<?xml version="1.0" encoding="UTF-8"?>\n'
         f'<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" '
         f'renderorder="right-down" width="{width}" height="{height}" tilewidth="64" '
-        f'tileheight="64" infinite="0" nextlayerid="3" nextobjectid="{obj_id}">\n'
+        f'tileheight="64" infinite="0" nextlayerid="4" nextobjectid="{obj_id}">\n'
         f' <properties>\n'
         f'  <property name="levelName" value="{level_name}"/>\n'
         f' </properties>\n'
         f' <tileset firstgid="1" source="plane0_tileset.tsx"/>\n'
+        f' <tileset firstgid="{PLANE1_GID_OFFSET + 1}" source="plane1_tileset.tsx"/>\n'
         f' <layer id="1" name="plane0" width="{width}" height="{height}">\n'
-        f'  <data encoding="csv">\n{csv_data}\n</data>\n'
+        f'  <data encoding="csv">\n{plane0_csv}\n</data>\n'
         f' </layer>\n'
-        f' <objectgroup id="2" name="markers">\n{"".join(objects)} </objectgroup>\n'
+        f' <layer id="2" name="plane1" width="{width}" height="{height}">\n'
+        f'  <data encoding="csv">\n{plane1_csv}\n</data>\n'
+        f' </layer>\n'
+        f' <objectgroup id="3" name="markers">\n{"".join(objects)} </objectgroup>\n'
         '</map>\n')
     out_path = os.path.join(out_dir, f"level_{index:02d}.tmx")
     with open(out_path, "w") as f:
@@ -175,6 +274,7 @@ def build_level_tmx(gamemaps: bytes, maphead: mapfile.MapHead, index: int, out_d
 def extract_tiled_maps(maphead_path: str, gamemaps_path: str, vswap_path: str,
                         out_dir: str) -> list[str]:
     build_plane0_tileset(vswap_path, out_dir)
+    build_plane1_tileset(out_dir)
     with open(maphead_path, "rb") as f:
         maphead = mapfile.read_maphead(f.read())
     with open(gamemaps_path, "rb") as f:
@@ -212,6 +312,7 @@ def main() -> None:
     os.makedirs(tiled_dir, exist_ok=True)
     tiled_paths = extract_tiled_maps(maphead_path, gamemaps_path, vswap_path, tiled_dir)
     print(f"wrote {tiled_dir}/plane0_tileset.tsx (+ .png)")
+    print(f"wrote {tiled_dir}/plane1_tileset.tsx (+ .png)")
     for path in tiled_paths:
         print(f"wrote {path}")
 
