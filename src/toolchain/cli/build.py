@@ -12,11 +12,14 @@ same schema:
   point object with a `facing` (N/E/S/W) property on a `markers` object
   layer.
 
-Note: this only compiles the map data. VSWAP.WL1/VGA*.WL1 etc. still need
-to be copied alongside the output from orig/data/ for the result to be a
-complete, runnable game directory -- this tool doesn't touch textures.
+Also rebuilds VSWAP.WL1's wall/door textures from an edited copy of
+extract.py's wall_textures.png sheet (pass --skip-textures to compile map
+geometry only). VGA*.WL1/WOLF3D.EXE etc. still need to be copied alongside
+the output from orig/data/ for the result to be a complete, runnable game
+directory -- this tool doesn't touch those.
 
 Usage: .venv/bin/python -m toolchain.cli.build [--tiled-dir DIR] [--out DIR]
+       [--textures PNG] [--orig-vswap PATH] [--skip-textures]
 """
 from __future__ import annotations
 
@@ -26,7 +29,10 @@ import os
 import re
 import xml.etree.ElementTree as ET
 
-from toolchain.formats import mapfile
+from PIL import Image
+
+from toolchain.cli.extract import TILESET_COLUMNS
+from toolchain.formats import mapfile, vswap
 
 # Inverse of extract.py's PLAYER_START_FACING.
 FACING_TO_PLAYER_START = {"N": 19, "E": 20, "S": 21, "W": 22}
@@ -152,6 +158,35 @@ def build_wl1(tiled_dir: str, out_dir: str) -> tuple[str, str]:
     return maphead_path, gamemaps_path
 
 
+def build_vswap(textures_png_path: str, orig_vswap_path: str, out_path: str) -> str:
+    """Re-encode an edited wall/door texture sheet (extract.py's
+    wall_textures.png layout: TILESET_COLUMNS-wide grid, one tile per VSWAP
+    chunk index 0..spritestart) back into VSWAP.WL1. Every other chunk --
+    sprites, sounds, and any wall slot that was originally empty/unused --
+    is copied byte-for-byte from orig_vswap_path, so this only ever touches
+    real wall/door textures.
+    """
+    with open(orig_vswap_path, "rb") as f:
+        orig = vswap.read_vswap(f.read())
+    sheet = Image.open(textures_png_path).convert("RGB")
+    size = vswap.TEXTURE_SIZE
+
+    chunks = list(orig.chunks)
+    for i in range(orig.spritestart):
+        if not orig.chunks[i]:
+            continue  # originally empty/unused wall-texture slot -- leave as-is
+        x, y = (i % TILESET_COLUMNS) * size, (i // TILESET_COLUMNS) * size
+        tile = sheet.crop((x, y, x + size, y + size))
+        chunks[i] = vswap.image_to_chunk(tile)
+
+    new_vswap = vswap.VSwapFile(numchunks=orig.numchunks, spritestart=orig.spritestart,
+                                 soundstart=orig.soundstart, chunks=chunks)
+    os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
+    with open(out_path, "wb") as f:
+        f.write(vswap.write_vswap(new_vswap))
+    return out_path
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--tiled-dir",
@@ -160,11 +195,29 @@ def main() -> None:
     parser.add_argument("--out",
                          default=os.path.join(os.path.dirname(__file__), "..", "..", "..",
                                                "build", "wl1"))
+    parser.add_argument("--textures",
+                         default=os.path.join(os.path.dirname(__file__), "..", "..", "..",
+                                               "build", "extracted", "wall_textures.png"),
+                         help="edited copy of extract.py's wall_textures.png")
+    parser.add_argument("--orig-vswap",
+                         default=os.path.join(os.path.dirname(__file__), "..", "..", "..",
+                                               "orig", "data", "VSWAP.WL1"),
+                         help="original VSWAP.WL1 to copy sprite/sound chunks from")
+    parser.add_argument("--skip-textures", action="store_true",
+                         help="compile map geometry only, don't rebuild VSWAP.WL1")
     args = parser.parse_args()
 
     maphead_path, gamemaps_path = build_wl1(args.tiled_dir, args.out)
     print(f"wrote {maphead_path}")
     print(f"wrote {gamemaps_path}")
+
+    if args.skip_textures:
+        return
+    if not (os.path.exists(args.textures) and os.path.exists(args.orig_vswap)):
+        print(f"skipping VSWAP.WL1 rebuild ({args.textures} or {args.orig_vswap} not found)")
+        return
+    vswap_path = build_vswap(args.textures, args.orig_vswap, os.path.join(args.out, "VSWAP.WL1"))
+    print(f"wrote {vswap_path}")
 
 
 if __name__ == "__main__":

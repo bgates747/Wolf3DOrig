@@ -45,3 +45,38 @@ def test_extract_then_build_reproduces_original_level_grids(tmp_path):
         assert rebuilt_level.plane0 == orig_level.plane0
         assert rebuilt_level.plane1 == orig_level.plane1
         assert rebuilt_level.header.name == orig_level.header.name
+
+
+@requires_orig_data
+def test_extract_then_build_reproduces_original_vswap_textures(tmp_path):
+    """build_vswap should leave every chunk functionally unchanged when fed
+    back its own unedited wall_textures.png. Not a raw-byte comparison: the
+    real VSWAP.WL1 pads its offset table to a 4096-byte boundary (a page-
+    alignment artifact write_vswap doesn't replicate -- offsets are stored
+    explicitly, so this doesn't affect the game's ability to load it), and
+    the Wolf3D palette has a few duplicate RGB entries so a repainted wall
+    chunk's raw index bytes aren't guaranteed identical to the original,
+    only its decoded pixels are (see test_formats.py's equivalent caveat)."""
+    from toolchain.formats import vswap as vswap_mod
+
+    extract.extract_tileset(VSWAP_PATH, str(tmp_path))
+    textures_png = tmp_path / "wall_textures.png"
+
+    out_path = build.build_vswap(str(textures_png), VSWAP_PATH, str(tmp_path / "VSWAP.WL1"))
+
+    with open(VSWAP_PATH, "rb") as f:
+        orig = vswap_mod.read_vswap(f.read())
+    with open(out_path, "rb") as f:
+        rebuilt = vswap_mod.read_vswap(f.read())
+
+    assert rebuilt.numchunks == orig.numchunks
+    assert rebuilt.spritestart == orig.spritestart
+    assert rebuilt.soundstart == orig.soundstart
+    for i in range(orig.spritestart):
+        if not orig.chunks[i]:
+            assert not rebuilt.chunks[i]
+            continue
+        assert vswap_mod.chunk_to_image(rebuilt.chunks[i]).tobytes() == \
+            vswap_mod.chunk_to_image(orig.chunks[i]).tobytes()
+    for i in range(orig.spritestart, orig.numchunks):
+        assert rebuilt.chunks[i] == orig.chunks[i]

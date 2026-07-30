@@ -419,6 +419,11 @@ Grounded in `orig/src/WOLFSRC/ID_PM.C` / `WL_DRAW.C`:
     this project's Tiled maps INTO AgonWolf3D's own `.map`/room-binary
     format, and/or a whole-floor translator that reconstructs the room-link
     graph instead of discarding it.
+  - **Status per Author (2026-07-30): downgraded to off the critical path.**
+    Was a "can we do it" proof-of-concept, valuable partly because the
+    Author already knows the sample rooms' layouts well enough to sanity-
+    check the translation quality by eye. Not a priority for further work
+    unless the Author raises it again.
 - **Major advance: AgonWolf3D room deployed as a real playable floor** —
   done. Previous validation was data-level only (parse/round-trip/
   throwaway `/tmp` smoke build). This time `agon_00_0.tmx` was swapped in
@@ -432,3 +437,24 @@ Grounded in `orig/src/WOLFSRC/ID_PM.C` / `WL_DRAW.C`:
   only in gitignored `build/` scratch output (original `level_00.tmx` is
   regenerated any time by rerunning `extract.py`) — no permanent change to
   the real Episode 1 data.
+- **Wall/door texture write-back** (`build.py`'s new `build_vswap()`) —
+  done. `build.py` can now rebuild `VSWAP.WL1` from an edited copy of
+  `extract.py`'s `wall_textures.png` sheet (`--textures PATH
+  --orig-vswap PATH`, or `--skip-textures` to compile map geometry only).
+  Every chunk the sheet doesn't cover — sprites, sounds, and any wall slot
+  that was originally empty/unused — is copied byte-for-byte from the
+  original VSWAP.WL1, so this can never corrupt anything outside real
+  wall/door textures. `tests/test_build.py`'s new
+  `test_extract_then_build_reproduces_original_vswap_textures` grounds an
+  unedited round trip (chunk-for-chunk pixel-identical for walls, byte-
+  identical for everything else) against real `orig/data/VSWAP.WL1` — note
+  it's *not* a raw-byte file comparison, since the real file pads its
+  offset table to a 4096-byte boundary (a page-alignment artifact
+  `write_vswap` doesn't replicate, harmless since offsets are stored
+  explicitly) and the Wolf3D palette has a few duplicate RGB entries.
+  Validated for real: painted wall type 1's texture solid green in
+  `wall_textures.png`, rebuilt `VSWAP.WL1`, deployed into
+  `build/playtest/`, and booted floor 2 (which still uses the original
+  map and that wall type) under DOSBox — Author-confirmed the wall
+  rendered green in-game, proving the write-back path actually works
+  end-to-end, not just at the codec level.
