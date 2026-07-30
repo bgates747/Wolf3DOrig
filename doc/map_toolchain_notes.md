@@ -367,3 +367,55 @@ Grounded in `orig/src/WOLFSRC/ID_PM.C` / `WL_DRAW.C`:
   it should be filled in once `build.py`'s Tiled GID/property schema
   (the next open design task, see above) is actually decided, rather than
   guessed at ahead of time.
+- **End-to-end DOSBox playtest validation** — done. Assembled
+  `build/playtest/` (real `VSWAP.WL1`/`VGA*.WL1`/`WOLF3D.EXE` copied
+  verbatim from `orig/data/` + `MAPHEAD.WL1`/`GAMEMAPS.WL1` freshly rebuilt
+  by `build.py` from the extracted Tiled maps) and booted it under DOSBox
+  (`dosbox/playtest.conf`). Confirmed by the Author ("looks good") that the
+  round-tripped levels play identically to the original shareware release —
+  this closes the loop the codec/Tiled round-trip tests could only prove at
+  the data level. Marked with the annotated git tag `playtest-validation-start`
+  as the jumping-off commit for this milestone.
+- **AgonWolf3D map translator** (`src/toolchain/formats/agonmap.py` +
+  `src/toolchain/cli/import_agon.py`) — done (best-effort, first pass).
+  `~/Agon/mystuff/AgonWolf3D` is a separate sibling project (a from-scratch
+  eZ80/ESP32 engine, discrete-movement/cardinal-facing-only, with its own
+  MapMaker tool) that the Author wants interop with. Its map format is a
+  fundamentally different shape than real Wolf3D: independent 15×15 "rooms"
+  (`.map` files, format grounded in that project's own
+  `docs/map-design-manual/appendix-b-map-build-format.md` and verified
+  against a real file's raw bytes: 4 header records + 225 grid records,
+  each a 5-byte little-endian int, Y-major/X-minor) linked by a room-
+  transition graph rather than one continuous 64×64 grid, described by a
+  tab-separated object catalog (`src/mapmaker/tiles.txt`: walls, doors,
+  items, 3 enemy types, no difficulty tiers, no door lock types).
+  Per Author decision (2026-07-30), the translator is explicitly **lossy,
+  best-effort**, mapping each Agon room onto this project's *existing*
+  plane0/plane1 WL1 vocabulary (reusing `plane0_tileset.tsx`/
+  `plane1_tileset.tsx`) rather than inventing a separate faithful schema:
+  - Agon's compiled 16×16 room shape (15×15 authored + a synthesized
+    "outer" boundary row/col, matching Agon's own MapMaker import step) is
+    embedded alone in the top-left corner of a real 64×64 WL1 canvas; the
+    remaining area is solid wall filler.
+  - Walls/items/decorations/enemies map to the nearest-analog real Wolf3D
+    tile by name/function (e.g. Agon's "gold chalise" → real "chalice";
+    "keycard" → "clip" ammo pickup by function, not by name, since Agon's
+    keycard isn't a lock key); door orientation (Agon doesn't record it) is
+    guessed from neighboring wall cells; Agon's numbered "room link" doors
+    (which teleport to another room *file*) become ordinary in-place doors
+    that lead nowhere, since real Wolf3D has no equivalent to an arbitrary
+    room-transition graph — this is the biggest acknowledged gap.
+  - Output is written as `agon_<stem>.tmx` (e.g. `agon_00_0.tmx`) — a
+    different filename pattern than `level_NN.tmx` on purpose, so it won't
+    collide with `build.py`'s `level_*.tmx` glob unless deliberately renamed.
+  - Validated: round-trips through Tiled's own `--export-map` parser for
+    all three sample floor-0 rooms; one was renamed to `level_00.tmx` and
+    smoke-tested through `build.py` to confirm it *can* produce a real,
+    bootable (if mostly empty) WL1 level. `tests/test_agonmap.py` grounds
+    the `.map`/`tiles.txt` parsers against real sample files (skipped if
+    the sibling repo isn't present locally).
+  - Explicitly **not yet done, future direction** (per Author: "eventually
+    ... we could consider going the other way as well"): exporting FROM
+    this project's Tiled maps INTO AgonWolf3D's own `.map`/room-binary
+    format, and/or a whole-floor translator that reconstructs the room-link
+    graph instead of discarding it.

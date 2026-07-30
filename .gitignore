@@ -16,6 +16,7 @@ __pycache__/
 build/wl1/*
 !build/wl1/.gitkeep
 build/extracted/
+build/playtest/
 dosbox/mapedit/
 
 # Downloaded third-party editor archives (not our asset to vendor).
