@@ -6,3 +6,21 @@ orig/src
 # orig/data — shareware episode 1 game data. Freely redistributable by id,
 # but not our asset to vendor/publish from here.
 orig/data
+
+# Python toolchain virtualenv and caches.
+.venv/
+__pycache__/
+*.pyc
+
+# Build output and DOSBox playtest sandbox (regenerated from src/content/).
+build/wl1/*
+!build/wl1/.gitkeep
+build/extracted/
+dosbox/mapedit/
+
+# Downloaded third-party editor archives (not our asset to vendor).
+tools/mapedit72/
+
+# Tiled per-user UI state (recent files, view scroll/zoom) -- the
+# .tiled-project file itself is shared/tracked, this is not.
+*.tiled-session

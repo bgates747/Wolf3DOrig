@@ -1,5 +1,14 @@
 # Handoff — wolf3dmaps (as of 2026-07-25)
 
+> **Superseded, kept for history.** Since this was written the project
+> pivoted away from image-based extraction (see below) to decoding the
+> real shareware binary files directly, moved from
+> `/home/smith/Desktop/wolf3dmaps` to `/home/smith/Agon/mystuff/Wolf3dOrig`,
+> and got a git repo. For current state, read
+> [map_toolchain_notes.md](map_toolchain_notes.md) and
+> [devlog_20260730.md](devlog_20260730.md) instead — this file is
+> historical context only, not an accurate handoff anymore.
+
 This document exists so a fresh agent session can reconstruct project
 state and continue seamlessly. Read this first, then the two companion
 docs it references.
