@@ -72,6 +72,61 @@ def _plane1_category_color(value: int) -> tuple[int, int, int]:
     return (80, 80, 80)  # unused/unknown code
 
 
+# Real static-object names, grounded in WL_ACT1.C's statinfo[] table (index 0
+# == tile 23). Covers the non-SPEAR (WL1/WL6) portion of that table only --
+# indices 48-51 are SPEAR-only (marble pillar/25-clip/truck/spear of destiny)
+# and unreachable in our target games, so tiles 72-74 fall back to unnamed
+# (still correctly colored/numbered as a generic static item).
+STATIC_NAMES = [
+    "puddle", "barrel", "table", "lamp", "chandlr", "hangman", "badfood", "pillar",
+    "tree", "skel-flat", "sink", "plant", "urn", "table2", "celight", "kitchen",
+    "armor", "cage", "skel-cage", "skel-relax", "key1", "key2", "stuff", "stuff2",
+    "food", "firstaid", "clip", "mg", "chaingun", "cross", "chalice", "bible",
+    "crown", "1up", "gibs", "barrel2", "well", "well-mt", "gibs2", "flag", "apogee",
+    "junk1", "junk2", "junk3", "pots", "stove", "spears", "vines", "clip2",
+]
+# (name, stand-block first tile, patrol-block first tile), each block spans 4
+# tiles (one per facing); repeated at DIFFICULTY_TIER_OFFSETS per difficulty.
+ENEMY_KINDS = [("GRD", 108, 112), ("OFC", 116, 120), ("SS", 126, 130), ("DOG", 134, 138)]
+DIFFICULTY_TIER_OFFSETS = (0, 36, 72)
+MUTANT_STAND, MUTANT_PATROL = 216, 220
+MUTANT_TIER_OFFSETS = (0, 18, 36)
+BOSS_NAMES = {214: "HANS", 197: "GRETEL", 215: "OTTO", 179: "FAT", 196: "SCHABBS",
+              160: "HTLR-FAKE", 178: "HITLER"}
+GHOST_NAMES = {224: "BLINKY", 225: "CLYDE", 226: "PINKY", 227: "INKY"}
+
+
+def _plane1_mnemonic(value: int) -> str | None:
+    """Short human-readable label for a plane1 dispatch code, grounded in
+    WL_GAME.C's ScanInfoPlane() switch -- a legend on top of the raw code,
+    not a replacement for it (see the module-level Tiled-export docstring)."""
+    facing = PLAYER_START_FACING.get(value)
+    if facing:
+        return f"PSTART-{facing}"
+    if value == PUSHWALL_TILE:
+        return "PUSH"
+    if value == DEAD_GUARD_TILE:
+        return "DEAD-GRD"
+    if value in BOSS_NAMES:
+        return BOSS_NAMES[value]
+    if value in GHOST_NAMES:
+        return GHOST_NAMES[value]
+    if STATIC_MIN <= value <= STATIC_MIN + len(STATIC_NAMES) - 1:
+        return STATIC_NAMES[value - STATIC_MIN]
+    for name, stand, patrol in ENEMY_KINDS:
+        for t in DIFFICULTY_TIER_OFFSETS:
+            if stand + t <= value <= stand + t + 3:
+                return name
+            if patrol + t <= value <= patrol + t + 3:
+                return f"{name}-P"
+    for t in MUTANT_TIER_OFFSETS:
+        if MUTANT_STAND + t <= value <= MUTANT_STAND + t + 3:
+            return "MUT"
+        if MUTANT_PATROL + t <= value <= MUTANT_PATROL + t + 3:
+            return "MUT-P"
+    return None
+
+
 def extract_tileset(vswap_path: str, out_dir: str) -> int:
     with open(vswap_path, "rb") as f:
         vs = vswap.read_vswap(f.read())
@@ -172,12 +227,17 @@ def build_plane0_tileset(vswap_path: str, out_dir: str) -> tuple[str, str]:
 def _plane1_tile_image(size: int, font: ImageFont.ImageFont, value: int) -> Image.Image:
     tile = Image.new("RGB", (size, size), _plane1_category_color(value))
     draw = ImageDraw.Draw(tile)
-    label = str(value)
-    bbox = draw.textbbox((0, 0), label, font=font)
-    pos = ((size - (bbox[2] - bbox[0])) // 2 - bbox[0], (size - (bbox[3] - bbox[1])) // 2 - bbox[1])
-    shadow = (pos[0] + 1, pos[1] + 1)
-    draw.text(shadow, label, fill=(0, 0, 0), font=font)
-    draw.text(pos, label, fill=(255, 255, 255), font=font)
+    mnemonic = _plane1_mnemonic(value)
+    lines = [mnemonic, str(value)] if mnemonic else [str(value)]
+    line_height = draw.textbbox((0, 0), "Ag", font=font)[3] + 2
+    total_height = line_height * len(lines)
+    y = (size - total_height) // 2
+    for line in lines:
+        bbox = draw.textbbox((0, 0), line, font=font)
+        x = (size - (bbox[2] - bbox[0])) // 2 - bbox[0]
+        draw.text((x + 1, y + 1), line, fill=(0, 0, 0), font=font)
+        draw.text((x, y), line, fill=(255, 255, 255), font=font)
+        y += line_height
     return tile
 
 

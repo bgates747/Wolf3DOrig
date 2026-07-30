@@ -300,10 +300,17 @@ Grounded in `orig/src/WOLFSRC/ID_PM.C` / `WL_DRAW.C`:
     - Since decoding VSWAP's sprite-chunk format (column-sparse, masked,
       distinct from the flat 64×64 wall-texture format) is a substantially
       bigger task, plane1 tiles are rendered as **category-colored,
-      number-stamped placeholders** (green=static item, orange=pushwall,
-      dark red=enemy any tier, purple=unique boss, pink=ghost, gray=unused
-      code) rather than real sprite art — full-fidelity data, placeholder
-      visuals. Real sprite rendering remains a possible future enhancement.
+      number-and-mnemonic-stamped placeholders** (green=static item,
+      orange=pushwall, dark red=enemy any tier, purple=unique boss,
+      pink=ghost, gray=unused code) rather than real sprite art — full-
+      fidelity data, placeholder visuals. The mnemonic (e.g. `GRD`, `HANS`,
+      `1up`, `PUSH`) is a legend on top of the raw dispatch code, grounded
+      directly in `WL_GAME.C`'s `ScanInfoPlane()` switch and (for the 49
+      static item types) `WL_ACT1.C`'s `statinfo[]` table comments — it's
+      not stored/round-tripped anywhere, purely a `extract.py`-side visual
+      aid. **Future QoL TODO, not on the critical path**: replace these
+      placeholders with real decoded VSWAP sprite art once that decoder
+      exists.
   - **Validated two ways**: `flatpak run org.mapeditor.Tiled --export-map
     level_00.tmx level_00_check.json` round-trips through Tiled's own parser
     with no errors and preserves both tile layers, both tilesets' GID
