@@ -5,12 +5,13 @@
 > real shareware binary files directly, moved from
 > `/home/smith/Desktop/wolf3dmaps` to `/home/smith/Agon/mystuff/Wolf3dOrig`,
 > and got a git repo. For current state, read
-> [map_toolchain_notes.md](map_toolchain_notes.md) and
-> [devlog_20260730.md](devlog_20260730.md) instead — this file is
+> [map_toolchain_notes.md](map_toolchain_notes.md),
+> [devlog_20260730.md](devlog_20260730.md), and
+> [agon_port_notes.md](agon_port_notes.md) instead — this file is
 > historical context only, not an accurate handoff anymore.
 
 This document exists so a fresh agent session can reconstruct project
-state and continue seamlessly. Read this first, then the two companion
+state and continue seamlessly. Read this first, then the companion
 docs it references.
 
 ## 1. What this project is
@@ -192,3 +193,9 @@ the other five episodes.
   even under "Educational Use."
 - When citing facts about the original file format, prefer this
   notebook's already-cited primary sources over re-guessing at URLs.
+- Whenever the Author asks an Agon-porting-specific aside (how a future
+  Agon-side loader/renderer would consume this project's formats, platform
+  constraints, etc.) rather than a question about this project's own
+  toolchain, log it in [agon_port_notes.md](agon_port_notes.md): the
+  question, the answer given, and whether it was resolved or deferred.
+  Informal running log, not rigorously structured — append, don't rewrite.
