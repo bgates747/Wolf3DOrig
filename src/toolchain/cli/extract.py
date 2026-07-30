@@ -28,6 +28,27 @@ DOOR_MIN, DOOR_MAX = 90, 101
 AREA_TILE, NUM_AREAS = 107, 37
 PLANE0_MAX_VALUE = AREA_TILE + NUM_AREAS - 1  # 143
 
+# Door lock types, grounded in WL_DEF.H's doortype_t enum (dr_normal=0,
+# dr_lock1..dr_lock4=1-4, dr_elevator=5) and WL_GAME.C's tile<->lock formula
+# (tile-90)//2, which happens to give the right lock index for both the
+# even/vertical and odd/horizontal tile in a pair. Real WL_DRAW.C rendering
+# only ever shows 3 distinct door textures (normal/any-lock/elevator), but
+# WL_ACT1.C's key check is genuinely per-lock (gamestate.keys bit lock-1),
+# and only lock1 (gold key, WL_AGENT.C GOLDKEYPIC) and lock2 (silver key,
+# SILVERKEYPIC) have an actual key item in the shareware release -- lock3/
+# lock4 are valid, distinct codes with no way to unlock them in this
+# version. Colored + mnemonic-labeled per lock type (not just 3 groups) so
+# a level author can tell exactly which lock number they placed.
+DOOR_LOCK_NAMES = ["DOOR", "KEY1", "KEY2", "KEY3", "KEY4", "ELEV"]
+DOOR_LOCK_COLORS = [
+    (150, 100, 40),   # dr_normal -- plain wood door
+    (218, 165, 32),   # dr_lock1 -- gold key
+    (170, 170, 185),  # dr_lock2 -- silver key
+    (190, 70, 70),    # dr_lock3 -- no in-game key item
+    (70, 100, 190),   # dr_lock4 -- no in-game key item
+    (90, 190, 110),   # dr_elevator -- elevator shaft door
+]
+
 # Plane1 player-start tiles -> facing, per WL_GAME.C's
 # SpawnPlayer(x, y, NORTH + tile - 19) and WL_DEF.H's NORTH=0/EAST=1/SOUTH=2/WEST=3.
 PLAYER_START_FACING = {19: "N", 20: "E", 21: "S", 22: "W"}
@@ -172,7 +193,7 @@ def extract_levels(maphead_path: str, gamemaps_path: str, out_dir: str) -> list[
     return written
 
 
-def _plane0_tile_image(vs: vswap.VSwapFile, value: int) -> Image.Image:
+def _plane0_tile_image(vs: vswap.VSwapFile, value: int, font: ImageFont.ImageFont) -> Image.Image:
     size = vswap.TEXTURE_SIZE
     if 1 <= value <= 63:  # wall types, incl. ELEVATORTILE=21 (just another wall type)
         horiz, _vert = vswap.wall_tile_to_chunks(value)
@@ -185,9 +206,10 @@ def _plane0_tile_image(vs: vswap.VSwapFile, value: int) -> Image.Image:
             return vswap.chunk_to_image(chunk)
         return Image.new("RGB", (size, size), (255, 0, 255))  # wall type unused by shareware
     if DOOR_MIN <= value <= DOOR_MAX:
-        # Real doors pick a VSWAP door-face texture at runtime by lock type;
-        # a flat placeholder is enough to spot/edit door placement in Tiled.
-        return Image.new("RGB", (size, size), (150, 100, 40))
+        lock_type = (value - DOOR_MIN) // 2
+        tile = Image.new("RGB", (size, size), DOOR_LOCK_COLORS[lock_type])
+        _stamp_mnemonic(tile, font, [DOOR_LOCK_NAMES[lock_type], str(value)])
+        return tile
     if AREA_TILE <= value <= PLANE0_MAX_VALUE:
         return Image.new("RGB", (size, size), (190, 190, 190))  # open floor/area
     return Image.new("RGB", (size, size), (255, 0, 255))  # undefined code
@@ -201,11 +223,12 @@ def build_plane0_tileset(vswap_path: str, out_dir: str) -> tuple[str, str]:
     size = vswap.TEXTURE_SIZE
     columns = PLANE0_TILESET_COLUMNS
     rows = (PLANE0_MAX_VALUE + columns - 1) // columns
+    font = ImageFont.load_default()
     sheet = Image.new("RGB", (columns * size, rows * size), (255, 0, 255))
     for value in range(1, PLANE0_MAX_VALUE + 1):
         local_id = value - 1
         x, y = (local_id % columns) * size, (local_id // columns) * size
-        sheet.paste(_plane0_tile_image(vs, value), (x, y))
+        sheet.paste(_plane0_tile_image(vs, value, font), (x, y))
 
     os.makedirs(out_dir, exist_ok=True)
     png_path = os.path.join(out_dir, "plane0_tileset.png")
@@ -224,20 +247,26 @@ def build_plane0_tileset(vswap_path: str, out_dir: str) -> tuple[str, str]:
     return tsx_path, png_path
 
 
-def _plane1_tile_image(size: int, font: ImageFont.ImageFont, value: int) -> Image.Image:
-    tile = Image.new("RGB", (size, size), _plane1_category_color(value))
+def _stamp_mnemonic(tile: Image.Image, font: ImageFont.ImageFont, lines: list[str]) -> None:
+    """Draw center-aligned, black-outlined white text lines onto a tile
+    (shared by plane0 door and plane1 actor/item placeholders)."""
     draw = ImageDraw.Draw(tile)
-    mnemonic = _plane1_mnemonic(value)
-    lines = [mnemonic, str(value)] if mnemonic else [str(value)]
     line_height = draw.textbbox((0, 0), "Ag", font=font)[3] + 2
     total_height = line_height * len(lines)
-    y = (size - total_height) // 2
+    y = (tile.height - total_height) // 2
     for line in lines:
         bbox = draw.textbbox((0, 0), line, font=font)
-        x = (size - (bbox[2] - bbox[0])) // 2 - bbox[0]
+        x = (tile.width - (bbox[2] - bbox[0])) // 2 - bbox[0]
         draw.text((x + 1, y + 1), line, fill=(0, 0, 0), font=font)
         draw.text((x, y), line, fill=(255, 255, 255), font=font)
         y += line_height
+
+
+def _plane1_tile_image(size: int, font: ImageFont.ImageFont, value: int) -> Image.Image:
+    tile = Image.new("RGB", (size, size), _plane1_category_color(value))
+    mnemonic = _plane1_mnemonic(value)
+    lines = [mnemonic, str(value)] if mnemonic else [str(value)]
+    _stamp_mnemonic(tile, font, lines)
     return tile
 
 

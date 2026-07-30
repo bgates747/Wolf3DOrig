@@ -271,10 +271,9 @@ Grounded in `orig/src/WOLFSRC/ID_PM.C` / `WL_DRAW.C`:
   - **GID == plane0 tile value directly** (tileset `firstgid=1`) — no
     separate value↔GID lookup table anywhere in the pipeline. Tile values
     1-63 render their real wall texture (via `wall_tile_to_chunks`); 90-101
-    (doors) and 107-143 (floor/area codes) get flat placeholder colors for
-    now, since doors pick their real texture by lock type at runtime rather
-    than having one fixed per-tile texture, and area codes only affect
-    sound/area connectivity, not appearance.
+    (doors) are colored + mnemonic-labeled by lock type (see below); 107-143
+    (floor/area codes) get a flat placeholder color, since area codes only
+    affect sound/area connectivity, not appearance.
   - **Plane 1 → two representations**, split by how sparse/dense each part
     is:
     - The **player-start marker** (tiles 19-22) is sparse, so it becomes a
@@ -458,3 +457,21 @@ Grounded in `orig/src/WOLFSRC/ID_PM.C` / `WL_DRAW.C`:
   map and that wall type) under DOSBox — Author-confirmed the wall
   rendered green in-game, proving the write-back path actually works
   end-to-end, not just at the codec level.
+- **Door lock-type visual distinction** in the plane0 Tiled tileset —
+  done. Previously all 12 door tile values (90-101) shared one flat brown
+  placeholder. Grounded in `WL_DEF.H`'s `doortype_t` enum (`dr_normal`=0,
+  `dr_lock1..dr_lock4`=1-4, `dr_elevator`=5) and the tile↔lock formula
+  `(tile-90)//2`: each of the 6 lock types now gets its own placeholder
+  color plus a stamped mnemonic + numeric code (`DOOR`/`KEY1`/`KEY2`/
+  `KEY3`/`KEY4`/`ELEV`), reusing the same text-stamping style already
+  established for plane1 (factored into a shared `_stamp_mnemonic()`
+  helper). Note real `WL_DRAW.C` rendering only ever shows 3 distinct door
+  *textures* (normal / any-lock / elevator — locks 1-4 all render
+  identically in-game), but `WL_ACT1.C`'s key check is genuinely per-lock
+  (a `gamestate.keys` bitmask), and only lock1 (gold key, `GOLDKEYPIC`)
+  and lock2 (silver key, `SILVERKEYPIC`) have an actual key item in the
+  shareware release — lock3/lock4 are valid, distinct codes with no way to
+  unlock them in this version, kept distinguishable anyway for map-
+  authoring clarity. Visually verified via a cropped-tileset image
+  inspection (all 6 lock types render with distinct colors/labels); full
+  test suite still passes (12/12), including the wall/VSWAP round trip.
