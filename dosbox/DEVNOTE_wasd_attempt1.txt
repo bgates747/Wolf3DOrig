@@ -1,0 +1,40 @@
+Dev note - 2026-07-30 - WASD/strafe mapper hack, attempt 1 (FAILED)
+
+Goal: remap WASD + Alt-strafe onto the original WOLF3D.EXE controls via a
+DOSBox mapper file override, without touching game source or the global
+~/.dosbox config.
+
+Result: FAILED. On relaunch with the files below in place, DOSBox accepted
+no keyboard input at all (only mouse worked) - not just WASD, but the
+original arrow keys too. Root cause not yet diagnosed - candidates: wrong
+DOSBox 0.74-3 mapper event names (e.g. "key_lalt" may not be the actual
+internal event name), wrong SDL1 keysym values, or a mapper file syntax
+error causing DOSBox to silently drop keyboard bindings entirely rather
+than falling back to defaults for the malformed lines.
+
+These bindings were hand-authored from memory (no GUI mapper access, no
+screenshot/automation tooling available on this Wayland session to verify
+via the in-game Ctrl+F1 mapper editor) - not verified against an actual
+DOSBox-generated mapper file before use. Next attempt should probably
+generate a real default mapper file first (e.g. via the in-game Ctrl+F1
+mapper -> Save) and diff against it to get correct event names/syntax.
+
+--- dosbox/wolf3d.conf (as of this attempt) ---
+[sdl]
+mapperfile=/home/smith/Agon/mystuff/Wolf3dOrig/dosbox/mapper-wolf3d.map
+
+[autoexec]
+mount c /home/smith/Agon/mystuff/Wolf3dOrig/orig/data
+c:
+WOLF3D.EXE
+
+--- dosbox/mapper-wolf3d.map (as of this attempt, now removed) ---
+key_up key 273 key 119
+key_down key 274 key 115
+key_left key 276 key 97
+key_right key 275 key 100
+key_lalt key 308 key 97 key 100
+
+Action taken after this failure: removed mapper-wolf3d.map and the
+mapperfile= line from wolf3d.conf, reverting to DOSBox's internal default
+keyboard mapping (original arrow-key controls only, no WASD).

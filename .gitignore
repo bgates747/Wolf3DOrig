@@ -1,8 +1,8 @@
-# Symlink to the external id-Software/wolf3d reference clone (~/Agon/id/wolf3d).
-# Never track/publish this — it's a read-only reference under id's own
-# Limited Use Software License Agreement, not this project's license.
-wolf3d-original-source-EXTERNAL
+# orig/src — id-Software/wolf3d reference source clone. Never track/publish —
+# it's a read-only reference under id's own Limited Use Software License
+# Agreement, not this project's license.
+orig/src
 
-# Symlink to the shareware episode 1 game data (~/Agon/id/wolf3d-shareware).
-# Freely redistributable by id, but not our asset to vendor/publish from here.
-wolf3d-shareware-data-EXTERNAL
+# orig/data — shareware episode 1 game data. Freely redistributable by id,
+# but not our asset to vendor/publish from here.
+orig/data
