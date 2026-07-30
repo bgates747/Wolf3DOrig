@@ -419,3 +419,16 @@ Grounded in `orig/src/WOLFSRC/ID_PM.C` / `WL_DRAW.C`:
     this project's Tiled maps INTO AgonWolf3D's own `.map`/room-binary
     format, and/or a whole-floor translator that reconstructs the room-link
     graph instead of discarding it.
+- **Major advance: AgonWolf3D room deployed as a real playable floor** —
+  done. Previous validation was data-level only (parse/round-trip/
+  throwaway `/tmp` smoke build). This time `agon_00_0.tmx` was swapped in
+  as floor 1 (`E1L1`) in place of `level_00.tmx`, rebuilt through
+  `build.py`, copied into the `build/playtest/` DOSBox sandbox, and booted
+  — a brand-new game now starts directly inside the translated AgonWolf3D
+  room. Author-confirmed: "the layout looks reasonably accurate." This is
+  the first proof that the toolchain carries content all the way from a
+  different game's map format into a booting, playable real Wolf3D floor,
+  not just a round-trip of the original shareware levels. The swap lives
+  only in gitignored `build/` scratch output (original `level_00.tmx` is
+  regenerated any time by rerunning `extract.py`) — no permanent change to
+  the real Episode 1 data.
