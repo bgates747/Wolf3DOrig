@@ -27,7 +27,8 @@ tools/mapedit72/
 *.tiled-session
 
 # Agon port generated assets, build output, and local emulator profile.
-agonport/assets/generated/
+agonport/assets/generated/*
+!agonport/assets/generated/dda_smoke_test_map.bin
 agonport/build/
 agonport/emulator/
 
