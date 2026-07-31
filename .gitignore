@@ -25,3 +25,8 @@ tools/mapedit72/
 # Tiled per-user UI state (recent files, view scroll/zoom) -- the
 # .tiled-project file itself is shared/tracked, this is not.
 *.tiled-session
+
+# Agon port generated assets, build output, and local emulator profile.
+agonport/assets/generated/
+agonport/build/
+agonport/emulator/
