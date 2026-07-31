@@ -59,36 +59,78 @@ w3d_initialize_motion_state:
     ld de,w3d_player_pose
     ld bc,w3d_fixture_initial_player_pose_end-w3d_fixture_initial_player_pose
     ldir
+    ld a,W3D_FIXTURE_DOOR_COUNT
+    or a
+    jr z,@doors_seeded
     ld hl,w3d_fixture_initial_doors
     ld de,w3d_doors
     ld bc,w3d_fixture_initial_doors_end-w3d_fixture_initial_doors
     ldir
+@doors_seeded:
+    ld a,W3D_FIXTURE_STATIC_COUNT
+    or a
+    jr z,@statics_seeded
     ld hl,w3d_fixture_initial_statics
     ld de,w3d_statics
     ld bc,w3d_fixture_initial_statics_end-w3d_fixture_initial_statics
     ldir
+@statics_seeded:
     xor a
     ld (w3d_player_dirty),a
     ld (w3d_world_dirty),a
     ld (w3d_controls),a
     ld (w3d_use_was_down),a
     ld (w3d_player_key_flags),a
+    ld (w3d_player_thrustspeed+0),a
+    ld (w3d_player_thrustspeed+1),a
+    ld (w3d_player_dead),a
+    ld a,W3D_SLOT_NONE
+    ld (w3d_player_last_attacker),a
+    ld (w3d_player_killer),a
+    ld a,W3D_FIXTURE_DIFFICULTY
+    ld (w3d_game_difficulty),a
+    xor a
     ld (w3d_door_motion_phase),a
+    ld bc,W3D_FIXTURE_DOOR_COUNT*2
+    ld a,b
+    or c
+    jr z,@door_timers_cleared
     ld hl,w3d_door_timers
-    ld (hl),a
-    ld de,w3d_door_timers+1
-    ld bc,W3D_FIXTURE_DOOR_COUNT*2-1
-    ldir
+@clear_door_timer:
+    ld (hl),0
+    inc hl
+    dec bc
+    ld a,b
+    or c
+    jr nz,@clear_door_timer
+@door_timers_cleared:
+    ld bc,W3D_FIXTURE_DOOR_COUNT
+    ld a,b
+    or c
+    jr z,@door_dirty_cleared
     ld hl,w3d_door_dirty
-    ld (hl),a
-    ld de,w3d_door_dirty+1
-    ld bc,W3D_FIXTURE_DOOR_COUNT-1
-    ldir
+@clear_door_dirty:
+    ld (hl),0
+    inc hl
+    dec bc
+    ld a,b
+    or c
+    jr nz,@clear_door_dirty
+@door_dirty_cleared:
+    ld bc,W3D_FIXTURE_STATIC_COUNT
+    ld a,b
+    or c
+    jr z,@static_dirty_cleared
     ld hl,w3d_static_dirty
-    ld (hl),a
-    ld de,w3d_static_dirty+1
-    ld bc,W3D_FIXTURE_STATIC_COUNT-1
-    ldir
+@clear_static_dirty:
+    ld (hl),0
+    inc hl
+    dec bc
+    ld a,b
+    or c
+    jr nz,@clear_static_dirty
+@static_dirty_cleared:
+    xor a
     ld (w3d_hud_dirty),a
     ld (w3d_pickup_scan_needed),a
     ld (w3d_player_score+0),a
@@ -123,6 +165,9 @@ w3d_initialize_motion_state:
     ld (w3d_doors_ptr),hl
     ld hl,0
     ld (w3d_simulation_accumulator),hl
+    call w3d_initialize_actor_state
+    call w3d_initialize_actor_simulation
+    call w3d_initialize_area_state
     call w3d_reset_keys
     ret
 
@@ -238,8 +283,15 @@ w3d_sample_controls:
 ; input, matching the original update order; a newly operated door therefore
 ; begins moving on the next quantum. Rotation precedes translation.
 w3d_simulate_player_step:
+; Death is a stable gameplay latch until a future restart/respawn slice. The
+; foreground loop still drains fixed time, polls Escape and submits the final
+; health/dead-face snapshot; only world simulation freezes.
+    ld a,(w3d_player_dead)
+    or a
+    ret nz
     call w3d_simulate_doors
     call w3d_sample_controls
+    call w3d_update_player_thrustspeed
     call w3d_handle_use_edge
 
     ld a,(w3d_controls)
@@ -257,30 +309,70 @@ w3d_simulate_player_step:
 
 @translation:
     ld a,(w3d_controls)
-    bit 0,a                        ; W: current heading
-    jr z,@not_w
+    and W3D_CONTROL_W|W3D_CONTROL_S
+    cp W3D_CONTROL_W               ; exactly W: current heading
+    jr nz,@check_s
     ld de,0
     call w3d_move_at_heading_offset
-@not_w:
-    ld a,(w3d_controls)
-    bit 1,a                        ; S: opposite heading
-    jr z,@not_s
+    jr @strafe_translation
+@check_s:
+    cp W3D_CONTROL_S               ; exactly S: opposite heading
+    jr nz,@strafe_translation
     ld de,180
     call w3d_move_at_heading_offset
-@not_s:
+
+@strafe_translation:
     ld a,(w3d_controls)
-    bit 2,a                        ; A: 90 degrees left
-    jr z,@not_a
+    and W3D_CONTROL_A|W3D_CONTROL_D
+    cp W3D_CONTROL_A               ; exactly A: 90 degrees left
+    jr nz,@check_d
     ld de,90
     call w3d_move_at_heading_offset
-@not_a:
-    ld a,(w3d_controls)
-    bit 3,a                        ; D: 90 degrees right
-    jr z,@pickups
+    jr @pickups
+@check_d:
+    cp W3D_CONTROL_D               ; exactly D: 90 degrees right
+    jr nz,@pickups
     ld de,270
     call w3d_move_at_heading_offset
 @pickups:
-    jp w3d_collect_pending_pickups
+    call w3d_refresh_player_area
+    call w3d_collect_pending_pickups
+    jp w3d_simulate_actors
+
+; Reconstruct the original per-frame `thrustspeed` gameplay signal from this
+; port's fixed 0x1000 movement requests. Opposite keys cancel before they can
+; contribute; collision does not, matching Thrust() adding speed before
+; ClipMove(). A cardinal request is 4096 and a forward+strafe diagonal is
+; 8192, so the original RUNSPEED=6000 test remains meaningful.
+w3d_update_player_thrustspeed:
+    ld hl,0
+    ld a,(w3d_controls)
+    and W3D_CONTROL_W|W3D_CONTROL_S
+    cp W3D_CONTROL_W
+    jr z,@forward_axis
+    cp W3D_CONTROL_S
+    jr nz,@strafe_axis
+@forward_axis:
+    ld de,01000h
+    add.s hl,de
+@strafe_axis:
+    ld a,(w3d_controls)
+    and W3D_CONTROL_A|W3D_CONTROL_D
+    cp W3D_CONTROL_A
+    jr z,@strafe
+    cp W3D_CONTROL_D
+    jr nz,@store
+@strafe:
+    ld de,01000h
+    add.s hl,de
+@store:
+; The value is deliberately uint16. An unsuffixed ADL store would write HLU
+; across the following health byte, so publish only the two significant bytes.
+    ld a,l
+    ld (w3d_player_thrustspeed+0),a
+    ld a,h
+    ld (w3d_player_thrustspeed+1),a
+    ret
 
 ; DE is a signed turn delta; the persistent wire angle remains 0..359.
 w3d_rotate_player:
@@ -494,6 +586,9 @@ w3d_player_position_clear:
     ld a,(w3d_clip_y_high)
     ld c,a
     call w3d_collision_tile_clear
+    or a
+    jr z,@blocked
+    call w3d_player_actors_clear
     or a
     jr z,@blocked
     ld a,1
@@ -752,12 +847,12 @@ w3d_clip_bounds_overlap_door:
 ; A=door index; returns IY -> authoritative W3D_DOOR_SIZE record without
 ; borrowing IX from the movement candidate.
 w3d_door_pointer_iy_from_index:
-    ld hl,0
-    ld l,a
-    add.s hl,hl
-    add.s hl,hl
-    add.s hl,hl
-    ld de,w3d_doors
+    ld d,a
+    ld e,W3D_DOOR_SIZE
+    mlt de
+    inc de
+    dec.s de
+    ld hl,w3d_doors
     add hl,de
     push hl
     pop iy
@@ -1369,6 +1464,37 @@ w3d_use_adjacent_door:
     call w3d_zero_current_door_timer
     jp w3d_mark_current_door_dirty
 
+; Actor-side OpenDoor. A=door index, return A=current action. Unlike the
+; player's use command this deliberately ignores locks. OPEN resets its hold
+; timer; CLOSED/CLOSING reverses toward OPENING; OPENING is unchanged. IX is
+; preserved because T_Path owns it as the current actor record.
+w3d_request_open_door:
+    cp W3D_FIXTURE_DOOR_COUNT
+    jr c,@valid
+    ld a,0ffh
+    ret
+@valid:
+    ld (w3d_current_door_index),a
+    push ix
+    call w3d_door_pointer_from_index
+    ld a,(ix+W3D_DOOR_ACTION)
+    cp W3D_DOOR_ACTION_OPEN
+    jr z,@already_open
+    cp W3D_DOOR_ACTION_OPENING
+    jr z,@return
+    ld a,W3D_DOOR_ACTION_OPENING
+    ld (ix+W3D_DOOR_ACTION),a
+    call w3d_zero_current_door_timer
+    call w3d_mark_current_door_dirty
+    ld a,W3D_DOOR_ACTION_OPENING
+    jr @return
+@already_open:
+    call w3d_zero_current_door_timer
+    ld a,W3D_DOOR_ACTION_OPEN
+@return:
+    pop ix
+    ret
+
 ; Advance every authoritative door once. The phase sequence preserves the
 ; original 70 Hz travel time without a runtime multiply.
 w3d_simulate_doors:
@@ -1390,7 +1516,7 @@ w3d_simulate_doors:
 @loop:
     ld a,(w3d_current_door_index)
     cp W3D_FIXTURE_DOOR_COUNT
-    ret nc
+    jp nc,w3d_refresh_areas_if_dirty
     call w3d_door_pointer_from_index
     ld a,(ix+W3D_DOOR_ACTION)
     cp W3D_DOOR_ACTION_OPENING
@@ -1418,6 +1544,9 @@ w3d_advance_opening_door:
     ld hl,0
     ld l,(ix+W3D_DOOR_POSITION+0)
     ld h,(ix+W3D_DOOR_POSITION+1)
+    ld a,h
+    or l
+    call z,w3d_mark_area_topology_dirty ; edge becomes live after this step
     ld de,(w3d_door_step_delta)
     add.s hl,de
     jr c,@fully_open
@@ -1456,15 +1585,18 @@ w3d_advance_open_door:
     jp w3d_try_close_current_door
 
 w3d_try_close_current_door:
-    call w3d_door_player_obstructs
+    call w3d_door_anything_obstructs
     or a
     ret nz                           ; remain open and retry next update
+    call w3d_door_adjacent_actor_obstructs
+    or a
+    ret nz                           ; crossing body has not cleared the well
     ld a,W3D_DOOR_ACTION_CLOSING
     ld (ix+W3D_DOOR_ACTION),a
     jp w3d_mark_current_door_dirty
 
 w3d_advance_closing_door:
-    call w3d_door_player_obstructs
+    call w3d_door_anything_obstructs
     or a
     jr z,@unobstructed
     ld a,W3D_DOOR_ACTION_OPENING
@@ -1484,6 +1616,11 @@ w3d_advance_closing_door:
     ld (ix+W3D_DOOR_POSITION+1),h
     jp w3d_mark_current_door_dirty
 @fully_closed:
+    ld a,(ix+W3D_DOOR_POSITION+0)
+    ld b,a
+    ld a,(ix+W3D_DOOR_POSITION+1)
+    or b
+    call nz,w3d_mark_area_topology_dirty ; edge dies with the zero position
     xor a
     ld (ix+W3D_DOOR_POSITION+0),a
     ld (ix+W3D_DOOR_POSITION+1),a
@@ -1491,10 +1628,16 @@ w3d_advance_closing_door:
     call w3d_zero_current_door_timer
     jp w3d_mark_current_door_dirty
 
-; Actor-free obstruction hook using exactly the same finite slab/AABB geometry
-; as movement. Thus a player safely inside the passable part of either well
-; does not hold the door, while contact with the currently visible panel does.
-; IX remains the current authoritative door for the caller.
+; Test the player first, then every markable live actor against exactly the
+; same finite slab/AABB geometry. Thus occupants in either recessed door well
+; reverse a closing panel instead of being clipped by it. IX remains the
+; current authoritative door for the caller.
+w3d_door_anything_obstructs:
+    call w3d_door_player_obstructs
+    or a
+    ret nz
+    jp w3d_door_actor_obstructs
+
 w3d_door_player_obstructs:
     push iy
     push ix
@@ -1507,14 +1650,169 @@ w3d_door_player_obstructs:
     pop iy
     ret
 
+w3d_door_actor_obstructs:
+    push iy
+    push ix
+    push ix
+    pop iy                            ; IY=current authoritative door
+
+; Preserve the original CloseDoor invariant first: an actor reserving the
+; door cell holds a fully open door even though its rendered slab is empty at
+; position FFFF. This closes the gap between our separate tilemap/actorat
+; planes and the DOS actorat door sentinel lifecycle.
+    ld b,(iy+W3D_DOOR_TILEX)
+    ld c,(iy+W3D_DOOR_TILEY)
+    call w3d_actorat_get
+    or a
+    jr nz,@blocked
+
+; Adjacent physical actors then use the renderer-matching finite slab test.
+    ld a,(w3d_actor_live_head)
+@loop:
+    cp W3D_SLOT_NONE
+    jr z,@clear
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_FLAGS)
+    and W3D_ACTOR_FLAG_NONMARK|W3D_ACTOR_FLAG_NEVERMARK
+    jr nz,@next
+    call w3d_compute_player_bounds   ; generic square bounds from actor x/y
+    call w3d_clip_bounds_overlap_door
+    or a
+    jr nz,@blocked
+@next:
+    ld a,(ix+W3D_ACTOR_NEXT)
+    jr @loop
+@blocked:
+    ld a,1
+    jr @return
+@clear:
+    xor a
+@return:
+    pop ix
+    pop iy
+    ret
+
+; Close-start guard matching the original CloseDoor neighbour checks. A path
+; actor reserves its destination tile before its physical center arrives, so
+; after crossing the door center its reservation may already be on the far
+; side while its body still occupies the well. A fully-open finite slab is
+; empty and cannot detect that case. Inspect only the two axis-adjacent
+; reservations and require the actor's MINDIST-radius body to clear the door
+; tile before CLOSING begins. This is intentionally actor-only: the accepted
+; player well/slab behavior is unchanged.
+;
+; IX -> authoritative door. Return A=1 obstructed, A=0 clear; preserve IX/IY.
+w3d_door_adjacent_actor_obstructs:
+    push iy
+    push ix
+    push ix
+    pop iy
+    ld a,(iy+W3D_DOOR_VERTICAL)
+    or a
+    jr z,@horizontal
+
+; Vertical door: check the reservations immediately west/east and the
+; corresponding high/low X bounds.
+    ld a,(iy+W3D_DOOR_TILEX)
+    or a
+    jp z,@blocked
+    dec a
+    ld b,a
+    ld c,(iy+W3D_DOOR_TILEY)
+    call w3d_door_reserved_actor_pointer
+    jp c,@blocked
+    or a
+    jr z,@vertical_east
+    call w3d_compute_player_bounds
+    ld a,(w3d_clip_x_high)
+    cp (iy+W3D_DOOR_TILEX)
+    jp z,@blocked
+@vertical_east:
+    ld a,(iy+W3D_DOOR_TILEX)
+    inc a
+    cp W3D_MAP_SIZE
+    jp nc,@blocked
+    ld b,a
+    ld c,(iy+W3D_DOOR_TILEY)
+    call w3d_door_reserved_actor_pointer
+    jp c,@blocked
+    or a
+    jr z,@clear
+    call w3d_compute_player_bounds
+    ld a,(w3d_clip_x_low)
+    cp (iy+W3D_DOOR_TILEX)
+    jp z,@blocked
+    jr @clear
+
+; Horizontal door: axis-swapped north/south checks.
+@horizontal:
+    ld a,(iy+W3D_DOOR_TILEY)
+    or a
+    jp z,@blocked
+    dec a
+    ld c,a
+    ld b,(iy+W3D_DOOR_TILEX)
+    call w3d_door_reserved_actor_pointer
+    jp c,@blocked
+    or a
+    jr z,@horizontal_south
+    call w3d_compute_player_bounds
+    ld a,(w3d_clip_y_high)
+    cp (iy+W3D_DOOR_TILEY)
+    jp z,@blocked
+@horizontal_south:
+    ld a,(iy+W3D_DOOR_TILEY)
+    inc a
+    cp W3D_MAP_SIZE
+    jp nc,@blocked
+    ld c,a
+    ld b,(iy+W3D_DOOR_TILEX)
+    call w3d_door_reserved_actor_pointer
+    jp c,@blocked
+    or a
+    jr z,@clear
+    call w3d_compute_player_bounds
+    ld a,(w3d_clip_y_low)
+    cp (iy+W3D_DOOR_TILEY)
+    jp z,@blocked
+@clear:
+    xor a
+    jr @return
+@blocked:
+    ld a,1
+@return:
+    pop ix
+    pop iy
+    ret
+
+; B/C=reservation cell. Empty returns A=0/carry clear; a valid live actor
+; returns IX -> record and A=1/carry clear. Corrupt or stale free slots fail
+; closed with carry set.
+w3d_door_reserved_actor_pointer:
+    call w3d_actorat_get
+    or a
+    ret z
+    cp W3D_MAX_ACTORS
+    jr nc,@invalid
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    cp W3D_ACTOR_ACTIVE_FREE
+    jr z,@invalid
+    ld a,1
+    or a
+    ret
+@invalid:
+    scf
+    ret
+
 ; A=door index; returns IX -> authoritative W3D_DOOR_SIZE record.
 w3d_door_pointer_from_index:
-    ld hl,0
-    ld l,a
-    add.s hl,hl
-    add.s hl,hl
-    add.s hl,hl
-    ld de,w3d_doors
+    ld d,a
+    ld e,W3D_DOOR_SIZE
+    mlt de
+    inc de
+    dec.s de
+    ld hl,w3d_doors
     add hl,de
     push hl
     pop ix
@@ -1580,7 +1878,7 @@ w3d_submit_dirty_world_render:
     push ix
     pop hl
     ld de,@door_record
-    ld bc,W3D_DOOR_SIZE
+    ld bc,W3D_DOOR_WIRE_SIZE
     ldir
     ld hl,@door_command
     ld bc,@door_end-@door_command
@@ -1602,6 +1900,7 @@ w3d_submit_dirty_world_render:
     jr @door_loop
 
 @statics:
+    call w3d_submit_dirty_actors
     ld hl,0
     ld (w3d_current_static_index),hl
 @static_loop:
@@ -1675,7 +1974,7 @@ w3d_submit_dirty_world_render:
 @door_number:
     db 0
 @door_record:
-    ds W3D_DOOR_SIZE
+    ds W3D_DOOR_WIRE_SIZE
 @door_end:
 @static_command:
     db 23,0,0A0h
@@ -1826,6 +2125,23 @@ w3d_use_was_down:
 
 w3d_player_key_flags:
     db 0
+
+; Sum of requested movement magnitudes for the current 30-Hz quantum. This
+; is the eZ80 counterpart of WL_AGENT.C's `thrustspeed`.
+w3d_player_thrustspeed:
+    dw 0
+
+w3d_player_dead:
+    db 0
+
+w3d_player_last_attacker:
+    db W3D_SLOT_NONE
+
+w3d_player_killer:
+    db W3D_SLOT_NONE
+
+w3d_game_difficulty:
+    db W3D_FIXTURE_DIFFICULTY
 
 w3d_player_health:
     db 100

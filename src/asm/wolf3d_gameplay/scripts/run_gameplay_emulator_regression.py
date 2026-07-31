@@ -72,7 +72,10 @@ def main() -> int:
     # durable entry file under a short name; its includes still resolve from
     # STAGED_SRC, which remains the assembler working directory.
     entry = work / "g.asm"
-    shutil.copyfile(HERE.parent / "src/gameplay_regression.asm", entry)
+    shutil.copyfile(
+        STAGED_ROOT / "src/asm/wolf3d_gameplay/src/gameplay_regression.asm",
+        entry,
+    )
     binary = app / "g.bin"
     run(
         ["ez80asm", str(entry), str(binary)],

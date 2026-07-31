@@ -26,6 +26,9 @@ fa_create_always:   equ 0x08
 
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
+    include "wolf3d_actors.inc"
+    include "wolf3d_areas.inc"
+    include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
 
 rec_item:               equ 0

@@ -26,6 +26,9 @@ fa_create_always:   equ 0x08
 
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
+    include "wolf3d_actors.inc"
+    include "wolf3d_areas.inc"
+    include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
 
 record_size:            equ 40
@@ -184,6 +187,12 @@ initialize_test_world:
     ldir
     ld hl,test_static_bits
     ld (w3d_static_blocking_ptr),hl
+    xor a
+    ld hl,w3d_actorat
+    ld (hl),a
+    ld de,w3d_actorat+1
+    ld bc,W3D_MAP_BYTES-1
+    ldir
     ld hl,w3d_doors
     ld (w3d_doors_ptr),hl
     xor a

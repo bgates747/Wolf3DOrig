@@ -64,7 +64,10 @@ def main() -> int:
     app.mkdir(parents=True)
 
     entry = work / "p.asm"
-    shutil.copyfile(HERE.parent / "src/pickup_regression.asm", entry)
+    shutil.copyfile(
+        STAGED_ROOT / "src/asm/wolf3d_gameplay/src/pickup_regression.asm",
+        entry,
+    )
     binary = app / "p.bin"
     run(["ez80asm", str(entry), str(binary)], cwd=STAGED_SRC)
     (sdcard / "autoexec.txt").write_bytes(

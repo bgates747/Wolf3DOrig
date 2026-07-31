@@ -66,12 +66,15 @@ VDU_WOLF3D = 0x4A
 SUB_INIT_LEVEL = 1
 SUB_SET_PLAYER_POSE = 2
 SUB_SET_DOOR = 3
+SUB_SET_ACTOR = 4
 SUB_SET_STATIC = 6
 SUB_RENDER_FRAME = 7
 
 DOOR_RECORD = struct.Struct("<BBBBBHB")
+DOOR_SEED_RECORD = struct.Struct("<BBBBBHBBB")
 STATIC_SEED_RECORD = struct.Struct("<BBhBB")
 STATIC_WIRE_RECORD = struct.Struct("<HBBhB")
+ACTOR_WIRE_RECORD = struct.Struct("<HhiiHB")
 PLAYER_POSE = struct.Struct("<iiH")
 
 
@@ -616,6 +619,7 @@ def parse_command_stream(payload: bytes) -> list[tuple[int, bytes]]:
         SUB_INIT_LEVEL: 2,
         SUB_SET_PLAYER_POSE: PLAYER_POSE.size,
         SUB_SET_DOOR: 1 + DOOR_RECORD.size,
+        SUB_SET_ACTOR: ACTOR_WIRE_RECORD.size,
         SUB_SET_STATIC: STATIC_WIRE_RECORD.size,
         SUB_RENDER_FRAME: 0,
     }

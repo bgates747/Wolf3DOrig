@@ -55,6 +55,7 @@ SPR_CLYDE_W1 = 292
 SPR_INKY_W1 = 294
 SPR_BOSS_W1 = 296       # Hans Grosse
 SPR_SCHABB_W1 = 307     # Dr. Schabbs
+SPR_FAKE_W1 = 321       # fake Hitler (precedes Mecha Hitler in WL_DEF.H)
 SPR_MECHA_W1 = 334      # fake/robot Hitler
 SPR_HITLER_W1 = 345     # real Hitler
 SPR_GIFT_W1 = 360       # Otto Giftmacher
@@ -77,7 +78,7 @@ BOSS_SHAPENUMS = {
     "OTTO": SPR_GIFT_W1,
     "FAT": SPR_FAT_W1,
     "SCHABBS": SPR_SCHABB_W1,
-    "HTLR-FAKE": SPR_MECHA_W1,
+    "HTLR-FAKE": SPR_FAKE_W1,
     "HITLER": SPR_HITLER_W1,
 }
 

@@ -798,6 +798,9 @@ class GeneratorAndWireTests(unittest.TestCase):
         cls.initial_statics = parse_label_bytes(
             cls.text, "w3d_fixture_initial_statics", "w3d_fixture_initial_statics_end"
         )
+        cls.initial_actors = parse_label_bytes(
+            cls.text, "w3d_fixture_initial_actors", "w3d_fixture_initial_actors_end"
+        )
         cls.tilemap = parse_label_bytes(
             cls.text, "w3d_fixture_tilemap", "w3d_fixture_tilemap_end"
         )
@@ -812,20 +815,29 @@ class GeneratorAndWireTests(unittest.TestCase):
         if static_count_match is None:
             raise AssertionError("missing fixture static count")
         cls.static_count = int(static_count_match.group(1))
+        actor_count_match = re.search(r"W3D_FIXTURE_ACTOR_COUNT:\s*equ\s+(\d+)", cls.text)
+        if actor_count_match is None:
+            raise AssertionError("missing fixture actor count")
+        cls.actor_count = int(actor_count_match.group(1))
 
     def test_fixture_record_sizes_and_tilemap_indices(self) -> None:
-        self.assertEqual(len(self.initial_doors), self.door_count * go.DOOR_RECORD.size)
+        self.assertEqual(len(self.initial_doors), self.door_count * go.DOOR_SEED_RECORD.size)
         self.assertEqual(
             len(self.initial_statics), self.static_count * go.STATIC_SEED_RECORD.size
         )
+        self.assertEqual(len(self.initial_actors), self.actor_count * 39)
         self.assertEqual(len(self.tilemap), 64 * 64)
         for index in range(self.door_count):
-            record = go.DOOR_RECORD.unpack_from(self.initial_doors, index * go.DOOR_RECORD.size)
-            tile_x, tile_y, vertical, lock, action, position, texture_id = record
+            record = go.DOOR_SEED_RECORD.unpack_from(
+                self.initial_doors, index * go.DOOR_SEED_RECORD.size
+            )
+            tile_x, tile_y, vertical, lock, action, position, texture_id, area1, area2 = record
             self.assertIn(vertical, (0, 1))
             self.assertIn(lock, range(6))
             self.assertEqual((action, position), (go.DOOR_CLOSED, 0))
             self.assertIn(texture_id, (121, 123, 124))
+            self.assertIn(area1, range(37))
+            self.assertIn(area2, range(37))
             self.assertEqual(self.tilemap[tile_y * 64 + tile_x], 0x80 | index)
 
     def test_initial_wire_stream_exactly_matches_durable_seed_records(self) -> None:
@@ -838,7 +850,7 @@ class GeneratorAndWireTests(unittest.TestCase):
         for index, body in enumerate(door_bodies):
             self.assertEqual(body[0], index)
             expected = self.initial_doors[
-                index * go.DOOR_RECORD.size : (index + 1) * go.DOOR_RECORD.size
+                index * go.DOOR_SEED_RECORD.size : index * go.DOOR_SEED_RECORD.size + go.DOOR_RECORD.size
             ]
             self.assertEqual(body[1:], expected)
         static_bodies = [
@@ -853,16 +865,34 @@ class GeneratorAndWireTests(unittest.TestCase):
                 body,
                 go.STATIC_WIRE_RECORD.pack(index, tile_x, tile_y, shapenum, flags),
             )
+        actor_bodies = [
+            body for subcommand, body in parsed if subcommand == go.SUB_SET_ACTOR
+        ]
+        self.assertEqual(len(actor_bodies), self.actor_count)
+        for actor_id, body in enumerate(actor_bodies, start=1):
+            wire_id, shape, x, y, facing, rotations = go.ACTOR_WIRE_RECORD.unpack(body)
+            self.assertEqual(wire_id, actor_id)
+            record = self.initial_actors[(actor_id - 1) * 39:actor_id * 39]
+            self.assertEqual((x, y), struct.unpack_from("<ii", record, 0))
+            direction = record[11]
+            if direction < 8:
+                self.assertEqual(facing, direction * 45)
+            self.assertIn(rotations, (0, 2, 8))
+            self.assertGreaterEqual(shape, 0)
 
     def test_stream_has_no_gaps_or_trailing_bytes(self) -> None:
         parsed = go.parse_command_stream(self.commands)
-        expected_length = 9 + self.door_count * 16 + self.static_count * 14 + 17 + 7
+        expected_length = (
+            9 + self.door_count * 16 + self.static_count * 14
+            + self.actor_count * 22 + 17 + 7
+        )
         self.assertEqual(len(self.commands), expected_length)
         self.assertEqual(
             [subcommand for subcommand, _ in parsed],
             [go.SUB_INIT_LEVEL]
             + [go.SUB_SET_DOOR] * self.door_count
             + [go.SUB_SET_STATIC] * self.static_count
+            + [go.SUB_SET_ACTOR] * self.actor_count
             + [go.SUB_SET_PLAYER_POSE, go.SUB_RENDER_FRAME],
         )
 
@@ -892,16 +922,29 @@ class GeneratorAndWireTests(unittest.TestCase):
         generator = load_generator()
         plane = [[0] * 64 for _ in range(64)]
         for index, tile_value in enumerate(range(90, 102)):
-            plane[10 + index][20] = tile_value
+            # Keep each synthetic door isolated and give both of its geometric
+            # endpoints real area tiles.  The production generator now rejects
+            # the formerly convenient all-zero surroundings because those
+            # would become malformed runtime graph edges.
+            tile_y = 2 + index * 5
+            plane[tile_y][20] = tile_value
+            area_tile = generator.actorinfo.AREATILE + (index % 37)
+            if index % 2 == 0:       # vertical door: east/west endpoints
+                plane[tile_y][19] = area_tile
+                plane[tile_y][21] = area_tile
+            else:                    # horizontal door: north/south endpoints
+                plane[tile_y - 1][20] = area_tile
+                plane[tile_y + 1][20] = area_tile
         tilemap, doors = generator.build_tilemap_and_doors(plane)
         self.assertEqual(len(doors), 12)
-        for index, (tile_x, tile_y, vertical, lock, texture_id) in enumerate(doors):
-            self.assertEqual((tile_x, tile_y), (20, 10 + index))
+        for index, door in enumerate(doors):
+            tile_x, tile_y, vertical, lock, texture_id = door[:5]
+            self.assertEqual((tile_x, tile_y), (20, 2 + index * 5))
             self.assertEqual(vertical, index % 2 == 0)
             self.assertEqual(lock, index // 2)
             expected_texture = 121 if lock == 0 else 123 if lock == 5 else 124
             self.assertEqual(texture_id, expected_texture)
-            self.assertEqual(tilemap[(10 + index) * 64 + 20], 0x80 | index)
+            self.assertEqual(tilemap[(2 + index * 5) * 64 + 20], 0x80 | index)
 
 
 @unittest.skipUnless(STAGED_ROOT.exists(), "staged assembly unavailable")

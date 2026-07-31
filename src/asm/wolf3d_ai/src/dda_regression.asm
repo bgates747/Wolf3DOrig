@@ -702,20 +702,16 @@ prepare_record:
     ld (current_opcode),a
     ret
 
-; A=door index. Configure that packed eight-byte slot from the current record.
+; A=door index. Configure that production runtime slot from the current
+; record. The first eight bytes are the VDP wire prefix; area endpoints may
+; follow it locally.
 configure_record_door:
-    ld e,a
-    ld d,0
+    ld d,a
+    ld e,W3D_DOOR_SIZE
+    mlt de
     inc de
     dec.s de
-    ld l,e
-    ld h,0
-    inc hl
-    dec.s hl
-    add.s hl,hl
-    add.s hl,hl
-    add.s hl,hl
-    ld de,doors
+    ld hl,doors
     add hl,de
     inc hl
     inc hl

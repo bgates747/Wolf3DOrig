@@ -48,8 +48,11 @@ _KIND_FIRST_SHAPENUM = {
     "INKY": spritenames.SPR_INKY_W1,
     "HANS": spritenames.SPR_BOSS_W1,
     "SCHABBS": spritenames.SPR_SCHABB_W1,
-    "HTLR-FAKE": spritenames.SPR_MECHA_W1,
-    "HITLER": spritenames.SPR_HITLER_W1,
+    "HTLR-FAKE": spritenames.SPR_FAKE_W1,
+    # The plane-1 HITLER marker first spawns Mecha-Hitler, then transitions
+    # into the real-Hitler frames. Keep both contiguous ranges in one asset
+    # block beginning at the Mecha anchor.
+    "HITLER": spritenames.SPR_MECHA_W1,
     "OTTO": spritenames.SPR_GIFT_W1,
     "GRETEL": spritenames.SPR_GRETEL_W1,
     "FAT": spritenames.SPR_FAT_W1,

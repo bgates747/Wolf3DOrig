@@ -851,3 +851,36 @@ Happy to add a small standalone test if useful once there's a fixture
 (tilemap + door state) to drive it with.
 
 ## VDP_AGENT_UPDATE3_END_2026_07_31
+
+## EZ80_ACTOR_ABI_BEGIN_2026_07_31
+
+This is the current actor rendering contract and supersedes earlier
+provisional subcommand-4 payloads in this handoff.
+
+The eZ80 is authoritative for actor lifetime, state, position, facing,
+occupancy, collision, and AI. The VDP retains only render snapshots and must
+derive view-relative sprite rotation from the current camera on every frame.
+Turning the camera therefore never requires the eZ80 to dirty every stationary
+actor.
+
+`set_actor` (`BUFFERED_WOLF3D` subcommand 4) has a 15-byte payload:
+
+```text
+actorId        uint16 little-endian
+baseShape      int16  little-endian
+x              int32 16.16 little-endian
+y              int32 16.16 little-endian
+facingDegrees  int16  little-endian, east=0, ccw
+rotations      uint8, legal values 0, 2, or 8
+```
+
+The complete VDU packet is the seven-byte buffered-command prefix followed by
+those 15 bytes. `remove_actor` (subcommand 5) remains `actorId:uint16`.
+Actor slot zero is reserved for the player; production actor ids are stable
+pool slots 1..149.
+
+The actor-facing selection is implemented and covered in the native renderer
+suite, and the full userspace VDP dispatch smoke passes. The eZ80 fixture now
+emits the real difficulty-filtered E1L1 population under this contract.
+
+## EZ80_ACTOR_ABI_END_2026_07_31

@@ -36,6 +36,10 @@ w3d_CheckLine:
     or a
     ret
 
+; This is the visual/proximity predicate, not the complete SightPlayer wake-up
+; wrapper. w3d_actor_sight_player accepts made-noise immediately for a
+; non-ambush actor in a connected area without invoking this line trace;
+; ambush actors still take the visual path here with context noise forced off.
 w3d_CheckSight:
     push bc
     push de
@@ -44,7 +48,10 @@ w3d_CheckSight:
     push iy
 
     ; Area connectivity is authoritative even for proximity/noise.
-    ld e,(ix+W3D_SIGHT_ACTOR_AREA)
+    ld a,(ix+W3D_SIGHT_ACTOR_AREA)
+    cp W3D_NUM_AREAS
+    jr nc,@blocked
+    ld e,a
     ld d,0
     inc de
     dec.s de
@@ -391,18 +398,11 @@ w3d_tile_is_clear:
     cp W3D_TILE_DOOR_MAX+1
     jr nc,@blocked
     and W3D_TILE_DOOR_MASK
-    ld e,a
-    ld d,0
+    ld d,a
+    ld e,W3D_DOOR_SIZE
+    mlt de
     inc de
     dec.s de
-    ld l,e
-    ld h,0
-    inc hl
-    dec.s hl
-    add.s hl,hl
-    add.s hl,hl
-    add.s hl,hl
-    ex de,hl
     ld hl,(w3d_doors_ptr)
     add hl,de
     inc hl

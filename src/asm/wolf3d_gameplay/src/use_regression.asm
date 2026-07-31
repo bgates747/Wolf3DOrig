@@ -25,6 +25,9 @@ fa_create_always:   equ 0x08
 
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
+    include "wolf3d_actors.inc"
+    include "wolf3d_areas.inc"
+    include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
 
 use_case_count:     equ 13
@@ -102,6 +105,19 @@ begin_case:
     ldir
     ld hl,test_static_bits
     ld (w3d_static_blocking_ptr),hl
+
+; Door close now consults the authoritative actor planes. This harness wants
+; an intentionally empty world, so initialize both rather than relying on
+; assembler-fill bytes in the actorat reservation storage.
+    ld hl,w3d_actorat
+    ld (hl),a
+    ld de,w3d_actorat+1
+    ld bc,W3D_MAP_BYTES-1
+    ldir
+    dec a
+    ld (w3d_actor_live_head),a
+    ld (w3d_actor_live_tail),a
+    inc a
 
     ld hl,w3d_doors
     ld (hl),a

@@ -17,8 +17,10 @@
 ; GAMEMAPS data -- do not hand-edit that file). It now runs an interactive
 ; fixed-step player loop with callback-gated rendering. Player collision,
 ; eZ80-authoritative moving doors, blocking decorations, and mutable pickup/HUD
-; state are live; actors, AI, and map loading beyond this fixture remain future
-; work.
+; state are live. The authoritative actor pool advances original-timed path
+; patrols, awareness/reaction, ordinary chase/dodge movement, ranged and dog
+; attack chains, and player damage/death. Player weapons, actor injury/death,
+; special actors, and map loading beyond this fixture remain future work.
 ; =============================================================================
 
 mos_getkey:      equ 00h
@@ -45,6 +47,9 @@ sysvar_time:     equ 00h
     include "agnb_api.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_render_async.inc"
+    include "wolf3d_actors.inc"
+    include "wolf3d_areas.inc"
+    include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
 
 start:

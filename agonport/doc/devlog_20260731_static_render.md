@@ -568,3 +568,343 @@ Interactive E1L1 review confirmed that doors now work well enough for the
 current milestone. Fine tuning of perceived well depth/player clearance is
 explicitly deferred, but current-cell and exterior use are accepted. The fix
 may therefore be committed as the clean base for actor work.
+
+## First authoritative actor slice
+
+Door behavior was accepted as good enough for the present milestone, so the
+next production layer begins from commit `3214b67`. The fixture now decodes
+actors directly from the real WL1 plane-1 markers with original difficulty
+fall-through, hit points, active/ambush flags, initial states, patrol
+destinations, and row-major allocation. Medium E1L1 contains 21 non-player
+records: 17 guards, three dogs, and the inert dead guard; six actors begin in
+patrol states. Baby/easy, medium, and hard counts are pinned independently as
+12, 21, and 38 records.
+
+The eZ80 now owns a fixed 150-slot actor pool, matching the original
+`MAXACTORS`; slot zero remains reserved for the player. Byte-sized stable slot
+ids replace near pointers in live/free lists and double as VDP actor ids. A
+4,096-byte `actorat` grid tracks each markable actor's reserved destination.
+The implementation includes deterministic initialization, allocation,
+publication, removal, occupancy claim/release, dirty set/remove snapshots, and
+the original inclusive one-tile player-versus-shootable-actor collision rule.
+
+Generated durable metadata anticipates rather than fakes the next AI slice:
+all floor-area ids, resolved ambush areas, all 18 E1L1 path arrows, and both
+area endpoints for every door are retained locally. Door runtime records are
+therefore ten bytes, while dirty VDP updates deliberately copy only the
+established eight-byte wire prefix.
+
+The actor render ABI has been made camera-independent. VDP subcommand 4 now
+takes a 15-byte snapshot:
+
+```text
+actorId:u16, baseShape:i16, x:i32, y:i32,
+facingDegrees:i16, rotations:u8
+```
+
+The VDP derives the view-relative sprite rotation on every render. Stationary
+actors no longer need to be resent merely because the player turns. The
+native renderer suite covers 0/2/8-frame selection, angle boundaries, actor
+lifetime, depth sorting, wall occlusion, culling, and stream length; the full
+userspace VDP build and token-matched dispatch smoke pass.
+
+Host actor/fixture tests pin marker decoding, patrol seeding, difficulty
+counts, runtime byte layout, command ordering, fake/Mecha-Hitler asset
+boundaries, areas, arrows, and door endpoints. Adversarial review additionally
+caught and fixed four future-facing faults before integration: recessed door
+cells now inherit the original west/north area ownership, empty generated
+actor/door/static arrays cannot execute a zero-length `LDIR`, ghosts retain
+their original zero hit points, and the graduated DDA regression addresses
+the expanded ten-byte door stride. It also identified the exact Fake/Mecha
+asset boundary rather than allowing Fake's block to consume Mecha frames.
+
+The durable direct-eZ80 actor harness now passes 10,494 checks. It exercises
+all initial records and free slots, every dirty and `actorat` byte, allocation,
+publication/removal/reuse, pool exhaustion, sender bytes, inclusive collision
+thresholds, and all four fractional-AABB cases where the expanded scan must
+reach a reserved destination two tile indices from the candidate center. The
+established 10,028-case ClipMove, 13-case pickup, 13-case door-use, and 55-case
+host gameplay suites remain green after actor integration.
+
+The interactive emulator view is the remaining acceptance gate before this
+slice is considered complete. The staged application currently assembles to
+49,581 bytes (SHA-256
+`d9523a17ee8e440cad54fe05741f3b6ed9fd9c540992e54b76129bf667b8a39f`).
+
+The state-runner, patrol, area-connectivity, awareness, chase, and combat
+sequence is recorded in `agonport/doc/actor_gameplay_plan.md`.
+
+## Original-timed path patrols
+
+The next actor layer retains the original `statetype` durations directly in
+70 Hz tics. A single global `2,2,3` cadence advances them at the client's
+fixed 30 Hz, exactly consuming seven original tics every three updates without
+division or a per-actor fractional field. Actor records therefore remain 39
+bytes. The generated map seed now reproduces `US_InitRndT(false)` and
+`SpawnNewObj`: medium E1L1's six timed patrol records receive row-major phases
+`8,9,0,2,1,9`. The zero is not normalized away. Original `DoActor()` treats
+it as a permanent non-transitional W1 state while still calling `T_Path`, and
+the port deliberately preserves that visible quirk.
+
+The compact state table now contains all six path states for guards, dogs,
+officers, mutants, and SS actors. It carries signed transition overshoot,
+calls only the final state's think once, avoids dirtying the duplicate-shape
+W1/W3 pause transitions, and caps corrupt transition graphs at sixteen before
+removing the bad actor. State ids remain stable generated-data values rather
+than code pointers.
+
+`T_Path`, `SelectPathDir`, `TryWalk`, and `MoveObj` are now eZ80-owned. The
+implementation preserves physical position versus ahead-tile reservation,
+plane-1 arrow turns, residual motion through a tile center, diagonal corner
+checks, shootable versus inert occupancy, guard/dog differences, the negative
+door-wait encoding, AI opening that ignores locks, and inclusive one-tile
+player exclusion. Doors update first, then player input/pickups, then actors.
+Only pose/facing/render-shape changes cross the write-only VDP boundary.
+Moving doors also test live actor AABBs before continuing to close.
+An actorat reservation in the door cell holds even a fully open door first,
+matching the original `CloseDoor()` invariant before the finite-slab checks.
+Its original adjacent-cell `MINDIST` check is retained at close start as well,
+so a patrol that has reserved the far-side tile cannot have the door begin
+closing around its still-crossing body.
+
+An independent host oracle and versioned `W3PV` corpus exercise the shared
+clock, zero latch, animation dirtiness, dog residual/arrow motion, door
+selection/wait ordering, player rejection, and a real 92-frame slot-11 route
+through E1L1 door 8. Its 24 host tests pass. After linking the runner, all
+pre-existing gates remain green:
+
+```text
+asset/fixture host tests:           26/26 pass
+gameplay host/oracle:               55/55 pass
+production actor pool:              10,494 checks pass
+production actor patrol/state:      550 checks pass
+production ClipMove:                10,028/10,028 pass
+production pickups:                 13/13 pass
+production door use:                13/13 pass
+main eZ80 application assembly:     pass
+wolf3d.bin:                          51,827 bytes
+wolf3d.bin sha256:                   5e2569615f2b6e6f671946b6863ecbb1c52489f9a8d3ef6986f79a41834317f9
+```
+
+The 550 direct checks include all ten independent `W3PV` cases, malformed
+state/occupancy defenses, diagonal and static blocking, moving-door
+obstruction, and the exact far-side `MINDIST` close boundary. PRT1 measures
+the real 92-frame E1L1 slot-11/door-8 route at 15 ms total, or about
+0.163 ms per fixed frame in the emulator. Interactive emulator review is the
+remaining acceptance gate after this staged slice replaces the live worktree.
+
+## Lean door-area connectivity and inactive-actor scheduling
+
+The client now owns the original level's 37-area reachability without carrying
+the DOS engine's 37-by-37 counter matrix. Each ten-byte door record already
+contains its two area endpoints, so one 37-entry iterative BFS scans the live
+records directly. A door is an undirected graph edge exactly while its unsigned
+0.16 position is nonzero; action labels do not affect connectivity. Parallel
+doors, cycles, and self-loops therefore fall out of the same traversal.
+
+Opening's first zero-to-positive step and closing's final positive-to-zero step
+mark topology dirty. The complete door pass performs at most one rebuild, so
+simultaneous transitions do not reflood repeatedly. A player-area change also
+rebuilds before pickups and actors run. Invalid player roots clear the table and
+fault once per sampled-value transition; malformed live door endpoints are
+ignored and fault once per door per rebuild. The bounded implementation uses 86
+bytes, including the 37-byte reachability table, 37-byte queue, diagnostics,
+and scratch state.
+
+`ACTIVE_NO` actors now run only in a valid area reachable from the player.
+`ACTIVE_YES` and `ACTIVE_ALWAYS` remain global, and eligibility never mutates
+the durable active byte. The same area gate limits MoveObj's player-proximity
+rejection, while `w3d_CheckSight()` independently rejects invalid actor areas.
+The generator now fails closed on actor and live-door areas outside `0..36` and
+on levels exceeding the 64-door wire/index budget. Regenerating E1L1 remains
+byte-identical (`wolf3d_fixture.inc` SHA-256
+`227f7f41706bbbbbffc2a2d94c94178f5c259a92f548cf9267b173194e813389`).
+
+An independent host oracle pins synthetic graph behavior and the exact real
+E1L1 components. A separate assembly fixture calls production labels directly,
+compares every reachability byte and relevant scalar/door field, and verifies
+BC/DE/HL/IX/IY preservation. Independent review found no remaining production
+defect. The complete pre-visual gate is:
+
+```text
+asset/fixture host tests:           29/29 pass
+gameplay host/oracle:               55/55 pass (10,000 randomized cases)
+actor patrol host/oracle:           24/24 pass
+area host/oracle:                   18/18 pass
+production actor pool:              10,494 checks pass
+production actor patrol/state:      550 checks pass
+production area connectivity:       1,288 checks pass
+production DDA/CheckSight:           20,112/20,112 pass
+production ClipMove:                10,028/10,028 pass
+production pickups:                 13/13 pass
+production door use:                13/13 pass
+main eZ80 application assembly:     pass
+wolf3d.bin:                          52,542 bytes
+wolf3d.bin sha256:                   ff928e665ece60a63c22f6a1fb36714bdd49ad897e7f72bcca125a32e9b6b2b8
+```
+
+With the area hooks linked, PRT1 measures the same 92-frame real E1L1 patrol
+route at 16 ms total (about 0.174 ms per fixed frame) in Fab. Interactive
+emulator review remains the acceptance gate before committing this emulator-
+coupled slice. Awareness/noise activation is the next actor layer.
+
+## Ordinary actor awareness and reaction staging
+
+The next staging layer ports `SightPlayer()` and the ordinary-class portion of
+`FirstSighting()` without conflating them with chase movement. Guards,
+officers, mutants, SS, and dogs now detect only from valid connected areas.
+Non-ambush noise bypasses facing and the complete line trace; ambush actors
+ignore noise, require visual sight, and clear the ambush bit at acquisition.
+Quiet visual checks reuse the already-regressed strict 1.5-tile proximity,
+eight-direction facing, and wall/door DDA implementation.
+
+Detection seeds the original class delay and returns before activation. The
+pending delay consumes the shared `2,2,3` original-tic cadence before any area
+or sight revalidation, exactly preserving the DOS behavior if a door closes
+during the reaction. Activation installs the class chase-entry state, ten
+tics, speed multiplier, and `ATTACKMODE|FIRSTATTACK`; it cancels a negative
+door wait but does not change position, tile reservation, direction, area, or
+persistent activity. Chase entries intentionally self-loop without motion
+until the next direction-selection layer is independently regressed.
+
+The exact 256-byte `US_RndT` table/index convention is now shared runtime
+state. Fixture generation records the post-spawn E1L1 index as 6, making the
+first gameplay draw table entry 7 (`107`). The officer's fixed two-tic delay
+consumes no byte. A one-byte player-noise event remains asserted for every
+actor in the current pass and clears only after the complete list traversal.
+
+Qualification of this staging checkpoint:
+
+```text
+asset/fixture host tests:           29/29 pass
+gameplay host/oracle:               55/55 pass (10,000 randomized cases)
+actor patrol host/oracle:           24/24 pass
+area host/oracle:                   18/18 pass
+awareness host/oracle:              21/21 pass
+production actor pool:              10,494 checks pass
+production actor patrol/state:      550 checks pass
+production area connectivity:       1,288 checks pass
+production actor awareness:         321 checks pass
+production ClipMove:                10,028/10,028 pass
+production pickups:                 13/13 pass
+production door use:                13/13 pass
+main eZ80 application assembly:     pass
+wolf3d.bin:                          53,366 bytes
+wolf3d.bin sha256:                   416982060450c647fdccd0fd9595a2bdb7773e968521480903f6713c9ea237ca
+wolf3d_fixture.inc sha256:           8e43379689917603c3325ad6a81c4888d33156ec3fdc586d79340b1e5405bfde
+```
+
+The awareness fixture calls production labels directly in the stock isolated
+emulator. Its 321 checks cover RNG continuation/wrap, every ordinary delay,
+area and visual gates, noise/ambush paths, countdown, every FirstSighting
+mutation and non-mutation, corrupt-input removal, and whole-pass noise
+lifetime. PRT1 measured 10,000 connected quiet visual acquisitions in 1,099 ms
+(0.1099 ms/call), with comparisons and file I/O outside the timed loop.
+Independent adversarial review found no production defect. The earlier
+20,112-case DDA/CheckSight result remains applicable because this slice changed
+only its caller and explanatory comment, not the trace implementation.
+
+## Ordinary chase and dog pursuit
+
+The ordinary chase layer now follows the source `T_Chase`, `T_DogChase`,
+`SelectChaseDir`, and `SelectDodgeDir` ordering against the authoritative eZ80
+world. Guards, officers, mutants, and SS run the line/attack probe before
+direction or movement; dogs project their complete movement budget before
+requesting a jump. The first-attack reversal exception, exact `128/129` RNG
+split, cardinal/diagonal occupancy, closed-door waits, dog door rejection,
+residual travel through tile centers, and reservation release/reclaim are all
+preserved. Attack decisions are explicit results from the chase routine, so
+the state runner can install the appropriate animation without coupling the
+direction oracle to combat side effects.
+
+The direct production corpus passes 703/703 checks across nine phases after
+the combat records expanded the shared table to 101 states. Its current binary
+is 49,881 bytes, SHA-256
+`27e224f017b185cffe037b9a6fa137dcab7934d106f3ce9877c6bff3084e2bd1`.
+PRT1 measures 10,000 clear close-range ranged requests in 743 ms
+(0.0743 ms/call) and 10,000 projected dog-jump requests in 128 ms
+(0.0128 ms/call). Assertions, fixture reset, and mailbox I/O remain outside
+the timed loops.
+
+## Ordinary enemy attack chains and player damage staging
+
+The next slice appends the original 24 attack states at stable ids 77..100:
+three guard shooting states, five dog jump/bite states, three officer shooting
+states, four mutant states with two shots, and nine SS states with four shots.
+Actions execute on the expiring state before `NEXT`, signed overshoot is
+retained, and the final transition reaches the already-qualified chase graph
+in the same scheduler call. Ranged and dog-jump chase requests now install the
+full first-state duration instead of remaining unlatched seams.
+
+`T_Shoot` revalidates area connectivity and `CheckLine` at action time, derives
+the source Chebyshev tile distance (including SS's `floor(2d/3)` adjustment),
+and preserves unclamped chance arithmetic, strict comparison, and conditional
+damage draws. `T_Bite` uses the exact inclusive `0x20000` physical square and
+draws no RNG outside it. Player damage records the last attacker, quarters on
+baby difficulty, saturates health at zero, and allows a later hit in the same
+actor pass to replace the killer. Death freezes later world quanta while the
+foreground still polls Escape and can submit the final health/dead-face HUD.
+Sound, damage flash, god/victory presentation, and respawn are deliberately
+deferred; durable gameplay state is the current boundary.
+
+The DOS hit chance depended on renderer-owned `FL_VISABLE`, but this port's VDP
+is write-only and rendering is intentionally asynchronous. The replacement is
+a synchronous CPU projection from authoritative actor/player pose after the
+area and line gates. It uses the generated Q12 motion basis, the original
+`FixedByFrac` per-product truncation toward zero, the original transform
+constants reduced to signed 8.8, and exact strict product inequalities for the
+inclusive 0..255 screen interval. It consumes no additional RNG and cannot
+make simulation depend on render completion.
+
+Two eZ80-specific review catches are worth retaining. First, an unsuffixed ADL
+store of the new uint16 `thrustspeed` field wrote a third byte over player
+health; all new two-byte fields are now loaded/stored bytewise. Second, an
+arithmetic right shift initially rounded negative Q8-by-Q12 products toward
+minus infinity; adding `0x0fff` to non-exact negative magnitudes restores the
+source's truncation toward zero. Independent adversarial review then found no
+remaining production defect. The independent host combat corpus passes 39/39
+tests. The direct production fixture passes 298/298 checks across ten phases;
+its 48,311-byte binary has SHA-256
+`b68499e151e2828ef26649f26c3a212aa8473be8b6298a0ff306e051cb509e06`.
+PRT1 measures 10,000 clear-line ordinary shots in 1,555 ms
+(0.1555 ms/call) and 10,000 in-range dog bites in 87 ms
+(0.0087 ms/call). The complete earlier direct matrix also remains green,
+including 10,494 actor-pool checks, 607 patrol checks, 1,288 area checks, 321
+awareness checks, 703 chase checks, and 10,028 ClipMove vectors.
+
+## Ordinary combat emulator and hardware acceptance
+
+The complete staged actor stack was integrated into the live client and built
+as a 56,360-byte `wolf3d.bin`, SHA-256
+`3de852653caaa2a594b288dac87be42cafc79d60cc7738dba2f3d55c76aeb4b4`.
+The existing level-0 sprite container was independently checked before launch:
+all guard shapes 50..98 and dog shapes 99..137 are present, including the
+shoot and jump/bite frames. No VDP or asset-format change was required for
+combat presentation.
+
+Interactive emulator acceptance passed. The real medium-difficulty E1L1
+population acquires the player, follows the authoritative eZ80 chase paths,
+animates attacks, reduces the live HUD health, and reaches the deliberate
+dead-face/frozen-world latch. Render callbacks continued advancing while the
+simulation remained independent of variable render time. Combat sound, player
+weapons, actor injury/death, drops, and respawn remain explicit later layers.
+
+The same client and its `tiles.agnb`, `sprites.agnb`, and `hud.agnb` containers
+were deployed to `/wolf3dorig` on the FAT32 `AGON` card. `autoexec.txt` selects
+keyboard layout 1, changes to that directory, and loads `wolf3d.bin` without a
+`run`; prior application commands remain commented and the previous file is
+preserved as `autoexec.pre-wolf3dorig.bak`.
+
+The current custom VDP was rebuilt from source and flashed to the hardware
+ESP32-PICO-D4 through `/dev/ttyUSB0`. PlatformIO reported 83.0% flash and 13.6%
+RAM use. All four flash regions passed esptool hash verification, RTS hard
+reset succeeded, and the serial device re-enumerated. The 1,087,792-byte
+firmware image has SHA-256
+`4093eeb054b9494f169c02d576b2d0fd0a7699e09996fc8984eb0d5d80384463`.
+
+Hardware acceptance passed: the complete fixture works, remains eminently
+playable under load, and preserves correct simulation behavior. The observed
+input/render response may be a touch laggy on hardware, which is retained as a
+performance note rather than a correctness failure. This checkpoint is tagged
+`ordinary-combat-hardware-pass` in both `Wolf3dOrig` and
+`agon-vdp-wolf3d` so the matching eZ80 and VDP sides can be recovered together.

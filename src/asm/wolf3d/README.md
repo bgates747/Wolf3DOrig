@@ -11,6 +11,18 @@ The real, permanent eZ80 game client. Distinct from its two siblings under
 - `wolf3d_gameplay` -- the independent host/oracle and real-eZ80 regression
   project for player collision, `ClipMove`, door state/timing, use sectors,
   blocking statics, mutable pickups/HUD state, and generated wire parity.
+- `wolf3d_areas` -- the independent host oracle and direct-eZ80 regression for
+  lean door-area connectivity, player-root flooding, and area-gated actor
+  scheduling/player exclusion.
+- `wolf3d_awareness` -- the independent host oracle and direct-eZ80 regression
+  for ordinary-enemy sight/noise acquisition, deterministic reaction delays,
+  and `FirstSighting` state changes.
+- `wolf3d_chase` -- the independent host oracle and direct-eZ80 regression for
+  ordinary chase/dodge selection, door waits, reservations, movement, and
+  guard/dog attack requests.
+- `wolf3d_combat` -- the independent host oracle and direct-eZ80 regression for
+  ordinary ranged/melee attack chains, player damage, movement-speed hit
+  chance, and deterministic CPU-side actor visibility.
 
 Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
 
@@ -35,14 +47,31 @@ Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
     operates the containing door well or the adjacent facing door, and Escape
     exits. Player collision and
     eZ80-authoritative moving doors, original blocking decorations, persistent
-    pickups, and live HUD fields are active; actors and the wider game loop
-    remain future work. See "Interactive render fixture" below.
+    pickups, live HUD fields, and the real difficulty-filtered E1L1 actor
+    population are active. Original state timing and path patrols are also
+    live, with door-area connectivity determining inactive-actor eligibility.
+    Awareness, reaction delays, ordinary chase movement, guard/officer/
+    mutant/SS shooting, dog bites, and player damage/death are live. See
+    "Interactive render fixture" below.
   - `wolf3d_fixture.inc` -- generated, do not hand-edit; see below.
   - `wolf3d_render_async.inc` -- the callback-driven control-loop scaffold:
     one render may be in flight, `W3DR` completion is copied by the MOS
     interrupt callback, and the foreground validates and presents it. It
     also retains the 120 Hz elapsed clock needed by future fixed-step
     simulation.
+  - `wolf3d_actors.inc` -- fixed 150-slot authoritative actor pool, live/free
+    lists, tile occupancy, player collision, complete patrol-state table, and
+    dirty VDP set/remove bridge. Slot zero is reserved for the player.
+  - `wolf3d_actor_sim.inc` -- original 70 Hz actor state semantics advanced by
+    an exact `2,2,3` tic cadence at the client's 30 Hz fixed step, plus
+    `T_Path`, arrow following, ahead-tile reservation, actor movement/player
+    exclusion, guard/dog door behavior, the exact Carmack RNG stream,
+    ordinary-enemy awareness/reaction, chase/dodge movement, ordinary attack
+    state chains, CPU-side combat visibility, and player damage/death.
+  - `wolf3d_areas.inc` -- 37-area player reachability rebuilt by an iterative
+    BFS over live ten-byte door records. It batches exact zero-position door
+    topology transitions, handles parallel/self-loop doors without a matrix,
+    and supplies the scheduling and sight gate for inactive actors.
 - `tgt/` is ignored generated output.
 
 ## Building
@@ -125,6 +154,31 @@ callback, and returns cleanly. Player motion advances at a fixed 30 Hz from
 the 120 Hz MOS clock; render submission is capped at the same cadence and
 skips stale snapshots if rendering falls behind.
 
+At the default medium difficulty the E1L1 fixture additionally owns 21
+non-player actor records (17 guards, three dogs, and one dead guard). The
+eZ80 retains the original floor-area ids, path arrows, door area endpoints,
+actor live/free lists, and `actorat` occupancy. The VDP receives complete
+15-byte render snapshots containing stable actor id, base shape, 16.16
+position, world facing, and a `0`/`2`/`8` rotation count; it chooses the
+view-relative sprite frame at render time, so camera motion does not dirty
+stationary actors. The six map-spawned patrols advance every 30 Hz simulation
+quantum after doors and player input, independently of render completion.
+Their original random animation phases, including the zero-phase W1 latch,
+are generated deterministically; movement follows real plane-1 arrows and
+ordinary guards open/wait for doors while dogs reject a closed door. The
+ordinary classes acquire the player through the original connected-area,
+noise, ambush, proximity, facing, wall/door, and class-delay rules, then run
+the original chase/dodge selectors and residual movement. Guards, officers,
+mutants, and SS enter their exact shooting chains; dogs enter their jump/bite
+chain. Attack actions re-check current geometry and use the shared deterministic
+RNG stream. Because the VDP is write-only and render completion is decoupled
+from simulation, ranged hit chance uses a synchronous CPU projection from the
+authoritative pose instead of a renderer-owned visibility bit. Player health
+saturates at zero and death freezes world simulation while leaving Escape and
+the final HUD submission responsive. Player weapons, actor injury/death, and
+special enemies remain later layers. The remaining state/AI rollout is recorded in
+`agonport/doc/actor_gameplay_plan.md`.
+
 `wolf3d_fixture.inc` (the tilemap + precomputed command-stream bytes) is
 generated, not hand-written:
 
@@ -155,6 +209,9 @@ contract, and tests are documented in
 Run the gameplay host and real-eZ80 regressions from the repository root:
 
 ```bash
+.venv/bin/python -m unittest -v \
+  agonport/tools/wolf3d_assets/tests/test_actor_fixture.py \
+  agonport/tools/wolf3d_assets/tests/test_static_fixture.py
 .venv/bin/python -m unittest discover -v \
   -s src/asm/wolf3d_gameplay/scripts -p 'test_gameplay_oracle.py'
 .venv/bin/python \
@@ -162,6 +219,28 @@ Run the gameplay host and real-eZ80 regressions from the repository root:
   --random-cases 10000 --include-zero-delta
 .venv/bin/python \
   src/asm/wolf3d_gameplay/scripts/run_pickup_emulator_regression.py
+.venv/bin/python \
+  src/asm/wolf3d_gameplay/scripts/run_use_emulator_regression.py
+.venv/bin/python \
+  src/asm/wolf3d_actors/scripts/run_actor_emulator_regression.py
+.venv/bin/python \
+  src/asm/wolf3d_actors/scripts/run_patrol_emulator_regression.py
+.venv/bin/python -m unittest discover -v \
+  -s src/asm/wolf3d_areas/scripts -p 'test_area_oracle.py'
+.venv/bin/python \
+  src/asm/wolf3d_areas/scripts/run_area_emulator_regression.py
+.venv/bin/python -m unittest discover -v \
+  -s src/asm/wolf3d_awareness/scripts -p 'test_awareness_oracle.py'
+.venv/bin/python \
+  src/asm/wolf3d_awareness/scripts/run_awareness_emulator_regression.py
+.venv/bin/python -m unittest discover -v \
+  -s src/asm/wolf3d_chase/scripts -p 'test_chase_oracle.py'
+.venv/bin/python \
+  src/asm/wolf3d_chase/scripts/run_chase_emulator_regression.py
+.venv/bin/python -m unittest discover -v \
+  -s src/asm/wolf3d_combat/scripts -p 'test_combat_oracle.py'
+.venv/bin/python \
+  src/asm/wolf3d_combat/scripts/run_combat_emulator_regression.py
 ```
 
 **Hardware deployment** (no emulator/build harness involved): assemble as
