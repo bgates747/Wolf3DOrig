@@ -2,9 +2,9 @@
 
 This package is a durable, independent host oracle for the first eZ80-owned
 gameplay layer: square-player collision, original `ClipMove` sliding order,
-cardinal use targeting, lock gating, Space rising-edge behavior, 30 Hz door
-motion/timing, original blocking decorations, mutable pickups/HUD state, and
-the complete fixture-generator door/static wire contract.
+current-well/cardinal use targeting, lock gating, Space rising-edge behavior,
+30 Hz door motion/timing, original blocking decorations, mutable pickups/HUD
+state, and the complete fixture-generator door/static wire contract.
 
 The directory is ready to live at `src/asm/wolf3d_gameplay`. Run the host
 suite from the repository root with the project virtualenv:
@@ -61,6 +61,19 @@ cap, full heal, the `FFFF` removed-shape sentinel, exact HUD/world dirty masks,
 and isolation of the one changed static slot. See
 `PICKUP_REGRESSION.md` for the packed case contract.
 
+Door use is executed directly against production assembly in a third isolated
+profile:
+
+```bash
+.venv/bin/python \
+  src/asm/wolf3d_gameplay/scripts/run_use_emulator_regression.py
+```
+
+Its 13 cases reproduce both reachable halves of an E1L1 door well, all four
+exterior approaches, ordinary adjacent fallback, malformed-current fail-closed
+behavior, locks, action transitions, complete dirty/timer state, and the held
+Space latch. See `USE_REGRESSION.md` for the exact contract.
+
 Important model choices match the current port contract:
 
 1. Player collision uses the original `0x5800` square radius.
@@ -73,7 +86,9 @@ Important model choices match the current port contract:
    exact `FFFF` sum saturates immediately, including after a close reversal.
 5. Open wait uses seven third-ticks per update, closes on reaching 900, and
    clamps there while obstructed so per-tick retries cannot wrap the timer.
-6. Angles 45/135/225 change sector; 315 is south and 316 is east.
+6. A valid current-cell door takes use priority from either well; otherwise
+   angles 45/135/225 change the adjacent sector, with 315 south and 316 east.
+   An invalid current door index fails closed rather than targeting a neighbor.
 7. Lock values 1..4 use key bits 0..3; normal 0 and elevator-art 5 operate.
 8. Blocking decorations live in a separate immutable 512-byte LSB-first
    occupancy bitset. They stop movement but never become DDA wall cells.

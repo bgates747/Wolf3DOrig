@@ -521,3 +521,50 @@ the new plane predicate. The tests prove the isolated fixed-point slab cases,
 but not yet this complete use/approach sequence in the real E1L1 doorway. The
 next change will reproduce that sequence deterministically and reconcile both
 systems from this known commit boundary.
+
+## Door-well use invariant: diagnosis and candidate fix
+
+The complete pre-fix checkpoint was committed before investigation as
+`2b2dc1a` in `Wolf3dOrig` and `cfc22f9` in `agon-vdp-wolf3d`. The reported
+behavior was then reproduced without changing the slab normal.
+
+The old adjacent-only use rule depended on an unstated invariant: the player
+could never occupy a door tile. Whole-cell DOS collision guaranteed that
+invariant. Center-plane collision intentionally removed it, but Space still
+computed only `floor(player)+facing`. At E1L1 door 20 `(32,57)`, the player
+starts west and can now reach `x=32.125` with the real `0x1000` movement step.
+That correctly places the center inside door tile 32, where the old use code
+looked past the door into open tile 33. Backing across `x<32` restored the old
+adjacency and made Space work again. A failed press remaining latched until a
+sampled release amplified the apparent resistance.
+
+The candidate correction gives a valid door in the player's current tile
+priority, irrespective of view direction, and otherwise retains every original
+cardinal angle boundary. A current door byte whose index is invalid for the
+fixture fails closed rather than falling through to an unrelated neighbor.
+Locks and all action/timer/dirty transitions still share the existing single
+operation path. No VDP change is involved: vertical and horizontal slab axes
+already match the renderer.
+
+The well depth itself is also now quantified. With radius `0x5800` and a panel
+at fraction `0x8000`, the camera center can reach fraction `0x27FF` from the
+near side or `0xD801` from the far side; the `0x1000` control step lands at
+`0x2000`/`0xE000`. Thus the center gains half a tile over the former DOS
+rejection boundary, while still retaining the original player clearance from
+the visible panel.
+
+Candidate-fix qualification before interactive review:
+
+```text
+host gameplay/oracle:              55/55 pass (10,000 randomized cases)
+production eZ80 ClipMove:          10,028/10,028 pass
+production eZ80 door use:          13/13 pass
+main eZ80 application assembly:    pass
+wolf3d.bin:                        28,644 bytes
+wolf3d.bin sha256:                 f17070445c87edc1610d022380a8f6819ffcd0484abc837573091a4cc3801504
+```
+
+Interactive E1L1 review confirmed that doors now work well enough for the
+current milestone. Fine tuning of perceived well depth/player clearance is
+explicitly deferred, but current-cell and exterior use are accepted. The fix
+may therefore be committed as the clean base for actor work.

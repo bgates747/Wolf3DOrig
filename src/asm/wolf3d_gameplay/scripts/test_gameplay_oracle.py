@@ -712,15 +712,79 @@ class UseAndLockTests(unittest.TestCase):
             [False, True, False, False, False, False, True],
         )
 
-    def test_adjacent_map_lookup_and_invalid_index(self) -> None:
+    def test_open_current_cell_uses_original_adjacent_lookup(self) -> None:
         tilemap = go.empty_bordered_map()
         player = go.Pose(go.fixed(20), go.fixed(20), 0)
         door = go.Door(21, 20, True, 0)
         tilemap[20 * 64 + 21] = 0x80
         self.assertEqual(go.use_adjacent_door(tilemap, [door], player), 0)
         self.assertEqual(door.action, go.DOOR_OPENING)
+
+    def test_adjacent_lookup_rejects_invalid_index(self) -> None:
+        tilemap = go.empty_bordered_map()
+        player = go.Pose(go.fixed(20), go.fixed(20), 0)
+        door = go.Door(21, 20, True, 0)
         tilemap[20 * 64 + 21] = 0x81
         self.assertIsNone(go.use_adjacent_door(tilemap, [door], player))
+        self.assertEqual(door.action, go.DOOR_CLOSED)
+
+    def test_door_is_usable_from_both_wells(self) -> None:
+        tilemap = go.empty_bordered_map()
+        tilemap[20 * 64 + 21] = 0x80
+        cases = (
+            (go.fixed(21, 0x2000), 0, "near well facing through"),
+            (go.fixed(21, 0xE000), 180, "far well facing back"),
+        )
+        for x, angle, label in cases:
+            with self.subTest(label=label):
+                door = go.Door(21, 20, True, 0)
+                player = go.Pose(x, go.fixed(20), angle)
+                self.assertEqual(go.use_adjacent_door(tilemap, [door], player), 0)
+                self.assertEqual(door.action, go.DOOR_OPENING)
+
+    def test_door_is_usable_immediately_outside_both_sides(self) -> None:
+        tilemap = go.empty_bordered_map()
+        tilemap[20 * 64 + 21] = 0x80
+        cases = (
+            (go.fixed(20, 0xFFFF), 0, "west side facing east"),
+            (go.fixed(22, 0), 180, "east side facing west"),
+        )
+        for x, angle, label in cases:
+            with self.subTest(label=label):
+                door = go.Door(21, 20, True, 0)
+                player = go.Pose(x, go.fixed(20), angle)
+                self.assertEqual(go.use_adjacent_door(tilemap, [door], player), 0)
+                self.assertEqual(door.action, go.DOOR_OPENING)
+
+    def test_current_door_lookup_is_orientation_independent(self) -> None:
+        tilemap = go.empty_bordered_map()
+        tilemap[20 * 64 + 21] = 0x80
+        for angle in (0, 44, 45, 90, 135, 180, 225, 270, 315, 316, 359):
+            with self.subTest(angle=angle):
+                door = go.Door(21, 20, True, 0)
+                player = go.Pose(go.fixed(21, 0x2000), go.fixed(20), angle)
+                self.assertEqual(go.use_adjacent_door(tilemap, [door], player), 0)
+                self.assertEqual(door.action, go.DOOR_OPENING)
+
+    def test_valid_current_door_takes_precedence_over_adjacent_door(self) -> None:
+        tilemap = go.empty_bordered_map()
+        current = go.Door(21, 20, True, 0)
+        adjacent = go.Door(22, 20, True, 0)
+        tilemap[20 * 64 + 21] = 0x80
+        tilemap[20 * 64 + 22] = 0x81
+        player = go.Pose(go.fixed(21, 0xE000), go.fixed(20), 0)
+        self.assertEqual(go.use_adjacent_door(tilemap, [current, adjacent], player), 0)
+        self.assertEqual(current.action, go.DOOR_OPENING)
+        self.assertEqual(adjacent.action, go.DOOR_CLOSED)
+
+    def test_invalid_current_door_index_fails_closed_without_fallback(self) -> None:
+        tilemap = go.empty_bordered_map()
+        adjacent = go.Door(21, 20, True, 0)
+        tilemap[20 * 64 + 20] = 0x81
+        tilemap[20 * 64 + 21] = 0x80
+        player = go.Pose(go.fixed(20, 0xE000), go.fixed(20), 0)
+        self.assertIsNone(go.use_adjacent_door(tilemap, [adjacent], player))
+        self.assertEqual(adjacent.action, go.DOOR_CLOSED)
 
 
 @unittest.skipUnless(FIXTURE.exists() and GENERATOR.exists(), "staged fixture unavailable")

@@ -504,6 +504,31 @@ def use_adjacent_door(
     pose: Pose,
     player_key_flags: int = 0,
 ) -> int | None:
+    """Operate the door containing the player, or the cardinal door ahead.
+
+    Door wells are real traversable cells in this port.  Once the player has
+    entered one, the containing door must remain usable irrespective of view
+    angle; otherwise the old cardinal adjacent-cell lookup is preserved.
+    A door-valued current cell with an out-of-range index is malformed and
+    fails closed instead of falling through to a different adjacent door.
+
+    The historical function name is retained because callers use this as the
+    complete Use-key operation, not merely as a coordinate helper.
+    """
+
+    current_x = pose.x // TILE_GLOBAL
+    current_y = pose.y // TILE_GLOBAL
+    current_value = tile_at(tilemap, current_x, current_y)
+    if TILE_DOOR_MIN <= current_value <= TILE_DOOR_MAX:
+        current_index = current_value & TILE_DOOR_MASK
+        if current_index >= len(doors):
+            return None
+        return (
+            current_index
+            if operate_door(doors[current_index], pose, player_key_flags)
+            else None
+        )
+
     tile_x, tile_y = adjacent_tile(pose)
     value = tile_at(tilemap, tile_x, tile_y)
     if not TILE_DOOR_MIN <= value <= TILE_DOOR_MAX:

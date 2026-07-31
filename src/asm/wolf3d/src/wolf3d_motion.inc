@@ -1249,10 +1249,27 @@ w3d_handle_use_edge:
     ld (w3d_use_was_down),a
     ret
 
-; Operate exactly one adjacent tile in the nearest cardinal direction.
-; Angle sectors preserve the original boundary behavior: 315 remains south;
-; 316 begins the east sector. Pushwalls/elevator switches are future layers.
+; Operate the door whose cell currently contains the player, otherwise exactly
+; one adjacent tile in the nearest cardinal direction.  Center-plane collision
+; deliberately permits the player to enter a door well, so current-cell
+; priority keeps Space useful throughout that recess.  A malformed current
+; door byte fails closed instead of accidentally operating a neighboring door.
+; Adjacent angle sectors preserve the original boundary behavior: 315 remains
+; south; 316 begins the east sector. Pushwalls/elevator switches are future
+; layers.
 w3d_use_adjacent_door:
+    ld a,(w3d_player_pose+2)
+    ld b,a
+    ld a,(w3d_player_pose+6)
+    ld c,a
+    call w3d_map_read
+    cp W3D_TILE_DOOR_MIN
+    jr c,@select_adjacent
+    cp W3D_TILE_DOOR_MAX+1
+    jr nc,@select_adjacent
+    jr @resolve_door_tile
+
+@select_adjacent:
     call w3d_load_player_angle
     ld de,45
     or a
@@ -1312,6 +1329,7 @@ w3d_use_adjacent_door:
     ret c
     cp W3D_TILE_DOOR_MAX+1
     ret nc
+@resolve_door_tile:
     and W3D_TILE_DOOR_MASK
     cp W3D_FIXTURE_DOOR_COUNT
     ret nc

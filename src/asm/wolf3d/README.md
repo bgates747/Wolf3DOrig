@@ -32,7 +32,8 @@ Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
     uploads the real tilemap, initializes every door and static, then runs a
     callback-gated 30 Hz
     control/render loop. W/S move, A/D strafe, the arrow keys turn, Space
-    operates an adjacent door, and Escape exits. Player collision and
+    operates the containing door well or the adjacent facing door, and Escape
+    exits. Player collision and
     eZ80-authoritative moving doors, original blocking decorations, persistent
     pickups, and live HUD fields are active; actors and the wider game loop
     remain future work. See "Interactive render fixture" below.
@@ -102,7 +103,9 @@ therefore cannot vary with VDP or rendering cadence. Refused full-health or
 full-ammo pickups remain active; consumed objects use the original
 `shapenum=-1` sentinel and only that static slot plus changed HUD fields cross
 the wire.
-Space is rising-edge-triggered and operates the one adjacent cardinal door.
+Space is rising-edge-triggered. A valid door cell containing the player takes
+priority, keeping the control usable from either recessed well; otherwise the
+original one-adjacent-cardinal-tile lookup and angle boundaries apply.
 The eZ80 owns door action, 0.16 position, auto-close timing, and player
 obstruction; only dirty door/player snapshots are sent before a render. The
 client never allows more than one VDP render in flight.
