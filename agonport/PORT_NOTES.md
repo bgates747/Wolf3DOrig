@@ -155,5 +155,12 @@ effectively owned by active Pingo work right now):
   clone (shares `.git` objects/remotes, independent working directory and
   branch) rather than a full second clone -- same pattern already used for
   `agon-vdp-pingo-v216-userspace`.
+- Directory layout: own subdirectory `video/wolf3d/`, mirroring `video/
+  pingo/`'s "own subdirectory, own docs" pattern (devlog items 4, 13).
+  Dispatch will follow Pingo's single-top-level-opcode shape exactly --
+  one `#define BUFFERED_WOLF3D ... 0x4A` in `agon.h` (candidate opcode,
+  devlog item 23) plus one new `case` in `vdu_buffered.h`'s existing
+  switch, no other changes to core dispatch. Scaffolded (empty dir +
+  `README.md` placeholder only, no code yet) in `agon-vdp-wolf3d`.
 
 
