@@ -85,6 +85,10 @@ def main() -> None:
         "wolf3d.bin": PROJECT_ROOT / "src/asm/wolf3d/tgt/wolf3d.bin",
         "tiles.agnb": PROJECT_ROOT
         / "agonport/assets/generated/wolf3d/levels/level_00/tiles.agnb",
+        "sprites.agnb": PROJECT_ROOT
+        / "agonport/assets/generated/wolf3d/levels/level_00/sprites.agnb",
+        "hud.agnb": PROJECT_ROOT
+        / "agonport/assets/generated/wolf3d/hud/hud.agnb",
     }
     for source in sources.values():
         if not source.is_file() or source.stat().st_size == 0:

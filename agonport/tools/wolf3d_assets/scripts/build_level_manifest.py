@@ -16,7 +16,7 @@ src/toolchain/cli/extract.py, grounded there against WL_GAME.C/WL_DEF.H).
 lock_type 0 -> "normal", 1-4 -> "locked", 5 -> "elevator"; the door "jamb"
 (frame) texture is always needed once any door tile appears in the level.
 
-Plane1 (statics/actors): static item codes (23-74) map 1:1 to a real
+Plane1 (statics/actors): the 49 non-SPEAR static item codes (23-71) map 1:1 to a real
 shapenum via spritenames.STATIC_SHAPENUMS (exact, no ambiguity -- statics
 don't animate). Enemy/boss/ghost codes identify a creature KIND exactly
 (reusing the same tile-range logic as the sibling project's
@@ -48,7 +48,8 @@ DOOR_LOCK_KIND = {0: "normal", 1: "locked", 2: "locked", 3: "locked", 4: "locked
 # textureId assignment, must match scripts/export_vswap_art.py exactly.
 DOOR_KIND_TEXTURE_ID = {"normal": 121, "jamb": 122, "elevator": 123, "locked": 124}
 
-STATIC_MIN, STATIC_MAX = 23, 74
+STATIC_MIN = 23
+STATIC_MAX = STATIC_MIN + len(spritenames.STATIC_SHAPENUMS) - 1
 DEAD_GUARD_TILE = 124  # plane1 code (unrelated to the door textureId 124 above)
 GHOST_MIN, GHOST_MAX = 224, 227
 ENEMY_KINDS = [("GRD", 108, 112), ("OFC", 116, 120), ("SS", 126, 130), ("DOG", 134, 138)]
@@ -94,7 +95,7 @@ def scope_level(plane0: list[list[int]], plane1: list[list[int]], max_shapenum: 
 
     for row in plane1:
         for value in row:
-            if STATIC_MIN <= value <= STATIC_MIN + len(spritenames.STATIC_SHAPENUMS) - 1:
+            if STATIC_MIN <= value <= STATIC_MAX:
                 sprite_shapenums.add(spritenames.STATIC_SHAPENUMS[value - STATIC_MIN])
             elif value == DEAD_GUARD_TILE:
                 sprite_shapenums.add(spritenames.SPR_GRD_DEAD)

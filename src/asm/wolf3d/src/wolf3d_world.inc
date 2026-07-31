@@ -8,6 +8,7 @@ W3D_MAP_SIZE:               equ 64
 W3D_MAP_BYTES:              equ W3D_MAP_SIZE*W3D_MAP_SIZE
 W3D_MAX_ACTORS:             equ 150
 W3D_MAX_DOORS:              equ 64
+W3D_MAX_STATICS:            equ 400
 
 W3D_TILE_OPEN:              equ 0x00
 W3D_TILE_WALL_MIN:          equ 0x01
@@ -45,6 +46,43 @@ W3D_DOOR_ACTION:            equ 4       ; uint8
 W3D_DOOR_POSITION:          equ 5       ; uint16 unsigned 0.16
 W3D_DOOR_TEXTURE_ID:        equ 7       ; uint8 wall-buffer texture id
 W3D_DOOR_SIZE:              equ 8
+
+; Compact eZ80-owned statobj record.  This preserves the mutable fields from
+; the original statobj_t while omitting its render-visibility pointer (the VDP
+; owns visibility).  The first five bytes are exactly the set_static wire
+; payload after its uint16 slot index; itemnumber remains local gameplay state.
+W3D_STATIC_TILEX:           equ 0       ; uint8
+W3D_STATIC_TILEY:           equ 1       ; uint8
+W3D_STATIC_SHAPENUM:        equ 2       ; int16; -1 means removed
+W3D_STATIC_FLAGS:           equ 4       ; uint8; original FL_* bits
+W3D_STATIC_ITEMNUMBER:      equ 5       ; uint8; original stat_t value
+W3D_STATIC_WIRE_SIZE:       equ 5
+W3D_STATIC_SIZE:            equ 6
+
+W3D_STATIC_FLAG_BONUS:     equ 2       ; original FL_BONUS
+
+; Original non-SPEAR stat_t values used by pickup dispatch.  Dressing and
+; block records are never collectible; blocking itself lives in a separate
+; immutable 64x64 occupancy bitset because both have wire flags == 0.
+W3D_ITEM_DRESSING:          equ 0
+W3D_ITEM_BLOCK:             equ 1
+W3D_ITEM_GIBS:              equ 2
+W3D_ITEM_ALPO:              equ 3
+W3D_ITEM_FIRSTAID:          equ 4
+W3D_ITEM_KEY1:              equ 5
+W3D_ITEM_KEY2:              equ 6
+W3D_ITEM_KEY3:              equ 7
+W3D_ITEM_KEY4:              equ 8
+W3D_ITEM_CROSS:             equ 9
+W3D_ITEM_CHALICE:           equ 10
+W3D_ITEM_BIBLE:             equ 11
+W3D_ITEM_CROWN:             equ 12
+W3D_ITEM_CLIP:              equ 13
+W3D_ITEM_CLIP2:             equ 14
+W3D_ITEM_MACHINEGUN:        equ 15
+W3D_ITEM_CHAINGUN:          equ 16
+W3D_ITEM_FOOD:              equ 17
+W3D_ITEM_FULLHEAL:          equ 18
 
 ; Minimal stable actor view required by CheckLine/CheckSight. This is named
 ; explicitly as a sight view rather than prematurely freezing the eventual
