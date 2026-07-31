@@ -62,3 +62,33 @@ load entirely into RAM up front on any platform, Agon included.
 **Resolution:** informational only, no code changes this round. Feeds
 into future Agon-side VSWAP loader design once porting work actually
 starts.
+
+---
+
+## 2026-07-30: Extracted texture and sprite sheets for Agon conversion
+
+**Q: can the environment textures and sprite bitmaps be unpacked as PNGs?**
+
+Yes. Running `PYTHONPATH=src .venv/bin/python -m toolchain.cli.extract`
+regenerates these gitignored reference images from `orig/data/VSWAP.WL1`:
+
+1. `build/extracted/wall_textures.png` -- all 106 wall/door texture chunks.
+2. `build/extracted/sprite_textures.png` -- all 436 sprite chunks, decoded
+	as 64x64 images with transparent backgrounds and arranged as a sheet.
+3. `build/extracted/tiled/plane1_tileset.png` -- the Tiled authoring sheet,
+	using real sprite art where mapped and labeled placeholders otherwise.
+
+The first two sheets are the useful source artifacts for an Agon asset
+conversion pipeline. The plane1 sheet is primarily an editor visualization,
+not the canonical sprite source.
+
+**Agon follow-up:** test these decoded images for conversion to Agon's
+64-color palette. Evaluate wall/door readability, sprite silhouettes,
+transparent-background handling, and whether a single fixed palette mapping
+is adequate or palette-aware dithering/remapping is needed. Keep the original
+Wolf3D palette-index data available until that test is resolved; converting
+through RGB PNG alone may discard information useful to a better mapper.
+
+**Resolution:** PNG extraction is implemented and verified. Agon 64-color
+palette conversion quality and the final conversion method are deferred for
+an explicit visual test.
