@@ -110,7 +110,7 @@ vdu_buff_select:
     ret
 @cmd:       db 23,27,$20
 @bufferId:  dw 0
-@end:
+@end:       db 0 ; ADL padding for the third byte stored by LD (nn),HL
 
 ; Create a bitmap from the selected buffer: A=format, BC=width, DE=height.
 vdu_bmp_create:
@@ -143,4 +143,5 @@ vdu_buffer_to_sound:
 @bufferId:   dw 0
 @format:     db 0
 @sampleRate: dw 0
-@end:
+; Native ADL stores three bytes from DE. This excluded byte absorbs DEU.
+@end:        db 0
