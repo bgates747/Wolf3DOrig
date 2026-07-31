@@ -193,5 +193,14 @@ classes, etc.), as is vdp-gl. Writing new code in C would be an
 immediate, visible departure from house style and undermine the
 convention-fit bar (devlog item 19) that upstreamability depends on.
 
+Subcommand numbering: reserving subcommand `41` under `BUFFERED_WOLF3D`
+(`0x4A`) for the render-done callback, mirroring Pingo's own subcommand
+`41` under `BUFFERED_PINGO_3D` (`0x49`) for the same purpose (confirmed
+against `moveair-local`'s `render-async.inc` -- enable/disable via
+`db 49h,41,<0|1>` plus a token, delivered through the MOS keyboard-vector
+callback path). Parity between the two extensions for a shared job, and
+keeps both aligned if a generic "async operation complete" callback
+(devlog item 25) eventually replaces both.
+
 
 
