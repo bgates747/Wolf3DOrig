@@ -9,7 +9,7 @@ containing the exact precomputed VDU byte stream needed to drive it end to
 end: the raw 64x64 tilemap buffer, mutable door/static/actor seeds, eZ80-only
 area/path/occupancy metadata, and the wire-format `init_level` / `set_door` /
 `set_static` / `set_actor` / `set_player_pose` / `render_frame` command
-sequence, per the
+sequence, including the original pistol-ready first-person shape, per the
 settled contract in agonport/doc/handoff_ez80_ai_raycaster.md. All doors are
 emitted closed (action=0, position=0x0000) and all real plane-1 static objects
 are emitted in row-major order -- the level's actual state at first spawn,
@@ -57,6 +57,9 @@ SUB_SET_DOOR = 3
 SUB_SET_ACTOR = 4
 SUB_SET_STATIC = 6
 SUB_RENDER_FRAME = 7
+SUB_SET_VIEW_WEAPON = 8
+
+INITIAL_VIEW_WEAPON_SHAPE = 421  # SPR_PISTOLREADY
 
 W3D_TILE_DOOR_FLAG = 0x80
 TILE_GLOBAL = 1 << 16
@@ -306,6 +309,7 @@ def build_command_stream(
         out += le16(actor.facing_degrees) + bytes((actor.rotations,))
 
     out += header(SUB_SET_PLAYER_POSE) + le32(player_x) + le32(player_y) + le16(player_angle)
+    out += header(SUB_SET_VIEW_WEAPON) + lei16(INITIAL_VIEW_WEAPON_SHAPE)
     out += header(SUB_RENDER_FRAME)
     return bytes(out)
 

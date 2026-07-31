@@ -83,7 +83,7 @@ def load_manifest_view(path: Path, kind: str) -> list[ManifestView]:
         entries.append(
             ManifestView(
                 value["name"], value["source"], "hud",
-                value["chunkId"] if value["chunkId"] is not None else "panel",
+                value["chunkId"],
                 value["bufferId"],
             )
         )

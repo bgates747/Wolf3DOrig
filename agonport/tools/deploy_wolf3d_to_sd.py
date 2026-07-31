@@ -14,12 +14,9 @@ import subprocess
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_MOUNT = Path("/media/smith/AGON")
 APP_DIRECTORY = "wolf3dorig"
-AUTOEXEC = (
-    b"SET KEYBOARD 1\r\n"
-    b"cd /wolf3dorig\r\n"
-    b"load wolf3d.bin\r\n"
-    b"# run\r\n"
-)
+AUTOEXEC_KEYBOARD = "SET KEYBOARD 1"
+AUTOEXEC_DIRECTORY = "cd /wolf3dorig"
+AUTOEXEC_LOAD = "load wolf3d.bin"
 
 
 def sha256(path: Path) -> str:
@@ -62,15 +59,37 @@ def replace_file(source: Path, destination: Path) -> None:
             temporary.unlink()
 
 
+def build_autoexec(existing: bytes, *, run: bool) -> bytes:
+    """Comment every old directive and select only this application."""
+
+    retained: list[str] = []
+    for raw_line in existing.decode("ascii").replace("\r\n", "\n").split("\n"):
+        line = raw_line.strip()
+        if not line or line.upper() == AUTOEXEC_KEYBOARD:
+            continue
+        retained.append(line if line.startswith("#") else f"# {line}")
+
+    selected = [AUTOEXEC_KEYBOARD, *retained, AUTOEXEC_DIRECTORY, AUTOEXEC_LOAD]
+    selected.append("run" if run else "# run")
+    return ("\r\n".join(selected) + "\r\n").encode("ascii")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--mount", type=Path, default=DEFAULT_MOUNT)
     parser.add_argument(
         "--write-autoexec",
         action="store_true",
-        help="select Wolf3DOrig at boot, loading but not automatically running it",
+        help="select Wolf3DOrig in autoexec.txt (load-only unless --run is set)",
+    )
+    parser.add_argument(
+        "--run",
+        action="store_true",
+        help="with --write-autoexec, automatically run Wolf3DOrig at boot",
     )
     args = parser.parse_args()
+    if args.run and not args.write_autoexec:
+        parser.error("--run requires --write-autoexec")
 
     mount = args.mount.resolve(strict=True)
     if not mount.is_dir() or not os.path.ismount(mount):
@@ -108,13 +127,16 @@ def main() -> None:
 
     if args.write_autoexec:
         autoexec_source = destination / ".autoexec.deploying"
-        autoexec_source.write_bytes(AUTOEXEC)
+        autoexec_target = mount / "autoexec.txt"
+        existing_autoexec = autoexec_target.read_bytes() if autoexec_target.exists() else b""
+        autoexec_source.write_bytes(build_autoexec(existing_autoexec, run=args.run))
         try:
-            replace_file(autoexec_source, mount / "autoexec.txt")
+            replace_file(autoexec_source, autoexec_target)
         finally:
             if autoexec_source.exists():
                 autoexec_source.unlink()
-        print("Updated autoexec.txt to load /wolf3dorig/wolf3d.bin without running it")
+        action = "run" if args.run else "load"
+        print(f"Updated autoexec.txt to {action} /wolf3dorig/wolf3d.bin at boot")
 
     os.sync()
     print(f"Deployment synced to {source_device} ({fstype}, label {label})")

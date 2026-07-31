@@ -37,6 +37,11 @@ W3D_DIR_NODIR:              equ 8
 
 W3D_SLOT_NONE:              equ 0ffh
 
+; The compact control byte lives in wolf3d_motion.inc.  Its final bit is
+; reserved here because the player-combat include is deliberately independent
+; of the input implementation: the current client maps Space to it.
+W3D_CONTROL_ATTACK:         equ 080h
+
 ; Original objtype flag values. Render visibility remains VDP-owned, but the
 ; bit positions stay source-compatible for gameplay/state transitions.
 W3D_ACTOR_FLAG_SHOOTABLE:    equ 001h
@@ -273,7 +278,39 @@ W3D_STATE_SS_SHOOT6:        equ 97
 W3D_STATE_SS_SHOOT7:        equ 98
 W3D_STATE_SS_SHOOT8:        equ 99
 W3D_STATE_SS_SHOOT9:        equ 100
-W3D_STATE_COUNT:            equ 101
+; Ordinary player-inflicted pain/death chains.  The map ABI's stable dead
+; guard id remains 10, so the guard death chain rejoins that existing latch.
+; The complete ordinary graph remains safely below the uint8 NEXT limit.
+W3D_STATE_GRD_PAIN:         equ 101
+W3D_STATE_GRD_PAIN1:        equ 102
+W3D_STATE_GRD_DIE1:         equ 103
+W3D_STATE_GRD_DIE2:         equ 104
+W3D_STATE_GRD_DIE3:         equ 105
+W3D_STATE_DOG_DIE1:         equ 106
+W3D_STATE_DOG_DIE2:         equ 107
+W3D_STATE_DOG_DIE3:         equ 108
+W3D_STATE_DOG_DEAD:         equ 109
+W3D_STATE_OFC_PAIN:         equ 110
+W3D_STATE_OFC_PAIN1:        equ 111
+W3D_STATE_OFC_DIE1:         equ 112
+W3D_STATE_OFC_DIE2:         equ 113
+W3D_STATE_OFC_DIE3:         equ 114
+W3D_STATE_OFC_DIE4:         equ 115
+W3D_STATE_OFC_DEAD:         equ 116
+W3D_STATE_MUT_PAIN:         equ 117
+W3D_STATE_MUT_PAIN1:        equ 118
+W3D_STATE_MUT_DIE1:         equ 119
+W3D_STATE_MUT_DIE2:         equ 120
+W3D_STATE_MUT_DIE3:         equ 121
+W3D_STATE_MUT_DIE4:         equ 122
+W3D_STATE_MUT_DEAD:         equ 123
+W3D_STATE_SS_PAIN:          equ 124
+W3D_STATE_SS_PAIN1:         equ 125
+W3D_STATE_SS_DIE1:          equ 126
+W3D_STATE_SS_DIE2:          equ 127
+W3D_STATE_SS_DIE3:          equ 128
+W3D_STATE_SS_DEAD:          equ 129
+W3D_STATE_COUNT:            equ 130
 
 W3D_STATE_THINK_NONE:       equ 0
 W3D_STATE_THINK_PATH:       equ 1
@@ -283,6 +320,13 @@ W3D_STATE_THINK_DOG_CHASE:  equ 4
 W3D_STATE_ACTION_NONE:      equ 0
 W3D_STATE_ACTION_SHOOT:     equ 1
 W3D_STATE_ACTION_BITE:      equ 2
+W3D_STATE_ACTION_DEATH_SCREAM: equ 3
+
+; Public DamageActor result values returned by w3d_damage_actor.
+W3D_DAMAGE_RESULT_PAIN:     equ 0
+W3D_DAMAGE_RESULT_KILLED:   equ 1
+W3D_DAMAGE_RESULT_REJECTED: equ 2
+W3D_DAMAGE_RESULT_CORRUPT:  equ 0ffh
 
 ; Chase movement exposes attack transitions as small return values; the state
 ; runner consumes them immediately by installing the class-specific shooting

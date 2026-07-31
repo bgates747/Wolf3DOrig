@@ -17,6 +17,7 @@ from scripts.gen_render_fixture import (
     SUB_RENDER_FRAME,
     SUB_SET_ACTOR,
     SUB_SET_PLAYER_POSE,
+    SUB_SET_VIEW_WEAPON,
     W3D_ACTOR_SIZE,
     build_actors,
     build_area_map,
@@ -210,8 +211,11 @@ class ActorWireAndRuntimeTests(unittest.TestCase):
         )
         self.assertEqual(stream[actor_offset + 7:actor_offset + 22], expected_payload)
         player_offset = actor_offset + 22
-        render_offset = player_offset + 17
+        weapon_offset = player_offset + 17
+        render_offset = weapon_offset + 9
         self.assertEqual(stream[player_offset:player_offset + 7], prefix + bytes((SUB_SET_PLAYER_POSE,)))
+        self.assertEqual(stream[weapon_offset:weapon_offset + 7], prefix + bytes((SUB_SET_VIEW_WEAPON,)))
+        self.assertEqual(struct.unpack_from("<h", stream, weapon_offset + 7)[0], 421)
         self.assertEqual(stream[render_offset:render_offset + 7], prefix + bytes((SUB_RENDER_FRAME,)))
         self.assertEqual(len(stream), render_offset + 7)
 
@@ -256,6 +260,7 @@ class ActorWireAndRuntimeTests(unittest.TestCase):
             constants[label] = int(value.split("equ", 1)[1].split()[0])
         for state in actorinfo.ActorState:
             self.assertEqual(constants[f"W3D_STATE_{state.name}"], int(state))
+        self.assertEqual(constants["W3D_STATE_COUNT"], max(actorinfo.ActorState) + 1)
 
     def test_zero_duration_actors_do_not_consume_random_values(self) -> None:
         plane0 = self.empty_plane()

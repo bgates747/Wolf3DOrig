@@ -40,6 +40,7 @@ timing_iterations:  equ 10000
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
+    include "wolf3d_player_combat.inc"
 
 phase_rng:              equ 1
 phase_delay:            equ 2
@@ -1401,6 +1402,14 @@ print_string:
     ld a,0
     rst.lil 18h
     pop bc
+    ret
+
+; Normal-world fixture: death presentation is deliberately inactive.
+w3d_death_fixed_step:
+    or a
+    ret
+w3d_death_promote_lethal_latch:
+    or a
     ret
 
 ; Required by wolf3d_motion.inc but not exercised here.

@@ -884,3 +884,58 @@ suite, and the full userspace VDP dispatch smoke passes. The eZ80 fixture now
 emits the real difficulty-filtered E1L1 population under this contract.
 
 ## EZ80_ACTOR_ABI_END_2026_07_31
+
+## EZ80_ORDINARY_COMBAT_PROTOCOL_BEGIN_2026_07_31
+
+This section freezes the minimal write-only presentation additions for the
+ordinary player-combat and death/restart loop. The eZ80 remains authoritative
+for controls, weapon timing, ammunition, target selection, RNG, actor hit
+points/pain/death, scoring, drops, lives, death phases, and level reseeding.
+The VDP receives only durable render state.
+
+Two previously unused `BUFFERED_WOLF3D` subcommands are assigned:
+
+```text
+8  set_view_weapon  shapenum:int16 little-endian
+9  fizzle_to_red    token:uint16 little-endian
+```
+
+`set_view_weapon` persists one first-person VSWAP shape. Legal ordinary
+combat values are 416..435; `-1` suppresses the overlay during death. The VDP
+draws it after world sprites and before the HUD, centered in the current
+viewport and uniformly scaled to `viewheight+1`. The existing HUD weapon icon
+(subcommand 13) is independent and still receives the weapon enum 0..3.
+
+`fizzle_to_red` is accepted only when the eZ80 has no render in flight. It
+owns presentation until complete, applies the original deterministic
+`ID_VH.C::FizzleFade` LFSR order to the strict gameplay viewport bounds, uses
+the original palette-index-4 red, and mirrors cumulative pixels into both
+mode-8 double buffers. The HUD and surrounding play border are untouched.
+Ordinary death is nonabortable; the eZ80 owns the release-before-press hold
+that follows.
+
+Subcommand 41 retains its enable/disable/token registration shape. Its
+ten-byte `W3DR` packet is generalized only at the existing status/event byte:
+
+```text
+bytes 0..3   "W3DR"
+byte  4      version = 1
+byte  5      event: 1=render complete, 2=fizzle complete
+bytes 6..7   token:uint16
+bytes 8..9   sequence:uint16
+```
+
+Event 1 keeps the registered render token and monotonically increasing render
+sequence. Event 2 echoes the token carried by subcommand 9 and uses a separate
+presentation sequence; it must not advance or perturb the render sequence.
+The eZ80 routes the two events to separate mailboxes. It presents event 1 with
+`C3`; event 2 never triggers `C3` because the VDP has already maintained and
+presented both fizzle surfaces. No render or ordinary state command may be
+submitted while a fizzle token is outstanding.
+
+No actor hit points, damage, target feedback, per-pixel traffic, or sound
+state crosses this interface. Existing subcommands 4/5/6 carry actor death
+shapes and runtime drops without revision. Resident sprite containers must
+include player shapes 416..435 in every level.
+
+## EZ80_ORDINARY_COMBAT_PROTOCOL_END_2026_07_31

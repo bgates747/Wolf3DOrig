@@ -28,6 +28,7 @@ fa_create_always:   equ 0x08
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
+    include "wolf3d_player_combat.inc"
 
 case_initial:           equ 1
 case_real_e1l1:         equ 2
@@ -1265,6 +1266,14 @@ print_string:
     ld a,0
     rst.lil 18h
     pop bc
+    ret
+
+; Normal-world fixture: death presentation is deliberately inactive.
+w3d_death_fixed_step:
+    or a
+    ret
+w3d_death_promote_lethal_latch:
+    or a
     ret
 
 ; Required by the interactive motion include, not exercised here.

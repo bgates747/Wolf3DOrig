@@ -57,6 +57,7 @@ timing_iterations:  equ 10000
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
+    include "wolf3d_player_combat.inc"
 
 phase_states:       equ 1
 phase_entry:        equ 2
@@ -135,12 +136,12 @@ test_state_table:
     ld a,1
     ld (test_detail),a
     ld a,W3D_STATE_COUNT
-    CHECK_A 101,reason_scalar
+    CHECK_A 130,reason_scalar
     ld hl,w3d_actor_states_end-w3d_actor_states
     ld a,l
-    CHECK_A 028h,reason_scalar
+    CHECK_A 010h,reason_scalar
     ld a,h
-    CHECK_A 3,reason_scalar
+    CHECK_A 4,reason_scalar
     ld ix,w3d_actor_states+616       ; 77 * 8
     ld iy,expected_attack_states
     ld de,expected_attack_states_end-expected_attack_states
@@ -666,7 +667,7 @@ test_containment_scheduler:
     ld a,1
     ld (test_detail),a
     call prepare_guard
-    ld a,3
+    ld a,4
     call w3d_actor_dispatch_action
     ld a,0
     adc a,0
@@ -1297,6 +1298,14 @@ print_string:
     ld a,0
     rst.lil 18h
     pop bc
+    ret
+
+; Normal-world fixture: death presentation is deliberately inactive.
+w3d_death_fixed_step:
+    or a
+    ret
+w3d_death_promote_lethal_latch:
+    or a
     ret
 
 ; Required by wolf3d_motion.inc but not exercised by this fixture.

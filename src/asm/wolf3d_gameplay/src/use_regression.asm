@@ -2,7 +2,7 @@
 ;
 ; The center-plane collision model permits the player's center to enter a
 ; door cell.  These cases call the real w3d_use_adjacent_door and
-; w3d_handle_use_edge routines and prove that Space continues to resolve that
+; w3d_handle_use_edge routines and prove that Up Arrow continues to resolve that
 ; current-cell door before falling back to the original cardinal neighbour.
 
     assume adl=1
@@ -29,6 +29,7 @@ fa_create_always:   equ 0x08
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
+    include "wolf3d_player_combat.inc"
 
 use_case_count:     equ 13
 
@@ -596,6 +597,14 @@ print_string:
     ld a,0
     rst.lil 18h
     pop bc
+    ret
+
+; Normal-world fixture: death presentation is deliberately inactive.
+w3d_death_fixed_step:
+    or a
+    ret
+w3d_death_promote_lethal_latch:
+    or a
     ret
 
 ; Required by the included interactive module but not exercised here.

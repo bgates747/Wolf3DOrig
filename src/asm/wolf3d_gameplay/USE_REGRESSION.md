@@ -36,10 +36,10 @@ The thirteen assembly-resident cases cover:
 11. Operating a door already opening is ignored without dirty state or timer
     mutation.
 12. Operating a fully open, unobstructed adjacent door starts it closing.
-13. The held Space state causes exactly one operation per rising edge: after
+13. The held Up-Arrow state causes exactly one operation per rising edge: after
     the first operation the harness deliberately resets the door and dirty
     state behind the still-set latch, proves a second held sample does
-    nothing, releases Space, and proves the next press operates it again.
+    nothing, releases Up Arrow, and proves the next press operates it again.
 
 Every case checks the selected door index, exact action, targeted dirty byte,
 sum of the complete 22-byte dirty array, world-dirty state, and both door

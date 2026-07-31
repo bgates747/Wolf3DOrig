@@ -65,6 +65,7 @@ timing_iterations:  equ 10000
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
+    include "wolf3d_player_combat.inc"
 
 phase_chase_select:     equ 1
 phase_dodge_select:     equ 2
@@ -808,9 +809,9 @@ test_state_table_and_scheduler:
     CHECK_A 76,reason_scalar
     ld hl,w3d_actor_states_end-w3d_actor_states
     ld a,l
-    CHECK_A 028h,reason_scalar          ; 101 * 8 = 0x0328
+    CHECK_A 010h,reason_scalar          ; 130 * 8 = 0x0410
     ld a,h
-    CHECK_A 3,reason_scalar
+    CHECK_A 4,reason_scalar
 
     ld ix,w3d_actor_states+376         ; 47 * 8, literal avoids precedence
     ld iy,expected_chase_states
@@ -1442,6 +1443,14 @@ print_string:
     ld a,0
     rst.lil 18h
     pop bc
+    ret
+
+; Normal-world fixture: death presentation is deliberately inactive.
+w3d_death_fixed_step:
+    or a
+    ret
+w3d_death_promote_lethal_latch:
+    or a
     ret
 
 ; Required by wolf3d_motion.inc but not exercised by this mailbox fixture.

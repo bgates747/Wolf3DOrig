@@ -449,6 +449,131 @@ w3d_actor_states:
     db 0
     dw 10
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE1
+
+; Original ordinary-enemy pain and death animations.  Pain records use the
+; source's rotate=2 rule.  A_DeathScream is an end action on the first death
+; frame; its port-side dispatcher publishes a sound event without making
+; audio part of authoritative actor state.
+    dw 90              ; 101 s_grdpain / SPR_GRD_PAIN_1
+    db 2
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE1
+    dw 94              ; 102 s_grdpain1 / SPR_GRD_PAIN_2
+    db 2
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE1
+    dw 91              ; 103 s_grddie1 / SPR_GRD_DIE_1
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_GRD_DIE2
+    dw 92              ; 104 s_grddie2 / SPR_GRD_DIE_2
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_DIE3
+    dw 93              ; 105 s_grddie3 / SPR_GRD_DIE_3
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_DEAD
+
+    dw 131             ; 106 s_dogdie1 / SPR_DOG_DIE_1
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_DOG_DIE2
+    dw 132             ; 107 s_dogdie2 / SPR_DOG_DIE_2
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_DIE3
+    dw 133             ; 108 s_dogdie3 / SPR_DOG_DIE_3
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_DEAD
+    dw 134             ; 109 s_dogdead / SPR_DOG_DEAD
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_DEAD
+
+    dw 278             ; 110 s_ofcpain / SPR_OFC_PAIN_1
+    db 2
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE1
+    dw 282             ; 111 s_ofcpain1 / SPR_OFC_PAIN_2
+    db 2
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE1
+    dw 279             ; 112 s_ofcdie1 / SPR_OFC_DIE_1
+    db 0
+    dw 11
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_OFC_DIE2
+    dw 280             ; 113 s_ofcdie2 / SPR_OFC_DIE_2
+    db 0
+    dw 11
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_DIE3
+    dw 281             ; 114 s_ofcdie3 / SPR_OFC_DIE_3
+    db 0
+    dw 11
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_DIE4
+    dw 283             ; 115 s_ofcdie4 / SPR_OFC_DIE_4
+    db 0
+    dw 11
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_DEAD
+    dw 284             ; 116 s_ofcdie5 / SPR_OFC_DEAD
+    db 0
+    dw 0
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_DEAD
+
+    dw 227             ; 117 s_mutpain / SPR_MUT_PAIN_1
+    db 2
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE1
+    dw 231             ; 118 s_mutpain1 / SPR_MUT_PAIN_2
+    db 2
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE1
+    dw 228             ; 119 s_mutdie1 / SPR_MUT_DIE_1
+    db 0
+    dw 7
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_MUT_DIE2
+    dw 229             ; 120 s_mutdie2 / SPR_MUT_DIE_2
+    db 0
+    dw 7
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_DIE3
+    dw 230             ; 121 s_mutdie3 / SPR_MUT_DIE_3
+    db 0
+    dw 7
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_DIE4
+    dw 232             ; 122 s_mutdie4 / SPR_MUT_DIE_4
+    db 0
+    dw 7
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_DEAD
+    dw 233             ; 123 s_mutdie5 / SPR_MUT_DEAD
+    db 0
+    dw 0
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_DEAD
+
+    dw 178             ; 124 s_sspain / SPR_SS_PAIN_1
+    db 2
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE1
+    dw 182             ; 125 s_sspain1 / SPR_SS_PAIN_2
+    db 2
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE1
+    dw 179             ; 126 s_ssdie1 / SPR_SS_DIE_1
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_SS_DIE2
+    dw 180             ; 127 s_ssdie2 / SPR_SS_DIE_2
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_DIE3
+    dw 181             ; 128 s_ssdie3 / SPR_SS_DIE_3
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_DEAD
+    dw 183             ; 129 s_ssdie4 / SPR_SS_DEAD
+    db 0
+    dw 0
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_DEAD
 w3d_actor_states_end:
 
 ; ---------------------------------------------------------------------------

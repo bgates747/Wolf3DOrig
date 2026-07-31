@@ -843,7 +843,8 @@ class GeneratorAndWireTests(unittest.TestCase):
     def test_initial_wire_stream_exactly_matches_durable_seed_records(self) -> None:
         parsed = go.parse_command_stream(self.commands)
         self.assertEqual(parsed[0][0], go.SUB_INIT_LEVEL)
-        self.assertEqual(parsed[-2][0], go.SUB_SET_PLAYER_POSE)
+        self.assertEqual(parsed[-3][0], go.SUB_SET_PLAYER_POSE)
+        self.assertEqual(parsed[-2], (go.SUB_SET_VIEW_WEAPON, struct.pack("<h", 421)))
         self.assertEqual(parsed[-1][0], go.SUB_RENDER_FRAME)
         door_bodies = [body for subcommand, body in parsed if subcommand == go.SUB_SET_DOOR]
         self.assertEqual(len(door_bodies), self.door_count)
@@ -884,7 +885,7 @@ class GeneratorAndWireTests(unittest.TestCase):
         parsed = go.parse_command_stream(self.commands)
         expected_length = (
             9 + self.door_count * 16 + self.static_count * 14
-            + self.actor_count * 22 + 17 + 7
+            + self.actor_count * 22 + 17 + 9 + 7
         )
         self.assertEqual(len(self.commands), expected_length)
         self.assertEqual(
@@ -893,7 +894,7 @@ class GeneratorAndWireTests(unittest.TestCase):
             + [go.SUB_SET_DOOR] * self.door_count
             + [go.SUB_SET_STATIC] * self.static_count
             + [go.SUB_SET_ACTOR] * self.actor_count
-            + [go.SUB_SET_PLAYER_POSE, go.SUB_RENDER_FRAME],
+            + [go.SUB_SET_PLAYER_POSE, go.SUB_SET_VIEW_WEAPON, go.SUB_RENDER_FRAME],
         )
 
     def test_generator_command_is_independently_decodable(self) -> None:
@@ -916,7 +917,8 @@ class GeneratorAndWireTests(unittest.TestCase):
             parsed[3],
             (go.SUB_SET_PLAYER_POSE, go.PLAYER_POSE.pack(go.fixed(8), go.fixed(10), 315)),
         )
-        self.assertEqual(parsed[4], (go.SUB_RENDER_FRAME, b""))
+        self.assertEqual(parsed[4], (go.SUB_SET_VIEW_WEAPON, struct.pack("<h", 421)))
+        self.assertEqual(parsed[5], (go.SUB_RENDER_FRAME, b""))
 
     def test_generator_door_classification_and_row_major_map(self) -> None:
         generator = load_generator()

@@ -5,8 +5,8 @@ This staged addition is intended to be copied into
 
 - `formats/vgagraph.py` — strict VGAHEAD/VGADICT/VGAGRAPH picture decoder;
 - `formats/hud.py` — stable original-chunk names, dimensions, and buffer IDs;
-- `scripts/build_hud_assets.py` — extraction, Agon64 conversion, 320x80 panel
-  composition, manifest/include generation, and AGNB packing;
+- `scripts/build_hud_assets.py` — extraction, Agon64 conversion,
+  manifest/include generation, and AGNB packing;
 - `tests/test_vgagraph.py` and `tests/test_hud_contract.py` — focused decoder
   and real-data/container checks.
 
@@ -19,27 +19,18 @@ The script reuses the already-vendored `formats/palette.py`,
 - Original chunk 98 (`STATUSBARPIC`): `0x4062`.
 - Original chunks 103 through 144: `0x4000 + chunkId`, hence
   `0x4067` through `0x4090`.
-- Composed 320x80 mode-8 `status_panel`: `0x40F0`.
 
-The composed panel contains chunk 98 exactly in rows 0–39. Rows 40–79 are a
-neutral full-width material band in the same blue/cyan/bevel visual language,
-without copying the original labels or readout slots. The build asserts that the
-panel's converted RGBA2222 top half is byte-identical to the separately
-packed chunk 98.
+The generated container has exactly these 43 original chunks. Chunk 98 remains
+the archive's original 320x40 image; the build does not synthesize, override,
+or pack an extended status panel.
 
 ## Screen composition assumed by this milestone
 
-- The raycast viewport is 256x160, centered at screen `x=32`, `y=0`.
-- The original 320x40 `STATUSBARPIC` occupies screen rows 160–199.
-- The generated neutral extension occupies screen rows 200–239.
-- The resulting 320x80 `status_panel` is therefore plotted once at `x=0`,
-  `y=160` in Agon mode 8.
+- The raycast viewport is 256x160, centered at screen `x=32`, `y=20`.
+- The 320x200 play area supplies the surrounding border on all four sides.
+- Original chunk 98 is plotted directly at `x=0`, `y=200`, occupying the final
+  40 rows of Agon mode 8.
 - Splash/title assets are intentionally out of scope.
-
-The lower half is a **deliberate neutral fill**, not newly invented original
-Wolf3D artwork and not a claim that the original strip continued for another
-40 rows. It reuses only the source strip's established blue/cyan palette and
-horizontal bevel language so the otherwise unused mode-8 rows look cohesive.
 
 ## Build and test after copying
 

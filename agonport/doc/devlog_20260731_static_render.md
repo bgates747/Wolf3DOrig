@@ -935,3 +935,376 @@ treated as final palettized art: matching filenames bypass automatic
 quantization, retain dimensions, are encoded directly to RGBA2222, and are
 identified as overrides in the generated manifest. An isolated real-file
 override round trip passed alongside the complete 31-test asset suite.
+
+## Player-death source inventory and ownership plan
+
+This is the source-grounded inventory for the phase before player weapons:
+finish the behavior that begins when BJ's health reaches zero. No production
+implementation was started during this review.
+
+### Original WL1 execution path
+
+1. `orig/src/WOLFSRC/WL_AGENT.C`, `TakeDamage`: stores `LastAttacker`, applies
+   baby-difficulty quarter damage, saturates health at zero, sets
+   `playstate = ex_died`, captures `killerobj`, starts the red damage flash,
+   clears `gotgatgun`, and redraws health/face. This is the authoritative
+   transition into death; the current eZ80 equivalent already saturates
+   health, stores an actor-slot killer, dirties health, and latches
+   `w3d_player_dead`.
+2. `orig/src/WOLFSRC/WL_PLAY.C`, `PlayLoop`: exits its normal actor/control
+   loop when `playstate` becomes `ex_died`. Unlike other exits it deliberately
+   does not call `FinishPaletteShifts`, leaving cleanup to `Died`. Its palette
+   helpers (`StartDamageFlash`, `UpdatePaletteShifts`,
+   `FinishPaletteShifts`) define the transient red damage presentation that
+   precedes the death sequence.
+3. `orig/src/WOLFSRC/WL_GAME.C`, `Died`: removes the weapon, plays
+   `PLAYERDEATHSND`, computes the killer bearing with `atan2`, chooses the
+   shortest angular direction, and turns toward the killer at
+   `DEATHROTATE == 2` original angle units per tic while calling
+   `ThreeDRefresh` after every step. It restores the normal palette, fizzle-
+   transitions the 3-D viewport to solid palette index 4 (red) over 70 ticks,
+   accepts input or waits 100 ticks, waits for the death sound, decrements
+   lives, and—when another life remains—resets health to 100, weapon/best/
+   chosen weapon to pistol, ammo to `STARTAMMO` (8), keys and weapon animation
+   fields to zero, then redraws the affected HUD fields.
+4. `orig/src/WOLFSRC/WL_GAME.C`, `GameLoop`: dispatches `ex_died` to `Died`,
+   marks the next iteration as a death restart (skipping the preload/Get
+   Psyched presentation), and calls `SetupGameLevel` again. Before setup it
+   restores `gamestate.score = gamestate.oldscore`, so points and extra lives
+   earned during the failed attempt are rolled back to the level-entry
+   checkpoint. With no lives remaining it fades out, clears level resources,
+   checks the high score, selects the score screen, and returns to the menu.
+   The original starts at three displayed lives and decrements before testing
+   `lives > -1`, hence zero is still one final playable life.
+5. `orig/src/WOLFSRC/WL_GAME.C`, `SetupGameLevel` and `DrawPlayScreen`: rebuild
+   every mutable level object/door/occupancy structure at its original state
+   and redraw the complete play screen/HUD for the new attempt. Loaded
+   textures remain cached; this is a world-state reset, not an asset reload.
+6. `orig/src/WOLFSRC/WL_DRAW.C`, `DrawPlayerWeapon`: a weapon value of `-1`
+   suppresses the first-person weapon during the death turn and red fizzle.
+   The `SPR_DEATHCAM` branch nearby is boss victory/death-camera behavior, not
+   ordinary player death, and is out of scope for this phase.
+
+### Supporting original source needed for faithful translation
+
+- `orig/src/WOLFSRC/WL_DEF.H`: `exit_t`/`ex_died`, `gametype` fields,
+  `STARTAMMO`, `EXTRAPOINTS`, weapon enum values, and `killerobj` declarations.
+- `orig/src/WOLFSRC/WL_MAIN.C`, `NewGame`: canonical initial health, pistol,
+  ammo, three lives, score/extra-life threshold, difficulty, and episode.
+- `orig/src/WOLFSRC/ID_VH.C`, `FizzleFade`: deterministic LFSR pixel order,
+  70-frame pacing, viewport-only dimensions, and optional input-abort
+  semantics. Ordinary death passes `abortable=false`; the following
+  `IN_UserInput(100)` is the skippable/timed hold.
+- `orig/src/WOLFSRC/ID_IN.C`, `IN_StartAck`/`IN_CheckAck`/`IN_UserInput`:
+  release-before-new-press acknowledgment semantics, needed so a held combat
+  key cannot accidentally dismiss death presentation.
+- `orig/src/WOLFSRC/ID_VL.C` and `ID_VL.H`: palette fade/reset mechanics. The
+  Agon port need not reproduce VGA DAC writes, but their timing and intended
+  normal-to-red-to-black transitions define presentation behavior.
+- `orig/src/WOLFSRC/ID_SD.*` plus `AUDIOWL1.H`: `PLAYERDEATHSND` identity,
+  asynchronous playback, polling, and wait-for-completion behavior. Sound is
+  still deferred in the current port, so death logic must not block on an
+  unavailable sound producer.
+- `orig/src/WOLFSRC/WL_INTER.C` and the menu/high-score portions of
+  `WL_GAME.C`/`WL_MENU.C`: required only for the later no-lives/game-over
+  destination. They are not prerequisites for a correct remaining-life
+  respawn fixture.
+
+### Agon ownership boundary
+
+The write-only VDP must not own death or restart state. The eZ80 should own a
+small explicit death-phase machine, killer slot/bearing, timed shortest-path
+turn, input acknowledgment, lives and inventory mutation, score checkpoint,
+and complete level-state reseed. It should continue using the existing
+render-completion mailbox: submit each changed player angle only when no frame
+is in flight, while fixed simulation timing remains independent of renderer
+speed. Normal actor/door/player simulation stays frozen during presentation.
+
+The custom VDP should remain a renderer. Existing `set_player_pose` plus
+`render_frame` are sufficient for the killer-facing turn, and health zero
+already selects the dead-face HUD image. `init_level` clears VDP door/actor/
+static render records, after which the eZ80 can replay the generated initial
+world snapshot without re-uploading AGNB textures. A small new presentation
+command may be justified for a viewport-only red fizzle (or a cheaper red
+fill/fade approximation), because implementing an asynchronous per-pixel
+transition through ordinary eZ80 plot traffic would be wasteful. Any such
+command needs completion notification/token semantics so it cannot race the
+double-buffer render owner. First-person weapon suppression presently costs
+nothing because the port has not implemented the weapon overlay yet; retain
+an explicit hook for it before weapons land.
+
+### Recommended staged acceptance boundary
+
+The first slice should cover lethal damage -> stable dead-face render ->
+shortest-path camera turn toward a valid killer -> timed red transition ->
+one-life decrement -> canonical health/pistol/ammo/key reset -> complete E1L1
+world reseed at the original spawn, with score restored to its level-entry
+checkpoint and textures left resident. Regression cases need angle wrap and
+exact 180-degree tie behavior, slow-render callback gating, held-key
+suppression, killer-slot validation, lives values 3/1/0, reset of collected
+pickups/open doors/moved or alerted actors/RNG and area state, and preservation
+of persistent score checkpoint/extra-life semantics. Game-over menus,
+high-score entry, sound, general damage flashes, and exact VGA palette fades
+can follow as separate presentation/application-shell slices.
+
+## Ordinary player-combat source inventory and implementation boundary
+
+The remaining authoritative path is grounded in `WL_AGENT.C`'s
+`attackinfo`, `CheckWeaponChange`, `Cmd_Fire`, `KnifeAttack`, `GunAttack`,
+and `T_Attack`, plus `WL_STATE.C`'s `DamageActor`, `KillActor`, and
+`PlaceItemType` and the ordinary pain/death records in `WL_ACT2.C`.
+
+- The four weapon rows each use 6 original 70-Hz tics per frame. Knife and
+  pistol require release/repress; machine gun and chaingun repeat while held.
+  The exact gun/knife action-frame behavior, ammo decrement/fallback, chosen
+  and best weapon state, and deterministic RNG consumption remain eZ80 state.
+- Knife and hitscan candidates must be shootable, synchronously CPU-visible,
+  and strictly inside the original center cone. The existing CPU projection,
+  deterministic random table, and `CheckLine` provide write-only-safe
+  replacements for the original renderer-owned `FL_VISABLE`, `viewx`, and
+  `transx` fields.
+- Surviving dormant actors take doubled damage, enter attack mode, and select
+  class/parity pain frames. Ordinary deaths retain their exact original shape
+  and tic chains, award 100/400/700/500/200 points for guard/officer/mutant/
+  SS/dog, clear shootable occupancy once, increment kill count once, and leave
+  a live NONMARK corpse animation.
+- Guard, officer, and mutant deaths create a four-round clip. SS deaths create
+  a machine gun only when the player has not owned one, otherwise a clip;
+  dogs drop nothing. Runtime statics therefore use the original 400-slot
+  capacity and reuse removed pickup slots before extending the high-water
+  count.
+- Player weapon art is the final twenty VSWAP shapes: knife 416..420, pistol
+  421..425, machine gun 426..430, and chaingun 431..435. It is presentation-
+  only VDP state; every scoped level container must carry all twenty shapes.
+- The frozen minimal protocol is recorded under
+  `EZ80_ORDINARY_COMBAT_PROTOCOL_BEGIN_2026_07_31` in
+  `agonport/doc/handoff_ez80_ai_raycaster.md`: subcommand 8 persists the view
+  weapon shape, subcommand 9 starts the tokenized VDP-owned red fizzle, and
+  the existing `W3DR` event byte distinguishes render from fizzle completion.
+
+## Complete ordinary-combat implementation checklist
+
+This checklist is the durable progress ledger for completing the ordinary
+shareware combat loop. Tick an item only after its implementation and relevant
+regressions pass. The required target includes the original deterministic red
+death fizzle. Bosses, projectiles, menus/high-score entry, and level completion
+remain separate systems unless a shared primitive is required here.
+
+### Grounding and contracts
+
+- [x] Inventory the original lethal-damage, death-camera, life-loss, and
+  restart path and assign eZ80/VDP ownership.
+- [x] Inventory original player weapon, attack, actor damage/pain/death,
+  scoring, and drop paths against the current port.
+- [x] Freeze the ordinary-combat scope and wire additions in the protocol
+  handoff before changing either producer or consumer.
+- [x] Add host-side packet/layout assertions for every new command or field.
+
+### Player weapon state and controls — eZ80 authoritative
+
+- [x] Port rising-edge/held attack and weapon-selection controls without
+  allowing queued keyboard packets to create extra attacks.
+- [x] Port knife, pistol, machine-gun, and chaingun attack-frame timing and
+  ammo consumption for the weapons attainable in shareware E1L1.
+- [x] Preserve current/chosen/best weapon semantics, empty-ammo fallback, and
+  weapon pickup behavior.
+- [x] Publish original noise events at the correct attack frames so dormant
+  actors hear gunfire but not the knife.
+- [x] Keep weapon simulation fixed-step and independent of render cadence.
+
+### Player attacks and actor consequences — eZ80 authoritative
+
+- [x] Port knife range/target selection and damage RNG semantics.
+- [x] Port hitscan target selection, screen-center eligibility, line-of-sight,
+  distance-adjusted hit chance, damage RNG, and deterministic RNG consumption.
+- [x] Add actor hit points and `DamageActor` behavior, including first
+  sighting caused by damage, class-specific pain-state rules, and target
+  retention.
+- [x] Port ordinary guard/officer/mutant/SS/dog death state chains and ensure
+  dead actors stop blocking/reserving tiles at the original point.
+- [x] Apply class scores exactly once and preserve score/extra-life behavior.
+- [x] Spawn ordinary ammo/weapon drops with stable eZ80/VDP static identities,
+  collection behavior, and level-restart cleanup.
+- [x] Resolve simultaneous actor actions, player attacks, and lethal damage in
+  the original update order with an explicitly tested RNG stream.
+
+### Combat presentation — VDP render-only
+
+- [x] Add first-person weapon-frame rendering from existing sprite buffers,
+  including suppression during death presentation.
+- [x] Verify actor pain/death/drop shapes and all required weapon frames are in
+  the scoped level containers and remain within VDP memory/object budgets.
+- [x] Extend only the minimal render snapshots/commands needed for weapon and
+  combat presentation; keep hit points and state transitions off the VDP.
+- [x] Preserve complete HUD composition on both back buffers for health, ammo,
+  weapon, score, lives, keys, and dead face.
+
+### Player death, original fizzle, and respawn
+
+- [x] Add an explicit eZ80 death-phase state machine; freeze ordinary world
+  simulation while input polling, render completion, and Escape remain live.
+- [x] Rotate by the shortest path toward the validated killer at the original
+  rate, including angle wrap and the exact 180-degree tie direction.
+- [x] Add a VDP-owned asynchronous viewport-only red fizzle using the original
+  `FizzleFade` LFSR traversal/order and approximately 70 original ticks.
+- [x] Add tokenized fizzle completion and enforce double-buffer ownership so
+  fizzle/render/present operations cannot overlap incorrectly.
+- [x] Implement release-before-new-press acknowledgment and the original
+  timed-or-keypress post-fizzle hold.
+- [x] Decrement lives with the original zero-is-still-playable semantics;
+  restore health, pistol, eight rounds, no keys, and reset attack frames.
+- [x] Restore score to the level-entry checkpoint and reconcile any extra life
+  earned during the failed attempt.
+- [x] Completely reseed doors, statics/pickups/drops, actors, occupancy, areas,
+  AI/RNG, player pose, HUD dirty state, and render snapshots without reloading
+  resident textures.
+- [x] Define and test the no-lives fixture behavior; full menu/high-score UI may
+  remain a later application-shell destination.
+
+### Regression and acceptance gates
+
+- [x] Extend host oracles from original C semantics for weapon timing, target
+  choice, hit/damage RNG, pain/death chains, scoring, and drops.
+- [x] Add direct production-code eZ80 regression phases, including ADL-width
+  sentinels around every new compact field and record.
+- [x] Add deterministic VDP tests for the complete fizzle sequence, bounds,
+  final red viewport, HUD preservation, token, and cancellation/reset safety.
+- [x] Re-run all existing actor, patrol, area, awareness, chase, combat,
+  gameplay, pickup, use, asset, ABI, and renderer suites with zero regressions.
+- [x] Exercise slow-render and held-key adversarial cases in the bespoke
+  emulator; verify simulation, attack rate, death timing, and respawn do not
+  depend on rendering performance.
+- [x] Obtain interactive emulator and hardware acceptance for fighting,
+  killing, collecting
+  drops, being killed, observing the original red fizzle, and respawning.
+- [ ] Update this checklist with measured timings, binary/container hashes,
+  remaining exclusions, and the exact synchronized repository revisions.
+
+### Screen-composition parity — queued independently of combat
+
+- [x] Remove the invented 40-row status-panel extension. In Agon mode 8, use
+  the complete `320x200` area above the original `320x40` status bar as the
+  play surround. Keep the accepted `256x160` projection centered at `(32,20)`,
+  which naturally restores surround on all four sides without rescaling the
+  current 3-D view. Draw the unextended original status panel at `y=200..239`.
+- [x] Retain viewport width/height as projection hooks for later selectable
+  sizes without adding hot-loop multiplies. Source parity remains documented:
+  WL1's default `viewsize=15` produced 240x120 inside a 320x160 play area, but
+  that smaller projection is not required for the corrected mode-8 layout.
+- [ ] Add native layout assertions and emulator visual acceptance for all four
+  surround edges, bevel colours/corners, viewport origin `(32,20)`, and the
+  original 40-row HUD at `y=200` with no extension.
+
+## Ordinary combat/death implementation result
+
+The ordinary shareware combat loop is implemented end to end in the current
+working trees. Space drives the original rising-edge/automatic-fire semantics;
+Up Arrow is the rising-edge Use control. Number keys 1..4 select knife,
+pistol, submachine gun, and gatling gun when owned. Weapon
+simulation, target selection, hit/damage RNG, actor pain/death, scores,
+extra-life thresholds, and stable clip/weapon drops remain entirely eZ80
+state. The VDP gained only `set_view_weapon` (subcommand 8, signed uint16 shape)
+and `fizzle_to_red` (subcommand 9, uint16 token), plus independently sequenced
+`W3DR` event 2 completion.
+
+Interactive Escape testing exposed one omitted idiom from the proven
+Earth-party loop: Wolf3D recognized ASCII Escape in the asynchronous callback
+but never promoted byte 14 bit 0 from its held-key map. Every foreground and
+catch-up key sample now latches Escape directly into `w3d_exit_requested`;
+the callback remains a low-latency backup. Shutdown still waits for the active
+render/fizzle owner, disables notifications, removes the callback, and returns
+to MOS.
+
+Ordinary death now freezes the world after the complete actor pass, hides the
+view weapon, forces health zero, renders the dead face, turns toward the
+validated killer at exactly 140 degrees/second, renders the final bearing into
+both mode-8 surfaces, and performs the original deterministic red LFSR fizzle
+locally on the VDP. The eZ80 owns the post-fizzle hold, release-before-new-press
+acknowledgment, signed life decrement, score checkpoint restoration, and full
+E1L1 attempt reseed. Displayed life zero still permits one final attempt; the
+next death leaves the red screen as the explicit game-over placeholder until
+Escape. Menus/high-score entry remain outside this phase.
+
+The closing ownership audit found and fixed four non-happy-path defects:
+Escape can no longer start a new fizzle after the second target render;
+malformed completion now enters an explicit callback shutdown path instead of
+spinning on a retained owner; dirty/reset serializers acquire ownership before
+emitting or clearing anything; and the public render gate rejects every active
+owner. The death fixture poisons all major mutable regions before invoking the
+real `w3d_reseed_level_attempt`, then validates pose, doors/timers, all 400
+static slots, actor records/lists/occupancy, areas, RNG, controls, persistent
+fields, and exact dirty prefixes. Its stock-VDP reset tests cover both
+no-output conflict preflights; successful `init_level` wire replay is the
+bespoke-emulator acceptance boundary.
+
+The independent player-combat oracle subsequently caught three presentation
+and occlusion defects before launch. The write-only replacement for source
+`FL_VISABLE` had tested projection alone, allowing knife damage through opaque
+geometry and allowing a blocked nearer actor to mask a farther clear gun
+target. Target selection now requires current CPU `CheckLine` for every
+projected candidate; equal reduced-Q8 depths deliberately retain live-list
+order. `GiveAmmo` also once again observes the source `attackframe==0` guard,
+and both ammo restoration and weapon pickups immediately refresh the cached
+first-person shape. Direct eZ80 cases reproduce the blocked-wall,
+blocked-near/clear-far, mid-attack pickup, and stale-shape failures.
+
+Final automated results before the interactive launch:
+
+- host/asset suites: 34 asset/manifest/HUD checks, 55 gameplay checks, 18 area
+  checks, 21 awareness checks, 41 chase checks, 39 actor-combat checks, and 47
+  source-grounded player-combat checks;
+- direct production eZ80: gameplay 10,027; pickup 13; use 13; actor pool
+  10,494; patrol 607; areas 1,288; awareness 321; chase 703; actor combat 298;
+  player combat 306; death/render/reseed 182 -- all zero-error;
+- VDP native renderer and fizzle tests pass; the full userspace smoke test pins
+  subcommand widths, token/sequence separation, both fizzle surfaces, strict
+  viewport bounds, all surround/bevel sides and corners, `(32,20)` origin, and
+  the original HUD's `y=200..239` bounds;
+- final ESP32 build: 83.1% flash and 13.6% RAM.
+
+Reproducible artifact ledger:
+
+```text
+wolf3d.bin      63718 bytes  6b863f88edc62e730c0637e9882c845888ac5bacd2ef7c95799c03e4eca79653
+tiles.agnb      66328 bytes  9990d79e3ae47d0c940e072f70f821d505d9e39ce21f713b38f5d8c7237502c8
+sprites.agnb   559464 bytes  7bf0f04a6fad56d5a83b26b30f5c0ea3bbafb4c8727a3c5f9d266c30c0e058f9
+hud.agnb        39720 bytes  1848900559fe9f684dbfc8ae80b0416132db5414bc1ab41f9dad47a5ab26a74d
+vdp_wolf3d.so 10651488 bytes  0641908e772da7d5a300882946b015d7191e61a586cb206b4e1bd095521251a9
+firmware.bin  1089280 bytes  12679256751cfab10b4c2e27c04fb404626e38915f248c63b87b14aa7f78557a
+```
+
+The uncommitted implementation is based on Wolf3dOrig
+`3776722aefa6dc9130178c1657d81802c431d880` and agon-vdp-wolf3d
+`8b3e2bf0b2c516cc3bafb52f28e351c0781b4cc2`. Audio playback is still absent;
+the deterministic weapon/death sound events are retained for that later
+backend. All ordinary combat-loop acceptance gates for this milestone are
+complete.
+
+## Major milestone closure — playable ordinary combat loop
+
+The bespoke emulator and physical Agon both accepted the complete ordinary
+combat build. The application remains playable when rendering is stressed:
+fixed-step simulation and input continue independently while callback-gated
+presentation skips stale snapshots. Weapon selection and firing, door use,
+actor attacks and deaths, pickups/drops, HUD changes, player death, the
+original red fizzle, and attempt reseeding were exercised as one application.
+
+The final exit audit found that asynchronous ASCII Escape handling was not
+enough: the foreground held-key map did not latch Escape in the hot loop. Byte
+14 bit 0 is now authoritative and covered by direct production regression
+check 306. Shutdown drains the render/fizzle owner, disables notifications,
+and removes the callback. An outer lifecycle wrapper snapshots MOS sysvar
+`0x27` before any gallery mode change. On every return path it masks off bit 7,
+restores the caller's exact base mode in single-buffered form, clears both text
+and graphics surfaces, and returns to MOS. Emulator acceptance confirmed the
+complete exit path.
+
+The exact firmware flashed and accepted on hardware is:
+
+```text
+firmware.bin  1089280 bytes  12679256751cfab10b4c2e27c04fb404626e38915f248c63b87b14aa7f78557a
+```
+
+This milestone is frozen across `Wolf3DOrig` and `agon-vdp-wolf3d` with the
+synchronized annotated tag `playable-combat-loop-milestone`; its annotation
+also records this firmware hash and both repository commit ids.

@@ -27,6 +27,12 @@ script includes that KIND's *entire* animation-frame shapenum block
 manifest's actually-converted shapenums -- i.e. every real frame the eZ80
 actor state machine could ever select for that creature, not just one
 representative frame (Author decision 2026-07-31).
+
+Every playable level also carries the twenty first-person weapon shapes
+416..435 (knife, pistol, machine gun, and chaingun READY + ATK1..4). They are
+player presentation state rather than plane-1 objects, so map scanning can
+never discover them; including them explicitly keeps every level container
+self-contained for the ordinary combat loop.
 """
 
 import argparse
@@ -59,6 +65,7 @@ MUTANT_TIER_OFFSETS = (0, 18, 36)
 BOSS_NAMES = {214: "HANS", 197: "GRETEL", 215: "OTTO", 179: "FAT", 196: "SCHABBS",
               160: "HTLR-FAKE", 178: "HITLER"}
 GHOST_NAMES = {224: "BLINKY", 225: "CLYDE", 226: "PINKY", 227: "INKY"}
+PLAYER_WEAPON_SHAPENUMS = range(416, 436)
 
 
 def plane1_creature_kind(value: int) -> str | None:
@@ -80,7 +87,9 @@ def plane1_creature_kind(value: int) -> str | None:
 def scope_level(plane0: list[list[int]], plane1: list[list[int]], max_shapenum: int):
     wall_ids: set[int] = set()
     door_kinds: set[str] = set()
-    sprite_shapenums: set[int] = set()
+    sprite_shapenums: set[int] = {
+        shape for shape in PLAYER_WEAPON_SHAPENUMS if shape <= max_shapenum
+    }
 
     for row in plane0:
         for value in row:

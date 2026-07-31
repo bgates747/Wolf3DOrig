@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import struct
 import sys
 import unittest
 from pathlib import Path
@@ -13,6 +14,7 @@ from scripts.gen_render_fixture import (
     SUB_INIT_LEVEL,
     SUB_RENDER_FRAME,
     SUB_SET_PLAYER_POSE,
+    SUB_SET_VIEW_WEAPON,
     SUB_SET_STATIC,
     build_command_stream,
     build_statics,
@@ -98,7 +100,8 @@ class StaticFixtureTests(unittest.TestCase):
         first_static = 9
         second_static = first_static + 14
         player = second_static + 14
-        render = player + 17
+        weapon = player + 17
+        render = weapon + 9
         self.assertEqual(stream[first_static:first_static + 7], header_prefix + bytes((SUB_SET_STATIC,)))
         self.assertEqual(stream[first_static + 7:first_static + 14], bytes((0, 0, 2, 1, 3, 0, 0)))
         self.assertEqual(stream[second_static:second_static + 7], header_prefix + bytes((SUB_SET_STATIC,)))
@@ -107,6 +110,8 @@ class StaticFixtureTests(unittest.TestCase):
             bytes((1, 0, 9, 1, 8, 0, staticinfo.FL_BONUS)),
         )
         self.assertEqual(stream[player:player + 7], header_prefix + bytes((SUB_SET_PLAYER_POSE,)))
+        self.assertEqual(stream[weapon:weapon + 7], header_prefix + bytes((SUB_SET_VIEW_WEAPON,)))
+        self.assertEqual(struct.unpack_from("<h", stream, weapon + 7)[0], 421)
         self.assertEqual(stream[render:render + 7], header_prefix + bytes((SUB_RENDER_FRAME,)))
         self.assertEqual(len(stream), render + 7)
 

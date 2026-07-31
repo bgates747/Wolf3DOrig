@@ -266,7 +266,7 @@ test_pointer_helpers:
     ld a,W3D_STATE_COUNT-1
     ld (test_detail),a
     call w3d_actor_state_pointer_from_id
-    ld hl,w3d_actor_states+800  ; 100 * 8, literal avoids assembler precedence
+    ld hl,w3d_actor_states+1032 ; 129 * 8, literal avoids assembler precedence
     call assert_iy_equals_hl
     ld a,W3D_STATE_COUNT
     ld (test_detail),a
@@ -293,7 +293,7 @@ test_pointer_helpers:
     ld a,W3D_STATE_COUNT-1
     call w3d_actor_state_pointer_from_id
     ld a,(iy+W3D_STATE_SHAPENUM+0)
-    ld b,0bah                         ; SS shoot9 shape 186
+    ld b,0b7h                         ; terminal SS corpse shape 183
     ld c,reason_pointer
     call assert_equal
     ld a,(iy+W3D_STATE_SHAPENUM+1)

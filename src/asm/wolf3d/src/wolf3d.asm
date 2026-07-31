@@ -19,8 +19,10 @@
 ; eZ80-authoritative moving doors, blocking decorations, and mutable pickup/HUD
 ; state are live. The authoritative actor pool advances original-timed path
 ; patrols, awareness/reaction, ordinary chase/dodge movement, ranged and dog
-; attack chains, and player damage/death. Player weapons, actor injury/death,
-; special actors, and map loading beyond this fixture remain future work.
+; attack chains, player damage, all four ordinary player weapons, actor pain/
+; death, scores and drops, and the original ordinary death/fizzle/respawn loop.
+; Bosses, projectiles, audio playback, and map loading beyond this fixture
+; remain future work.
 ; =============================================================================
 
 mos_getkey:      equ 00h
@@ -28,6 +30,7 @@ mos_sysvars:     equ 08h
 mos_setkbvector: equ 1Dh
 mos_getkbmap:    equ 1Eh
 sysvar_time:     equ 00h
+sysvar_scrMode:  equ 27h
 
     MACRO MOSCALL function
         ld a,function
@@ -51,6 +54,8 @@ sysvar_time:     equ 00h
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
+    include "wolf3d_player_combat.inc"
+    include "wolf3d_death.inc"
 
 start:
     push af
@@ -112,6 +117,31 @@ w3d_gallery_setup:
     db 18,0,128             ; graphics background logical colour 0 (black)
     db 16                   ; clear visible graphics surface
 w3d_gallery_setup_end:
+
+; Preserve the caller's display geometry before either loading gallery or game
+; changes it. Wolf3D always restores the same base mode in single-buffered
+; form: bit 7 is a VDP double-buffer request, not part of the MOS mode number.
+w3d_capture_original_screen_mode:
+    MOSCALL mos_sysvars
+    ld a,(ix+sysvar_scrMode)
+    and 07Fh
+    ld (w3d_restore_mode_command+1),a
+    ret
+
+; Return MOS to the display mode from which the game was launched. Clear both
+; the text and graphics surfaces so neither the last 3D frame nor stale MOS
+; text survives the handoff.
+w3d_restore_original_screen_mode:
+    ld hl,w3d_restore_mode_command
+    ld bc,w3d_restore_mode_command_end-w3d_restore_mode_command
+    rst.lil 18h
+    ret
+
+w3d_restore_mode_command:
+    db 22,0                 ; saved base mode, patched during startup
+    db 12                   ; CLS: clear text viewport
+    db 16                   ; CLG: clear graphics viewport
+w3d_restore_mode_command_end:
 
 ; ---------------------------------------------------------------------------
 ; VDU helpers
@@ -235,6 +265,12 @@ gallery_y:
     dl 32
 
 main:
+    call w3d_capture_original_screen_mode
+    call w3d_main_body
+    call w3d_restore_original_screen_mode
+    ret
+
+w3d_main_body:
     ld hl,banner
     call printString
     call printNewLine
@@ -307,6 +343,9 @@ main:
     call w3d_initialize_control_clock
     call w3d_initialize_render_state
     call w3d_initialize_motion_state
+    call w3d_initialize_death_state
+    ld hl,w3d_reseed_level_attempt
+    call w3d_death_set_reseed_hook
     call w3d_install_render_callback
     call w3d_enable_render_notifications
     ei
@@ -314,10 +353,17 @@ main:
 ; The initial world snapshot is complete. Submit one unconditional render.
 ; Future simulation/input work belongs in mainloop and may submit another
 ; snapshot only while w3d_render_in_flight is clear.
+    call w3d_death_prepare_next_render
     call w3d_mark_render_submitted
     ld hl,w3d_fixture_cmds
     ld bc,w3d_fixture_cmds_len
     rst.lil 18h
+; The generated initial stream contains the exact ready-weapon shape. Combat
+; initialization dirties that same value for generic reseeds; consume the
+; redundant initial dirty edge now that the snapshot is on the wire.
+    xor a
+    ld (w3d_player_weapon_shape_dirty),a
+    ld (w3d_world_dirty),a
 
 mainloop:
 ; Input and simulation run at an exact 30 Hz fixed step (four 120 Hz MOS
@@ -327,18 +373,27 @@ mainloop:
     call w3d_accumulate_simulation_time
     call w3d_run_simulation_batch
 
-    ld a,(w3d_completion_ready)
-    or a
-    call nz,w3d_consume_render_completion
+; Consume and route both ordinary render and death-fizzle completions. Only
+; event-1 renders issue C3; event-2 already leaves both VDP surfaces mirrored.
+    call w3d_death_foreground_update
 
-; Escape exits cleanly once no render remains in flight.
+; Escape exits cleanly once no asynchronous producer remains in flight. A
+; malformed completion is different: validation deliberately retains its
+; owner, so waiting would spin forever. In that terminal fault case disable
+; future notifications and remove the callback immediately; any late UART
+; record then falls through MOS's ordinary keyboard path instead of targeting
+; application memory.
     ld a,(w3d_exit_requested)
     or a
     jr z,@continue
-    ld a,(w3d_render_in_flight)
+    ld a,(w3d_callback_error)
+    or a
+    jr nz,@shutdown
+    ld a,(w3d_async_owner)
     or a
     jr nz,mainloop
 
+@shutdown:
     call w3d_disable_render_notifications
     call w3d_remove_render_callback
     ret
@@ -348,7 +403,7 @@ mainloop:
 ; simulation is fully caught up. Thus 30 Hz is both the simulation quantum and
 ; the maximum presentation cadence; slower rendering skips stale snapshots
 ; without slowing world time.
-    ld a,(w3d_render_in_flight)
+    ld a,(w3d_async_owner)
     or a
     jr nz,mainloop
 
@@ -358,8 +413,24 @@ mainloop:
     sbc hl,de
     jr nc,mainloop
 
+    call w3d_death_render_permitted
+    or a
+    jr z,mainloop
+
+; A successful death reseed must begin with init_level, then replay the full
+; authoritative fixture snapshot into the cleared VDP mirror. No other phase
+; may use this reset submission path.
+    ld a,(w3d_death_phase)
+    cp W3D_DEATH_PHASE_WAIT_RESPAWN_FRAME
+    jr nz,@ordinary_render
+    call w3d_death_prepare_next_render
+    call w3d_submit_level_reset
+    jr mainloop
+
+@ordinary_render:
     ld a,(w3d_world_dirty)
     or a
     jr z,mainloop
+    call w3d_death_prepare_next_render
     call w3d_submit_dirty_world_render
     jr mainloop

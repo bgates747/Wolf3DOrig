@@ -33,9 +33,18 @@ w3d_initialize_actor_simulation:
     xor a
     ld (w3d_actor_tic_phase),a
     ld (w3d_actor_frame_tics),a
+    ld (w3d_actor_tics_prepared),a
     ld (w3d_player_made_noise),a
     ld (w3d_actor_fault_count+0),a
     ld (w3d_actor_fault_count+1),a
+    ld (w3d_player_kill_count+0),a
+    ld (w3d_player_kill_count+1),a
+    ld (w3d_actor_death_sound_count+0),a
+    ld (w3d_actor_death_sound_count+1),a
+    ld a,W3D_SLOT_NONE
+    ld (w3d_actor_death_sound_actor),a
+    xor a
+    ld (w3d_actor_death_sound_class),a
     ld a,W3D_FIXTURE_RND_INDEX_AFTER_SPAWN
     ld (w3d_random_index),a
     ld a,1
@@ -50,9 +59,8 @@ w3d_initialize_actor_simulation:
     ld (w3d_actor_sight_context+W3D_SIGHT_CTX_MADENOISE),a
     ret
 
-; Publish one fixed-step noise event.  The current control layer has no weapon
-; input yet, but this is the stable producer API for weapon fire and successful
-; player damage to an actor.
+; Publish one fixed-step noise event for weapon fire or successful player
+; damage to an actor.
 ; Every scheduled actor sees the same byte; w3d_simulate_actors clears it only
 ; after the complete live-list pass.
 w3d_mark_player_noise:
@@ -63,7 +71,7 @@ w3d_mark_player_noise:
 ; Advance every scheduled actor once after doors and player movement. The
 ; saved NEXT byte makes removal during the current turn traversal-safe.
 w3d_simulate_actors:
-    call w3d_actor_advance_frame_tics
+    call w3d_prepare_actor_frame_tics
     call w3d_prepare_actor_sight_context
     ld a,(w3d_actor_live_head)
 @loop:
@@ -126,6 +134,7 @@ w3d_simulate_actors:
 @done:
     xor a
     ld (w3d_player_made_noise),a
+    ld (w3d_actor_tics_prepared),a
     ret
 
 ; CheckSight consumes one stable context while actor records remain in IX.
@@ -138,6 +147,20 @@ w3d_prepare_actor_sight_context:
     ldir
     xor a
     ld (w3d_actor_sight_context+W3D_SIGHT_CTX_MADENOISE),a
+    ret
+
+; Prepare one shared source-time quantum for both the player weapon and every
+; actor.  The player-combat step runs before the actor pass, just as the DOS
+; player object headed the live list; the latch prevents that ordering from
+; advancing the 2,2,3 cadence twice.  Existing callers that only simulate
+; actors retain their previous behavior.
+w3d_prepare_actor_frame_tics:
+    ld a,(w3d_actor_tics_prepared)
+    or a
+    ret nz
+    call w3d_actor_advance_frame_tics
+    ld a,1
+    ld (w3d_actor_tics_prepared),a
     ret
 
 ; Produce 2,2,3 original tics on successive 30-Hz fixed updates.
@@ -343,12 +366,31 @@ w3d_actor_dispatch_action:
     jp z,w3d_actor_action_shoot
     cp W3D_STATE_ACTION_BITE
     jp z,w3d_actor_action_bite
+    cp W3D_STATE_ACTION_DEATH_SCREAM
+    jp z,w3d_actor_action_death_scream
     scf
     ret
 
 ; ---------------------------------------------------------------------------
 ; Ordinary attack end actions
 ; ---------------------------------------------------------------------------
+
+; IX=current dying actor.  Audio remains an eZ80 integration concern, so the
+; exact A_DeathScream state action publishes a durable edge rather than
+; issuing a device command from the state runner.  Consumers compare the
+; monotonically wrapping count and read actor/class from the same event.
+w3d_actor_action_death_scream:
+    ld a,(w3d_current_actor_index)
+    ld (w3d_actor_death_sound_actor),a
+    ld a,(ix+W3D_ACTOR_CLASS)
+    ld (w3d_actor_death_sound_class),a
+    ld hl,w3d_actor_death_sound_count
+    inc (hl)
+    ret nz
+    inc hl
+    inc (hl)
+    or a
+    ret
 
 ; IX=current guard/officer/mutant/SS. Port T_Shoot's observable gameplay
 ; order exactly: connected area, line trace, action-time distance, deterministic
@@ -601,6 +643,240 @@ w3d_take_player_damage:
     or a
     ret
 
+; ---------------------------------------------------------------------------
+; Player-inflicted ordinary actor damage and death
+; ---------------------------------------------------------------------------
+
+; A=stable actor slot, HL=unsigned raw damage.  This is the authoritative
+; port of WL_STATE.C DamageActor for guard/officer/mutant/SS/dog.  It returns
+; one W3D_DAMAGE_RESULT_* value in A.  A successful zero-damage hit is still
+; a real hit: it makes noise, wakes a dormant actor, and installs pain.
+w3d_damage_actor:
+    ld (w3d_actor_damage_id),a
+    ld a,l
+    ld (w3d_actor_damage_amount+0),a
+    ld a,h
+    ld (w3d_actor_damage_amount+1),a
+
+    ld a,(w3d_actor_damage_id)
+    or a
+    jp z,@corrupt
+    cp W3D_MAX_ACTORS
+    jp nc,@corrupt
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    cp W3D_ACTOR_ACTIVE_FREE
+    jp z,@rejected
+    ld a,(ix+W3D_ACTOR_FLAGS)
+    and W3D_ACTOR_FLAG_SHOOTABLE
+    jp z,@rejected
+    ld a,(ix+W3D_ACTOR_CLASS)
+    cp W3D_CLASS_GUARD
+    jr z,@class_ok
+    cp W3D_CLASS_OFFICER
+    jr z,@class_ok
+    cp W3D_CLASS_MUTANT
+    jr z,@class_ok
+    cp W3D_CLASS_SS
+    jr z,@class_ok
+    cp W3D_CLASS_DOG
+    jp nz,@rejected
+@class_ok:
+    call w3d_mark_player_noise
+
+; A dormant target takes double damage.  Keep the pre-hit attack-mode bit for
+; the later FirstSighting decision; that routine sets the bit itself.
+    ld a,(ix+W3D_ACTOR_FLAGS)
+    and W3D_ACTOR_FLAG_ATTACKMODE
+    ld (w3d_actor_damage_was_active),a
+    ld hl,0
+    ld a,(w3d_actor_damage_amount+0)
+    ld l,a
+    ld a,(w3d_actor_damage_amount+1)
+    ld h,a
+    ld a,(w3d_actor_damage_was_active)
+    or a
+    jr nz,@damage_ready
+    add.s hl,hl
+@damage_ready:
+    push hl
+    pop de
+    ld hl,0
+    ld l,(ix+W3D_ACTOR_HITPOINTS+0)
+    ld h,(ix+W3D_ACTOR_HITPOINTS+1)
+    or a
+    sbc.s hl,de
+    ld (ix+W3D_ACTOR_HITPOINTS+0),l
+    ld (ix+W3D_ACTOR_HITPOINTS+1),h
+    bit 7,h
+    jr nz,@killed
+    ld a,h
+    or l
+    jr z,@killed
+
+    ld a,(w3d_actor_damage_was_active)
+    or a
+    jr nz,@choose_pain
+    call w3d_actor_first_sighting
+    cp 0ffh
+    jr z,@corrupt
+
+@choose_pain:
+    ld a,(ix+W3D_ACTOR_CLASS)
+    cp W3D_CLASS_DOG
+    jr z,@mark_pain                 ; source dogs have no pain-state arm
+    ld b,W3D_STATE_GRD_PAIN
+    ld c,W3D_STATE_GRD_PAIN1
+    cp W3D_CLASS_GUARD
+    jr z,@pain_parity
+    ld b,W3D_STATE_OFC_PAIN
+    ld c,W3D_STATE_OFC_PAIN1
+    cp W3D_CLASS_OFFICER
+    jr z,@pain_parity
+    ld b,W3D_STATE_MUT_PAIN
+    ld c,W3D_STATE_MUT_PAIN1
+    cp W3D_CLASS_MUTANT
+    jr z,@pain_parity
+    ld b,W3D_STATE_SS_PAIN
+    ld c,W3D_STATE_SS_PAIN1
+@pain_parity:
+    bit 0,(ix+W3D_ACTOR_HITPOINTS+0)
+    jr nz,@pain_state_ready
+    ld b,c
+@pain_state_ready:
+    ld a,b
+    call w3d_actor_new_state
+    jr c,@corrupt
+@mark_pain:
+    ld a,(w3d_actor_damage_id)
+    call w3d_actor_mark_dirty
+    ld a,W3D_DAMAGE_RESULT_PAIN
+    ret
+
+@killed:
+    ld a,(w3d_actor_damage_id)
+    jp w3d_kill_actor
+@rejected:
+    ld a,W3D_DAMAGE_RESULT_REJECTED
+    ret
+@corrupt:
+    ld a,W3D_DAMAGE_RESULT_CORRUPT
+    ret
+
+; A=ordinary actor slot.  Mirrors WL_STATE.C KillActor while routing the two
+; cross-module effects through existing/public gameplay seams:
+;   w3d_add_player_score: HL=points
+;   w3d_place_item_type:  A=itemnumber, B=tilex, C=tiley
+; The runtime-static allocator owns capacity and the VDP set_static update.
+w3d_kill_actor:
+    ld (w3d_actor_damage_id),a
+    call w3d_actor_pointer_from_id
+
+; Release the reserved destination before snapping cached coordinates to the
+; physical corpse tile.  This closes a stale-reservation edge in the compact
+; actorat model while retaining the source-visible corpse/drop position.
+    ld a,(w3d_actor_damage_id)
+    call w3d_actorat_release
+    ld a,(ix+W3D_ACTOR_X+2)
+    ld (ix+W3D_ACTOR_TILEX),a
+    ld (w3d_actor_kill_tilex),a
+    ld a,(ix+W3D_ACTOR_Y+2)
+    ld (ix+W3D_ACTOR_TILEY),a
+    ld (w3d_actor_kill_tiley),a
+
+    ld a,0ffh
+    ld (w3d_actor_kill_drop_item),a
+    ld a,(ix+W3D_ACTOR_CLASS)
+    cp W3D_CLASS_GUARD
+    jr z,@guard
+    cp W3D_CLASS_OFFICER
+    jr z,@officer
+    cp W3D_CLASS_MUTANT
+    jr z,@mutant
+    cp W3D_CLASS_SS
+    jr z,@ss
+    cp W3D_CLASS_DOG
+    jr z,@dog
+    ld a,W3D_DAMAGE_RESULT_CORRUPT
+    ret
+@guard:
+    ld a,W3D_STATE_GRD_DIE1
+    ld hl,100
+    ld b,W3D_ITEM_CLIP2
+    jr @class_ready
+@officer:
+    ld a,W3D_STATE_OFC_DIE1
+    ld hl,400
+    ld b,W3D_ITEM_CLIP2
+    jr @class_ready
+@mutant:
+    ld a,W3D_STATE_MUT_DIE1
+    ld hl,700
+    ld b,W3D_ITEM_CLIP2
+    jr @class_ready
+@ss:
+    ld a,W3D_STATE_SS_DIE1
+    ld hl,500
+    ld b,W3D_ITEM_CLIP2
+    ld c,a
+    ld a,(w3d_player_best_weapon)
+    cp 2
+    ld a,c
+    jr nc,@class_ready
+    ld b,W3D_ITEM_MACHINEGUN
+    jr @class_ready
+@dog:
+    ld a,W3D_STATE_DOG_DIE1
+    ld hl,200
+    ld b,0ffh
+@class_ready:
+    ld (w3d_actor_kill_state),a
+    ld a,l
+    ld (w3d_actor_kill_points+0),a
+    ld a,h
+    ld (w3d_actor_kill_points+1),a
+    ld a,b
+    ld (w3d_actor_kill_drop_item),a
+
+    ld a,(w3d_actor_kill_state)
+    call w3d_actor_new_state
+    jr c,@kill_corrupt
+    ld a,(ix+W3D_ACTOR_FLAGS)
+    and 0ffh-W3D_ACTOR_FLAG_SHOOTABLE
+    or W3D_ACTOR_FLAG_NONMARK
+    ld (ix+W3D_ACTOR_FLAGS),a
+    ld a,(w3d_actor_damage_id)
+    call w3d_actor_mark_dirty
+
+    ld hl,w3d_player_kill_count
+    inc (hl)
+    jr nz,@kill_counted
+    inc hl
+    inc (hl)
+@kill_counted:
+    ld hl,0
+    ld a,(w3d_actor_kill_points+0)
+    ld l,a
+    ld a,(w3d_actor_kill_points+1)
+    ld h,a
+    call w3d_add_player_score
+
+    ld a,(w3d_actor_kill_drop_item)
+    cp 0ffh
+    jr z,@killed_done
+    ld a,(w3d_actor_kill_tilex)
+    ld b,a
+    ld a,(w3d_actor_kill_tiley)
+    ld c,a
+    ld a,(w3d_actor_kill_drop_item)
+    call w3d_place_item_type
+@killed_done:
+    ld a,W3D_DAMAGE_RESULT_KILLED
+    ret
+@kill_corrupt:
+    ld a,W3D_DAMAGE_RESULT_CORRUPT
+    ret
+
 ; Deterministic replacement for renderer-owned FL_VISABLE. It uses the same
 ; current projection constants but only authoritative CPU state. The reduced
 ; actor-relative vector is rotated by the generated 360-degree Q12 motion
@@ -694,6 +970,10 @@ w3d_actor_cpu_visible:
     ld h,a
     or a
     sbc.s hl,de
+    ld a,l
+    ld (w3d_actor_projection_lateral+0),a
+    ld a,h
+    ld (w3d_actor_projection_lateral+1),a
 
 ; For negative lateral, screen x>=0 iff abs(ny)*87 < nx*128.
 ; For nonnegative lateral, x<=255 iff ny*87 < nx*129.
@@ -2512,6 +2792,8 @@ w3d_actor_tic_phase:
     db 0
 w3d_actor_frame_tics:
     db 0
+w3d_actor_tics_prepared:
+    db 0
 w3d_player_made_noise:
     db 0
 w3d_awareness_enabled:
@@ -2556,8 +2838,37 @@ w3d_actor_projection_term:
     dw 0
 w3d_actor_projection_nx:
     dw 0
+w3d_actor_projection_lateral:
+    dw 0
 w3d_actor_projection_left_product:
     ds 4
+w3d_actor_damage_id:
+    db W3D_SLOT_NONE
+w3d_actor_damage_amount:
+    dw 0
+w3d_actor_damage_was_active:
+    db 0
+w3d_actor_kill_state:
+    db 0
+w3d_actor_kill_points:
+    dw 0
+w3d_actor_kill_drop_item:
+    db W3D_SLOT_NONE
+w3d_actor_kill_tilex:
+    db 0
+w3d_actor_kill_tiley:
+    db 0
+; Per-level statistic, reset by the level/respawn integration alongside the
+; existing treasure count.  It is not a HUD field.
+w3d_player_kill_count:
+    dw 0
+; Edge-published A_DeathScream event for a future audio consumer.
+w3d_actor_death_sound_actor:
+    db W3D_SLOT_NONE
+w3d_actor_death_sound_class:
+    db W3D_CLASS_NOTHING
+w3d_actor_death_sound_count:
+    dw 0
 w3d_actor_iteration_next:
     db W3D_SLOT_NONE
 w3d_actor_transitions_left:

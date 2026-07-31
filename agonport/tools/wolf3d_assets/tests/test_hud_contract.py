@@ -15,7 +15,6 @@ sys.path.insert(0, str(TOOLS_ROOT))
 from formats.hud import (
     HUD_CHUNKS,
     HUD_EXPECTED_DIMENSIONS,
-    STATUS_PANEL_BUFFER_ID,
     chunk_buffer_id,
 )
 from formats.vgagraph import read_vgagraph
@@ -67,28 +66,32 @@ class HudArchiveTests(unittest.TestCase):
         for chunk_id in HUD_CHUNKS:
             self.assertEqual(archive.decode_picture(chunk_id).size, HUD_EXPECTED_DIMENSIONS[chunk_id])
 
-    def test_full_build_has_exact_ids_dimensions_and_panel_prefix(self) -> None:
+    def test_full_build_has_exact_original_ids_and_dimensions(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             out_dir = Path(temporary)
             entries = build_hud_assets(DATA_DIR, out_dir, PALETTE_FILE, method="rgb")
-            self.assertEqual(len(entries), len(HUD_CHUNKS) + 1)
+            self.assertEqual(len(entries), len(HUD_CHUNKS))
+            self.assertEqual({entry.chunkId for entry in entries}, set(HUD_CHUNKS))
             self.assertEqual(
                 {entry.bufferId for entry in entries},
-                {chunk_buffer_id(chunk_id) for chunk_id in HUD_CHUNKS}
-                | {STATUS_PANEL_BUFFER_ID},
+                {chunk_buffer_id(chunk_id) for chunk_id in HUD_CHUNKS},
             )
 
             records = _agnb_records(out_dir / "hud.agnb")
+            self.assertEqual(
+                set(records),
+                {chunk_buffer_id(chunk_id) for chunk_id in HUD_CHUNKS},
+            )
             for chunk_id in HUD_CHUNKS:
                 self.assertEqual(
                     records[chunk_buffer_id(chunk_id)],
                     (*HUD_EXPECTED_DIMENSIONS[chunk_id], 1),
                 )
-            self.assertEqual(records[STATUS_PANEL_BUFFER_ID], (320, 80, 1))
-
-            statusbar = (out_dir / "processed" / "statusbar.rgba2").read_bytes()
-            panel = (out_dir / "processed" / "status_panel.rgba2").read_bytes()
-            self.assertEqual(panel[: 320 * 40], statusbar)
+            self.assertNotIn(0x40F0, records)
+            self.assertFalse((out_dir / "processed" / "status_panel.rgba2").exists())
+            constants = (out_dir / "hud_buffers.inc").read_text()
+            self.assertIn("W3D_HUD_STATUSBAR_BUFFER equ $4062", constants)
+            self.assertNotIn("W3D_HUD_STATUS_PANEL", constants)
 
     def test_matching_hand_edited_png_overrides_only_that_asset(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

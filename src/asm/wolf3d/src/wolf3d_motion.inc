@@ -10,7 +10,9 @@
 ;   W/S         forward/backward
 ;   A/D         strafe left/right
 ;   Left/Right  turn left/right
-;   Space       operate the adjacent door (rising edge)
+;   Up Arrow    operate the adjacent door (rising edge)
+;   Space       attack/fire
+;   1/2/3/4     knife/pistol/submachine gun/gatling gun
 ;   Escape      clean exit
 ;
 ; Player collision follows Wolf3D's square PLAYERSIZE AABB and ClipMove
@@ -51,10 +53,35 @@ W3D_HUD_DIRTY_WEAPON:           equ 00001000b
 W3D_HUD_DIRTY_SCORE:            equ 00010000b
 W3D_HUD_DIRTY_LIVES:            equ 00100000b
 
-; Seed the mutable pose from the generated level fixture and start with no
-; pending simulation time or unsent change. The fixture command stream has
-; already submitted this exact pose for the unconditional first render.
+; Initialize persistent new-game state, then build the first authoritative
+; attempt.  Respawns call w3d_reseed_level_attempt instead: lives, score,
+; difficulty, and the extra-life threshold survive that world rebuild and are
+; reconciled by wolf3d_death.inc after the hook returns.
 w3d_initialize_motion_state:
+    ld a,W3D_FIXTURE_DIFFICULTY
+    ld (w3d_game_difficulty),a
+    ld a,3
+    ld (w3d_player_lives),a
+    xor a
+    ld (w3d_player_score+0),a
+    ld (w3d_player_score+1),a
+    ld (w3d_player_score+2),a
+    ld (w3d_player_score+3),a
+    ld a,040h
+    ld (w3d_player_next_extra+0),a
+    ld a,09ch
+    ld (w3d_player_next_extra+1),a
+    xor a
+    ld (w3d_player_next_extra+2),a
+    ld (w3d_player_next_extra+3),a
+    jp w3d_seed_level_attempt_state
+
+; Rebuild every mutable E1L1 attempt field from the generated fixture without
+; touching persistent game fields.  This routine submits no VDU bytes and
+; leaves no full-reset dirty set; the generated startup stream already carries
+; the first snapshot.  w3d_reseed_level_attempt adds the complete dirty set
+; required after init_level clears the VDP mirror.
+w3d_seed_level_attempt_state:
     ld hl,w3d_fixture_initial_player_pose
     ld de,w3d_player_pose
     ld bc,w3d_fixture_initial_player_pose_end-w3d_fixture_initial_player_pose
@@ -67,6 +94,20 @@ w3d_initialize_motion_state:
     ld bc,w3d_fixture_initial_doors_end-w3d_fixture_initial_doors
     ldir
 @doors_seeded:
+; Clear the complete runtime-static capacity before copying the fixture's
+; active prefix. Drops may extend that prefix to the original MAXSTATS=400,
+; so no byte may depend on MOS loader/BSS behavior.
+    xor a
+    ld hl,w3d_statics
+    ld (hl),a
+    ld de,w3d_statics+1
+    ld bc,W3D_MAX_STATICS*W3D_STATIC_SIZE-1
+    ldir
+    ld hl,w3d_static_dirty
+    ld (hl),a
+    ld de,w3d_static_dirty+1
+    ld bc,W3D_MAX_STATICS-1
+    ldir
     ld a,W3D_FIXTURE_STATIC_COUNT
     or a
     jr z,@statics_seeded
@@ -75,6 +116,11 @@ w3d_initialize_motion_state:
     ld bc,w3d_fixture_initial_statics_end-w3d_fixture_initial_statics
     ldir
 @statics_seeded:
+    ld hl,W3D_FIXTURE_STATIC_COUNT
+    ld a,l
+    ld (w3d_static_count+0),a
+    ld a,h
+    ld (w3d_static_count+1),a
     xor a
     ld (w3d_player_dirty),a
     ld (w3d_world_dirty),a
@@ -87,8 +133,6 @@ w3d_initialize_motion_state:
     ld a,W3D_SLOT_NONE
     ld (w3d_player_last_attacker),a
     ld (w3d_player_killer),a
-    ld a,W3D_FIXTURE_DIFFICULTY
-    ld (w3d_game_difficulty),a
     xor a
     ld (w3d_door_motion_phase),a
     ld bc,W3D_FIXTURE_DOOR_COUNT*2
@@ -117,7 +161,7 @@ w3d_initialize_motion_state:
     or c
     jr nz,@clear_door_dirty
 @door_dirty_cleared:
-    ld bc,W3D_FIXTURE_STATIC_COUNT
+    ld bc,W3D_MAX_STATICS
     ld a,b
     or c
     jr z,@static_dirty_cleared
@@ -133,19 +177,8 @@ w3d_initialize_motion_state:
     xor a
     ld (w3d_hud_dirty),a
     ld (w3d_pickup_scan_needed),a
-    ld (w3d_player_score+0),a
-    ld (w3d_player_score+1),a
-    ld (w3d_player_score+2),a
-    ld (w3d_player_score+3),a
     ld (w3d_player_treasure_count+0),a
     ld (w3d_player_treasure_count+1),a
-    ld a,040h
-    ld (w3d_player_next_extra+0),a
-    ld a,09ch
-    ld (w3d_player_next_extra+1),a
-    xor a
-    ld (w3d_player_next_extra+2),a
-    ld (w3d_player_next_extra+3),a
     ld a,100
     ld (w3d_player_health),a
     ld a,8
@@ -154,8 +187,6 @@ w3d_initialize_motion_state:
     ld (w3d_player_weapon),a
     ld (w3d_player_best_weapon),a
     ld (w3d_player_chosen_weapon),a
-    ld a,3
-    ld (w3d_player_lives),a
     xor a
     ld hl,w3d_fixture_tilemap
     ld (w3d_map_ptr),hl
@@ -169,11 +200,66 @@ w3d_initialize_motion_state:
     call w3d_initialize_actor_simulation
     call w3d_initialize_area_state
     call w3d_reset_keys
+    jp w3d_initialize_player_combat
+
+; Death-restart hook. Rebuild authoritative state, then mark exactly the
+; fixture's active doors/statics/actors plus all player/HUD state for replay.
+; Carry is clear only after the full reset is ready; no render is submitted.
+w3d_reseed_level_attempt:
+    call w3d_seed_level_attempt_state
+    call w3d_mark_full_level_dirty
+    or a
+    ret
+
+w3d_mark_full_level_dirty:
+    ld a,W3D_FIXTURE_DOOR_COUNT
+    or a
+    jr z,@statics
+    ld b,a
+    ld hl,w3d_door_dirty
+@door_loop:
+    ld (hl),1
+    inc hl
+    djnz @door_loop
+
+@statics:
+    ld bc,W3D_FIXTURE_STATIC_COUNT
+    ld hl,w3d_static_dirty
+@static_loop:
+    ld a,b
+    or c
+    jr z,@actors
+    ld (hl),1
+    inc hl
+    dec bc
+    jr @static_loop
+
+@actors:
+    ld a,W3D_FIXTURE_ACTOR_COUNT
+    or a
+    jr z,@player
+    ld b,a
+    ld hl,w3d_actor_dirty+1
+@actor_loop:
+    ld (hl),W3D_ACTOR_DIRTY_SET
+    inc hl
+    djnz @actor_loop
+
+@player:
+    ld a,W3D_HUD_DIRTY_HEALTH|W3D_HUD_DIRTY_AMMO|W3D_HUD_DIRTY_KEYS|W3D_HUD_DIRTY_WEAPON|W3D_HUD_DIRTY_SCORE|W3D_HUD_DIRTY_LIVES
+    ld (w3d_hud_dirty),a
+    ld a,1
+    ld (w3d_player_dirty),a
+    ld (w3d_player_weapon_shape_dirty),a
+    ld (w3d_world_dirty),a
     ret
 
 ; OR MOS's current held-key map into a local latch. Sampling on every
 ; foreground pass catches short taps; resetting and immediately resampling
 ; after each fixed quantum makes held keys active during every catch-up step.
+; Every sample also promotes Escape directly from byte 14 bit 0 into the
+; shutdown latch. The keyboard callback remains a low-latency backup, but the
+; hot loop is authoritative and cannot depend on receiving an ASCII record.
 w3d_poll_keys:
     MOSCALL mos_getkbmap
     ld iy,w3d_keyboard_masks
@@ -185,6 +271,14 @@ w3d_poll_keys:
     inc ix
     inc iy
     djnz @loop
+    ; fall through
+
+w3d_latch_exit_request:
+    ld a,(w3d_keyboard_masks+14)
+    and 00000001b                  ; Escape
+    ret z
+    ld a,1
+    ld (w3d_exit_requested),a
     ret
 
 w3d_reset_keys:
@@ -225,7 +319,11 @@ w3d_run_simulation_batch:
     ret nz
     call w3d_take_simulation_step
     ret c
+    call w3d_death_fixed_step
+    jr c,@step_complete
     call w3d_simulate_player_step
+    call w3d_death_promote_lethal_latch
+@step_complete:
     call w3d_reset_keys
     call w3d_poll_keys
     ld hl,w3d_simulation_steps_remaining
@@ -272,9 +370,13 @@ w3d_sample_controls:
     jr z,@not_right
     or W3D_CONTROL_RIGHT
 @not_right:
-    bit 2,(ix+12)                ; Space / use
-    jr z,@done
+    bit 1,(ix+7)                 ; Up arrow / use
+    jr z,@not_use
     or W3D_CONTROL_USE
+@not_use:
+    bit 2,(ix+12)                ; Space / attack
+    jr z,@done
+    or W3D_CONTROL_ATTACK
 @done:
     ld (w3d_controls),a
     ret
@@ -337,6 +439,7 @@ w3d_simulate_player_step:
 @pickups:
     call w3d_refresh_player_area
     call w3d_collect_pending_pickups
+    call w3d_simulate_player_combat
     jp w3d_simulate_actors
 
 ; Reconstruct the original per-frame `thrustspeed` gameplay signal from this
@@ -922,7 +1025,7 @@ w3d_collect_pending_pickups:
     ld (w3d_current_static_index),hl
 @loop:
     ld hl,(w3d_current_static_index)
-    ld de,W3D_FIXTURE_STATIC_COUNT
+    call w3d_load_static_count_de
     or a
     sbc hl,de
     jr nc,@done
@@ -1147,9 +1250,9 @@ w3d_add_player_health:
     jp w3d_mark_hud_dirty
 
 ; A=ammo increment. Saturates at 99 and marks only an actual HUD change.
-; With no attack animation modeled yet, an empty-ammo player is necessarily
-; idle, so match GiveAmmo's restore of the chosen weapon when ammunition
-; becomes available again.
+; GiveAmmo restores the chosen weapon from an empty magazine only while the
+; source attack frame is zero.  A pickup during another attack frame must not
+; switch attackinfo rows underneath the active animation.
 w3d_add_player_ammo:
     ld b,a
     ld a,(w3d_player_ammo)
@@ -1167,6 +1270,9 @@ w3d_add_player_ammo:
     ld a,c
     or a
     ret nz
+    ld a,(w3d_player_attack_frame)
+    or a
+    ret nz
     ld a,(w3d_player_chosen_weapon)
     ld b,a
     ld a,(w3d_player_weapon)
@@ -1175,7 +1281,8 @@ w3d_add_player_ammo:
     ld a,b
     ld (w3d_player_weapon),a
     ld a,W3D_HUD_DIRTY_WEAPON
-    jp w3d_mark_hud_dirty
+    call w3d_mark_hud_dirty
+    jp w3d_player_combat_refresh_shape
 
 ; HL=unsigned point increment (the current treasures all fit in 16 bits).
 w3d_add_player_score:
@@ -1264,7 +1371,8 @@ w3d_set_player_weapon:
     ld (w3d_player_weapon),a
     ld (w3d_player_chosen_weapon),a
     ld a,W3D_HUD_DIRTY_WEAPON
-    jp w3d_mark_hud_dirty
+    call w3d_mark_hud_dirty
+    jp w3d_player_combat_refresh_shape
 
 ; A=one or more W3D_HUD_DIRTY_* bits.
 w3d_mark_hud_dirty:
@@ -1292,6 +1400,16 @@ w3d_static_pointer_from_current:
     pop ix
     ret
 
+; Return the uint16 runtime high-water count in DE with DEU deliberately zero.
+; A native ADL load from the two-byte field would consume the following byte.
+w3d_load_static_count_de:
+    ld de,0
+    ld a,(w3d_static_count+0)
+    ld e,a
+    ld a,(w3d_static_count+1)
+    ld d,a
+    ret
+
 w3d_mark_current_static_dirty:
     ld hl,(w3d_current_static_index)
     ld de,w3d_static_dirty
@@ -1299,6 +1417,93 @@ w3d_mark_current_static_dirty:
     ld a,1
     ld (hl),a
     ld (w3d_world_dirty),a
+    ret
+
+; ---------------------------------------------------------------------------
+; Runtime item drops
+; ---------------------------------------------------------------------------
+
+; PlaceItemType's ordinary-combat subset. A=itemnumber, B=tilex, C=tiley.
+; Reuse the first collected/removed slot (shapenum=-1), otherwise append one
+; stable VDP identity up to the original MAXSTATS=400 capacity. Carry is set
+; on success and clear if the item is unsupported or the pool is full.
+w3d_place_item_type:
+    cp W3D_ITEM_CLIP2
+    jr z,@clip2
+    cp W3D_ITEM_MACHINEGUN
+    jr z,@machinegun
+    or a
+    ret
+@clip2:
+    ld d,28                         ; SPR_STAT_26
+    jr @shape_ready
+@machinegun:
+    ld d,29                         ; SPR_STAT_27
+@shape_ready:
+    ld (w3d_drop_itemnumber),a
+    ld a,b
+    ld (w3d_drop_tilex),a
+    ld a,c
+    ld (w3d_drop_tiley),a
+    ld a,d
+    ld (w3d_drop_shapenum),a
+
+    ld hl,0
+    ld (w3d_current_static_index),hl
+@find_reusable:
+    ld hl,(w3d_current_static_index)
+    call w3d_load_static_count_de
+    or a
+    sbc.s hl,de
+    jr nc,@append
+    call w3d_static_pointer_from_current
+    ld a,(ix+W3D_STATIC_SHAPENUM+0)
+    inc a
+    jr nz,@next
+    ld a,(ix+W3D_STATIC_SHAPENUM+1)
+    inc a
+    jr z,@write_record
+@next:
+    ld hl,(w3d_current_static_index)
+    inc.s hl
+    ld (w3d_current_static_index),hl
+    jr @find_reusable
+
+@append:
+    call w3d_load_static_count_de
+    ex de,hl
+    ld de,W3D_MAX_STATICS
+    or a
+    sbc.s hl,de
+    jr nc,@full
+    add.s hl,de                     ; restore old count/index
+    ld (w3d_current_static_index),hl
+    inc.s hl
+; Count is uint16; publish only its two significant bytes in ADL mode.
+    ld a,l
+    ld (w3d_static_count+0),a
+    ld a,h
+    ld (w3d_static_count+1),a
+    call w3d_static_pointer_from_current
+
+@write_record:
+    ld a,(w3d_drop_tilex)
+    ld (ix+W3D_STATIC_TILEX),a
+    ld a,(w3d_drop_tiley)
+    ld (ix+W3D_STATIC_TILEY),a
+    ld a,(w3d_drop_shapenum)
+    ld (ix+W3D_STATIC_SHAPENUM+0),a
+    xor a
+    ld (ix+W3D_STATIC_SHAPENUM+1),a
+    ld a,W3D_STATIC_FLAG_BONUS
+    ld (ix+W3D_STATIC_FLAGS),a
+    ld a,(w3d_drop_itemnumber)
+    ld (ix+W3D_STATIC_ITEMNUMBER),a
+    call w3d_mark_current_static_dirty
+    scf
+    ret
+@full:
+    or a
     ret
 
 ; Add the signed 24-bit little-endian value at HL to the 32-bit value at IX.
@@ -1328,7 +1533,7 @@ w3d_add_signed_delta24:
 ; Door operation and fixed-step simulation
 ; ---------------------------------------------------------------------------
 
-; Turn the latched Space state into one operation per physical key press.
+; Turn the latched Up-arrow state into one operation per physical key press.
 w3d_handle_use_edge:
     ld a,(w3d_controls)
     and W3D_CONTROL_USE
@@ -1347,7 +1552,7 @@ w3d_handle_use_edge:
 ; Operate the door whose cell currently contains the player, otherwise exactly
 ; one adjacent tile in the nearest cardinal direction.  Center-plane collision
 ; deliberately permits the player to enter a door well, so current-cell
-; priority keeps Space useful throughout that recess.  A malformed current
+; priority keeps Up Arrow useful throughout that recess. A malformed current
 ; door byte fails closed instead of accidentally operating a neighboring door.
 ; Adjacent angle sectors preserve the original boundary behavior: 315 remains
 ; south; 316 begins the east sector. Pushwalls/elevator switches are future
@@ -1851,11 +2056,37 @@ w3d_mark_current_door_dirty:
     ld (w3d_world_dirty),a
     ret
 
+; Respawn presentation entry. init_level clears every VDP-side door, actor,
+; static, and map reference while leaving resident bitmap assets intact. The
+; reseed hook has already marked the complete authoritative fixture prefix;
+; replay it and submit exactly one purpose-tagged render through the ordinary
+; dirty bridge. The caller must have established RESPawn purpose and verified
+; that no asynchronous owner is active. Ownership is nevertheless acquired
+; here before destructive init_level bytes are allowed onto the wire.
+w3d_submit_level_reset:
+    call w3d_mark_render_submitted
+    ret c
+    ld hl,@init_level_command
+    ld bc,@init_level_end-@init_level_command
+    rst.lil 18h
+    jp w3d_submit_dirty_world_render_marked
+@init_level_command:
+    db 23,0,0A0h
+    dw W3D_FIXTURE_CONTROL_BUFFER_ID
+    db 4Ah,1
+    dw W3D_FIXTURE_TILEMAP_BUFFER_ID
+@init_level_end:
+
 ; Send every changed door/static/HUD field, then the changed player pose,
 ; followed by one render request. Assets/map remain resident. Each dirty flag
 ; is cleared only after its complete command crosses the synchronous VDU
-; boundary.
+; boundary. Mark ownership first: a rejected overlapping submission must emit
+; no state bytes and must leave every dirty flag intact for diagnosis/retry.
 w3d_submit_dirty_world_render:
+    call w3d_mark_render_submitted
+    ret c
+
+w3d_submit_dirty_world_render_marked:
     xor a
     ld (w3d_current_door_index),a
 @door_loop:
@@ -1905,7 +2136,7 @@ w3d_submit_dirty_world_render:
     ld (w3d_current_static_index),hl
 @static_loop:
     ld hl,(w3d_current_static_index)
-    ld de,W3D_FIXTURE_STATIC_COUNT
+    call w3d_load_static_count_de
     or a
     sbc hl,de
     jr nc,@hud
@@ -1945,6 +2176,20 @@ w3d_submit_dirty_world_render:
 @hud:
     call w3d_submit_dirty_hud
 
+@view_weapon:
+    ld a,(w3d_player_weapon_shape_dirty)
+    or a
+    jr z,@player
+    ld a,(w3d_player_weapon_shape+0)
+    ld (@view_weapon_shape+0),a
+    ld a,(w3d_player_weapon_shape+1)
+    ld (@view_weapon_shape+1),a
+    ld hl,@view_weapon_command
+    ld bc,@view_weapon_end-@view_weapon_command
+    rst.lil 18h
+    xor a
+    ld (w3d_player_weapon_shape_dirty),a
+
 @player:
     ld a,(w3d_player_dirty)
     or a
@@ -1962,10 +2207,10 @@ w3d_submit_dirty_world_render:
 @render:
     xor a
     ld (w3d_world_dirty),a
-    call w3d_mark_render_submitted
     ld hl,@render_command
     ld bc,@render_end-@render_command
     rst.lil 18h
+    or a
     ret
 @door_command:
     db 23,0,0A0h
@@ -1985,6 +2230,13 @@ w3d_submit_dirty_world_render:
 @static_record:
     ds W3D_STATIC_WIRE_SIZE
 @static_end:
+@view_weapon_command:
+    db 23,0,0A0h
+    dw W3D_FIXTURE_CONTROL_BUFFER_ID
+    db 4Ah,8
+@view_weapon_shape:
+    dw -1
+@view_weapon_end:
 @player_command:
     db 23,0,0A0h
     dw W3D_FIXTURE_CONTROL_BUFFER_ID
@@ -2193,13 +2445,25 @@ w3d_door_dirty:
     ds W3D_FIXTURE_DOOR_COUNT
 
 w3d_statics:
-    ds W3D_FIXTURE_STATIC_COUNT*W3D_STATIC_SIZE
+    ds W3D_MAX_STATICS*W3D_STATIC_SIZE
 
 w3d_static_dirty:
-    ds W3D_FIXTURE_STATIC_COUNT
+    ds W3D_MAX_STATICS
+
+w3d_static_count:
+    dw W3D_FIXTURE_STATIC_COUNT
 
 w3d_current_static_index:
     dl 0
+
+w3d_drop_tilex:
+    db 0
+w3d_drop_tiley:
+    db 0
+w3d_drop_shapenum:
+    db 0
+w3d_drop_itemnumber:
+    db 0
 
 w3d_current_door_index:
     db 0

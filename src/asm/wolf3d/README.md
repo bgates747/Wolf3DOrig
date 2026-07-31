@@ -23,6 +23,12 @@ The real, permanent eZ80 game client. Distinct from its two siblings under
 - `wolf3d_combat` -- the independent host oracle and direct-eZ80 regression for
   ordinary ranged/melee attack chains, player damage, movement-speed hit
   chance, and deterministic CPU-side actor visibility.
+- `wolf3d_player_combat` -- the independent host oracle and direct
+  production-code eZ80 regression for player weapon timing, input, target
+  selection, actor pain/death, scores, and stable runtime drops.
+- `wolf3d_death` -- the direct production-code eZ80 regression for asynchronous
+  render/fizzle ownership, killer-facing turns, life semantics, and complete
+  attempt reseeding.
 
 Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
 
@@ -40,12 +46,14 @@ Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
     their buffers at the exact ids these loaders expect
     (`Wolf3dWallBufferId()`/`Wolf3dSpriteBufferId()` on the VDP side).
   - `wolf3d.asm` -- the interactive player's-first-position fixture: it loads
-    real level_00 wall and sprite textures plus original status-panel art,
+    real level_00 wall and sprite textures plus original HUD art,
     uploads the real tilemap, initializes every door and static, then runs a
     callback-gated 30 Hz
-    control/render loop. W/S move, A/D strafe, the arrow keys turn, Space
-    operates the containing door well or the adjacent facing door, and Escape
-    exits. Player collision and
+    control/render loop. W/S move, A/D strafe, Left/Right turn, Up Arrow
+    operates the containing door well or the adjacent facing door, Space
+    attacks, and 1..4 select knife, pistol, submachine gun, and gatling gun.
+    Escape exits, restoring and clearing the single-buffered MOS display mode
+    that was active before launch. Player collision and
     eZ80-authoritative moving doors, original blocking decorations, persistent
     pickups, live HUD fields, and the real difficulty-filtered E1L1 actor
     population are active. Original state timing and path patrols are also
@@ -102,9 +110,9 @@ uses dot-only breadcrumbs. Once the gallery is visible,
 press any key to switch to the Wolf3D render attempt. This distinguishes a
 bad MOS-to-VDP bitmap upload from a later renderer/presentation failure;
 the host-side Tk viewer alone does not exercise that upload path. It then
-loads `hud.agnb`, which contains only the original in-game status assets and
-the generated 320x80 Agon lower-panel composition--not title or splash
-screens. A load error aborts before rendering. It uploads the real tilemap,
+loads `hud.agnb`, which contains only the original in-game status assets--not
+an extended panel, title, or splash screens. A load error aborts before
+rendering. It uploads the real tilemap,
 sends one `set_door` per real door (all closed -- the level's actual state at
 first spawn), one `set_static` per real decoration/pickup, sets the player's
 real start tile/facing, selects 320x240x64 double-buffered mode 8+128,
@@ -132,17 +140,16 @@ therefore cannot vary with VDP or rendering cadence. Refused full-health or
 full-ammo pickups remain active; consumed objects use the original
 `shapenum=-1` sentinel and only that static slot plus changed HUD fields cross
 the wire.
-Space is rising-edge-triggered. A valid door cell containing the player takes
+Up Arrow is rising-edge-triggered. A valid door cell containing the player takes
 priority, keeping the control usable from either recessed well; otherwise the
 original one-adjacent-cardinal-tile lookup and angle boundaries apply.
 The eZ80 owns door action, 0.16 position, auto-close timing, and player
 obstruction; only dirty door/player snapshots are sent before a render. The
 client never allows more than one VDP render in flight.
 
-The VDP centers the accepted 256x160 view at `(32,0)` in mode 8, draws the
-original 320x40 status bar at `y=160`, and extends its lower-panel styling
-through mode 8's extra forty rows. The complete lower panel is drawn into
-every back buffer before presentation.
+The VDP centers the accepted 256x160 view at `(32,20)` in mode 8, leaving the
+320x200 play surround visible on all four sides. It draws original chunk 98's
+320x40 status bar directly at `y=200` in every back buffer before presentation.
 
 Presentation follows the same ownership model as `earth-party-local`: the
 MOS keyboard callback recognizes the ten-byte `W3DR` completion record and
@@ -150,7 +157,9 @@ only publishes a mailbox flag; the foreground control loop validates the
 token/sequence and issues exactly one `C3` frame boundary, presenting the
 completed hidden buffer. The loop remains responsive without submitting
 duplicate frames. Escape disables the VDP notification producer, removes the
-callback, and returns cleanly. Player motion advances at a fixed 30 Hz from
+callback, restores the caller's saved base video mode without the double-buffer
+flag, clears its text and graphics surfaces, and returns cleanly. Player motion
+advances at a fixed 30 Hz from
 the 120 Hz MOS clock; render submission is capped at the same cadence and
 skips stale snapshots if rendering falls behind.
 
@@ -172,11 +181,25 @@ the original chase/dodge selectors and residual movement. Guards, officers,
 mutants, and SS enter their exact shooting chains; dogs enter their jump/bite
 chain. Attack actions re-check current geometry and use the shared deterministic
 RNG stream. Because the VDP is write-only and render completion is decoupled
-from simulation, ranged hit chance uses a synchronous CPU projection from the
-authoritative pose instead of a renderer-owned visibility bit. Player health
-saturates at zero and death freezes world simulation while leaving Escape and
-the final HUD submission responsive. Player weapons, actor injury/death, and
-special enemies remain later layers. The remaining state/AI rollout is recorded in
+from simulation, weapon targeting uses synchronous CPU projection plus a
+current `CheckLine` for every candidate instead of the renderer-owned
+`FL_VISABLE` bit. This prevents an occluded actor from masking a farther clear
+target and prevents knife damage through opaque geometry; equal Q8 depths
+retain live-list order. Player health saturates at zero. Lethal damage freezes
+ordinary world simulation, presents
+the dead face, turns by the shortest path toward the validated killer at the
+original angular rate, synchronizes the final view to both mode-8 surfaces,
+and hands the viewport to the VDP-owned original red fizzle. The eZ80 then
+applies release-before-new-press acknowledgment, original life/score
+semantics, a complete authoritative E1L1 attempt reseed, and one
+purpose-tagged respawn render. Displayed life zero remains one final playable
+attempt; exhausting it leaves a stable red game-over placeholder until Escape.
+
+Knife, pistol, machine gun, and chaingun timelines, target selection, actor
+pain/death chains, class scores, extra lives, and stable clip/weapon drops are
+live. Weapon and death sounds are retained as deterministic simulation events;
+audio playback, bosses, projectiles, menus/high-score entry, and level
+completion remain later layers. The remaining rollout is recorded in
 `agonport/doc/actor_gameplay_plan.md`.
 
 `wolf3d_fixture.inc` (the tilemap + precomputed command-stream bytes) is
@@ -194,8 +217,8 @@ and player start tile/facing directly -- nothing in it is hand-tuned. For
 shareware E1L1 it emits 121 statics: 34 blockers, 48 pickups, and 39
 nonblocking decorations.
 
-The original in-game HUD assets and mode-8 lower panel are likewise generated
-from the bundled WL1 archive:
+The original in-game HUD assets are likewise generated from the bundled WL1
+archive:
 
 ```bash
 .venv/bin/python agonport/tools/wolf3d_assets/scripts/build_hud_assets.py
@@ -241,6 +264,13 @@ Run the gameplay host and real-eZ80 regressions from the repository root:
   -s src/asm/wolf3d_combat/scripts -p 'test_combat_oracle.py'
 .venv/bin/python \
   src/asm/wolf3d_combat/scripts/run_combat_emulator_regression.py
+.venv/bin/python -m unittest discover -v \
+  -s src/asm/wolf3d_player_combat/scripts \
+  -p 'test_player_combat_oracle.py'
+.venv/bin/python \
+  src/asm/wolf3d_player_combat/scripts/run_player_combat_emulator_regression.py
+.venv/bin/python \
+  src/asm/wolf3d_death/scripts/run_death_emulator_regression.py
 ```
 
 **Hardware deployment** (no emulator/build harness involved): assemble as

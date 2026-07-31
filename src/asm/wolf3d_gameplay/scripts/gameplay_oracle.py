@@ -69,6 +69,7 @@ SUB_SET_DOOR = 3
 SUB_SET_ACTOR = 4
 SUB_SET_STATIC = 6
 SUB_RENDER_FRAME = 7
+SUB_SET_VIEW_WEAPON = 8
 
 DOOR_RECORD = struct.Struct("<BBBBBHB")
 DOOR_SEED_RECORD = struct.Struct("<BBBBBHBBB")
@@ -622,6 +623,7 @@ def parse_command_stream(payload: bytes) -> list[tuple[int, bytes]]:
         SUB_SET_ACTOR: ACTOR_WIRE_RECORD.size,
         SUB_SET_STATIC: STATIC_WIRE_RECORD.size,
         SUB_RENDER_FRAME: 0,
+        SUB_SET_VIEW_WEAPON: 2,
     }
     commands: list[tuple[int, bytes]] = []
     offset = 0

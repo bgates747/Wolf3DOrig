@@ -2,7 +2,7 @@
 
 This package is a durable, independent host oracle for the first eZ80-owned
 gameplay layer: square-player collision, original `ClipMove` sliding order,
-current-well/cardinal use targeting, lock gating, Space rising-edge behavior,
+current-well/cardinal use targeting, lock gating, Up-Arrow rising-edge behavior,
 30 Hz door motion/timing, original blocking decorations, mutable pickups/HUD
 state, and the complete fixture-generator door/static wire contract.
 
@@ -72,7 +72,7 @@ profile:
 Its 13 cases reproduce both reachable halves of an E1L1 door well, all four
 exterior approaches, ordinary adjacent fallback, malformed-current fail-closed
 behavior, locks, action transitions, complete dirty/timer state, and the held
-Space latch. See `USE_REGRESSION.md` for the exact contract.
+Up-Arrow latch. See `USE_REGRESSION.md` for the exact contract.
 
 Important model choices match the current port contract:
 
