@@ -238,4 +238,35 @@ prebuilt firmware); building a custom `vdp_wolf3d.so` would need a
 has, which doesn't exist yet for this fork -- deliberately deferred as a
 separate task.
 
+## 2026-07-31: custom vdp_wolf3d.so built, deployed, and validated end-to-end
+
+The `userspace/` harness deferred above now exists in `agon-vdp-wolf3d`
+(`vdp_wolf3d.cpp`, `wolf3d_smoke.cpp`, `Makefile`), built following
+`agon-dev-env/codex/bespoke-vdp-emulator.md` and modeled on Pingo's
+`userspace/vdp_pingo.cpp`, simplified since this branch has no Pingo code.
+A clean `USERSPACE` host build surfaced several portability gaps that only
+show up off-ESP32 (32-bit `size_t`, no PlatformIO `lib_deps` resolution, no
+real Arduino core) -- missing `CRC16.h`/`ESP32Time.h` include paths, a
+dead-but-still-compiled function with no return under `USERSPACE`
+(`hexload.h`), a `size_t`/`unsigned` declaration mismatch (`ymodem.h`), an
+ESP-IDF-only heap API in a debug log (`vdu_layers.h`), a bare `max()`
+relying on Arduino's implicit global template (`context/cursor.h`), and
+missing CRC library objects plus a bare `yield()` needing a small compat
+shim. All fixed directly in `agon-vdp-wolf3d`'s own checkout -- the
+read-only Fab reference checkout was never modified. Full details and the
+per-file fixes are in devlog item 32.
+
+Deployed the built `.so` into the local emulator profile via the existing
+`AGONPORT_VDP` env override (no code change needed, `run_emulator.sh`
+already supported it) and wired `wolf3d_hello.bin` into the SD profile via
+a new `sdcard/wolf3d_hello` symlink plus an `autoexec.txt` `cd`/`load`/
+`run` sequence -- both changes live only under the gitignored
+`agonport/emulator/` profile, not committed. Ran the emulator with
+`--verbose` and confirmed the real eZ80 client's hello dispatch (subcommand
+`0` under `0x4A`) reached the new native VDP and printed `"Wolf3D: Hello
+from Castle Wolfenstein 3D!"` -- the first fully working round trip through
+the whole chain: assembly client -> MOS -> buffered VDU wire protocol ->
+native `vdp_wolf3d.so` dispatch. Committed to `agon-vdp-wolf3d` as
+`4d1e8f2`.
+
 
