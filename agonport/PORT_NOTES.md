@@ -163,4 +163,35 @@ effectively owned by active Pingo work right now):
   switch, no other changes to core dispatch. Scaffolded (empty dir +
   `README.md` placeholder only, no code yet) in `agon-vdp-wolf3d`.
 
+## 2026-07-31: video/wolf3d/ subfolder plan and implementation language
+
+Reviewed the original `WOLFSRC` layout for a subfolder analog and
+concluded most of it doesn't map to VDP-side work at all -- `WL_AGENT.C`,
+`WL_PLAY.C`, `WL_ACT1.C`/`WL_ACT2.C`, `WL_MENU.C`, `WL_STATE.C`,
+`WL_TEXT.C` are game logic that stays on the eZ80; `ID_PM.C` (VSWAP
+paging) is superseded by the existing Python toolchain's pre-converted
+RGBA2222 assets; `ID_VL.C` (palette/mode setup) is just a `MODE 136` VDU
+call. Only one part has a real analog: `WL_DRAW.C`'s raycast column loop
+plus the `WL_SCALE.C`/`CONTIGSC.C`/`OLDSCALE.C` compiled-scaler family
+(three CPU-tier-specific implementations of the same job originally --
+Agon only needs one modern one). That maps to a single new subfolder,
+`video/wolf3d/render/` (scaffolded, placeholder `README.md` only, no code
+yet): given a screen column, texture ID + source column, and top/bottom
+height, blits a scaled textured vertical strip into the render target.
+Deliberately not adding a `math/` subfolder (mirroring Pingo's) yet --
+that only makes sense if the VDP ends up doing ray/wall-distance math
+itself, which is still the open eZ80/VDP renderer-boundary question in
+`vdp-3d-pipeline-reuse.md`/`ARCHITECTURE_PRECIS.md`.
+
+Implementation language: C++, not the original's plain C (plus inline
+assembly for the scalers). The original's language choice was purely a
+product of its era's compilers/CPU, not something worth preserving.
+`video/` is overwhelmingly Steve Sims's C++ (camelCase, tabs -- see
+`vdp-coding-conventions.md` items 2, 9), and Pingo -- the structural
+template this work mirrors -- is C++ as well (`Texture`, mesh/scene
+classes, etc.), as is vdp-gl. Writing new code in C would be an
+immediate, visible departure from house style and undermine the
+convention-fit bar (devlog item 19) that upstreamability depends on.
+
+
 
