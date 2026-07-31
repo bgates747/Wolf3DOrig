@@ -297,19 +297,24 @@ Grounded in `orig/src/WOLFSRC/ID_PM.C` / `WL_DRAW.C`:
       solely in the `PlayerStart` object) to avoid two disagreeing sources
       of truth for the same cell.
     - Since decoding VSWAP's sprite-chunk format (column-sparse, masked,
-      distinct from the flat 64×64 wall-texture format) is a substantially
-      bigger task, plane1 tiles are rendered as **category-colored,
-      number-and-mnemonic-stamped placeholders** (green=static item,
-      orange=pushwall, dark red=enemy any tier, purple=unique boss,
-      pink=ghost, gray=unused code) rather than real sprite art — full-
-      fidelity data, placeholder visuals. The mnemonic (e.g. `GRD`, `HANS`,
-      `1up`, `PUSH`) is a legend on top of the raw dispatch code, grounded
-      directly in `WL_GAME.C`'s `ScanInfoPlane()` switch and (for the 49
-      static item types) `WL_ACT1.C`'s `statinfo[]` table comments — it's
-      not stored/round-tripped anywhere, purely a `extract.py`-side visual
-      aid. **Future QoL TODO, not on the critical path**: replace these
-      placeholders with real decoded VSWAP sprite art once that decoder
-      exists.
+      distinct from the flat 64×64 wall-texture format) was a substantially
+      bigger task, plane1 tiles were originally rendered as purely
+      **category-colored, number-and-mnemonic-stamped placeholders**
+      (green=static item, orange=pushwall, dark red=enemy any tier,
+      purple=unique boss, pink=ghost, gray=unused code). **This is now
+      upgraded**: `extract.py` composites real decoded VSWAP sprite art
+      over that same category-color background wherever a shapenum
+      mapping and non-empty chunk exist (see the "Real VSWAP sprite art
+      decoding" entry further down), stamping just the numeric code (the
+      art itself IDs it) — falling back to the full colored+mnemonic
+      placeholder only where no real-art mapping exists (e.g. many
+      individual enemy/animation frames, which still share one
+      representative sprite per creature/tier rather than full fidelity).
+      The mnemonic (e.g. `GRD`, `HANS`, `1up`, `PUSH`) remains a legend on
+      top of the raw dispatch code either way, grounded directly in
+      `WL_GAME.C`'s `ScanInfoPlane()` switch and (for the 49 static item
+      types) `WL_ACT1.C`'s `statinfo[]` table comments — it's not stored/
+      round-tripped anywhere, purely a `extract.py`-side visual aid.
   - **Validated two ways**: `flatpak run org.mapeditor.Tiled --export-map
     level_00.tmx level_00_check.json` round-trips through Tiled's own parser
     with no errors and preserves both tile layers, both tilesets' GID
@@ -475,3 +480,33 @@ Grounded in `orig/src/WOLFSRC/ID_PM.C` / `WL_DRAW.C`:
   authoring clarity. Visually verified via a cropped-tileset image
   inspection (all 6 lock types render with distinct colors/labels); full
   test suite still passes (12/12), including the wall/VSWAP round trip.
+- **Real VSWAP sprite art decoding for plane1 tiles** — done (the last
+  critical-path item). `vswap.py`'s `sprite_chunk_to_image()` decodes the
+  `t_compshape` column/post sprite format (grounded in `WL_DEF.H`,
+  cross-checked against `mozzwald/wolf4sdl`'s plain-C++ `ScaleShape`/
+  `SimpleScaleShape` since id's own scaler code is assembly-entangled)
+  into a transparent-background RGBA image. New
+  `toolchain/formats/spritenames.py` hardcodes just the shapenums needed:
+  a direct 49-entry static-item table mirroring `WL_ACT1.C`'s
+  `statinfo[]` (exact 1:1 fidelity for tiles 23-71), plus one
+  representative "standing" frame per enemy/boss/ghost type — not full
+  per-facing/animation fidelity, every dispatch code for a given
+  creature/tier still renders one shared frame (same simplification the
+  old mnemonic placeholders made). `extract.py`'s `_plane1_tile_image()`
+  composites real art over the category-color background when a mapping
+  and non-empty chunk exist, falling back to the colored+mnemonic
+  placeholder otherwise (this correctly and silently covers retail-only
+  content missing from the shareware `VSWAP.WL1` — Gretel/Otto/Fat/
+  Schabbs/mecha-Hitler/real-Hitler, the four ghosts, mutants — verified
+  to be zero-length chunks there, not a bug). Also added
+  `extract_sprite_sheet()` → `build/extracted/sprite_textures.png`, a
+  standalone full-sprite-range reference sheet (not consumed by the Tiled
+  pipeline). Gotcha worth remembering for future binary-format work: the
+  post record's `pixelbase`/"newstart" field is a **signed** 16-bit short
+  in the original struct — reading it unsigned caused real decode
+  failures on real sprite chunks where it's legitimately negative; always
+  check field signedness against the original C type, not just width.
+  Visually verified via cropped `view_image` inspection of the
+  regenerated tileset/sheet (static items, guard/officer/SS/dog frames,
+  Hans Grosse, dead-guard body all render correctly); full test suite
+  still green (12/12).

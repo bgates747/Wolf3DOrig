@@ -103,3 +103,57 @@ def _nearest_palette_index(rgb: tuple[int, int, int]) -> int:
             best_dist = dist
             best_index = i
     return best_index
+
+
+def sprite_chunk_to_image(chunk: bytes) -> Image.Image:
+    """Decode a raw VSWAP sprite chunk (chunks spritestart..soundstart-1) into
+    an RGBA image, TEXTURE_SIZE x TEXTURE_SIZE, with fully transparent pixels
+    wherever no post covers a column/row -- sprites are camera-facing
+    billboards that rarely fill their whole 64x64 bounding box.
+
+    Format (t_compshape in WL_DEF.H): UINT16LE leftpix, UINT16LE rightpix,
+    then (rightpix-leftpix+1) UINT16LE column offsets (byte offsets from the
+    start of this chunk), one per column in [leftpix, rightpix]. Each column
+    offset points to a list of "posts" (vertical runs of opaque pixels):
+    UINT16LE endrow*2 (0 terminates the column's post list), INT16LE
+    pixelbase (signed -- see below), UINT16LE startrow*2. For row y in
+    [startrow, endrow), the pixel's palette index is
+    chunk[pixelbase + y] (pixelbase is precomputed as the real pixel-data
+    offset minus startrow, a trick to avoid an extra subtraction per pixel
+    in the original assembly scaler; it's legitimately negative for posts
+    whose pixel data sits earlier in the chunk than startrow would suggest,
+    so it must be read as a signed 16-bit value).
+
+    Grounded in WL_DEF.H's t_compshape struct and WL_SCALE.C/CONTIGSC.C's
+    ScaleShape()/SimpleScaleShape() column/post walk (id's own scaler code
+    is deeply entangled with 16-bit segment/assembly-call scaling, so the
+    post-triple layout was cross-checked against mozzwald/wolf4sdl's
+    wl_draw.cpp, a maintained open-source SDL reimplementation, for the
+    exact per-post field order).
+    """
+    leftpix, rightpix = struct.unpack_from("<HH", chunk, 0)
+    img = Image.new("RGBA", (TEXTURE_SIZE, TEXTURE_SIZE), (0, 0, 0, 0))
+    if rightpix < leftpix:
+        return img
+    num_cols = rightpix - leftpix + 1
+    dataofs = struct.unpack_from(f"<{num_cols}H", chunk, 4)
+    pixels = img.load()
+    for col in range(num_cols):
+        x = leftpix + col
+        pos = dataofs[col]
+        while True:
+            endrow = struct.unpack_from("<H", chunk, pos)[0]
+            if endrow == 0:
+                break
+            # pixelbase ("newstart" in the original source) is a signed
+            # short -- it's precomputed as (pixel-data offset - startrow),
+            # which is legitimately negative for posts near the top of a
+            # tall pixel pool, so it must NOT be read as unsigned.
+            pixelbase, startrow2 = struct.unpack_from("<hH", chunk, pos + 2)
+            endrow >>= 1
+            startrow = startrow2 >> 1
+            pos += 6
+            for y in range(startrow, endrow):
+                r, g, b = WOLF3D_PALETTE_RGB888[chunk[pixelbase + y]]
+                pixels[x, y] = (r, g, b, 255)
+    return img

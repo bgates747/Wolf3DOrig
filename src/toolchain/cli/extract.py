@@ -17,7 +17,7 @@ from xml.sax.saxutils import escape
 
 from PIL import Image, ImageDraw, ImageFont
 
-from toolchain.formats import mapfile, vswap
+from toolchain.formats import mapfile, spritenames, vswap
 
 TILESET_COLUMNS = 8
 
@@ -148,6 +148,33 @@ def _plane1_mnemonic(value: int) -> str | None:
     return None
 
 
+def _plane1_sprite_shapenum(value: int) -> int | None:
+    """Best-effort real-sprite-art lookup: plane1 dispatch code -> VSWAP
+    shapenum (see toolchain.formats.spritenames for the grounding and the
+    one-frame-per-creature-type caveat). None if no real art is mapped for
+    this code, in which case the caller falls back to the colored/mnemonic
+    placeholder."""
+    if STATIC_MIN <= value <= STATIC_MIN + len(spritenames.STATIC_SHAPENUMS) - 1:
+        return spritenames.STATIC_SHAPENUMS[value - STATIC_MIN]
+    if value == DEAD_GUARD_TILE:
+        return spritenames.SPR_GRD_DEAD
+    name = BOSS_NAMES.get(value)
+    if name:
+        return spritenames.BOSS_SHAPENUMS[name]
+    name = GHOST_NAMES.get(value)
+    if name:
+        return spritenames.GHOST_SHAPENUMS[name]
+    for name, stand, patrol in ENEMY_KINDS:
+        for t in DIFFICULTY_TIER_OFFSETS:
+            if stand + t <= value <= stand + t + 3 or patrol + t <= value <= patrol + t + 3:
+                return spritenames.ENEMY_STAND_SHAPENUMS[name]
+    for t in MUTANT_TIER_OFFSETS:
+        if MUTANT_STAND + t <= value <= MUTANT_STAND + t + 3 or \
+                MUTANT_PATROL + t <= value <= MUTANT_PATROL + t + 3:
+            return spritenames.ENEMY_STAND_SHAPENUMS["MUT"]
+    return None
+
+
 def extract_tileset(vswap_path: str, out_dir: str) -> int:
     with open(vswap_path, "rb") as f:
         vs = vswap.read_vswap(f.read())
@@ -262,21 +289,33 @@ def _stamp_mnemonic(tile: Image.Image, font: ImageFont.ImageFont, lines: list[st
         y += line_height
 
 
-def _plane1_tile_image(size: int, font: ImageFont.ImageFont, value: int) -> Image.Image:
+def _plane1_tile_image(vs: vswap.VSwapFile, size: int, font: ImageFont.ImageFont,
+                        value: int) -> Image.Image:
     tile = Image.new("RGB", (size, size), _plane1_category_color(value))
+    shapenum = _plane1_sprite_shapenum(value)
+    if shapenum is not None:
+        chunk_index = vs.spritestart + shapenum
+        chunk = vs.chunks[chunk_index] if chunk_index < len(vs.chunks) else b""
+        if chunk:
+            sprite = vswap.sprite_chunk_to_image(chunk)
+            tile.paste(sprite, (0, 0), sprite)
+            _stamp_mnemonic(tile, font, [str(value)])  # number only -- the art itself IDs it
+            return tile
     mnemonic = _plane1_mnemonic(value)
     lines = [mnemonic, str(value)] if mnemonic else [str(value)]
     _stamp_mnemonic(tile, font, lines)
     return tile
 
 
-def build_plane1_tileset(out_dir: str) -> tuple[str, str]:
-    """Build a Tiled tileset (.tsx + backing .png) of category-colored,
-    number-stamped placeholders for plane1 actor/item/pushwall codes (see
-    the PLANE1_* constants above for the grounding and the real-sprite-art
-    caveat). GID == plane1 value + PLANE1_GID_OFFSET (tileset firstgid ==
-    PLANE0_MAX_VALUE + 1), so its GIDs never collide with the plane0 tileset
-    sharing the same map."""
+def build_plane1_tileset(vswap_path: str, out_dir: str) -> tuple[str, str]:
+    """Build a Tiled tileset (.tsx + backing .png) for plane1 actor/item/
+    pushwall codes: real decoded VSWAP sprite art where a mapping exists
+    (see toolchain.formats.spritenames), category-colored/mnemonic-stamped
+    placeholders otherwise. GID == plane1 value + PLANE1_GID_OFFSET (tileset
+    firstgid == PLANE0_MAX_VALUE + 1), so its GIDs never collide with the
+    plane0 tileset sharing the same map."""
+    with open(vswap_path, "rb") as f:
+        vs = vswap.read_vswap(f.read())
     size = vswap.TEXTURE_SIZE
     columns = PLANE1_TILESET_COLUMNS
     rows = (PLANE1_MAX_VALUE + columns - 1) // columns
@@ -285,7 +324,7 @@ def build_plane1_tileset(out_dir: str) -> tuple[str, str]:
     for value in range(1, PLANE1_MAX_VALUE + 1):
         local_id = value - 1
         x, y = (local_id % columns) * size, (local_id // columns) * size
-        sheet.paste(_plane1_tile_image(size, font, value), (x, y))
+        sheet.paste(_plane1_tile_image(vs, size, font, value), (x, y))
 
     os.makedirs(out_dir, exist_ok=True)
     png_path = os.path.join(out_dir, "plane1_tileset.png")
@@ -360,10 +399,37 @@ def build_level_tmx(gamemaps: bytes, maphead: mapfile.MapHead, index: int, out_d
     return out_path
 
 
+def extract_sprite_sheet(vswap_path: str, out_dir: str) -> str:
+    """Decode every VSWAP sprite chunk (spritestart..soundstart-1) into a
+    single reference PNG sheet, for manual inspection -- not consumed by
+    the Tiled pipeline (see build_plane1_tileset for the placeholder/real-art
+    logic that actually feeds Tiled). Composited onto a mid-gray backdrop so
+    each sprite's transparent regions are visible rather than looking like
+    real background."""
+    with open(vswap_path, "rb") as f:
+        vs = vswap.read_vswap(f.read())
+    size = vswap.TEXTURE_SIZE
+    count = vs.soundstart - vs.spritestart
+    columns = TILESET_COLUMNS
+    rows = (count + columns - 1) // columns
+    sheet = Image.new("RGB", (columns * size, rows * size), (128, 128, 128))
+    for i in range(count):
+        chunk = vs.chunks[vs.spritestart + i]
+        if not chunk:
+            continue
+        sprite = vswap.sprite_chunk_to_image(chunk)
+        x, y = (i % columns) * size, (i // columns) * size
+        sheet.paste(sprite, (x, y), sprite)
+    os.makedirs(out_dir, exist_ok=True)
+    out_path = os.path.join(out_dir, "sprite_textures.png")
+    sheet.save(out_path)
+    return out_path
+
+
 def extract_tiled_maps(maphead_path: str, gamemaps_path: str, vswap_path: str,
                         out_dir: str) -> list[str]:
     build_plane0_tileset(vswap_path, out_dir)
-    build_plane1_tileset(out_dir)
+    build_plane1_tileset(vswap_path, out_dir)
     with open(maphead_path, "rb") as f:
         maphead = mapfile.read_maphead(f.read())
     with open(gamemaps_path, "rb") as f:
@@ -392,6 +458,9 @@ def main() -> None:
 
     n = extract_tileset(vswap_path, args.out)
     print(f"wrote {n}-tile wall/door texture sheet -> {args.out}/wall_textures.png")
+
+    sprite_sheet_path = extract_sprite_sheet(vswap_path, args.out)
+    print(f"wrote {sprite_sheet_path}")
 
     levels = extract_levels(maphead_path, gamemaps_path, args.out)
     for path in levels:
