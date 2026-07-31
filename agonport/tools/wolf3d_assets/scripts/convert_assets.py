@@ -5,10 +5,10 @@ extension -- writes agonport/assets/generated/wolf3d/processed/ plus the
 final images.jsonl manifest (agnb/manifest.py's schema) that scripts/
 pack_agnb.py and scripts/build_level_manifest.py consume next.
 
-Default conversion method is "floyd" (Floyd-Steinberg dithering), per
-Author decision 2026-07-31 ("floyd-steinberg approved", after A/B testing
-against "rgb" no-dither and "bayer" ordered dithering). Pass --method to
-try "rgb", "hsv", "bayer", or "atkinson" instead.
+Opaque wall and door textures default to Floyd-Steinberg dithering. Sprites
+default to nearest-colour RGB with no dithering, which preserves cleaner
+silhouettes. Use --method to override both groups for an A/B comparison, or
+the kind-specific options to change one group.
 """
 
 import argparse
@@ -29,6 +29,7 @@ from agnb.manifest import (  # noqa: E402
 )
 
 GENERATED_DIR = Path(__file__).resolve().parents[3] / "assets" / "generated" / "wolf3d"
+DEFAULT_OVERRIDE_DIR = Path(__file__).resolve().parents[3] / "assets" / "overrides" / "wolf3d"
 PALETTE_FILE = Path(__file__).resolve().parents[1] / "palettes" / "Agon64.gpl"
 TRANSPARENT_RGBA = (0, 0, 0, 0)
 
@@ -48,16 +49,53 @@ def convert_one(source_png: Path, destination: Path, method: str, transparent: b
     )
 
 
+def use_palettized_override(
+    override_png: Path, source_png: Path, destination: Path, transparent: bool
+) -> None:
+    """Copy a durable hand edit and encode it without applying dithering again."""
+    with Image.open(source_png) as source, Image.open(override_png) as override:
+        if override.size != source.size:
+            raise ValueError(
+                f"Override {override_png} is {override.size}, expected {source.size}"
+            )
+    shutil.copy2(override_png, destination)
+    transparent_color = TRANSPARENT_RGBA if transparent else None
+    au.img_to_rgba2(
+        str(destination),
+        str(destination.with_suffix(".rgba2")),
+        str(PALETTE_FILE),
+        "rgb",
+        transparent_color,
+    )
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--in-dir", type=Path, default=GENERATED_DIR / "orig")
     parser.add_argument("--out-dir", type=Path, default=GENERATED_DIR / "processed")
     parser.add_argument(
+        "--override-dir",
+        type=Path,
+        default=DEFAULT_OVERRIDE_DIR,
+        help="tracked palettized PNG overrides (default: %(default)s)",
+    )
+    parser.add_argument(
         "--method",
+        default=None,
+        choices=["rgb", "hsv", "bayer", "floyd", "atkinson"],
+        help="override the conversion method for every image kind",
+    )
+    parser.add_argument(
+        "--wall-method",
         default="floyd",
         choices=["rgb", "hsv", "bayer", "floyd", "atkinson"],
-        help="agonutils palette_conversion_method (case-insensitive in the C "
-        "extension; lowercased here for consistency).",
+        help="wall/door conversion method (default: floyd)",
+    )
+    parser.add_argument(
+        "--sprite-method",
+        default="rgb",
+        choices=["rgb", "hsv", "bayer", "floyd", "atkinson"],
+        help="sprite conversion method (default: rgb/no dithering)",
     )
     args = parser.parse_args()
 
@@ -76,12 +114,35 @@ def main() -> None:
 
     entries = []
     for raw in raw_entries:
+        method = args.method or (
+            args.wall_method if raw["kind"] == "wall" else args.sprite_method
+        )
         source_png = args.in_dir / ("walls" if raw["kind"] == "wall" else "sprites") / raw["png"]
         destination = args.out_dir / raw["png"]
+        override_png = args.override_dir / (
+            "walls" if raw["kind"] == "wall" else "sprites"
+        ) / raw["png"]
         # Sprites are camera-facing billboards with real transparent
         # background pixels (see formats/vswap.py's sprite_chunk_to_image);
         # walls/doors are fully opaque 64x64 tiles.
-        convert_one(source_png, destination, args.method, transparent=raw["kind"] == "sprite")
+        if override_png.is_file():
+            use_palettized_override(
+                override_png,
+                source_png,
+                destination,
+                transparent=raw["kind"] == "sprite",
+            )
+            selected_source = f"hand-edited override: {override_png}"
+            print(f"Used override {raw['name']} (already palettized)")
+        else:
+            convert_one(
+                source_png,
+                destination,
+                method,
+                transparent=raw["kind"] == "sprite",
+            )
+            selected_source = raw["source"]
+            print(f"Converted {raw['name']} ({method})")
 
         rgba2_file = destination.with_suffix(".rgba2")
         with Image.open(destination) as image:
@@ -91,7 +152,7 @@ def main() -> None:
                 include=True,
                 kind=raw["kind"],
                 assetId=raw["assetId"],
-                source=raw["source"],
+                source=selected_source,
                 name=raw["name"],
                 bufferId=buffer_id_for(raw["kind"], raw["assetId"]),
                 width=width,
@@ -102,8 +163,6 @@ def main() -> None:
                 dataSize=rgba2_file.stat().st_size,
             )
         )
-        print(f"Converted {raw['name']} ({args.method})")
-
     manifest_out = args.out_dir / "images.jsonl"
     write_manifest(manifest_out, entries)
     print(f"Wrote {manifest_out} with {len(entries)} entries")

@@ -63,6 +63,7 @@ PROJECT_ROOT = next(
 )
 DEFAULT_DATA_DIR = PROJECT_ROOT / "orig" / "data"
 DEFAULT_OUT_DIR = PROJECT_ROOT / "agonport" / "assets" / "generated" / "wolf3d" / "hud"
+DEFAULT_OVERRIDE_DIR = PROJECT_ROOT / "agonport" / "assets" / "overrides" / "wolf3d" / "hud"
 DEFAULT_PALETTE_FILE = TOOLS_ROOT / "palettes" / "Agon64.gpl"
 IMAGE_FORMAT_RGBA2222 = 1
 
@@ -162,7 +163,8 @@ def build_hud_assets(
     data_dir: Path,
     out_dir: Path,
     palette_file: Path,
-    method: str = "floyd",
+    method: str = "rgb",
+    override_dir: Path | None = DEFAULT_OVERRIDE_DIR,
 ) -> list[HudManifestEntry]:
     """Build all staged HUD artifacts and return their manifest entries."""
     archive = read_vgagraph(
@@ -188,23 +190,36 @@ def build_hud_assets(
                 f"Chunk {chunk_id} dimensions changed: {image.size}, expected {expected}"
             )
         name = HUD_CHUNK_NAMES[chunk_id]
-        source_images.append(
-            (name, f"VGAGRAPH.WL1 chunk {chunk_id}", chunk_id, chunk_buffer_id(chunk_id), image)
-        )
+        source = f"VGAGRAPH.WL1 chunk {chunk_id}"
+        override_file = override_dir / f"{name}.png" if override_dir else None
+        if override_file and override_file.is_file():
+            with Image.open(override_file) as override:
+                override_rgb = override.convert("RGB")
+            if override_rgb.size != expected:
+                raise ValueError(
+                    f"HUD override {override_file} is {override_rgb.size}, expected {expected}"
+                )
+            image = override_rgb.quantize(palette=image)
+            source = f"hand-edited override: {override_file}"
+        source_images.append((name, source, chunk_id, chunk_buffer_id(chunk_id), image))
         if chunk_id == STATUSBAR_CHUNK:
             statusbar = image
 
     if statusbar is None:
         raise AssertionError("HUD chunk set omitted STATUSBARPIC")
-    source_images.append(
-        (
-            "status_panel",
-            "composite: chunk 98 plus neutral mode-8 extension",
-            None,
-            STATUS_PANEL_BUFFER_ID,
-            make_status_panel(statusbar),
-        )
-    )
+    panel = make_status_panel(statusbar)
+    panel_source = "composite: selected statusbar plus neutral mode-8 extension"
+    panel_override = override_dir / "status_panel.png" if override_dir else None
+    if panel_override and panel_override.is_file():
+        with Image.open(panel_override) as override:
+            panel = override.convert("RGBA")
+        if panel.size != (STATUS_PANEL_WIDTH, STATUS_PANEL_HEIGHT):
+            raise ValueError(
+                f"HUD override {panel_override} is {panel.size}, expected "
+                f"{(STATUS_PANEL_WIDTH, STATUS_PANEL_HEIGHT)}"
+            )
+        panel_source = f"hand-edited override: {panel_override}"
+    source_images.append(("status_panel", panel_source, None, STATUS_PANEL_BUFFER_ID, panel))
 
     entries: list[HudManifestEntry] = []
     records: list[BufferRecord] = []
@@ -267,14 +282,22 @@ def main() -> None:
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
     parser.add_argument("--palette", type=Path, default=DEFAULT_PALETTE_FILE)
     parser.add_argument(
+        "--override-dir",
+        type=Path,
+        default=DEFAULT_OVERRIDE_DIR,
+        help="tracked hand-edited PNG overrides (default: %(default)s)",
+    )
+    parser.add_argument(
         "--method",
-        default="floyd",
+        default="rgb",
         choices=("rgb", "hsv", "bayer", "floyd", "atkinson"),
-        help="agonutils palette-conversion method (default: floyd)",
+        help="agonutils palette-conversion method (default: rgb/no dithering)",
     )
     args = parser.parse_args()
 
-    entries = build_hud_assets(args.data_dir, args.out_dir, args.palette, args.method)
+    entries = build_hud_assets(
+        args.data_dir, args.out_dir, args.palette, args.method, args.override_dir
+    )
     total_pixels = sum(entry.dataSize for entry in entries)
     print(
         f"Wrote {args.out_dir / 'hud.agnb'}: {len(entries)} images, "

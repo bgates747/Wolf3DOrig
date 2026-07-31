@@ -908,3 +908,30 @@ input/render response may be a touch laggy on hardware, which is retained as a
 performance note rather than a correctness failure. This checkpoint is tagged
 `ordinary-combat-hardware-pass` in both `Wolf3dOrig` and
 `agon-vdp-wolf3d` so the matching eZ80 and VDP sides can be recovered together.
+
+## Asset quantization review
+
+Interactive full-scene comparison established a useful per-kind split. HUD
+widgets, actors, and static billboards read more cleanly with nearest-colour
+RGB conversion and no dithering; opaque wall and door textures retain useful
+surface detail with Floyd-Steinberg dithering. The asset builder now exposes
+separate `--wall-method` and `--sprite-method` defaults while retaining
+`--method` as a global comparison override. HUD conversion remains RGB.
+
+Deferred experiment: `agonutils` currently dispatches `floyd` and `hsv` as
+mutually exclusive presets. Its Floyd implementation diffuses RGB channel
+error and selects palette entries with `_nearest_rgb`; its HSV implementation
+uses `_nearest_hsv` but performs no diffusion. Add and regress a `floyd_hsv`
+mode that uses HSV nearest-palette selection during Floyd-Steinberg error
+diffusion, then visually compare it on Wolf3D wall textures. The matching
+utility-side note is in the canonical `agon-utils` repository devlog.
+
+Hand editing is exception-based so generated art remains disposable. Tracked
+override directories now exist for `hud`, `walls`, and `sprites` under
+`agonport/assets/overrides/wolf3d/`, each with local source/build/target
+instructions. HUD overrides replace extracted inputs before RGB conversion.
+Wall and sprite overrides are copied from the ignored processed output and
+treated as final palettized art: matching filenames bypass automatic
+quantization, retain dimensions, are encoded directly to RGBA2222, and are
+identified as overrides in the generated manifest. An isolated real-file
+override round trip passed alongside the complete 31-test asset suite.

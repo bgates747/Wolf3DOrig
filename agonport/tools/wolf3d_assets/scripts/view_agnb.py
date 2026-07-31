@@ -16,6 +16,7 @@ Usage:
 """
 
 import argparse
+import json
 import struct
 import sys
 import tempfile
@@ -50,6 +51,53 @@ class ImageRecord:
     dataOffset: int
     dataSize: int
     listOffset: int
+
+
+@dataclass(frozen=True)
+class AssetSet:
+    name: str
+    container: Path
+    manifest: Path
+
+
+@dataclass(frozen=True)
+class ManifestView:
+    name: str
+    source: str
+    kind: str
+    assetId: int | str
+    bufferId: int
+
+
+def load_manifest_view(path: Path, kind: str) -> list[ManifestView]:
+    if kind != "hud":
+        return [
+            ManifestView(e.name, e.source, e.kind, e.assetId, e.bufferId)
+            for e in load_manifest(path)
+        ]
+    entries = []
+    for line in path.read_text().splitlines():
+        if not line.strip():
+            continue
+        value = json.loads(line)
+        entries.append(
+            ManifestView(
+                value["name"], value["source"], "hud",
+                value["chunkId"] if value["chunkId"] is not None else "panel",
+                value["bufferId"],
+            )
+        )
+    return entries
+
+
+def available_asset_sets(level: str) -> dict[str, AssetSet]:
+    level_dir = LEVELS_DIR / level
+    candidates = {
+        "tiles": AssetSet("tiles", level_dir / "tiles.agnb", level_dir / "tiles.jsonl"),
+        "sprites": AssetSet("sprites", level_dir / "sprites.agnb", level_dir / "sprites.jsonl"),
+        "hud": AssetSet("hud", GENERATED_DIR / "hud" / "hud.agnb", GENERATED_DIR / "hud" / "hud_assets.jsonl"),
+    }
+    return {name: item for name, item in candidates.items() if item.container.is_file()}
 
 
 def read_chunk(data: bytes, offset: int, boundary: int):
@@ -163,13 +211,14 @@ def parse_container(path: Path) -> tuple[bytes, list[ImageRecord]]:
 
 
 class ContainerViewer(tk.Tk):
-    def __init__(self, container_path: Path, manifest_entries: list[ImageManifestEntry]):
+    def __init__(self, asset_sets: dict[str, AssetSet], initial_kind: str):
         super().__init__()
-        self.container_path = container_path
-        self.container_data, self.records = parse_container(container_path)
-        self.manifestByBufferId = {
-            entry.bufferId: entry for entry in manifest_entries
-        }
+        self.asset_sets = asset_sets
+        self.kind_var = tk.StringVar(value=initial_kind)
+        self.container_path = Path()
+        self.container_data = b""
+        self.records = []
+        self.manifestByBufferId = {}
         self.record_index = 0
         self.scale = 1
         self.current_payload = b""
@@ -178,7 +227,7 @@ class ContainerViewer(tk.Tk):
         self.tk_image = None
         self.temp_dir = tempfile.TemporaryDirectory(prefix="agnb-viewer-")
 
-        self.title(f"Wolf3D AGNB Viewer — {container_path}")
+        self.title("Wolf3D AGNB Viewer")
         self.geometry("1400x1000")
         self.minsize(900, 650)
         self.protocol("WM_DELETE_WINDOW", self.close)
@@ -191,6 +240,15 @@ class ContainerViewer(tk.Tk):
 
         self.build_ui()
         self.bind_keys()
+        self.select_kind()
+
+    def select_kind(self, _event=None):
+        selected = self.asset_sets[self.kind_var.get()]
+        self.container_path = selected.container
+        self.container_data, self.records = parse_container(selected.container)
+        entries = load_manifest_view(selected.manifest, selected.name) if selected.manifest.is_file() else []
+        self.manifestByBufferId = {entry.bufferId: entry for entry in entries}
+        self.title(f"Wolf3D AGNB Viewer — {selected.name}: {selected.container}")
         self.show_record(0)
 
     def enlarge_fonts(self):
@@ -217,6 +275,16 @@ class ContainerViewer(tk.Tk):
     def build_ui(self):
         toolbar = ttk.Frame(self, padding=12)
         toolbar.grid(row=0, column=0, sticky="ew")
+        ttk.Label(toolbar, text="Kind:").pack(side="left")
+        kind_box = ttk.Combobox(
+            toolbar,
+            textvariable=self.kind_var,
+            values=tuple(self.asset_sets),
+            state="readonly",
+            width=10,
+        )
+        kind_box.pack(side="left", padx=(4, 12))
+        kind_box.bind("<<ComboboxSelected>>", self.select_kind)
         ttk.Button(toolbar, text="|<", command=lambda: self.show_record(0)).pack(
             side="left"
         )
@@ -422,7 +490,7 @@ def main():
     )
     parser.add_argument(
         "--which",
-        choices=("tiles", "sprites"),
+        choices=("tiles", "sprites", "hud"),
         default="tiles",
         help="Which per-level container to open when --container isn't given",
     )
@@ -433,21 +501,22 @@ def main():
     )
     args = parser.parse_args()
 
-    level_dir = LEVELS_DIR / args.level
-    container_path = args.container or (level_dir / f"{args.which}.agnb")
-    manifest_path = args.manifest or (level_dir / f"{args.which}.jsonl")
+    asset_sets = available_asset_sets(args.level)
+    if args.container:
+        asset_sets = {
+            "custom": AssetSet(
+                "custom", args.container,
+                args.manifest or args.container.with_suffix(".jsonl"),
+            )
+        }
+        initial_kind = "custom"
+    else:
+        initial_kind = args.which
+    if initial_kind not in asset_sets:
+        available = sorted(asset_sets)
+        raise SystemExit(f"No generated {initial_kind!r} assets; available kinds: {available}")
 
-    if not container_path.exists():
-        available = sorted(p.name for p in LEVELS_DIR.iterdir()) if LEVELS_DIR.is_dir() else []
-        raise SystemExit(
-            f"No such container: {container_path}\n"
-            f"Run scripts/export_vswap_art.py, convert_assets.py, "
-            f"build_level_manifest.py, and pack_agnb.py first.\n"
-            f"Available levels under {LEVELS_DIR}: {available}"
-        )
-
-    manifest_entries = load_manifest(manifest_path) if manifest_path.exists() else []
-    viewer = ContainerViewer(container_path.resolve(), manifest_entries)
+    viewer = ContainerViewer(asset_sets, initial_kind)
     viewer.mainloop()
 
 

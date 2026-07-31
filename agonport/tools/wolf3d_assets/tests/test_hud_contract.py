@@ -6,6 +6,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
+from PIL import Image
+
 TOOLS_ROOT = Path(__file__).resolve().parents[1]
 PROJECT_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(TOOLS_ROOT))
@@ -87,6 +89,35 @@ class HudArchiveTests(unittest.TestCase):
             statusbar = (out_dir / "processed" / "statusbar.rgba2").read_bytes()
             panel = (out_dir / "processed" / "status_panel.rgba2").read_bytes()
             self.assertEqual(panel[: 320 * 40], statusbar)
+
+    def test_matching_hand_edited_png_overrides_only_that_asset(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            override_dir = root / "overrides"
+            override_dir.mkdir()
+            Image.new("RGB", (48, 24), (255, 0, 0)).save(
+                override_dir / "weapon_knife.png"
+            )
+
+            entries = build_hud_assets(
+                DATA_DIR, root / "out", PALETTE_FILE, override_dir=override_dir
+            )
+            by_name = {entry.name: entry for entry in entries}
+            self.assertTrue(by_name["weapon_knife"].source.startswith("hand-edited override:"))
+            self.assertEqual(by_name["weapon_pistol"].source, "VGAGRAPH.WL1 chunk 104")
+            with Image.open(root / "out" / "orig" / "weapon_knife.png") as image:
+                self.assertEqual(image.convert("RGB").getpixel((0, 0)), (255, 0, 0))
+
+    def test_hand_edited_override_dimensions_are_checked(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            override_dir = root / "overrides"
+            override_dir.mkdir()
+            Image.new("RGB", (1, 1)).save(override_dir / "weapon_knife.png")
+            with self.assertRaisesRegex(ValueError, "expected"):
+                build_hud_assets(
+                    DATA_DIR, root / "out", PALETTE_FILE, override_dir=override_dir
+                )
 
 
 if __name__ == "__main__":
