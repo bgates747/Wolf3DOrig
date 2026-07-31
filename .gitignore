@@ -30,3 +30,7 @@ tools/mapedit72/
 agonport/assets/generated/
 agonport/build/
 agonport/emulator/
+
+# eZ80 assembly apps: tracked src/, ignored assembled tgt/ (mirrors
+# pingoasm's apps/<app>/{src,tgt} convention).
+src/asm/*/tgt/

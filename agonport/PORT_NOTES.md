@@ -202,5 +202,40 @@ callback path). Parity between the two extensions for a shared job, and
 keeps both aligned if a generic "async operation complete" callback
 (devlog item 25) eventually replaces both.
 
+## 2026-07-31: BUFFERED_WOLF3D dispatch landed; eZ80 test app under src/asm/
+
+`agon-vdp-wolf3d` now has real dispatch code, not just scaffolding:
+`BUFFERED_WOLF3D` (`0x4A`) in `agon.h`, a `Wolf3dControl` struct/dispatcher
+in the new `video/wolf3d.h`, and a `case`/`bufferUseWolf3D()` pair in
+`vdu_buffered.h`. Subcommand `0` prints a hello message (`debug_log`) as a
+pure dispatch smoke test; subcommand `41` is `set_render_notification`/
+`send_render_complete`, ported from Pingo's `video/pingo_3d.h` as closely
+as the existing conventions allow (same mode/token shape, same
+`send_packet(PACKET_KEYCODE, ...)` delivery, distinct `"W3DR"` wire magic
+so it's distinguishable from Pingo's `"P3DR"`). `send_render_complete` is
+not yet called from anywhere -- no render pipeline exists to call it from
+yet. One convention had to be copied to even compile: `readByte_t`/
+`readWord_t`/`send_packet` are private on `VDUStreamProcessor`, so
+`tag_Wolf3dControl` needed the same `friend` declaration Pingo's
+`tag_Pingo3dControl` already has. Verified with a full `pio run -e
+esp32dev` build (succeeds; Flash 82.3%, RAM 13.6%).
+
+eZ80 assembly source for hand-written test clients (as opposed to the
+Python map/texture toolchain under `src/toolchain/`) lives at
+`src/asm/`, project-root-relative, one subdirectory per app with a
+tracked `src/` and a gitignored `tgt/` -- the same flat contract
+`pingoasm`'s `apps/<app>/{src,tgt}` uses, reused here rather than
+invented fresh. First app: `src/asm/wolf3d_hello/`, a standalone (not
+`pingoasm`-dependent) smoke test that sends `VDU 23,0,&A0,0;&4A,0`
+(hello) and `VDU 23,0,&A0,0;&4A,41,0,0;` (render-done notify, left
+disabled) to prove the wire encoding, modeled on the MOS/VDU conventions
+in `pingoasm/apps/moveair-local/src/jet.asm` without depending on that
+sibling project's files. Assembles cleanly with `ez80asm`. Not yet run
+against a VDP: the Fab emulator profile at `agonport/emulator/` only has
+the stock VDP wired up (`vdp_stock.so`, from `~/Agon/fab-agon-emulator`'s
+prebuilt firmware); building a custom `vdp_wolf3d.so` would need a
+`userspace/` build harness like the one `agon-vdp-pingo-v216-userspace`
+has, which doesn't exist yet for this fork -- deliberately deferred as a
+separate task.
 
 
