@@ -31,6 +31,7 @@ agonport/assets/generated/*
 !agonport/assets/generated/dda_smoke_test_map.bin
 agonport/build/
 agonport/emulator/
+agonport/release/
 
 # eZ80 assembly apps: tracked src/, ignored assembled tgt/ (mirrors
 # pingoasm's apps/<app>/{src,tgt} convention).
