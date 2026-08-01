@@ -26,9 +26,11 @@ fa_create_always:    equ 08h
         rst.lil 08h
     endmacro
 
+    include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_render_async.inc"
+    include "wolf3d_version.inc"
     include "wolf3d_actors.inc"
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
@@ -67,9 +69,11 @@ run_tests:
     ld (result_first_expected),a
     ld (result_first_actual),a
     call test_callback_routing
+    call test_version_compatibility
     call test_render_events
     call test_fizzle_events
     call test_default_bearings
+    call test_death_audio
     call test_turn_routes_and_cadence
     call test_fizzle_phase
     call test_hold_and_lives
@@ -137,6 +141,93 @@ test_callback_routing:
     ld c,1
     ld d,8
     ld b,1
+    jp expect_a
+
+; ---------------------------------------------------------------------------
+; Renderer identity/capability handshake tests
+; ---------------------------------------------------------------------------
+
+test_version_compatibility:
+    ld hl,version_packet_template
+    ld de,w3d_version_record
+    ld bc,W3D_VERSION_REPLY_SIZE
+    ldir
+    call w3d_validate_version_record
+    ld c,9
+    ld d,1
+    call expect_carry_clear
+    ld d,2
+    ld a,(w3d_version_status)
+    ld b,W3D_VERSION_STATUS_OK
+    call expect_a
+
+; A newer compatible ABI minor must be accepted.
+    ld a,7
+    ld (w3d_version_record+W3D_VERSION_OFF_ABI_MINOR),a
+    call w3d_validate_version_record
+    ld d,3
+    call expect_carry_clear
+
+; Semantic extension versions are provenance, not compatibility gates.
+    ld a,99
+    ld (w3d_version_record+W3D_VERSION_OFF_EXTENSION_MAJOR),a
+    call w3d_validate_version_record
+    ld d,4
+    call expect_carry_clear
+
+; A missing required capability and a different ABI major are incompatible.
+    ld a,W3D_REQUIRED_CAPABILITIES & 0ffh
+    and 0ffh-W3D_CAP_ASYNC_RENDER
+    ld (w3d_version_record+W3D_VERSION_OFF_CAPABILITIES),a
+    call w3d_validate_version_record
+    ld d,5
+    call expect_carry_set
+    ld d,6
+    ld a,(w3d_version_status)
+    ld b,W3D_VERSION_STATUS_INCOMPATIBLE
+    call expect_a
+
+    ld hl,version_packet_template
+    ld de,w3d_version_record
+    ld bc,W3D_VERSION_REPLY_SIZE
+    ldir
+    ld a,W3D_RENDERER_ABI_REQUIRED_MAJOR+1
+    ld (w3d_version_record+W3D_VERSION_OFF_ABI_MAJOR),a
+    call w3d_validate_version_record
+    ld d,7
+    call expect_carry_set
+
+; Schema/cookie corruption is malformed rather than merely incompatible.
+    ld hl,version_packet_template
+    ld de,w3d_version_record
+    ld bc,W3D_VERSION_REPLY_SIZE
+    ldir
+    ld a,W3D_VERSION_REPLY_SCHEMA+1
+    ld (w3d_version_record+W3D_VERSION_OFF_SCHEMA),a
+    call w3d_validate_version_record
+    ld d,8
+    call expect_carry_set
+    ld d,9
+    ld a,(w3d_version_status)
+    ld b,W3D_VERSION_STATUS_MALFORMED
+    call expect_a
+
+; Exercise the actual interrupt callback route and packet consumption.
+    ld hl,version_packet_template
+    ld de,callback_version_packet
+    ld bc,W3D_VERSION_REPLY_SIZE
+    ldir
+    xor a
+    ld (w3d_version_ready),a
+    ld de,callback_version_packet
+    call w3d_render_packet_callback
+    ld d,10
+    ld a,(w3d_version_ready)
+    ld b,1
+    call expect_a
+    ld d,11
+    ld a,(callback_version_packet+0)
+    ld b,0
     jp expect_a
 
 test_render_events:
@@ -493,6 +584,49 @@ test_default_bearings:
     ld d,25
     jp expect_a
 
+; Lethal promotion emits PLAYERDEATH once; alive/nonlethal calls and repeated
+; calls after ownership has transferred are silent.
+test_death_audio:
+    call prepare_death_test
+    call w3d_death_promote_lethal_latch
+    ld c,9
+    ld d,1
+    call expect_carry_set
+    ld d,2
+    ld a,(test_audio_count)
+    ld b,1
+    call expect_a
+    ld d,3
+    ld a,(test_audio_last_id)
+    ld b,9
+    call expect_a
+    ld d,4
+    ld a,(test_audio_gain)
+    ld b,127
+    call expect_a
+    ld d,5
+    ld a,(test_audio_flags)
+    ld b,0
+    call expect_a
+    call w3d_death_promote_lethal_latch
+    ld d,6
+    call expect_carry_clear
+    ld d,7
+    ld a,(test_audio_count)
+    ld b,1
+    call expect_a
+
+    call prepare_death_test
+    xor a
+    ld (w3d_player_dead),a
+    call w3d_death_promote_lethal_latch
+    ld d,8
+    call expect_carry_clear
+    ld d,9
+    ld a,(test_audio_count)
+    ld b,0
+    jp expect_a
+
 ; B=signed X tile delta, E=signed map-Y tile delta.
 seed_actor_relative_tiles:
     push bc
@@ -655,6 +789,7 @@ test_turn_routes_and_cadence:
     jp expect_a
 
 prepare_death_test:
+    call test_audio_reset
     call w3d_initialize_render_state
     xor a
     ld (w3d_player_score+0),a
@@ -1500,6 +1635,36 @@ expect_carry_clear:
     ld b,0
     jp expect_a
 
+; Fixed producer-ABI capture doubles required by the included gameplay files.
+w3d_audio_begin_quantum:
+    ret
+w3d_audio_request:
+    ld (test_audio_last_id),a
+    ld a,b
+    ld (test_audio_gain),a
+    ld a,c
+    ld (test_audio_flags),a
+    ld hl,test_audio_count
+    inc (hl)
+    jr nz,@done
+    inc hl
+    inc (hl)
+@done:
+    or a
+    ret
+w3d_audio_request_actor:
+    jp w3d_audio_request
+w3d_audio_request_tile:
+    jp w3d_audio_request
+test_audio_reset:
+    xor a
+    ld hl,test_audio_begin
+    ld (hl),a
+    ld de,test_audio_begin+1
+    ld bc,test_audio_end-test_audio_begin-1
+    ldir
+    ret
+
 write_result:
     ld hl,result_filename
     ld c,fa_write|fa_create_always
@@ -1528,9 +1693,17 @@ fizzle_stale_packet_template:
     db 'W','3','D','R',1,W3D_RENDER_EVENT_FIZZLE_COMPLETE
     dw 05678h
     dw 9
+version_packet_template:
+    db 'W','3','D','V',W3D_VERSION_REPLY_SCHEMA
+    db W3D_RENDERER_ABI_REQUIRED_MAJOR,W3D_RENDERER_ABI_REQUIRED_MINOR
+    dw W3D_REQUIRED_CAPABILITIES
+    db 0,1,0,1,1
+    db 2,16,0,0
+    dw w3d_version_reply_cookie
 
 callback_render_packet: ds 10
 callback_fizzle_packet: ds 10
+callback_version_packet: ds W3D_VERSION_REPLY_SIZE
 test_bearing_angle:     ds 2
 test_render_purpose:    db 0
 test_fizzle_token:      ds 2
@@ -1539,6 +1712,12 @@ test_saved_player_area: db 0
 test_memory_expected:  db 0
 test_gate_remaining:   db 0
 test_gate_reason:      db 0
+test_audio_begin:
+test_audio_count:      dw 0
+test_audio_last_id:    db 0
+test_audio_gain:       db 0
+test_audio_flags:      db 0
+test_audio_end:
 test_render_gate_cases:
     db W3D_DEATH_PHASE_ALIVE,1
     db W3D_DEATH_PHASE_WAIT_DEAD_FRAME,1

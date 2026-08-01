@@ -77,19 +77,19 @@ hardware-limited single-effect behavior is not reproduced rigidly. VDP can
 play multiple streams, and ordinary environment, combat, and pickup sounds may
 overlap when gameplay calls for them.
 
-Requests are arbitrated as one batch per 30 Hz simulation quantum. Conflicts
-within that batch use original priority and deterministic event ordering. If
-render delay causes several simulation quanta to be processed before output,
-only the newest quantum's accepted requests are emitted. Sounds from earlier
-catch-up quanta are discarded rather than played late. This prevents stale
-audio bursts and keeps sound synchronized with the current world state.
+Requests are arbitrated as one batch per 30 Hz simulation quantum. The three
+highest original priorities survive; strict ties retain earlier deterministic
+event order. If render delay causes several simulation quanta to be processed
+before output, only the newest quantum's accepted requests are emitted. Sounds
+from earlier catch-up quanta are discarded rather than played late. This
+prevents stale audio bursts and keeps sound synchronized with the current
+world state.
 
-The initial channel allocation is a small fixed pool of three ordinary VDP
-audio channels. Exact assignment—dedicated roles or general-purpose
-allocation—is chosen after the authoritative effect catalog and concurrency
-sites are inventoried. The allocation must be deterministic, must not interfere
-with later music channels, and must permit expansion without changing gameplay
-event call sites.
+The initial channel allocation is a general-purpose fixed pool of ordinary VDP
+channels 0, 1, and 2. Accepted requests take successive channels from a
+deterministic round-robin cursor. The pool leaves later music allocation as a
+separate decision and can expand without changing gameplay event call sites.
+Requests for unavailable logical samples disappear silently.
 
 The backend is fire-and-forget. No original completion queries or waits are
 ported unless a future gameplay feature demonstrably depends on them. Long
@@ -118,7 +118,7 @@ The first phase covers sounds belonging to gameplay already implemented:
 1. environment: door opening and closing, locked/no-way feedback, and
    pushwalls where supported;
 2. combat: knife, pistol, machine gun, gatling gun, enemy shots, dog attacks,
-   actor alert/pain/death voices, player damage, and player death; and
+   actor alert/death voices, player damage, and player death; and
 3. pickups: ammunition, weapons, health, treasure, keys, and extra life.
 
 Menus, intermission narration, unimplemented bosses/projectiles, and music are
@@ -150,33 +150,38 @@ failed sound asset must not prevent the game from starting: record the failure
 in the loading breadcrumbs, leave that logical effect unavailable, and continue
 silently when gameplay requests it.
 
-Sample IDs and callable command-buffer IDs occupy documented, nonoverlapping,
-stable ranges which do not collide with Wolf image/HUD IDs or shared firmware
-facilities. The generator emits a manifest mapping logical sound, source,
-sample rate, byte length, sample ID, and playback-command IDs. The build records
-total resident sound bytes, container size, and loading time so SRAM growth is
-visible well before it becomes dangerous.
+Sample IDs are `0x5000 + logicalSoundId`. Callable playback procedures are
+`0x6000 + logicalSoundId*3 + channelIndex`. These stable ranges do not collide
+with the fixture control/tilemap IDs, `0x1000` wall textures, `0x2000` sprites,
+or `0x4000` HUD assets. The generator emits a manifest mapping logical sound,
+source, sample rate, byte length, sample ID, and all three playback-procedure
+IDs. The build records total resident sound bytes and container size so SRAM
+growth is visible well before it becomes dangerous.
 
 ## 7. Playback transport
 
 The first implementation uses standard VDP audio commands and the ordinary
 Buffered Commands API. It does not require a Wolf-specific firmware command.
 
-For each sample/channel combination needed by the final allocation, setup
-uploads a short command buffer containing the proven waveform selection and
-play sequence. Runtime playback invokes it with:
+For each loaded sample/channel combination, setup uploads one 23-byte command
+buffer containing reset-channel, waveform-selection, and full-duration play.
+Reset is required because the VDP rejects play on a busy channel; it makes
+fixed-pool channel reuse deterministic without completion tracking. Runtime
+playback invokes that procedure with:
 
 ```text
 VDU 23,0,0xA0, commandBufferId; 1
 ```
 
-The six-byte buffered call avoids repeatedly sending the multi-byte waveform
-and play commands across the UART. Volume or distance gain may be sent as a
-small ordinary command immediately before the buffered call. Sample buffers
-and command buffers remain distinct.
+The six-byte buffered call avoids repeatedly sending those 23 command bytes
+across the UART. The stored play command establishes its own volume, so the
+six-byte dynamic volume/distance-gain command follows the buffered call and
+adjusts the now-playing channel. The proven path therefore costs exactly 12
+UART bytes per accepted effect. Sample buffers and command buffers remain
+distinct.
 
-Direct ordinary playback is retained as a diagnostic fallback while the
-buffered path is validated. A custom compact sound-trigger opcode, writable
+Direct ordinary playback (the same 23 reset/select/play bytes) is retained as
+a diagnostic fallback while the buffered path is validated. A custom compact sound-trigger opcode, writable
 command templates, quantized-volume command matrices, and the Jukebox
 gain/mixing firmware hooks are optimization options only after measurement and
 audible testing show that the proven buffered path is insufficient.

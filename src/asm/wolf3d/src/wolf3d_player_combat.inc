@@ -640,14 +640,40 @@ w3d_player_reset_attack_result:
     ld (w3d_player_last_attack_target),a
     ret
 
-; Publish an audio edge without coupling simulation to a sound backend.
+; Retain the original observable edge and enqueue its WL1 logical sound at
+; full unpositioned gain.  w3d_audio_request owns the request copy, so this
+; routine need not retain A/B/C after the call.
 w3d_player_publish_attack_sound:
     ld (w3d_player_attack_sound),a
     ld hl,w3d_player_attack_sound_count
     inc (hl)
-    ret nz
+    jr nz,@map_sound
     inc hl
     inc (hl)
+@map_sound:
+    ld a,(w3d_player_attack_sound)
+    cp W3D_PLAYER_SOUND_KNIFE
+    jr z,@knife
+    cp W3D_PLAYER_SOUND_PISTOL
+    jr z,@pistol
+    cp W3D_PLAYER_SOUND_MACHINEGUN
+    jr z,@machinegun
+    cp W3D_PLAYER_SOUND_CHAINGUN
+    ret nz
+    ld a,W3D_AUDIO_SOUND_ATKGATLING
+    jr @request
+@knife:
+    ld a,W3D_AUDIO_SOUND_ATKKNIFE
+    jr @request
+@pistol:
+    ld a,W3D_AUDIO_SOUND_ATKPISTOL
+    jr @request
+@machinegun:
+    ld a,W3D_AUDIO_SOUND_ATKMACHINEGUN
+@request:
+    ld b,127
+    ld c,0                          ; unpositioned
+    call w3d_audio_request
     ret
 
 ; tics, signed action, first-person visual frame

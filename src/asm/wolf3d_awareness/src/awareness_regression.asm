@@ -34,6 +34,7 @@ timing_iterations:  equ 10000
         rst.lil 08h
     endmacro
 
+    include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_actors.inc"
@@ -67,6 +68,7 @@ reason_containment:     equ 9
 reason_noise:           equ 10
 reason_clock:           equ 11
 reason_actor_record:    equ 12
+reason_audio:           equ 13
 
 start:
     push af
@@ -724,6 +726,48 @@ test_first_sighting_all_classes:
     ld c,reason_temp2
     call assert_equal
 
+; Successful FirstSighting emits one positioned class sound, except for the
+; source-silent mutant case.
+    ld a,(expected_class)
+    cp W3D_CLASS_MUTANT
+    jr z,@audio_silent
+    ld b,21                         ; guard HALTSND
+    cp W3D_CLASS_GUARD
+    jr z,@audio_id_ready
+    ld b,66                         ; officer SPIONSND
+    cp W3D_CLASS_OFFICER
+    jr z,@audio_id_ready
+    ld b,51                         ; SS SCHUTZADSND
+    cp W3D_CLASS_SS
+    jr z,@audio_id_ready
+    ld b,41                         ; dog DOGBARKSND
+@audio_id_ready:
+    ld a,(test_audio_count)
+    ld c,reason_audio
+    push bc
+    ld b,1
+    call assert_equal
+    pop bc
+    ld a,(test_audio_last_id)
+    call assert_equal
+    ld a,(test_audio_kind)
+    ld b,1
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_arg_b)
+    ld b,20
+    call assert_equal
+    ld a,(test_audio_arg_c)
+    ld b,20
+    call assert_equal
+    jr @audio_done
+@audio_silent:
+    ld a,(test_audio_count)
+    ld b,0
+    ld c,reason_audio
+    call assert_equal
+@audio_done:
+
     ld hl,(first_sighting_ptr)
     ld de,fs_size
     add hl,de
@@ -945,6 +989,7 @@ time_quiet_visual_acquisition:
 ; ---------------------------------------------------------------------------
 
 reset_awareness_world:
+    call test_audio_reset
     xor a
     ld hl,w3d_actors
     ld (hl),a
@@ -1415,10 +1460,67 @@ w3d_death_promote_lethal_latch:
 ; Required by wolf3d_motion.inc but not exercised here.
 w3d_mark_render_submitted:
     ret
+w3d_audio_begin_quantum:
+    ret
+w3d_audio_request:
+    ld d,a
+    xor a
+    ld (test_audio_kind),a
+    ld a,b
+    ld (test_audio_arg_b),a
+    ld a,c
+    ld (test_audio_arg_c),a
+    ld a,d
+    jr test_audio_record
+w3d_audio_request_actor:
+    ld d,a
+    ld a,1
+    ld (test_audio_kind),a
+    ld a,(ix+W3D_ACTOR_TILEX)
+    ld (test_audio_arg_b),a
+    ld a,(ix+W3D_ACTOR_TILEY)
+    ld (test_audio_arg_c),a
+    ld a,d
+    jr test_audio_record
+w3d_audio_request_tile:
+    ld d,a
+    ld a,2
+    ld (test_audio_kind),a
+    ld a,b
+    ld (test_audio_arg_b),a
+    ld a,c
+    ld (test_audio_arg_c),a
+    ld a,d
+test_audio_record:
+    ld (test_audio_last_id),a
+    ld hl,test_audio_count
+    inc (hl)
+    jr nz,@done
+    inc hl
+    inc (hl)
+@done:
+    or a
+    ret
+test_audio_reset:
+    xor a
+    ld hl,test_audio_begin
+    ld (hl),a
+    ld de,test_audio_begin+1
+    ld bc,test_audio_end-test_audio_begin-1
+    ldir
+    ret
 w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
     db 0
+
+test_audio_begin:
+test_audio_count:   dw 0
+test_audio_last_id: db 0
+test_audio_kind:    db 0
+test_audio_arg_b:   db 0
+test_audio_arg_c:   db 0
+test_audio_end:
 
 ; class, chase state, speed in/out, distance in/out, active.
 first_sighting_cases:

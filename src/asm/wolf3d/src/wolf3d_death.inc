@@ -98,10 +98,10 @@ w3d_death_checkpoint_level_score:
 w3d_death_promote_lethal_latch:
     ld a,(w3d_death_phase)
     cp W3D_DEATH_PHASE_ALIVE
-    jr nz,@not_promoted
+    jp nz,@not_promoted
     ld a,(w3d_player_dead)
     or a
-    jr z,@not_promoted
+    jp z,@not_promoted
 
 ; Combat for this fixed quantum has already run. Hide the overlay here so the
 ; first purpose-tagged dead-face snapshot cannot expose one stale gun frame.
@@ -145,6 +145,13 @@ w3d_death_promote_lethal_latch:
     ld (w3d_death_ack_armed),a
     ld a,W3D_DEATH_PHASE_WAIT_DEAD_FRAME
     ld (w3d_death_phase),a
+; This is the single authoritative lethal-promotion edge. The preceding
+; nonzero damage already queued TAKEDAMAGESND; now queue the original player
+; death sound at full unpositioned gain, once before presentation begins.
+    ld a,W3D_AUDIO_SOUND_PLAYERDEATH
+    ld b,127
+    ld c,0
+    call w3d_audio_request
 ; Damage normally dirties health already, but the state boundary must be safe
 ; when tests or future hazards latch death directly.
     xor a

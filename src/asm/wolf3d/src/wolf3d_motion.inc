@@ -319,6 +319,10 @@ w3d_run_simulation_batch:
     ret nz
     call w3d_take_simulation_step
     ret c
+; Every fixed quantum owns a fresh same-tick arbitration batch. Beginning a
+; newer catch-up step discards the older step's unplayed requests, so sound
+; never lags behind authoritative simulation time.
+    call w3d_audio_begin_quantum
     call w3d_death_fixed_step
     jr c,@step_complete
     call w3d_simulate_player_step
@@ -1069,9 +1073,9 @@ w3d_collect_pending_pickups:
     ret
 
 ; Apply the original non-SPEAR GetBonus state rules represented by this port's
-; current HUD/gameplay subset.  Sound/flash side effects are deliberately not
-; part of authoritative object state.  Refused health/ammo/gibs pickups remain
-; active exactly as in the original.
+; current HUD/gameplay subset. Refused health/ammo/gibs pickups remain active
+; and silent exactly as in the original; every successful consumption queues
+; one full-gain unpositioned logical pickup sound before removing its static.
 w3d_apply_current_pickup:
     ld a,(ix+W3D_STATIC_ITEMNUMBER)
     cp W3D_ITEM_GIBS
@@ -1226,11 +1230,90 @@ w3d_apply_current_pickup:
     call w3d_increment_treasure_count
 
 @consume:
+    call w3d_request_current_pickup_sound
     ld a,0ffh
     ld (ix+W3D_STATIC_SHAPENUM+0),a
     ld (ix+W3D_STATIC_SHAPENUM+1),a
     call w3d_mark_current_static_dirty
     ld a,1
+    ret
+
+; IX=current successfully consumed static. w3d_audio_request consumes A/B/C
+; and may destroy AF/BC/DE/HL; its fixed ABI preserves IX/IY. The explicit IX
+; save keeps this producer correct for a future backend with weaker internals.
+w3d_request_current_pickup_sound:
+    ld a,(ix+W3D_STATIC_ITEMNUMBER)
+    cp W3D_ITEM_GIBS
+    jp z,@gibs
+    cp W3D_ITEM_ALPO
+    jp z,@food
+    cp W3D_ITEM_FIRSTAID
+    jp z,@firstaid
+    cp W3D_ITEM_KEY1
+    jp c,@none
+    cp W3D_ITEM_KEY4+1
+    jp c,@key
+    cp W3D_ITEM_CROSS
+    jp z,@cross
+    cp W3D_ITEM_CHALICE
+    jp z,@chalice
+    cp W3D_ITEM_BIBLE
+    jp z,@bible
+    cp W3D_ITEM_CROWN
+    jp z,@crown
+    cp W3D_ITEM_CLIP
+    jp z,@ammo
+    cp W3D_ITEM_CLIP2
+    jp z,@ammo
+    cp W3D_ITEM_MACHINEGUN
+    jp z,@machinegun
+    cp W3D_ITEM_CHAINGUN
+    jp z,@chaingun
+    cp W3D_ITEM_FOOD
+    jp z,@food
+    cp W3D_ITEM_FULLHEAL
+    jp nz,@none
+    ld a,W3D_AUDIO_SOUND_BONUS1UP
+    jr @request
+@gibs:
+    ld a,W3D_AUDIO_SOUND_SLURPIE
+    jr @request
+@food:
+    ld a,W3D_AUDIO_SOUND_HEALTH1
+    jr @request
+@firstaid:
+    ld a,W3D_AUDIO_SOUND_HEALTH2
+    jr @request
+@key:
+    ld a,W3D_AUDIO_SOUND_GETKEY
+    jr @request
+@cross:
+    ld a,W3D_AUDIO_SOUND_BONUS1
+    jr @request
+@chalice:
+    ld a,W3D_AUDIO_SOUND_BONUS2
+    jr @request
+@bible:
+    ld a,W3D_AUDIO_SOUND_BONUS3
+    jr @request
+@crown:
+    ld a,W3D_AUDIO_SOUND_BONUS4
+    jr @request
+@ammo:
+    ld a,W3D_AUDIO_SOUND_GETAMMO
+    jr @request
+@machinegun:
+    ld a,W3D_AUDIO_SOUND_GETMACHINE
+    jr @request
+@chaingun:
+    ld a,W3D_AUDIO_SOUND_GETGATLING
+@request:
+    ld b,127
+    ld c,0                          ; unpositioned
+    push ix
+    call w3d_audio_request
+    pop ix
+@none:
     ret
 
 ; A=health increment. Saturates at 100 and marks only an actual HUD change.
@@ -1656,7 +1739,7 @@ w3d_use_adjacent_door:
     ld b,a
     ld a,(w3d_player_key_flags)
     and b
-    ret z
+    jr z,@locked
 @unlocked:
     ld a,(ix+W3D_DOOR_ACTION)
     cp W3D_DOOR_ACTION_OPENING
@@ -1668,6 +1751,13 @@ w3d_use_adjacent_door:
     ld (ix+W3D_DOOR_ACTION),a
     call w3d_zero_current_door_timer
     jp w3d_mark_current_door_dirty
+
+@locked:
+    ld a,W3D_AUDIO_SOUND_NOWAY
+    ld b,127
+    ld c,0                          ; unpositioned
+    call w3d_audio_request
+    ret
 
 ; Actor-side OpenDoor. A=door index, return A=current action. Unlike the
 ; player's use command this deliberately ignores locks. OPEN resets its hold
@@ -1751,7 +1841,13 @@ w3d_advance_opening_door:
     ld h,(ix+W3D_DOOR_POSITION+1)
     ld a,h
     or l
-    call z,w3d_mark_area_topology_dirty ; edge becomes live after this step
+    jr nz,@advance
+    call w3d_mark_area_topology_dirty ; edge becomes live after this step
+    ld a,W3D_AUDIO_SOUND_OPENDOOR
+    push hl                           ; spatial gating uses HL as scratch
+    call w3d_audio_request_current_door
+    pop hl                            ; restore the zero position accumulator
+@advance:
     ld de,(w3d_door_step_delta)
     add.s hl,de
     jr c,@fully_open
@@ -1798,7 +1894,57 @@ w3d_try_close_current_door:
     ret nz                           ; crossing body has not cleared the well
     ld a,W3D_DOOR_ACTION_CLOSING
     ld (ix+W3D_DOOR_ACTION),a
+    ld a,W3D_AUDIO_SOUND_CLOSEDOOR
+    call w3d_audio_request_current_door
     jp w3d_mark_current_door_dirty
+
+; Root-provided tile-helper ABI: A=logical id, B=tilex, C=tiley. It may
+; destroy AF/BC/DE/HL. Preserve IX because every caller still owns the current
+; authoritative door record after the enqueue. WL_ACT1 emits door motion only
+; when at least one valid endpoint area is currently connected to the player;
+; first-open calls this before the pending topology rebuild, so the listener
+; side's old reachability is exactly the intended gate.
+w3d_audio_request_current_door:
+    push af
+    ld a,(ix+W3D_DOOR_AREA1)
+    call w3d_audio_door_area_reachable
+    or a
+    jr nz,@request
+    ld a,(ix+W3D_DOOR_AREA2)
+    call w3d_audio_door_area_reachable
+    or a
+    jr z,@silent
+@request:
+    pop af
+    ld b,(ix+W3D_DOOR_TILEX)
+    ld c,(ix+W3D_DOOR_TILEY)
+    push ix
+    call w3d_audio_request_tile
+    pop ix
+    ret
+@silent:
+    pop af
+    or a
+    ret
+
+; A=area endpoint. Return A=1 iff it is in range and player-reachable.
+w3d_audio_door_area_reachable:
+    cp W3D_NUM_AREAS
+    jr nc,@no
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    ld hl,w3d_area_by_player
+    add hl,de
+    ld a,(hl)
+    or a
+    ret z
+    ld a,1
+    ret
+@no:
+    xor a
+    ret
 
 w3d_advance_closing_door:
     call w3d_door_anything_obstructs

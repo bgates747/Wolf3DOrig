@@ -375,10 +375,10 @@ w3d_actor_dispatch_action:
 ; Ordinary attack end actions
 ; ---------------------------------------------------------------------------
 
-; IX=current dying actor.  Audio remains an eZ80 integration concern, so the
-; exact A_DeathScream state action publishes a durable edge rather than
-; issuing a device command from the state runner.  Consumers compare the
-; monotonically wrapping count and read actor/class from the same event.
+; IX=current dying actor. Retain the durable edge, then enqueue the ordinary
+; actor's positioned WL1 death sound. Guard choice follows the UPLOAD build's
+; original one-byte US_RndT()%2 rule (29/22) and therefore advances the same
+; deterministic RNG stream once. Other ordinary classes consume no RNG.
 w3d_actor_action_death_scream:
     ld a,(w3d_current_actor_index)
     ld (w3d_actor_death_sound_actor),a
@@ -386,10 +386,51 @@ w3d_actor_action_death_scream:
     ld (w3d_actor_death_sound_class),a
     ld hl,w3d_actor_death_sound_count
     inc (hl)
-    ret nz
+    jr nz,@map_sound
     inc hl
     inc (hl)
+@map_sound:
+    ld a,(w3d_actor_death_sound_class)
+    cp W3D_CLASS_GUARD
+    jr z,@guard
+    cp W3D_CLASS_OFFICER
+    jr z,@officer
+    cp W3D_CLASS_MUTANT
+    jr z,@mutant
+    cp W3D_CLASS_SS
+    jr z,@ss
+    cp W3D_CLASS_DOG
+    jr nz,@done
+    ld a,W3D_AUDIO_SOUND_DOGDEATH
+    jr @request
+@guard:
+    call w3d_random_byte
+    and 1
+    ld a,W3D_AUDIO_SOUND_DEATHSCREAM1
+    jr z,@request
+    ld a,W3D_AUDIO_SOUND_DEATHSCREAM2
+    jr @request
+@officer:
+    ld a,W3D_AUDIO_SOUND_NEINSOVAS
+    jr @request
+@mutant:
+    ld a,W3D_AUDIO_SOUND_AHHHG
+    jr @request
+@ss:
+    ld a,W3D_AUDIO_SOUND_LEBEN
+@request:
+    call w3d_actor_request_sound
+@done:
     or a
+    ret
+
+; Root-provided spatial-helper ABI: A=WL1 logical id, IX=actor. It may
+; destroy AF/BC/DE/HL but returns the actor index register intact. Preserve IX
+; here as an additional producer-side guarantee for state-action callers.
+w3d_actor_request_sound:
+    push ix
+    call w3d_audio_request_actor
+    pop ix
     ret
 
 ; IX=current guard/officer/mutant/SS. Port T_Shoot's observable gameplay
@@ -429,6 +470,16 @@ w3d_actor_action_shoot:
     call w3d_CheckLine
     or a
     jp z,@no_shot
+
+; T_Shoot emits only after both connected-area and LOS gates succeed, whether
+; the later accuracy roll hits or misses.
+    ld a,(w3d_actor_combat_is_ss)
+    or a
+    ld a,W3D_AUDIO_SOUND_NAZIFIRE
+    jr z,@shoot_sound_ready
+    ld a,W3D_AUDIO_SOUND_SSFIRE
+@shoot_sound_ready:
+    call w3d_actor_request_sound
 
     call w3d_actor_tile_deltas_abs
     ld a,(w3d_actor_chase_abs_x)
@@ -537,6 +588,8 @@ w3d_actor_action_bite:
     ld a,(ix+W3D_ACTOR_CLASS)
     cp W3D_CLASS_DOG
     jr nz,@corrupt
+    ld a,W3D_AUDIO_SOUND_DOGATTACK ; every valid bite action
+    call w3d_actor_request_sound
     call w3d_actor_bite_in_range
     or a
     jr z,@no_bite
@@ -636,6 +689,12 @@ w3d_take_player_damage:
     ld a,1
     ld (w3d_player_dead),a
 @changed:
+; Zero raw/scaled damage returns above. Every actual health change, including
+; a lethal one, gets the unpositioned player-pain sound before HUD dirtiness.
+    ld a,W3D_AUDIO_SOUND_TAKEDAMAGE
+    ld b,127
+    ld c,0
+    call w3d_audio_request
     ld a,1
     ld (w3d_pickup_scan_needed),a
     ld a,W3D_HUD_DIRTY_HEALTH
@@ -1463,7 +1522,9 @@ w3d_random_byte:
     ld a,(hl)
     ret
 
-; Apply ordinary FirstSighting without chase movement or sound dispatch.
+; Apply ordinary FirstSighting without chase movement. Successful class
+; transitions publish their original positioned alert sound; mutants are the
+; original silent case.
 ; Active is intentionally unchanged: the original renderer promoted visible
 ; actors, while this write-only VDP cannot feed visibility back to the eZ80.
 ; Existing ACTIVE_NO actors therefore retain the settled area scheduler rule.
@@ -1545,7 +1606,37 @@ w3d_actor_first_sighting:
     ld a,(ix+W3D_ACTOR_FLAGS)
     or W3D_ACTOR_FLAG_ATTACKMODE|W3D_ACTOR_FLAG_FIRSTATTACK
     ld (ix+W3D_ACTOR_FLAGS),a
+    call w3d_actor_first_sighting_sound
     ld a,1
+    or a
+    ret
+
+w3d_actor_first_sighting_sound:
+    ld a,(ix+W3D_ACTOR_CLASS)
+    cp W3D_CLASS_GUARD
+    jr z,@guard
+    cp W3D_CLASS_OFFICER
+    jr z,@officer
+    cp W3D_CLASS_SS
+    jr z,@ss
+    cp W3D_CLASS_DOG
+    jr z,@dog
+    or a                             ; mutant/unsupported: no request
+    ret
+@guard:
+    ld a,W3D_AUDIO_SOUND_HALT
+    jr @request
+@officer:
+    ld a,W3D_AUDIO_SOUND_SPION
+    jr @request
+@ss:
+    ld a,W3D_AUDIO_SOUND_SCHUTZAD
+    jr @request
+@dog:
+    ld a,W3D_AUDIO_SOUND_DOGBARK
+@request:
+    call w3d_actor_request_sound
+    or a
     ret
 
 w3d_actor_remove_current:

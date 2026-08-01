@@ -34,6 +34,7 @@ fa_create_always:   equ 0x08
         CHECK_A expected,why
     endmacro
 
+    include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_actors.inc"
@@ -56,6 +57,7 @@ reason_target:      equ 4
 reason_inventory:   equ 5
 reason_drop:        equ 6
 reason_table:       equ 7
+reason_audio:       equ 8
 
 start:
     push af
@@ -86,6 +88,7 @@ run_tests:
     call test_target_boundaries
     call test_damage_death_drops
     call test_weapon_selection
+    call test_player_audio_requests
     call write_result
     call print_report
     ret
@@ -442,6 +445,33 @@ test_weapon_selection:
     CHECK_MEM8 w3d_player_weapon_shape+1,1,reason_inventory
     ret
 
+; The retained 1..4 observability id is translated exactly once into the
+; generated WL1 id at full unpositioned gain. Unsupported internal ids do not
+; leak a backend request.
+test_player_audio_requests:
+    ld a,phase_timeline
+    ld (test_phase),a
+    call test_audio_reset
+    ld a,W3D_PLAYER_SOUND_KNIFE
+    call w3d_player_publish_attack_sound
+    CHECK_MEM8 test_audio_last_id,23,reason_audio
+    ld a,W3D_PLAYER_SOUND_PISTOL
+    call w3d_player_publish_attack_sound
+    CHECK_MEM8 test_audio_last_id,24,reason_audio
+    ld a,W3D_PLAYER_SOUND_MACHINEGUN
+    call w3d_player_publish_attack_sound
+    CHECK_MEM8 test_audio_last_id,26,reason_audio
+    ld a,W3D_PLAYER_SOUND_CHAINGUN
+    call w3d_player_publish_attack_sound
+    CHECK_MEM8 test_audio_last_id,11,reason_audio
+    CHECK_MEM8 test_audio_count+0,4,reason_audio
+    CHECK_MEM8 test_audio_gain,127,reason_audio
+    CHECK_MEM8 test_audio_flags,0,reason_audio
+    xor a
+    call w3d_player_publish_attack_sound
+    CHECK_MEM8 test_audio_count+0,4,reason_audio
+    ret
+
 ; ---------------------------------------------------------------------------
 ; Deterministic test-world setup.
 ; ---------------------------------------------------------------------------
@@ -677,6 +707,34 @@ w3d_death_promote_lethal_latch:
 ; Required by wolf3d_motion.inc but not exercised here.
 w3d_mark_render_submitted:
     ret
+w3d_audio_begin_quantum:
+    ret
+w3d_audio_request:
+    ld (test_audio_last_id),a
+    ld a,b
+    ld (test_audio_gain),a
+    ld a,c
+    ld (test_audio_flags),a
+    ld hl,test_audio_count
+    inc (hl)
+    jr nz,@done
+    inc hl
+    inc (hl)
+@done:
+    or a
+    ret
+w3d_audio_request_actor:
+    jp w3d_audio_request
+w3d_audio_request_tile:
+    jp w3d_audio_request
+test_audio_reset:
+    xor a
+    ld hl,test_audio_begin
+    ld (hl),a
+    ld de,test_audio_begin+1
+    ld bc,test_audio_end-test_audio_begin-1
+    ldir
+    ret
 w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
@@ -809,6 +867,13 @@ test_phase:         db 0
 output_handle:      db 0
 assert_expected:    db 0
 assert_actual:      db 0
+
+test_audio_begin:
+test_audio_count:   dw 0
+test_audio_last_id: db 0
+test_audio_gain:    db 0
+test_audio_flags:   db 0
+test_audio_end:
 
 result_data:
     db "W3PC"

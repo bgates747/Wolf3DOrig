@@ -29,6 +29,18 @@ The real, permanent eZ80 game client. Distinct from its two siblings under
 - `wolf3d_death` -- the direct production-code eZ80 regression for asynchronous
   render/fizzle ownership, killer-facing turns, life semantics, and complete
   attempt reseeding.
+- `wolf3d_audio` -- the independent host oracle and direct-eZ80 regression for
+  loaded-sample admission, original-priority arbitration, three-channel
+  allocation, stale-quantum suppression, buffered/direct wire bytes, and
+  shutdown.
+
+The payload-free W3DV renderer query, ABI validator, and their regressions are
+present, but the startup gate is temporarily commented out. Native VDP and
+direct-eZ80 tests pass; the real MOS callback path produced a false
+incompatibility and needs a raw-packet transport fixture before the gate can be
+enabled safely. Semantic application and VDP-extension versions remain
+independent. The exact wire layout, capability policy, branding, release rules,
+and current deferral are durable in `agonport/doc/wolf3d-versioning.md`.
 
 Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
 
@@ -41,8 +53,9 @@ Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
     loader, vendored verbatim from `agon-utils/examples/agnb/api/` per this
     project's fork/vendor-don't-cross-import convention
     (`agonport/doc/wolf3d-asset-toolchain-plan.md` decision 5). Public entry
-    points: `agnb_load_images`/`agnb_load_images_with_callback` (DE ->
-    filename). Files packed by `agonport/tools/wolf3d_assets/` already land
+    points: `agnb_load_images`/`agnb_load_images_with_callback` and
+    `agnb_load_audio`/`agnb_load_audio_with_callback` (DE -> filename). Files
+    packed by `agonport/tools/wolf3d_assets/` already land
     their buffers at the exact ids these loaders expect
     (`Wolf3dWallBufferId()`/`Wolf3dSpriteBufferId()` on the VDP side).
   - `wolf3d.asm` -- the interactive player's-first-position fixture: it loads
@@ -59,7 +72,10 @@ Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
     population are active. Original state timing and path patrols are also
     live, with door-area connectivity determining inactive-actor eligibility.
     Awareness, reaction delays, ordinary chase movement, guard/officer/
-    mutant/SS shooting, dog bites, and player damage/death are live. See
+    mutant/SS shooting, dog bites, and player damage/death are live. Native-
+    rate digitized combat, pickup, and door effects are loaded from
+    `sfx.agnb`, selected with original priorities, and emitted through three
+    buffered VDP audio channels without coupling simulation to rendering. See
     "Interactive render fixture" below.
   - `wolf3d_fixture.inc` -- generated, do not hand-edit; see below.
   - `wolf3d_render_async.inc` -- the callback-driven control-loop scaffold:
@@ -103,13 +119,10 @@ while keeping this one as cwd.
 (`agonport/doc/handoff_ez80_ai_raycaster.md`) end to end against a real
 level instead of a synthetic one: it loads level_00's real wall/door and
 static-sprite textures through the modern AGNB container API, printing one
-`.` only after each image is fully finalized as a VDP bitmap. As a temporary upload-path
-diagnostic, the completion callback also selects and plots every finalized
-wall bitmap unscaled in a mode-0 gallery; the much larger sprite container
-uses dot-only breadcrumbs. Once the gallery is visible,
-press any key to switch to the Wolf3D render attempt. This distinguishes a
-bad MOS-to-VDP bitmap upload from a later renderer/presentation failure;
-the host-side Tk viewer alone does not exercise that upload path. It then
+`.` only after each image is fully finalized as a VDP bitmap. Normal startup
+uses breadcrumb-only callbacks and proceeds directly into the game. The
+mode-0 wall-texture gallery, its plotting callback, and its review pause remain
+commented beside the loading path for future bitmap-upload diagnosis. It then
 loads `hud.agnb`, which contains only the original in-game status assets--not
 an extended panel, title, or splash screens. A load error aborts before
 rendering. It uploads the real tilemap,
@@ -197,8 +210,8 @@ attempt; exhausting it leaves a stable red game-over placeholder until Escape.
 
 Knife, pistol, machine gun, and chaingun timelines, target selection, actor
 pain/death chains, class scores, extra lives, and stable clip/weapon drops are
-live. Weapon and death sounds are retained as deterministic simulation events;
-audio playback, bosses, projectiles, menus/high-score entry, and level
+live. Sound effects are now consumers of those deterministic simulation
+events; music, bosses, projectiles, menus/high-score entry, and level
 completion remain later layers. The remaining rollout is recorded in
 `agonport/doc/actor_gameplay_plan.md`.
 
@@ -228,6 +241,19 @@ This writes the ignored, reproducible
 `agonport/assets/generated/wolf3d/hud/hud.agnb`; the decoder, stable buffer-ID
 contract, and tests are documented in
 `agonport/tools/wolf3d_assets/HUD_ASSETS.md`.
+
+Generate the native-rate sound container, all 69 logical-ID/priority records,
+and the assembly asset table with:
+
+```bash
+.venv/bin/python agonport/tools/wolf3d_assets/scripts/build_audio_assets.py
+```
+
+This writes ignored reproducible `sfx.agnb`/manifest outputs and the tracked
+`wolf3d_audio_assets.inc`. Native WL1 PCM remains unsigned mono at 7000 Hz;
+explicit fallback assets retain 16384 Hz. Provenance, stable IDs, resident
+bytes, and exact tests are documented in
+`agonport/tools/wolf3d_assets/AUDIO_ASSETS.md`.
 
 Run the gameplay host and real-eZ80 regressions from the repository root:
 
@@ -271,6 +297,10 @@ Run the gameplay host and real-eZ80 regressions from the repository root:
   src/asm/wolf3d_player_combat/scripts/run_player_combat_emulator_regression.py
 .venv/bin/python \
   src/asm/wolf3d_death/scripts/run_death_emulator_regression.py
+.venv/bin/python -m unittest discover -v \
+  -s src/asm/wolf3d_audio/scripts -p 'test_audio_oracle.py'
+.venv/bin/python \
+  src/asm/wolf3d_audio/scripts/run_audio_emulator_regression.py
 ```
 
 **Hardware deployment** (no emulator/build harness involved): assemble as
@@ -282,8 +312,8 @@ above, mount the FAT32 card labelled `AGON`, then run from the repository root:
 
 The narrowly scoped deployer validates the mount and writes only
 `/wolf3dorig/wolf3d.bin`, `/wolf3dorig/tiles.agnb`,
-`/wolf3dorig/sprites.agnb`, `/wolf3dorig/hud.agnb`, and (when explicitly
-requested) `autoexec.txt`. The
+`/wolf3dorig/sprites.agnb`, `/wolf3dorig/hud.agnb`,
+`/wolf3dorig/sfx.agnb`, and (when explicitly requested) `autoexec.txt`. The
 generated autoexec selects keyboard layout 1, changes to `/wolf3dorig`, and
 loads the program, but leaves `run` commented so the fixture never starts
 automatically.

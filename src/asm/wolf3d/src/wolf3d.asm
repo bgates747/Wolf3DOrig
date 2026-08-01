@@ -21,8 +21,10 @@
 ; patrols, awareness/reaction, ordinary chase/dodge movement, ranged and dog
 ; attack chains, player damage, all four ordinary player weapons, actor pain/
 ; death, scores and drops, and the original ordinary death/fizzle/respawn loop.
-; Bosses, projectiles, audio playback, and map loading beyond this fixture
-; remain future work.
+; Native-rate digitized combat, pickup, door, and environment effects are
+; loaded through AGNB and arbitrated once per caught-up simulation quantum.
+; Bosses, projectiles, music, and map loading beyond this fixture remain
+; future work.
 ; =============================================================================
 
 mos_getkey:      equ 00h
@@ -48,14 +50,18 @@ sysvar_scrMode:  equ 27h
     include "wolf3d_sight.inc"
     include "agnb_dependencies.inc"
     include "agnb_api.inc"
+    include "wolf3d_audio_assets.inc"
+    include "wolf3d_audio.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_render_async.inc"
+    include "wolf3d_version.inc"
     include "wolf3d_actors.inc"
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
     include "wolf3d_death.inc"
+    include "wolf3d_audio_spatial.inc"
 
 start:
     push af
@@ -75,27 +81,45 @@ exit:
     ret
 
 banner:
-    db "Wolf3D eZ80 client",0
+    db "Wolf3DOrig App 0.1.0 Alpha 1",0
 assets_filename:
     db "tiles.agnb",0
 sprites_filename:
     db "sprites.agnb",0
 hud_filename:
     db "hud.agnb",0
+sfx_filename:
+    db "sfx.agnb",0
 loading_msg:
-    db "Loading level_00 wall/door textures (tiles.agnb)...",0
+    db "Loading level_00 wall/door textures (tiles.agnb)",0
 loading_sprites_msg:
-    db "Loading level_00 static sprite art (sprites.agnb)...",0
+    db "Loading level_00 static sprite art (sprites.agnb)",0
 loading_hud_msg:
-    db "Loading original in-game status panel (hud.agnb)...",0
+    db "Loading original in-game status panel (hud.agnb)",0
+loading_sfx_msg:
+    db "Loading native-rate Wolf3D sound effects (sfx.agnb)",0
 rendering_msg:
-    db "Uploading tilemap and rendering player's first-position view...",0
+    db "Uploading tilemap and rendering player's first-position view",0
 assets_error_msg:
     db "AGNB texture load failed; render not submitted.",0
+sfx_error_msg:
+    db "AGNB sound load incomplete; continuing with available effects.",0
 gallery_msg:
     db "VDP-uploaded texture gallery (one dot per finalized bitmap):",0
 gallery_done_msg:
     db "Assets complete. Press any key to enter the Wolf3D view.",0
+vdp_check_msg:
+    db "Checking Wolf3DOrig VDP renderer compatibility",0
+vdp_check_ok_msg:
+    db "Renderer ABI 1.0 and required capabilities confirmed.",0
+vdp_check_missing_msg:
+    db "Wolf3DOrig VDP extension not found (no W3DV reply).",0
+vdp_check_bad_msg:
+    db "Incompatible or malformed Wolf3DOrig VDP response.",0
+vdp_check_required_msg:
+    db "This application requires renderer ABI 1.0 and capabilities 003Fh.",0
+vdp_check_return_msg:
+    db "Press any key to return safely to MOS.",0
 
 ; Select the 320x240x64 double-buffered display only after all bootstrap
 ; diagnostics and asset loading are complete. The renderer draws its 256x160
@@ -223,6 +247,20 @@ printImageDot:
     xor a
     ret
 
+; One dot means one PCM record was streamed, converted to a VDP sample, and
+; admitted to the runtime loaded-sample table. The exact buffer-ID callback
+; prevents a malformed or sparse container from making unavailable effects
+; appear playable.
+printAudioDot:
+    ld hl,(agnb_audio_metadata+agnb_audio_meta_bufferId)
+    inc hl
+    dec.s hl
+    call w3d_audio_mark_sample_buffer_loaded
+    ld a,'.'
+    rst.lil 10h
+    xor a
+    ret
+
 ; Canonical Agon bitmap-buffer selection. The one-byte padding deliberately
 ; absorbs HLU from the native-ADL three-byte store; it is outside the command
 ; length and is never sent to the VDP.
@@ -275,20 +313,65 @@ w3d_main_body:
     call printString
     call printNewLine
 
+; FUTURE: The W3DV startup compatibility gate is deliberately preserved below
+; but disabled. Its VDP-native and direct-eZ80 validation tests pass, while the
+; real MOS keycode-callback transport currently produces a false incompatibility
+; result. The Author wants to ship tonight, so startup temporarily retains the
+; established pre-gate behavior. Diagnose the raw callback bytes before
+; reenabling this block.
+;    call w3d_initialize_render_state
+;    call w3d_install_render_callback
+;    ei
+;    ld hl,vdp_check_msg
+;    call printString
+;    call printNewLine
+;    call w3d_query_renderer_compatibility
+;    jr c,@vdp_incompatible
+;    call w3d_remove_render_callback
+;    ld hl,vdp_check_ok_msg
+;    call printString
+;    call printNewLine
+;    jr @vdp_compatible
+;
+;@vdp_incompatible:
+;    call w3d_remove_render_callback
+;    ld a,(w3d_version_status)
+;    cp W3D_VERSION_STATUS_TIMEOUT
+;    ld hl,vdp_check_missing_msg
+;    jr z,@print_vdp_error
+;    ld hl,vdp_check_bad_msg
+;@print_vdp_error:
+;    call printString
+;    call printNewLine
+;    ld hl,vdp_check_required_msg
+;    call printString
+;    call printNewLine
+;    ld hl,vdp_check_return_msg
+;    call printString
+;    call printNewLine
+;    MOSCALL mos_getkey
+;    ret
+;
+;@vdp_compatible:
+
     ld hl,loading_msg
     call printString
     call printNewLine
 
-    ld hl,w3d_gallery_setup
-    ld bc,w3d_gallery_setup_end-w3d_gallery_setup
-    rst.lil 18h
-    ld hl,gallery_msg
-    call printString
-    call printNewLine
-    call initializeTextureGallery
+; Wall-gallery upload diagnostics are intentionally retained but disabled.
+; Uncomment this block and select printImageBreadcrumb below when a future
+; asset-upload failure needs bitmap-by-bitmap visual inspection.
+;    ld hl,w3d_gallery_setup
+;    ld bc,w3d_gallery_setup_end-w3d_gallery_setup
+;    rst.lil 18h
+;    ld hl,gallery_msg
+;    call printString
+;    call printNewLine
+;    call initializeTextureGallery
 
     ld de,assets_filename
-    ld hl,printImageBreadcrumb
+;    ld hl,printImageBreadcrumb ; diagnostic wall gallery
+    ld hl,printImageDot         ; normal breadcrumb-only loading
     call agnb_load_images_with_callback
     jr z,@assets_loaded
     call printNewLine
@@ -323,10 +406,28 @@ w3d_main_body:
     call printNewLine
     ret
 @hud_loaded:
-    ld hl,gallery_done_msg
+    call printNewLine
+    ld hl,loading_sfx_msg
     call printString
     call printNewLine
-    MOSCALL mos_getkey
+    call w3d_audio_initialize
+    ld de,sfx_filename
+    ld hl,printAudioDot
+    call agnb_load_audio_with_callback
+    jr z,@sfx_loaded
+    call printNewLine
+    ld hl,sfx_error_msg
+    call printString
+@sfx_loaded:
+    call printNewLine
+; Partial containers remain useful: install procedures only for callbacks
+; that reached the finalized-sample boundary before any loader error.
+    call w3d_audio_install_available_command_buffers
+; Gallery review pause, retained alongside the disabled diagnostic block.
+;    ld hl,gallery_done_msg
+;    call printString
+;    call printNewLine
+;    MOSCALL mos_getkey
 
     ld hl,rendering_msg
     call printString
@@ -373,6 +474,18 @@ mainloop:
     call w3d_accumulate_simulation_time
     call w3d_run_simulation_batch
 
+; A max-step catch-up pass may still leave complete 30-Hz quanta queued. Keep
+; only its newest pending requests and emit nothing stale; the next simulated
+; quantum replaces them. Once fully caught up, flush the winning requests
+; independently of whether the VDP renderer is still busy.
+    ld hl,(w3d_simulation_accumulator)
+    ld de,W3D_SIMULATION_STEP_TICKS
+    or a
+    sbc hl,de
+    jr nc,@audio_backlog_remains
+    call w3d_audio_flush_quantum
+@audio_backlog_remains:
+
 ; Consume and route both ordinary render and death-fizzle completions. Only
 ; event-1 renders issue C3; event-2 already leaves both VDP surfaces mirrored.
     call w3d_death_foreground_update
@@ -394,6 +507,7 @@ mainloop:
     jr nz,mainloop
 
 @shutdown:
+    call w3d_audio_shutdown
     call w3d_disable_render_notifications
     call w3d_remove_render_callback
     ret
@@ -425,7 +539,7 @@ mainloop:
     jr nz,@ordinary_render
     call w3d_death_prepare_next_render
     call w3d_submit_level_reset
-    jr mainloop
+    jp mainloop
 
 @ordinary_render:
     ld a,(w3d_world_dirty)
@@ -433,4 +547,4 @@ mainloop:
     jr z,mainloop
     call w3d_death_prepare_next_render
     call w3d_submit_dirty_world_render
-    jr mainloop
+    jp mainloop

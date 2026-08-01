@@ -1308,3 +1308,136 @@ firmware.bin  1089280 bytes  12679256751cfab10b4c2e27c04fb404626e38915f248c63b87
 This milestone is frozen across `Wolf3DOrig` and `agon-vdp-wolf3d` with the
 synchronized annotated tag `playable-combat-loop-milestone`; its annotation
 also records this firmware hash and both repository commit ids.
+
+## Native-rate sound-effects implementation candidate
+
+Audio work began from pushed contract baseline `905496d`. No custom firmware
+opcode was required: Wolf3DOrig now uses the standard Enhanced Audio API plus
+ordinary buffered-command procedures. The durable generator reads the WL1
+logical enum, AdLib `SoundCommon.priority` values, shareware `wolfdigimap`,
+VSWAP PCM pages, and `WL_GAME.C` attenuation tables rather than copying an
+informal catalog into assembly.
+
+The generated `sfx.agnb` contains 39 logical effects: 20 byte-exact unsigned
+mono VSWAP samples at their original 7000 Hz and 19 explicit test-pack
+fallbacks at their existing 16384 Hz. All 35 producers in the current
+environment/combat/pickup slice have an available effect. The container owns
+426,951 resident PCM bytes (238,034 unique payload bytes) and remains
+reproducible and ignored; its tracked manifest/include retain provenance,
+hashes, rates, lengths, durations, original priorities, availability, and all
+69 logical IDs. Wilhelm is deliberately absent and reserved for a later
+easter egg.
+
+Stable sample IDs are `0x5000+logicalId`; the three stored playback procedures
+are `0x6000+logicalId*3+channel`. Setup clears each procedure buffer before
+uploading reset-channel, select-sample, and full-duration play. Runtime sends a
+six-byte buffered call followed by the six-byte dynamic gain command, exactly
+12 UART bytes per accepted event. A 23-byte direct path remains available for
+diagnosis. Channels 0..2 are a deterministic general-purpose round-robin pool;
+each 30 Hz quantum retains the three highest original priorities, with strict
+ties preserving event order. Catch-up replaces older pending batches so audio
+never replays stale simulation history. Escape shutdown discards pending work
+and resets all three channels.
+
+World-originated actor and door sounds use the source `SetSoundLoc` contract:
+16.16 source/listener subtraction reduced to Q8, the shared 360-degree Q12
+heading basis, original `0x5700` focal-point bias, source row/column clamps,
+and a generated 450-byte collapse of the original stereo attenuation table to
+mono gain. Player weapons, pickups, locked-door feedback, player damage, and
+player death remain full-gain unpositioned events. Producers now cover all
+four player weapons, ordinary enemy fire/alerts/deaths, dog bites, real damage
+and lethal promotion, successful pickups, connected-area door motion, and
+no-way feedback. Guard death consumes exactly one original preincrement RNG
+byte and selects only upload-build death IDs 29/22; rejected or scaled-zero
+damage is silent.
+
+Automated acceptance at this candidate boundary:
+
+- 42/42 complete asset/fixture tests, including exact PCM, container,
+  priority, stable-ID, and attenuation-table checks;
+- audio backend host oracle: 6/6 tests with 10,000 randomized batches;
+- audio backend direct eZ80: 287/287 checks across eight phases;
+- positional host oracle: 10/10 tests with all 360 basis entries and 25,000
+  randomized source transforms;
+- positional direct eZ80: 3,792/3,792 checks across 315 actor/tile vectors;
+- producer host oracles: 162/162 checks;
+- direct producer eZ80: player combat 314, actor combat 332, awareness 342,
+  pickups 31, door use 16, and death 191, all zero-error;
+- PRT1 timing over 10,000 calls, with matched fixture baselines subtracted:
+  loaded request dispatch 16.2 us/call and one-event buffered capture flush
+  71.9 us/call (UART/VDP latency deliberately excluded);
+- the complete application assembles successfully with no VDP/firmware source
+  change.
+
+Current reproducible audio candidate artifacts:
+
+```text
+wolf3d.bin   68021 bytes  336131bc006e2d4ea2ae3a60a9f38fb80118c8c6c3212fbf3ee4141a4c1c78e1
+sfx.agnb    428744 bytes  f294c1152bedca56e726e115ce1d1dc2f5aa6191e340a96a79b1e845296f1cd4
+```
+
+The bespoke-emulator audible/mix acceptance run passed. Weapon, environment,
+pickup, and combat sounds were judged good in live play. Simultaneous guard
+fire was not practical to force safely in that run, but the deterministic
+same-tick arbitration and three independent channel paths remain directly
+regression-covered. Physical hardware acceptance, music/IMF work, custom
+gain/mixer commands, extra channels, payload deduplication, a possible future
+god-mode mix fixture, and the Wilhelm easter egg remain separate future
+decisions.
+
+## W3DV startup gate deferred for tonight's build
+
+Application/renderer identity work added independent app, Wolf extension,
+upstream VDP, and wire-ABI versions plus a payload-free subcommand-40 W3DV
+query. The exact responder passes the standalone native VDP smoke test, the
+combined Wolf/Pingo native Wolf suite and cross-subsystem test pass, and the
+production eZ80 validator/callback regression passes 202/202 checks.
+
+The first complete emulator startup nevertheless exited with the new
+incompatibility message. Logs prove that the emulator loaded the intended
+custom Wolf VDP and that the renderer received subcommand 40, so this is not a
+deployment or renderer-feature mismatch. The untested seam is delivery and
+recognition of the 20-byte response through the real MOS keycode callback.
+
+At the Author's request, because the otherwise working game is intended to ship
+tonight, the startup gate is now commented out and the established pre-gate
+startup behavior is restored. All W3DV implementation code, failure UI,
+documentation, and regressions are retained. Future work is to build a minimal
+raw-callback mailbox fixture, diagnose the exact transport bytes, repair that
+seam, and only then reenable the gate.
+
+## Audio implementation accepted on physical hardware
+
+The complete audio-enabled application was deployed to the FAT `AGON` card and
+run on physical Agon hardware after flashing the standalone Wolf-only VDP. The
+Author reports that it works very well and explicitly accepts this state as the
+audio implementation checkpoint. This is a preserved known-good development
+state, not a tagged release; further tuning remains planned.
+
+The accepted client uses breadcrumb-only asset loading. The temporary wall
+texture gallery and review pause remain commented in place for future upload
+diagnosis. The unsuccessful W3DV startup gate also remains commented out as
+documented above, so it cannot block this accepted game while its MOS callback
+transport is unresolved.
+
+Acceptance artifacts:
+
+```text
+wolf3d.bin   68556 bytes    2d845e2882ae22012f0c64c7705d47b7413dc6b6301bc07bcdfdfadbe635f1c7
+firmware.bin 1089424 bytes  6b485f512abcecb3841699b848d6b8759c6f1be4c3baa114c7d18d4b8059a802
+```
+
+The flash used 83.1% of the ESP32 application partition and 13.6% static RAM.
+All four written regions passed esptool hash verification and the board reset
+cleanly through RTS. The hardware SD profile loaded, but deliberately did not
+auto-run, `/wolf3dorig/wolf3d.bin`.
+
+Fresh automated confirmation immediately before this checkpoint:
+
+- audio asset contract: 8/8 tests;
+- backend host oracle: 6/6 tests, including 10,000 randomized batches;
+- direct production audio backend: 287/287 checks;
+- positional host oracle: 10/10 tests, including 25,000 randomized vectors;
+- direct production positional adapter: 3,792/3,792 checks;
+- production death/render/version fixture: 202/202 checks;
+- full application assembly: pass.

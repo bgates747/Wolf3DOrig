@@ -23,6 +23,7 @@ fa_create_always:   equ 0x08
         rst.lil 08h
     endmacro
 
+    include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_actors.inc"
@@ -31,7 +32,7 @@ fa_create_always:   equ 0x08
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
 
-use_case_count:     equ 13
+use_case_count:     equ 16
 
 reason_index:       equ 1
 reason_action:      equ 2
@@ -41,6 +42,7 @@ reason_world_dirty: equ 5
 reason_timer_low:   equ 6
 reason_timer_high:  equ 7
 reason_latch:       equ 8
+reason_audio:       equ 9
 
 start:
     push af
@@ -79,6 +81,9 @@ run_tests:
     call case_key_allows
     call case_opening_ignored
     call case_open_starts_closing
+    call case_first_opening_sound
+    call case_disconnected_open_silent
+    call case_malformed_areas_silent
     call case_use_edge_latch
 
     call write_result
@@ -89,6 +94,7 @@ run_tests:
 ; to a closed vertical door at (10,10), with a nonzero timer so successful
 ; opening must visibly clear it. The tilemap starts entirely open.
 begin_case:
+    call test_audio_reset
     xor a
     ld (case_failed),a
     ld hl,test_tilemap
@@ -150,6 +156,18 @@ begin_case:
     ld (w3d_doors+W3D_DOOR_TILEY),a
     ld a,1
     ld (w3d_doors+W3D_DOOR_VERTICAL),a
+    ld a,2
+    ld (w3d_doors+W3D_DOOR_AREA1),a
+    ld a,3
+    ld (w3d_doors+W3D_DOOR_AREA2),a
+    xor a
+    ld hl,w3d_area_by_player
+    ld (hl),a
+    ld de,w3d_area_by_player+1
+    ld bc,W3D_NUM_AREAS-1
+    ldir
+    ld a,1
+    ld (w3d_area_by_player+2),a
     xor a
     ld (w3d_doors+W3D_DOOR_LOCK),a
     ld (w3d_doors+W3D_DOOR_ACTION),a
@@ -341,6 +359,22 @@ case_locked_refused:
     ld (w3d_doors+W3D_DOOR_LOCK),a
     call w3d_use_adjacent_door
     call expect_unchanged_selected
+    ld a,(test_audio_count)
+    ld b,1
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,6
+    call assert_equal
+    ld a,(test_audio_kind)
+    ld b,0
+    call assert_equal
+    ld a,(test_audio_arg_b)
+    ld b,127
+    call assert_equal
+    ld a,(test_audio_arg_c)
+    ld b,0
+    call assert_equal
     jp finish_case
 
 case_key_allows:
@@ -352,6 +386,10 @@ case_key_allows:
     ld (w3d_player_key_flags),a
     call w3d_use_adjacent_door
     call expect_opening_zero
+    ld a,(test_audio_count)          ; opening sound waits for position zero's first step
+    ld b,0
+    ld c,reason_audio
+    call assert_equal
     jp finish_case
 
 case_opening_ignored:
@@ -373,6 +411,75 @@ case_opening_ignored:
     ld a,012h
     ld (expected_timer+1),a
     call validate_standard
+    jp finish_case
+
+case_first_opening_sound:
+    call begin_case
+    xor a
+    ld (w3d_current_door_index),a
+    call w3d_door_pointer_from_index
+    ld a,W3D_DOOR_ACTION_OPENING
+    ld (ix+W3D_DOOR_ACTION),a
+    ld de,W3D_DOOR_STEP_LO
+    ld (w3d_door_step_delta),de
+    call w3d_advance_opening_door
+    ld a,(test_audio_count)
+    ld b,1
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,18
+    call assert_equal
+    ld a,(test_audio_kind)
+    ld b,2
+    call assert_equal
+    ld a,(test_audio_arg_b)
+    ld b,10
+    call assert_equal
+    ld a,(test_audio_arg_c)
+    ld b,10
+    call assert_equal
+    call w3d_advance_opening_door     ; nonzero position: no duplicate open sound
+    ld a,(test_audio_count)
+    ld b,1
+    call assert_equal
+    jp finish_case
+
+case_disconnected_open_silent:
+    call begin_case
+    xor a
+    ld (w3d_area_by_player+2),a
+    ld (w3d_current_door_index),a
+    call w3d_door_pointer_from_index
+    ld a,W3D_DOOR_ACTION_OPENING
+    ld (ix+W3D_DOOR_ACTION),a
+    ld de,W3D_DOOR_STEP_LO
+    ld (w3d_door_step_delta),de
+    call w3d_advance_opening_door
+    ld a,(test_audio_count)
+    ld b,0
+    ld c,reason_audio
+    call assert_equal
+    jp finish_case
+
+case_malformed_areas_silent:
+    call begin_case
+    xor a
+    ld (w3d_current_door_index),a
+    call w3d_door_pointer_from_index
+    ld a,W3D_NUM_AREAS
+    ld (ix+W3D_DOOR_AREA1),a
+    ld a,0ffh
+    ld (ix+W3D_DOOR_AREA2),a
+    ld a,W3D_DOOR_ACTION_OPENING
+    ld (ix+W3D_DOOR_ACTION),a
+    ld de,W3D_DOOR_STEP_LO
+    ld (w3d_door_step_delta),de
+    call w3d_advance_opening_door
+    ld a,(test_audio_count)
+    ld b,0
+    ld c,reason_audio
+    call assert_equal
     jp finish_case
 
 case_open_starts_closing:
@@ -402,6 +509,22 @@ case_open_starts_closing:
     ld a,012h
     ld (expected_timer+1),a
     call validate_standard
+    ld a,(test_audio_count)
+    ld b,1
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,19
+    call assert_equal
+    ld a,(test_audio_kind)
+    ld b,2
+    call assert_equal
+    ld a,(test_audio_arg_b)
+    ld b,10
+    call assert_equal
+    ld a,(test_audio_arg_c)
+    ld b,10
+    call assert_equal
     jp finish_case
 
 case_use_edge_latch:
@@ -610,6 +733,51 @@ w3d_death_promote_lethal_latch:
 ; Required by the included interactive module but not exercised here.
 w3d_mark_render_submitted:
     ret
+w3d_audio_begin_quantum:
+    ret
+w3d_audio_request:
+    ld (test_audio_last_id),a
+    xor a
+    ld (test_audio_kind),a
+    ld a,b
+    ld (test_audio_arg_b),a
+    ld a,c
+    ld (test_audio_arg_c),a
+    jr test_audio_record
+w3d_audio_request_actor:
+    ld (test_audio_last_id),a
+    ld a,1
+    ld (test_audio_kind),a
+    ld a,(ix+W3D_ACTOR_TILEX)
+    ld (test_audio_arg_b),a
+    ld a,(ix+W3D_ACTOR_TILEY)
+    ld (test_audio_arg_c),a
+    jr test_audio_record
+w3d_audio_request_tile:
+    ld (test_audio_last_id),a
+    ld a,2
+    ld (test_audio_kind),a
+    ld a,b
+    ld (test_audio_arg_b),a
+    ld a,c
+    ld (test_audio_arg_c),a
+test_audio_record:
+    ld hl,test_audio_count
+    inc (hl)
+    jr nz,@done
+    inc hl
+    inc (hl)
+@done:
+    or a
+    ret
+test_audio_reset:
+    xor a
+    ld hl,test_audio_begin
+    ld (hl),a
+    ld de,test_audio_begin+1
+    ld bc,test_audio_end-test_audio_begin-1
+    ldir
+    ret
 w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
@@ -629,6 +797,14 @@ expected_world:         db 0
 expected_timer:         dw 0
 assert_expected:        db 0
 assert_actual:          db 0
+
+test_audio_begin:
+test_audio_count:       dw 0
+test_audio_last_id:     db 0
+test_audio_kind:        db 0
+test_audio_arg_b:       db 0
+test_audio_arg_c:       db 0
+test_audio_end:
 
 result_data:
     db "W3U1"

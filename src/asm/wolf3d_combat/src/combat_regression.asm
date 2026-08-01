@@ -51,6 +51,7 @@ timing_iterations:  equ 10000
         CHECK_IX8 offset+2,b2,why
     endmacro
 
+    include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_actors.inc"
@@ -83,6 +84,7 @@ reason_fault:       equ 9
 reason_reservation: equ 10
 reason_clock:       equ 11
 reason_pose:        equ 12
+reason_audio:       equ 13
 
 cell_center:        equ 20*64+20
 
@@ -119,6 +121,7 @@ run_tests:
     call test_thrust
     call test_bite
     call test_damage
+    call test_audio_events
     call test_containment_scheduler
     call time_combat
     call prt_irq_restore
@@ -657,6 +660,123 @@ test_damage:
     ret
 
 ; ---------------------------------------------------------------------------
+; Direct producer ABI: positioning, ordering, and false-event gates.
+; ---------------------------------------------------------------------------
+
+test_audio_events:
+    ld a,phase_damage
+    ld (test_phase),a
+
+; Disconnected and wall-blocked T_Shoot actions do not enqueue anything.
+    ld a,20
+    ld (test_detail),a
+    call prepare_shoot_east2
+    xor a
+    ld (w3d_area_by_player+2),a
+    call w3d_actor_action_shoot
+    CHECK_MEM8 test_audio_count+0,0,reason_audio
+
+    call prepare_shoot_east2
+    ld a,1
+    ld (test_tilemap+651),a
+    call w3d_actor_action_shoot
+    CHECK_MEM8 test_audio_count+0,0,reason_audio
+
+; A clear guard miss still emits positioned NAZIFIRESND with the actor ABI.
+    call prepare_shoot_east2
+    ld a,54                         ; table[55]=224: exact miss
+    ld (w3d_random_index),a
+    call w3d_actor_action_shoot
+    CHECK_MEM8 test_audio_count+0,1,reason_audio
+    CHECK_MEM8 test_audio_last_id,58,reason_audio
+    CHECK_MEM8 test_audio_kind,1,reason_audio
+    CHECK_MEM8 test_audio_arg_b,12,reason_audio
+    CHECK_MEM8 test_audio_arg_c,10,reason_audio
+
+; SS chooses its distinct shot id. A guard hit orders shot before player pain.
+    call prepare_shoot_east2
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_SS
+    ld a,4                          ; table[5]=241: miss chance 240 exactly
+    ld (w3d_random_index),a
+    call w3d_actor_action_shoot
+    CHECK_MEM8 test_audio_count+0,1,reason_audio
+    CHECK_MEM8 test_audio_last_id,60,reason_audio
+
+    call prepare_shoot_east2
+    ld a,1                          ; 109 hits, 220 damages
+    ld (w3d_random_index),a
+    call w3d_actor_action_shoot
+    CHECK_MEM8 test_audio_count+0,2,reason_audio
+    CHECK_MEM8 test_audio_previous_id,58,reason_audio
+    CHECK_MEM8 test_audio_last_id,16,reason_audio
+    CHECK_MEM8 test_audio_kind,0,reason_audio
+    CHECK_MEM8 test_audio_arg_b,127,reason_audio
+    CHECK_MEM8 test_audio_arg_c,0,reason_audio
+
+; Every valid dog bite action barks, including an out-of-range no-RNG action;
+; a wrong-class direct call fails closed and silent.
+    call prepare_dog
+    ld hl,00c8001h
+    ld (ix+W3D_ACTOR_X),hl
+    xor a
+    ld (ix+W3D_ACTOR_X+3),a
+    call w3d_actor_action_bite
+    CHECK_MEM8 test_audio_count+0,1,reason_audio
+    CHECK_MEM8 test_audio_last_id,68,reason_audio
+    CHECK_MEM8 test_audio_kind,1,reason_audio
+
+    call prepare_guard
+    call w3d_actor_action_bite
+    CHECK_MEM8 test_audio_count+0,0,reason_audio
+
+; Zero damage is silent; actual damage is full-gain unpositioned id 16.
+    call prepare_guard
+    xor a
+    call w3d_take_player_damage
+    CHECK_MEM8 test_audio_count+0,0,reason_audio
+    ld a,1
+    call w3d_take_player_damage
+    CHECK_MEM8 test_audio_count+0,1,reason_audio
+    CHECK_MEM8 test_audio_last_id,16,reason_audio
+    CHECK_MEM8 test_audio_arg_b,127,reason_audio
+    CHECK_MEM8 test_audio_arg_c,0,reason_audio
+
+; A_DeathScream: guard consumes exactly one native RNG byte and uses parity;
+; the fixed class sounds consume none. All are actor-positioned.
+    call prepare_guard
+    xor a
+    ld (w3d_random_index),a          ; table[1]=8 -> guard variant 29
+    call w3d_actor_action_death_scream
+    CHECK_MEM8 w3d_random_index,1,reason_rng
+    CHECK_MEM8 test_audio_last_id,29,reason_audio
+    CHECK_MEM8 test_audio_kind,1,reason_audio
+
+    call prepare_guard
+    ld a,1                           ; table[2]=109 -> guard variant 22
+    ld (w3d_random_index),a
+    call w3d_actor_action_death_scream
+    CHECK_MEM8 w3d_random_index,2,reason_rng
+    CHECK_MEM8 test_audio_last_id,22,reason_audio
+
+    call prepare_guard
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_OFFICER
+    call w3d_actor_action_death_scream
+    CHECK_MEM8 test_audio_last_id,67,reason_audio
+    call prepare_guard
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_MUTANT
+    call w3d_actor_action_death_scream
+    CHECK_MEM8 test_audio_last_id,52,reason_audio
+    call prepare_guard
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_SS
+    call w3d_actor_action_death_scream
+    CHECK_MEM8 test_audio_last_id,56,reason_audio
+    call prepare_dog
+    call w3d_actor_action_death_scream
+    CHECK_MEM8 test_audio_last_id,10,reason_audio
+    CHECK_MEM8 test_audio_count+0,1,reason_audio
+    ret
+
+; ---------------------------------------------------------------------------
 ; 9. Corrupt action/class/area plus live scheduler reservation/dirtiness.
 ; ---------------------------------------------------------------------------
 
@@ -791,6 +911,7 @@ time_combat:
 ; ---------------------------------------------------------------------------
 
 reset_combat_world:
+    call test_audio_reset
     xor a
     ld hl,w3d_actors
     ld (hl),a
@@ -1311,10 +1432,81 @@ w3d_death_promote_lethal_latch:
 ; Required by wolf3d_motion.inc but not exercised by this fixture.
 w3d_mark_render_submitted:
     ret
+w3d_audio_begin_quantum:
+    ret
+
+; Direct capture doubles for the fixed audio producer ABI. Actor/tile helpers
+; record their spatial arguments and otherwise deliberately share the same
+; monotonically wrapping request log as unpositioned requests.
+w3d_audio_request:
+    ld d,a
+    xor a
+    ld (test_audio_kind),a
+    ld a,b
+    ld (test_audio_arg_b),a
+    ld a,c
+    ld (test_audio_arg_c),a
+    ld a,d
+    jp test_audio_record
+
+w3d_audio_request_actor:
+    ld d,a
+    ld a,1
+    ld (test_audio_kind),a
+    ld a,(ix+W3D_ACTOR_TILEX)
+    ld (test_audio_arg_b),a
+    ld a,(ix+W3D_ACTOR_TILEY)
+    ld (test_audio_arg_c),a
+    ld a,d
+    jp test_audio_record
+
+w3d_audio_request_tile:
+    ld d,a
+    ld a,2
+    ld (test_audio_kind),a
+    ld a,b
+    ld (test_audio_arg_b),a
+    ld a,c
+    ld (test_audio_arg_c),a
+    ld a,d
+
+test_audio_record:
+    ld d,a
+    ld a,(test_audio_last_id)
+    ld (test_audio_previous_id),a
+    ld a,d
+    ld (test_audio_last_id),a
+    ld hl,test_audio_count
+    inc (hl)
+    jr nz,@done
+    inc hl
+    inc (hl)
+@done:
+    or a
+    ret
+
+test_audio_reset:
+    xor a
+    ld hl,test_audio_begin
+    ld (hl),a
+    ld de,test_audio_begin+1
+    ld bc,test_audio_end-test_audio_begin-1
+    ldir
+    ret
+
 w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
     db 0
+
+test_audio_begin:
+test_audio_count:       dw 0
+test_audio_previous_id: db 0
+test_audio_last_id:     db 0
+test_audio_kind:        db 0
+test_audio_arg_b:       db 0
+test_audio_arg_c:       db 0
+test_audio_end:
 
 ; Literal source-derived attack records, ids 77..100.
 expected_attack_states:

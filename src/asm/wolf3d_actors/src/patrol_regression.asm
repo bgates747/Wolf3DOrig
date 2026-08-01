@@ -33,6 +33,7 @@ PRT_ON:             equ %01011111
         rst.lil 08h
     endmacro
 
+    include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_actors.inc"
@@ -1310,6 +1311,13 @@ w3d_death_promote_lethal_latch:
 
 ; Required by the interactive motion include, not exercised by this fixture.
 w3d_mark_render_submitted:
+    ret
+w3d_audio_begin_quantum:
+    ret
+w3d_audio_request:
+w3d_audio_request_actor:
+w3d_audio_request_tile:
+    or a
     ret
 w3d_elapsed_ticks:
     dl 0

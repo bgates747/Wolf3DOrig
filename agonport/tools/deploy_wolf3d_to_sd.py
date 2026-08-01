@@ -108,6 +108,8 @@ def main() -> None:
         / "agonport/assets/generated/wolf3d/levels/level_00/sprites.agnb",
         "hud.agnb": PROJECT_ROOT
         / "agonport/assets/generated/wolf3d/hud/hud.agnb",
+        "sfx.agnb": PROJECT_ROOT
+        / "agonport/assets/generated/wolf3d/audio/sfx.agnb",
     }
     for source in sources.values():
         if not source.is_file() or source.stat().st_size == 0:

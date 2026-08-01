@@ -31,6 +31,7 @@ W3D_RENDER_PURPOSE_DEATH_TARGET_SYNC: equ 4
 W3D_RENDER_PURPOSE_RESPAWN:       equ 5
 
 w3d_initialize_render_state:
+; TODO: if the scratch area is contiguous we can use ldir to clear the whole block.
     xor a
     ld (w3d_render_in_flight),a
     ld (w3d_completion_ready),a
@@ -449,10 +450,18 @@ w3d_vdu_present:
 ; payload. It must not make MOS/VDU calls or perform foreground work.
 w3d_render_packet_callback:
     push af
+    push bc
+    push de
+    push hl
     push ix
     push iy
     push de
     pop ix
+
+; W3DV is a startup compatibility reply, not a render event or keyboard
+; record. The helper consumes cookie-matched and malformed replies atomically.
+    call w3d_try_capture_version_packet
+    jr c,@done
 
     ld a,(ix+0)
     cp 'W'
@@ -478,26 +487,12 @@ w3d_render_packet_callback:
 @fizzle_record:
     ld iy,w3d_fizzle_completion_record
 @copy_record:
-    ld a,(ix+0)
-    ld (iy+0),a
-    ld a,(ix+1)
-    ld (iy+1),a
-    ld a,(ix+2)
-    ld (iy+2),a
-    ld a,(ix+3)
-    ld (iy+3),a
-    ld a,(ix+4)
-    ld (iy+4),a
-    ld a,(ix+5)
-    ld (iy+5),a
-    ld a,(ix+6)
-    ld (iy+6),a
-    ld a,(ix+7)
-    ld (iy+7),a
-    ld a,(ix+8)
-    ld (iy+8),a
-    ld a,(ix+9)
-    ld (iy+9),a
+    push ix
+    pop hl
+    push iy
+    pop de
+    ld bc,10
+    ldir
 
 ; MOS resumes normal keyboard processing after this callback. Turn W3DR into
 ; a harmless null key-up record before returning.
@@ -531,6 +526,9 @@ w3d_render_packet_callback:
 @done:
     pop iy
     pop ix
+    pop hl
+    pop de
+    pop bc
     pop af
     ret
 

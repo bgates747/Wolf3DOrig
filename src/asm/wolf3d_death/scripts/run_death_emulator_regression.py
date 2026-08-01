@@ -26,7 +26,7 @@ VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
 
 RESULT_SIZE = 16
 RESULT_SCHEMA = 1
-EXPECTED_CHECKS = 182
+EXPECTED_CHECKS = 202
 LOG_TAIL_BYTES = 16 * 1024
 
 CASE_NAMES = {
@@ -38,6 +38,7 @@ CASE_NAMES = {
     6: "target-sync and fizzle transition",
     7: "acknowledgment, lives, and respawn",
     8: "production reseed and submission",
+    9: "renderer version compatibility",
 }
 
 

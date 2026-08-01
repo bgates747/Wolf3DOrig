@@ -24,6 +24,7 @@ fa_create_always:   equ 0x08
         rst.lil 08h
     endmacro
 
+    include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_actors.inc"
@@ -79,6 +80,7 @@ reason_static_dirty:    equ 14
 reason_dirty_count:     equ 15
 reason_player_dirty:    equ 16
 reason_treasure_count:  equ 17
+reason_audio:           equ 18
 
 start:
     push af
@@ -114,8 +116,110 @@ run_tests:
     pop bc
     djnz @loop
 
+    call test_pickup_audio
     call write_result
     call print_report
+    ret
+
+; Exercise every successful GetBonus sound branch plus representative refusal
+; and unsupported cases. Records are item, initial health/ammo, consumed, id;
+; id FF means no request is permitted.
+audio_case_item:       equ 0
+audio_case_health:     equ 1
+audio_case_ammo:       equ 2
+audio_case_consumed:   equ 3
+audio_case_sound:      equ 4
+audio_case_size:       equ 5
+audio_case_count:      equ 18
+
+test_pickup_audio:
+    ld iy,pickup_audio_cases
+    ld b,audio_case_count
+@loop:
+    push bc
+    xor a
+    ld (case_failed),a
+    call prepare_audio_pickup
+    call w3d_apply_current_pickup
+    ld b,(iy+audio_case_consumed)
+    ld c,reason_audio
+    call assert_equal
+
+    ld a,(iy+audio_case_sound)
+    cp 0ffh
+    jr z,@silent
+    ld b,a
+    ld a,(test_audio_count)
+    push bc
+    ld b,1
+    call assert_equal
+    pop bc
+    ld a,(test_audio_last_id)
+    call assert_equal
+    ld a,(test_audio_arg_b)
+    ld b,127
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_arg_c)
+    ld b,0
+    call assert_equal
+    jr @finished
+@silent:
+    ld a,(test_audio_count)
+    ld b,0
+    ld c,reason_audio
+    call assert_equal
+@finished:
+    ld a,(result_records)
+    inc a
+    ld (result_records),a
+    lea iy,iy+audio_case_size
+    pop bc
+    djnz @loop
+    ret
+
+prepare_audio_pickup:
+    call test_audio_reset
+    xor a
+    ld (w3d_hud_dirty),a
+    ld (w3d_world_dirty),a
+    ld (w3d_player_key_flags),a
+    ld (w3d_player_score+0),a
+    ld (w3d_player_score+1),a
+    ld (w3d_player_score+2),a
+    ld (w3d_player_score+3),a
+    ld (w3d_player_treasure_count+0),a
+    ld (w3d_player_treasure_count+1),a
+    ld (w3d_player_attack_frame),a
+    ld (w3d_player_next_extra+2),a
+    ld (w3d_player_next_extra+3),a
+    ld a,040h
+    ld (w3d_player_next_extra+0),a
+    ld a,09ch
+    ld (w3d_player_next_extra+1),a
+    ld hl,0
+    ld (w3d_current_static_index),hl
+    ld a,(iy+audio_case_health)
+    ld (w3d_player_health),a
+    ld a,(iy+audio_case_ammo)
+    ld (w3d_player_ammo),a
+    ld a,3
+    ld (w3d_player_lives),a
+    ld a,W3D_WEAPON_PISTOL
+    ld (w3d_player_weapon),a
+    ld (w3d_player_best_weapon),a
+    ld (w3d_player_chosen_weapon),a
+    ld ix,w3d_statics
+    xor a
+    ld (ix+W3D_STATIC_TILEX),a
+    ld (ix+W3D_STATIC_TILEY),a
+    ld (ix+W3D_STATIC_SHAPENUM+1),a
+    ld a,1
+    ld (ix+W3D_STATIC_SHAPENUM+0),a
+    ld a,W3D_STATIC_FLAG_BONUS
+    ld (ix+W3D_STATIC_FLAGS),a
+    ld a,(iy+audio_case_item)
+    ld (ix+W3D_STATIC_ITEMNUMBER),a
     ret
 
 run_case:
@@ -392,6 +496,34 @@ w3d_death_promote_lethal_latch:
 ; Required by the included interactive module but not exercised here.
 w3d_mark_render_submitted:
     ret
+w3d_audio_begin_quantum:
+    ret
+w3d_audio_request:
+    ld (test_audio_last_id),a
+    ld a,b
+    ld (test_audio_arg_b),a
+    ld a,c
+    ld (test_audio_arg_c),a
+    ld hl,test_audio_count
+    inc (hl)
+    jr nz,@done
+    inc hl
+    inc (hl)
+@done:
+    or a
+    ret
+w3d_audio_request_actor:
+    jp w3d_audio_request
+w3d_audio_request_tile:
+    jp w3d_audio_request
+test_audio_reset:
+    xor a
+    ld hl,test_audio_begin
+    ld (hl),a
+    ld de,test_audio_begin+1
+    ld bc,test_audio_end-test_audio_begin-1
+    ldir
+    ret
 w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
@@ -408,6 +540,13 @@ actual_return:              db 0
 assert_expected:            db 0
 assert_actual:              db 0
 
+test_audio_begin:
+test_audio_count:           dw 0
+test_audio_last_id:         db 0
+test_audio_arg_b:           db 0
+test_audio_arg_c:           db 0
+test_audio_end:
+
 result_data:
     db "W3P1"
 result_records:             db 0
@@ -418,6 +557,26 @@ result_first_expected:      db 0
 result_first_actual:        db 0
                             db 0,0,0,0,0,0
 result_end:
+
+pickup_audio_cases:
+    db W3D_ITEM_GIBS,10,50,1,61
+    db W3D_ITEM_ALPO,50,50,1,33
+    db W3D_ITEM_FIRSTAID,50,50,1,34
+    db W3D_ITEM_KEY1,50,50,1,12
+    db W3D_ITEM_KEY4,50,50,1,12
+    db W3D_ITEM_CROSS,50,50,1,35
+    db W3D_ITEM_CHALICE,50,50,1,36
+    db W3D_ITEM_BIBLE,50,50,1,37
+    db W3D_ITEM_CROWN,50,50,1,45
+    db W3D_ITEM_CLIP,50,50,1,31
+    db W3D_ITEM_CLIP2,50,50,1,31
+    db W3D_ITEM_MACHINEGUN,50,50,1,30
+    db W3D_ITEM_CHAINGUN,50,50,1,38
+    db W3D_ITEM_FOOD,50,50,1,33
+    db W3D_ITEM_FULLHEAL,50,50,1,44
+    db W3D_ITEM_FIRSTAID,100,50,0,0ffh
+    db W3D_ITEM_CLIP,50,99,0,0ffh
+    db W3D_ITEM_DRESSING,50,50,0,0ffh
 
 ; Record 0: full-health first aid is refused, active, and completely clean.
 pickup_cases:
