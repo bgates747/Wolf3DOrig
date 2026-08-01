@@ -57,10 +57,22 @@ bandwidth. Preserve the original unsigned PCM bytes and create Agon samples at
 7000 Hz unless direct audible comparison establishes that using the effective
 7042 Hz clock is materially more faithful. Both values fit AGNB's u16 rate.
 
-The existing canonical 22-record `sfx.agnb` is proven at 16,384 Hz, but it is
-an older Agon-oriented effect collection and is not automatically the new
-asset authority. The Wolf3DOrig pipeline should extract or otherwise validate
+The existing canonical 22-record `sfx.agnb` is proven at 16,384 Hz, but it was
+assembled as a transport/playback test collection and is not the new asset
+authority. The Wolf3DOrig pipeline should extract or otherwise validate
 native-rate effects against the original shareware data and logical DigiMap.
+
+Author decision: use original VSWAP PCM wherever the shareware game supplies a
+digitized effect. The 22-effect test collection may fill logical gaps such as
+pickup effects which originally had only PC-speaker/AdLib synthesis. Preserve
+those fallback samples at their existing rate; do not downsample them merely
+for uniformity. If that collection does not cover the required environment,
+combat, and pickup scope, identify the concrete gaps before synthesizing or
+inventing replacements.
+
+The collection's Wilhelm scream is reserved as a future easter egg. It is not a
+replacement for an original shareware death sound and is outside the initial
+fidelity pass.
 
 ### 2.2 PC-speaker effects
 
@@ -76,9 +88,11 @@ Each AdLib effect contains `SoundCommon`, a two-operator OPL2 instrument, a
 block/octave value, and a byte stream which updates the effect voice's
 frequency. It is synthesized and serviced at approximately 140 Hz, not PCM.
 
-For the first Agon phase, native digitized replacements are preferred wherever
-the original shareware DigiMap supplies them. Synthesizing PC-speaker or AdLib
-fallback effects can be evaluated only for logical sounds without suitable PCM.
+For the first Agon phase, native digitized replacements are required wherever
+the original shareware DigiMap supplies them. For logical sounds without native
+PCM, prefer a suitable existing sample from the 22-effect test collection.
+Synthesizing PC-speaker or AdLib fallback effects is a later option only when a
+glaring required gap remains.
 
 ## 3. Original priority and concurrency policy
 
