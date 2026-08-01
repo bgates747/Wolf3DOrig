@@ -24,7 +24,8 @@ W3D_WEAPON_COUNT:              equ 4
 W3D_PLAYER_ATTACK_RECORD_SIZE: equ 3
 W3D_PLAYER_ATTACK_ROW_SIZE:    equ 12
 W3D_PLAYER_ATTACK_FRAME_COUNT: equ 4
-W3D_PLAYER_SHOOT_DELTA:        equ 25
+; Experimental aiming tune: narrower than the original viewwidth/10 cone.
+W3D_PLAYER_SHOOT_DELTA:        equ 16
 W3D_PLAYER_KNIFE_RANGE_Q8:     equ 0180h
 
 W3D_PLAYER_ATTACK_NONE:        equ 0

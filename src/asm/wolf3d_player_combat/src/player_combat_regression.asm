@@ -164,17 +164,17 @@ test_target_boundaries:
     ld a,phase_target
     ld (test_phase),a
     call prepare_test_world
-; rel=(512,+153) Q8 is inside: 153*87 < (512+23)*25.
+; rel=(512,+98) Q8 is inside: 98*87 < (512+23)*16.
     ld ix,w3d_actors+W3D_ACTOR_SIZE
-    ld a,019h
+    ld a,0e2h
     ld (ix+W3D_ACTOR_Y+1),a
-    ld a,11
+    ld a,10
     ld (ix+W3D_ACTOR_Y+2),a
     call w3d_player_select_attack_target
     CHECK_A 1,reason_target
 ; One Q8 lateral unit farther is strictly outside.
     ld ix,w3d_actors+W3D_ACTOR_SIZE
-    ld a,01ah
+    ld a,0e3h
     ld (ix+W3D_ACTOR_Y+1),a
     call w3d_player_select_attack_target
     CHECK_A W3D_SLOT_NONE,reason_target
@@ -218,8 +218,8 @@ test_target_boundaries:
     CHECK_MEM8 w3d_random_index,0,reason_rng
 
 ; A nearer projected actor must not mask a farther clear actor.  Actor 1's
-; ray crosses wall (13,11); actor 2's equally valid shoot-cone ray crosses
-; (13,9), so the production linked-list scan must continue and select id 2.
+; ray crosses wall (13,11); actor 2's equally valid narrower-cone ray crosses
+; (13,10), so the production linked-list scan must continue and select id 2.
     call prepare_test_world
     ld ix,w3d_actors+W3D_ACTOR_SIZE
     ld a,14
@@ -241,7 +241,7 @@ test_target_boundaries:
     ld (ix+W3D_ACTOR_TILEX),a
     xor a
     ld (ix+W3D_ACTOR_Y+1),a
-    ld a,9
+    ld a,10
     ld (ix+W3D_ACTOR_Y+2),a
     ld (ix+W3D_ACTOR_TILEY),a
     ld a,1

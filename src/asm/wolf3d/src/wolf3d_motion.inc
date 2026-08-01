@@ -28,7 +28,9 @@ W3D_SIMULATION_STEP_TICKS:      equ 4
 W3D_SIMULATION_MAX_STEPS:       equ 4
 W3D_SIMULATION_MAX_BACKLOG:     equ 32
 W3D_PLAYER_TURN_STEP_DEGREES:   equ 3
-W3D_PLAYER_COLLISION_RADIUS:     equ 05800h
+; Experimental feel tuning: the original 0x5800 square radius proved too
+; conservative around walls, decorations, and the renderer-matched door slab.
+W3D_PLAYER_COLLISION_RADIUS:     equ 04800h
 
 ; Original doors traverse 0xffff in 64 ticks at 70 Hz and wait 300 ticks.
 ; At 30 Hz, 2389,2389,2390 repeating is the exact average travel rate;

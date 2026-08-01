@@ -90,20 +90,20 @@ def build_vectors(random_cases: int, *, include_zero_delta: bool) -> list[bytes]
 
     # Exact wall-contact boundary and each ClipMove outcome.
     wall = (11, 10, 1)
-    add(go.Pose(go.fixed(10, 0xA7FF), go.fixed(10)), 1, 0, wall)
-    add(go.Pose(go.fixed(10, 0xA800), go.fixed(10)), -1, 0, wall)
+    add(go.Pose(go.fixed(10, 0xB7FF), go.fixed(10)), 1, 0, wall)
+    add(go.Pose(go.fixed(10, 0xB800), go.fixed(10)), -1, 0, wall)
     # Blocking statics use a separate bit-plane but retain identical tile-wide
     # PLAYERSIZE contact and ClipMove behavior.
-    add(go.Pose(go.fixed(10, 0xA7FF), go.fixed(10)), 1, 0, wall, PATCH_STATIC)
-    add(go.Pose(go.fixed(10, 0xA800), go.fixed(10)), -1, 0, wall, PATCH_STATIC)
-    add(go.Pose(go.fixed(10), go.fixed(10)), 0x2000, 0x3000,
+    add(go.Pose(go.fixed(10, 0xB7FF), go.fixed(10)), 1, 0, wall, PATCH_STATIC)
+    add(go.Pose(go.fixed(10, 0xB800), go.fixed(10)), -1, 0, wall, PATCH_STATIC)
+    add(go.Pose(go.fixed(10), go.fixed(10)), 0x2000, 0x4000,
         (10, 11, 1), PATCH_STATIC)
-    add(go.Pose(go.fixed(10), go.fixed(10)), 0x3000, 0x2000,
+    add(go.Pose(go.fixed(10), go.fixed(10)), 0x4000, 0x2000,
         (11, 10, 1), PATCH_STATIC)
-    add(go.Pose(go.fixed(10), go.fixed(10)), 0x3000, 0x3000, (11, 11, 1))
-    add(go.Pose(go.fixed(10), go.fixed(10)), 0x2000, 0x3000, (10, 11, 1))
-    add(go.Pose(go.fixed(10), go.fixed(10)), 0x3000, 0x2000, (11, 10, 1))
-    add(go.Pose(go.fixed(10), go.fixed(10)), 0x3000, 0x3000, (11, 10, 1))
+    add(go.Pose(go.fixed(10), go.fixed(10)), 0x4000, 0x4000, (11, 11, 1))
+    add(go.Pose(go.fixed(10), go.fixed(10)), 0x2000, 0x4000, (10, 11, 1))
+    add(go.Pose(go.fixed(10), go.fixed(10)), 0x4000, 0x2000, (11, 10, 1))
+    add(go.Pose(go.fixed(10), go.fixed(10)), 0x4000, 0x4000, (11, 10, 1))
     # Exercise the harness's physical bottom border explicitly. ez80asm
     # evaluates mixed +/* expressions left-to-right, so this guards the
     # literal row-63 setup in gameplay_regression.asm as well as ClipMove.
@@ -132,32 +132,32 @@ def build_vectors(random_cases: int, *, include_zero_delta: bool) -> list[bytes]
     )
     # Cross each tile boundary into the closed door well without reaching its
     # center plane. A tile-wide door implementation rejects both vectors.
-    add(go.Pose(go.fixed(10, 0xA7FF), panel_y), 1, 0, door_patch)
-    add(go.Pose(go.fixed(12, 0x5800), panel_y), -1, 0, door_patch)
+    add(go.Pose(go.fixed(10, 0xB7FF), panel_y), 1, 0, door_patch)
+    add(go.Pose(go.fixed(12, 0x4800), panel_y), -1, 0, door_patch)
     # A player centered on the closed plane is blocked even for nonzero motion.
     add(go.Pose(vertical_plane, panel_y), 1, 0, door_patch)
     # At p=C000, q=C000 is still gap and q=C001 is first panel.
     add(
         go.Pose(vertical_plane - go.PLAYER_RADIUS - 1,
-                go.fixed(10, 0x6800)),
+                go.fixed(10, 0x7800)),
         1, 0, door_patch, door_position=0xC000,
     )
     add(
         go.Pose(vertical_plane - go.PLAYER_RADIUS - 1,
-                go.fixed(10, 0x6801)),
+                go.fixed(10, 0x7801)),
         1, 0, door_patch, door_position=0xC000,
     )
     # The final q=FFFF endpoint blocks at p=FFFE; p=FFFF has no panel,
     # independently of the action label.
     add(
         go.Pose(vertical_plane - go.PLAYER_RADIUS - 1,
-                go.fixed(10, 0xA7FF)),
+                go.fixed(10, 0xB7FF)),
         1, 0, door_patch,
         door_action=go.DOOR_OPENING, door_position=0xFFFE,
     )
     add(
         go.Pose(vertical_plane - go.PLAYER_RADIUS - 1,
-                go.fixed(10, 0xA7FF)),
+                go.fixed(10, 0xB7FF)),
         1, 0, door_patch,
         door_action=go.DOOR_CLOSING, door_position=0xFFFF,
     )
@@ -174,17 +174,17 @@ def build_vectors(random_cases: int, *, include_zero_delta: bool) -> list[bytes]
         0, -1, door_patch, door_vertical=False,
     )
     add(
-        go.Pose(go.fixed(11, 0x6800),
+        go.Pose(go.fixed(11, 0x7800),
                 horizontal_plane - go.PLAYER_RADIUS - 1),
         0, 1, door_patch, door_position=0xC000, door_vertical=False,
     )
     add(
-        go.Pose(go.fixed(11, 0x6801),
+        go.Pose(go.fixed(11, 0x7801),
                 horizontal_plane - go.PLAYER_RADIUS - 1),
         0, 1, door_patch, door_position=0xC000, door_vertical=False,
     )
     add(
-        go.Pose(panel_x, go.fixed(9, 0xA7FF)),
+        go.Pose(panel_x, go.fixed(9, 0xB7FF)),
         0, 1, door_patch, door_vertical=False,
     )
     if include_zero_delta:

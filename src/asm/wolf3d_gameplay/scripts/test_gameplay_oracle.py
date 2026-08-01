@@ -152,13 +152,13 @@ class CollisionDirectedTests(unittest.TestCase):
         self.tilemap = go.empty_bordered_map()
         self.doors: list[go.Door] = []
 
-    def test_radius_matches_original_contract(self) -> None:
-        self.assertEqual(go.PLAYER_RADIUS, 0x5800)
+    def test_radius_matches_tuned_contract(self) -> None:
+        self.assertEqual(go.PLAYER_RADIUS, 0x4800)
 
     def test_touching_wall_fraction_threshold(self) -> None:
         self.tilemap[10 * 64 + 11] = 1
-        just_clear = go.Pose(go.fixed(10, 0xA7FF), go.fixed(10))
-        touching = go.Pose(go.fixed(10, 0xA800), go.fixed(10))
+        just_clear = go.Pose(go.fixed(10, 0xB7FF), go.fixed(10))
+        touching = go.Pose(go.fixed(10, 0xB800), go.fixed(10))
         self.assertTrue(go.player_position_clear(self.tilemap, self.doors, just_clear))
         self.assertFalse(go.player_position_clear(self.tilemap, self.doors, touching))
 
@@ -233,9 +233,9 @@ class CollisionDirectedTests(unittest.TestCase):
         door = self.install_door()
         door.position = 0xC000
         plane = go.fixed(11)
-        # Radius 0x5800 makes these upper AABB edges exactly C000/C001.
-        last_gap = go.Pose(plane, go.fixed(10, 0x6800))
-        first_panel = go.Pose(plane, go.fixed(10, 0x6801))
+        # Radius 0x4800 makes these upper AABB edges exactly C000/C001.
+        last_gap = go.Pose(plane, go.fixed(10, 0x7800))
+        first_panel = go.Pose(plane, go.fixed(10, 0x7801))
         self.assertTrue(go.player_position_clear(self.tilemap, self.doors, last_gap))
         self.assertFalse(
             go.player_position_clear(self.tilemap, self.doors, first_panel)
@@ -245,8 +245,8 @@ class CollisionDirectedTests(unittest.TestCase):
         door = self.install_door(vertical=False)
         door.position = 0xC000
         plane = go.fixed(door.tile_y)
-        last_gap = go.Pose(go.fixed(door.tile_x, 0x6800), plane)
-        first_panel = go.Pose(go.fixed(door.tile_x, 0x6801), plane)
+        last_gap = go.Pose(go.fixed(door.tile_x, 0x7800), plane)
+        first_panel = go.Pose(go.fixed(door.tile_x, 0x7801), plane)
         self.assertTrue(go.player_position_clear(self.tilemap, self.doors, last_gap))
         self.assertFalse(
             go.player_position_clear(self.tilemap, self.doors, first_panel)
@@ -254,7 +254,7 @@ class CollisionDirectedTests(unittest.TestCase):
 
     def test_position_ffff_is_clear_independent_of_action(self) -> None:
         door = self.install_door()
-        endpoint_contact = go.Pose(go.fixed(11), go.fixed(10, 0xA7FF))
+        endpoint_contact = go.Pose(go.fixed(11), go.fixed(10, 0xB7FF))
         door.position = 0xFFFE
         self.assertFalse(
             go.player_position_clear(self.tilemap, self.doors, endpoint_contact)
@@ -296,14 +296,14 @@ class ClipMoveDirectedTests(unittest.TestCase):
         # Candidate's Y crosses the wall row; X alone remains clear.
         self.tilemap[11 * 64 + 10] = 1
         self.tilemap[11 * 64 + 11] = 1
-        result, path = go.clip_move(self.tilemap, [], self.pose, 0x2000, 0x3000)
+        result, path = go.clip_move(self.tilemap, [], self.pose, 0x2000, 0x4000)
         self.assertEqual(path, "x")
         self.assertEqual((result.x, result.y), (self.pose.x + 0x2000, self.pose.y))
 
     def test_y_slide_when_x_blocked(self) -> None:
         self.tilemap[10 * 64 + 11] = 1
         self.tilemap[11 * 64 + 11] = 1
-        result, path = go.clip_move(self.tilemap, [], self.pose, 0x3000, 0x2000)
+        result, path = go.clip_move(self.tilemap, [], self.pose, 0x4000, 0x2000)
         self.assertEqual(path, "y")
         self.assertEqual((result.x, result.y), (self.pose.x, self.pose.y + 0x2000))
 
@@ -311,7 +311,7 @@ class ClipMoveDirectedTests(unittest.TestCase):
         self.tilemap[10 * 64 + 11] = 1
         self.tilemap[11 * 64 + 10] = 1
         self.tilemap[11 * 64 + 11] = 1
-        result, path = go.clip_move(self.tilemap, [], self.pose, 0x3000, 0x3000)
+        result, path = go.clip_move(self.tilemap, [], self.pose, 0x4000, 0x4000)
         self.assertEqual(path, "blocked")
         self.assertEqual(result, self.pose)
 
@@ -363,8 +363,8 @@ class StaticCollisionTests(unittest.TestCase):
 
     def test_exact_contact_matches_wall_semantics(self) -> None:
         go.set_static_blocked(self.bits, 11, 10)
-        just_clear = go.Pose(go.fixed(10, 0xA7FF), go.fixed(10))
-        touching = go.Pose(go.fixed(10, 0xA800), go.fixed(10))
+        just_clear = go.Pose(go.fixed(10, 0xB7FF), go.fixed(10))
+        touching = go.Pose(go.fixed(10, 0xB800), go.fixed(10))
         self.assertTrue(go.player_position_clear(
             self.tilemap, [], just_clear, static_blocking_bits=self.bits
         ))
@@ -393,7 +393,7 @@ class StaticCollisionTests(unittest.TestCase):
         go.set_static_blocked(self.bits, 10, 11)
         pose = go.Pose(go.fixed(10), go.fixed(10))
         result, path = go.clip_move(
-            self.tilemap, [], pose, 0x2000, 0x3000, self.bits
+            self.tilemap, [], pose, 0x2000, 0x4000, self.bits
         )
         self.assertEqual(path, "x")
         self.assertEqual((result.x, result.y), (pose.x + 0x2000, pose.y))
@@ -405,7 +405,7 @@ class PickupStateTests(unittest.TestCase):
         return go.StaticObject(x, y, 20, go.STATIC_FLAG_BONUS, item)
 
     def test_contact_uses_player_aabb_and_removed_sentinel(self) -> None:
-        pose = go.Pose(go.fixed(10, 0xA800), go.fixed(10))
+        pose = go.Pose(go.fixed(10, 0xB800), go.fixed(10))
         pickup = self.pickup(go.ITEM_CROSS, x=11)
         dressing = go.StaticObject(11, 10, 3, 0, 0)
         player = go.PlayerState()
@@ -620,8 +620,8 @@ class DoorTimingTests(unittest.TestCase):
 
     def test_closing_uses_exact_gap_and_first_panel_threshold(self) -> None:
         plane = go.fixed(10)
-        last_gap = go.Pose(go.fixed(10, 0x2800), plane)
-        first_panel = go.Pose(go.fixed(10, 0x2801), plane)
+        last_gap = go.Pose(go.fixed(10, 0x3800), plane)
+        first_panel = go.Pose(go.fixed(10, 0x3801), plane)
 
         clear_door = go.Door(
             10, 10, False, 0, action=go.DOOR_CLOSING, position=0x8000

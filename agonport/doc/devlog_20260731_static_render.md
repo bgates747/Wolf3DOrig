@@ -1441,3 +1441,51 @@ Fresh automated confirmation immediately before this checkpoint:
 - direct production positional adapter: 3,792/3,792 checks;
 - production death/render/version fixture: 202/202 checks;
 - full application assembly: pass.
+
+## Isolated collision and aiming feel experiment
+
+The hardware-accepted audio checkpoint exposed three independent feel issues:
+gun hits are too forgiving, the player stops too far from walls/statics/door
+slabs, and player/enemy separation is too large. Inspection found no common
+coordinate-scaling defect. The port faithfully retained three independent DOS
+thresholds whose original feel is overly conservative in the current view.
+
+An isolated `experiment/collision-tuning` worktree tests this first conservative
+combination without modifying the main worktree or Pingo's active combined-VDP
+fixture inputs:
+
+```text
+player square collision radius: 0x5800 -> 0x4800 (0.34375 -> 0.28125 tile)
+player/enemy center separation:  0x10000 -> 0xC000 (1.0 -> 0.75 tile)
+shooting cone half-width:        25 -> 18 projected viewport pixels
+```
+
+The smaller player AABB applies uniformly to ordinary walls, tile-wide
+blocking decorations, pickup contact, and the finite moving door slab. Enemy
+spacing remains a separate center-delta rule and therefore requires its own
+constant. Knife range remains unchanged. The experiment must pass the existing
+host/direct-eZ80 collision, door, actor, and player-combat suites before visual
+emulator review; any expectation that intentionally pins an old threshold must
+be updated with explicit new boundary cases rather than weakened.
+
+The isolated implementation assembles successfully. Regressions were retuned
+at their independent contract boundaries and now pass:
+
+- gameplay host oracle: 55/55 tests;
+- direct production ClipMove: 10,028/10,028 records, including 10,000 random;
+- directed production door use: 16/16 cases;
+- production actor pool/collision: 10,494 checks;
+- production player combat: 314/314 checks.
+
+New directed cases retain exact clear/contact pairs for the `0x4800` wall,
+static, pickup, partial-door, and final-panel endpoints; exact `0xC000` versus
+`0xC001` actor separation; and the 18-pixel strict shooting-cone boundary. The
+isolated emulator profile is kept under `/tmp/wolf3d-collision-tuning-runtime`
+so this experiment cannot replace the main ignored profile or Pingo's active
+combined-candidate executable.
+
+First visual review accepted the `0x4800` wall/door distance. Target acquisition
+was improved but remained slightly too permissive, so the second isolated pass
+narrows only the strict shooting cone from 18 to 16 projected pixels. Collision
+thresholds remain unchanged. Its directed boundary is now 98 Q8 lateral units
+inside versus 99 outside at the pinned 535-Q8 projected depth.
