@@ -13,9 +13,6 @@ of the first packaged release, and correct any remaining regressions.
 title and control-panel presentation, visible game version, original shareware
 episode and difficulty selection, and a clean start/quit flow.
 
-[ ] 2. Implement level completion and the transition into a general
-level-loading and world-reinitialization path.
-
 [ ] 4. Widen or remap the byte-sized actor-state dispatcher before importing
 the remaining original actor states, avoiding the current 254-ID ceiling.
 

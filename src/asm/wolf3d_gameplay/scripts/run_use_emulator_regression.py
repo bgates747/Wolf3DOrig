@@ -34,6 +34,8 @@ REASONS = {
     6: "door timer low byte",
     7: "door timer high byte",
     8: "use-key latch",
+    9: "audio request",
+    10: "level completion",
 }
 
 

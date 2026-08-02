@@ -177,7 +177,7 @@ w3d_rebuild_area_connectivity:
     ld (w3d_area_scan_current),a
 
     ld ix,(w3d_doors_ptr)
-    ld a,W3D_FIXTURE_DOOR_COUNT
+    ld a,(w3d_level_door_count)
     ld (w3d_area_scan_doors_left),a
 @door_loop:
     ld a,(w3d_area_scan_doors_left)
@@ -250,7 +250,7 @@ w3d_rebuild_area_connectivity:
 
 w3d_area_validate_live_doors:
     ld ix,(w3d_doors_ptr)
-    ld a,W3D_FIXTURE_DOOR_COUNT
+    ld a,(w3d_level_door_count)
     ld (w3d_area_scan_doors_left),a
 @loop:
     ld a,(w3d_area_scan_doors_left)

@@ -28,9 +28,14 @@ W3D_SIMULATION_STEP_TICKS:      equ 4
 W3D_SIMULATION_MAX_STEPS:       equ 4
 W3D_SIMULATION_MAX_BACKLOG:     equ 32
 W3D_PLAYER_TURN_STEP_DEGREES:   equ 3
+W3D_PLAYER_POSE_SIZE:           equ 10
 ; Experimental feel tuning: the original 0x5800 square radius proved too
 ; conservative around walls, decorations, and the renderer-matched door slab.
 W3D_PLAYER_COLLISION_RADIUS:     equ 04800h
+W3D_ELEVATOR_SWITCH_TILE:        equ 21
+W3D_LEVEL_COMPLETION_NONE:       equ 0
+W3D_LEVEL_COMPLETION_NORMAL:     equ 1
+W3D_LEVEL_COMPLETION_SECRET:     equ 2
 
 ; Original doors traverse 0xffff in 64 ticks at 70 Hz and wait 300 ticks.
 ; At 30 Hz, 2389,2389,2390 repeating is the exact average travel rate;
@@ -60,7 +65,7 @@ W3D_HUD_DIRTY_LIVES:            equ 00100000b
 ; difficulty, and the extra-life threshold survive that world rebuild and are
 ; reconciled by wolf3d_death.inc after the hook returns.
 w3d_initialize_motion_state:
-    ld a,W3D_FIXTURE_DIFFICULTY
+    ld a,(w3d_requested_difficulty)
     ld (w3d_game_difficulty),a
     ld a,3
     ld (w3d_player_lives),a
@@ -76,27 +81,47 @@ w3d_initialize_motion_state:
     xor a
     ld (w3d_player_next_extra+2),a
     ld (w3d_player_next_extra+3),a
+    ld a,100
+    ld (w3d_player_health),a
+    ld a,8
+    ld (w3d_player_ammo),a
+    ld a,1
+    ld (w3d_player_weapon),a
+    ld (w3d_player_best_weapon),a
+    ld (w3d_player_chosen_weapon),a
     jp w3d_seed_level_attempt_state
 
-; Rebuild every mutable E1L1 attempt field from the generated fixture without
-; touching persistent game fields.  This routine submits no VDU bytes and
-; leaves no full-reset dirty set; the generated startup stream already carries
-; the first snapshot.  w3d_reseed_level_attempt adds the complete dirty set
-; required after init_level clears the VDP mirror.
-w3d_seed_level_attempt_state:
-    ld hl,w3d_fixture_initial_player_pose
+; Rebuild every mutable world/per-level field from the active level bindings
+; without touching game-persistent health, ammo, weapons, lives, difficulty,
+; score, or extra-life threshold. This is the common SetupGameLevel core for
+; a fresh game, death reseed, and successful level transition.
+w3d_seed_level_world_state:
+    ld hl,(w3d_level_player_seed_ptr)
     ld de,w3d_player_pose
-    ld bc,w3d_fixture_initial_player_pose_end-w3d_fixture_initial_player_pose
+    ld bc,W3D_PLAYER_POSE_SIZE
     ldir
-    ld a,W3D_FIXTURE_DOOR_COUNT
+
+; Clear the complete runtime-door capacity before copying the active prefix.
+; Level transitions may shrink the active count, so no stale record survives
+; as an accidental future seed.
+    xor a
+    ld hl,w3d_doors
+    ld (hl),a
+    ld de,w3d_doors+1
+    ld bc,W3D_MAX_DOORS*W3D_DOOR_SIZE-1
+    ldir
+    ld a,(w3d_level_door_count)
     or a
     jr z,@doors_seeded
-    ld hl,w3d_fixture_initial_doors
+    ld hl,(w3d_level_door_seed_ptr)
     ld de,w3d_doors
-    ld bc,w3d_fixture_initial_doors_end-w3d_fixture_initial_doors
+@copy_door_seed:
+    ld bc,W3D_DOOR_SIZE
     ldir
+    dec a
+    jr nz,@copy_door_seed
 @doors_seeded:
-; Clear the complete runtime-static capacity before copying the fixture's
+; Clear the complete runtime-static capacity before copying the active level's
 ; active prefix. Drops may extend that prefix to the original MAXSTATS=400,
 ; so no byte may depend on MOS loader/BSS behavior.
     xor a
@@ -110,18 +135,28 @@ w3d_seed_level_attempt_state:
     ld de,w3d_static_dirty+1
     ld bc,W3D_MAX_STATICS-1
     ldir
-    ld a,W3D_FIXTURE_STATIC_COUNT
-    or a
+    ld bc,0
+    ld a,(w3d_level_static_count+0)
+    ld c,a
+    ld a,(w3d_level_static_count+1)
+    ld b,a
+    or c
     jr z,@statics_seeded
-    ld hl,w3d_fixture_initial_statics
+    ld hl,(w3d_level_static_seed_ptr)
     ld de,w3d_statics
-    ld bc,w3d_fixture_initial_statics_end-w3d_fixture_initial_statics
+@copy_static_seed:
+    push bc
+    ld bc,W3D_STATIC_SIZE
     ldir
+    pop bc
+    dec bc
+    ld a,b
+    or c
+    jr nz,@copy_static_seed
 @statics_seeded:
-    ld hl,W3D_FIXTURE_STATIC_COUNT
-    ld a,l
+    ld a,(w3d_level_static_count+0)
     ld (w3d_static_count+0),a
-    ld a,h
+    ld a,(w3d_level_static_count+1)
     ld (w3d_static_count+1),a
     xor a
     ld (w3d_player_dirty),a
@@ -132,67 +167,31 @@ w3d_seed_level_attempt_state:
     ld (w3d_player_thrustspeed+0),a
     ld (w3d_player_thrustspeed+1),a
     ld (w3d_player_dead),a
+    ld (w3d_level_completion),a
     ld a,W3D_SLOT_NONE
     ld (w3d_player_last_attacker),a
     ld (w3d_player_killer),a
     xor a
     ld (w3d_door_motion_phase),a
-    ld bc,W3D_FIXTURE_DOOR_COUNT*2
-    ld a,b
-    or c
-    jr z,@door_timers_cleared
     ld hl,w3d_door_timers
-@clear_door_timer:
-    ld (hl),0
-    inc hl
-    dec bc
-    ld a,b
-    or c
-    jr nz,@clear_door_timer
-@door_timers_cleared:
-    ld bc,W3D_FIXTURE_DOOR_COUNT
-    ld a,b
-    or c
-    jr z,@door_dirty_cleared
+    ld (hl),a
+    ld de,w3d_door_timers+1
+    ld bc,W3D_MAX_DOORS*2-1
+    ldir
     ld hl,w3d_door_dirty
-@clear_door_dirty:
-    ld (hl),0
-    inc hl
-    dec bc
-    ld a,b
-    or c
-    jr nz,@clear_door_dirty
-@door_dirty_cleared:
-    ld bc,W3D_MAX_STATICS
-    ld a,b
-    or c
-    jr z,@static_dirty_cleared
-    ld hl,w3d_static_dirty
-@clear_static_dirty:
-    ld (hl),0
-    inc hl
-    dec bc
-    ld a,b
-    or c
-    jr nz,@clear_static_dirty
-@static_dirty_cleared:
+    ld (hl),a
+    ld de,w3d_door_dirty+1
+    ld bc,W3D_MAX_DOORS-1
+    ldir
     xor a
     ld (w3d_hud_dirty),a
     ld (w3d_pickup_scan_needed),a
     ld (w3d_player_treasure_count+0),a
     ld (w3d_player_treasure_count+1),a
-    ld a,100
-    ld (w3d_player_health),a
-    ld a,8
-    ld (w3d_player_ammo),a
-    ld a,1
-    ld (w3d_player_weapon),a
-    ld (w3d_player_best_weapon),a
-    ld (w3d_player_chosen_weapon),a
     xor a
-    ld hl,w3d_fixture_tilemap
+    ld hl,(w3d_level_tilemap_ptr)
     ld (w3d_map_ptr),hl
-    ld hl,w3d_fixture_static_blocking_bits
+    ld hl,(w3d_level_blocking_ptr)
     ld (w3d_static_blocking_ptr),hl
     ld hl,w3d_doors
     ld (w3d_doors_ptr),hl
@@ -202,10 +201,18 @@ w3d_seed_level_attempt_state:
     call w3d_initialize_actor_simulation
     call w3d_initialize_area_state
     call w3d_reset_keys
+    ret
+
+; Attempt entry resets transient weapon/attack machinery around whichever
+; inventory policy the caller established. New-game startup sets canonical
+; pistol inventory above; death code reapplies it after this hook; a level
+; transition deliberately retains the player's current inventory.
+w3d_seed_level_attempt_state:
+    call w3d_seed_level_world_state
     jp w3d_initialize_player_combat
 
 ; Death-restart hook. Rebuild authoritative state, then mark exactly the
-; fixture's active doors/statics/actors plus all player/HUD state for replay.
+; level's active doors/statics/actors plus all player/HUD state for replay.
 ; Carry is clear only after the full reset is ready; no render is submitted.
 w3d_reseed_level_attempt:
     call w3d_seed_level_attempt_state
@@ -214,7 +221,7 @@ w3d_reseed_level_attempt:
     ret
 
 w3d_mark_full_level_dirty:
-    ld a,W3D_FIXTURE_DOOR_COUNT
+    ld a,(w3d_level_door_count)
     or a
     jr z,@statics
     ld b,a
@@ -225,7 +232,11 @@ w3d_mark_full_level_dirty:
     djnz @door_loop
 
 @statics:
-    ld bc,W3D_FIXTURE_STATIC_COUNT
+    ld bc,0
+    ld a,(w3d_level_static_count+0)
+    ld c,a
+    ld a,(w3d_level_static_count+1)
+    ld b,a
     ld hl,w3d_static_dirty
 @static_loop:
     ld a,b
@@ -237,7 +248,7 @@ w3d_mark_full_level_dirty:
     jr @static_loop
 
 @actors:
-    ld a,W3D_FIXTURE_ACTOR_COUNT
+    ld a,(w3d_level_actor_count)
     or a
     jr z,@player
     ld b,a
@@ -784,7 +795,7 @@ w3d_collision_tile_clear:
     cp W3D_TILE_DOOR_MAX+1
     jr nc,@blocked
     and W3D_TILE_DOOR_MASK
-    cp W3D_FIXTURE_DOOR_COUNT
+    call w3d_compare_door_index
     jr nc,@blocked
     push iy
     call w3d_door_pointer_iy_from_index
@@ -1640,9 +1651,11 @@ w3d_handle_use_edge:
 ; priority keeps Up Arrow useful throughout that recess. A malformed current
 ; door byte fails closed instead of accidentally operating a neighboring door.
 ; Adjacent angle sectors preserve the original boundary behavior: 315 remains
-; south; 316 begins the east sector. Pushwalls/elevator switches are future
-; layers.
+; south; 316 begins the east sector. The original elevator switch is operable
+; only from its east/west faces; area zero selects the secret exit.
 w3d_use_adjacent_door:
+    xor a
+    ld (w3d_use_elevator_ok),a
     ld a,(w3d_player_pose+2)
     ld b,a
     ld a,(w3d_player_pose+6)
@@ -1652,7 +1665,7 @@ w3d_use_adjacent_door:
     jr c,@select_adjacent
     cp W3D_TILE_DOOR_MAX+1
     jr nc,@select_adjacent
-    jr @resolve_door_tile
+    jp @resolve_door_tile
 
 @select_adjacent:
     call w3d_load_player_angle
@@ -1683,6 +1696,8 @@ w3d_use_adjacent_door:
     ld c,a
     jr @tile_ready
 @east:
+    ld a,1
+    ld (w3d_use_elevator_ok),a
     ld a,(w3d_player_pose+2)
     inc a
     ld b,a
@@ -1697,6 +1712,8 @@ w3d_use_adjacent_door:
     ld c,a
     jr @tile_ready
 @west:
+    ld a,1
+    ld (w3d_use_elevator_ok),a
     ld a,(w3d_player_pose+2)
     dec a
     ld b,a
@@ -1710,13 +1727,30 @@ w3d_use_adjacent_door:
     cp W3D_MAP_SIZE
     ret nc
     call w3d_map_read
+    cp W3D_ELEVATOR_SWITCH_TILE
+    jr nz,@check_door_tile
+    ld a,(w3d_use_elevator_ok)
+    or a
+    ret z
+    ld a,(w3d_player_area)
+    or a
+    ld a,W3D_LEVEL_COMPLETION_NORMAL
+    jr nz,@complete_level
+    ld a,W3D_LEVEL_COMPLETION_SECRET
+@complete_level:
+    ld (w3d_level_completion),a
+    ld a,W3D_AUDIO_SOUND_LEVELDONE
+    ld b,127
+    ld c,0
+    jp w3d_audio_request
+@check_door_tile:
     cp W3D_TILE_DOOR_MIN
     ret c
     cp W3D_TILE_DOOR_MAX+1
     ret nc
 @resolve_door_tile:
     and W3D_TILE_DOOR_MASK
-    cp W3D_FIXTURE_DOOR_COUNT
+    call w3d_compare_door_index
     ret nc
     ld (w3d_current_door_index),a
     call w3d_door_pointer_from_index
@@ -1766,7 +1800,7 @@ w3d_use_adjacent_door:
 ; timer; CLOSED/CLOSING reverses toward OPENING; OPENING is unchanged. IX is
 ; preserved because T_Path owns it as the current actor record.
 w3d_request_open_door:
-    cp W3D_FIXTURE_DOOR_COUNT
+    call w3d_compare_door_index
     jr c,@valid
     ld a,0ffh
     ret
@@ -1812,7 +1846,7 @@ w3d_simulate_doors:
     ld (w3d_current_door_index),a
 @loop:
     ld a,(w3d_current_door_index)
-    cp W3D_FIXTURE_DOOR_COUNT
+    call w3d_compare_door_index
     jp nc,w3d_refresh_areas_if_dirty
     call w3d_door_pointer_from_index
     ld a,(ix+W3D_DOOR_ACTION)
@@ -2239,7 +2273,7 @@ w3d_submit_dirty_world_render_marked:
     ld (w3d_current_door_index),a
 @door_loop:
     ld a,(w3d_current_door_index)
-    cp W3D_FIXTURE_DOOR_COUNT
+    call w3d_compare_door_index
     jr nc,@statics
     ld e,a
     ld d,0
@@ -2543,6 +2577,9 @@ w3d_player_killer:
 w3d_game_difficulty:
     db W3D_FIXTURE_DIFFICULTY
 
+w3d_requested_difficulty:
+    db W3D_FIXTURE_DIFFICULTY
+
 w3d_player_health:
     db 100
 
@@ -2584,13 +2621,13 @@ w3d_key_masks:
     db 1,2,4,8
 
 w3d_doors:
-    ds W3D_FIXTURE_DOOR_COUNT*W3D_DOOR_SIZE
+    ds W3D_MAX_DOORS*W3D_DOOR_SIZE
 
 w3d_door_timers:
-    ds W3D_FIXTURE_DOOR_COUNT*2
+    ds W3D_MAX_DOORS*2
 
 w3d_door_dirty:
-    ds W3D_FIXTURE_DOOR_COUNT
+    ds W3D_MAX_DOORS
 
 w3d_statics:
     ds W3D_MAX_STATICS*W3D_STATIC_SIZE
@@ -2615,6 +2652,12 @@ w3d_drop_itemnumber:
 
 w3d_current_door_index:
     db 0
+
+w3d_use_elevator_ok:
+    db 0
+
+w3d_level_completion:
+    db W3D_LEVEL_COMPLETION_NONE
 
 w3d_door_motion_phase:
     db 0

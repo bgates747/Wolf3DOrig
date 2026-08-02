@@ -70,7 +70,7 @@ class ManifestView:
 
 
 def load_manifest_view(path: Path, kind: str) -> list[ManifestView]:
-    if kind != "hud":
+    if kind not in ("hud", "shell"):
         return [
             ManifestView(e.name, e.source, e.kind, e.assetId, e.bufferId)
             for e in load_manifest(path)
@@ -82,7 +82,7 @@ def load_manifest_view(path: Path, kind: str) -> list[ManifestView]:
         value = json.loads(line)
         entries.append(
             ManifestView(
-                value["name"], value["source"], "hud",
+                value["name"], value["source"], kind,
                 value["chunkId"],
                 value["bufferId"],
             )
@@ -96,6 +96,7 @@ def available_asset_sets(level: str) -> dict[str, AssetSet]:
         "tiles": AssetSet("tiles", level_dir / "tiles.agnb", level_dir / "tiles.jsonl"),
         "sprites": AssetSet("sprites", level_dir / "sprites.agnb", level_dir / "sprites.jsonl"),
         "hud": AssetSet("hud", GENERATED_DIR / "hud" / "hud.agnb", GENERATED_DIR / "hud" / "hud_assets.jsonl"),
+        "shell": AssetSet("shell", GENERATED_DIR / "shell" / "shell.agnb", GENERATED_DIR / "shell" / "shell_assets.jsonl"),
     }
     return {name: item for name, item in candidates.items() if item.container.is_file()}
 

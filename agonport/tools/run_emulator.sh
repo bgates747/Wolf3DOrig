@@ -4,7 +4,7 @@ set -euo pipefail
 port_root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 profile="${port_root}/emulator"
 fab_bin="$(readlink -f "${profile}/fab-agon-emulator")"
-vdp_module="$(readlink -f "${AGONPORT_VDP:-${profile}/vdp_stock.so}")"
+vdp_module="$(readlink -f "${AGONPORT_VDP:-${profile}/vdp_wolf3d.so}")"
 mos_bin="$(readlink -f "${profile}/mos_console8.bin")"
 sdcard="$(readlink -f "${profile}/sdcard")"
 

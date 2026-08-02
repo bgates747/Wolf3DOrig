@@ -102,16 +102,32 @@ def main() -> None:
 
     sources = {
         "wolf3d.bin": PROJECT_ROOT / "src/asm/wolf3d/tgt/wolf3d.bin",
-        "tiles.agnb": PROJECT_ROOT
-        / "agonport/assets/generated/wolf3d/levels/level_00/tiles.agnb",
-        "sprites.agnb": PROJECT_ROOT
-        / "agonport/assets/generated/wolf3d/levels/level_00/sprites.agnb",
         "hud.agnb": PROJECT_ROOT
         / "agonport/assets/generated/wolf3d/hud/hud.agnb",
         "sfx.agnb": PROJECT_ROOT
         / "agonport/assets/generated/wolf3d/audio/sfx.agnb",
     }
-    for source in sources.values():
+    level_sources: dict[str, dict[str, Path]] = {}
+    for index in range(10):
+        level_name = f"level_{index:02d}"
+        level_root = (
+            PROJECT_ROOT / "agonport/assets/generated/wolf3d/levels" / level_name
+        )
+        level_sources[level_name] = {
+            filename: level_root / filename
+            for filename in (
+                "tiles.agnb",
+                "sprites.agnb",
+                "state_baby.w3l",
+                "state_easy.w3l",
+                "state_medium.w3l",
+                "state_hard.w3l",
+            )
+        }
+    for source in [
+        *sources.values(),
+        *(path for level in level_sources.values() for path in level.values()),
+    ]:
         if not source.is_file() or source.stat().st_size == 0:
             raise RuntimeError(f"Missing or empty deployment source: {source}")
 
@@ -126,6 +142,18 @@ def main() -> None:
             f"Deployed {target} ({target.stat().st_size} bytes, "
             f"sha256 {sha256(source)})"
         )
+    for level_name, level in level_sources.items():
+        level_destination = destination / level_name
+        if level_destination.is_symlink():
+            raise RuntimeError(f"Refusing symlinked level destination: {level_destination}")
+        level_destination.mkdir(exist_ok=True)
+        for filename, source in level.items():
+            target = level_destination / filename
+            replace_file(source, target)
+            print(
+                f"Deployed {target} ({target.stat().st_size} bytes, "
+                f"sha256 {sha256(source)})"
+            )
 
     if args.write_autoexec:
         autoexec_source = destination / ".autoexec.deploying"

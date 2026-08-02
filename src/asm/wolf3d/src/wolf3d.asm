@@ -28,6 +28,7 @@
 ; =============================================================================
 
 mos_getkey:      equ 00h
+mos_load:        equ 01h
 mos_sysvars:     equ 08h
 mos_setkbvector: equ 1Dh
 mos_getkbmap:    equ 1Eh
@@ -51,6 +52,8 @@ sysvar_scrMode:  equ 27h
     include "agnb_dependencies.inc"
     include "agnb_api.inc"
     include "wolf3d_audio_assets.inc"
+    include "wolf3d_shell_assets.inc"
+    include "wolf3d_shell.inc"
     include "wolf3d_audio.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_render_async.inc"
@@ -62,6 +65,7 @@ sysvar_scrMode:  equ 27h
     include "wolf3d_player_combat.inc"
     include "wolf3d_death.inc"
     include "wolf3d_audio_spatial.inc"
+    include "wolf3d_level_loader.inc"
 
 start:
     push af
@@ -90,6 +94,8 @@ hud_filename:
     db "hud.agnb",0
 sfx_filename:
     db "sfx.agnb",0
+shell_filename:
+    db "shell.agnb",0
 loading_msg:
     db "Loading level_00 wall/door textures (tiles.agnb)",0
 loading_sprites_msg:
@@ -98,8 +104,28 @@ loading_hud_msg:
     db "Loading original in-game status panel (hud.agnb)",0
 loading_sfx_msg:
     db "Loading native-rate Wolf3D sound effects (sfx.agnb)",0
+loading_shell_msg:
+    db "Loading original Wolf3D application shell (shell.agnb)",0
 rendering_msg:
     db "Uploading tilemap and rendering player's first-position view",0
+level_state_loading_msg:
+    db "Loading runtime level state",0
+level_state_error_msg:
+    db "Runtime level-state load or validation failed.",0
+level_state_file_error_msg:
+    db "Runtime level-state file error.",0
+level_state_magic_error_msg:
+    db "Runtime level-state magic error.",0
+level_state_version_error_msg:
+    db "Runtime level-state version error.",0
+level_state_id_error_msg:
+    db "Runtime level-state level/difficulty error.",0
+level_state_count_error_msg:
+    db "Runtime level-state capacity error.",0
+level_state_bounds_error_msg:
+    db "Runtime level-state layout/size error.",0
+level_transition_msg:
+    db "Loading next floor",0
 assets_error_msg:
     db "AGNB texture load failed; render not submitted.",0
 sfx_error_msg:
@@ -120,6 +146,10 @@ vdp_check_required_msg:
     db "This application requires renderer ABI 1.0 and capabilities 003Fh.",0
 vdp_check_return_msg:
     db "Press any key to return safely to MOS.",0
+farewell_msg:
+    db "Thanks for playing Wolf3DOrig!",10,0
+w3d_exit_message_ptr:
+    dl farewell_msg
 
 ; Select the 320x240x64 double-buffered display only after all bootstrap
 ; diagnostics and asset loading are complete. The renderer draws its 256x160
@@ -186,6 +216,35 @@ printNewLine:
     ld a,'\n'
     rst.lil 10h
     ret
+
+; A=W3D_LEVEL_LOAD_* nonzero result. Select a specific fail-closed reason for
+; main to print after restoring the caller's MOS mode.
+w3d_set_level_load_error:
+    cp W3D_LEVEL_LOAD_BOUNDS_ERROR+1
+    ld hl,level_state_error_msg
+    jr nc,@selected
+    dec a
+    ld b,a
+    add a,a
+    add a,b
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    ld hl,w3d_level_error_message_table
+    add hl,de
+    ld hl,(hl)
+@selected:
+    ld (w3d_exit_message_ptr),hl
+    ret
+
+w3d_level_error_message_table:
+    dl level_state_file_error_msg
+    dl level_state_magic_error_msg
+    dl level_state_version_error_msg
+    dl level_state_id_error_msg
+    dl level_state_count_error_msg
+    dl level_state_bounds_error_msg
 
 ; One breadcrumb means one image record was fully streamed, consolidated, and
 ; finalized as a VDP bitmap by the modern AGNB container loader.
@@ -303,9 +362,13 @@ gallery_y:
     dl 32
 
 main:
+    ld hl,farewell_msg
+    ld (w3d_exit_message_ptr),hl
     call w3d_capture_original_screen_mode
     call w3d_main_body
     call w3d_restore_original_screen_mode
+    ld hl,(w3d_exit_message_ptr)
+    call printString
     ret
 
 w3d_main_body:
@@ -354,6 +417,17 @@ w3d_main_body:
 ;
 ;@vdp_compatible:
 
+; Direct-to-play currently selects the generated fixture difficulty and the
+; first shareware floor. The deferred shell will eventually supply both.
+    ld a,(w3d_requested_difficulty)
+    ld b,a
+    xor a
+    call w3d_load_level_package
+    jr z,@level_state_loaded
+    call w3d_set_level_load_error
+    ret
+@level_state_loaded:
+
     ld hl,loading_msg
     call printString
     call printNewLine
@@ -369,7 +443,7 @@ w3d_main_body:
 ;    call printNewLine
 ;    call initializeTextureGallery
 
-    ld de,assets_filename
+    ld de,w3d_level_tiles_filename
 ;    ld hl,printImageBreadcrumb ; diagnostic wall gallery
     ld hl,printImageDot         ; normal breadcrumb-only loading
     call agnb_load_images_with_callback
@@ -384,7 +458,7 @@ w3d_main_body:
     ld hl,loading_sprites_msg
     call printString
     call printNewLine
-    ld de,sprites_filename
+    ld de,w3d_level_sprites_filename
     ld hl,printImageDot
     call agnb_load_images_with_callback
     jr z,@sprites_loaded
@@ -423,6 +497,27 @@ w3d_main_body:
 ; Partial containers remain useful: install procedures only for callbacks
 ; that reached the finalized-sample boundary before any loader error.
     call w3d_audio_install_available_command_buffers
+
+; TODO 3 shell implementation is preserved but temporarily bypassed while its
+; presentation receives a later polish pass. Keep direct-to-play startup fast:
+; do not load shell.agnb or reserve its VDP SRAM merely to skip its screens.
+;    ld hl,loading_shell_msg
+;    call printString
+;    call printNewLine
+;    ld de,shell_filename
+;    ld hl,printImageDot
+;    call agnb_load_images_with_callback
+;    jr z,@shell_loaded
+;    call printNewLine
+;    ld hl,assets_error_msg
+;    call printString
+;    call printNewLine
+;    ret
+;@shell_loaded:
+;    call printNewLine
+;    call w3d_shell_run
+;    cp W3D_SHELL_RESULT_NEW_GAME
+;    ret nz
 ; Gallery review pause, retained alongside the disabled diagnostic block.
 ;    ld hl,gallery_done_msg
 ;    call printString
@@ -433,8 +528,8 @@ w3d_main_body:
     call printString
     call printNewLine
     ld hl,W3D_FIXTURE_TILEMAP_BUFFER_ID
-    ld bc,w3d_fixture_tilemap_end-w3d_fixture_tilemap
-    ld de,w3d_fixture_tilemap
+    ld bc,W3D_MAP_BYTES
+    ld de,(w3d_level_tilemap_ptr)
     call vdu_load_buffer
 
     ld hl,w3d_display_setup
@@ -451,22 +546,33 @@ w3d_main_body:
     call w3d_enable_render_notifications
     ei
 
-; The initial world snapshot is complete. Submit one unconditional render.
-; Future simulation/input work belongs in mainloop and may submit another
-; snapshot only while w3d_render_in_flight is clear.
+; The initial world snapshot is complete. Use the same generic init/full-replay
+; path as a later floor transition; the generated fixture command stream is no
+; longer the application's runtime-level authority.
+    call w3d_mark_full_level_dirty
     call w3d_death_prepare_next_render
-    call w3d_mark_render_submitted
-    ld hl,w3d_fixture_cmds
-    ld bc,w3d_fixture_cmds_len
-    rst.lil 18h
-; The generated initial stream contains the exact ready-weapon shape. Combat
-; initialization dirties that same value for generic reseeds; consume the
-; redundant initial dirty edge now that the snapshot is on the wire.
-    xor a
-    ld (w3d_player_weapon_shape_dirty),a
-    ld (w3d_world_dirty),a
+    call w3d_submit_level_reset
+    jp c,w3d_main_shutdown
 
 mainloop:
+; Elevator completion freezes input/simulation immediately. The final ordinary
+; snapshot, if any, still owns its callback; consume it before any new floor
+; assets or init_level bytes are allowed onto the wire.
+    ld a,(w3d_level_completion)
+    or a
+    jr z,@simulate
+    call w3d_death_foreground_update
+    ld a,(w3d_callback_error)
+    or a
+    jr nz,@shutdown
+    ld a,(w3d_async_owner)
+    or a
+    jp nz,mainloop
+    call w3d_transition_to_next_level
+    jr c,@shutdown
+    jp mainloop
+
+@simulate:
 ; Input and simulation run at an exact 30 Hz fixed step (four 120 Hz MOS
 ; ticks), independently of render completion.
     call w3d_poll_keys
@@ -504,13 +610,10 @@ mainloop:
     jr nz,@shutdown
     ld a,(w3d_async_owner)
     or a
-    jr nz,mainloop
+    jp nz,mainloop
 
 @shutdown:
-    call w3d_audio_shutdown
-    call w3d_disable_render_notifications
-    call w3d_remove_render_callback
-    ret
+    jp w3d_main_shutdown
 
 @continue:
 ; A new render may be submitted only when the previous one completed and the
@@ -519,17 +622,17 @@ mainloop:
 ; without slowing world time.
     ld a,(w3d_async_owner)
     or a
-    jr nz,mainloop
+    jp nz,mainloop
 
     ld hl,(w3d_simulation_accumulator)
     ld de,W3D_SIMULATION_STEP_TICKS
     or a
     sbc hl,de
-    jr nc,mainloop
+    jp nc,mainloop
 
     call w3d_death_render_permitted
     or a
-    jr z,mainloop
+    jp z,mainloop
 
 ; A successful death reseed must begin with init_level, then replay the full
 ; authoritative fixture snapshot into the cleared VDP mirror. No other phase
@@ -544,7 +647,13 @@ mainloop:
 @ordinary_render:
     ld a,(w3d_world_dirty)
     or a
-    jr z,mainloop
+    jp z,mainloop
     call w3d_death_prepare_next_render
     call w3d_submit_dirty_world_render
     jp mainloop
+
+w3d_main_shutdown:
+    call w3d_audio_shutdown
+    call w3d_disable_render_notifications
+    call w3d_remove_render_callback
+    ret

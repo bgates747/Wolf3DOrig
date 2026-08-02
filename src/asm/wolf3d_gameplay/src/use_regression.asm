@@ -32,7 +32,7 @@ fa_create_always:   equ 0x08
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
 
-use_case_count:     equ 16
+use_case_count:     equ 19
 
 reason_index:       equ 1
 reason_action:      equ 2
@@ -43,6 +43,7 @@ reason_timer_low:   equ 6
 reason_timer_high:  equ 7
 reason_latch:       equ 8
 reason_audio:       equ 9
+reason_completion:  equ 10
 
 start:
     push af
@@ -85,6 +86,9 @@ run_tests:
     call case_disconnected_open_silent
     call case_malformed_areas_silent
     call case_use_edge_latch
+    call case_elevator_east_normal
+    call case_elevator_west_secret
+    call case_elevator_north_ignored
 
     call write_result
     call print_report
@@ -148,6 +152,7 @@ begin_case:
     ld (w3d_use_was_down),a
     ld (w3d_controls),a
     ld (w3d_player_key_flags),a
+    ld (w3d_level_completion),a
     dec a
     ld (w3d_current_door_index),a
 
@@ -600,6 +605,58 @@ case_use_edge_latch:
     ld a,(w3d_door_timers+1)
     ld b,0
     ld c,reason_timer_high
+    call assert_equal
+    jp finish_case
+
+case_elevator_east_normal:
+    call begin_case
+    call pose_center
+    ld a,W3D_ELEVATOR_SWITCH_TILE
+    ld (test_tilemap+651),a       ; east of player
+    ld a,3
+    ld (w3d_player_area),a
+    call w3d_use_adjacent_door
+    ld a,(w3d_level_completion)
+    ld b,W3D_LEVEL_COMPLETION_NORMAL
+    ld c,reason_completion
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,W3D_AUDIO_SOUND_LEVELDONE
+    ld c,reason_audio
+    call assert_equal
+    jp finish_case
+
+case_elevator_west_secret:
+    call begin_case
+    call pose_center
+    ld a,W3D_ELEVATOR_SWITCH_TILE
+    ld (test_tilemap+649),a       ; west of player
+    ld a,180
+    ld (w3d_player_pose+8),a
+    xor a
+    ld (w3d_player_pose+9),a
+    xor a
+    ld (w3d_player_area),a
+    call w3d_use_adjacent_door
+    ld a,(w3d_level_completion)
+    ld b,W3D_LEVEL_COMPLETION_SECRET
+    ld c,reason_completion
+    call assert_equal
+    jp finish_case
+
+case_elevator_north_ignored:
+    call begin_case
+    call pose_center
+    ld a,W3D_ELEVATOR_SWITCH_TILE
+    ld (test_tilemap+586),a       ; north of player
+    ld a,90
+    ld (w3d_player_pose+8),a
+    xor a
+    ld (w3d_player_pose+9),a
+    call w3d_use_adjacent_door
+    ld a,(w3d_level_completion)
+    ld b,W3D_LEVEL_COMPLETION_NONE
+    ld c,reason_completion
     call assert_equal
     jp finish_case
 

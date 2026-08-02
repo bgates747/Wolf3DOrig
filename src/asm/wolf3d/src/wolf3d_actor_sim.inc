@@ -45,11 +45,11 @@ w3d_initialize_actor_simulation:
     ld (w3d_actor_death_sound_actor),a
     xor a
     ld (w3d_actor_death_sound_class),a
-    ld a,W3D_FIXTURE_RND_INDEX_AFTER_SPAWN
+    ld a,(w3d_level_random_index)
     ld (w3d_random_index),a
     ld a,1
     ld (w3d_awareness_enabled),a
-    ld hl,w3d_fixture_tilemap
+    ld hl,(w3d_level_tilemap_ptr)
     ld (w3d_actor_sight_context+W3D_SIGHT_CTX_TILEMAP),hl
     ld hl,w3d_doors
     ld (w3d_actor_sight_context+W3D_SIGHT_CTX_DOORS),hl
@@ -1713,7 +1713,7 @@ w3d_actor_think_chase:
     jr nz,@bad_wait
     ld a,(ix+W3D_ACTOR_DISTANCE+0)
     cpl                               ; -distance-1 -> door index
-    cp W3D_FIXTURE_DOOR_COUNT
+    call w3d_compare_door_index
     jr nc,@bad_wait
     call w3d_request_open_door
     cp W3D_DOOR_ACTION_OPEN
@@ -2340,7 +2340,7 @@ w3d_actor_think_path:
     jr nz,@bad_wait
     ld a,(ix+W3D_ACTOR_DISTANCE+0)
     cpl                               ; -distance-1 -> door index
-    cp W3D_FIXTURE_DOOR_COUNT
+    call w3d_compare_door_index
     jr nc,@bad_wait
     call w3d_request_open_door
     cp W3D_DOOR_ACTION_OPEN
@@ -2596,7 +2596,7 @@ w3d_actor_check_side_cell:
 ; A=door index, B/C=map coordinate. Return action or FF for malformed name.
 ; Actor IX is preserved across the door-record lookup.
 w3d_actor_door_action_at_bc:
-    cp W3D_FIXTURE_DOOR_COUNT
+    call w3d_compare_door_index
     jr nc,@invalid
     ld (w3d_actor_checked_door),a
     push ix

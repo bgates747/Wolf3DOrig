@@ -11,6 +11,10 @@ AGON_ROOT = Path.home() / "Agon"
 FAB_ROOT = AGON_ROOT / "fab-agon-emulator"
 PORT_ROOT = Path(__file__).resolve().parent.parent
 PROFILE = PORT_ROOT / "emulator"
+WOLF3D_VDP = (
+    Path.home()
+    / "Agon/mystuff/agon-vdp-wolf3d/video/build/userspace/vdp_wolf3d.so"
+)
 
 
 def replace_symlink(link: Path, target: Path) -> None:
@@ -26,6 +30,7 @@ def main() -> None:
     artifacts = {
         PROFILE / "fab-agon-emulator": FAB_ROOT / "fab-agon-emulator",
         PROFILE / "vdp_stock.so": FAB_ROOT / "firmware/vdp_console8.so",
+        PROFILE / "vdp_wolf3d.so": WOLF3D_VDP,
         PROFILE / "mos_console8.bin": FAB_ROOT / "firmware/mos_console8.bin",
         PROFILE / "sdcard/bin": FAB_ROOT / "sdcard/bin",
         PROFILE / "sdcard/mos": FAB_ROOT / "sdcard/mos",
@@ -48,6 +53,7 @@ def main() -> None:
 
     print(f"Emulator profile: {PROFILE}")
     print(f"Stock VDP:        {PROFILE / 'vdp_stock.so'}")
+    print(f"Wolf3DOrig VDP:   {PROFILE / 'vdp_wolf3d.so'}")
     print(f"Autoexec:         {autoexec}")
 
 

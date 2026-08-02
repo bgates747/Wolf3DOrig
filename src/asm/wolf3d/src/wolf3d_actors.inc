@@ -585,9 +585,9 @@ w3d_actor_states_end:
 ; ---------------------------------------------------------------------------
 
 w3d_initialize_actor_state:
-    ld hl,w3d_fixture_area_map
+    ld hl,(w3d_level_area_ptr)
     ld (w3d_area_map_ptr),hl
-    ld hl,w3d_fixture_path_directions
+    ld hl,(w3d_level_path_ptr)
     ld (w3d_path_directions_ptr),hl
 ; Deterministically clear every byte; do not depend on MOS loader BSS policy.
     xor a
@@ -637,18 +637,21 @@ w3d_initialize_actor_state:
 
 ; Slot ids in the generated records start at one. They already contain the
 ; correct original active state, cached destination, and live next/prev links.
-    ld a,W3D_FIXTURE_ACTOR_COUNT
+    ld a,(w3d_level_actor_count)
     ld (w3d_actor_count),a
     or a
     jr z,@no_live_seed
-    ld hl,w3d_fixture_initial_actors
+    ld hl,(w3d_level_actor_seed_ptr)
     ld de,w3d_actors+W3D_ACTOR_SIZE
-    ld bc,w3d_fixture_initial_actors_end-w3d_fixture_initial_actors
+@copy_live_seed:
+    ld bc,W3D_ACTOR_SIZE
     ldir
+    dec a
+    jr nz,@copy_live_seed
 
     ld a,1
     ld (w3d_actor_live_head),a
-    ld a,W3D_FIXTURE_ACTOR_COUNT
+    ld a,(w3d_level_actor_count)
     ld (w3d_actor_live_tail),a
     jr @set_free_head
 @no_live_seed:
@@ -656,7 +659,8 @@ w3d_initialize_actor_state:
     ld (w3d_actor_live_head),a
     ld (w3d_actor_live_tail),a
 @set_free_head:
-    ld a,W3D_FIXTURE_ACTOR_COUNT+1
+    ld a,(w3d_level_actor_count)
+    inc a
     cp W3D_MAX_ACTORS
     jr c,@free_head_valid
     ld a,W3D_SLOT_NONE
@@ -679,6 +683,15 @@ w3d_initialize_actor_state:
     ld a,(ix+W3D_ACTOR_NEXT)
     jr @occupancy_loop
 @done:
+    ret
+
+; Compare A with the active runtime door count without borrowing a caller's
+; coordinate or pointer registers. Carry is set exactly when A is in range.
+w3d_compare_door_index:
+    push hl
+    ld hl,w3d_level_door_count
+    cp (hl)
+    pop hl
     ret
 
 ; A=slot -> IX=record. Destroys DE,HL; A preserved.
@@ -1157,6 +1170,34 @@ w3d_actor_remove_end:
 ; ---------------------------------------------------------------------------
 ; Storage
 ; ---------------------------------------------------------------------------
+
+; Loader-facing mutable level bindings. The generated E1L1 fixture remains
+; the default so every standalone regression harness retains its deterministic
+; seed without needing to include the production package loader.
+w3d_level_player_seed_ptr:
+    dl w3d_fixture_initial_player_pose
+w3d_level_door_seed_ptr:
+    dl w3d_fixture_initial_doors
+w3d_level_static_seed_ptr:
+    dl w3d_fixture_initial_statics
+w3d_level_actor_seed_ptr:
+    dl w3d_fixture_initial_actors
+w3d_level_blocking_ptr:
+    dl w3d_fixture_static_blocking_bits
+w3d_level_area_ptr:
+    dl w3d_fixture_area_map
+w3d_level_path_ptr:
+    dl w3d_fixture_path_directions
+w3d_level_tilemap_ptr:
+    dl w3d_fixture_tilemap
+w3d_level_door_count:
+    db W3D_FIXTURE_DOOR_COUNT
+w3d_level_static_count:
+    dw W3D_FIXTURE_STATIC_COUNT
+w3d_level_actor_count:
+    db W3D_FIXTURE_ACTOR_COUNT
+w3d_level_random_index:
+    db W3D_FIXTURE_RND_INDEX_AFTER_SPAWN
 
 w3d_actors:
     ds W3D_MAX_ACTORS*W3D_ACTOR_SIZE
