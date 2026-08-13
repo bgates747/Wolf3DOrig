@@ -92,13 +92,13 @@ def build_vectors(random_cases: int, *, include_zero_delta: bool) -> list[bytes]
     wall = (11, 10, 1)
     add(go.Pose(go.fixed(10, 0xB7FF), go.fixed(10)), 1, 0, wall)
     add(go.Pose(go.fixed(10, 0xB800), go.fixed(10)), -1, 0, wall)
-    # Blocking statics use a separate bit-plane but retain identical tile-wide
-    # PLAYERSIZE contact and ClipMove behavior.
-    add(go.Pose(go.fixed(10, 0xB7FF), go.fixed(10)), 1, 0, wall, PATCH_STATIC)
-    add(go.Pose(go.fixed(10, 0xB800), go.fixed(10)), -1, 0, wall, PATCH_STATIC)
-    add(go.Pose(go.fixed(10), go.fixed(10)), 0x2000, 0x4000,
+    # The bit plane remains the broad phase, but a dense slot lookup resolves
+    # centered blocking statics for the exact 0x4800 narrow-phase boundary.
+    add(go.Pose(go.fixed(11, 0x37FF), go.fixed(10)), 1, 0, wall, PATCH_STATIC)
+    add(go.Pose(go.fixed(11, 0x3800), go.fixed(10)), -1, 0, wall, PATCH_STATIC)
+    add(go.Pose(go.fixed(10), go.fixed(10)), 0x2000, 0xB800,
         (10, 11, 1), PATCH_STATIC)
-    add(go.Pose(go.fixed(10), go.fixed(10)), 0x4000, 0x2000,
+    add(go.Pose(go.fixed(10), go.fixed(10)), 0xB800, 0x2000,
         (11, 10, 1), PATCH_STATIC)
     add(go.Pose(go.fixed(10), go.fixed(10)), 0x4000, 0x4000, (11, 11, 1))
     add(go.Pose(go.fixed(10), go.fixed(10)), 0x2000, 0x4000, (10, 11, 1))

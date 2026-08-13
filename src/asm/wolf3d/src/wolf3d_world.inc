@@ -12,6 +12,10 @@ W3D_MAX_DOORS:              equ 64
 W3D_MAX_STATICS:            equ 400
 W3D_TILE_GLOBAL:            equ 010000h
 W3D_MIN_ACTOR_DISTANCE:     equ 010000h
+; Physical body clearance is intentionally distinct from original behavioral
+; distances such as dog attack reach. Player/actor and player/blocking-static
+; contact use this symmetric center-square threshold.
+W3D_PHYSICAL_OBJECT_CLEARANCE: equ 004800h
 
 W3D_TILE_OPEN:              equ 0x00
 W3D_TILE_WALL_MIN:          equ 0x01

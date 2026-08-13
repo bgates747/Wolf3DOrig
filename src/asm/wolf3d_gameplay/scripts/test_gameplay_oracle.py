@@ -52,7 +52,11 @@ def brute_position_clear(
                 return False
             value = tilemap[y * go.MAP_SIZE + x]
             if value == go.TILE_OPEN:
-                if go.static_tile_blocked(static_bits, x, y):
+                if (
+                    go.static_tile_blocked(static_bits, x, y)
+                    and abs(pose.x - go.fixed(x)) <= go.PHYSICAL_OBJECT_CLEARANCE
+                    and abs(pose.y - go.fixed(y)) <= go.PHYSICAL_OBJECT_CLEARANCE
+                ):
                     return False
                 continue
             if not go.TILE_DOOR_MIN <= value <= go.TILE_DOOR_MAX:
@@ -363,8 +367,8 @@ class StaticCollisionTests(unittest.TestCase):
 
     def test_exact_contact_matches_wall_semantics(self) -> None:
         go.set_static_blocked(self.bits, 11, 10)
-        just_clear = go.Pose(go.fixed(10, 0xB7FF), go.fixed(10))
-        touching = go.Pose(go.fixed(10, 0xB800), go.fixed(10))
+        just_clear = go.Pose(go.fixed(11, 0x37FF), go.fixed(10))
+        touching = go.Pose(go.fixed(11, 0x3800), go.fixed(10))
         self.assertTrue(go.player_position_clear(
             self.tilemap, [], just_clear, static_blocking_bits=self.bits
         ))
@@ -393,7 +397,7 @@ class StaticCollisionTests(unittest.TestCase):
         go.set_static_blocked(self.bits, 10, 11)
         pose = go.Pose(go.fixed(10), go.fixed(10))
         result, path = go.clip_move(
-            self.tilemap, [], pose, 0x2000, 0x4000, self.bits
+            self.tilemap, [], pose, 0x2000, 0xB800, self.bits
         )
         self.assertEqual(path, "x")
         self.assertEqual((result.x, result.y), (pose.x + 0x2000, pose.y))

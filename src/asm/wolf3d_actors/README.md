@@ -12,7 +12,7 @@ The assembly fixture validates:
 - detached allocation, zeroing, tail publication, `NEVERMARK`, middle-list
   self-removal, reusable slots, and SET/REMOVE/SET dirty precedence;
 - deterministic full-pool exhaustion and carry behavior;
-- clear, exact inclusive one-tile, one-LSB-outside, nonshootable, corrupt-slot,
+- clear, exact inclusive `0x4800`, one-LSB-outside, nonshootable, corrupt-slot,
   and out-of-scan player/actor collision cases, plus all four high/low X/Y
   3x3-to-4x4 AABB crossovers where the actor reserves the second-away tile;
 - the actual command memory passed synchronously by `RST.LIL 18h`: subcommand

@@ -31,6 +31,7 @@ MAP_SIZE = 64
 MAP_BYTES = MAP_SIZE * MAP_SIZE
 TILE_GLOBAL = 1 << 16
 MIN_ACTOR_DISTANCE = TILE_GLOBAL
+PHYSICAL_OBJECT_CLEARANCE = 0x4800
 AREA_NONE = 0xFF
 PATH_NONE = 0xFF
 
@@ -621,8 +622,8 @@ class World:
             delta_x = actor.x - self.player_x
             delta_y = actor.y - self.player_y
             if (
-                -MIN_ACTOR_DISTANCE <= delta_x <= MIN_ACTOR_DISTANCE
-                and -MIN_ACTOR_DISTANCE <= delta_y <= MIN_ACTOR_DISTANCE
+                -PHYSICAL_OBJECT_CLEARANCE <= delta_x <= PHYSICAL_OBJECT_CLEARANCE
+                and -PHYSICAL_OBJECT_CLEARANCE <= delta_y <= PHYSICAL_OBJECT_CLEARANCE
             ):
                 actor.x, actor.y = old_x, old_y
                 return False

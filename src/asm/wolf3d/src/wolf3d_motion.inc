@@ -29,9 +29,12 @@ W3D_SIMULATION_MAX_STEPS:       equ 4
 W3D_SIMULATION_MAX_BACKLOG:     equ 32
 W3D_PLAYER_TURN_STEP_DEGREES:   equ 3
 W3D_PLAYER_POSE_SIZE:           equ 10
-; Experimental feel tuning: the original 0x5800 square radius proved too
-; conservative around walls, decorations, and the renderer-matched door slab.
+; Experimental feel tuning: the original 0x5800 player radius proved too
+; conservative around walls and the renderer-matched door slab.
 W3D_PLAYER_COLLISION_RADIUS:     equ 04800h
+; Original CloseDoor's MINDIST body margin is an actor-only close-start rule.
+; It must not inherit the independently tuned player wall/door radius.
+W3D_DOOR_ACTOR_CLEARANCE:        equ 05800h
 W3D_ELEVATOR_SWITCH_TILE:        equ 21
 W3D_LEVEL_COMPLETION_NONE:       equ 0
 W3D_LEVEL_COMPLETION_NORMAL:     equ 1
@@ -195,6 +198,7 @@ w3d_seed_level_world_state:
     ld (w3d_static_blocking_ptr),hl
     ld hl,w3d_doors
     ld (w3d_doors_ptr),hl
+    call w3d_build_static_collision_lookup
     ld hl,0
     ld (w3d_simulation_accumulator),hl
     call w3d_initialize_actor_state
@@ -627,7 +631,7 @@ w3d_clip_move_delta24:
     or (hl)
     inc hl
     or (hl)
-    jr z,@blocked
+    jp z,@blocked
     call w3d_copy_pose_to_candidate
     ld hl,(w3d_move_delta_ptr)
     inc hl
@@ -720,10 +724,20 @@ w3d_player_position_clear:
 ; Compute low/high tile bounds for the square player at IX without touching
 ; any 24-bit register upper byte. The fractional words use forced 16-bit ops.
 w3d_compute_player_bounds:
+    ld de,W3D_PLAYER_COLLISION_RADIUS
+    jr w3d_compute_square_bounds
+
+; CloseDoor's adjacent-reservation guard uses the original actor MINDIST,
+; independently of both the player wall radius and actor/player clearance.
+w3d_compute_door_actor_bounds:
+    ld de,W3D_DOOR_ACTOR_CLEARANCE
+
+; IX -> int32 x/y; DE -> 16-bit radius. Populate the shared clip-bound
+; scratch. The caller-selected radius remains live through all four bounds.
+w3d_compute_square_bounds:
     ld hl,0
     ld l,(ix+0)
     ld h,(ix+1)
-    ld de,W3D_PLAYER_COLLISION_RADIUS
     or a
     sbc.s hl,de
     ld a,l
@@ -737,7 +751,6 @@ w3d_compute_player_bounds:
     ld hl,0
     ld l,(ix+0)
     ld h,(ix+1)
-    ld de,W3D_PLAYER_COLLISION_RADIUS
     add.s hl,de
     ld a,l
     ld (w3d_clip_x_high_fraction+0),a
@@ -750,7 +763,6 @@ w3d_compute_player_bounds:
     ld hl,0
     ld l,(ix+4)
     ld h,(ix+5)
-    ld de,W3D_PLAYER_COLLISION_RADIUS
     or a
     sbc.s hl,de
     ld a,l
@@ -764,7 +776,6 @@ w3d_compute_player_bounds:
     ld hl,0
     ld l,(ix+4)
     ld h,(ix+5)
-    ld de,W3D_PLAYER_COLLISION_RADIUS
     add.s hl,de
     ld a,l
     ld (w3d_clip_y_high_fraction+0),a
@@ -785,7 +796,7 @@ w3d_collision_tile_clear:
     call w3d_map_read
     or a
     jr nz,@map_occupied
-    call w3d_static_tile_blocked
+    call w3d_static_blocks_candidate
     or a
     jr nz,@blocked
     jr @clear
@@ -1019,6 +1030,177 @@ w3d_static_tile_blocked:
 
 w3d_static_bit_masks:
     db 1,2,4,8,16,32,64,128
+
+; Build an 8 KiB dense broad-phase resolution table once per level/attempt.
+; Each uint16 entry is static slot+1; zero means that tile has no blocking
+; static. The immutable bitset remains authoritative for broad-phase hits,
+; while this table makes the rare narrow phase constant-time.
+w3d_build_static_collision_lookup:
+    xor a
+    ld hl,w3d_static_collision_lookup
+    ld (hl),a
+    ld de,w3d_static_collision_lookup+1
+    ld bc,W3D_MAP_BYTES*2-1
+    ldir
+    ld hl,0
+    ld (w3d_current_static_index),hl
+@loop:
+    ld hl,(w3d_current_static_index)
+    call w3d_load_static_count_de
+    or a
+    sbc.s hl,de
+    ret nc
+    call w3d_static_pointer_from_current
+    ld a,(ix+W3D_STATIC_TILEX)
+    ld b,a
+    ld a,(ix+W3D_STATIC_TILEY)
+    ld c,a
+    push bc
+    call w3d_static_tile_blocked
+    pop bc
+    or a
+    jr z,@next
+    call w3d_static_collision_lookup_address
+    ld de,(w3d_current_static_index)
+    inc.s de
+    ld (hl),e
+    inc hl
+    ld (hl),d
+@next:
+    ld hl,(w3d_current_static_index)
+    inc.s hl
+    ld (w3d_current_static_index),hl
+    jr @loop
+
+; B=x,C=y -> HL=&uint16 lookup[y*64+x]. Preserves BC; DE is scratch.
+w3d_static_collision_lookup_address:
+    ld e,c
+    ld d,0
+    inc de
+    dec.s de
+    sla e                           ; y * 128
+    rl d
+    sla e
+    rl d
+    sla e
+    rl d
+    sla e
+    rl d
+    sla e
+    rl d
+    sla e
+    rl d
+    sla e
+    rl d
+    ld a,b
+    add a,a                        ; x * 2
+    add a,e
+    ld e,a
+    jr nc,@ready
+    inc d
+@ready:
+    ld hl,w3d_static_collision_lookup
+    add hl,de
+    ret
+
+; B=x,C=y, IX -> candidate player pose. Return A=1 only when the occupancy
+; broad phase hits and the candidate center is inside the resolved static's
+; inclusive W3D_PHYSICAL_OBJECT_CLEARANCE square. A bit/table or table/record
+; disagreement fails
+; closed, preventing corrupt level state from silently becoming traversable.
+w3d_static_blocks_candidate:
+    push bc
+    call w3d_static_tile_blocked
+    pop bc
+    or a
+    ret z
+    call w3d_static_collision_lookup_address
+    ld e,(hl)
+    inc hl
+    ld d,(hl)
+    ld a,d
+    or e
+    jp z,@blocked
+    dec.s de                       ; stored slot+1 -> zero-based slot
+    ld hl,W3D_MAX_STATICS
+    or a
+    sbc.s hl,de
+    jp c,@blocked
+    jp z,@blocked
+    push iy
+    call w3d_static_pointer_iy_from_de
+    ld a,(iy+W3D_STATIC_TILEX)
+    cp b
+    jr nz,@corrupt
+    ld a,(iy+W3D_STATIC_TILEY)
+    cp c
+    jr nz,@corrupt
+    ld a,(iy+W3D_STATIC_SHAPENUM+0)
+    inc a
+    jr nz,@x
+    ld a,(iy+W3D_STATIC_SHAPENUM+1)
+    inc a
+    jr z,@corrupt
+@x:
+    ld a,(ix+2)
+    cp b
+    jr nz,@clear
+    ld hl,0
+    ld l,(ix+0)
+    ld h,(ix+1)
+    ld de,08000h-W3D_PHYSICAL_OBJECT_CLEARANCE
+    or a
+    sbc.s hl,de
+    jr c,@clear
+    ld hl,0
+    ld l,(ix+0)
+    ld h,(ix+1)
+    ld de,08000h+W3D_PHYSICAL_OBJECT_CLEARANCE+1
+    or a
+    sbc.s hl,de
+    jr nc,@clear
+@y:
+    ld a,(ix+6)
+    cp c
+    jr nz,@clear
+    ld hl,0
+    ld l,(ix+4)
+    ld h,(ix+5)
+    ld de,08000h-W3D_PHYSICAL_OBJECT_CLEARANCE
+    or a
+    sbc.s hl,de
+    jr c,@clear
+    ld hl,0
+    ld l,(ix+4)
+    ld h,(ix+5)
+    ld de,08000h+W3D_PHYSICAL_OBJECT_CLEARANCE+1
+    or a
+    sbc.s hl,de
+    jr nc,@clear
+    pop iy
+@blocked:
+    ld a,1
+    ret
+@corrupt:
+    pop iy
+    jr @blocked
+@clear:
+    pop iy
+    xor a
+    ret
+
+; DE=zero-based uint16 stable static slot -> IY=runtime static record.
+w3d_static_pointer_iy_from_de:
+    push de
+    pop hl
+    add hl,hl                       ; 2 * slot
+    add hl,de                       ; 3 * slot
+    add hl,hl                       ; 6 * slot
+    ld de,w3d_statics
+    add hl,de
+    push hl
+    pop iy
+    ret
 
 ; ---------------------------------------------------------------------------
 ; Mutable statics and pickups
@@ -2110,7 +2292,7 @@ w3d_door_adjacent_actor_obstructs:
     jp c,@blocked
     or a
     jr z,@vertical_east
-    call w3d_compute_player_bounds
+    call w3d_compute_door_actor_bounds
     ld a,(w3d_clip_x_high)
     cp (iy+W3D_DOOR_TILEX)
     jp z,@blocked
@@ -2125,7 +2307,7 @@ w3d_door_adjacent_actor_obstructs:
     jp c,@blocked
     or a
     jr z,@clear
-    call w3d_compute_player_bounds
+    call w3d_compute_door_actor_bounds
     ld a,(w3d_clip_x_low)
     cp (iy+W3D_DOOR_TILEX)
     jp z,@blocked
@@ -2143,7 +2325,7 @@ w3d_door_adjacent_actor_obstructs:
     jp c,@blocked
     or a
     jr z,@horizontal_south
-    call w3d_compute_player_bounds
+    call w3d_compute_door_actor_bounds
     ld a,(w3d_clip_y_high)
     cp (iy+W3D_DOOR_TILEY)
     jp z,@blocked
@@ -2158,7 +2340,7 @@ w3d_door_adjacent_actor_obstructs:
     jp c,@blocked
     or a
     jr z,@clear
-    call w3d_compute_player_bounds
+    call w3d_compute_door_actor_bounds
     ld a,(w3d_clip_y_low)
     cp (iy+W3D_DOOR_TILEY)
     jp z,@blocked
@@ -2634,6 +2816,10 @@ w3d_statics:
 
 w3d_static_dirty:
     ds W3D_MAX_STATICS
+
+; uint16 slot+1 per map cell; 0 means no blocking static.
+w3d_static_collision_lookup:
+    ds W3D_MAP_BYTES*2
 
 w3d_static_count:
     dw W3D_FIXTURE_STATIC_COUNT

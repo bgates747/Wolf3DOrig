@@ -155,7 +155,7 @@ def _scenario_door_before_actor() -> Scenario:
 def _scenario_player_overlap() -> Scenario:
     actor = _actor()
     world = _world_with_actor(actor)
-    world.player_x = actor.x + 1024 + ao.MIN_ACTOR_DISTANCE
+    world.player_x = actor.x + 1024 + ao.PHYSICAL_OBJECT_CLEARANCE
     world.player_y = actor.y
     return Scenario(9, "inclusive_player_overlap", 1, world, 1, ((11, 10),))
 

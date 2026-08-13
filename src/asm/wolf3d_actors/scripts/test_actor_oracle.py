@@ -278,7 +278,7 @@ class PlayerAndOccupancyTests(unittest.TestCase):
             with self.subTest(extra=extra):
                 world = ao.World()
                 actor = path_actor(tile_x=10, tile_y=10, direction=ao.DIR_EAST)
-                world.player_x = actor.x + 1024 + ao.MIN_ACTOR_DISTANCE + extra
+                world.player_x = actor.x + 1024 + ao.PHYSICAL_OBJECT_CLEARANCE + extra
                 world.player_y = actor.y
                 world.add_actor(1, actor)
                 world.step()

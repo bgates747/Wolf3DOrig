@@ -527,7 +527,7 @@ test_exhaustion:
     jp assert_equal
 
 ; ---------------------------------------------------------------------------
-; Tuned inclusive 0xc000 shootable-actor collision contract.
+; Tuned inclusive 0x4800 shootable-actor collision contract.
 ; ---------------------------------------------------------------------------
 
 test_collision:
@@ -932,12 +932,12 @@ expected_wire_continuous:
 collision_cases:
     db 000h,080h,010,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,0,1
     db 000h,080h,010,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,0
-    db 000h,040h,011,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,0
-    db 001h,040h,011,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,1
-    db 000h,0c0h,009,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,0
-    db 0ffh,0bfh,009,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,1
-    db 000h,080h,010,0, 000h,040h,011,0, W3D_ACTOR_FLAG_SHOOTABLE,1,0
-    db 000h,080h,010,0, 001h,040h,011,0, W3D_ACTOR_FLAG_SHOOTABLE,1,1
+    db 000h,0c8h,010,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,0
+    db 001h,0c8h,010,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,1
+    db 000h,038h,010,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,0
+    db 0ffh,037h,010,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,1
+    db 000h,080h,010,0, 000h,0c8h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,0
+    db 000h,080h,010,0, 001h,0c8h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,1,1
     db 000h,080h,010,0, 000h,080h,010,0, 0,1,1
     db 000h,080h,010,0, 000h,080h,010,0, W3D_ACTOR_FLAG_SHOOTABLE,150,0
     db 000h,080h,020,0, 000h,080h,020,0, W3D_ACTOR_FLAG_SHOOTABLE,1,1
@@ -951,19 +951,19 @@ collision_crossover_cases:
     ; X high: candidate 10.E, actor 11.E, actor reserves x=12.
     db 000h,0e0h,10,0, 000h,080h,10,0
     db 000h,0a0h,11,0, 000h,080h,10,0
-    db 12,10, 10,11,10,10, 0
+    db 12,10, 10,11,10,10, 1
     ; X low: candidate 10.2, actor 9.2, actor reserves x=8.
     db 000h,020h,10,0, 000h,080h,10,0
     db 000h,060h,9,0, 000h,080h,10,0
-    db 8,10, 9,10,10,10, 0
+    db 8,10, 9,10,10,10, 1
     ; Y high: candidate 10.E, actor 11.E, actor reserves y=12.
     db 000h,080h,10,0, 000h,0e0h,10,0
     db 000h,080h,10,0, 000h,0a0h,11,0
-    db 10,12, 10,10,10,11, 0
+    db 10,12, 10,10,10,11, 1
     ; Y low: candidate 10.2, actor 9.2, actor reserves y=8.
     db 000h,080h,10,0, 000h,020h,10,0
     db 000h,080h,10,0, 000h,060h,9,0
-    db 10,8, 10,10,9,10, 0
+    db 10,8, 10,10,9,10, 1
 collision_crossover_cases_end:
 collision_crossover_case_count: equ 4
 

@@ -2667,7 +2667,8 @@ w3d_actor_area_at_cached_tile:
 ; ---------------------------------------------------------------------------
 
 ; Tentatively move by w3d_actor_move_amount in the actor's octant. Reject and
-; restore when both center deltas to the player are <= MINACTORDIST. On an
+; restore when both center deltas to the player are within the shared physical
+; body clearance. Behavioral ranges retain W3D_MIN_ACTOR_DISTANCE. On an
 ; accepted move subtract the amount from the positive leg distance.
 w3d_actor_move_obj:
     ld a,(ix+W3D_ACTOR_DIR)
@@ -2781,8 +2782,8 @@ w3d_actor_sub_y:
     ld (ix+W3D_ACTOR_Y),hl
     ret
 
-; Return A=1 if either absolute player delta is strictly greater than one
-; tile; A=0 when both are within the original inclusive square threshold.
+; Return A=1 if either absolute player delta is strictly greater than the
+; shared physical clearance; A=0 when both are within its inclusive square.
 w3d_actor_clear_of_player:
     ld hl,(ix+W3D_ACTOR_X)
     ld de,(w3d_player_pose+0)
@@ -2794,7 +2795,7 @@ w3d_actor_clear_of_player:
     or a
     sbc hl,de
 @x_abs:
-    ld de,W3D_MIN_ACTOR_DISTANCE+1
+    ld de,W3D_PHYSICAL_OBJECT_CLEARANCE+1
     or a
     sbc hl,de
     jr nc,@clear
@@ -2809,7 +2810,7 @@ w3d_actor_clear_of_player:
     or a
     sbc hl,de
 @y_abs:
-    ld de,W3D_MIN_ACTOR_DISTANCE+1
+    ld de,W3D_PHYSICAL_OBJECT_CLEARANCE+1
     or a
     sbc hl,de
     jr nc,@clear

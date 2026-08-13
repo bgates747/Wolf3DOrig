@@ -641,7 +641,7 @@ test_player_rollback:
     call prepare_direct_actor
     ld hl,0000400h
     ld (w3d_actor_move_amount),hl
-    ld hl,00b8400h                   ; exactly one tile east of moved actor
+    ld hl,00acc00h                   ; exactly 0x4800 east of moved actor
     ld (w3d_player_pose+0),hl
     xor a
     ld (w3d_player_pose+3),a

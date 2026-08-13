@@ -17,6 +17,7 @@ from typing import Iterable, Sequence
 MAP_SIZE = 64
 TILE_GLOBAL = 1 << 16
 PLAYER_RADIUS = 0x4800
+PHYSICAL_OBJECT_CLEARANCE = 0x4800
 STATIC_BLOCKING_BYTES = MAP_SIZE * MAP_SIZE // 8
 
 TILE_OPEN = 0x00
@@ -278,6 +279,28 @@ def static_tile_blocked(bits: bytes | bytearray | None, x: int, y: int) -> bool:
     return bool(bits[index >> 3] & (1 << (index & 7)))
 
 
+def static_center_overlaps_player(
+    x: int,
+    y: int,
+    pose: Pose,
+    clearance: int = PHYSICAL_OBJECT_CLEARANCE,
+) -> bool:
+    """Return whether a centered blocking static overlaps the player center.
+
+    The production eZ80 reaches this narrow phase only after its occupancy
+    bitset hits, then resolves the stable static slot through a dense lookup.
+    Tile coordinates suffice for the independent geometry oracle because all
+    original blocking statics are centered in their map cells.
+    """
+
+    center_x = fixed(x)
+    center_y = fixed(y)
+    return (
+        abs(pose.x - center_x) <= clearance
+        and abs(pose.y - center_y) <= clearance
+    )
+
+
 def fixed(tile: int, fraction: int = 0x8000) -> int:
     if not 0 <= fraction <= 0xFFFF:
         raise ValueError(f"fraction outside uint16: {fraction}")
@@ -394,8 +417,19 @@ def player_position_clear(
         (x_high, y_high),
     }
     for x, y in cells:
-        if not tile_is_clear(tilemap, doors, x, y, static_blocking_bits):
+        value = tile_at(tilemap, x, y)
+        if value == TILE_OPEN:
+            if (
+                static_tile_blocked(static_blocking_bits, x, y)
+                and static_center_overlaps_player(x, y, pose)
+            ):
+                return False
+            continue
+        if TILE_DOOR_MIN <= value <= TILE_DOOR_MAX:
+            if (value & TILE_DOOR_MASK) < len(doors):
+                continue
             return False
+        return False
 
     # Door cells are wells containing a zero-thickness moving panel, not solid
     # tiles. Check each referenced slab once against the complete player AABB.

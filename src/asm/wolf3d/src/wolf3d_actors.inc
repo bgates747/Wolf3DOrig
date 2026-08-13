@@ -1,8 +1,5 @@
 ; =============================================================================
 
-; Experimental player/enemy spacing. The original MINACTORDIST was one full
-; tile; 0xc000 permits closer contact without allowing center overlap.
-W3D_PLAYER_ACTOR_COLLISION_DISTANCE: equ 0c000h
 ; Authoritative eZ80 actor pool and VDP snapshot bridge.
 ;
 ; The pool keeps the original fixed MAXACTORS ownership model while replacing
@@ -918,7 +915,7 @@ w3d_actor_mark_dirty:
 ; IX -> candidate player position. Return A=1 clear, A=0 blocked. Expand the
 ; already-computed player AABB tile bounds by one exactly like TryMove (a 3x3
 ; or 4x4 actorat search); final center deltas use inclusive
-; +/-W3D_PLAYER_ACTOR_COLLISION_DISTANCE on both axes.
+; +/-W3D_PHYSICAL_OBJECT_CLEARANCE on both axes.
 w3d_player_actors_clear:
     push bc
     push de
@@ -981,7 +978,7 @@ w3d_player_actors_clear:
     or a
     sbc hl,de
 @x_positive:
-    ld de,W3D_PLAYER_ACTOR_COLLISION_DISTANCE+1
+    ld de,W3D_PHYSICAL_OBJECT_CLEARANCE+1
     or a
     sbc hl,de
     jr nc,@next_column
@@ -997,7 +994,7 @@ w3d_player_actors_clear:
     or a
     sbc hl,de
 @y_positive:
-    ld de,W3D_PLAYER_ACTOR_COLLISION_DISTANCE+1
+    ld de,W3D_PHYSICAL_OBJECT_CLEARANCE+1
     or a
     sbc hl,de
     jr c,@blocked

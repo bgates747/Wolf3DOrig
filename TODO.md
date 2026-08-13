@@ -5,10 +5,6 @@ unfinished work. IDs are stable references and are not reused. When an item is
 accepted, rejected, or superseded, record its ID, evidence, and rationale in
 the current dated development log, then remove it from this file.
 
-[ ] 1. Requalify the current collision and aiming changes, reproduce the two
-direct-eZ80 patrol/door-obstruction mismatches that kept commit `4facefe` out
-of the first packaged release, and correct any remaining regressions.
-
 [ ] 3. Add the first application shell: a future Agon-splash hook, original
 title and control-panel presentation, visible game version, original shareware
 episode and difficulty selection, and a clean start/quit flow.

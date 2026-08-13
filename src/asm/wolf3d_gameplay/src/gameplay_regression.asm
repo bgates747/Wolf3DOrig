@@ -189,6 +189,11 @@ initialize_test_world:
     ldir
     ld hl,test_static_bits
     ld (w3d_static_blocking_ptr),hl
+    ld hl,w3d_static_collision_lookup
+    ld (hl),a
+    ld de,w3d_static_collision_lookup+1
+    ld bc,W3D_MAP_BYTES*2-1
+    ldir
     xor a
     ld hl,w3d_actorat
     ld (hl),a
@@ -415,16 +420,32 @@ test_static_bit_address:
 
 test_set_static_patch:
     call test_static_bit_address
-    ld b,a
+    ld d,a
     ld a,(hl)
-    or b
+    or d
     ld (hl),a
+    ld a,b
+    ld (w3d_statics+W3D_STATIC_TILEX),a
+    ld a,c
+    ld (w3d_statics+W3D_STATIC_TILEY),a
+    xor a
+    ld (w3d_statics+W3D_STATIC_SHAPENUM+0),a
+    ld (w3d_statics+W3D_STATIC_SHAPENUM+1),a
+    call w3d_static_collision_lookup_address
+    ld (hl),1
+    inc hl
+    ld (hl),0
     ret
 
 test_clear_static_patch:
     call test_static_bit_address
     cpl
     and (hl)
+    ld (hl),a
+    call w3d_static_collision_lookup_address
+    xor a
+    ld (hl),a
+    inc hl
     ld (hl),a
     ret
 
