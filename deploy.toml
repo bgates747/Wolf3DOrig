@@ -8,11 +8,12 @@ expected_sd_label = "AGON"
 collection = "apps"
 destination = "mystuff/Wolf3dOrig"
 entry = "wolf3d.bin"
-require = ["wolf3d.bin", "hud.agnb", "sfx.agnb"]
+require = ["wolf3d.bin", "hud.agnb", "sfx.agnb", "shell.agnb"]
 items = [
   { source = "src/asm/wolf3d/tgt/wolf3d.bin", destination = "wolf3d.bin" },
   { source = "agonport/assets/generated/wolf3d/hud/hud.agnb", destination = "hud.agnb" },
   { source = "agonport/assets/generated/wolf3d/audio/sfx.agnb", destination = "sfx.agnb" },
+  { source = "agonport/assets/generated/wolf3d/shell/shell.agnb", destination = "shell.agnb" },
   { source = "agonport/assets/generated/wolf3d/levels/level_00", destination = "level_00", files = ["tiles.agnb", "sprites.agnb", "state_baby.w3l", "state_easy.w3l", "state_medium.w3l", "state_hard.w3l"] },
   { source = "agonport/assets/generated/wolf3d/levels/level_01", destination = "level_01", files = ["tiles.agnb", "sprites.agnb", "state_baby.w3l", "state_easy.w3l", "state_medium.w3l", "state_hard.w3l"] },
   { source = "agonport/assets/generated/wolf3d/levels/level_02", destination = "level_02", files = ["tiles.agnb", "sprites.agnb", "state_baby.w3l", "state_easy.w3l", "state_medium.w3l", "state_hard.w3l"] },

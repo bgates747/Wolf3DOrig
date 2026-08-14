@@ -63,8 +63,14 @@ Sections are packed consecutively after the header in this exact order:
 3. `actor_count` 39-byte `W3D_ACTOR_*` records;
 4. one 512-byte 64x64 blocking-static bitset;
 5. one 4096-byte area-id map;
-6. one 4096-byte path-direction map;
+6. one 4096-byte path/trigger metadata map;
 7. one 4096-byte VDP tilemap.
+
+The path/trigger byte remains compact and actor-compatible: `0..7` are the
+eight original path arrows, `ffh` means no arrow, and `feh` preserves the
+original plane-1 `EXITTILE` value 99. Actor path selection already treats all
+values at or above eight as no direction, so the `feh` victory marker adds no
+actor hot-loop branch and requires no package-layout or version change.
 
 The final section is followed by the four-byte `E3L1` end marker. MOS LOAD
 silently caps its read to the caller's receive-arena size and does not return
@@ -84,9 +90,19 @@ live in `formats/level_package.py`; the eZ80 loader is
 The eZ80 retains the loaded package in RAM for the whole level. Immutable map
 views point directly into that arena; doors, statics, actors, inventory, and
 other changing fields are copied into their normal mutable runtime storage.
-Respawning reseeds the current package. Completing a floor selects the next
-package, reloads its per-level image containers, preserves game-persistent
-player fields, clears per-level state, and submits one complete world reset.
+Respawning reseeds the current package. Completing an ordinary floor selects
+the next package; the secret exit selects floor 9 and floor 9 returns to floor
+1. Each of those routes reloads its per-level image containers, preserves
+game-persistent player fields, clears per-level state, and submits one complete
+world reset.
+
+Episode 1's boss floor is deliberately different. Accepted movement onto one
+of its three `feh` cells latches a distinct victory result, freezes further
+simulation, drains the current asynchronous render owner, and returns to the
+application shell without loading floor 9. A defensive normal-completion
+signal on zero-based floor 8 is classified the same way, preventing older test
+or call paths from accidentally treating the boss floor as an ordinary route
+into the secret floor.
 
 The compile-time `wolf3d_fixture.inc` remains the standalone-regression and
 bootstrap default. It is no longer intended to be the application’s only

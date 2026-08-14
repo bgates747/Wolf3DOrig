@@ -34,29 +34,37 @@ def instrument(source: str) -> str:
         "mos_load:        equ 01h\nmos_save:        equ 02h\n",
         1,
     )
-    marker = (
-        "    call w3d_load_level_package\n"
-        "    jr z,@level_state_loaded\n"
-        "    call w3d_set_level_load_error\n"
-        "    ret\n"
-        "@level_state_loaded:\n"
-    )
+    # Shell loading and keyboard-driven title presentation now precede normal
+    # startup. This regression is deliberately about the production loader,
+    # so replace the application-body entry with a tiny direct caller instead
+    # of staging unrelated shell assets or coupling to either fatal route.
+    marker = "w3d_main_body:\n"
     if source.count(marker) != 1:
         raise RuntimeError("production loader marker changed; update W3L regression")
     source = source.replace(
         marker,
-        "    call w3d_load_level_package\n"
-        "    ld (w3l_regression_result+4),a\n"
-        "    ld hl,w3l_regression_filename\n"
-        "    ld de,w3l_regression_result\n"
-        "    ld bc,5\n"
-        "    MOSCALL mos_save\n"
-        "    ret\n",
+        marker + "    jp w3l_regression_run\n",
         1,
     )
     return source + r'''
 
 ; Added only to the temporary W3L validation-regression source.
+w3l_regression_run:
+    ld a,2
+    ld (w3d_requested_difficulty),a
+    ld b,a
+    xor a
+    call w3d_load_level_package
+    jp w3l_regression_record_and_exit
+
+w3l_regression_record_and_exit:
+    ld (w3l_regression_result+4),a
+    ld hl,w3l_regression_filename
+    ld de,w3l_regression_result
+    ld bc,5
+    MOSCALL mos_save
+    ret
+
 w3l_regression_filename:
     db "loader_result.bin",0
 w3l_regression_result:

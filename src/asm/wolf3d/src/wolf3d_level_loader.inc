@@ -341,6 +341,17 @@ w3d_level_patch_index_in_hl:
 ; Carry clear: the new level's reset/render is in flight.
 ; Carry set:   state or AGNB loading failed; no partial world was submitted.
 w3d_transition_to_next_level:
+; Victory is a terminal gameplay result, never a load target. Also classify a
+; legacy/forced normal completion on zero-based floor 8 as victory so no call
+; path can accidentally advance the boss floor into secret floor 9.
+    call w3d_level_completion_is_victory
+    jr nz,@ordinary_transition
+    ld a,W3D_LEVEL_COMPLETION_VICTORY
+    ld (w3d_level_completion),a
+    scf
+    ret
+
+@ordinary_transition:
     ld hl,level_transition_msg
     call printString
     call printNewLine
@@ -392,10 +403,24 @@ w3d_transition_to_next_level:
     call w3d_set_level_load_error
     scf
     ret
+
 @asset_failed:
     ld hl,assets_error_msg
     ld (w3d_exit_message_ptr),hl
     scf
+    ret
+
+; Z means the current completion belongs to Episode 1 victory. The explicit
+; result is authoritative; normal completion on E1L9 is accepted defensively
+; for regression injection and older callers. Every other completion is NZ.
+w3d_level_completion_is_victory:
+    ld a,(w3d_level_completion)
+    cp W3D_LEVEL_COMPLETION_VICTORY
+    ret z
+    cp W3D_LEVEL_COMPLETION_NORMAL
+    ret nz
+    ld a,(w3d_level_requested_index)
+    cp 8
     ret
 
 ; Production transition wrapper. Keep this out of wolf3d_motion.inc so its

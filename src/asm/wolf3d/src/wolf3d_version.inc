@@ -13,6 +13,12 @@ W3D_APP_VERSION_PATCH:              equ 0
 W3D_APP_VERSION_PRERELEASE:         equ 1 ; 0=release, 1=alpha
 W3D_APP_VERSION_PRERELEASE_NUMBER:  equ 1
 
+; Single authoritative human-readable application identity. Startup,
+; application shell, future splash screens, and diagnostics all reference
+; this byte string instead of maintaining copies that can drift.
+w3d_app_version_text:
+    db "Wolf3DOrig App 0.1.0 Alpha 1",0
+
 W3D_VERSION_REPLY_SIZE:             equ 20
 W3D_VERSION_REPLY_SCHEMA:           equ 1
 W3D_RENDERER_ABI_REQUIRED_MAJOR:    equ 1

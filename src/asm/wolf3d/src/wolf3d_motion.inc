@@ -39,6 +39,7 @@ W3D_ELEVATOR_SWITCH_TILE:        equ 21
 W3D_LEVEL_COMPLETION_NONE:       equ 0
 W3D_LEVEL_COMPLETION_NORMAL:     equ 1
 W3D_LEVEL_COMPLETION_SECRET:     equ 2
+W3D_LEVEL_COMPLETION_VICTORY:    equ 3
 
 ; Original doors traverse 0xffff in 64 ticks at 70 Hz and wait 300 ticks.
 ; At 30 Hz, 2389,2389,2390 repeating is the exact average travel rate;
@@ -412,10 +413,21 @@ w3d_simulate_player_step:
     ld a,(w3d_player_dead)
     or a
     ret nz
+; A completion can be latched partway through a catch-up batch. Freeze every
+; later fixed quantum until the foreground drains the outstanding render and
+; routes the level or victory; this also protects ordinary elevator exits.
+    ld a,(w3d_level_completion)
+    or a
+    ret nz
     call w3d_simulate_doors
     call w3d_sample_controls
     call w3d_update_player_thrustspeed
     call w3d_handle_use_edge
+; Elevator use can latch normal or secret completion. As with EXITTILE,
+; nothing later in this fixed quantum may mutate the completed world.
+    ld a,(w3d_level_completion)
+    or a
+    ret nz
 
     ld a,(w3d_controls)
     and W3D_CONTROL_LEFT|W3D_CONTROL_RIGHT
@@ -437,12 +449,19 @@ w3d_simulate_player_step:
     jr nz,@check_s
     ld de,0
     call w3d_move_at_heading_offset
-    jr @strafe_translation
+    jr @forward_translation_done
 @check_s:
     cp W3D_CONTROL_S               ; exactly S: opposite heading
-    jr nz,@strafe_translation
+    jr nz,@forward_translation_done
     ld de,180
     call w3d_move_at_heading_offset
+@forward_translation_done:
+; EXITTILE victory takes ownership immediately after the successful movement
+; that reached it. Do not permit a second-axis move, pickups, weapon actions,
+; or actor simulation in the same fixed quantum.
+    ld a,(w3d_level_completion)
+    cp W3D_LEVEL_COMPLETION_VICTORY
+    ret z
 
 @strafe_translation:
     ld a,(w3d_controls)
@@ -451,12 +470,16 @@ w3d_simulate_player_step:
     jr nz,@check_d
     ld de,90
     call w3d_move_at_heading_offset
-    jr @pickups
+    jr @strafe_translation_done
 @check_d:
     cp W3D_CONTROL_D               ; exactly D: 90 degrees right
-    jr nz,@pickups
+    jr nz,@strafe_translation_done
     ld de,270
     call w3d_move_at_heading_offset
+@strafe_translation_done:
+    ld a,(w3d_level_completion)
+    cp W3D_LEVEL_COMPLETION_VICTORY
+    ret z
 @pickups:
     call w3d_refresh_player_area
     call w3d_collect_pending_pickups
@@ -652,6 +675,10 @@ w3d_clip_move_delta24:
     ld (w3d_player_dirty),a
     ld (w3d_world_dirty),a
     ld (w3d_pickup_scan_needed),a
+    call w3d_check_player_victory_tile
+; Preserve ClipMove's public A=1 success result regardless of whether the
+; victory helper changed the completion latch or weapon overlay.
+    ld a,1
     ret
 @blocked:
     xor a
@@ -664,8 +691,49 @@ w3d_copy_pose_to_candidate:
     ldir
     ret
 
+; The original E1L9 completes when player movement reaches plane-1 EXITTILE
+; value 99. Runtime packages preserve that cell as W3D_PATH_VICTORY in the
+; existing 64x64 path metadata. This check runs only after an accepted move,
+; so there is no additional cost on blocked or idle simulation quanta.
+w3d_check_player_victory_tile:
+    ld a,(w3d_level_completion)
+    or a
+    ret nz
+; Standalone motion regressions may exercise ClipMove before binding runtime
+; package metadata. A null view cannot contain a victory marker.
+    ld hl,w3d_path_directions_ptr
+    ld a,(hl)
+    inc hl
+    or (hl)
+    inc hl
+    or (hl)
+    ret z
+    ld hl,0
+    ld a,(w3d_player_pose+6)       ; integer tile Y from signed 16.16
+    ld l,a
+    add.s hl,hl
+    add.s hl,hl
+    add.s hl,hl
+    add.s hl,hl
+    add.s hl,hl
+    add.s hl,hl                   ; Y * 64
+    ld de,0
+    ld a,(w3d_player_pose+2)       ; integer tile X from signed 16.16
+    ld e,a
+    add.s hl,de
+    ld de,(w3d_path_directions_ptr)
+    add hl,de
+    ld a,(hl)
+    cp W3D_PATH_VICTORY
+    ret nz
+    ld a,W3D_LEVEL_COMPLETION_VICTORY
+    ld (w3d_level_completion),a
+; Match the original victoryflag presentation contract: first-person weapon
+; art disappears as soon as victory begins, without changing inventory.
+    jp w3d_hide_player_weapon
+
 ; IX points to candidate int32 X/Y. Derive the four corner tiles of the
-; square 0x5800-radius player AABB and require every corner to be clear. A
+; square W3D_PLAYER_COLLISION_RADIUS AABB and require every corner to be clear. A
 ; named door corner is resolved to its renderer-matching center-plane slab by
 ; w3d_collision_tile_clear. IX is preserved so ClipMove can still copy the
 ; accepted candidate afterward.

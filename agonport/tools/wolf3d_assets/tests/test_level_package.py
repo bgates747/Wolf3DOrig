@@ -18,6 +18,7 @@ from formats.level_package import (  # noqa: E402
     parse_package,
 )
 from scripts.build_level_packages import build_one  # noqa: E402
+from scripts.gen_render_fixture import W3D_PATH_NONE, W3D_PATH_VICTORY  # noqa: E402
 
 DATA_DIR = PROJECT_ROOT / "orig/data"
 
@@ -64,6 +65,32 @@ class RuntimeLevelPackageTests(unittest.TestCase):
         self.assertLess(easy.actor_count, hard.actor_count)
         for name in ("doors", "statics", "blocking", "areas", "paths", "tilemap"):
             self.assertEqual(easy.sections[name], hard.sections[name])
+
+    def test_only_e1l9_preserves_exact_victory_tiles_in_path_metadata(self) -> None:
+        for level_index in range(10):
+            with self.subTest(level=level_index):
+                package = parse_package(
+                    build_one(
+                        self.level(level_index),
+                        level_index,
+                        actorinfo.Difficulty.MEDIUM,
+                    )
+                )
+                paths = package.sections["paths"]
+                actual = {
+                    (offset % mapfile.MAP_WIDTH, offset // mapfile.MAP_WIDTH)
+                    for offset, value in enumerate(paths)
+                    if value == W3D_PATH_VICTORY
+                }
+                expected = {(33, 7), (34, 7), (35, 7)} if level_index == 8 else set()
+                self.assertEqual(actual, expected)
+                self.assertTrue(
+                    all(
+                        value in range(8)
+                        or value in (W3D_PATH_VICTORY, W3D_PATH_NONE)
+                        for value in paths
+                    )
+                )
 
     def test_reserved_header_bytes_are_rejected(self) -> None:
         encoded = bytearray(build_one(self.level(0), 0, actorinfo.Difficulty.MEDIUM))

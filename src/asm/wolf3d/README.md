@@ -33,6 +33,10 @@ The real, permanent eZ80 game client. Distinct from its two siblings under
   loaded-sample admission, original-priority arbitration, three-channel
   allocation, stale-quantum suppression, buffered/direct wire bytes, and
   shutdown.
+- `wolf3d_shell` -- the direct production-code eZ80 regression for normalized
+  menu input, original-facing main/episode/difficulty navigation, selection
+  flags, locked shareware episodes, lifecycle entry points, and exact bitmap
+  placement.
 
 The payload-free W3DV renderer query, ABI validator, and their regressions are
 present, but the startup gate is temporarily commented out. Native VDP and
@@ -58,8 +62,9 @@ Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
     packed by `agonport/tools/wolf3d_assets/` already land
     their buffers at the exact ids these loaders expect
     (`Wolf3dWallBufferId()`/`Wolf3dSpriteBufferId()` on the VDP side).
-  - `wolf3d.asm` -- the interactive player's-first-position fixture: it loads
-    real level_00 wall and sprite textures plus original HUD art,
+  - `wolf3d.asm` -- the interactive application: it loads the original-facing
+    title/control-panel shell, accepts the shareware episode and difficulty,
+    then loads real level wall and sprite textures plus original HUD art,
     uploads the real tilemap, initializes every door and static, then runs a
     callback-gated 30 Hz
     control/render loop. W/S move, A/D strafe, Left/Right turn, Up Arrow
@@ -117,10 +122,12 @@ while keeping this one as cwd.
 
 `wolf3d.asm` exercises the full settled wire protocol
 (`agonport/doc/handoff_ez80_ai_raycaster.md`) end to end against a real
-level instead of a synthetic one: it loads level_00's real wall/door and
-static-sprite textures through the modern AGNB container API, printing one
-`.` only after each image is fully finalized as a VDP bitmap. Normal startup
-uses breadcrumb-only callbacks and proceeds directly into the game. The
+level instead of a synthetic one. Startup first loads `shell.agnb`, shows the
+original title plus application version, and enters an original-facing main,
+shareware-episode, and difficulty flow. Only after selection does it load the
+matching level package plus that floor's real wall/door and static-sprite
+textures through the modern AGNB container API, printing one `.` only after
+each image is fully finalized as a VDP bitmap. The
 mode-0 wall-texture gallery, its plotting callback, and its review pause remain
 commented beside the loading path for future bitmap-upload diagnosis. It then
 loads `hud.agnb`, which contains only the original in-game status assets--not
@@ -132,9 +139,12 @@ real start tile/facing, selects 320x240x64 double-buffered mode 8+128,
 clears the draw surface, and issues one `render_frame`.
 
 After that first frame, held-key input advances the persistent player pose at
-an exact 30 Hz fixed step. Collision uses the original square `0x5800` player
-radius and combined-vector/X-only/Y-only `ClipMove` ordering, so the player
-slides along blocking walls. Door cells are not treated as solid cubes: the
+an exact 30 Hz fixed step. Collision uses the accepted square `0x4800` player
+wall/panel radius and combined-vector/X-only/Y-only `ClipMove` ordering, so the
+player slides along blocking walls. Actors and blocking statics use their own
+inclusive `0x4800` center-square contact test, while the original actor-only
+fully-open-door close guard remains `0x5800`. Door cells are not treated as
+solid cubes: the
 player can enter either recessed well until the square AABB touches the
 center-mounted sliding panel. Partial openings use the VDP's exact aperture
 rule (`0..position` is gap, `position+1..FFFF` is panel), including the same
@@ -211,8 +221,10 @@ attempt; exhausting it leaves a stable red game-over placeholder until Escape.
 Knife, pistol, machine gun, and chaingun timelines, target selection, actor
 pain/death chains, class scores, extra lives, and stable clip/weapon drops are
 live. Sound effects are now consumers of those deterministic simulation
-events; music, bosses, projectiles, menus/high-score entry, and level
-completion remain later layers. The remaining rollout is recorded in
+events. Original-facing title/main/episode/difficulty menus, ordinary and
+secret floor transitions, and the E1L9 application-shell victory return are
+live. Music, bosses, projectiles, the complete original victory/intermission
+presentation, and high-score entry remain later layers. The remaining rollout is recorded in
 `agonport/doc/actor_gameplay_plan.md`.
 
 `wolf3d_fixture.inc` (the tilemap + precomputed command-stream bytes) is
@@ -254,6 +266,18 @@ This writes ignored reproducible `sfx.agnb`/manifest outputs and the tracked
 explicit fallback assets retain 16384 Hz. Provenance, stable IDs, resident
 bytes, and exact tests are documented in
 `agonport/tools/wolf3d_assets/AUDIO_ASSETS.md`.
+
+Generate the original-facing title/control-panel container, composed menu
+screens, manifest, and synchronized assembly constants with:
+
+```bash
+.venv/bin/python agonport/tools/wolf3d_assets/scripts/build_shell_assets.py
+```
+
+This writes the ignored reproducible
+`agonport/assets/generated/wolf3d/shell/shell.agnb` and the tracked
+`wolf3d_shell_assets.inc`. The direct production-shell regression is documented
+in `../wolf3d_shell/README.md`.
 
 Run the gameplay host and real-eZ80 regressions from the repository root:
 
@@ -301,22 +325,36 @@ Run the gameplay host and real-eZ80 regressions from the repository root:
   -s src/asm/wolf3d_audio/scripts -p 'test_audio_oracle.py'
 .venv/bin/python \
   src/asm/wolf3d_audio/scripts/run_audio_emulator_regression.py
+.venv/bin/python \
+  src/asm/wolf3d_gameplay/scripts/run_victory_emulator_regression.py
+.venv/bin/python \
+  src/asm/wolf3d_shell/scripts/run_shell_emulator_regression.py
 ```
 
-**Hardware deployment** (no emulator/build harness involved): assemble as
-above, mount the FAT32 card labelled `AGON`, then run from the repository root:
+**Deployment:** assemble and generate the declared assets first. The canonical
+journaled deployer plans before it writes and preserves `autoexec.txt` unless a
+different policy is explicitly requested. For a FAT32 card labelled `AGON`:
 
 ```bash
-.venv/bin/python agonport/tools/deploy_wolf3d_to_sd.py --write-autoexec
+.venv/bin/python deploy.py plan wolf3d --to sd --mount /media/smith/AGON \
+  --autoexec preserve
+.venv/bin/python deploy.py deploy wolf3d --to sd --mount /media/smith/AGON \
+  --autoexec preserve
 ```
 
-The narrowly scoped deployer validates the mount and writes only
-`/wolf3dorig/wolf3d.bin`, `/wolf3dorig/tiles.agnb`,
-`/wolf3dorig/sprites.agnb`, `/wolf3dorig/hud.agnb`,
-`/wolf3dorig/sfx.agnb`, and (when explicitly requested) `autoexec.txt`. The
-generated autoexec selects keyboard layout 1, changes to `/wolf3dorig`, and
-loads the program, but leaves `run` commented so the fixture never starts
-automatically.
+For the project-owned emulator SD tree:
+
+```bash
+.venv/bin/python deploy.py plan wolf3d --to emulator \
+  --profile agonport/emulator --autoexec preserve
+.venv/bin/python deploy.py deploy wolf3d --to emulator \
+  --profile agonport/emulator --autoexec preserve
+```
+
+The `wolf3d` bundle validates and deploys the application, HUD, SFX, shell,
+and all four difficulty packages plus wall/sprite assets for all ten shareware
+floors under `mystuff/Wolf3dOrig`. Use `--autoexec load` or `run` only when that
+mutation is intentional.
 
 The custom `agon-vdp-wolf3d` VDP firmware must already be flashed onto the
 hardware for the door-plane/wall-rendering fix

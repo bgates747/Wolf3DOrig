@@ -1,13 +1,14 @@
 # Wolf3DOrig application-shell précis
 
-## Purpose and proposed first slice
+## Purpose and implemented first slice
 
-TODO 3 should precede level completion. It establishes the application
-lifecycle into which a completed level, a dead game, or an aborted game will
-eventually return.
+This document began as the design inventory for TODO 3a. The candidate now
+implements that shell together with TODO 2a's Episode 1 victory return. It
+establishes the application lifecycle around a new game, a completed episode,
+an aborted game, and a clean quit.
 
-The first implementation should be intentionally smaller than the original
-control panel:
+The implemented first slice is intentionally smaller than the original control
+panel:
 
 1. Retain a hook for a future Agon-specific splash, but currently begin on the
    original title screen carrying the Wolf3DOrig application version.
@@ -15,7 +16,8 @@ control panel:
 3. Reproduce the original shareware episode menu: Episode 1 is selectable and
    Episodes 2-6 remain visibly disabled. Then offer the original four
    difficulty levels.
-4. Start the existing level-00 game using the selected difficulty.
+4. Load and start level 00 using the selected difficulty; the selection occurs
+   before W3L loading and therefore governs the real difficulty-filtered world.
 5. For now, make Escape during play exit the application cleanly rather than
    returning to the menu. Restore the caller's original video mode first,
    print a plain-text thanks-for-playing message terminated by a line feed so
@@ -110,10 +112,11 @@ archive's status bar is chunk 98, while historical headers assign other values
 to `STATUSBARPIC`. The current HUD builder correctly uses the data-driven
 v1.4 mapping.
 
-The shell must extend `formats/vgagraph.py` with a tested v1.4 shell catalog
-and dimension assertions. It must not import the old header values verbatim.
-Generated manifests should retain both semantic names and actual chunk IDs so
-the mapping remains auditable.
+The implemented `formats/shell.py` catalog uses the tested bundled-v1.4 chunk
+IDs and dimension assertions rather than importing historical header values.
+Generated manifests retain semantic names and actual chunk IDs so the mapping
+remains auditable. In particular, VGAGRAPH chunk 21 must not be restored as a
+menu backdrop: it is a promotional/help collage, not the control-panel field.
 
 ## Sound and music inventory
 
@@ -149,10 +152,10 @@ later without restructuring it.
 
 ## Agon-side architecture
 
-The current program performs asset loading and immediately enters gameplay.
-It already captures the caller's video mode, forces mode 8 double buffering,
-and restores the caller's base single-buffered mode on exit. That lifecycle
-should be retained but moved around an explicit top-level state machine:
+The program captures the caller's video mode, loads the application-global
+shell container, and enters an explicit top-level state machine. Each gameplay
+session selects mode 8 double buffering and owns its render callback and audio;
+final application exit restores the caller's base single-buffered mode:
 
 ```text
 startup -> optional Agon splash hook -> original title -> main menu
@@ -162,34 +165,38 @@ startup -> optional Agon splash hook -> original title -> main menu
                                                              clean exit
 
 main menu -> new game -> episode -> difficulty -> load gameplay assets
-          -> gameplay -> Escape -> clean exit
+          -> gameplay -> Escape ---------------------------> clean exit
+                     -> E1L9 victory -> drain final render -> episode-complete
+                                                         -> main menu
 
 clean exit -> restore original mode -> print farewell + LF -> MOS
 ```
 
-Recommended implementation boundaries:
+Implemented boundaries:
 
 - `wolf3d_shell.inc`: top-level state machine and transitions;
-- `wolf3d_menu.inc`: faithful original control-panel rendering, input repeat,
-  and selection;
+- `wolf3d_shell.inc`: original-facing control-panel rendering, input
+  normalization/repeat, and selection;
 - generated `shell.agnb` plus `wolf3d_shell_assets.inc`: shell graphics only;
 - durable `build_shell_assets.py`: v1.4 extraction, conversion, override
   selection, manifest generation, and AGNB packing;
-- `agonport/assets/overrides/wolf3d/shell/`: optional hand-edited originals,
-  following the existing HUD/wall/sprite override convention.
+- `src/asm/wolf3d_shell/`: isolated direct-eZ80 semantic and drawing
+  regression for the production shell include.
 
-Shell assets should load once at startup. Level-specific wall and sprite
-containers should remain separate so TODO 2 can replace them between levels.
-The HUD and SFX containers are also global and need not be reloaded.
+Shell assets load once at startup and remain resident across gameplay sessions.
+Level-specific wall and sprite containers remain separate and are replaced on
+ordinary floor transitions. HUD and SFX containers are reloaded at session
+entry; gameplay shutdown clears the CPU-side audio admission state before a
+victory return, while the shell stays available.
 
-The first shell should use the existing 320x240 mode. Original 320x200 screens
-fit exactly above the 40-pixel status-panel region, but the shell does not need
-the gameplay HUD; the remaining 40 pixels can be filled with a deliberate
-border/background color rather than vertically stretching original art.
+The candidate shell uses the existing 320x240 mode. Original 320x200 screens
+are plotted without vertical stretching; the remaining 40 pixels carry the
+visible application version or the shell's cleared background rather than the
+gameplay HUD.
 
 ## State that must survive the shell boundary
 
-Even before save games exist, the shell/game contract should explicitly carry:
+Even before save games exist, the shell/game contract explicitly carries:
 
 - selected episode (episode 0 is the only currently available value);
 - selected difficulty, preserving all four original choices;
@@ -198,23 +205,22 @@ Even before save games exist, the shell/game contract should explicitly carry:
 - caller video mode for final return to MOS;
 - later: score/high-score table, save slots, audio preferences, and controls.
 
-Difficulty must not be cosmetic. The current actor setup and combat constants
-need a single selected-difficulty input so later level loading can apply the
-original thing-plane difficulty filters and combat behavior consistently.
+Difficulty is not cosmetic. The selected value is authoritative before the
+initial W3L package is loaded, so original thing-plane difficulty filters and
+combat behavior are initialized consistently.
 
-## Recommended implementation phases
+## Qualification and deliberate deferrals
 
-1. Add a tested shell-asset extractor and inspect the generated title/menu/
-   episode/difficulty images in the existing tkinter viewer.
-2. Add title and main-menu states with New Game and Quit.
-3. Add episode and difficulty selection; feed difficulty into game startup.
-4. Route gameplay Escape and menu Quit through one clean exit path: restore the
-   caller's original video mode, print the plain-text thanks-for-playing line
-   with a terminating line feed, and return to MOS.
-5. Human-validate the emulator lifecycle before committing emulator-coupled
-   changes.
-6. Defer high scores, save/load, settings, help, demos, and music into their
-   appropriate TODOs rather than expanding TODO 3 silently.
+The asset contract has host regressions, and the production shell runs under a
+deterministic direct-eZ80 harness covering all key aliases, result flags,
+navigation and cancellation routes, locked episodes, difficulties, lifecycle
+entry points, and bitmap coordinates. Production transition regressions cover
+ordinary, secret, secret-return, and victory routes. Human emulator validation
+remains mandatory before committing this emulator-dependent candidate.
+
+High scores, save/load, settings, help, demos, the original victory/intermission
+presentation, and music remain in their respective TODOs rather than silently
+expanding TODO 3a.
 
 ## Settled shell decisions
 
