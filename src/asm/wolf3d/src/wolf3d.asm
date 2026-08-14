@@ -528,10 +528,7 @@ w3d_run_gameplay_session:
     ld hl,rendering_msg
     call printString
     call printNewLine
-    ld hl,W3D_FIXTURE_TILEMAP_BUFFER_ID
-    ld bc,W3D_MAP_BYTES
-    ld de,(w3d_level_tilemap_ptr)
-    call vdu_load_buffer
+    call w3d_replace_level_tilemap_buffer
 
     ld hl,w3d_display_setup
     ld bc,w3d_display_setup_end-w3d_display_setup

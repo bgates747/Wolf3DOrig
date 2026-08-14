@@ -387,10 +387,7 @@ w3d_transition_to_next_level:
     call agnb_load_images_with_callback
     jr nz,@asset_failed
 
-    ld hl,W3D_FIXTURE_TILEMAP_BUFFER_ID
-    ld bc,W3D_MAP_BYTES
-    ld de,(w3d_level_tilemap_ptr)
-    call vdu_load_buffer
+    call w3d_replace_level_tilemap_buffer
     call w3d_seed_level_transition_state
 ; Loading may take seconds. Re-prime the fixed-step clock so disk/VDU transfer
 ; time never appears as a simulation backlog on the new floor.
@@ -432,6 +429,21 @@ w3d_seed_level_transition_state:
     call w3d_initialize_player_combat
     call w3d_death_checkpoint_level_score
     jp w3d_mark_full_level_dirty
+
+; Replace, never append, the renderer's 4096-byte tilemap buffer. Stock
+; BUFFERED_WRITE intentionally adds a new stream to an existing buffer ID,
+; while Wolf3D GetTile reads stream zero. Without the clear, a floor transition
+; binds the destination player pose to the previous floor's map: E1L2's real
+; spawn (16,61) is solid wall in E1L1, producing the observed gray enclosure.
+; The caller has established that no asynchronous render owner is active, so
+; removing the old map before the synchronous replacement is safe.
+w3d_replace_level_tilemap_buffer:
+    ld hl,W3D_FIXTURE_TILEMAP_BUFFER_ID
+    call vdu_clear_buffer
+    ld hl,W3D_FIXTURE_TILEMAP_BUFFER_ID
+    ld bc,W3D_MAP_BYTES
+    ld de,(w3d_level_tilemap_ptr)
+    jp vdu_load_buffer
 
 w3d_level_state_filename_table:
     dl w3d_level_state_baby_filename

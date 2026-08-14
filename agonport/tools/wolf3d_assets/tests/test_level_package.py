@@ -66,6 +66,23 @@ class RuntimeLevelPackageTests(unittest.TestCase):
         for name in ("doors", "statics", "blocking", "areas", "paths", "tilemap"):
             self.assertEqual(easy.sections[name], hard.sections[name])
 
+    def test_e1l2_spawn_exposes_stale_e1l1_tilemap_signature(self) -> None:
+        e1l1 = parse_package(build_one(self.level(0), 0, actorinfo.Difficulty.MEDIUM))
+        e1l2 = parse_package(build_one(self.level(1), 1, actorinfo.Difficulty.MEDIUM))
+        tilex = int.from_bytes(e1l2.player_pose[0:4], "little") >> 16
+        tiley = int.from_bytes(e1l2.player_pose[4:8], "little") >> 16
+        self.assertEqual((tilex, tiley), (16, 61))
+        offset = tiley * mapfile.MAP_WIDTH + tilex
+        self.assertEqual(e1l2.sections["tilemap"][offset], 0)
+        self.assertEqual(e1l2.sections["areas"][offset], 12)
+        # This exact cross-floor mismatch produced the hardware symptom: the
+        # destination pose is open in E1L2 but embedded in wall 1 if VDP buffer
+        # stream zero still contains E1L1 after an appended upload.
+        self.assertEqual(e1l1.sections["tilemap"][offset], 1)
+        for y in range(58, 64):
+            for x in range(13, 20):
+                self.assertEqual(e1l1.sections["tilemap"][y * 64 + x], 1)
+
     def test_only_e1l9_preserves_exact_victory_tiles_in_path_metadata(self) -> None:
         for level_index in range(10):
             with self.subTest(level=level_index):

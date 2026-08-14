@@ -166,6 +166,11 @@ w3d_transition_regression_count_transition:
     inc (hl)
     ret
 
+w3d_transition_regression_count_tilemap_replace:
+    ld hl,w3d_transition_regression_tilemap_replace_count
+    inc (hl)
+    ret
+
 ; A=result kind: 0 successful destination reset, 1 victory/shell return.
 w3d_transition_regression_write_result:
     ld (w3d_transition_regression_result+25),a
@@ -215,6 +220,8 @@ w3d_transition_regression_write_result:
     ld (w3d_transition_regression_result+26),a
     ld a,(w3d_exit_requested)
     ld (w3d_transition_regression_result+27),a
+    ld a,(w3d_transition_regression_tilemap_replace_count)
+    ld (w3d_transition_regression_result+28),a
     ld hl,w3d_transition_regression_filename
     ld de,w3d_transition_regression_result
     ld bc,32
@@ -230,6 +237,7 @@ w3d_transition_regression_result:
 w3d_transition_regression_shell_resume_count: db 0
 w3d_transition_regression_package_load_count: db 0
 w3d_transition_regression_transition_count: db 0
+w3d_transition_regression_tilemap_replace_count: db 0
 '''
     return source
 
@@ -242,12 +250,32 @@ def instrument_loader(source: str) -> str:
         "    call w3d_transition_regression_count_package_load\n",
         "level-package loader",
     )
-    return replace_once(
+    source = replace_once(
         source,
         "w3d_transition_to_next_level:\n",
         "w3d_transition_to_next_level:\n"
         "    call w3d_transition_regression_count_transition\n",
         "level-transition entry",
+    )
+    # This exact marker makes the wire-level replacement contract part of the
+    # production regression: stock BUFFERED_WRITE appends blocks, so clearing
+    # buffer 2 must precede every 4096-byte tilemap upload.
+    replacement = (
+        "w3d_replace_level_tilemap_buffer:\n"
+        "    ld hl,W3D_FIXTURE_TILEMAP_BUFFER_ID\n"
+        "    call vdu_clear_buffer\n"
+        "    ld hl,W3D_FIXTURE_TILEMAP_BUFFER_ID\n"
+        "    ld bc,W3D_MAP_BYTES\n"
+        "    ld de,(w3d_level_tilemap_ptr)\n"
+        "    jp vdu_load_buffer\n"
+    )
+    return replace_once(
+        source,
+        replacement,
+        "w3d_replace_level_tilemap_buffer:\n"
+        "    call w3d_transition_regression_count_tilemap_replace\n"
+        + replacement.removeprefix("w3d_replace_level_tilemap_buffer:\n"),
+        "clear-before-write tilemap replacement",
     )
 
 
@@ -302,7 +330,10 @@ def expected_payload(
     payload[23] = 1 if victory else 2  # initial package only / initial + destination
     payload[24] = 0 if victory else 1  # generic transition must be bypassed for victory
     payload[25] = 1 if victory else 0  # result kind
-    # callback_error, exit_requested and reserved tail remain zero.
+    # callback_error and exit_requested remain zero. Startup replaces one map;
+    # an ordinary transition replaces the destination map a second time.
+    payload[28] = 1 if victory else 2
+    # Reserved tail remains zero.
     return bytes(payload)
 
 
