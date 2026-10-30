@@ -28,3 +28,11 @@ sound-effects implementation.
 
 [ ] 7. Add high-score entry and remaining presentation polish after the core
 game progression is established.
+
+[ ] 8. Replace the requirement for a dedicated Wolf3D VDP firmware with a
+loadable Wolf3D VDPlet running on the shared VDPlet runtime. Phase 1 is a
+feasibility study and implementation plan only: identify the renderer's
+firmware dependencies, required VDPlet ABI/runtime extensions, memory and
+performance envelopes, protocol and lifecycle changes, compatibility risks,
+and qualification gates. Stop for Author review before implementing the
+migration. See `agonport/doc/wolf3d-vdplet-migration.md`.

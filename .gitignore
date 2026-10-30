@@ -33,6 +33,10 @@ agonport/build/
 agonport/emulator/
 agonport/release/
 
+# Complete SD/firmware staging tree assembled on request. It contains generated
+# binaries and derived shareware assets; preserve it locally, never publish it.
+/tgt/
+
 # eZ80 assembly apps: tracked src/, ignored assembled tgt/ (mirrors
 # pingoasm's apps/<app>/{src,tgt} convention).
 src/asm/*/tgt/
