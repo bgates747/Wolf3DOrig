@@ -66,6 +66,26 @@ class RuntimeLevelPackageTests(unittest.TestCase):
         for name in ("doors", "statics", "blocking", "areas", "paths", "tilemap"):
             self.assertEqual(easy.sections[name], hard.sections[name])
 
+    def test_diagnostic_e1l1_spawn_only_changes_player_pose(self) -> None:
+        level = self.level(0)
+        original = parse_package(build_one(level, 0, actorinfo.Difficulty.MEDIUM))
+        diagnostic = parse_package(
+            build_one(
+                level,
+                0,
+                actorinfo.Difficulty.MEDIUM,
+                diagnostic_e1l1_elevator_start=True,
+            )
+        )
+        self.assertEqual(
+            diagnostic.player_pose,
+            (25 * 0x10000 + 0x8000).to_bytes(4, "little")
+            + (47 * 0x10000 + 0x8000).to_bytes(4, "little")
+            + (0).to_bytes(2, "little"),
+        )
+        self.assertNotEqual(diagnostic.player_pose, original.player_pose)
+        self.assertEqual(diagnostic.sections, original.sections)
+
     def test_e1l2_spawn_exposes_stale_e1l1_tilemap_signature(self) -> None:
         e1l1 = parse_package(build_one(self.level(0), 0, actorinfo.Difficulty.MEDIUM))
         e1l2 = parse_package(build_one(self.level(1), 1, actorinfo.Difficulty.MEDIUM))

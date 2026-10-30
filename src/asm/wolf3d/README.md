@@ -70,8 +70,9 @@ Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
     control/render loop. W/S move, A/D strafe, Left/Right turn, Up Arrow
     operates the containing door well or the adjacent facing door, Space
     attacks, and 1..4 select knife, pistol, submachine gun, and gatling gun.
-    Escape exits, restoring and clearing the single-buffered MOS display mode
-    that was active before launch. Player collision and
+    Escape exits from shell screens, asset loading, floor intermissions, or
+    play, restoring and clearing the single-buffered MOS display mode that was
+    active before launch. Player collision and
     eZ80-authoritative moving doors, original blocking decorations, persistent
     pickups, live HUD fields, and the real difficulty-filtered E1L1 actor
     population are active. Original state timing and path patrols are also
@@ -130,13 +131,24 @@ textures through the modern AGNB container API, printing one `.` only after
 each image is fully finalized as a VDP bitmap. The
 mode-0 wall-texture gallery, its plotting callback, and its review pause remain
 commented beside the loading path for future bitmap-upload diagnosis. It then
-loads `hud.agnb`, which contains only the original in-game status assets--not
-an extended panel, title, or splash screens. A load error aborts before
+loads `hud.agnb`, which contains the original in-game status art and the
+original-picture-font floor-completion presentation--not an extended panel,
+title, or splash screens. A load error aborts before
 rendering. It uploads the real tilemap,
 sends one `set_door` per real door (all closed -- the level's actual state at
 first spawn), one `set_static` per real decoration/pickup, sets the player's
 real start tile/facing, selects 320x240x64 double-buffered mode 8+128,
 clears the draw surface, and issues one `render_frame`.
+
+Ordinary and secret exits first drain render ownership and draw the completed
+floor's original-style 320x200 tally over the retained status bar. Destination
+loading starts immediately rather than waiting at that screen. Each finalized
+destination bitmap supplies a deterministic input/animation tick for BJ's
+two-frame breathing portrait; a fresh non-Escape acknowledgment is latched
+during the load and must also be released before gameplay resumes. If no such
+acknowledgment arrives, the completed screen waits only after loading finishes.
+Escape instead aborts cleanly at the next boundary and shares the same outer
+mode-restoration/farewell route as title, menus, bootstrap loading, and play.
 
 After that first frame, held-key input advances the persistent player pose at
 an exact 30 Hz fixed step. Collision uses the accepted square `0x4800` player

@@ -5,6 +5,15 @@ unfinished work. IDs are stable references and are not reused. When an item is
 accepted, rejected, or superseded, record its ID, evidence, and rationale in
 the current dated development log, then remove it from this file.
 
+[ ] 2c. Present the original-style floor-completion intermission before each
+ordinary or secret floor transition, using the bundled level-end artwork and
+the completed floor's authoritative time, kill, secret, and treasure state.
+Draw it immediately, begin loading the destination without an acknowledgment
+pause, and use finalized-asset callbacks to animate/poll input while loading.
+An acknowledgment may be latched during loading; Escape must instead converge
+on the common clean application-exit path from every shell, load, intermission,
+and gameplay phase.
+
 [ ] 3b. Add the reserved Agon-specific splash and presentation hook without
 changing the accepted original-facing startup flow.
 

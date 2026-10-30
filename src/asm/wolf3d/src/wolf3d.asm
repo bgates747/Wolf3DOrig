@@ -19,8 +19,9 @@
 ; death, scores and drops, and the original ordinary death/fizzle/respawn loop.
 ; Native-rate digitized combat, pickup, door, and environment effects are
 ; loaded through AGNB and arbitrated once per caught-up simulation quantum.
-; Episode 1 floor routing and the E1L9 victory return are live. Bosses,
-; projectiles, music, and the full original intermission remain future work.
+; Episode 1 floor routing, original-looking floor intermissions, and the E1L9
+; victory return are live. Bosses, projectiles, music, and the intermission's
+; original count-up/bonus animation remain future work.
 ; =============================================================================
 
 mos_getkey:      equ 00h
@@ -51,6 +52,7 @@ sysvar_scrMode:  equ 27h
     include "wolf3d_shell_assets.inc"
     include "wolf3d_version.inc"
     include "wolf3d_shell.inc"
+    include "wolf3d_intermission.inc"
     include "wolf3d_audio.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_render_async.inc"
@@ -118,8 +120,6 @@ level_state_count_error_msg:
     db "Runtime level-state capacity error.",0
 level_state_bounds_error_msg:
     db "Runtime level-state layout/size error.",0
-level_transition_msg:
-    db "Loading next floor",0
 assets_error_msg:
     db "AGNB texture load failed; render not submitted.",0
 sfx_error_msg:
@@ -300,6 +300,37 @@ printImageDot:
     xor a
     ret
 
+; Common application-exit predicate. The shell latch covers menus and
+; synchronous loaders; once the gameplay keycode callback is installed its
+; low-latency render-state latch also preserves a short Escape between polls.
+w3d_query_application_exit:
+    call w3d_shell_query_exit_request
+    ret nz
+    ld a,(w3d_exit_requested)
+    or a
+    ret
+
+; Poll the shared shell keyboard seam at synchronous loading boundaries.
+; Once Escape is seen the application-level request remains latched, so every
+; later abortable callback returns nonzero even after the physical key lifts.
+; All callers ultimately converge on main's mode restoration and farewell.
+w3d_poll_application_escape:
+    call w3d_query_application_exit
+    ret nz
+    call w3d_shell_read_keyboard
+    bit 0,(ix+14)                 ; Escape
+    jr z,@continue
+    jp w3d_shell_request_exit
+@continue:
+    xor a
+    ret
+
+; Abortable AGNB image callback used during textual bootstrap loading.
+; One dot still means one finalized bitmap; only Escape returns nonzero.
+printImageDotAndPollEscape:
+    call printImageDot
+    jp w3d_poll_application_escape
+
 ; One dot means one PCM record was streamed, converted to a VDP sample, and
 ; admitted to the runtime loaded-sample table. The exact buffer-ID callback
 ; prevents a malformed or sparse container from making unavailable effects
@@ -313,6 +344,11 @@ printAudioDot:
     rst.lil 10h
     xor a
     ret
+
+; Preserve the exact loaded-sample bookkeeping before checking Escape.
+printAudioDotAndPollEscape:
+    call printAudioDot
+    jp w3d_poll_application_escape
 
 ; Canonical Agon bitmap-buffer selection. The one-byte padding deliberately
 ; absorbs HLU from the native-ADL three-byte store; it is outside the command
@@ -366,6 +402,13 @@ main:
     ret
 
 w3d_main_body:
+; Establish the application-global Escape latch before the first potentially
+; long container load.  w3d_shell_run resets it again for a fresh shell
+; lifecycle; it deliberately remains sticky everywhere else. Clear the older
+; gameplay latch too so a second MOS RUN of the resident binary starts clean.
+    xor a
+    ld (w3d_exit_requested),a
+    call w3d_shell_reset_exit_request
     ld hl,w3d_app_version_text
     call printString
     call printNewLine
@@ -377,9 +420,11 @@ w3d_main_body:
     call printString
     call printNewLine
     ld de,shell_filename
-    ld hl,printImageDot
-    call agnb_load_images_with_callback
+    ld hl,printImageDotAndPollEscape
+    call agnb_load_images_with_abortable_callback
     jr z,@shell_loaded
+    call w3d_shell_query_exit_request
+    ret nz
     ld hl,assets_error_msg
     ld (w3d_exit_message_ptr),hl
     ret
@@ -445,13 +490,24 @@ w3d_run_gameplay_session:
 ;
 ;@vdp_compatible:
 
+; The package itself is a single synchronous FatFS operation, so poll on both
+; sides of it.  AGNB containers below provide finer image/sample boundaries.
+    call w3d_poll_application_escape
+    jp nz,w3d_gameplay_exit_before_runtime
     ld a,(w3d_requested_difficulty)
     ld b,a
     xor a
     call w3d_load_level_package
+    push af
+    call w3d_poll_application_escape
+    jr nz,@level_load_aborted
+    pop af
     jr z,@level_state_loaded
     call w3d_set_level_load_error
     jp w3d_gameplay_fatal_before_runtime
+@level_load_aborted:
+    pop af
+    jp w3d_gameplay_exit_before_runtime
 @level_state_loaded:
 
     ld hl,loading_msg
@@ -471,9 +527,11 @@ w3d_run_gameplay_session:
 
     ld de,w3d_level_tiles_filename
 ;    ld hl,printImageBreadcrumb ; diagnostic wall gallery
-    ld hl,printImageDot         ; normal breadcrumb-only loading
-    call agnb_load_images_with_callback
+    ld hl,printImageDotAndPollEscape ; normal breadcrumb-only loading
+    call agnb_load_images_with_abortable_callback
     jr z,@assets_loaded
+    call w3d_shell_query_exit_request
+    jp nz,w3d_gameplay_exit_before_runtime
     ld hl,assets_error_msg
     ld (w3d_exit_message_ptr),hl
     jp w3d_gameplay_fatal_before_runtime
@@ -483,9 +541,11 @@ w3d_run_gameplay_session:
     call printString
     call printNewLine
     ld de,w3d_level_sprites_filename
-    ld hl,printImageDot
-    call agnb_load_images_with_callback
+    ld hl,printImageDotAndPollEscape
+    call agnb_load_images_with_abortable_callback
     jr z,@sprites_loaded
+    call w3d_shell_query_exit_request
+    jp nz,w3d_gameplay_exit_before_runtime
     ld hl,assets_error_msg
     ld (w3d_exit_message_ptr),hl
     jp w3d_gameplay_fatal_before_runtime
@@ -495,8 +555,11 @@ w3d_run_gameplay_session:
     call printString
     call printNewLine
     ld de,hud_filename
-    call agnb_load_images
+    ld hl,printImageDotAndPollEscape
+    call agnb_load_images_with_abortable_callback
     jr z,@hud_loaded
+    call w3d_shell_query_exit_request
+    jp nz,w3d_gameplay_exit_before_runtime
     ld hl,assets_error_msg
     ld (w3d_exit_message_ptr),hl
     jp w3d_gameplay_fatal_before_runtime
@@ -507,9 +570,11 @@ w3d_run_gameplay_session:
     call printNewLine
     call w3d_audio_initialize
     ld de,sfx_filename
-    ld hl,printAudioDot
-    call agnb_load_audio_with_callback
+    ld hl,printAudioDotAndPollEscape
+    call agnb_load_audio_with_abortable_callback
     jr z,@sfx_loaded
+    call w3d_shell_query_exit_request
+    jp nz,w3d_gameplay_exit_before_runtime
     call printNewLine
     ld hl,sfx_error_msg
     call printString
@@ -517,7 +582,11 @@ w3d_run_gameplay_session:
     call printNewLine
 ; Partial containers remain useful: install procedures only for callbacks
 ; that reached the finalized-sample boundary before any loader error.
+    call w3d_poll_application_escape
+    jp nz,w3d_gameplay_exit_before_runtime
     call w3d_audio_install_available_command_buffers
+    call w3d_poll_application_escape
+    jp nz,w3d_gameplay_exit_before_runtime
 
 ; Gallery review pause, retained alongside the disabled diagnostic block.
 ;    ld hl,gallery_done_msg
@@ -536,6 +605,11 @@ w3d_run_gameplay_session:
 
     call w3d_initialize_control_clock
     call w3d_initialize_render_state
+; Intermission polling primarily reads the held-key map, but the installed MOS
+; callback may observe and latch a shorter Escape entirely between two asset
+; boundaries. Give it the same common predicate so that event cannot be lost.
+    ld hl,w3d_query_application_exit
+    call w3d_intermission_set_application_exit_query_hook
     call w3d_initialize_motion_state
     call w3d_initialize_death_state
     ld hl,w3d_reseed_level_attempt
@@ -566,10 +640,28 @@ mainloop:
     ld a,(w3d_async_owner)
     or a
     jp nz,mainloop
+; Completion owns this branch, but Escape remains globally stronger.  A key
+; pressed on the same fixed quantum as an elevator/EXITTILE must still use the
+; common application exit instead of entering intermission or victory UI.
+    ld a,(w3d_exit_requested)
+    or a
+    jr z,@classify_completion
+    call w3d_shell_request_exit
+    jp w3d_gameplay_exit_shutdown
+@classify_completion:
     call w3d_level_completion_is_victory
     jr z,@victory
+; The completed floor remains authoritative until its intermission has
+; captured and presented the source-level state.  We reach this seam only
+; after the previous renderer/fizzle owner drained, and victory deliberately
+; bypasses it for the separate episode-ending lifecycle below.
+    call w3d_intermission_begin
     call w3d_transition_to_next_level
-    jr c,@fatal_shutdown
+    jr nc,@transition_ready
+    call w3d_shell_query_exit_request
+    jp nz,w3d_gameplay_exit_shutdown
+    jr @fatal_shutdown
+@transition_ready:
     jp mainloop
 
 @victory:
@@ -636,6 +728,7 @@ mainloop:
     ld a,(w3d_callback_error)
     or a
     jr nz,@fatal_shutdown
+    call w3d_shell_request_exit
     jp w3d_gameplay_exit_shutdown
 
 @fatal_shutdown:
@@ -687,6 +780,10 @@ mainloop:
 
 w3d_gameplay_fatal_before_runtime:
     ld a,W3D_GAMEPLAY_RESULT_FATAL
+    ret
+
+w3d_gameplay_exit_before_runtime:
+    ld a,W3D_GAMEPLAY_RESULT_EXIT
     ret
 
 w3d_gameplay_exit_shutdown:

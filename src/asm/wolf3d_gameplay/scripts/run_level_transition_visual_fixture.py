@@ -45,6 +45,7 @@ def main() -> None:
         for filename, source in (
             ("hud.agnb", GENERATED / "hud/hud.agnb"),
             ("sfx.agnb", GENERATED / "audio/sfx.agnb"),
+            ("shell.agnb", GENERATED / "shell/shell.agnb"),
         ):
             shutil.copyfile(require_file(source), app / filename)
         for index in sorted({0, target_level}):
@@ -62,7 +63,10 @@ def main() -> None:
         )
 
         environment = os.environ.copy()
-        environment["SDL_VIDEODRIVER"] = "wayland"
+        # Fab's native Wayland window can exit immediately under some IDE
+        # launch environments. XWayland is stable here, while setdefault still
+        # lets CI select SDL_VIDEO_DRIVER=dummy explicitly.
+        environment.setdefault("SDL_VIDEO_DRIVER", "x11")
         local_lib = str(Path.home() / ".local/lib")
         environment["LD_LIBRARY_PATH"] = local_lib + (
             ":" + environment["LD_LIBRARY_PATH"]

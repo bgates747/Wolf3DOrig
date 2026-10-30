@@ -20,6 +20,13 @@ PROJECT_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_DATA_DIR = PROJECT_ROOT / "orig/data"
 DEFAULT_OUT_DIR = PROJECT_ROOT / "agonport/assets/generated/wolf3d/levels"
 
+# Temporary TODO 2b diagnostic spawn. This is the open elevator car on E1L1:
+# the player stands at (25,47), facing east directly toward the ordinary exit
+# switch at (26,47). One Up-arrow press therefore requests the normal E1L2
+# transition without replaying the whole first floor. The original map data is
+# never edited; omitting the CLI switch restores its real (29,57, east) spawn.
+DIAGNOSTIC_E1L1_ELEVATOR_START = (25, 47, 0)
+
 
 def _le16(value: int) -> bytes:
     return int(value).to_bytes(2, "little", signed=False)
@@ -29,13 +36,25 @@ def _le32(value: int) -> bytes:
     return int(value).to_bytes(4, "little", signed=False)
 
 
-def build_one(level: mapfile.Level, level_index: int, difficulty: actorinfo.Difficulty) -> bytes:
+def build_one(
+    level: mapfile.Level,
+    level_index: int,
+    difficulty: actorinfo.Difficulty,
+    *,
+    diagnostic_e1l1_elevator_start: bool = False,
+) -> bytes:
     tilemap, doors = fixture.build_tilemap_and_doors(level.plane0)
     statics, blocking = fixture.build_statics(level.plane1)
     actors = fixture.build_actors(level.plane0, level.plane1, difficulty)
     areas = fixture.build_area_map(level.plane0)
     paths = fixture.build_path_directions(level.plane1)
     tilex, tiley, angle = fixture.find_player_start(level.plane1)
+    if diagnostic_e1l1_elevator_start and level_index == 0:
+        tilex, tiley, angle = DIAGNOSTIC_E1L1_ELEVATOR_START
+        if level.plane0[tiley][tilex] < actorinfo.AREATILE:
+            raise ValueError("diagnostic E1L1 spawn is not on open area floor")
+        if level.plane0[tiley][tilex + 1] != 21:
+            raise ValueError("diagnostic E1L1 spawn no longer faces the exit switch")
     player_pose = _le32(tilex * TILE_GLOBAL + TILE_GLOBAL // 2)
     player_pose += _le32(tiley * TILE_GLOBAL + TILE_GLOBAL // 2) + _le16(angle)
 
@@ -83,6 +102,11 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-dir", type=Path, default=DEFAULT_DATA_DIR)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
+    parser.add_argument(
+        "--diagnostic-e1l1-elevator-start",
+        action="store_true",
+        help="start E1L1 inside its ordinary elevator, facing the exit switch",
+    )
     args = parser.parse_args()
     maphead = mapfile.read_maphead((args.data_dir / "MAPHEAD.WL1").read_bytes())
     gamemaps = (args.data_dir / "GAMEMAPS.WL1").read_bytes()
@@ -93,7 +117,12 @@ def main() -> None:
         level_dir = args.out_dir / f"level_{level_index:02d}"
         level_dir.mkdir(parents=True, exist_ok=True)
         for difficulty in actorinfo.Difficulty:
-            payload = build_one(level, level_index, difficulty)
+            payload = build_one(
+                level,
+                level_index,
+                difficulty,
+                diagnostic_e1l1_elevator_start=args.diagnostic_e1l1_elevator_start,
+            )
             name = difficulty.name.lower()
             output = level_dir / f"state_{name}.w3l"
             output.write_bytes(payload)

@@ -36,6 +36,7 @@ REASONS = {
     9: "plot buffer",
     10: "plot x coordinate",
     11: "plot y coordinate",
+    12: "application-global exit latch",
 }
 
 

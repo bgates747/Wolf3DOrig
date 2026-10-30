@@ -338,8 +338,15 @@ w3d_level_patch_index_in_hl:
 ; synchronous; the next render is acquired only after every package pointer,
 ; bitmap, tilemap byte, and mutable-world seed is ready.
 ;
+; The caller has already drawn the source-floor intermission. Destination
+; loading starts immediately: every finalized image gives that screen an
+; animation/input tick, and a non-Escape acknowledgment is merely latched.
+; The display returns to double-buffered gameplay only after loading and the
+; final acknowledgment are complete.
+;
 ; Carry clear: the new level's reset/render is in flight.
-; Carry set:   state or AGNB loading failed; no partial world was submitted.
+; Carry set:   Escape, state, or AGNB loading failed; no partial world was
+;              submitted. w3d_shell_query_exit_request distinguishes Escape.
 w3d_transition_to_next_level:
 ; Victory is a terminal gameplay result, never a load target. Also classify a
 ; legacy/forced normal completion on zero-based floor 8 as victory so no call
@@ -352,10 +359,6 @@ w3d_transition_to_next_level:
     ret
 
 @ordinary_transition:
-    ld hl,level_transition_msg
-    call printString
-    call printNewLine
-
     ld a,(w3d_level_completion)
     cp W3D_LEVEL_COMPLETION_SECRET
     jr z,@secret_floor
@@ -372,22 +375,44 @@ w3d_transition_to_next_level:
     ld a,1
 @target_ready:
     ld (w3d_level_transition_target),a
+; Poll once before the single synchronous W3L operation, then once afterward.
+; Image containers below provide much finer finalized-record boundaries.
+    call w3d_intermission_loading_tick
+    jr c,@user_aborted
     ld a,(w3d_game_difficulty)
     ld b,a
     ld a,(w3d_level_transition_target)
     call w3d_load_level_package
+    push af
+    call w3d_intermission_loading_tick
+    jr c,@package_aborted
+    pop af
     jr nz,@package_failed
 
     ld de,w3d_level_tiles_filename
-    ld hl,printImageDot
-    call agnb_load_images_with_callback
+    ld hl,w3d_intermission_loading_tick
+    call agnb_load_images_with_abortable_callback
     jr nz,@asset_failed
     ld de,w3d_level_sprites_filename
-    ld hl,printImageDot
-    call agnb_load_images_with_callback
+    ld hl,w3d_intermission_loading_tick
+    call agnb_load_images_with_abortable_callback
     jr nz,@asset_failed
 
     call w3d_replace_level_tilemap_buffer
+    call w3d_intermission_loading_tick
+    jr c,@user_aborted
+; If a fresh non-Escape press occurred during streaming this is immediate;
+; otherwise remain on the completed-floor screen until acknowledgment. Escape
+; retains its own terminal result in either case.
+    call w3d_intermission_finish
+    jr c,@user_aborted
+; The intermission presents in proven mode-8 single-buffered shell geometry.
+; Do not restore the gameplay double buffer until the complete destination
+; package, image set, and tilemap are resident.  No asynchronous owner exists
+; here; the reset render below acquires the freshly restored hidden surface.
+    ld hl,w3d_display_setup
+    ld bc,w3d_display_setup_end-w3d_display_setup
+    rst.lil 18h
     call w3d_seed_level_transition_state
 ; Loading may take seconds. Re-prime the fixed-step clock so disk/VDU transfer
 ; time never appears as a simulation backlog on the new floor.
@@ -396,14 +421,30 @@ w3d_transition_to_next_level:
     call w3d_submit_level_reset
     ret
 
+@package_aborted:
+    pop af
+    jr @user_aborted
+
 @package_failed:
     call w3d_set_level_load_error
     scf
     ret
 
 @asset_failed:
+; The AGNB API deliberately reports a generic callback-abort code. Recover the
+; intermission's durable reason and promote Escape into the application-global
+; latch before choosing between clean exit and a real asset fault.
+    call w3d_intermission_escape_is_requested
+    jr nz,@user_aborted
+    call w3d_shell_query_exit_request
+    jr nz,@user_aborted
     ld hl,assets_error_msg
     ld (w3d_exit_message_ptr),hl
+    scf
+    ret
+
+@user_aborted:
+    call w3d_shell_request_exit
     scf
     ret
 

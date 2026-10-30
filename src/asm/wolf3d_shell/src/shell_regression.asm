@@ -30,6 +30,11 @@ fa_create_always: equ 08h
         CHECK_A expected,reason
     endmacro
 
+    macro CHECK_EXIT expected
+        call w3d_shell_query_exit_request
+        CHECK_A expected,REASON_EXIT_LATCH
+    endmacro
+
     macro CHECK_PLOT offset,buffer,x,y
         CHECK_MEM8 test_plot_log+offset+0,buffer&0ffh,REASON_PLOT_BUFFER
         CHECK_MEM8 test_plot_log+offset+1,buffer>>8,REASON_PLOT_BUFFER
@@ -77,6 +82,7 @@ SCRIPT_KEYPAD: equ 4
 SCRIPT_SPACE: equ 5
 SCRIPT_ESCAPE: equ 6
 SCRIPT_ANY: equ 7
+SCRIPT_ESCAPE_ACCEPT: equ 8
 
 REASON_ACTION: equ 1
 REASON_RESULT: equ 2
@@ -89,6 +95,7 @@ REASON_PLOT_COUNT: equ 8
 REASON_PLOT_BUFFER: equ 9
 REASON_PLOT_X: equ 10
 REASON_PLOT_Y: equ 11
+REASON_EXIT_LATCH: equ 12
 
 start:
     push af
@@ -126,6 +133,7 @@ run_tests:
     ret
 
 test_input_actions:
+    call w3d_shell_reset_exit_request
     ld a,1
     ld (test_case),a
     ld hl,script_action_up
@@ -162,11 +170,43 @@ test_input_actions:
     call test_set_script
     call w3d_shell_wait_action
     CHECK_A W3D_SHELL_ACTION_ESCAPE,REASON_ACTION
+    CHECK_EXIT 1
+    call w3d_shell_reset_exit_request
+    ld hl,script_action_escape_accept
+    call test_set_script
+    call w3d_shell_wait_action
+    CHECK_A W3D_SHELL_ACTION_ESCAPE,REASON_ACTION
+    CHECK_EXIT 1
+    ld a,7
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_wait_any_ordinary
+    call test_set_script
+    call w3d_shell_wait_any_press
+    CHECK_EXIT 0
+    ld a,8
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_wait_any_escape
+    call test_set_script
+    call w3d_shell_wait_any_press
+    CHECK_EXIT 1
+    call w3d_shell_reset_exit_request
+    ld hl,script_wait_any_held_ordinary_then_escape
+    call test_set_script
+    call w3d_shell_wait_any_press
+    CHECK_EXIT 1
+    call w3d_shell_reset_exit_request
+    ld hl,script_wait_any_held_escape
+    call test_set_script
+    call w3d_shell_wait_any_press
+    CHECK_EXIT 1
     ret
 
 test_main_results:
-    ld a,7
+    ld a,9
     ld (test_case),a
+    call w3d_shell_reset_exit_request
     ld hl,script_main_quit
     call test_set_script
     call w3d_shell_main_menu
@@ -178,14 +218,18 @@ test_main_results:
 @quit_flag:
     CHECK_A 0,REASON_FLAGS
     CHECK_MEM8 w3d_shell_main_choice,W3D_SHELL_MAIN_QUIT,REASON_SELECTION
-    ld a,8
+    CHECK_EXIT 0
+    ld a,10
     ld (test_case),a
+    call w3d_shell_reset_exit_request
     ld hl,script_main_escape
     call test_set_script
     call w3d_shell_main_menu
     CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
-    ld a,9
+    CHECK_EXIT 1
+    ld a,11
     ld (test_case),a
+    call w3d_shell_reset_exit_request
     ld hl,script_new_game_medium
     call test_set_script
     call w3d_shell_main_menu
@@ -197,11 +241,13 @@ test_main_results:
 @new_flag:
     CHECK_A 1,REASON_FLAGS
     CHECK_MEM8 w3d_requested_difficulty,2,REASON_DIFFICULTY
+    CHECK_EXIT 0
     ret
 
 test_episode_semantics:
-    ld a,10
+    ld a,12
     ld (test_case),a
+    call w3d_shell_reset_exit_request
     call test_reset_plots
     ld hl,script_episode_locked_wrap
     call test_set_script
@@ -209,50 +255,102 @@ test_episode_semantics:
     CHECK_A 1,REASON_RESULT
     CHECK_MEM8 w3d_shell_episode_choice,0,REASON_SELECTION
     CHECK_MEM8 test_notice_plots,1,REASON_NOTICE
-; Proves difficulty Escape routes back to episode, then episode Escape routes
-; to main. Directly returning difficulty Escape to main consumes the wrong key.
-    ld a,11
+    CHECK_EXIT 0
+    ld a,13
     ld (test_case),a
-    ld hl,script_difficulty_back_to_episode
+    call w3d_shell_reset_exit_request
+    ld hl,script_episode_escape
+    call test_set_script
+    call w3d_shell_choose_episode
+    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_EXIT 1
+    ld a,14
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    call test_reset_plots
+    ld hl,script_episode_unavailable_escape
+    call test_set_script
+    call w3d_shell_choose_episode
+    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_MEM8 test_notice_plots,1,REASON_NOTICE
+    CHECK_EXIT 1
+    ld a,15
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_main_episode_escape
     call test_set_script
     call w3d_shell_main_menu
     CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
-    CHECK_MEM8 w3d_shell_main_choice,W3D_SHELL_MAIN_QUIT,REASON_SELECTION
+    CHECK_EXIT 1
     ret
 
 test_difficulty_semantics:
-    ld a,12
+    ld a,16
     ld (test_case),a
+    call w3d_shell_reset_exit_request
     ld hl,script_difficulty_medium
     call test_set_script
     call w3d_shell_choose_difficulty
     CHECK_A 1,REASON_RESULT
     CHECK_MEM8 w3d_requested_difficulty,2,REASON_DIFFICULTY
-    ld a,13
+    CHECK_EXIT 0
+    ld a,17
     ld (test_case),a
+    call w3d_shell_reset_exit_request
     ld hl,script_difficulty_hard
     call test_set_script
     call w3d_shell_choose_difficulty
     CHECK_A 1,REASON_RESULT
     CHECK_MEM8 w3d_requested_difficulty,3,REASON_DIFFICULTY
-    ld a,14
+    CHECK_EXIT 0
+    ld a,18
     ld (test_case),a
+    call w3d_shell_reset_exit_request
     ld hl,script_difficulty_easy
     call test_set_script
     call w3d_shell_choose_difficulty
     CHECK_A 1,REASON_RESULT
     CHECK_MEM8 w3d_requested_difficulty,1,REASON_DIFFICULTY
-    ld a,15
+    CHECK_EXIT 0
+    ld a,19
     ld (test_case),a
+    call w3d_shell_reset_exit_request
     ld hl,script_difficulty_baby
     call test_set_script
     call w3d_shell_choose_difficulty
     CHECK_A 1,REASON_RESULT
     CHECK_MEM8 w3d_requested_difficulty,0,REASON_DIFFICULTY
+    CHECK_EXIT 0
+    ld a,20
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_difficulty_escape
+    call test_set_script
+    call w3d_shell_choose_difficulty
+    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_EXIT 1
+    ld a,21
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_main_difficulty_escape
+    call test_set_script
+    call w3d_shell_main_menu
+    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_EXIT 1
     ret
 
 test_lifecycle_entries:
-    ld a,16
+    ld a,22
+    ld (test_case),a
+    xor a
+    ld (test_version_prints),a
+    ld hl,script_title_escape
+    call test_set_script
+    call w3d_shell_run
+    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_MEM8 test_version_prints,1,REASON_VERSION
+    CHECK_EXIT 1
+    ld a,23
     ld (test_case),a
     xor a
     ld (test_version_prints),a
@@ -261,16 +359,27 @@ test_lifecycle_entries:
     call w3d_shell_run
     CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
     CHECK_MEM8 test_version_prints,1,REASON_VERSION
-    ld a,17
+    CHECK_EXIT 1
+    ld a,24
     ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_victory_escape
+    call test_set_script
+    call w3d_shell_resume_after_victory
+    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_EXIT 1
+    ld a,25
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
     ld hl,script_ack_then_escape
     call test_set_script
     call w3d_shell_resume_after_victory
     CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_EXIT 1
     ret
 
 test_draw_contract:
-    ld a,18
+    ld a,26
     ld (test_case),a
     call test_reset_plots
     xor a
@@ -279,7 +388,7 @@ test_draw_contract:
     CHECK_MEM8 test_plot_count,3,REASON_PLOT_COUNT
     CHECK_PLOT 6,W3D_SHELL_MAIN_NEW_GAME_SELECTED_BUFFER,100,55
     CHECK_PLOT 12,W3D_SHELL_CURSOR_1_BUFFER,72,53
-    ld a,19
+    ld a,27
     ld (test_case),a
     call test_reset_plots
     ld a,1
@@ -288,16 +397,16 @@ test_draw_contract:
     CHECK_MEM8 test_plot_count,3,REASON_PLOT_COUNT
     CHECK_PLOT 6,W3D_SHELL_MAIN_QUIT_SELECTED_BUFFER,100,172
     CHECK_PLOT 12,W3D_SHELL_CURSOR_1_BUFFER,72,170
-    TEST_EPISODE_DRAW 0,W3D_SHELL_EPISODE_1_SELECTED_BUFFER,23,21,20
-    TEST_EPISODE_DRAW 1,W3D_SHELL_EPISODE_2_SELECTED_BUFFER,49,47,21
-    TEST_EPISODE_DRAW 2,W3D_SHELL_EPISODE_3_SELECTED_BUFFER,75,73,22
-    TEST_EPISODE_DRAW 3,W3D_SHELL_EPISODE_4_SELECTED_BUFFER,101,99,23
-    TEST_EPISODE_DRAW 4,W3D_SHELL_EPISODE_5_SELECTED_BUFFER,127,125,24
-    TEST_EPISODE_DRAW 5,W3D_SHELL_EPISODE_6_SELECTED_BUFFER,153,151,25
-    TEST_DIFFICULTY_DRAW 0,W3D_SHELL_DIFFICULTY_BABY_SELECTED_BUFFER,100,98,W3D_SHELL_DIFFICULTY_BABY_BUFFER,26
-    TEST_DIFFICULTY_DRAW 1,W3D_SHELL_DIFFICULTY_EASY_SELECTED_BUFFER,113,111,W3D_SHELL_DIFFICULTY_EASY_BUFFER,27
-    TEST_DIFFICULTY_DRAW 2,W3D_SHELL_DIFFICULTY_NORMAL_SELECTED_BUFFER,126,124,W3D_SHELL_DIFFICULTY_NORMAL_BUFFER,28
-    TEST_DIFFICULTY_DRAW 3,W3D_SHELL_DIFFICULTY_HARD_SELECTED_BUFFER,139,137,W3D_SHELL_DIFFICULTY_HARD_BUFFER,29
+    TEST_EPISODE_DRAW 0,W3D_SHELL_EPISODE_1_SELECTED_BUFFER,23,21,28
+    TEST_EPISODE_DRAW 1,W3D_SHELL_EPISODE_2_SELECTED_BUFFER,49,47,29
+    TEST_EPISODE_DRAW 2,W3D_SHELL_EPISODE_3_SELECTED_BUFFER,75,73,30
+    TEST_EPISODE_DRAW 3,W3D_SHELL_EPISODE_4_SELECTED_BUFFER,101,99,31
+    TEST_EPISODE_DRAW 4,W3D_SHELL_EPISODE_5_SELECTED_BUFFER,127,125,32
+    TEST_EPISODE_DRAW 5,W3D_SHELL_EPISODE_6_SELECTED_BUFFER,153,151,33
+    TEST_DIFFICULTY_DRAW 0,W3D_SHELL_DIFFICULTY_BABY_SELECTED_BUFFER,100,98,W3D_SHELL_DIFFICULTY_BABY_BUFFER,34
+    TEST_DIFFICULTY_DRAW 1,W3D_SHELL_DIFFICULTY_EASY_SELECTED_BUFFER,113,111,W3D_SHELL_DIFFICULTY_EASY_BUFFER,35
+    TEST_DIFFICULTY_DRAW 2,W3D_SHELL_DIFFICULTY_NORMAL_SELECTED_BUFFER,126,124,W3D_SHELL_DIFFICULTY_NORMAL_BUFFER,36
+    TEST_DIFFICULTY_DRAW 3,W3D_SHELL_DIFFICULTY_HARD_SELECTED_BUFFER,139,137,W3D_SHELL_DIFFICULTY_HARD_BUFFER,37
     ret
 
 test_set_script:
@@ -329,6 +438,8 @@ test_keyboard_hook:
     jr z,@escape
     cp SCRIPT_ANY
     jr z,@any
+    cp SCRIPT_ESCAPE_ACCEPT
+    jr z,@escape_accept
     jr @done
 @up:
     ld a,00000010b
@@ -353,6 +464,12 @@ test_keyboard_hook:
 @escape:
     ld a,00000001b
     ld (test_keymap+14),a
+    jr @done
+@escape_accept:
+    ld a,00000001b
+    ld (test_keymap+14),a
+    ld a,00000010b
+    ld (test_keymap+9),a
     jr @done
 @any:
     ld a,1
@@ -524,6 +641,12 @@ script_action_return: db SCRIPT_RETURN,SCRIPT_RELEASE
 script_action_keypad: db SCRIPT_KEYPAD,SCRIPT_RELEASE
 script_action_space: db SCRIPT_SPACE,SCRIPT_RELEASE
 script_action_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_action_escape_accept: db SCRIPT_ESCAPE_ACCEPT,SCRIPT_RELEASE
+script_wait_any_ordinary: db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE
+script_wait_any_escape: db SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_wait_any_held_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_wait_any_held_ordinary_then_escape:
+    db SCRIPT_ANY,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_main_quit: db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_SPACE,SCRIPT_RELEASE
 script_main_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_new_game_medium:
@@ -533,15 +656,25 @@ script_episode_locked_wrap:
     db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
     db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE
     db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
-script_difficulty_back_to_episode:
-    db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
-    db SCRIPT_ESCAPE,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
-    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+script_episode_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_episode_unavailable_escape:
+    db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_main_episode_escape:
+    db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_difficulty_medium: db SCRIPT_RETURN,SCRIPT_RELEASE
 script_difficulty_hard: db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
 script_difficulty_easy: db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
 script_difficulty_baby:
     db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_UP,SCRIPT_RELEASE
     db SCRIPT_RETURN,SCRIPT_RELEASE
+script_difficulty_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_main_difficulty_escape:
+    db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_title_escape:
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_victory_escape:
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_ack_then_escape:
     db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE

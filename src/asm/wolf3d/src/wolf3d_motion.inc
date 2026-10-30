@@ -24,6 +24,8 @@
 ; every dirty snapshot sent to the VDP.
 ; =============================================================================
 
+    include "wolf3d_level_time.inc"
+
 W3D_SIMULATION_STEP_TICKS:      equ 4
 W3D_SIMULATION_MAX_STEPS:       equ 4
 W3D_SIMULATION_MAX_BACKLOG:     equ 32
@@ -100,6 +102,7 @@ w3d_initialize_motion_state:
 ; score, or extra-life threshold. This is the common SetupGameLevel core for
 ; a fresh game, death reseed, and successful level transition.
 w3d_seed_level_world_state:
+    call w3d_intermission_reset_level_time
     ld hl,(w3d_level_player_seed_ptr)
     ld de,w3d_player_pose
     ld bc,W3D_PLAYER_POSE_SIZE
@@ -419,6 +422,7 @@ w3d_simulate_player_step:
     ld a,(w3d_level_completion)
     or a
     ret nz
+    call w3d_intermission_tick_level_time
     call w3d_simulate_doors
     call w3d_sample_controls
     call w3d_update_player_thrustspeed

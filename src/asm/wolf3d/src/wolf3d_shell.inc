@@ -68,21 +68,30 @@ w3d_shell_show_agon_splash:
 ; original control panel.  Returns W3D_SHELL_RESULT_* in A with flags fixed to
 ; that result (Z for quit, NZ for new game).
 w3d_shell_run:
+    call w3d_shell_reset_exit_request
     call w3d_shell_setup
     call w3d_shell_show_agon_splash
     call w3d_shell_show_title
+    or a
+    ret z
     jp w3d_shell_main_menu
 
 ; Episode victory currently has no promoted intermission/high-score screen.
 ; Acknowledge the completed shareware episode and resume the same main-menu
 ; lifecycle.  This is intentionally distinct from initial title presentation.
 w3d_shell_resume_after_victory:
+    call w3d_shell_query_exit_request
+    jp nz,w3d_shell_return_quit
     call w3d_shell_setup
     call w3d_shell_draw_victory_acknowledgment
     call w3d_shell_wait_any_press
+    call w3d_shell_query_exit_request
+    jp nz,w3d_shell_return_quit
     jp w3d_shell_main_menu
 
 w3d_shell_show_title:
+    call w3d_shell_query_exit_request
+    jp nz,w3d_shell_return_quit
     call w3d_shell_clear
     ld hl,W3D_SHELL_TITLE_BUFFER
     call selectBitmap
@@ -94,6 +103,10 @@ w3d_shell_show_title:
     ld hl,w3d_app_version_text
     call printString
     call w3d_shell_wait_any_press
+    call w3d_shell_query_exit_request
+    jp nz,w3d_shell_return_quit
+    ld a,W3D_SHELL_RESULT_NEW_GAME
+    or a
     ret
 @version_position:
     db 17,15,31,8,26,0
@@ -111,6 +124,8 @@ w3d_shell_draw_victory_acknowledgment:
 ; -----------------------------------------------------------------------------
 
 w3d_shell_main_menu:
+    call w3d_shell_query_exit_request
+    jp nz,w3d_shell_return_quit
     ld a,W3D_SHELL_MAIN_NEW_GAME
     ld (w3d_shell_main_choice),a
 @redraw:
@@ -136,21 +151,15 @@ w3d_shell_main_menu:
     cp W3D_SHELL_MAIN_QUIT
     jr z,@quit
     call w3d_shell_choose_episode
-    jr z,@redraw
+    jr z,@quit
 @difficulty:
     call w3d_shell_choose_difficulty
-    jr z,@episode_again
+    jr z,@quit
     ld a,W3D_SHELL_RESULT_NEW_GAME
     or a                    ; caller may branch on NZ
     ret
-@episode_again:
-    call w3d_shell_choose_episode
-    jr z,@redraw
-    jr @difficulty
 @quit:
-    ld a,W3D_SHELL_RESULT_QUIT
-    or a                    ; caller may branch on Z
-    ret
+    jp w3d_shell_return_quit
 
 w3d_shell_draw_main_menu:
     call w3d_shell_clear
@@ -182,10 +191,12 @@ w3d_shell_draw_main_menu:
 ; Shareware episode menu.  All six rows navigate exactly like the original;
 ; only Episode 1 is available.  Accepting another episode retains selection,
 ; displays the original-style unavailable notice, and requires acknowledgment.
-; Escape returns to the main menu.
+; Escape requests application-global exit from this or any nested notice.
 ; -----------------------------------------------------------------------------
 
 w3d_shell_choose_episode:
+    call w3d_shell_query_exit_request
+    jp nz,w3d_shell_return_quit
     xor a
     ld (w3d_shell_episode_choice),a
 @redraw:
@@ -225,14 +236,15 @@ w3d_shell_choose_episode:
     jr z,@accepted
     call w3d_shell_draw_episode_unavailable
     call w3d_shell_wait_any_press
+    call w3d_shell_query_exit_request
+    jr nz,@cancel
     jr @redraw
 @accepted:
     ld a,1
     or a
     ret
 @cancel:
-    xor a
-    ret
+    jp w3d_shell_return_quit
 
 w3d_shell_draw_episode_menu:
     call w3d_shell_clear
@@ -271,11 +283,13 @@ w3d_shell_draw_episode_unavailable:
     jp w3d_shell_plot_at
 
 ; -----------------------------------------------------------------------------
-; Difficulty menu.  Medium is the original default.  Escape returns to episode
-; selection so a user never has to restart the complete New Game path.
+; Difficulty menu.  Medium is the original default.  Escape requests the same
+; application-global exit as it does everywhere else in the shell.
 ; -----------------------------------------------------------------------------
 
 w3d_shell_choose_difficulty:
+    call w3d_shell_query_exit_request
+    jp nz,w3d_shell_return_quit
     ld a,W3D_SHELL_DIFFICULTY_MEDIUM
     ld (w3d_shell_difficulty),a
 @redraw:
@@ -313,8 +327,7 @@ w3d_shell_choose_difficulty:
     or a
     ret
 @cancel:
-    xor a
-    ret
+    jp w3d_shell_return_quit
 
 w3d_shell_draw_difficulty_menu:
     call w3d_shell_clear
@@ -396,6 +409,31 @@ w3d_shell_reset_keyboard_read_hook:
     ld (w3d_shell_keyboard_read_hook),hl
     ret
 
+; Application-global exit latch.  The shell resets it exactly once on fresh
+; application entry.  Nested shell screens and gameplay may request it, then
+; cheaply poll it without coupling themselves to a particular input reader.
+w3d_shell_reset_exit_request:
+    xor a
+    ld (w3d_shell_exit_requested),a
+    ret
+
+w3d_shell_request_exit:
+    ld a,1
+    ld (w3d_shell_exit_requested),a
+    or a
+    ret
+
+; Returns A=0/Z when execution may continue, A=1/NZ when exit was requested.
+w3d_shell_query_exit_request:
+    ld a,(w3d_shell_exit_requested)
+    or a
+    ret
+
+w3d_shell_return_quit:
+    ld a,W3D_SHELL_RESULT_QUIT
+    or a
+    ret
+
 w3d_shell_read_keyboard:
     ld hl,(w3d_shell_keyboard_read_hook)
     jp (hl)
@@ -410,6 +448,9 @@ w3d_shell_read_keyboard_default:
 w3d_shell_wait_action:
 @wait:
     call w3d_shell_read_keyboard
+    bit 0,(ix+14)            ; Escape wins even if another key is also held
+    ld a,W3D_SHELL_ACTION_ESCAPE
+    jr nz,@recognized
     bit 1,(ix+7)             ; Up
     ld a,W3D_SHELL_ACTION_UP
     jr nz,@recognized
@@ -425,11 +466,14 @@ w3d_shell_wait_action:
     bit 2,(ix+12)            ; Space
     ld a,W3D_SHELL_ACTION_ACCEPT
     jr nz,@recognized
-    bit 0,(ix+14)            ; Escape
-    ld a,W3D_SHELL_ACTION_ESCAPE
-    jr nz,@recognized
     jr @wait
 @recognized:
+    cp W3D_SHELL_ACTION_ESCAPE
+    jr nz,@release
+    push af
+    call w3d_shell_request_exit
+    pop af
+@release:
     push af
     call w3d_shell_wait_all_released
     pop af
@@ -437,8 +481,15 @@ w3d_shell_wait_action:
 
 w3d_shell_wait_any_press:
     call w3d_shell_wait_all_released
+    call w3d_shell_query_exit_request
+    ret nz
 @wait:
     call w3d_shell_read_keyboard
+    bit 0,(ix+14)            ; Escape is globally meaningful on every wait
+    jr z,@scan_any
+    call w3d_shell_request_exit
+    jp w3d_shell_wait_all_released
+@scan_any:
     ld b,16
 @scan:
     ld a,(ix)
@@ -452,6 +503,10 @@ w3d_shell_wait_any_press:
 
 w3d_shell_wait_all_released:
     call w3d_shell_read_keyboard
+    bit 0,(ix+14)            ; never swallow an Escape held on wait entry
+    jr z,@scan_all
+    call w3d_shell_request_exit
+@scan_all:
     ld b,16
 @scan:
     ld a,(ix)
@@ -463,6 +518,8 @@ w3d_shell_wait_all_released:
 
 w3d_shell_keyboard_read_hook:
     dl w3d_shell_read_keyboard_default
+w3d_shell_exit_requested:
+    db 0
 w3d_shell_main_choice:
     db W3D_SHELL_MAIN_NEW_GAME
 w3d_shell_episode_choice:

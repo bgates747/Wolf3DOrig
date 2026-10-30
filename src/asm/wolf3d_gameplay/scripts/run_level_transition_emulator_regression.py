@@ -23,7 +23,7 @@ GENERATED = STAGED_ROOT / "agonport/assets/generated/wolf3d"
 FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
 MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
 VDP = RUNTIME_ROOT / "agonport/emulator/vdp_wolf3d.so"
-RESULT_SIZE = 32
+RESULT_SIZE = 48
 
 sys.path.insert(0, str(STAGED_ROOT / "agonport/tools/wolf3d_assets"))
 from formats.level_package import parse_package  # noqa: E402
@@ -69,6 +69,19 @@ def instrument(
         "    call w3d_shell_resume_after_victory\n",
         "    call w3d_transition_regression_shell_resume\n",
         "victory shell re-entry",
+    )
+
+    # Replace only the production begin call in the temporary copy with a
+    # nonblocking recorder.  The loader instrumentation below substitutes the
+    # matching loading-tick callbacks and finish call, preserving the complete
+    # begin -> load -> finish lifecycle without waiting for keyboard input.
+    source = replace_once(
+        source,
+        "    call w3d_intermission_begin\n"
+        "    call w3d_transition_to_next_level\n",
+        "    call w3d_transition_regression_intermission_begin\n"
+        "    call w3d_transition_to_next_level\n",
+        "intermission begin lifecycle",
     )
 
     startup_load = (
@@ -127,14 +140,22 @@ def instrument(
     # gameplay session returned W3D_GAMEPLAY_RESULT_VICTORY to the shell route.
     transition_call = (
         "    call w3d_transition_to_next_level\n"
-        "    jr c,@fatal_shutdown\n"
+        "    jr nc,@transition_ready\n"
+        "    call w3d_shell_query_exit_request\n"
+        "    jp nz,w3d_gameplay_exit_shutdown\n"
+        "    jr @fatal_shutdown\n"
+        "@transition_ready:\n"
         "    jp mainloop\n"
     )
     source = replace_once(
         source,
         transition_call,
         "    call w3d_transition_to_next_level\n"
-        "    jr c,@fatal_shutdown\n"
+        "    jr nc,@transition_ready\n"
+        "    call w3d_shell_query_exit_request\n"
+        "    jp nz,w3d_gameplay_exit_shutdown\n"
+        "    jr @fatal_shutdown\n"
+        "@transition_ready:\n"
         "    xor a\n"
         "    call w3d_transition_regression_write_result\n"
         "    jp mainloop\n",
@@ -157,8 +178,27 @@ w3d_transition_regression_shell_resume:
     ret
 
 w3d_transition_regression_count_package_load:
+    push af
+    push hl
     ld hl,w3d_transition_regression_package_load_count
     inc (hl)
+; The second package load is the destination. Capture the lifecycle phase at
+; its exact entry, then mark all subsequent ticks as destination-loading work.
+    ld a,(hl)
+    cp 2
+    jr nz,@done
+    ld a,(w3d_transition_regression_intermission_phase)
+    ld (w3d_transition_regression_destination_package_phase),a
+    cp 1
+    jr nz,@mark_loading
+    ld a,1
+    ld (w3d_transition_regression_begin_before_package),a
+@mark_loading:
+    ld a,2
+    ld (w3d_transition_regression_intermission_phase),a
+@done:
+    pop hl
+    pop af
     ret
 
 w3d_transition_regression_count_transition:
@@ -169,6 +209,92 @@ w3d_transition_regression_count_transition:
 w3d_transition_regression_count_tilemap_replace:
     ld hl,w3d_transition_regression_tilemap_replace_count
     inc (hl)
+    ret
+
+; Substitute for the production nonblocking begin in this headless lifecycle
+; fixture. Capture the still-authoritative source floor and prove that the
+; prior asynchronous producer has drained before UI ownership begins.
+w3d_transition_regression_intermission_begin:
+; Preserve the production mode-8 single-buffered side effect while skipping
+; its drawing. This makes the later restoration exercise the real single ->
+; double transition instead of redundantly setting an already-double mode.
+    call w3d_shell_setup
+    ld hl,w3d_transition_regression_intermission_count
+    inc (hl)
+    ld a,(w3d_transition_regression_intermission_phase)
+    ld (w3d_transition_regression_begin_phase),a
+    ld a,(w3d_transition_regression_package_load_count)
+    ld (w3d_transition_regression_begin_package_count),a
+    ld a,(w3d_level_requested_index)
+    ld (w3d_transition_regression_intermission_source),a
+    ld a,(w3d_level_completion)
+    ld (w3d_transition_regression_intermission_completion),a
+    ld a,(w3d_async_owner)
+    ld (w3d_transition_regression_intermission_owner),a
+    ld a,1
+    ld (w3d_transition_regression_intermission_phase),a
+    xor a
+    ret
+
+; Substitute for every explicit loading tick. The callback-specific wrapper
+; below proves that AGNB finalized at least one destination image rather than
+; merely observing the three explicit W3L/tilemap boundary ticks.
+w3d_transition_regression_intermission_loading_tick:
+    ld a,(w3d_transition_regression_intermission_phase)
+    cp 2
+    jr nz,@continue
+    ld a,1
+    ld (w3d_transition_regression_tick_during_load),a
+@continue:
+    xor a
+    ret
+
+w3d_transition_regression_intermission_image_callback:
+    ld a,1
+    ld (w3d_transition_regression_callback_tick_seen),a
+    jp w3d_transition_regression_intermission_loading_tick
+
+; Finish is deliberately immediate in the headless fixture. Snapshot both
+; destination loading milestones, then advance the phase so display-restore
+; instrumentation can prove this seam was crossed first.
+w3d_transition_regression_intermission_finish:
+    ld hl,w3d_transition_regression_finish_count
+    inc (hl)
+    ld a,(w3d_transition_regression_package_load_count)
+    cp 2
+    jr nz,@not_ready
+    ld a,(w3d_transition_regression_tilemap_replace_count)
+    cp 2
+    jr nz,@not_ready
+    ld a,1
+    ld (w3d_transition_regression_finish_ready),a
+@not_ready:
+    ld a,(w3d_async_owner)
+    ld (w3d_transition_regression_finish_owner),a
+    ld a,3
+    ld (w3d_transition_regression_intermission_phase),a
+    xor a
+    ret
+
+w3d_transition_regression_count_display_setup:
+    ld hl,w3d_transition_regression_display_setup_count
+    inc (hl)
+    ld a,(w3d_transition_regression_intermission_phase)
+    ld (w3d_transition_regression_display_phase),a
+    ld a,(w3d_transition_regression_finish_count)
+    ld (w3d_transition_regression_display_finish_count),a
+    ld a,1
+    ld (w3d_transition_regression_display_setup_ready),a
+    ret
+
+; Called at the exact production destination-reset submission seam. A value of
+; one proves mode 8+128 was restored before the renderer acquired ownership;
+; owner zero proves no stale render/fizzle overlapped that restoration.
+w3d_transition_regression_capture_pre_reset:
+    ld a,(w3d_transition_regression_display_setup_ready)
+    ld (w3d_transition_regression_display_ready_before_reset),a
+    ld a,(w3d_async_owner)
+    ld (w3d_transition_regression_display_owner_before_reset),a
     ret
 
 ; A=result kind: 0 successful destination reset, 1 victory/shell return.
@@ -222,22 +348,79 @@ w3d_transition_regression_write_result:
     ld (w3d_transition_regression_result+27),a
     ld a,(w3d_transition_regression_tilemap_replace_count)
     ld (w3d_transition_regression_result+28),a
+    ld a,(w3d_transition_regression_intermission_count)
+    ld (w3d_transition_regression_result+29),a
+    ld a,(w3d_transition_regression_intermission_source)
+    ld (w3d_transition_regression_result+30),a
+    ld a,(w3d_transition_regression_intermission_completion)
+    ld (w3d_transition_regression_result+31),a
+    ld a,(w3d_transition_regression_intermission_owner)
+    ld (w3d_transition_regression_result+32),a
+    ld a,(w3d_transition_regression_display_setup_count)
+    ld (w3d_transition_regression_result+33),a
+    ld a,(w3d_transition_regression_display_ready_before_reset)
+    ld (w3d_transition_regression_result+34),a
+    ld a,(w3d_transition_regression_display_owner_before_reset)
+    ld (w3d_transition_regression_result+35),a
+    ld a,(w3d_transition_regression_begin_package_count)
+    ld (w3d_transition_regression_result+36),a
+    ld a,(w3d_transition_regression_begin_phase)
+    ld (w3d_transition_regression_result+37),a
+    ld a,(w3d_transition_regression_destination_package_phase)
+    ld (w3d_transition_regression_result+38),a
+    ld a,(w3d_transition_regression_tick_during_load)
+    ld (w3d_transition_regression_result+39),a
+    ld a,(w3d_transition_regression_callback_tick_seen)
+    ld (w3d_transition_regression_result+40),a
+    ld a,(w3d_transition_regression_finish_count)
+    ld (w3d_transition_regression_result+41),a
+    ld a,(w3d_transition_regression_finish_ready)
+    ld (w3d_transition_regression_result+42),a
+    ld a,(w3d_transition_regression_finish_owner)
+    ld (w3d_transition_regression_result+43),a
+    ld a,(w3d_transition_regression_display_phase)
+    ld (w3d_transition_regression_result+44),a
+    ld a,(w3d_transition_regression_display_finish_count)
+    ld (w3d_transition_regression_result+45),a
+    ld a,(w3d_transition_regression_begin_before_package)
+    ld (w3d_transition_regression_result+46),a
     ld hl,w3d_transition_regression_filename
     ld de,w3d_transition_regression_result
-    ld bc,32
+    ld bc,48
     MOSCALL mos_save
     ret
 
 w3d_transition_regression_filename:
     db "transition_result.bin",0
 w3d_transition_regression_result:
-    db "W3T2"
+    db "W3T4"
     db 0,0,0,0,0,0,0,0,0,0,0,0,0,0
     db 0,0,0,0,0,0,0,0,0,0,0,0,0,0
+    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 w3d_transition_regression_shell_resume_count: db 0
 w3d_transition_regression_package_load_count: db 0
 w3d_transition_regression_transition_count: db 0
 w3d_transition_regression_tilemap_replace_count: db 0
+w3d_transition_regression_intermission_count: db 0
+w3d_transition_regression_intermission_source: db 0
+w3d_transition_regression_intermission_completion: db 0
+w3d_transition_regression_intermission_owner: db 0
+w3d_transition_regression_display_setup_count: db 0
+w3d_transition_regression_display_setup_ready: db 0
+w3d_transition_regression_display_ready_before_reset: db 0
+w3d_transition_regression_display_owner_before_reset: db 0
+w3d_transition_regression_intermission_phase: db 0
+w3d_transition_regression_begin_package_count: db 0
+w3d_transition_regression_begin_phase: db 0
+w3d_transition_regression_destination_package_phase: db 0
+w3d_transition_regression_tick_during_load: db 0
+w3d_transition_regression_callback_tick_seen: db 0
+w3d_transition_regression_finish_count: db 0
+w3d_transition_regression_finish_ready: db 0
+w3d_transition_regression_finish_owner: db 0
+w3d_transition_regression_display_phase: db 0
+w3d_transition_regression_display_finish_count: db 0
+w3d_transition_regression_begin_before_package: db 0
 '''
     return source
 
@@ -256,6 +439,74 @@ def instrument_loader(source: str) -> str:
         "w3d_transition_to_next_level:\n"
         "    call w3d_transition_regression_count_transition\n",
         "level-transition entry",
+    )
+    explicit_tick_count = source.count("    call w3d_intermission_loading_tick\n")
+    if explicit_tick_count != 3:
+        raise RuntimeError(
+            "production explicit intermission loading-tick markers changed: "
+            f"expected three, found {explicit_tick_count}"
+        )
+    source = source.replace(
+        "    call w3d_intermission_loading_tick\n",
+        "    call w3d_transition_regression_intermission_loading_tick\n",
+    )
+    callback_count = source.count("    ld hl,w3d_intermission_loading_tick\n")
+    if callback_count != 2:
+        raise RuntimeError(
+            "production intermission image callback marker changed: "
+            f"expected twice, found {callback_count}"
+        )
+    source = source.replace(
+        "    ld hl,w3d_intermission_loading_tick\n",
+        "    ld hl,w3d_transition_regression_intermission_image_callback\n",
+    )
+    source = replace_once(
+        source,
+        "    call w3d_intermission_finish\n",
+        "    call w3d_transition_regression_intermission_finish\n",
+        "intermission finish lifecycle",
+    )
+    # The production transition sits close to the eZ80 JR displacement limit.
+    # Temporary recorder calls add a few bytes, so widen only its terminal
+    # error/abort branches; this does not change their control-flow contract.
+    for target in (
+        "@user_aborted",
+        "@package_aborted",
+        "@package_failed",
+        "@asset_failed",
+    ):
+        source = source.replace(f"    jr c,{target}\n", f"    jp c,{target}\n")
+        source = source.replace(f"    jr nz,{target}\n", f"    jp nz,{target}\n")
+        source = source.replace(f"    jr {target}\n", f"    jp {target}\n")
+    display_contract = (
+        "    ld hl,w3d_display_setup\n"
+        "    ld bc,w3d_display_setup_end-w3d_display_setup\n"
+        "    rst.lil 18h\n"
+        "    call w3d_seed_level_transition_state\n"
+    )
+    source = replace_once(
+        source,
+        display_contract,
+        display_contract.replace(
+            "    call w3d_seed_level_transition_state\n",
+            "    call w3d_transition_regression_count_display_setup\n"
+            "    call w3d_seed_level_transition_state\n",
+        ),
+        "destination display restoration order",
+    )
+    reset_contract = (
+        "    call w3d_initialize_control_clock\n"
+        "    call w3d_death_prepare_next_render\n"
+        "    call w3d_submit_level_reset\n"
+    )
+    source = replace_once(
+        source,
+        reset_contract,
+        "    call w3d_initialize_control_clock\n"
+        "    call w3d_death_prepare_next_render\n"
+        "    call w3d_transition_regression_capture_pre_reset\n"
+        "    call w3d_submit_level_reset\n",
+        "destination reset submission order",
     )
     # This exact marker makes the wire-level replacement contract part of the
     # production regression: stock BUFFERED_WRITE appends blocks, so clearing
@@ -303,7 +554,7 @@ def expected_payload(
         ).read_bytes()
     )
     payload = bytearray(RESULT_SIZE)
-    payload[:4] = b"W3T2"
+    payload[:4] = b"W3T4"
     payload[4:20] = bytes(
         (
             observed_level,
@@ -333,7 +584,26 @@ def expected_payload(
     # callback_error and exit_requested remain zero. Startup replaces one map;
     # an ordinary transition replaces the destination map a second time.
     payload[28] = 1 if victory else 2
-    # Reserved tail remains zero.
+    if not victory:
+        payload[29] = 1  # one source-floor intermission
+        payload[30] = start_level
+        payload[31] = {"normal": 1, "secret": 2}[completion]
+        payload[32] = 0  # W3D_ASYNC_OWNER_NONE at intermission entry
+        payload[33] = 1  # one destination display restoration
+        payload[34] = 1  # restoration happened before reset submission
+        payload[35] = 0  # no owner before destination reset acquired it
+        payload[36] = 1  # begin followed exactly the initial package load
+        payload[37] = 0  # begin was the first intermission lifecycle event
+        payload[38] = 1  # destination package entered after begin
+        payload[39] = 1  # a tick occurred while destination loading was live
+        payload[40] = 1  # at least one finalized AGNB image invoked callback
+        payload[41] = 1  # finish ran exactly once
+        payload[42] = 1  # package and tilemap were ready at finish
+        payload[43] = 0  # no asynchronous owner at finish
+        payload[44] = 3  # display restoration observed post-finish phase
+        payload[45] = 1  # exactly one finish preceded display restoration
+        payload[46] = 1  # begin was observed before destination package entry
+    # Reserved tail remains zero; victory bypasses every intermission field.
     return bytes(payload)
 
 
@@ -352,6 +622,13 @@ def main() -> int:
     atexit.register(shutil.rmtree, work, ignore_errors=True)
     source_root = work / "src"
     shutil.copytree(STAGED_SRC, source_root)
+    # Lifecycle work may be qualified while the presentation module is being
+    # developed in parallel. The temporary source replaces its only production
+    # call with the recorder above, so an empty include is sufficient until the
+    # real module exists. Never create or modify this placeholder in the repo.
+    intermission_path = source_root / "wolf3d_intermission.inc"
+    if not intermission_path.exists():
+        intermission_path.write_text("; transition-regression placeholder\n")
     source_path = source_root / "wolf3d.asm"
     source_path.write_text(
         instrument(
@@ -430,7 +707,7 @@ def main() -> int:
                 break
             if result.exists():
                 payload = result.read_bytes()
-                if len(payload) == RESULT_SIZE and payload[:4] == b"W3T2":
+                if len(payload) == RESULT_SIZE and payload[:4] == b"W3T4":
                     break
             time.sleep(0.05)
         else:

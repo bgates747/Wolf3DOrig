@@ -10,9 +10,15 @@
 ;   agnb_load_images: DE -> zero-terminated AGNB 0.1 image filename
 ;   agnb_load_images_with_callback:
 ;                     DE -> filename, HL -> completed-image callback
+;   agnb_load_images_with_abortable_callback:
+;                     DE -> filename, HL -> completed-image callback whose
+;                     A=0 result continues and whose A!=0 result aborts
 ;   agnb_load_audio:  DE -> zero-terminated AGNB 0.2 audio filename
 ;   agnb_load_audio_with_callback:
 ;                     DE -> filename, HL -> completed-audio callback
+;   agnb_load_audio_with_abortable_callback:
+;                     DE -> filename, HL -> completed-audio callback whose
+;                     A=0 result continues and whose A!=0 result aborts
 ;
 ; Applications own plotting, playback, input, timing, and debug behavior.
 ; External dependencies and reference implementations are documented in
@@ -128,6 +134,7 @@ agnb_error_metadata:       equ 10
 agnb_error_data_size:      equ 11
 agnb_error_vdp:            equ 12
 agnb_error_eof:            equ 13
+agnb_error_callback_abort: equ 14
 agnb_error_not_implemented: equ 255
 
 
@@ -215,6 +222,10 @@ agnb_io_buffer_size:       equ 8192
 
 ; Application callback invoked after each image has been finalized.
 agnb_image_callback:       dl 0
+; Existing callback entry points deliberately ignore the callback's result.
+; The explicit abortable entry point sets this flag so a nonzero A requests
+; immediate close and returns agnb_error_callback_abort.
+agnb_image_callback_abortable: db 0
 
 ; Reader subroutine interface
 ; ---------------------------
@@ -327,6 +338,20 @@ agnb_load_images:
 ; Callback-enabled image loader.
 ; inputs: DE = filename; HL = callback whose result is ignored
 agnb_load_images_with_callback:
+    xor a
+    ld (agnb_image_callback_abortable),a
+    jr agnb_load_images_callback_common
+
+; Abortable callback-enabled image loader.
+; inputs: DE = filename; HL = callback returning A=0 to continue or A!=0
+;         to stop immediately after the just-finalized image
+; outputs: agnb_error_callback_abort/NZ after an application-requested stop;
+;          the FIL has been closed and agnb_last_error retains that code
+agnb_load_images_with_abortable_callback:
+    ld a,1
+    ld (agnb_image_callback_abortable),a
+
+agnb_load_images_callback_common:
     ld (agnb_image_callback),hl
     call agnb_open
     ret nz
@@ -362,6 +387,15 @@ agnb_load_images_with_callback:
 ; Give the application one completed-bitmap boundary per record.
 ; Metadata remains valid for the duration of the callback.
     call agnb_call_image_callback
+    or a
+    jr z,@callback_continue
+    ld a,(agnb_image_callback_abortable)
+    or a
+    jr z,@callback_continue       ; legacy callback ABI ignores its result
+    ld a,agnb_error_callback_abort
+    ld (agnb_last_error),a
+    jr @load_error
+@callback_continue:
 
     call agnb_finish_buffer_list
     jr nz,@load_error
@@ -1116,6 +1150,7 @@ agnb_audio_metadata:
 
 ; Application callback invoked after each audio sample has been finalized.
 agnb_audio_callback:       dl 0
+agnb_audio_callback_abortable: db 0
 
 ; Load every valid audio record at its explicit bufferId. Playback remains the
 ; application's responsibility.
@@ -1128,6 +1163,20 @@ agnb_load_audio:
 ; Callback-enabled audio loader.
 ; inputs: DE = filename; HL = callback whose result is ignored
 agnb_load_audio_with_callback:
+    xor a
+    ld (agnb_audio_callback_abortable),a
+    jr agnb_load_audio_callback_common
+
+; Abortable callback-enabled audio loader.
+; inputs: DE = filename; HL = callback returning A=0 to continue or A!=0
+;         to stop immediately after the just-finalized sample
+; outputs: agnb_error_callback_abort/NZ after an application-requested stop;
+;          the FIL has been closed and agnb_last_error retains that code
+agnb_load_audio_with_abortable_callback:
+    ld a,1
+    ld (agnb_audio_callback_abortable),a
+
+agnb_load_audio_callback_common:
     ld (agnb_audio_callback),hl
     call agnb_open
     ret nz
@@ -1162,6 +1211,15 @@ agnb_load_audio_with_callback:
 ; Give the application one completed-sample boundary per record.
 ; Metadata remains valid for the duration of the callback.
     call agnb_call_audio_callback
+    or a
+    jr z,@callback_continue
+    ld a,(agnb_audio_callback_abortable)
+    or a
+    jr z,@callback_continue       ; legacy callback ABI ignores its result
+    ld a,agnb_error_callback_abort
+    ld (agnb_last_error),a
+    jr @load_error
+@callback_continue:
 
     call agnb_finish_buffer_list
     jr nz,@load_error

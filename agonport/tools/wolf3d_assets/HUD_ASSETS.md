@@ -16,13 +16,19 @@ The script reuses the already-vendored `formats/palette.py`,
 
 ## Stable VDP IDs
 
+- Original level-end chunks 55 through 96: `0x4000 + chunkId`, hence
+  `0x4037` through `0x4060`.
 - Original chunk 98 (`STATUSBARPIC`): `0x4062`.
 - Original chunks 103 through 144: `0x4000 + chunkId`, hence
   `0x4067` through `0x4090`.
+- Composed ordinary and secret-floor completion bases: `0x4100` and `0x4101`.
 
-The generated container has exactly these 43 original chunks. Chunk 98 remains
-the archive's original 320x40 image; the build does not synthesize, override,
-or pack an extended status panel.
+The generated container has 85 original chunks and two composed screens.
+Chunk 98 remains the archive's original 320x40 image; the build does not
+synthesize, override, or pack an extended status panel.  The level-end bases
+reproduce `WL_INTER.C` from the bundled BJ portrait and dedicated picture
+alphabet; historical generated header IDs are deliberately not trusted for
+this v1.4 archive.
 
 ## Screen composition assumed by this milestone
 
@@ -30,6 +36,8 @@ or pack an extended status panel.
 - The 320x200 play area supplies the surrounding border on all four sides.
 - Original chunk 98 is plotted directly at `x=0`, `y=200`, occupying the final
   40 rows of Agon mode 8.
+- The 320x200 completion base occupies `x=0`, `y=0`; the same status bar is
+  plotted beneath it while the destination floor loads.
 - Splash/title assets are intentionally out of scope.
 
 ## Build and test after copying
