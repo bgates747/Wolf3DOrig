@@ -9,8 +9,11 @@ Production work now lives separately under `production/`. Its generated
 schema-1 C++/assembly contract and pure 5,360-byte world mirror implement
 exact descriptor validation, bounded atomic full/dirty batches, generation
 ownership, and same-batch retry after failed publication. See
-`../doc/wolf3d-vdplet-production-contract.md`. The production renderer itself
-is still under construction; the standalone backend remains the default.
+`../doc/wolf3d-vdplet-production-contract.md`. Its pure renderer now matches
+the standalone oracle for the play surround, DDA, grouped wall assets, moving
+doors/jambs, actors, statics, rotation frames, alpha, depth order, and wall
+occlusion. HUD/weapon composition and the real module wrapper remain under
+construction; the standalone backend remains the default.
 
 ## What the proof exercises
 

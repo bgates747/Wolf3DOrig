@@ -54,10 +54,12 @@ cutover, and physical qualification remain later gated work. See
 
 [ ] 8e. Replace the bounded static scene with the production render contract.
 Schema 1, synchronized C++/assembly constants, the 5,360-byte compact mirror,
-and validated atomic full/dirty batches are complete with host regression.
-Next extract the renderer over that mirror, then add real tilemap/per-texture
-asset access, actors/statics/doors/HUD/weapon composition, one-producer
-APPLY_AND_RENDER ownership, and app-paced fizzle. Compare deterministic output
-with the standalone oracle, then run complete emulator, human, performance,
-and physical gates before changing the default backend or removing the
-standalone rollback path.
+validated atomic full/dirty batches, and the pure playfield renderer are
+complete with host regression. The renderer now consumes caller-owned map,
+workspace, and one-asset-at-a-time lease spans and matches the standalone
+oracle exactly across three deterministic wall/door/actor/static scenes.
+Next add HUD and view-weapon software composition, then wrap the core in the
+real CONFIG/APPLY_AND_RENDER module service lifecycle. Dirty-client
+integration, app-paced fizzle, complete emulator/human/performance/physical
+gates, default cutover, and removal of the standalone rollback path remain
+later work.

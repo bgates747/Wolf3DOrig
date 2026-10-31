@@ -183,11 +183,15 @@ BatchDetail validate_record(
     case W3P_RECORD_ACTOR_SET: {
         if (payload_bytes != W3P_ACTOR_SET_BYTES) return BatchDetail::bounds;
         const uint16_t index = load_u16(p);
+        const int16_t shape = load_i16(p + 2);
+        const uint8_t rotations = p[14];
         if (index == 0 || index >= W3P_MAX_ACTORS ||
-            !valid_shape(load_i16(p + 2), false) ||
+            !valid_shape(shape, false) ||
             !valid_position(load_i32(p + 4)) ||
             !valid_position(load_i32(p + 8)) || load_u16(p + 12) >= 360u ||
-            (p[14] != 0 && p[14] != 2 && p[14] != 8)) {
+            (rotations != 0 && rotations != 2 && rotations != 8) ||
+            (rotations == 2 && shape > static_cast<int16_t>(W3P_MAX_SHAPE - 4)) ||
+            (rotations == 8 && shape > static_cast<int16_t>(W3P_MAX_SHAPE - 7))) {
             return BatchDetail::argument;
         }
         return mark_once(validation.actors[index]);

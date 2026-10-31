@@ -94,14 +94,15 @@ std::vector<uint8_t> door_payload(uint8_t index, uint16_t position = 0) {
     return p;
 }
 
-std::vector<uint8_t> actor_payload(uint16_t index, int16_t shape = 50) {
+std::vector<uint8_t> actor_payload(
+    uint16_t index, int16_t shape = 50, uint8_t rotations = 8) {
     std::vector<uint8_t> p;
     append_u16(p, index);
     append_u16(p, static_cast<uint16_t>(shape));
     append_u32(p, 0x00128000u + (static_cast<uint32_t>(index) << 8));
     append_u32(p, 0x00148000u);
     append_u16(p, static_cast<uint16_t>(index % 360u));
-    p.push_back(8);
+    p.push_back(rotations);
     return p;
 }
 
@@ -307,6 +308,13 @@ void test_atomic_rejections() {
     invalid_actor.record(W3P_RECORD_ACTOR_SET, actor_payload(0));
     expect_preserved(mirror, invalid_actor.finish(2, 0), BatchDetail::argument,
                      "actor slot zero");
+
+    Batch rotation_overflow;
+    rotation_overflow.record(
+        W3P_RECORD_ACTOR_SET,
+        actor_payload(1, static_cast<int16_t>(W3P_MAX_SHAPE - 6), 8));
+    expect_preserved(mirror, rotation_overflow.finish(2, 0),
+                     BatchDetail::argument, "actor rotation shape overflow");
 
     Batch short_record;
     short_record.record(W3P_RECORD_PLAYER, std::vector<uint8_t>(9, 0));

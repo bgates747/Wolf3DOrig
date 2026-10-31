@@ -635,6 +635,15 @@ byte spans, and an RGB222 framebuffer. Implement the compact world mirror,
 quarter-wave trigonometry, local sprite ordering if needed, software HUD, and
 strictly bounded parsing without changing accepted render math.
 
+The playfield portion was extracted on 2026-10-31. It uses the frozen compact
+mirror and caller-owned map/workspace plus finite asset leases; implements the
+accepted wall, moving-door/jamb, actor, static, rotation, alpha, depth and
+occlusion paths; and matches the standalone oracle for 230,400 frame bytes and
+5,376 DDA bytes across three scenes. HUD and first-person weapon composition,
+the single freestanding entry translation unit, and real service wiring remain
+before Stage 2 can close. The standalone backend remains unchanged and
+selected by default.
+
 ### Stage 3 — prove module admission before integration
 
 Build with the VDPlet SDK using capability mask 17, ABI minor 3, 65,536-byte

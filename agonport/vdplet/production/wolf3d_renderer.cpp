@@ -1,0 +1,566 @@
+#include "wolf3d_renderer.h"
+
+#include "../wolf3d_tables.inc"
+
+namespace wolf3d_production {
+namespace {
+
+constexpr int32_t kTileGlobal = 1L << 16;
+constexpr int32_t kMinDist = 0x5800L;
+constexpr int32_t kActorSize = 0x4000L;
+constexpr int32_t kFocalLength = 0x5700L;
+constexpr int32_t kFineAngles = 3600;
+constexpr int32_t kScale = 87;
+constexpr int32_t kHeightNumerator = (kTileGlobal * kScale) >> 8;
+constexpr int32_t kCenterX = 127;
+constexpr int32_t kCenterY = 80;
+constexpr int32_t kInt32Max = 0x7fffffffL;
+constexpr int kViewWidth = 256;
+constexpr int kViewHeight = 160;
+constexpr int kViewX = 32;
+constexpr int kViewY = 20;
+constexpr int kPlayHeight = 200;
+constexpr int kTextureSize = 64;
+constexpr uint8_t kDoorFlag = 0x80;
+constexpr uint8_t kDoorMax = 0xbf;
+constexpr uint8_t kDoorMask = 0x7f;
+constexpr uint8_t kDoorJambTexture = 122;
+
+constexpr uint8_t kBlack = 0;
+constexpr uint8_t kDarkCyan = 20;
+constexpr uint8_t kDarkGray = 21;
+constexpr uint8_t kLightGray = 42;
+constexpr uint8_t kCyanBevel = 40;
+
+struct ViewState {
+    int32_t x;
+    int32_t y;
+    int32_t sine;
+    int32_t cosine;
+};
+
+struct VisSprite {
+    int32_t view_x;
+    uint32_t view_height;
+    int16_t shape;
+    uint16_t reserved;
+    int32_t depth;
+};
+
+static_assert(sizeof(VisSprite) == 16, "sprite arena record must remain 16 bytes");
+static_assert((W3P_MAX_ACTORS + W3P_MAX_STATICS) * sizeof(VisSprite) ==
+              W3P_SPRITE_ARENA_BYTES,
+              "sprite arena no longer covers every render slot");
+
+void clear_bytes(void *destination, uint8_t value, uint32_t count) {
+    uint8_t *p = static_cast<uint8_t *>(destination);
+    while (count-- != 0) *p++ = value;
+}
+
+void clear_stats(RenderStats *stats) {
+    if (stats == nullptr) return;
+    stats->visible_sprites = 0;
+    stats->wall_acquires = 0;
+    stats->sprite_acquires = 0;
+}
+
+int32_t fixed_mul(int32_t a, int32_t b) {
+    return static_cast<int32_t>(
+        (static_cast<int64_t>(a) * static_cast<int64_t>(b)) >> 16);
+}
+
+int32_t fixed_div(int32_t a, int32_t b) {
+    return static_cast<int32_t>((static_cast<int64_t>(a) << 16) / b);
+}
+
+int32_t normalize_fine(int32_t angle) {
+    angle %= kFineAngles;
+    if (angle < 0) angle += kFineAngles;
+    return angle;
+}
+
+int32_t sin_fine(int32_t angle) {
+    angle = normalize_fine(angle);
+    if (angle <= 900) return kWolfSinQuarter[angle];
+    if (angle <= 1800) return kWolfSinQuarter[1800 - angle];
+    if (angle <= 2700) return -kWolfSinQuarter[angle - 1800];
+    return -kWolfSinQuarter[3600 - angle];
+}
+
+int32_t cos_fine(int32_t angle) {
+    return sin_fine(angle + 900);
+}
+
+void fill_rect(uint8_t *frame, int left, int top, int right, int bottom,
+               uint8_t color) {
+    if (left < 0) left = 0;
+    if (top < 0) top = 0;
+    if (right >= static_cast<int>(W3P_SCREEN_WIDTH))
+        right = static_cast<int>(W3P_SCREEN_WIDTH) - 1;
+    if (bottom >= static_cast<int>(W3P_SCREEN_HEIGHT))
+        bottom = static_cast<int>(W3P_SCREEN_HEIGHT) - 1;
+    if (left > right || top > bottom) return;
+    for (int y = top; y <= bottom; ++y) {
+        clear_bytes(frame + static_cast<uint32_t>(y) * W3P_SCREEN_WIDTH +
+                        static_cast<uint32_t>(left),
+                    color, static_cast<uint32_t>(right - left + 1));
+    }
+}
+
+void compose_background(uint8_t *frame) {
+    clear_bytes(frame, kDarkGray, W3P_FRAME_BYTES);
+    fill_rect(frame, 0, 0, W3P_SCREEN_WIDTH - 1, kPlayHeight - 1, kDarkCyan);
+    fill_rect(frame, kViewX, kViewY, kViewX + kViewWidth - 1,
+              kViewY + kCenterY - 1, kLightGray);
+    fill_rect(frame, kViewX, kViewY + kCenterY, kViewX + kViewWidth - 1,
+              kViewY + kViewHeight - 1, kDarkGray);
+    fill_rect(frame, kViewX - 1, kViewY - 1, kViewX + kViewWidth,
+              kViewY - 1, kBlack);
+    fill_rect(frame, kViewX - 1, kViewY + kViewHeight, kViewX + kViewWidth,
+              kViewY + kViewHeight, kCyanBevel);
+    fill_rect(frame, kViewX - 1, kViewY - 1, kViewX - 1,
+              kViewY + kViewHeight, kBlack);
+    fill_rect(frame, kViewX + kViewWidth, kViewY - 1,
+              kViewX + kViewWidth, kViewY + kViewHeight, kCyanBevel);
+}
+
+ViewState setup_view(const WorldMirror &world) {
+    const int32_t fine = static_cast<int32_t>(world.player.angle) * 10;
+    ViewState view;
+    view.sine = sin_fine(fine);
+    view.cosine = cos_fine(fine);
+    view.x = world.player.x - fixed_mul(kFocalLength, view.cosine);
+    view.y = world.player.y + fixed_mul(kFocalLength, view.sine);
+    return view;
+}
+
+uint8_t tile_at(const uint8_t *map, int x, int y) {
+    if (x < 0 || x >= static_cast<int>(W3P_MAP_SIZE) ||
+        y < 0 || y >= static_cast<int>(W3P_MAP_SIZE)) return 1;
+    return map[static_cast<uint32_t>(y) * W3P_MAP_SIZE +
+               static_cast<uint32_t>(x)];
+}
+
+int32_t projected_height(int32_t intercept_x, int32_t intercept_y,
+                         const ViewState &view) {
+    const int32_t gx = intercept_x - view.x;
+    const int32_t gy = intercept_y - view.y;
+    int32_t nx = fixed_mul(gx, view.cosine) - fixed_mul(gy, view.sine);
+    if (nx < kMinDist) nx = kMinDist;
+    return kHeightNumerator / (nx >> 8);
+}
+
+RenderDetail cast_walls(const WorldMirror &world, const uint8_t *map,
+                        int32_t *heights, uint8_t *tiles, uint8_t *tex_u,
+                        uint8_t *sides, const ViewState &view) {
+    const int32_t fine_view = static_cast<int32_t>(world.player.angle) * 10;
+    for (int col = 0; col < kViewWidth; ++col) {
+        const int32_t fine = normalize_fine(fine_view + kWolfPixelAngleFine[col]);
+        const int32_t ray_x = cos_fine(fine);
+        const int32_t ray_y = -sin_fine(fine);
+        const int32_t px = view.x;
+        const int32_t py = view.y;
+        int map_x = px >> 16;
+        int map_y = py >> 16;
+        int step_x;
+        int step_y;
+        int32_t delta_x;
+        int32_t delta_y;
+        int32_t side_x;
+        int32_t side_y;
+
+        if (ray_x == 0) {
+            step_x = 0;
+            delta_x = side_x = kInt32Max;
+        } else if (ray_x < 0) {
+            step_x = -1;
+            delta_x = fixed_div(kTileGlobal, -ray_x);
+            side_x = fixed_mul(delta_x, px - (map_x << 16));
+        } else {
+            step_x = 1;
+            delta_x = fixed_div(kTileGlobal, ray_x);
+            side_x = fixed_mul(delta_x, ((map_x + 1) << 16) - px);
+        }
+        if (ray_y == 0) {
+            step_y = 0;
+            delta_y = side_y = kInt32Max;
+        } else if (ray_y < 0) {
+            step_y = -1;
+            delta_y = fixed_div(kTileGlobal, -ray_y);
+            side_y = fixed_mul(delta_y, py - (map_y << 16));
+        } else {
+            step_y = 1;
+            delta_y = fixed_div(kTileGlobal, ray_y);
+            side_y = fixed_mul(delta_y, ((map_y + 1) << 16) - py);
+        }
+
+        bool hit = false;
+        int side = 0;
+        uint8_t tile_value = 0;
+        int32_t intercept_x = px;
+        int32_t intercept_y = py;
+        for (int step = 0; step < static_cast<int>(W3P_MAP_SIZE * 2); ++step) {
+            int32_t traveled;
+            if (side_x < side_y) {
+                traveled = side_x;
+                side_x += delta_x;
+                map_x += step_x;
+                side = 0;
+            } else {
+                traveled = side_y;
+                side_y += delta_y;
+                map_y += step_y;
+                side = 1;
+            }
+            if (map_x < 0 || map_x >= static_cast<int>(W3P_MAP_SIZE) ||
+                map_y < 0 || map_y >= static_cast<int>(W3P_MAP_SIZE)) {
+                tile_value = 1;
+                hit = true;
+                break;
+            }
+            intercept_x = px + fixed_mul(ray_x, traveled);
+            intercept_y = py + fixed_mul(ray_y, traveled);
+            const uint8_t tile = tile_at(map, map_x, map_y);
+            if (tile == 0) continue;
+
+            if (tile >= kDoorFlag && tile <= kDoorMax) {
+                const uint8_t door_index = tile & kDoorMask;
+                if (door_index >= world.door_count) return RenderDetail::world;
+                const Door &door = world.doors[door_index];
+                bool resolved = false;
+                uint16_t fraction = 0;
+                if (door.vertical != 0) {
+                    if (ray_x != 0) {
+                        const int32_t plane_x =
+                            (static_cast<int32_t>(door.tile_x) << 16) + 0x8000;
+                        const int32_t t = fixed_div(plane_x - px, ray_x);
+                        const int32_t plane_y = py + fixed_mul(ray_y, t);
+                        if (static_cast<uint32_t>(plane_y >> 16) == door.tile_y) {
+                            fraction = static_cast<uint16_t>(plane_y);
+                            intercept_x = plane_x;
+                            intercept_y = plane_y;
+                            resolved = true;
+                        }
+                    }
+                } else if (ray_y != 0) {
+                    const int32_t plane_y =
+                        (static_cast<int32_t>(door.tile_y) << 16) + 0x8000;
+                    const int32_t t = fixed_div(plane_y - py, ray_y);
+                    const int32_t plane_x = px + fixed_mul(ray_x, t);
+                    if (static_cast<uint32_t>(plane_x >> 16) == door.tile_x) {
+                        fraction = static_cast<uint16_t>(plane_x);
+                        intercept_x = plane_x;
+                        intercept_y = plane_y;
+                        resolved = true;
+                    }
+                }
+                if (!resolved || fraction <= door.position) continue;
+                side = door.vertical != 0 ? 0 : 1;
+                tile_value = tile;
+                hit = true;
+            } else {
+                tile_value = tile;
+                if (tile <= 0x7f) {
+                    const int previous_x = map_x - (side == 0 ? step_x : 0);
+                    const int previous_y = map_y - (side == 1 ? step_y : 0);
+                    const uint8_t previous = tile_at(map, previous_x, previous_y);
+                    if (previous >= kDoorFlag && previous <= kDoorMax) {
+                        const uint8_t door_index = previous & kDoorMask;
+                        if (door_index >= world.door_count)
+                            return RenderDetail::world;
+                        const Door &door = world.doors[door_index];
+                        const bool jamb =
+                            (side == 1 && door.vertical != 0) ||
+                            (side == 0 && door.vertical == 0);
+                        if (jamb) tile_value = kDoorJambTexture;
+                    }
+                }
+                hit = true;
+            }
+            break;
+        }
+
+        if (!hit) {
+            heights[col] = 0;
+            tiles[col] = tex_u[col] = sides[col] = 0;
+            continue;
+        }
+        heights[col] = projected_height(intercept_x, intercept_y, view);
+        tiles[col] = tile_value;
+        sides[col] = static_cast<uint8_t>(side);
+        uint16_t fraction = side == 0 ? static_cast<uint16_t>(intercept_y)
+                                      : static_cast<uint16_t>(intercept_x);
+        if (tile_value >= kDoorFlag && tile_value <= kDoorMax) {
+            fraction = static_cast<uint16_t>(
+                fraction - world.doors[tile_value & kDoorMask].position);
+        }
+        tex_u[col] = static_cast<uint8_t>(fraction >> 10);
+    }
+    return RenderDetail::ok;
+}
+
+uint8_t wall_texture_id(const WorldMirror &world, uint8_t tile) {
+    if (tile >= kDoorFlag && tile <= kDoorMax)
+        return world.doors[tile & kDoorMask].texture_id;
+    return tile;
+}
+
+RenderDetail release_asset(const AssetProvider &provider, uint32_t lease) {
+    const RenderDetail detail = provider.release(provider.context, lease);
+    return detail == RenderDetail::ok ? RenderDetail::ok : RenderDetail::release;
+}
+
+RenderDetail draw_walls(const WorldMirror &world, const RenderResources &resources,
+                        uint8_t *frame, const int32_t *heights,
+                        const uint8_t *tiles, const uint8_t *tex_u,
+                        RenderStats *stats) {
+    bool needed[128];
+    clear_bytes(needed, 0, sizeof(needed));
+    for (int col = 0; col < kViewWidth; ++col) {
+        if (heights[col] <= 0) continue;
+        const uint8_t id = wall_texture_id(world, tiles[col]);
+        if (id >= 1 && id <= W3P_MAX_WALL_TEXTURE) needed[id] = true;
+    }
+    for (uint16_t id = 1; id <= W3P_MAX_WALL_TEXTURE; ++id) {
+        if (!needed[id]) continue;
+        AssetSpan span{};
+        RenderDetail detail = resources.assets.acquire(
+            resources.assets.context,
+            static_cast<uint16_t>(resources.wall_base + id), span);
+        if (detail != RenderDetail::ok) return RenderDetail::asset;
+        if (stats != nullptr) ++stats->wall_acquires;
+        if (span.bytes == nullptr || span.byte_count < kTextureSize * kTextureSize) {
+            const RenderDetail released = release_asset(resources.assets, span.lease);
+            return released == RenderDetail::ok ? RenderDetail::bounds : released;
+        }
+        for (int col = 0; col < kViewWidth; ++col) {
+            if (heights[col] <= 0 || wall_texture_id(world, tiles[col]) != id)
+                continue;
+            const int full_height = heights[col];
+            const int top = kCenterY - full_height / 2;
+            const int clipped_top = top < 0 ? 0 : top;
+            const int bottom = top + full_height;
+            const int clipped_bottom = bottom > kViewHeight ? kViewHeight : bottom;
+            const int destination_height = clipped_bottom - clipped_top;
+            if (destination_height <= 0) continue;
+            const int32_t step = (kTextureSize << 16) / full_height;
+            int32_t fraction = step * (clipped_top - top);
+            const uint8_t source_x = tex_u[col];
+            for (int y = 0; y < destination_height; ++y) {
+                int source_y = fraction >> 16;
+                if (source_y >= kTextureSize) source_y = kTextureSize - 1;
+                frame[static_cast<uint32_t>(kViewY + clipped_top + y) *
+                          W3P_SCREEN_WIDTH + kViewX + col] =
+                    span.bytes[source_y * kTextureSize + source_x] & 63u;
+                fraction += step;
+            }
+        }
+        detail = release_asset(resources.assets, span.lease);
+        if (detail != RenderDetail::ok) return detail;
+    }
+    return RenderDetail::ok;
+}
+
+bool transform_point(int32_t x, int32_t y, const ViewState &view,
+                     int32_t &trans_x, int32_t &trans_y, int32_t &screen_x,
+                     uint32_t &height) {
+    const int32_t gx = x - view.x;
+    const int32_t gy = y - view.y;
+    trans_x = fixed_mul(gx, view.cosine) - fixed_mul(gy, view.sine) - kActorSize;
+    trans_y = fixed_mul(gy, view.cosine) + fixed_mul(gx, view.sine);
+    if (trans_x < kMinDist) {
+        screen_x = kCenterX;
+        height = 0;
+        return false;
+    }
+    screen_x = kCenterX + static_cast<int32_t>(
+        (static_cast<int64_t>(trans_y) * kScale) / trans_x);
+    height = static_cast<uint32_t>(kHeightNumerator / (trans_x >> 8));
+    return height != 0 && screen_x >= -kCenterX &&
+           screen_x <= kViewWidth + kCenterX;
+}
+
+int rotation_offset(const WorldMirror &world, const Actor &actor,
+                    int32_t screen_x) {
+    if (actor.rotations != 2 && actor.rotations != 8) return 0;
+    const int view_angle = world.player.angle + (kCenterX - screen_x) / 8;
+    int angle = (view_angle - 180) - actor.facing;
+    angle += 360 / 16;
+    while (angle >= 360) angle -= 360;
+    while (angle < 0) angle += 360;
+    return actor.rotations == 2 ? 4 * (angle / 180) : angle / 45;
+}
+
+void swap_sprites(VisSprite &a, VisSprite &b) {
+    const VisSprite temporary = a;
+    a = b;
+    b = temporary;
+}
+
+void sift_min(VisSprite *sprites, uint16_t count, uint16_t root) {
+    for (;;) {
+        uint16_t child = static_cast<uint16_t>(root * 2u + 1u);
+        if (child >= count) return;
+        if (child + 1u < count && sprites[child + 1u].depth < sprites[child].depth)
+            ++child;
+        if (sprites[root].depth <= sprites[child].depth) return;
+        swap_sprites(sprites[root], sprites[child]);
+        root = child;
+    }
+}
+
+// A min-heap moved to the tail produces descending depth: far to near.
+void sort_far_to_near(VisSprite *sprites, uint16_t count) {
+    if (count < 2) return;
+    for (int root = count / 2 - 1; root >= 0; --root)
+        sift_min(sprites, count, static_cast<uint16_t>(root));
+    for (uint16_t remaining = count; remaining > 1; --remaining) {
+        swap_sprites(sprites[0], sprites[remaining - 1]);
+        sift_min(sprites, static_cast<uint16_t>(remaining - 1), 0);
+    }
+}
+
+uint16_t collect_sprites(const WorldMirror &world, const ViewState &view,
+                         VisSprite *sprites) {
+    uint16_t count = 0;
+    for (uint16_t index = 0; index < W3P_MAX_ACTORS; ++index) {
+        const Actor &actor = world.actors[index];
+        if (actor.shape < 0) continue;
+        int32_t depth;
+        int32_t lateral;
+        int32_t screen_x;
+        uint32_t height;
+        if (!transform_point(actor.x, actor.y, view, depth, lateral,
+                             screen_x, height)) continue;
+        sprites[count++] = {screen_x, height,
+            static_cast<int16_t>(actor.shape +
+                rotation_offset(world, actor, screen_x)), 0, depth};
+    }
+    for (uint16_t index = 0; index < world.static_count; ++index) {
+        const StaticObject &object = world.statics[index];
+        if (object.shape < 0) continue;
+        const int32_t x = (static_cast<int32_t>(object.tile_x) << 16) + 0x8000;
+        const int32_t y = (static_cast<int32_t>(object.tile_y) << 16) + 0x8000;
+        int32_t depth;
+        int32_t lateral;
+        int32_t screen_x;
+        uint32_t height;
+        if (!transform_point(x, y, view, depth, lateral, screen_x, height))
+            continue;
+        sprites[count++] = {screen_x, height, object.shape, 0, depth};
+    }
+    sort_far_to_near(sprites, count);
+    return count;
+}
+
+RenderDetail draw_sprites(const RenderResources &resources, uint8_t *frame,
+                          const int32_t *wall_heights,
+                          const VisSprite *sprites, uint16_t count,
+                          RenderStats *stats) {
+    for (uint16_t index = 0; index < count; ++index) {
+        const VisSprite &sprite = sprites[index];
+        AssetSpan span{};
+        RenderDetail detail = resources.assets.acquire(
+            resources.assets.context,
+            static_cast<uint16_t>(resources.sprite_base +
+                                  static_cast<uint16_t>(sprite.shape)), span);
+        if (detail != RenderDetail::ok) return RenderDetail::asset;
+        if (stats != nullptr) ++stats->sprite_acquires;
+        if (span.bytes == nullptr || span.byte_count < kTextureSize * kTextureSize) {
+            const RenderDetail released = release_asset(resources.assets, span.lease);
+            return released == RenderDetail::ok ? RenderDetail::bounds : released;
+        }
+
+        const int size = static_cast<int>(sprite.view_height);
+        const int left = sprite.view_x - size / 2;
+        const int top = kCenterY - size / 2;
+        const int clipped_left = left < 0 ? 0 : left;
+        const int right = left + size;
+        const int clipped_right = right > kViewWidth ? kViewWidth : right;
+        const int clipped_top = top < 0 ? 0 : top;
+        const int bottom = top + size;
+        const int clipped_bottom = bottom > kViewHeight ? kViewHeight : bottom;
+        const int width = clipped_right - clipped_left;
+        const int height = clipped_bottom - clipped_top;
+        if (width > 0 && height > 0) {
+            const int32_t x_step = (kTextureSize << 16) / size;
+            const int32_t y_step = (kTextureSize << 16) / size;
+            int32_t y_fraction = (clipped_top - top) * y_step;
+            for (int y = 0; y < height; ++y) {
+                int source_y = y_fraction >> 16;
+                if (source_y >= kTextureSize) source_y = kTextureSize - 1;
+                int32_t x_fraction = (clipped_left - left) * x_step;
+                for (int x = 0; x < width; ++x) {
+                    const int screen_x = clipped_left + x;
+                    int source_x = x_fraction >> 16;
+                    if (source_x >= kTextureSize) source_x = kTextureSize - 1;
+                    if (wall_heights[screen_x] < size) {
+                        const uint8_t pixel =
+                            span.bytes[source_y * kTextureSize + source_x];
+                        if ((pixel & 0xc0u) != 0) {
+                            frame[static_cast<uint32_t>(kViewY + clipped_top + y) *
+                                  W3P_SCREEN_WIDTH + kViewX + screen_x] =
+                                pixel & 63u;
+                        }
+                    }
+                    x_fraction += x_step;
+                }
+                y_fraction += y_step;
+            }
+        }
+        detail = release_asset(resources.assets, span.lease);
+        if (detail != RenderDetail::ok) return detail;
+    }
+    return RenderDetail::ok;
+}
+
+}  // namespace
+
+RenderDetail render_world(const WorldMirror &world,
+                          const RenderResources &resources,
+                          RenderStats *stats) {
+    clear_stats(stats);
+    if (!world.ready || resources.tilemap == nullptr ||
+        resources.workspace == nullptr || resources.assets.acquire == nullptr ||
+        resources.assets.release == nullptr) return RenderDetail::argument;
+    if (world.tilemap_id == 0 || resources.wall_base != W3P_DEFAULT_WALL_BASE ||
+        resources.sprite_base != W3P_DEFAULT_SPRITE_BASE)
+        return RenderDetail::argument;
+    if (resources.tilemap_bytes < W3P_MAP_SIZE * W3P_MAP_SIZE ||
+        resources.workspace_bytes < W3P_WORKSPACE_BYTES)
+        return RenderDetail::bounds;
+
+    uint8_t *const frame = resources.workspace;
+    int32_t *const heights = reinterpret_cast<int32_t *>(
+        resources.workspace + W3P_WALL_HEIGHT_OFFSET);
+    uint8_t *const tiles = resources.workspace + W3P_WALL_TILE_OFFSET;
+    uint8_t *const tex_u = resources.workspace + W3P_WALL_TEXU_OFFSET;
+    uint8_t *const sides = resources.workspace + W3P_WALL_SIDE_OFFSET;
+    VisSprite *const sprites = reinterpret_cast<VisSprite *>(
+        resources.workspace + W3P_SPRITE_ARENA_OFFSET);
+
+    compose_background(frame);
+    const ViewState view = setup_view(world);
+    RenderDetail detail = cast_walls(
+        world, resources.tilemap, heights, tiles, tex_u, sides, view);
+    if (detail != RenderDetail::ok) return detail;
+    detail = draw_walls(world, resources, frame, heights, tiles, tex_u, stats);
+    if (detail != RenderDetail::ok) return detail;
+    const uint16_t count = collect_sprites(world, view, sprites);
+    if (stats != nullptr) stats->visible_sprites = count;
+    return draw_sprites(resources, frame, heights, sprites, count, stats);
+}
+
+const char *render_detail_name(RenderDetail detail) {
+    switch (detail) {
+    case RenderDetail::ok: return "ok";
+    case RenderDetail::argument: return "argument";
+    case RenderDetail::bounds: return "bounds";
+    case RenderDetail::world: return "world";
+    case RenderDetail::asset: return "asset";
+    case RenderDetail::release: return "release";
+    }
+    return "unknown";
+}
+
+}  // namespace wolf3d_production

@@ -86,7 +86,7 @@ changed.
 | LEVEL (1) | 6 | `tilemap:u16, doorCount:u8, staticCount:u16, zero:u8`. Full-only and first. |
 | PLAYER (2) | 10 | Existing `x:i32, y:i32, angle:u16` pose. |
 | DOOR (3) | 9 | `id:u8` plus the existing eight-byte door wire record. |
-| ACTOR_SET (4) | 15 | Existing actor wire record: `id:u16, shape:i16, x:i32, y:i32, facing:u16, rotations:u8`. |
+| ACTOR_SET (4) | 15 | Existing actor wire record: `id:u16, shape:i16, x:i32, y:i32, facing:u16, rotations:u8`. The base shape plus its maximum 2/8-way rotation offset must remain at or below 8191. |
 | ACTOR_REMOVE (5) | 2 | `id:u16`; partial batches only. |
 | STATIC (6) | 7 | `id:u16` plus the existing five-byte static wire record; shape -1 removes it. |
 | HUD (7) | 12 | `health, ammo, keys, weapon, score:u32, level, face, lives, zero`. |
@@ -136,6 +136,42 @@ The first production arm retains the accepted copied-pixel workspace:
 Wall texture `n` is buffer `0x1000+n`; sprite shape `n` is `0x2000+n`; HUD
 chunk `n` is `0x4000+n`. Assets are leased only for the bounded interval in
 which they are sampled and are released before the requested RUN returns.
+
+## Pure renderer extraction
+
+`wolf3d_renderer.cpp` is the first production render core over this mirror. It
+accepts a caller-owned 4,096-byte tilemap span, 92,160-byte workspace, and a
+narrow acquire/release asset provider. It retains no span or lease. Wall
+textures are discovered from the completed DDA metadata and grouped by ID, so
+each distinct wall/door texture is leased once per frame rather than once per
+column. Sprites are leased one at a time. The fixed 8,800-byte arena holds all
+150 actor plus 400 static projection records and an in-place far-to-near heap
+sort; scaled pixels are written directly to the RGB222 frame without a second
+sprite bitmap.
+
+The extracted scope currently includes the 320x200 play surround, centered
+256x160 view, quarter-wave fixed-point projection, bounded DDA, exact
+center-plane moving doors, perpendicular jamb selection, nearest-neighbor wall
+columns, actor 2/8-way rotation selection, statics, sprite depth ordering,
+RGBA2222 transparency, and strict wall occlusion. It deliberately does not yet
+compose the persistent HUD or first-person view weapon.
+
+The durable host build renders three deterministic scenes through both the
+new core and the accepted standalone `Wolf3dRenderer`. All 230,400 RGB222
+frame bytes and 5,376 DDA bytes match exactly. Their SHA-256 values are
+`30f3ccb89d917bb2152377ef3e9cac7681f00cb55567f6000dfa68d44e00b156`
+and `fb7e03def15e8debd7eb31ddada6b43c123b3e0b1f3e021bb3857b3cc617a82a`.
+The same suite covers unready/short resources, missing and short assets,
+release failure, invalid map-to-door references, lease balance, and workspace
+guards. A sanitizer-backed maximum scene projects all 149 legal actor slots
+and all 400 statics at once without truncation or arena overrun.
+
+A pinned Xtensa freestanding object audit found 3,567 executable/literal bytes,
+4,187 read-only table/string bytes, no BSS/data, and a largest source stack
+frame of 336 bytes. Its only undefined symbols are the already understood
+`__divdi3`, `__udivdi3`, and `memset` helpers. This is promising extraction
+evidence, not a linked package-admission, emulator, performance, or hardware
+claim.
 
 ## Error and ownership semantics
 
