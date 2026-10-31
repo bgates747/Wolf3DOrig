@@ -1,0 +1,167 @@
+#!/usr/bin/env python3
+"""Assemble a named Wolf3D renderer backend without editing tracked source."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+from pathlib import Path
+import shutil
+import subprocess
+import tempfile
+
+
+HERE = Path(__file__).resolve().parent
+PROJECT = HERE.parent
+SOURCE = PROJECT / "src"
+TARGET = PROJECT / "tgt"
+SELECTOR = "W3D_RENDER_BACKEND:"
+BACKENDS = {
+    "standalone": "W3D_RENDER_BACKEND_STANDALONE",
+    "vdplet-copied": "W3D_RENDER_BACKEND_VDPLET_COPIED",
+}
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def assembler_works(candidate: Path) -> bool:
+    try:
+        result = subprocess.run(
+            [str(candidate), "-v"], capture_output=True, text=True, check=False
+        )
+    except OSError:
+        return False
+    return result.returncode == 0 and "ez80asm version" in result.stdout
+
+
+def build_local_assembler() -> Path:
+    source_root = Path("/Agon/agon-ez80asm/src")
+    sources = sorted(source_root.glob("*.c"))
+    if not sources:
+        raise SystemExit(f"ez80asm source not found: {source_root}")
+    destination = TARGET / ".tools/ez80asm"
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    subprocess.run(
+        [
+            "gcc", "-g", "-Wall", "-DUNIX", "-O2", "-DNDEBUG",
+            "-Wno-unused-result", "-fno-common",
+            *(str(path) for path in sources), "-o", str(destination),
+        ],
+        check=True,
+    )
+    if not assembler_works(destination):
+        raise SystemExit(f"locally built ez80asm is not executable: {destination}")
+    return destination
+
+
+def resolve_assembler(value: Path | None) -> Path:
+    if value is not None:
+        candidate = value.expanduser().resolve()
+    else:
+        installed = shutil.which("ez80asm")
+        candidate = (
+            Path(installed).resolve()
+            if installed
+            else Path("/Agon/agon-ez80asm/bin/ez80asm")
+        )
+    if candidate.is_file() and assembler_works(candidate):
+        return candidate
+    if value is not None:
+        raise SystemExit(f"ez80asm is missing or incompatible: {candidate}")
+    return build_local_assembler()
+
+
+def select_backend(path: Path, backend: str) -> None:
+    lines = path.read_text().splitlines()
+    matches = [index for index, line in enumerate(lines) if line.startswith(SELECTOR)]
+    if matches != [5]:
+        raise SystemExit("wolf3d_backend.inc selector layout changed")
+    lines[matches[0]] = (
+        f"W3D_RENDER_BACKEND:            equ {BACKENDS[backend]}"
+    )
+    path.write_text("\n".join(lines) + "\n")
+
+
+def select_package(path: Path, size: int) -> None:
+    lines = path.read_text().splitlines()
+    matches = [
+        index for index, line in enumerate(lines)
+        if line.startswith("W3D_VDPLET_PACKAGE_BYTES:")
+    ]
+    if matches != [3]:
+        raise SystemExit("wolf3d_vdplet_package.inc selector layout changed")
+    lines[matches[0]] = f"W3D_VDPLET_PACKAGE_BYTES: equ {size}"
+    path.write_text("\n".join(lines) + "\n")
+
+
+def build(assembler: Path, backend: str, module: Path | None) -> dict[str, object]:
+    if backend == "vdplet-copied":
+        if module is None:
+            raise SystemExit(
+                "--backend vdplet-copied requires --module PACKAGE.vdpl"
+            )
+        module = module.expanduser().resolve()
+        if not module.is_file():
+            raise SystemExit(f"VDPlet package not found: {module}")
+        if not 0 < module.stat().st_size < 0x20000:
+            raise SystemExit("VDPlet package must be 1..131071 bytes")
+    elif module is not None:
+        raise SystemExit("--module is valid only with --backend vdplet-copied")
+
+    TARGET.mkdir(parents=True, exist_ok=True)
+    output_name = "wolf3d.bin" if backend == "standalone" else f"wolf3d-{backend}.bin"
+    output = TARGET / output_name
+    with tempfile.TemporaryDirectory(prefix=f"wolf3d-{backend}-") as name:
+        temporary = Path(name)
+        source = temporary / "src"
+        shutil.copytree(SOURCE, source)
+        select_backend(source / "wolf3d_backend.inc", backend)
+        if module is not None:
+            select_package(source / "wolf3d_vdplet_package.inc", module.stat().st_size)
+        temporary_output = temporary / output_name
+        subprocess.run(
+            [str(assembler), "wolf3d.asm", str(temporary_output), "-l", "-c"],
+            cwd=source,
+            check=True,
+        )
+        shutil.copyfile(temporary_output, output)
+        listing = temporary_output.with_suffix(".lst")
+        if listing.is_file():
+            shutil.copyfile(listing, output.with_suffix(".lst"))
+
+    receipt = {
+        "backend": backend,
+        "assembler": str(assembler),
+        "output": str(output.relative_to(PROJECT.parents[2])),
+        "bytes": output.stat().st_size,
+        "sha256": sha256(output),
+    }
+    if module is not None:
+        packaged_module = TARGET / "wolf3d.vdpl"
+        shutil.copyfile(module, packaged_module)
+        receipt["module"] = {
+            "source": str(module),
+            "output": str(packaged_module.relative_to(PROJECT.parents[2])),
+            "bytes": packaged_module.stat().st_size,
+            "sha256": sha256(packaged_module),
+        }
+    receipt_path = TARGET / f"{output.stem}.json"
+    receipt_path.write_text(json.dumps(receipt, indent=2) + "\n")
+    return receipt
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--backend", choices=tuple(BACKENDS), default="standalone")
+    parser.add_argument("--assembler", type=Path)
+    parser.add_argument("--module", type=Path)
+    args = parser.parse_args()
+    receipt = build(resolve_assembler(args.assembler), args.backend, args.module)
+    print(json.dumps(receipt, indent=2))
+
+
+if __name__ == "__main__":
+    main()

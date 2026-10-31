@@ -458,6 +458,11 @@ w3d_render_packet_callback:
     push de
     pop ix
 
+    .if W3D_RENDER_BACKEND
+    call w3d_vdplet_try_capture_packet
+    jr c,@done
+    .endif
+
 ; W3DV is a startup compatibility reply, not a render event or keyboard
 ; record. The helper consumes cookie-matched and malformed replies atomically.
     call w3d_try_capture_version_packet

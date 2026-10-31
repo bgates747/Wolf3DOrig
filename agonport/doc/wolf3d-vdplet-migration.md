@@ -454,7 +454,153 @@ profile staging, or lease request occurred during preparation.
 
 ## Implementation map
 
-The following is the ordered plan for a later, separately authorized phase.
+The Author released production integration work on 2026-10-30 after accepting
+the copied-pixel and direct-row bounded reviews. TODO 8d and 8e are the single
+actionable tracker; the stages below remain the durable architecture and
+evidence sequence rather than a second checklist. The completed seam audit was
+moved from TODO 8c into this document and the dated development log.
+
+### Production seam audit — 2026-10-30
+
+The accepted game already has the correct high-level concurrency boundary.
+`w3d_async_owner` permits one render or fizzle producer, simulation continues
+at fixed 30 Hz while rendering is busy, and foreground code alone presents C3
+after a validated completion. VDPlet RUN can therefore replace the current
+`W3DR` producer without changing simulation cadence or presentation ownership.
+
+The replacement is not merely a different render command. The current dirty
+bridge emits one private `0x4A` command per changed door, actor, static, HUD
+field, weapon and player pose, clears each dirty flag after its synchronous VDU
+write, then sends `render_frame`. Production VDPlet mode instead needs one
+bounded application-owned update buffer with a versioned header, generation
+and length-delimited records, followed by one requested APPLY_AND_RENDER RUN.
+The module must validate the entire batch before mutating its compact mirror.
+The client must not present an ERROR frame; the first implementation may treat
+a RUN error as terminal while retaining the eZ80's authoritative state.
+
+The current `W3DR` callback and ten-byte mailbox are structurally reusable but
+not wire-compatible. A VDPlet build must recognize runtime `VDPL` replies,
+validate reply version/kind/token/value or fresh handle, and turn the record
+into a null key-up before MOS resumes. Escape remains a foreground shutdown
+latch. If a RUN is in flight, exit waits for its finite DONE/ERROR reply before
+unloading the application's own live handle; a malformed reply or timeout is a
+fatal session error and must never unload an unknown handle.
+
+Existing asset ownership is suitable. The eZ80 continues to load the tilemap,
+wall textures at `0x1000+`, sprites at `0x2000+`, HUD/shell buffers around
+`0x4000`, samples at `0x5000+`, and audio procedures at `0x6000+`. The VDPlet
+reconstructs checked offsets and acquires/releases only the map, current asset,
+update/config and workspace resources needed by one finite RUN. The first
+production client owns module staging `0xEA77`, workspace `0x7100`, update
+`0x7101`, config `0x7102`, and argument `0x7103`; resident game and audio asset
+buffers remain under their existing loaders.
+
+The bounded modules are exact architecture proofs, not drop-in game renderers:
+they contain one static scene, one wall texture and one sprite. Production work
+must add the real compact world mirror, per-asset lookup, HUD and weapon paths,
+dirty schema and fizzle lifecycle before the VDPlet backend can render gameplay.
+The standalone backend therefore remains the default and oracle throughout
+TODO 8d and 8e.
+
+Build selection will be durable and reproducible rather than a hand-edited
+source constant. A project-local build driver will assemble the unchanged
+standalone default or a named VDPlet candidate into distinct outputs, bundle
+only the corresponding module for that candidate, and record the selected
+backend. The first client foundation may compile without being selected at
+runtime; no default, deployment or firmware requirement changes until its
+separate gates pass.
+
+### Frozen production client contract and first gate
+
+Golem revision 2 is the current loader/lifecycle authority:
+`/Agon/mystuff/golem/docs/tasks/GOLEM-057/wolf-production-client-contract-v1-r02.md`,
+SHA-256 `efeb2e352156e8bf67b17120b0dc976ca4659a3e897dae7a161e24d471e6a65b`.
+It selects copied pixels first (ABI 1.3, capability subset `0x0011`) and keeps
+direct rows as a later selectable variant. Discovery is the operand-free
+`23,0,0xD9` probe. INFO0 is identity `0x0100`, INFO1 is a capability subset
+check, and INFO2 must show an empty slot before LOAD. LOAD/RUN/UNLOAD retain
+their existing 19/17/13-byte full wire forms. Consolidate-14 has no reply;
+LOAD or RUN is the authoritative contiguous-buffer check.
+
+The client now enforces one requested transaction and one nonwrapping token at
+a time, accepts only the expected kind and token, publishes only a fresh
+nonzero LOADED handle, and never converts timeout into cancellation authority.
+Escape stops new work and drains a matching RUN before requested UNLOAD.
+UNLOAD ERROR preserves the native value and uses INFO2 to distinguish release,
+the same live handle, and foreign ownership ambiguity. Callback and referenced
+storage remain alive after any unresolved timeout or ownership result.
+
+The default standalone backend still assembles to 106,434 bytes with SHA-256
+`2dee8b17ac83b8e7a43d7e1dcbd6962b1d24274ca489c145ef44a5fd1c0ea258`,
+byte-identical to the accepted pre-switch build. The named copied candidate is
+separate and bundles the accepted 7,952-byte module
+`57b635fc1807d9108e576cfff4c79c7f57ade48164fc5be97d75a3562e54b1be`.
+The final finite production-client fixture is 2,295 bytes, SHA-256
+`1096669ce659a744b4cb95ac53dc3c9881fd6578d646645c9eb0a541f149f230`.
+
+Twenty-one proportional host tests pin the assembled packets and model unavailable
+and incompatible runtimes, LOAD rejection/fresh ownership, ordinary keys and
+stale tokens, malformed replies, native errors, timeout ownership, Escape
+draining, all INFO2-assisted UNLOAD outcomes, and clean MOS return. The ADL
+audit reports no definite width hazards or unresolved items; all four detected
+wide memory accesses are annotated 24-bit storage. A source-visible canonical
+Oryx profile is staged and stopped at `.emulator/vdplet-client`.
+
+The first target client (`9657fdb2...`) cleanly but incorrectly rejected a
+valid INFO0 identity during generation 31. Its u16 reply path loaded L and H
+without clearing HLU, then performed an ADL-mode 24-bit identity comparison.
+The exact result/wire evidence proves that IDENT and INFO0 succeeded, no INFO1
+was sent, no handle was acquired, owned buffers and MOS mode were restored, and
+the backend fault counters stayed zero. The one-line `ld hl,0` correction and
+new structural regression are frozen in
+`src/asm/wolf3d_vdplet_client/gen31-failure-amendment.md`. Generation 31 was
+released before diagnosis. A subsequent wider audit found and preemptively
+fixed the same upper-byte class in the finite fixture's 24-bit MOS return
+status; that second correction does not change production client code and is
+frozen in `readiness-addendum-r2.md`. No corrected target execution is yet
+claimed.
+
+Generation 33 then passed the exact scene and key path but exposed two teardown
+defects. The client stored the handle high byte after an `or b` zero test,
+sending `0x0101` instead of owned handle `0x0001`; after the correct HANDLE 8
+and INFO2 value 1 replies, close performed another `or b` and returned with
+carry accidentally clear. The verifier rejected result zero paired with status
+3 and retained handle 1. The exact wire evidence and corrected outcome are
+frozen in `gen33-unload-amendment.md` and `gen33-diagnosis-r2.md`.
+
+The correction stores the original high byte before OR and explicitly
+reasserts carry whenever a live handle makes cleanup unsafe. It does not relax
+pending/ownership protections. The neighboring `cp ...; ret nz` path was also
+audited: its only reachable non-runtime inputs are timeout 1 and protocol 2,
+so its carry return remains correct and unchanged. The reconciled full pins
+and focused regressions are in `readiness-addendum-r4.md`; no r4 target
+execution is yet claimed.
+
+The separately granted final r4 target execution then passed once as Oryx
+generation 35. The displayed 76,800-pixel scene matched the frozen oracle at
+SHA-256 `42e227e80bba3cd7d65dc1bc1bee0b87e5d233e1cd8d3a1dd4f26805499bb4a2`.
+After the real key event, the client reported exactly result 0, status 0,
+pending 0, callback error 0, handle 0, native error 0, token 7 and schema 1.
+It returned to the MOS prompt, exited normally and recorded zero backend
+failure/unhandled/unregistered/unmapped counts. The passing receipt is
+`974a205396efab72fd7797a9724b672b0a64f9330e49a5005a94a2f459be247b`;
+the raw result is `de684fe97a8737e448113faf2b5efbac7c45a93195471ecc6882087f60822ddb`.
+Raw evidence was preserved before a fresh empty-host inspection and explicit
+generation-35 release. This closes the finite client lifecycle gate only;
+stage 8e still owns the real world mirror, update protocol and gameplay
+renderer.
+
+Golem accepted this as closure of the finite automated production-client gate.
+TODO 8d is complete and has been moved to the dated development log. The exact
+same candidate then passed its readable Author review on 2026-10-31 under a
+finite self-service Oryx lease: the oracle scene was accepted, Enter requested
+orderly unload, MOS returned to a live prompt, `dir` worked, and the generated
+result matched the expected SHA-256 exactly. The actual normalized
+`flexe-agon-emulator` launcher, accepted pins, procedure and acceptance record
+are frozen in
+`src/asm/wolf3d_vdplet_client/human-review-readiness-r1.md`. Oryx was empty
+after normal close and the lease was released with no queued successor. The
+gameplay renderer remains TODO 8e.
 
 ### Stage 0 — freeze the oracle and measurements
 

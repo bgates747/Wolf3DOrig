@@ -45,6 +45,7 @@ sysvar_scrMode:  equ 27h
     .align 64
     .db "MOS",0,1
 
+    include "wolf3d_backend.inc"
     include "wolf3d_sight.inc"
     include "agnb_dependencies.inc"
     include "agnb_api.inc"
@@ -56,6 +57,10 @@ sysvar_scrMode:  equ 27h
     include "wolf3d_audio.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_render_async.inc"
+    .if W3D_RENDER_BACKEND
+    include "wolf3d_vdplet_package.inc"
+    include "wolf3d_vdplet_client.inc"
+    .endif
     include "wolf3d_actors.inc"
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"

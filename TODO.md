@@ -43,7 +43,19 @@ direct-colour-row proof. Both returned cleanly to MOS and accepted `dir` after
 unload. The direct-row proof preserves exact pixels while reducing caller
 workspace by 80,608 bytes (87.47%), at a measured cost of about 32.93% more
 modeled RENDER transaction cycles in the bounded scene. This emulator evidence
-does not imply physical acceptance or establish a production winner. Full eZ80
-game integration, update batching, fizzle migration, default cutover, and
-physical qualification remain later gated work. See
+does not imply physical acceptance or establish a production winner. The full
+eZ80 production-client lifecycle also passed generation 35 with exact scene,
+teardown and MOS-return evidence. Its readable Author review passed on
+2026-10-31: the oracle scene rendered correctly, Enter requested orderly
+unload, MOS returned to a live prompt, `dir` worked, and the exact result hash
+matched. Gameplay integration, update batching, fizzle migration, default
+cutover, and physical qualification remain later gated work. See
 `agonport/doc/wolf3d-vdplet-migration.md`.
+
+[ ] 8e. Replace the bounded static scene with the production render contract.
+Implement the compact authoritative mirror, validated atomic dirty-update
+batches, real tilemap and per-texture asset access, actors/statics/doors/HUD/
+weapon composition, one-producer APPLY_AND_RENDER ownership, and app-paced
+fizzle. Compare deterministic output with the standalone oracle, then run
+complete emulator, human, performance, and physical gates before changing the
+default backend or removing the standalone rollback path.

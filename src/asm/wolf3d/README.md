@@ -106,6 +106,22 @@ Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
 
 ## Building
 
+The durable builder selects a backend in a temporary source tree, so the
+tracked selector always remains on the accepted standalone default:
+
+```bash
+.venv/bin/python src/asm/wolf3d/scripts/build.py --backend standalone
+```
+
+This writes the compatibility output `src/asm/wolf3d/tgt/wolf3d.bin` plus an
+ignored JSON receipt and assembler listing. The `vdplet-copied` selection is
+reserved for the production client/module integration under TODO 8d/8e and
+requires an explicit `--module PACKAGE.vdpl`; it is not a release backend until
+those gates pass. The direct-row candidate remains a separately gated later
+variant rather than a first-integration dependency.
+
+The equivalent direct standalone assembly remains supported:
+
 ```bash
 cd src/asm/wolf3d/src
 ez80asm wolf3d.asm ../tgt/wolf3d.bin
