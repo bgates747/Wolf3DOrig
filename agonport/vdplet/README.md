@@ -1,10 +1,16 @@
 # Bounded Wolf3D VDPlet proof
 
-This directory owns G057-WLF-001, the first deliberately bounded proof of the
-Wolf3D renderer running as a VDPlet. It is isolated from the production eZ80
-game and preserves the standalone renderer as its oracle and rollback path.
-It does not implement the eventual dirty-update protocol, full render mirror,
-actors, doors, HUD assets, fizzle, or production loader.
+The top-level sources in this directory own G057-WLF-001, the first
+deliberately bounded proof of the Wolf3D renderer running as a VDPlet. They are
+isolated from the production eZ80 game and preserve the standalone renderer as
+their oracle and rollback path.
+
+Production work now lives separately under `production/`. Its generated
+schema-1 C++/assembly contract and pure 5,360-byte world mirror implement
+exact descriptor validation, bounded atomic full/dirty batches, generation
+ownership, and same-batch retry after failed publication. See
+`../doc/wolf3d-vdplet-production-contract.md`. The production renderer itself
+is still under construction; the standalone backend remains the default.
 
 ## What the proof exercises
 

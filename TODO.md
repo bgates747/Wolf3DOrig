@@ -53,9 +53,11 @@ cutover, and physical qualification remain later gated work. See
 `agonport/doc/wolf3d-vdplet-migration.md`.
 
 [ ] 8e. Replace the bounded static scene with the production render contract.
-Implement the compact authoritative mirror, validated atomic dirty-update
-batches, real tilemap and per-texture asset access, actors/statics/doors/HUD/
-weapon composition, one-producer APPLY_AND_RENDER ownership, and app-paced
-fizzle. Compare deterministic output with the standalone oracle, then run
-complete emulator, human, performance, and physical gates before changing the
-default backend or removing the standalone rollback path.
+Schema 1, synchronized C++/assembly constants, the 5,360-byte compact mirror,
+and validated atomic full/dirty batches are complete with host regression.
+Next extract the renderer over that mirror, then add real tilemap/per-texture
+asset access, actors/statics/doors/HUD/weapon composition, one-producer
+APPLY_AND_RENDER ownership, and app-paced fizzle. Compare deterministic output
+with the standalone oracle, then run complete emulator, human, performance,
+and physical gates before changing the default backend or removing the
+standalone rollback path.

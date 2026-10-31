@@ -617,6 +617,16 @@ layout; buffer-ID allocation; module build identity; capability requirements;
 and exact error semantics. Keep the argument block at or below 32 bytes and
 version wire schema independently from module release version.
 
+Schema 1 was frozen on 2026-10-31 in
+`agonport/doc/wolf3d-vdplet-production-contract.md`. A single generator owns
+both the C++ and eZ80 constants. The 24-byte descriptor, 16-byte batch header,
+eight record types, 6,912-byte/617-record bounds, full-snapshot coverage,
+generation discipline, publication-failure replay, 5,500-byte mirror ceiling,
+copied workspace layout, entry state machine, asset formulas, and error mapping
+are now explicit. The pure two-pass parser validates every batch before
+mutation and passes maximal/invalid/retry host regression. Stage 2 owns the
+renderer which consumes this mirror; none of this changes the default backend.
+
 ### Stage 2 — extract a pure software renderer
 
 Create a single freestanding Wolf VDPlet translation unit and durable generated

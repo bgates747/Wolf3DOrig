@@ -58,6 +58,7 @@ sysvar_scrMode:  equ 27h
     include "wolf3d_fixture.inc"
     include "wolf3d_render_async.inc"
     .if W3D_RENDER_BACKEND
+    include "wolf3d_vdplet_contract.inc"
     include "wolf3d_vdplet_package.inc"
     include "wolf3d_vdplet_client.inc"
     .endif
