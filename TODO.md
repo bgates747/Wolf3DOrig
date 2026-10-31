@@ -56,9 +56,10 @@ cutover, and physical qualification remain later gated work. See
 Schema 1, synchronized C++/assembly constants, the 5,360-byte compact mirror,
 validated atomic full/dirty batches, complete pure renderer, real ABI 1.3
 CONFIG/APPLY_AND_RENDER/RESET wrapper, host lifecycle/retry matrix, and linked
-Xtensa package admission are complete. The package matches the standalone
-oracle exactly and retains at most three leases. Next qualify that exact
-package in the runtime emulator with INFO17 stack evidence, exact pixels,
-native error/recovery, teardown, and timing. Dirty-client integration,
-app-paced fizzle, complete human/performance/physical gates, default cutover,
-and removal of the standalone rollback path remain later work.
+Xtensa package admission are complete. The exact package also passes its real
+runtime-emulator gate with two oracle-exact frames, native error/retry,
+INFO17, timing, teardown, stale-handle, reload, and empty-slot evidence. Next
+integrate production full/dirty batch construction and the app's one-in-flight
+render handoff on the eZ80 while retaining the standalone default. App-paced
+fizzle, complete human/performance/physical gates, default cutover, and removal
+of the standalone rollback path remain later work.

@@ -678,6 +678,17 @@ test discovery, capabilities, LOAD/RUN/UNLOAD, slot busy, stale handle,
 double-buffer generic pixels, errors, repeated sessions, and runtime stack/heap
 information. Do not add a Wolf-specific runtime API to make this pass.
 
+The exact production package passed the finite Stage 5 JIT gate on 2026-10-31.
+Its full and retry frames matched both 76,800-byte oracle images; a missing HUD
+asset returned the native buffer error after update application; an altered
+same-generation retry was refused; restoring the asset and exact batch
+succeeded. RESET, deferred-fizzle refusal, unload, stale-handle rejection,
+reload, final empty slot, and clean backend counters all passed. INFO17 stayed
+at 2,152 free bytes. The first requested render measured 3,920,000 emulated
+cycles and 0.015407 host seconds, without making a physical-speed claim. Stage
+5 is complete for the production package; full-game runtime behavior remains
+the later integration gates.
+
 ### Stage 6 — integrate the eZ80 loader and mailbox
 
 Adapt the proven Golem VDPL assembly pattern for discovery, file upload,

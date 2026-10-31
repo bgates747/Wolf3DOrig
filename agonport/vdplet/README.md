@@ -14,8 +14,9 @@ the standalone oracle for the play surround, DDA, grouped wall assets, moving
 doors/jambs, actors, statics, rotation frames, alpha, depth order, and wall
 occlusion, followed by the first-person weapon and persistent HUD. Its real
 ABI 1.3 wrapper now passes host lifecycle/retry tests and linked Xtensa package
-admission. Runtime-emulator qualification and game integration remain open;
-the standalone backend remains the default.
+admission. The exact package also passes its finite runtime-emulator pixel,
+retry, INFO17, timing, and teardown gate. Game integration remains open; the
+standalone backend remains the default.
 
 ## What the proof exercises
 

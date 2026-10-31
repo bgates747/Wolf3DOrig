@@ -205,6 +205,24 @@ conservative visible module-owned call-chain sum is 992 bytes against the
 compiler-generated overhead. This is host and linked-package evidence, not
 runtime-emulator, performance, full-game, or physical-hardware qualification.
 
+The exact package subsequently passed its finite JIT runtime-emulator gate.
+The full snapshot and exact retry produced all 76,800 oracle pixels, with frame
+SHA-256 values
+`a20c0387435f480ff7b551896d4cc02c0539bac40a6af3753148252fb81fdaf6`
+and
+`554dcfdb164c79058762cc0c0aa6394409c9df40412ab872341d2b8ba81f3e95`.
+The exercised native failures were a missing HUD asset after update
+application, an altered same-generation retry, the deliberately deferred
+fizzle entry, and rendering after RESET. Restoring the asset and exact batch
+published the second frame. UNLOAD, stale-handle rejection, reload, final
+UNLOAD, and an empty slot all passed. INFO17 remained at 2,152 free bytes
+before and after the path. The first requested APPLY_AND_RENDER reply measured
+3,920,000 emulated VDP cycles and 0.015407 host seconds; this is not physical
+frame time. Backend failure, unhandled, unregistered, and unmapped counters
+were all zero. The ignored evidence receipt has SHA-256
+`bee886ccd052ea335c9fc6b63ed0d1d400c4cba1e1835c7f98a96291891968f8`.
+Full-game integration and physical qualification remain open.
+
 ## Error and ownership semantics
 
 - Bad entry IDs return `VDPL_E_UNSUPPORTED`.
