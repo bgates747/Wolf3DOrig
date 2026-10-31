@@ -4,8 +4,12 @@
 
 #include <algorithm>
 #include <cstdint>
+#include <filesystem>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
+#include <set>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <unordered_map>
@@ -41,6 +45,7 @@ struct Context {
     uint32_t pixel_calls = 0;
     uint32_t max_leases = 0;
     int32_t pixel_error = VDPL_OK;
+    std::set<uint16_t> acquired_buffers;
 };
 
 struct Batch {
@@ -117,6 +122,7 @@ int32_t acquire(void *opaque, uint16_t id, uint16_t access,
     }
     const uint32_t lease = context.next_lease++;
     context.leases.emplace(lease, Lease{id, access});
+    context.acquired_buffers.insert(id);
     context.max_leases = std::max(
         context.max_leases, static_cast<uint32_t>(context.leases.size()));
     *view = {sizeof(*view), lease, found->second.data() + offset, count, access};
@@ -270,11 +276,46 @@ void install_assets(Context &context) {
     }
 }
 
-void write_file(const char *path, const std::vector<uint8_t> &bytes) {
+void write_file(const std::filesystem::path &path,
+                const std::vector<uint8_t> &bytes) {
     std::ofstream stream(path, std::ios::binary);
     require(static_cast<bool>(stream), "cannot open module output");
     stream.write(reinterpret_cast<const char *>(bytes.data()), bytes.size());
     require(static_cast<bool>(stream), "cannot write module output");
+}
+
+void export_target_fixture(const std::filesystem::path &directory,
+                           const Context &context,
+                           const std::vector<uint8_t> &full_update,
+                           const std::vector<uint8_t> &retry_update,
+                           const std::vector<uint8_t> &full_frame,
+                           const std::vector<uint8_t> &retry_frame) {
+    std::filesystem::create_directories(directory);
+    write_file(directory / "argument.bin", context.buffers.at(kArgumentId));
+    write_file(directory / "update-full.bin", full_update);
+    write_file(directory / "update-retry.bin", retry_update);
+    write_file(directory / "workspace.bin",
+               std::vector<uint8_t>(W3P_WORKSPACE_BYTES));
+    write_file(directory / "tilemap.bin", context.buffers.at(fixture::kMapId));
+    write_file(directory / "expected-full.bin", full_frame);
+    write_file(directory / "expected-retry.bin", retry_frame);
+
+    std::ofstream manifest(directory / "assets.txt");
+    require(static_cast<bool>(manifest), "cannot open target asset manifest");
+    for (uint16_t id : context.acquired_buffers) {
+        if (id == kArgumentId || id == kUpdateId || id == kWorkspaceId ||
+            id == fixture::kMapId) continue;
+        const auto found = context.buffers.find(id);
+        if (found == context.buffers.end()) continue;
+        std::ostringstream name;
+        name << "buffer-" << std::hex << std::setfill('0')
+             << std::setw(4) << id << ".bin";
+        write_file(directory / name.str(), found->second);
+        manifest << "0x" << std::hex << std::setfill('0') << std::setw(4)
+                 << id << std::dec << " " << found->second.size() << " "
+                 << name.str() << "\n";
+    }
+    require(static_cast<bool>(manifest), "cannot write target asset manifest");
 }
 
 void require_clean(const Context &context, const std::string &label) {
@@ -284,8 +325,8 @@ void require_clean(const Context &context, const std::string &label) {
 }  // namespace
 
 int main(int argc, char **argv) {
-    if (argc != 2) {
-        std::cerr << "usage: test_module FRAME\n";
+    if (argc != 2 && argc != 3) {
+        std::cerr << "usage: test_module FRAME [TARGET_FIXTURE_DIR]\n";
         return 2;
     }
     try {
@@ -315,7 +356,8 @@ int main(int argc, char **argv) {
 
         expect("null host", vdplet_entry(nullptr, &init), VDPL_E_ABI);
         expect("INIT", vdplet_entry(&host, &init), VDPL_OK);
-        context.buffers[kUpdateId] = full_batch();
+        const std::vector<uint8_t> initial_batch = full_batch();
+        context.buffers[kUpdateId] = initial_batch;
         expect("apply before CONFIG", vdplet_entry(&host, &apply), VDPL_E_INIT);
         expect("CONFIG", vdplet_entry(&host, &config), VDPL_OK);
         require_clean(context, "CONFIG");
@@ -346,6 +388,7 @@ int main(int argc, char **argv) {
         context.buffers[kUpdateId] = retry_batch;
         expect("exact retry", vdplet_entry(&host, &apply), VDPL_OK);
         require(context.hidden != accepted_frame, "exact retry did not publish");
+        const std::vector<uint8_t> retry_frame = context.hidden;
         require_clean(context, "exact retry");
 
         context.buffers[kUpdateId] = hud_batch(3, 444444);
@@ -356,6 +399,11 @@ int main(int argc, char **argv) {
         context.buffers[fixture::kHudBase + 98] = std::move(status_bar);
         expect("asset recovery exact retry", vdplet_entry(&host, &apply), VDPL_OK);
         require_clean(context, "asset recovery");
+
+        if (argc == 3) {
+            export_target_fixture(argv[2], context, initial_batch, retry_batch,
+                                  accepted_frame, retry_frame);
+        }
 
         auto fizzle = request(
             VDPL_RUN, W3P_ENTRY_FIZZLE_BEGIN,

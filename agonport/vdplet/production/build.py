@@ -107,7 +107,10 @@ def main() -> None:
         "wolf3d_module.cpp", "test_module.cpp", "-o", str(MODULE_TEST),
     ])
     published_frame = BUILD / "module-frame.bin"
-    run([str(MODULE_TEST), str(published_frame)])
+    target_fixture = BUILD / "target-fixture"
+    if target_fixture.exists():
+        shutil.rmtree(target_fixture)
+    run([str(MODULE_TEST), str(published_frame), str(target_fixture)])
     if published_frame.read_bytes() != renderer_frame.read_bytes()[:FRAME_BYTES]:
         raise AssertionError("module publication differs from pure renderer/oracle")
 
@@ -171,6 +174,8 @@ def main() -> None:
         raise AssertionError(f"production source call chain exceeds limit: {call_chains}")
     shutil.copyfile(module_dir / "wolf3d_production.vdpl",
                     BUILD / "wolf3d_production.vdpl")
+    fixture_files = sorted(
+        path for path in target_fixture.iterdir() if path.is_file())
     receipt = {
         "schema": 1,
         "argument_bytes": 24,
@@ -191,6 +196,11 @@ def main() -> None:
         "module_lifecycle": (
             "CONFIG/APPLY/RESET/FINI plus publication and asset retry"
         ),
+        "target_fixture_files": len(fixture_files),
+        "target_fixture_bytes": sum(path.stat().st_size for path in fixture_files),
+        "target_fixture_sha256": {
+            path.name: sha(path) for path in fixture_files
+        },
         "package": package,
         "package_component_sha256": {
             "world_mirror": sha(HERE / "wolf3d_world_mirror.cpp"),
