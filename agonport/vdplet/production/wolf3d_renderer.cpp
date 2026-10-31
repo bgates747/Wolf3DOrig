@@ -25,6 +25,15 @@ constexpr uint8_t kDoorFlag = 0x80;
 constexpr uint8_t kDoorMax = 0xbf;
 constexpr uint8_t kDoorMask = 0x7f;
 constexpr uint8_t kDoorJambTexture = 122;
+constexpr uint16_t kHudStatusBar = 98;
+constexpr uint16_t kHudKnife = 103;
+constexpr uint16_t kHudNoKey = 107;
+constexpr uint16_t kHudGoldKey = 108;
+constexpr uint16_t kHudSilverKey = 109;
+constexpr uint16_t kHudBlank = 110;
+constexpr uint16_t kHudDigit0 = 111;
+constexpr uint16_t kHudFace1A = 121;
+constexpr uint16_t kHudFaceDead = 142;
 
 constexpr uint8_t kBlack = 0;
 constexpr uint8_t kDarkCyan = 20;
@@ -47,6 +56,12 @@ struct VisSprite {
     int32_t depth;
 };
 
+struct HudDraw {
+    uint16_t chunk;
+    int16_t x;
+    int16_t y;
+};
+
 static_assert(sizeof(VisSprite) == 16, "sprite arena record must remain 16 bytes");
 static_assert((W3P_MAX_ACTORS + W3P_MAX_STATICS) * sizeof(VisSprite) ==
               W3P_SPRITE_ARENA_BYTES,
@@ -62,6 +77,8 @@ void clear_stats(RenderStats *stats) {
     stats->visible_sprites = 0;
     stats->wall_acquires = 0;
     stats->sprite_acquires = 0;
+    stats->weapon_acquires = 0;
+    stats->hud_acquires = 0;
 }
 
 int32_t fixed_mul(int32_t a, int32_t b) {
@@ -514,6 +531,182 @@ RenderDetail draw_sprites(const RenderResources &resources, uint8_t *frame,
     return RenderDetail::ok;
 }
 
+RenderDetail draw_view_weapon(const WorldMirror &world,
+                              const RenderResources &resources,
+                              uint8_t *frame, RenderStats *stats) {
+    if (world.view_weapon_shape < 0) return RenderDetail::ok;
+    AssetSpan span{};
+    RenderDetail detail = resources.assets.acquire(
+        resources.assets.context,
+        static_cast<uint16_t>(resources.sprite_base +
+                              static_cast<uint16_t>(world.view_weapon_shape)),
+        span);
+    if (detail != RenderDetail::ok) return RenderDetail::asset;
+    if (stats != nullptr) ++stats->weapon_acquires;
+    if (span.bytes == nullptr || span.byte_count < kTextureSize * kTextureSize) {
+        const RenderDetail released = release_asset(resources.assets, span.lease);
+        return released == RenderDetail::ok ? RenderDetail::bounds : released;
+    }
+
+    const int size = kViewHeight + 1;
+    const int left = kViewWidth / 2 - size / 2;
+    const int top = (kViewHeight - size) / 2;
+    const int clipped_left = left < 0 ? 0 : left;
+    const int clipped_right = left + size > kViewWidth
+        ? kViewWidth : left + size;
+    const int clipped_top = top < 0 ? 0 : top;
+    const int clipped_bottom = top + size > kViewHeight
+        ? kViewHeight : top + size;
+    const int32_t x_step = (kTextureSize << 16) / size;
+    const int32_t y_step = (kTextureSize << 16) / size;
+    int32_t y_fraction = (clipped_top - top) * y_step;
+    for (int y = clipped_top; y < clipped_bottom; ++y) {
+        int source_y = y_fraction >> 16;
+        if (source_y >= kTextureSize) source_y = kTextureSize - 1;
+        int32_t x_fraction = (clipped_left - left) * x_step;
+        for (int x = clipped_left; x < clipped_right; ++x) {
+            int source_x = x_fraction >> 16;
+            if (source_x >= kTextureSize) source_x = kTextureSize - 1;
+            const uint8_t pixel = span.bytes[source_y * kTextureSize + source_x];
+            if ((pixel & 0xc0u) != 0) {
+                frame[static_cast<uint32_t>(kViewY + y) * W3P_SCREEN_WIDTH +
+                      kViewX + x] = pixel & 63u;
+            }
+            x_fraction += x_step;
+        }
+        y_fraction += y_step;
+    }
+    detail = release_asset(resources.assets, span.lease);
+    return detail;
+}
+
+bool hud_dimensions(uint16_t chunk, uint16_t &width, uint16_t &height) {
+    if (chunk == kHudStatusBar) {
+        width = 320;
+        height = 40;
+        return true;
+    }
+    if (chunk >= kHudKnife && chunk <= kHudKnife + 3) {
+        width = 48;
+        height = 24;
+        return true;
+    }
+    if (chunk >= kHudNoKey && chunk <= kHudDigit0 + 9) {
+        width = 8;
+        height = 16;
+        return true;
+    }
+    if (chunk >= kHudFace1A && chunk <= kHudFaceDead) {
+        width = 24;
+        height = 32;
+        return true;
+    }
+    return false;
+}
+
+bool append_hud_draw(HudDraw *draws, uint8_t &count, uint16_t chunk,
+                     int x, int y) {
+    if (count >= 20) return false;
+    draws[count++] = {chunk, static_cast<int16_t>(x), static_cast<int16_t>(y)};
+    return true;
+}
+
+bool append_hud_number(HudDraw *draws, uint8_t &count, int x, int y,
+                       int width, uint32_t value) {
+    uint32_t modulus = 1;
+    for (int i = 0; i < width; ++i) modulus *= 10;
+    value %= modulus;
+    uint32_t divisor = modulus / 10;
+    bool started = false;
+    for (int i = 0; i < width; ++i) {
+        const uint8_t digit = static_cast<uint8_t>(value / divisor);
+        value %= divisor;
+        uint16_t chunk = kHudDigit0 + digit;
+        if (!started && digit == 0 && i != width - 1) chunk = kHudBlank;
+        else started = true;
+        if (!append_hud_draw(draws, count, chunk, x + i * 8, y)) return false;
+        if (divisor > 1) divisor /= 10;
+    }
+    return true;
+}
+
+void blit_rgba2222(uint8_t *frame, const uint8_t *source,
+                   uint16_t width, uint16_t height, int left, int top) {
+    for (uint16_t source_y = 0; source_y < height; ++source_y) {
+        const int destination_y = top + source_y;
+        if (destination_y < 0 || destination_y >= static_cast<int>(W3P_SCREEN_HEIGHT))
+            continue;
+        for (uint16_t source_x = 0; source_x < width; ++source_x) {
+            const int destination_x = left + source_x;
+            if (destination_x < 0 ||
+                destination_x >= static_cast<int>(W3P_SCREEN_WIDTH)) continue;
+            const uint8_t pixel = source[static_cast<uint32_t>(source_y) * width +
+                                         source_x];
+            if ((pixel & 0xc0u) != 0) {
+                frame[static_cast<uint32_t>(destination_y) * W3P_SCREEN_WIDTH +
+                      destination_x] = pixel & 63u;
+            }
+        }
+    }
+}
+
+RenderDetail draw_hud(const WorldMirror &world,
+                      const RenderResources &resources,
+                      uint8_t *frame, RenderStats *stats) {
+    HudDraw draws[20];
+    uint8_t count = 0;
+    if (!append_hud_draw(draws, count, kHudStatusBar, 0, 200) ||
+        !append_hud_number(draws, count, 16, 216, 2, world.hud.level) ||
+        !append_hud_number(draws, count, 48, 216, 6, world.hud.score) ||
+        !append_hud_number(draws, count, 112, 216, 1, world.hud.lives))
+        return RenderDetail::world;
+    const uint16_t face = world.hud.health == 0
+        ? kHudFaceDead
+        : static_cast<uint16_t>(kHudFace1A +
+            ((100u - world.hud.health) / 16u) * 3u + world.hud.face);
+    if (!append_hud_draw(draws, count, face, 136, 204) ||
+        !append_hud_number(draws, count, 168, 216, 3, world.hud.health) ||
+        !append_hud_number(draws, count, 216, 216, 2, world.hud.ammo) ||
+        !append_hud_draw(draws, count,
+            (world.hud.keys & 1u) != 0 ? kHudGoldKey : kHudNoKey, 240, 204) ||
+        !append_hud_draw(draws, count,
+            (world.hud.keys & 2u) != 0 ? kHudSilverKey : kHudNoKey, 240, 220) ||
+        !append_hud_draw(draws, count, kHudKnife + world.hud.weapon, 256, 208))
+        return RenderDetail::world;
+
+    for (uint8_t i = 0; i < count; ++i) {
+        bool already_drawn = false;
+        for (uint8_t prior = 0; prior < i; ++prior) {
+            if (draws[prior].chunk == draws[i].chunk) already_drawn = true;
+        }
+        if (already_drawn) continue;
+        uint16_t width;
+        uint16_t height;
+        if (!hud_dimensions(draws[i].chunk, width, height))
+            return RenderDetail::world;
+        AssetSpan span{};
+        RenderDetail detail = resources.assets.acquire(
+            resources.assets.context,
+            static_cast<uint16_t>(resources.hud_base + draws[i].chunk), span);
+        if (detail != RenderDetail::ok) return RenderDetail::asset;
+        if (stats != nullptr) ++stats->hud_acquires;
+        const uint32_t required = static_cast<uint32_t>(width) * height;
+        if (span.bytes == nullptr || span.byte_count < required) {
+            const RenderDetail released = release_asset(resources.assets, span.lease);
+            return released == RenderDetail::ok ? RenderDetail::bounds : released;
+        }
+        for (uint8_t draw = i; draw < count; ++draw) {
+            if (draws[draw].chunk == draws[i].chunk) {
+                blit_rgba2222(frame, span.bytes, width, height,
+                              draws[draw].x, draws[draw].y);
+            }
+        }
+        detail = release_asset(resources.assets, span.lease);
+        if (detail != RenderDetail::ok) return detail;
+    }
+    return RenderDetail::ok;
+}
+
 }  // namespace
 
 RenderDetail render_world(const WorldMirror &world,
@@ -524,7 +717,8 @@ RenderDetail render_world(const WorldMirror &world,
         resources.workspace == nullptr || resources.assets.acquire == nullptr ||
         resources.assets.release == nullptr) return RenderDetail::argument;
     if (world.tilemap_id == 0 || resources.wall_base != W3P_DEFAULT_WALL_BASE ||
-        resources.sprite_base != W3P_DEFAULT_SPRITE_BASE)
+        resources.sprite_base != W3P_DEFAULT_SPRITE_BASE ||
+        resources.hud_base != W3P_DEFAULT_HUD_BASE)
         return RenderDetail::argument;
     if (resources.tilemap_bytes < W3P_MAP_SIZE * W3P_MAP_SIZE ||
         resources.workspace_bytes < W3P_WORKSPACE_BYTES)
@@ -548,7 +742,11 @@ RenderDetail render_world(const WorldMirror &world,
     if (detail != RenderDetail::ok) return detail;
     const uint16_t count = collect_sprites(world, view, sprites);
     if (stats != nullptr) stats->visible_sprites = count;
-    return draw_sprites(resources, frame, heights, sprites, count, stats);
+    detail = draw_sprites(resources, frame, heights, sprites, count, stats);
+    if (detail != RenderDetail::ok) return detail;
+    detail = draw_view_weapon(world, resources, frame, stats);
+    if (detail != RenderDetail::ok) return detail;
+    return draw_hud(world, resources, frame, stats);
 }
 
 const char *render_detail_name(RenderDetail detail) {

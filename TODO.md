@@ -57,9 +57,8 @@ Schema 1, synchronized C++/assembly constants, the 5,360-byte compact mirror,
 validated atomic full/dirty batches, and the pure playfield renderer are
 complete with host regression. The renderer now consumes caller-owned map,
 workspace, and one-asset-at-a-time lease spans and matches the standalone
-oracle exactly across three deterministic wall/door/actor/static scenes.
-Next add HUD and view-weapon software composition, then wrap the core in the
-real CONFIG/APPLY_AND_RENDER module service lifecycle. Dirty-client
-integration, app-paced fizzle, complete emulator/human/performance/physical
-gates, default cutover, and removal of the standalone rollback path remain
-later work.
+oracle exactly across three deterministic full-frame scenes, including HUD and
+view weapon. Next wrap the core in the real CONFIG/APPLY_AND_RENDER module
+service lifecycle and prove linked package admission. Dirty-client integration,
+app-paced fizzle, complete emulator/human/performance/physical gates, default
+cutover, and removal of the standalone rollback path remain later work.

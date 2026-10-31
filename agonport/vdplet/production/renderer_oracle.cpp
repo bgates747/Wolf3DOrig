@@ -60,8 +60,8 @@ void compose_background(std::vector<uint8_t> &frame) {
 }
 
 std::shared_ptr<OracleBuffer> texture(uint16_t id) {
-    std::vector<uint8_t> bytes(fixture::kTextureBytes);
-    fixture::fill_texture(id, bytes.data());
+    std::vector<uint8_t> bytes(fixture::asset_bytes(id));
+    fixture::fill_asset(id, bytes.data());
     return std::make_shared<OracleBuffer>(std::move(bytes));
 }
 
@@ -77,6 +77,12 @@ void install_assets(const std::vector<uint8_t> &map) {
     for (uint16_t shape = 0; shape < 64; ++shape) {
         buffers[fixture::kSpriteBase + shape].push_back(
             texture(static_cast<uint16_t>(fixture::kSpriteBase + shape)));
+    }
+    buffers[fixture::kHudBase + 98].push_back(
+        texture(fixture::kHudBase + 98));
+    for (uint16_t chunk = 103; chunk <= 142; ++chunk) {
+        buffers[fixture::kHudBase + chunk].push_back(
+            texture(static_cast<uint16_t>(fixture::kHudBase + chunk)));
     }
 }
 
@@ -170,6 +176,93 @@ void render_sprites(std::vector<uint8_t> &frame,
     }
 }
 
+void render_view_weapon(std::vector<uint8_t> &frame,
+                        int16_t shape) {
+    if (shape < 0) return;
+    auto found = buffers.find(
+        fixture::kSpriteBase + static_cast<uint16_t>(shape));
+    if (found == buffers.end()) return;
+    constexpr int size = 161;
+    constexpr int left = 128 - size / 2;
+    constexpr int top = (160 - size) / 2;
+    const int clipped_left = std::max(left, 0);
+    const int clipped_right = std::min(left + size, 256);
+    const int clipped_top = std::max(top, 0);
+    const int clipped_bottom = std::min(top + size, 160);
+    const int width = clipped_right - clipped_left;
+    const int height = clipped_bottom - clipped_top;
+    std::vector<uint8_t> scratch(static_cast<size_t>(width) * height);
+    Wolf3dRenderer::SampleSprite(
+        found->second[0]->getBuffer(), 64, 64, size, size,
+        clipped_left - left, clipped_top - top,
+        scratch.data(), width, height);
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            const uint8_t pixel = scratch[static_cast<size_t>(y) * width + x];
+            if ((pixel & 0xc0u) != 0) {
+                frame[static_cast<size_t>(kViewY + clipped_top + y) *
+                      kScreenWidth + kViewX + clipped_left + x] = pixel & 63u;
+            }
+        }
+    }
+}
+
+void draw_hud_pic(std::vector<uint8_t> &frame, uint16_t chunk,
+                  int left, int top) {
+    const uint16_t id = static_cast<uint16_t>(fixture::kHudBase + chunk);
+    auto found = buffers.find(id);
+    require(found != buffers.end(), "oracle HUD asset missing");
+    int width;
+    int height;
+    fixture::asset_dimensions(id, width, height);
+    const uint8_t *source = found->second[0]->getBuffer();
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            const uint8_t pixel = source[y * width + x];
+            if ((pixel & 0xc0u) != 0) {
+                frame[static_cast<size_t>(top + y) * kScreenWidth + left + x] =
+                    pixel & 63u;
+            }
+        }
+    }
+}
+
+void draw_hud_number(std::vector<uint8_t> &frame, int x, int y, int width,
+                     uint32_t value) {
+    uint32_t modulus = 1;
+    for (int i = 0; i < width; ++i) modulus *= 10;
+    value %= modulus;
+    uint32_t divisor = modulus / 10;
+    bool started = false;
+    for (int i = 0; i < width; ++i) {
+        const uint8_t digit = static_cast<uint8_t>(value / divisor);
+        value %= divisor;
+        uint16_t chunk = 111 + digit;
+        if (!started && digit == 0 && i != width - 1) chunk = 110;
+        else started = true;
+        draw_hud_pic(frame, chunk, x + i * 8, 200 + y);
+        if (divisor > 1) divisor /= 10;
+    }
+}
+
+void render_hud(std::vector<uint8_t> &frame,
+                const fixture::SceneSpec &spec) {
+    std::fill(frame.begin() + 200 * kScreenWidth, frame.end(), 21);
+    draw_hud_pic(frame, 98, 0, 200);
+    draw_hud_number(frame, 16, 16, 2, spec.level);
+    draw_hud_number(frame, 48, 16, 6, spec.score);
+    draw_hud_number(frame, 112, 16, 1, spec.lives);
+    const uint16_t face = spec.health == 0
+        ? 142
+        : static_cast<uint16_t>(121 + ((100 - spec.health) / 16) * 3 + spec.face);
+    draw_hud_pic(frame, face, 136, 204);
+    draw_hud_number(frame, 168, 16, 3, spec.health);
+    draw_hud_number(frame, 216, 16, 2, spec.ammo);
+    draw_hud_pic(frame, (spec.keys & 1) != 0 ? 108 : 107, 240, 204);
+    draw_hud_pic(frame, (spec.keys & 2) != 0 ? 109 : 107, 240, 220);
+    draw_hud_pic(frame, static_cast<uint16_t>(103 + spec.weapon), 256, 208);
+}
+
 void write_all(std::ofstream &stream, const void *data, size_t bytes) {
     stream.write(static_cast<const char *>(data), bytes);
     require(static_cast<bool>(stream), "cannot write oracle output");
@@ -190,6 +283,7 @@ int main(int argc, char **argv) {
         std::ofstream geometry_output(argv[2], std::ios::binary);
         require(frame_output && geometry_output, "cannot open oracle output");
         for (int scenario = 0; scenario < fixture::kScenarioCount; ++scenario) {
+            const fixture::SceneSpec spec = fixture::scene(scenario);
             Wolf3dWorldState world = make_world(scenario);
             Wolf3dRenderer renderer(world);
             renderer.ThreeDRefresh();
@@ -197,6 +291,8 @@ int main(int argc, char **argv) {
             compose_background(frame);
             render_walls(frame, world, renderer);
             render_sprites(frame, renderer);
+            render_view_weapon(frame, spec.view_weapon_shape);
+            render_hud(frame, spec);
             write_all(frame_output, frame.data(), frame.size());
             std::vector<uint8_t> geometry(kGeometryBytes);
             size_t at = 0;

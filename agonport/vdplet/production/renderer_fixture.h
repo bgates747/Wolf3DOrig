@@ -8,8 +8,10 @@ namespace wolf3d_renderer_fixture {
 constexpr uint16_t kMapId = 2;
 constexpr uint16_t kWallBase = 0x1000;
 constexpr uint16_t kSpriteBase = 0x2000;
+constexpr uint16_t kHudBase = 0x4000;
 constexpr uint32_t kMapBytes = 4096;
 constexpr uint32_t kTextureBytes = 4096;
+constexpr uint32_t kMaximumAssetBytes = 12800;
 constexpr int kScenarioCount = 3;
 
 struct DoorSpec {
@@ -39,6 +41,15 @@ struct SceneSpec {
     int32_t player_x;
     int32_t player_y;
     uint16_t player_angle;
+    int16_t view_weapon_shape;
+    uint8_t health;
+    uint8_t ammo;
+    uint8_t keys;
+    uint8_t weapon;
+    uint32_t score;
+    uint8_t level;
+    uint8_t face;
+    uint8_t lives;
     DoorSpec doors[2];
     ActorSpec actors[3];
     StaticSpec statics[3];
@@ -93,14 +104,41 @@ inline SceneSpec scene(int index) {
         result.player_x = tile_center(3);
         result.player_y = tile_center(4);
         result.player_angle = 0;
+        result.view_weapon_shape = 32;
+        result.health = 100;
+        result.ammo = 8;
+        result.keys = 0;
+        result.weapon = 1;
+        result.score = 12345;
+        result.level = 1;
+        result.face = 0;
+        result.lives = 3;
     } else if (index == 1) {
         result.player_x = tile_center(4);
         result.player_y = tile_center(3);
         result.player_angle = 270;
+        result.view_weapon_shape = 33;
+        result.health = 47;
+        result.ammo = 37;
+        result.keys = 3;
+        result.weapon = 3;
+        result.score = 987654;
+        result.level = 9;
+        result.face = 2;
+        result.lives = 7;
     } else {
         result.player_x = tile_center(8);
         result.player_y = tile_center(8);
         result.player_angle = 135;
+        result.view_weapon_shape = -1;
+        result.health = 0;
+        result.ammo = 0;
+        result.keys = 1;
+        result.weapon = 0;
+        result.score = 1000003;
+        result.level = 10;
+        result.face = 2;
+        result.lives = 0;
         result.doors[0].position = 0xd000;
         result.doors[1].position = 0xe000;
     }
@@ -116,14 +154,44 @@ inline bool valid_buffer(uint16_t buffer_id) {
     if (buffer_id == kWallBase + 1 || buffer_id == kWallBase + 2 ||
         buffer_id == kWallBase + 3 || buffer_id == kWallBase + 4 ||
         buffer_id == kWallBase + 122) return true;
-    return buffer_id >= kSpriteBase && buffer_id < kSpriteBase + 64;
+    if (buffer_id >= kSpriteBase && buffer_id < kSpriteBase + 64) return true;
+    const uint16_t chunk = static_cast<uint16_t>(buffer_id - kHudBase);
+    return buffer_id >= kHudBase &&
+        (chunk == 98 || (chunk >= 103 && chunk <= 142));
 }
 
-inline void fill_texture(uint16_t buffer_id, uint8_t *texture) {
+inline uint32_t asset_bytes(uint16_t buffer_id) {
+    if (buffer_id < kHudBase) return kTextureBytes;
+    const uint16_t chunk = static_cast<uint16_t>(buffer_id - kHudBase);
+    if (chunk == 98) return 320 * 40;
+    if (chunk >= 103 && chunk <= 106) return 48 * 24;
+    if (chunk >= 107 && chunk <= 120) return 8 * 16;
+    if (chunk >= 121 && chunk <= 142) return 24 * 32;
+    return 0;
+}
+
+inline void asset_dimensions(uint16_t buffer_id, int &width, int &height) {
+    if (buffer_id < kHudBase) {
+        width = height = 64;
+        return;
+    }
+    const uint16_t chunk = static_cast<uint16_t>(buffer_id - kHudBase);
+    if (chunk == 98) { width = 320; height = 40; }
+    else if (chunk <= 106) { width = 48; height = 24; }
+    else if (chunk <= 120) { width = 8; height = 16; }
+    else { width = 24; height = 32; }
+}
+
+inline void fill_asset(uint16_t buffer_id, uint8_t *texture) {
     const bool wall = buffer_id >= kWallBase && buffer_id < kSpriteBase;
-    const int seed = wall ? buffer_id - kWallBase : buffer_id - kSpriteBase;
-    for (int y = 0; y < 64; ++y) {
-        for (int x = 0; x < 64; ++x) {
+    const bool sprite = buffer_id >= kSpriteBase && buffer_id < kHudBase;
+    const int seed = wall ? buffer_id - kWallBase
+        : sprite ? buffer_id - kSpriteBase : buffer_id - kHudBase;
+    int width;
+    int height;
+    asset_dimensions(buffer_id, width, height);
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
             uint8_t pixel = 0;
             if (wall) {
                 const bool mortar = y % 16 == 0 ||
@@ -133,7 +201,7 @@ inline void fill_texture(uint16_t buffer_id, uint8_t *texture) {
                     : rgba2222((seed + x / 8) & 3,
                                (seed / 2 + y / 8) & 3,
                                (seed + x / 16 + y / 16) & 3);
-            } else {
+            } else if (sprite) {
                 const int dx = x - 31;
                 const int dy = y - 31;
                 const bool body = dx * dx + dy * dy <= 25 * 25;
@@ -145,8 +213,22 @@ inline void fill_texture(uint16_t buffer_id, uint8_t *texture) {
                     if (y >= 40 && y <= 44 && x >= 20 && x <= 43)
                         pixel = rgba2222(3, 0, 0);
                 }
+            } else {
+                // HUD assets use their real dimensions and opaque/transparent
+                // structure, while remaining synthetic and deterministic.
+                const bool border = x == 0 || y == 0 ||
+                    x == width - 1 || y == height - 1;
+                const bool transparent_corner =
+                    buffer_id != kHudBase + 98 && x < 2 && y < 2;
+                if (!transparent_corner) {
+                    pixel = border
+                        ? rgba2222(0, 0, 0)
+                        : rgba2222((seed + x / 4) & 3,
+                                   (seed / 2 + y / 4) & 3,
+                                   (seed / 3 + x / 8 + y / 8) & 3);
+                }
             }
-            texture[y * 64 + x] = pixel;
+            texture[y * width + x] = pixel;
         }
     }
 }

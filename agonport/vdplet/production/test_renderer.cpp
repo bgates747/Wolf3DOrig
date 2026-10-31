@@ -13,7 +13,7 @@ namespace fixture = wolf3d_renderer_fixture;
 namespace {
 
 struct ProviderState {
-    uint8_t texture[fixture::kTextureBytes];
+    uint8_t texture[fixture::kMaximumAssetBytes];
     uint16_t fail_buffer;
     uint16_t short_buffer;
     bool fail_release;
@@ -31,10 +31,11 @@ RenderDetail acquire(void *opaque, uint16_t buffer_id, AssetSpan &span) {
     ProviderState &state = *static_cast<ProviderState *>(opaque);
     if (buffer_id == state.fail_buffer || !fixture::valid_buffer(buffer_id))
         return RenderDetail::asset;
-    fixture::fill_texture(buffer_id, state.texture);
+    fixture::fill_asset(buffer_id, state.texture);
+    const uint32_t bytes = fixture::asset_bytes(buffer_id);
     span.bytes = state.texture;
     span.byte_count = buffer_id == state.short_buffer
-        ? fixture::kTextureBytes - 1 : fixture::kTextureBytes;
+        ? bytes - 1 : bytes;
     span.lease = ++state.next_lease;
     ++state.acquired;
     ++state.active;
@@ -61,6 +62,9 @@ WorldMirror make_world(int scenario) {
     for (uint16_t i = 0; i < W3P_MAX_STATICS; ++i) world.statics[i].shape = -1;
     const fixture::SceneSpec spec = fixture::scene(scenario);
     world.player = {spec.player_x, spec.player_y, spec.player_angle};
+    world.view_weapon_shape = spec.view_weapon_shape;
+    world.hud = {spec.health, spec.ammo, spec.keys, spec.weapon, spec.score,
+                 spec.level, spec.face, spec.lives};
     for (uint8_t i = 0; i < 2; ++i) {
         world.doors[i].position = spec.doors[i].position;
         world.doors[i].tile_x = spec.doors[i].x;
@@ -82,7 +86,7 @@ WorldMirror make_world(int scenario) {
 RenderResources resources(uint8_t *map, uint8_t *workspace,
                           ProviderState &provider) {
     return {map, fixture::kMapBytes, workspace, W3P_WORKSPACE_BYTES,
-            fixture::kWallBase, fixture::kSpriteBase,
+            fixture::kWallBase, fixture::kSpriteBase, fixture::kHudBase,
             {&provider, acquire, release}};
 }
 
@@ -130,6 +134,27 @@ void exercise_errors(uint8_t *map) {
             "release failure not propagated");
     require(provider.active == 0 && provider.released == 1,
             "release failure path retained a lease");
+
+    provider = {};
+    provider.fail_buffer = fixture::kSpriteBase + 32;
+    require(render_world(world, supplied) == RenderDetail::asset,
+            "missing view weapon accepted");
+    require(provider.active == 0 && provider.acquired == provider.released,
+            "missing view weapon leaked prior leases");
+
+    provider = {};
+    provider.fail_buffer = fixture::kHudBase + 98;
+    require(render_world(world, supplied) == RenderDetail::asset,
+            "missing HUD status bar accepted");
+    require(provider.active == 0 && provider.acquired == provider.released,
+            "missing HUD asset leaked prior leases");
+
+    provider = {};
+    provider.short_buffer = fixture::kHudBase + 98;
+    require(render_world(world, supplied) == RenderDetail::bounds,
+            "short HUD status bar accepted");
+    require(provider.active == 0 && provider.acquired == provider.released,
+            "short HUD asset lease not released");
 
     std::vector<uint8_t> bad_map(map, map + fixture::kMapBytes);
     bad_map[4 * 64 + 7] = 0xbf;
@@ -197,6 +222,10 @@ int main(int argc, char **argv) {
             require(stats.wall_acquires >= 2 && stats.sprite_acquires != 0 &&
                     stats.visible_sprites == stats.sprite_acquires,
                     "renderer stats do not cover exercised scene");
+            require(stats.weapon_acquires ==
+                        (world.view_weapon_shape < 0 ? 0 : 1) &&
+                    stats.hud_acquires != 0 && stats.hud_acquires <= 19,
+                    "weapon/HUD acquisition accounting mismatch");
             for (int i = 0; i < 16; ++i) {
                 require(guarded[i] == 0xa5, "workspace underflow");
                 require(guarded[W3P_WORKSPACE_BYTES + 16 + i] == 0xa5,

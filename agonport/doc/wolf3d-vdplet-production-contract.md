@@ -153,22 +153,27 @@ The extracted scope currently includes the 320x200 play surround, centered
 256x160 view, quarter-wave fixed-point projection, bounded DDA, exact
 center-plane moving doors, perpendicular jamb selection, nearest-neighbor wall
 columns, actor 2/8-way rotation selection, statics, sprite depth ordering,
-RGBA2222 transparency, and strict wall occlusion. It deliberately does not yet
-compose the persistent HUD or first-person view weapon.
+RGBA2222 transparency, and strict wall occlusion. It retains no asset pointer
+between calls. The final composition passes add the
+161-pixel unoccluded first-person weapon, original 320x40 status bar, numbers,
+damage/death face, keys, and HUD weapon icon. Repeated HUD chunks are grouped
+so each distinct chunk is leased once per frame.
 
 The durable host build renders three deterministic scenes through both the
 new core and the accepted standalone `Wolf3dRenderer`. All 230,400 RGB222
 frame bytes and 5,376 DDA bytes match exactly. Their SHA-256 values are
-`30f3ccb89d917bb2152377ef3e9cac7681f00cb55567f6000dfa68d44e00b156`
+`d04684a952fe4e918774b7f433d16d2888bc27ec98f97573b630b6dcbdeafbd9`
 and `fb7e03def15e8debd7eb31ddada6b43c123b3e0b1f3e021bb3857b3cc617a82a`.
 The same suite covers unready/short resources, missing and short assets,
-release failure, invalid map-to-door references, lease balance, and workspace
-guards. A sanitizer-backed maximum scene projects all 149 legal actor slots
-and all 400 statics at once without truncation or arena overrun.
+release failure across wall/weapon/HUD paths, invalid map-to-door references,
+lease balance, and workspace guards. It also verifies all 41 gameplay HUD
+chunks and payload sizes against the generated real-asset manifest. A
+sanitizer-backed maximum scene projects all 149 legal actor slots and all 400
+statics at once without truncation or arena overrun.
 
-A pinned Xtensa freestanding object audit found 3,567 executable/literal bytes,
-4,187 read-only table/string bytes, no BSS/data, and a largest source stack
-frame of 336 bytes. Its only undefined symbols are the already understood
+A pinned Xtensa freestanding object audit found 4,778 text bytes, 4,163
+read-only table/string bytes, no BSS/data, and a largest source stack frame of
+352 bytes. Its only undefined symbols are the already understood
 `__divdi3`, `__udivdi3`, and `memset` helpers. This is promising extraction
 evidence, not a linked package-admission, emulator, performance, or hardware
 claim.
