@@ -174,9 +174,36 @@ statics at once without truncation or arena overrun.
 A pinned Xtensa freestanding object audit found 4,778 text bytes, 4,163
 read-only table/string bytes, no BSS/data, and a largest source stack frame of
 352 bytes. Its only undefined symbols are the already understood
-`__divdi3`, `__udivdi3`, and `memset` helpers. This is promising extraction
-evidence, not a linked package-admission, emulator, performance, or hardware
-claim.
+`__divdi3`, `__udivdi3`, and `memset` helpers.
+
+## Module wrapper and first admission
+
+`wolf3d_module.cpp` is the real single-translation-unit ABI 1.3 wrapper. CONFIG
+copies and validates the exact descriptor before replacing state.
+APPLY_AND_RENDER requires that same descriptor, validates the pixel surface,
+leases and atomically applies the consolidated update, leases the workspace
+and tilemap, acquires at most one asset at a time, publishes one complete
+hidden frame, and commits the presented generation only after publication and
+cleanup succeed. RESET requires the same descriptor and clears module state;
+INIT and FINI are idempotent. FIZZLE_BEGIN, FIZZLE_STEP, and SELFTEST remain
+explicitly unsupported until their later tranches.
+
+The host lifecycle suite covers CONFIG, full and partial APPLY_AND_RENDER,
+RESET, FINI, malformed-batch rejection, pixel-publication failure, altered
+same-generation refusal, exact retry, missing-asset recovery, balanced cleanup,
+and the three-lease maximum. The first published 76,800-byte frame matches the
+pure renderer and standalone oracle exactly; its SHA-256 is
+`a20c0387435f480ff7b551896d4cc02c0539bac40a6af3753148252fb81fdaf6`.
+
+The pinned SDK admits the linked package under the contract's limits. The
+package is 14,008 bytes with 8,832 resident text bytes, 9,504 resident data
+bytes, 29 relative relocations, no undefined symbols, and SHA-256
+`badfb6e398cbebc8a1fe843578512c9631ad61551c66625c19053064f35bf734`.
+The largest compiler-reported source frame is 704 bytes. The largest
+conservative visible module-owned call-chain sum is 992 bytes against the
+2,048-byte limit; target INFO17 remains the authority for runtime and
+compiler-generated overhead. This is host and linked-package evidence, not
+runtime-emulator, performance, full-game, or physical-hardware qualification.
 
 ## Error and ownership semantics
 
@@ -194,8 +221,8 @@ claim.
 
 `agonport/vdplet/production/build.py` regenerates nothing implicitly: it first
 requires both generated consumers to match `contract.py`, then compiles and
-runs the pure mirror regressions. Those tests cover descriptor validation,
-full and partial application, exact retry, mutation-free rejection, complete
-coverage, duplicate/order/value/length failures, maximal snapshot bounds, and
-generation wrap refusal. They are host contract evidence, not a package,
-emulator, gameplay, or physical-hardware qualification.
+runs the mirror, renderer, standalone-oracle, and module-wrapper regressions.
+It builds the actual package, pins its hash and components, verifies admission,
+ABI/capabilities, relocations, undefined symbols, stack receipts, and exact
+module-to-oracle pixels. These are host and package-admission results, not
+runtime-emulator, gameplay, or physical-hardware qualification.

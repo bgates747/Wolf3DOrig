@@ -54,11 +54,11 @@ cutover, and physical qualification remain later gated work. See
 
 [ ] 8e. Replace the bounded static scene with the production render contract.
 Schema 1, synchronized C++/assembly constants, the 5,360-byte compact mirror,
-validated atomic full/dirty batches, and the pure playfield renderer are
-complete with host regression. The renderer now consumes caller-owned map,
-workspace, and one-asset-at-a-time lease spans and matches the standalone
-oracle exactly across three deterministic full-frame scenes, including HUD and
-view weapon. Next wrap the core in the real CONFIG/APPLY_AND_RENDER module
-service lifecycle and prove linked package admission. Dirty-client integration,
-app-paced fizzle, complete emulator/human/performance/physical gates, default
-cutover, and removal of the standalone rollback path remain later work.
+validated atomic full/dirty batches, complete pure renderer, real ABI 1.3
+CONFIG/APPLY_AND_RENDER/RESET wrapper, host lifecycle/retry matrix, and linked
+Xtensa package admission are complete. The package matches the standalone
+oracle exactly and retains at most three leases. Next qualify that exact
+package in the runtime emulator with INFO17 stack evidence, exact pixels,
+native error/recovery, teardown, and timing. Dirty-client integration,
+app-paced fizzle, complete human/performance/physical gates, default cutover,
+and removal of the standalone rollback path remain later work.

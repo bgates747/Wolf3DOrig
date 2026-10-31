@@ -12,9 +12,10 @@ ownership, and same-batch retry after failed publication. See
 `../doc/wolf3d-vdplet-production-contract.md`. Its pure renderer now matches
 the standalone oracle for the play surround, DDA, grouped wall assets, moving
 doors/jambs, actors, statics, rotation frames, alpha, depth order, and wall
-occlusion, followed by the first-person weapon and persistent HUD. The real
-module wrapper remains under construction; the standalone backend remains the
-default.
+occlusion, followed by the first-person weapon and persistent HUD. Its real
+ABI 1.3 wrapper now passes host lifecycle/retry tests and linked Xtensa package
+admission. Runtime-emulator qualification and game integration remain open;
+the standalone backend remains the default.
 
 ## What the proof exercises
 

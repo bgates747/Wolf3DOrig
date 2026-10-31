@@ -635,13 +635,16 @@ byte spans, and an RGB222 framebuffer. Implement the compact world mirror,
 quarter-wave trigonometry, local sprite ordering if needed, software HUD, and
 strictly bounded parsing without changing accepted render math.
 
-The playfield portion was extracted on 2026-10-31. It uses the frozen compact
-mirror and caller-owned map/workspace plus finite asset leases; implements the
-accepted wall, moving-door/jamb, actor, static, rotation, alpha, depth and
-occlusion paths; composes the unoccluded first-person weapon and original HUD;
-and matches the standalone oracle for 230,400 frame bytes and 5,376 DDA bytes
-across three scenes. The single freestanding entry translation unit and real
-service wiring remain before Stage 2 can close. The standalone backend remains
+The renderer and real module wrapper were extracted on 2026-10-31. They use
+the frozen compact mirror and caller-owned map/workspace plus finite asset
+leases. Together they implement the accepted wall, moving-door/jamb, actor,
+static, rotation, alpha, depth and occlusion paths; compose the unoccluded
+first-person weapon and original HUD; and match the standalone oracle for
+230,400 frame bytes and 5,376 DDA bytes
+across three scenes. The single freestanding entry translation unit now wires
+CONFIG, APPLY_AND_RENDER, RESET, INIT, and FINI to the real ABI services with
+bounded leases and exact-retry publication semantics. Fizzle remains the
+separate Stage 8 lifecycle. Stage 2 is complete; the standalone backend remains
 unchanged and selected by default.
 
 ### Stage 3 — prove module admission before integration
@@ -650,6 +653,16 @@ Build with the VDPlet SDK using capability mask 17, ABI minor 3, 65,536-byte
 text, 16,384-byte static data, 2,048-byte stack, and 131,072-byte package
 limits. Inspect JSON, ELF, map, relocation, and `.su` receipts. Stop and revise
 the design rather than weakening runtime limits if any receipt fails.
+
+The first linked package passed Stage 3 on 2026-10-31. It is 14,008 package
+bytes with 8,832 resident text bytes, 9,504 resident data bytes, 29 admitted
+relative relocations, no undefined symbols, a 704-byte largest source frame,
+and a 992-byte largest conservative visible module-owned call-chain sum. Its
+SHA-256 is
+`badfb6e398cbebc8a1fe843578512c9631ad61551c66625c19053064f35bf734`.
+The host wrapper regression also matches the standalone oracle exactly and
+proves publication and missing-asset retries without leaking more than three
+leases. Stage 3 is complete; target-runtime stack authority remains Stage 5.
 
 ### Stage 4 — add deterministic host regression
 

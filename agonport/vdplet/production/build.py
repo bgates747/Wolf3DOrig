@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Regenerate and exercise the pure production world-mirror contract."""
+"""Qualify the production mirror, renderer, wrapper, and Xtensa package."""
 
 from __future__ import annotations
 
 import hashlib
 import json
 from pathlib import Path
+import shutil
 import subprocess
 
 
@@ -15,7 +16,15 @@ BUILD = HERE / "build"
 TEST = BUILD / "test_world_mirror"
 RENDERER_TEST = BUILD / "test_renderer"
 RENDERER_ORACLE = BUILD / "renderer_oracle"
+MODULE_TEST = BUILD / "test_module"
 ORACLE_ROOT = Path("/Agon/mystuff/agon-vdp-wolf3d")
+SDK = Path("/Agon/mystuff/agon-vdplet/build/vdpl-012/sdk")
+SDK_PYTHON = Path("/Agon/mystuff/agon-vdplet/.venv/bin/python")
+TOOLCHAIN = Path("/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin")
+EXPECTED_PACKAGE_SHA256 = (
+    "badfb6e398cbebc8a1fe843578512c9631ad61551c66625c19053064f35bf734"
+)
+FRAME_BYTES = 76800
 HUD_MANIFEST = (
     PROJECT / "agonport/assets/generated/wolf3d/hud/hud_assets.jsonl"
 )
@@ -50,6 +59,15 @@ def verify_hud_manifest() -> int:
     return len(expected)
 
 
+def parse_stack(path: Path) -> dict[str, int]:
+    result = {}
+    for line in path.read_text().splitlines():
+        fields = line.rsplit("\t", 2)
+        if len(fields) == 3:
+            result[fields[0].split(":", 3)[-1]] = int(fields[1])
+    return result
+
+
 def main() -> None:
     run(["python3", "contract.py", "--check"])
     hud_assets_verified = verify_hud_manifest()
@@ -71,16 +89,88 @@ def main() -> None:
         "-I" + str(ORACLE_ROOT), "renderer_oracle.cpp",
         "-o", str(RENDERER_ORACLE),
     ])
-    module_frame = BUILD / "renderer-frame.bin"
-    module_geometry = BUILD / "renderer-geometry.bin"
+    renderer_frame = BUILD / "renderer-frame.bin"
+    renderer_geometry = BUILD / "renderer-geometry.bin"
     oracle_frame = BUILD / "oracle-frame.bin"
     oracle_geometry = BUILD / "oracle-geometry.bin"
-    run([str(RENDERER_TEST), str(module_frame), str(module_geometry)])
+    run([str(RENDERER_TEST), str(renderer_frame), str(renderer_geometry)])
     run([str(RENDERER_ORACLE), str(oracle_frame), str(oracle_geometry)])
-    if module_frame.read_bytes() != oracle_frame.read_bytes():
+    if renderer_frame.read_bytes() != oracle_frame.read_bytes():
         raise AssertionError("production renderer pixels differ from standalone oracle")
-    if module_geometry.read_bytes() != oracle_geometry.read_bytes():
+    if renderer_geometry.read_bytes() != oracle_geometry.read_bytes():
         raise AssertionError("production renderer DDA differs from standalone oracle")
+
+    run([
+        "g++", "-std=c++17", "-O2", *warnings, "-DWOLF3D_HOST_TEST",
+        "-I" + str(SDK / "include"),
+        "-I" + str(PROJECT / "agonport/vdplet/qualification"),
+        "wolf3d_module.cpp", "test_module.cpp", "-o", str(MODULE_TEST),
+    ])
+    published_frame = BUILD / "module-frame.bin"
+    run([str(MODULE_TEST), str(published_frame)])
+    if published_frame.read_bytes() != renderer_frame.read_bytes()[:FRAME_BYTES]:
+        raise AssertionError("module publication differs from pure renderer/oracle")
+
+    module_dir = BUILD / "module"
+    module_dir.mkdir(exist_ok=True)
+    run([
+        SDK_PYTHON, SDK / "tools/build_module.py", "wolf3d_module.cpp",
+        "--output", module_dir, "--name", "wolf3d_production",
+        "--capabilities", "17", "--abi-minor", "3",
+        "--text-limit", "65536", "--data-limit", "16384",
+        "--stack-limit", "2048", "--image-limit", "131072",
+        "--build-id", "0x20261031",
+    ])
+    manifest = json.loads(
+        (module_dir / "wolf3d_production.json").read_text())
+    package = manifest["module"]
+    if package["sha256"] != EXPECTED_PACKAGE_SHA256:
+        raise AssertionError("production package changed without pin update")
+    if (package["capabilities"], package["abi_minor"]) != (17, 3):
+        raise AssertionError("production package ABI/capability drifted")
+    undefined = subprocess.check_output([
+        str(TOOLCHAIN / "xtensa-esp32-elf-nm"), "-u",
+        str(module_dir / "wolf3d_production.o"),
+    ], text=True).strip().splitlines()
+    if undefined:
+        raise AssertionError(f"production package has undefined symbols: {undefined}")
+    relocations = [
+        line.strip() for line in
+        (module_dir / "wolf3d_production.readelf.txt").read_text().splitlines()
+        if "R_XTENSA_" in line
+    ]
+    if not relocations or any(
+            "R_XTENSA_RELATIVE" not in line for line in relocations):
+        raise AssertionError(f"unexpected production relocations: {relocations}")
+    stack = parse_stack(module_dir / "wolf3d_production.su")
+    def stack_for(fragment: str) -> int:
+        matches = [value for name, value in stack.items() if fragment in name]
+        if len(matches) != 1:
+            raise AssertionError(
+                f"expected one stack entry containing {fragment!r}, got {matches}")
+        return matches[0]
+
+    call_chains = {
+        "entry -> apply_update_batch -> validate_batch": (
+            stack_for("vdplet_entry") +
+            stack_for("apply_update_batch") +
+            stack_for("validate_batch")
+        ),
+        "entry -> render_world -> asset acquire": (
+            stack_for("vdplet_entry") +
+            stack_for("render_world") +
+            stack_for("acquire_asset")
+        ),
+        "entry -> descriptor match -> descriptor copy": (
+            stack_for("vdplet_entry") +
+            stack_for("require_matching_descriptor") +
+            stack_for("copy_descriptor")
+        ),
+    }
+    if max(call_chains.values()) > 2048:
+        raise AssertionError(f"production source call chain exceeds limit: {call_chains}")
+    shutil.copyfile(module_dir / "wolf3d_production.vdpl",
+                    BUILD / "wolf3d_production.vdpl")
     receipt = {
         "schema": 1,
         "argument_bytes": 24,
@@ -89,13 +179,34 @@ def main() -> None:
         "maximum_full_snapshot_bytes": 6891,
         "atomic_validation": True,
         "renderer_scenarios": 3,
-        "renderer_frame_bytes_compared": len(module_frame.read_bytes()),
-        "renderer_geometry_bytes_compared": len(module_geometry.read_bytes()),
-        "renderer_frame_sha256": sha(module_frame),
-        "renderer_geometry_sha256": sha(module_geometry),
+        "renderer_frame_bytes_compared": len(renderer_frame.read_bytes()),
+        "renderer_geometry_bytes_compared": len(renderer_geometry.read_bytes()),
+        "renderer_frame_sha256": sha(renderer_frame),
+        "renderer_geometry_sha256": sha(renderer_geometry),
         "hud_assets_verified": hud_assets_verified,
         "renderer_scope": (
             "background, DDA, walls, doors, actors, statics, view weapon, HUD"
+        ),
+        "module_frame_sha256": sha(published_frame),
+        "module_lifecycle": (
+            "CONFIG/APPLY/RESET/FINI plus publication and asset retry"
+        ),
+        "package": package,
+        "package_component_sha256": {
+            "world_mirror": sha(HERE / "wolf3d_world_mirror.cpp"),
+            "renderer": sha(HERE / "wolf3d_renderer.cpp"),
+            "contract": sha(HERE / "wolf3d_production_contract.h"),
+            "tables": sha(HERE.parent / "wolf3d_tables.inc"),
+        },
+        "undefined_symbols": undefined,
+        "relative_relocations": len(relocations),
+        "source_stack_frames": stack,
+        "largest_source_stack_frame": max(stack.values()),
+        "source_call_chain_sums": call_chains,
+        "largest_source_call_chain_sum": max(call_chains.values()),
+        "stack_limit_note": (
+            "Conservative sums of visible module-owned source frames; runtime "
+            "and compiler-generated overhead remain target-qualification evidence."
         ),
         "passed": True,
     }
