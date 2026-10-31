@@ -30,9 +30,20 @@ sound-effects implementation.
 game progression is established.
 
 [ ] 8. Replace the requirement for a dedicated Wolf3D VDP firmware with a
-loadable Wolf3D VDPlet running on the shared VDPlet runtime. Phase 1 is a
-feasibility study and implementation plan only: identify the renderer's
-firmware dependencies, required VDPlet ABI/runtime extensions, memory and
-performance envelopes, protocol and lifecycle changes, compatibility risks,
-and qualification gates. Stop for Author review before implementing the
-migration. See `agonport/doc/wolf3d-vdplet-migration.md`.
+loadable Wolf3D VDPlet running on the shared VDPlet runtime. The completed
+feasibility study is a conditional go. Under GOLEM-057, implement and qualify
+only the released bounded proof: one real freestanding module, compact mirror,
+representative static DDA/sprite scene, application-owned full-frame workspace,
+generic pixel publication, requested completion, and orderly teardown. Preserve
+the standalone renderer as the exact oracle and rollback path. The bounded
+host, pinned Oryx target proof, full-MOS headless rehearsals, bounded
+error/recovery matrices, and human visual/keyboard reviews passed on
+2026-10-30 for both the copied-pixel proof and the optional ABI 1.6
+direct-colour-row proof. Both returned cleanly to MOS and accepted `dir` after
+unload. The direct-row proof preserves exact pixels while reducing caller
+workspace by 80,608 bytes (87.47%), at a measured cost of about 32.93% more
+modeled RENDER transaction cycles in the bounded scene. This emulator evidence
+does not imply physical acceptance or establish a production winner. Full eZ80
+game integration, update batching, fizzle migration, default cutover, and
+physical qualification remain later gated work. See
+`agonport/doc/wolf3d-vdplet-migration.md`.
