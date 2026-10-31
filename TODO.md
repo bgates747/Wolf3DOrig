@@ -59,7 +59,11 @@ CONFIG/APPLY_AND_RENDER/RESET wrapper, host lifecycle/retry matrix, and linked
 Xtensa package admission are complete. The exact package also passes its real
 runtime-emulator gate with two oracle-exact frames, native error/retry,
 INFO17, timing, teardown, stale-handle, reload, and empty-slot evidence. Next
-integrate production full/dirty batch construction and the app's one-in-flight
-render handoff on the eZ80 while retaining the standalone default. App-paced
-fizzle, complete human/performance/physical gates, default cutover, and removal
-of the standalone rollback path remain later work.
+The production eZ80 descriptor/full/dirty serializer now also passes its direct
+MOS target regression: byte-identical frozen retry, in-flight dirty-state
+preservation, exact generation-2 delta, dirty consumption, and empty-batch
+refusal. Next connect CONFIG, update-buffer upload, requested RUN completion,
+C3 presentation, and exact retry to the app's existing one-in-flight render
+handoff while retaining the standalone default. App-paced fizzle, complete
+human/performance/physical gates, default cutover, and removal of the standalone
+rollback path remain later work.

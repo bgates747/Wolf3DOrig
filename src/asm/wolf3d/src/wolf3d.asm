@@ -63,6 +63,9 @@ sysvar_scrMode:  equ 27h
     include "wolf3d_vdplet_client.inc"
     .endif
     include "wolf3d_actors.inc"
+    .if W3D_RENDER_BACKEND
+    include "wolf3d_vdplet_batch.inc"
+    .endif
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
     include "wolf3d_motion.inc"

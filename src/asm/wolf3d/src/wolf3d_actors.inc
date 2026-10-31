@@ -1042,23 +1042,23 @@ w3d_player_actors_clear:
 w3d_submit_dirty_actors:
     ld a,1
     ld (w3d_actor_submit_id),a
-@loop:
+w3d_submit_dirty_actors_loop:
     ld a,(w3d_actor_submit_id)
     cp W3D_MAX_ACTORS
     ret nc
     call w3d_actor_dirty_address
     ld a,(hl)
     cp W3D_ACTOR_DIRTY_REMOVE
-    jr z,@remove
+    jr z,w3d_submit_dirty_actors_remove
     cp W3D_ACTOR_DIRTY_SET
-    jr z,@set
-@next:
+    jr z,w3d_submit_dirty_actors_set
+w3d_submit_dirty_actors_next:
     ld a,(w3d_actor_submit_id)
     inc a
     ld (w3d_actor_submit_id),a
-    jr @loop
+    jr w3d_submit_dirty_actors_loop
 
-@remove:
+w3d_submit_dirty_actors_remove:
     ld a,(w3d_actor_submit_id)
     ld (w3d_actor_remove_id+0),a
     xor a
@@ -1066,14 +1066,32 @@ w3d_submit_dirty_actors:
     ld hl,w3d_actor_remove_command
     ld bc,w3d_actor_remove_end-w3d_actor_remove_command
     rst.lil 18h
-    jp @clear_dirty
+    jp w3d_submit_dirty_actors_clear
 
-@set:
+w3d_submit_dirty_actors_set:
     ld a,(w3d_actor_submit_id)
+    call w3d_build_actor_wire_record
+    ld hl,w3d_actor_set_command
+    ld bc,w3d_actor_set_end-w3d_actor_set_command
+    rst.lil 18h
+    jr w3d_submit_dirty_actors_clear
+
+w3d_submit_dirty_actors_clear:
+    ld a,(w3d_actor_submit_id)
+    call w3d_actor_dirty_address
+    xor a
+    ld (hl),a
+    jp w3d_submit_dirty_actors_next
+
+; A=stable actor slot id. Build the existing 15-byte renderer record without
+; sending it or touching the dirty table. The VDPlet batch serializer shares
+; this conversion so the standalone and module backends cannot drift in shape
+; resolution, position, facing, or rotation semantics.
+w3d_build_actor_wire_record:
     ld (w3d_actor_wire_record+W3D_ACTOR_WIRE_ID+0),a
     xor a
     ld (w3d_actor_wire_record+W3D_ACTOR_WIRE_ID+1),a
-    ld a,(w3d_actor_submit_id)
+    ld a,(w3d_actor_wire_record+W3D_ACTOR_WIRE_ID+0)
     call w3d_actor_pointer_from_id
 
 ; Resolve state render metadata. A high state byte or out-of-range low byte
@@ -1134,16 +1152,7 @@ w3d_submit_dirty_actors:
     ld a,(ix+W3D_ACTOR_ANGLE+1)
     ld (w3d_actor_wire_record+W3D_ACTOR_WIRE_FACING+1),a
 @send_set:
-    ld hl,w3d_actor_set_command
-    ld bc,w3d_actor_set_end-w3d_actor_set_command
-    rst.lil 18h
-
-@clear_dirty:
-    ld a,(w3d_actor_submit_id)
-    call w3d_actor_dirty_address
-    xor a
-    ld (hl),a
-    jp @next
+    ret
 
 w3d_actor_direction_degrees:
     dw 0,45,90,135,180,225,270,315

@@ -106,13 +106,42 @@ skips, stale values, and wrap are rejected. Applying a valid batch records a
 pending publication. The module commits `presentedGeneration` only after
 copied-pixel publication succeeds.
 
-If rendering or publication fails after application, the eZ80 retains all
-dirty state and the exact consolidated batch. While publication is pending,
-the module accepts only that same generation with the same full-buffer FNV-1a
+On first submission, the eZ80 consumes only the dirty snapshot represented by
+the frozen consolidated batch. Simulation may then accumulate fresh dirt while
+that requested RUN is in flight. If rendering or publication fails after
+application, the exact batch and generation remain immutable and are retried;
+old flags are never restored over newer simulation state, and retry submission
+does not clear dirty state a second time. While publication is pending, the
+module accepts only that same generation with the same full-buffer FNV-1a
 fingerprint. It reapplies the idempotent records and retries rendering. An
 altered same-generation batch and every newer generation are rejected. This
 keeps retry possible without a second 5,360-byte mirror while preventing a
 half-old/half-new world or silent loss of authoritative changes.
+
+## eZ80 serializer
+
+`wolf3d_vdplet_batch.inc` constructs the exact descriptor and serializes the
+game's authoritative player, door, actor, static, HUD, and view-weapon state.
+It shares the standalone actor-wire conversion routine rather than maintaining
+a second shape/facing implementation. Full snapshots scan all live actor slots
+and every active door/static. Dirty batches capture the existing dirty arrays
+before serialization, then clear matching captured values only after RUN has
+been armed and emitted.
+
+A prepared batch owns its candidate generation and remains byte-for-byte frozen
+until accepted. Failure releases only RUN ownership; the next prepare returns
+the same buffer. Success commits the candidate generation and releases staging
+for whatever fresh dirt accumulated during the flight. Generation wrap and
+empty incremental batches are refused.
+
+The finite full-MOS regression under `src/asm/wolf3d_vdplet_batch` executes the
+production serializer on the eZ80. Its E1L1 full batch is 1,742 bytes and 168
+records; its failed-RUN retry is byte-identical, SHA-256
+`cdf0b7e2b79ed342d15f049182e609d19aa3cb227bbd4c78b1d653b2cd77a0cf`.
+Changes injected while that batch owned RUN survive the retry and form one
+70-byte generation-2 delta with PLAYER, DOOR, ACTOR_REMOVE, STATIC, HUD, and
+VIEW_WEAPON records, SHA-256
+`e42c1e35a41d18b4a26a9ab84fec6eeda3aa84c4af5a45b47623ad28e3276401`.
 
 ## Compact mirror and workspace
 
