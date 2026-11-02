@@ -238,6 +238,20 @@ void test_valid_full_and_partial() {
             "partial update values mismatch");
     mark_mirror_presented(mirror);
 
+    // Captured production failure: killing an actor appends its dropped item
+    // at the old static_count.  That first free slot is a legal contiguous
+    // extension, not an out-of-range update.
+    Batch dropped_item;
+    dropped_item.record(W3P_RECORD_STATIC, static_payload(3, 28));
+    const auto drop_update = dropped_item.finish(3, 0);
+    require(apply_update_batch(mirror, drop_update.data(), drop_update.size()) ==
+                BatchDetail::ok,
+            "dynamic dropped-item static rejected");
+    require(mirror.generation == 3 && mirror.static_count == 4 &&
+                mirror.statics[3].shape == 28,
+            "dynamic dropped-item static did not extend mirror");
+    mark_mirror_presented(mirror);
+
     initialize_world_mirror(mirror, 2, 7);
     const auto replacement = full_batch(3, 0, 0, 0, 7);
     require(apply_update_batch(mirror, replacement.data(), replacement.size()) ==
@@ -308,6 +322,11 @@ void test_atomic_rejections() {
     invalid_actor.record(W3P_RECORD_ACTOR_SET, actor_payload(0));
     expect_preserved(mirror, invalid_actor.finish(2, 0), BatchDetail::argument,
                      "actor slot zero");
+
+    Batch static_gap;
+    static_gap.record(W3P_RECORD_STATIC, static_payload(2, 16));
+    expect_preserved(mirror, static_gap.finish(2, 0), BatchDetail::argument,
+                     "noncontiguous dynamic static append");
 
     Batch rotation_overflow;
     rotation_overflow.record(

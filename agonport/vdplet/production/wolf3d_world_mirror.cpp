@@ -210,12 +210,26 @@ BatchDetail validate_record(
     case W3P_RECORD_STATIC: {
         if (payload_bytes != W3P_STATIC_BYTES) return BatchDetail::bounds;
         const uint16_t index = load_u16(p);
-        const uint16_t limit = full ? validation.static_count : mirror.static_count;
-        if (index >= limit) return BatchDetail::argument;
+        const int16_t shape = load_i16(p + 4);
+        if (full) {
+            if (index >= validation.static_count) return BatchDetail::argument;
+        } else {
+            // Gameplay appends dropped items to the authoritative static
+            // array.  A partial batch may therefore extend the mirror by one
+            // or more contiguous slots.  The eZ80 serializer emits statics in
+            // ascending order, so validation.static_count is also the next
+            // legal append index during this atomic first pass.
+            if (validation.static_count == 0)
+                validation.static_count = mirror.static_count;
+            if (index > validation.static_count ||
+                (index == validation.static_count && shape == -1) ||
+                index >= W3P_MAX_STATICS) return BatchDetail::argument;
+            if (index == validation.static_count) ++validation.static_count;
+        }
         detail = mark_once(validation.statics[index]);
         if (detail != BatchDetail::ok) return detail;
         if (p[2] >= W3P_MAP_SIZE || p[3] >= W3P_MAP_SIZE ||
-            !valid_shape(load_i16(p + 4), true) || (p[6] & ~2u) != 0) {
+            !valid_shape(shape, true) || (p[6] & ~2u) != 0) {
             return BatchDetail::argument;
         }
         return BatchDetail::ok;
@@ -318,11 +332,13 @@ void apply_record(WorldMirror &mirror, uint8_t type, const uint8_t *p) {
         mirror.actors[load_u16(p)].shape = -1;
         break;
     case W3P_RECORD_STATIC: {
-        StaticObject &object = mirror.statics[load_u16(p)];
+        const uint16_t index = load_u16(p);
+        StaticObject &object = mirror.statics[index];
         object.tile_x = p[2];
         object.tile_y = p[3];
         object.shape = load_i16(p + 4);
         object.flags = p[6];
+        if (index == mirror.static_count) ++mirror.static_count;
         break;
     }
     case W3P_RECORD_HUD:

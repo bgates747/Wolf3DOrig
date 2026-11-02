@@ -249,6 +249,18 @@ std::vector<uint8_t> hud_batch(uint16_t generation, uint32_t score) {
     return batch.finish(generation, 0);
 }
 
+std::vector<uint8_t> dropped_item_batch(uint16_t generation) {
+    Batch batch;
+    std::vector<uint8_t> dropped_item;
+    append_u16(dropped_item, 3);  // full snapshot declared slots 0..2
+    dropped_item.push_back(23);
+    dropped_item.push_back(47);
+    append_u16(dropped_item, 28);
+    dropped_item.push_back(2);
+    batch.record(W3P_RECORD_STATIC, dropped_item);
+    return batch.finish(generation, 0);
+}
+
 void install_assets(Context &context) {
     std::vector<uint8_t> map(fixture::kMapBytes);
     fixture::fill_map(map.data());
@@ -391,7 +403,12 @@ int main(int argc, char **argv) {
         const std::vector<uint8_t> retry_frame = context.hidden;
         require_clean(context, "exact retry");
 
-        context.buffers[kUpdateId] = hud_batch(3, 444444);
+        context.buffers[kUpdateId] = dropped_item_batch(3);
+        expect("dynamic dropped-item static", vdplet_entry(&host, &apply),
+               VDPL_OK);
+        require_clean(context, "dynamic dropped-item static");
+
+        context.buffers[kUpdateId] = hud_batch(4, 444444);
         auto status_bar = std::move(context.buffers[fixture::kHudBase + 98]);
         context.buffers.erase(fixture::kHudBase + 98);
         expect("missing render asset", vdplet_entry(&host, &apply), VDPL_E_BUFFER);

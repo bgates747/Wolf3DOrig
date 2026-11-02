@@ -88,7 +88,7 @@ changed.
 | DOOR (3) | 9 | `id:u8` plus the existing eight-byte door wire record. |
 | ACTOR_SET (4) | 15 | Existing actor wire record: `id:u16, shape:i16, x:i32, y:i32, facing:u16, rotations:u8`. The base shape plus its maximum 2/8-way rotation offset must remain at or below 8191. |
 | ACTOR_REMOVE (5) | 2 | `id:u16`; partial batches only. |
-| STATIC (6) | 7 | `id:u16` plus the existing five-byte static wire record; shape -1 removes it. |
+| STATIC (6) | 7 | `id:u16` plus the existing five-byte static wire record; shape -1 removes it. A partial batch may append non-removal records contiguously from the mirror's current `staticCount`, supporting actor item drops without a full snapshot. |
 | HUD (7) | 12 | `health, ammo, keys, weapon, score:u32, level, face, lives, zero`. |
 | VIEW_WEAPON (8) | 2 | `shape:i16`; -1 suppresses the overlay. |
 
@@ -220,14 +220,15 @@ explicitly unsupported until their later tranches.
 The host lifecycle suite covers CONFIG, full and partial APPLY_AND_RENDER,
 RESET, FINI, malformed-batch rejection, pixel-publication failure, altered
 same-generation refusal, exact retry, missing-asset recovery, balanced cleanup,
-and the three-lease maximum. The first published 76,800-byte frame matches the
+dynamic dropped-item static growth, and the three-lease maximum. The first
+published 76,800-byte frame matches the
 pure renderer and standalone oracle exactly; its SHA-256 is
 `a20c0387435f480ff7b551896d4cc02c0539bac40a6af3753148252fb81fdaf6`.
 
 The pinned SDK admits the linked package under the contract's limits. The
-package is 14,008 bytes with 8,832 resident text bytes, 9,504 resident data
+package is 14,060 bytes with 8,884 resident text bytes, 9,504 resident data
 bytes, 29 relative relocations, no undefined symbols, and SHA-256
-`badfb6e398cbebc8a1fe843578512c9631ad61551c66625c19053064f35bf734`.
+`12449bab795f4fd8ecfbbb2f4c547299632bba9bda88dc7ebf4e68160aac9c63`.
 The largest compiler-reported source frame is 704 bytes. The largest
 conservative visible module-owned call-chain sum is 992 bytes against the
 2,048-byte limit; target INFO17 remains the authority for runtime and
