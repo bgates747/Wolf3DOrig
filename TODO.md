@@ -67,64 +67,19 @@ C3 presentation, and exact retry to the app's existing one-in-flight render
 handoff while retaining the standalone default. App-paced fizzle, complete
 human/performance/physical gates, default cutover, and removal of the standalone
 rollback path remain later work. The first Console8 run under stock MOS Arthur
-loaded the complete level/assets but returned to MOS before the first frame;
-the same exact cohort was playable in Flexe. A no-protocol-change diagnostic
-build now reports the failing startup stage, client status, native reply value,
-and callback-overlap flag. Obtain that physical diagnostic before changing the
-runtime, firmware, timeout, transport, or renderer.
-
-[ ] 8f. Diagnose and resolve the severe gameplay-audio latency observed during
-the generation-64 production-VDPlet review. Preserve the accepted application,
-module, assets, firmware, sample data, rates, mixer behavior, renderer pacing,
-and queue policy while measuring the delay chain before proposing a repair.
-Flexe preparation is limited to the accepted ten-host-second, 8,192-event,
-one-MiB host-ring range observer derived from the exact production backend. It
-may measure producer-enqueue to real-sample dequeue residence, ring depth,
-fill, and existing drops; it cannot establish gameplay-event, parser, mixer,
-SDL-device, DAC, or speaker latency. Require pinned provenance, unchanged-PCM
-and forwarding tests, finite stopped-profile staging, one manually reviewed
-session if later authorized, and a separate human hardware comparison before
-assigning a cause or changing behavior.
-The isolated generation-64 consumer profile, exact pins, real-PulseAudio finite
-runner, structural gameplay oracle, stopped staging receipt, and no-launch
-checks are now ready under `agonport/vdplet/audio-ring/`. The reviewed-but-never-
-run `r01` preparation was superseded after finite-supervision defects were found;
-fresh `r02` bounds capture acceptance, final-file waits, reader execution, and
-owned TERM/KILL cleanup inside the whole-session ceiling. Eleven device-free
-tests pass, including real timeout and process-group cleanup cases. No diagnostic
-session had run at preparation time. The subsequently selected single generation-
-71 run completed normally and found a stable 5,065–5,543-sample backlog. Its
-158,563 fully observed samples had a 325.774095–325.774559 ms bounded mean
-extracted-U8 enqueue-to-dequeue residence; 5,277 samples at each window edge
-retain unknown censored ages. No fills or drops occurred in the recorded window.
-This identifies a substantial host-ring component,
-not shot identity or command/parser/mixer/device/speaker latency. Coordinate the
-next diagnosis or repair tranche before changing queue policy or audio behavior.
-The generation-71 record also carries a separate observer-initialization
-publication-race limitation; it cannot establish how the preserved backlog
-formed. A race-fixed backend and fresh SETUP+0..10-second STARTUP profile are now
-staged and stopped under `agonport/vdplet/audio-ring-startup/`. Its eligibility
-requires a first-row empty-ring witness and expected shot non-overlap while
-retaining all functional and cleanup gates. No startup capture or repeat has
-been selected.
-The subsequently selected single generation-75 startup run qualified and began
-with zero production/depth. Its 155,702 known samples averaged
-19.286677–19.287097 ms residence with maximum depth 529 samples; 8,171 fill
-samples documented intermittent startup underflow, and no drops occurred. The
-late 5K-sample bank was not present in this run's first ten seconds. This does
-not locate its later formation or justify pooling the two runs as a matched
-comparison. Coordinate the next source discriminator before another run or fix.
-A Pi-only corrected late-window preparation is now ready under
-`agonport/vdplet/audio-ring-late-corrected/`. It selects backend `943f...` with
-the exact accepted original late runner/oracle and SETUP+90..100-second overlap
-semantics; seven device-free checks pass. No target profile, Oryx contact,
-staging, build, reservation, emulator, audio device, or run occurred. Await
-central review before any target action.
-The later selected generation-78 invocation produced no measurement: the exact
-old runner expected `PROFILE/ring-output`, while the fresh profile created only
-`ring-output-late-corrected`. It failed before emulator/audio startup and Oryx
-was released cleanly without retry. Any path correction and successor require a
-new central selection.
+loaded the complete level/assets but intermittently returned to MOS before the
+first frame; the same exact cohort was playable in Flexe. A no-protocol-change
+diagnostic build reproduced the failure on the Olimex bench and localized it to
+application ordering: asynchronous mode 136 had completed in the VDP, but the
+first discovery command was issued before MOS had consumed the corresponding
+mode packet, never reached the VDP, and left later VDU bytes stranded while the
+eZ80 and MOS remained alive. The application now clears and waits on MOS's
+canonical mode-reply flag around VDU 22 before discovery. Five consecutive
+physical starts reached the production runtime and unloaded cleanly; four
+complete startup traces measured 12 ms from VDP mode completion to discovery,
+while the capture boundary retained the fifth run's live-runtime/unload evidence.
+Focused tests pass. A final Console8 stock-MOS Arthur acceptance remains required
+before default-cutover or physical-release claims.
 
 [ ] 8g. Replace production Wolf3D's copied full-frame publication with true
 ABI 1.6 scoped direct-row rendering. The production implementation and its
@@ -146,3 +101,15 @@ rows, and any already-real bitmap baseline using complete render/presentation
 boundaries; report workspace and speed separately, and presume no speed benefit
 until measured. A physical gate is still required before physical or
 default-cutover claims.
+
+[ ] 10. Repair Hans Grosse activation and complete his staged acceptance.
+Console8 review established that Hans is spawned, rendered and blocks player
+movement, but remains entirely inert: no animation, alert voice, chase, fire or
+damage. Compare the real E1L9 actor record and complete stand-state scheduling,
+area/sight gate, reaction delay, `FirstSighting`, chase and attack path against
+the original source. Preserve his one-hit diagnostic HP override only in the
+copied acceptance package. Add a regression which enters through the real
+zero-duration boss stand state and proves that sight acquisition retains the
+actor, applies the original immediate boss reaction delay, emits the alert,
+enters the widened chase state, animates and remains eligible to shoot. Rebuild
+the Hans fixture and require emulator then physical acceptance before closing.
