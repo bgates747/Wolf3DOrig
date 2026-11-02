@@ -14,7 +14,7 @@ already-palettized wall and door PNGs. Keep only intentional hand edits here.
 
 Copy the desired processed file here without renaming it, for example
 `wall_001.png` or `door_normal.png`, then edit this tracked copy. On later
-builds a matching file here replaces automatic Floyd-Steinberg conversion;
+builds a matching file here replaces automatic nearest-colour RGB conversion;
 assets absent here continue to be generated normally. Dimensions must remain
 unchanged. The override is treated as final palettized artwork and is encoded
 to RGBA2222 without applying dithering again.

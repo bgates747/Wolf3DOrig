@@ -224,12 +224,12 @@ open question 5 -- rather than expanding that project's own scope).
    layered on top (door-texture helpers in `vswap.py`, the new
    `sprite_kinds.py` module); `agnb/{manifest,container}.py` are
    vendored/adapted from `agon-utils`'s equivalents, not imported.
-6. **Palette method:** opaque walls and doors default to `floyd`;
-   sprites default to nearest-colour `rgb` with no dithering. This split was
-   selected by full-scene review: dithering retains wall texture detail, while
-   RGB gives actors and statics cleaner silhouettes. `--method` still
-   overrides both groups for A/B tests; `--wall-method` and `--sprite-method`
-   can adjust them independently. HUD assets remain nearest-colour RGB.
+6. **Palette method:** walls, doors, sprites, and HUD assets default to
+   nearest-colour `rgb` with no dithering. The earlier wall-only `floyd`
+   exception was superseded by the first complete VDPlet gameplay review:
+   perspective scaling made its stipple visibly objectionable. `--method`
+   still overrides both image groups for A/B tests; `--wall-method` and
+   `--sprite-method` can adjust them independently.
 
 ## Door textures (grounded 2026-07-31, not covered by the original plan)
 

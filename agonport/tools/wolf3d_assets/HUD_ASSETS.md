@@ -54,5 +54,5 @@ Generated output lands in
 `agonport/assets/generated/wolf3d/hud/`: `hud.agnb`, `hud_assets.jsonl`,
 `hud_buffers.inc`, source/converted PNGs, and individual `.rgba2` payloads.
 The default palette method is nearest-colour RGB with no dithering, matching
-actors and static sprites; walls and doors use Floyd-Steinberg. Other HUD
+walls, doors, actors, and static sprites. Other HUD
 methods remain available via `--method` for visual comparisons.

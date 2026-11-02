@@ -5,10 +5,11 @@ extension -- writes agonport/assets/generated/wolf3d/processed/ plus the
 final images.jsonl manifest (agnb/manifest.py's schema) that scripts/
 pack_agnb.py and scripts/build_level_manifest.py consume next.
 
-Opaque wall and door textures default to Floyd-Steinberg dithering. Sprites
-default to nearest-colour RGB with no dithering, which preserves cleaner
-silhouettes. Use --method to override both groups for an A/B comparison, or
-the kind-specific options to change one group.
+Wall, door, and sprite textures default to nearest-colour RGB with no
+dithering. Full-game VDPlet review superseded the former wall-only
+Floyd-Steinberg exception: its stipple is too aggressive once textures are
+perspective-scaled in motion. Use --method or the kind-specific options for
+deliberate A/B experiments.
 """
 
 import argparse
@@ -87,9 +88,9 @@ def main() -> None:
     )
     parser.add_argument(
         "--wall-method",
-        default="floyd",
+        default="rgb",
         choices=["rgb", "hsv", "bayer", "floyd", "atkinson"],
-        help="wall/door conversion method (default: floyd)",
+        help="wall/door conversion method (default: rgb/no dithering)",
     )
     parser.add_argument(
         "--sprite-method",
