@@ -685,7 +685,7 @@ w3d_vdplet_batch_any_nonzero:
 w3d_vdplet_descriptor_template:
     db 'W','3','P','A'
     db W3P_SCHEMA_VERSION,W3P_ARGUMENT_BYTES
-    dw W3P_ARG_FLAG_COPIED_PIXELS
+    dw W3P_ARG_FLAG_DIRECT_ROWS
     dw W3D_VDPLET_WORKSPACE_BUFFER
     dw W3D_VDPLET_UPDATE_BUFFER
     dw W3D_FIXTURE_TILEMAP_BUFFER_ID

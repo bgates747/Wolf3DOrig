@@ -24,7 +24,7 @@ CONSTANTS: tuple[tuple[str, int, str], ...] = (
     ("W3P_MODULE_ID", 0x31503357, '"W3P1" production renderer identity'),
     ("W3P_MODULE_RELEASE", 0x00010000, "module release 1.0.0"),
     ("W3P_SCHEMA_VERSION", 1, "wire schema, independent of module release"),
-    ("W3P_REQUIRED_CAPABILITIES", 0x0011, "buffers plus copied pixels"),
+    ("W3P_REQUIRED_CAPABILITIES", 0x0101, "buffers plus direct colour rows"),
 
     ("W3P_ENTRY_CONFIG", 0, "validate resource descriptor"),
     ("W3P_ENTRY_APPLY_AND_RENDER", 1, "atomically update and render"),
@@ -47,7 +47,8 @@ CONSTANTS: tuple[tuple[str, int, str], ...] = (
     ("W3P_ARG_GENERATION_SEED", 20, "u16; first batch is seed+1"),
     ("W3P_ARG_RESERVED", 22, "u16 zero"),
     ("W3P_ARG_FLAG_COPIED_PIXELS", 0x0001, "RGB222 workspace publication"),
-    ("W3P_ARG_KNOWN_FLAGS", 0x0001, "all schema-1 descriptor flags"),
+    ("W3P_ARG_FLAG_DIRECT_ROWS", 0x0002, "native hidden-framebuffer rows"),
+    ("W3P_ARG_KNOWN_FLAGS", 0x0003, "all schema-1 descriptor flags"),
 
     ("W3P_DEFAULT_WALL_BASE", 0x1000, "resident wall texture buffers"),
     ("W3P_DEFAULT_SPRITE_BASE", 0x2000, "resident sprite texture buffers"),
@@ -63,6 +64,8 @@ CONSTANTS: tuple[tuple[str, int, str], ...] = (
     ("W3P_SPRITE_ARENA_OFFSET", 78592, "sprite sort/scale scratch"),
     ("W3P_SPRITE_ARENA_BYTES", 8800, "bounded sprite scratch"),
     ("W3P_WORKSPACE_BYTES", 92160, "first copied-pixel production target"),
+    ("W3P_DIRECT_TARGET_WORKSPACE_BYTES", 11552,
+     "32-bit target row pointers plus render scratch"),
 
     ("W3P_BATCH_HEADER_BYTES", 16, "exact update header size"),
     ("W3P_BATCH_MAGIC_OFFSET", 0, "u32"),

@@ -72,6 +72,33 @@ void clear_bytes(void *destination, uint8_t value, uint32_t count) {
     while (count-- != 0) *p++ = value;
 }
 
+uint8_t *target_pixel(const RenderTarget &target, uint32_t x, uint32_t y) {
+    if (target.linear != nullptr)
+        return target.linear + y * W3P_SCREEN_WIDTH + x;
+    return reinterpret_cast<uint8_t *>(target.rows[y]) +
+        ((target.x_bias + x) ^ target.pixel_xor);
+}
+
+void put_pixel(const RenderTarget &target, uint32_t x, uint32_t y,
+               uint8_t color) {
+    uint8_t *const pixel = target_pixel(target, x, y);
+    if (target.linear != nullptr) {
+        *pixel = color;
+    } else {
+        *pixel = static_cast<uint8_t>((*pixel & target.preserve_mask) |
+                                     (color & target.color_mask));
+    }
+}
+
+void fill_span(const RenderTarget &target, uint32_t x, uint32_t y,
+               uint32_t count, uint8_t color) {
+    if (target.linear != nullptr) {
+        clear_bytes(target_pixel(target, x, y), color, count);
+        return;
+    }
+    while (count-- != 0) put_pixel(target, x++, y, color);
+}
+
 void clear_stats(RenderStats *stats) {
     if (stats == nullptr) return;
     stats->visible_sprites = 0;
@@ -108,7 +135,7 @@ int32_t cos_fine(int32_t angle) {
     return sin_fine(angle + 900);
 }
 
-void fill_rect(uint8_t *frame, int left, int top, int right, int bottom,
+void fill_rect(const RenderTarget &frame, int left, int top, int right, int bottom,
                uint8_t color) {
     if (left < 0) left = 0;
     if (top < 0) top = 0;
@@ -118,14 +145,14 @@ void fill_rect(uint8_t *frame, int left, int top, int right, int bottom,
         bottom = static_cast<int>(W3P_SCREEN_HEIGHT) - 1;
     if (left > right || top > bottom) return;
     for (int y = top; y <= bottom; ++y) {
-        clear_bytes(frame + static_cast<uint32_t>(y) * W3P_SCREEN_WIDTH +
-                        static_cast<uint32_t>(left),
-                    color, static_cast<uint32_t>(right - left + 1));
+        fill_span(frame, static_cast<uint32_t>(left), static_cast<uint32_t>(y),
+                  static_cast<uint32_t>(right - left + 1), color);
     }
 }
 
-void compose_background(uint8_t *frame) {
-    clear_bytes(frame, kDarkGray, W3P_FRAME_BYTES);
+void compose_background(const RenderTarget &frame) {
+    for (uint32_t y = 0; y < W3P_SCREEN_HEIGHT; ++y)
+        fill_span(frame, 0, y, W3P_SCREEN_WIDTH, kDarkGray);
     fill_rect(frame, 0, 0, W3P_SCREEN_WIDTH - 1, kPlayHeight - 1, kDarkCyan);
     fill_rect(frame, kViewX, kViewY, kViewX + kViewWidth - 1,
               kViewY + kCenterY - 1, kLightGray);
@@ -328,7 +355,7 @@ RenderDetail release_asset(const AssetProvider &provider, uint32_t lease) {
 }
 
 RenderDetail draw_walls(const WorldMirror &world, const RenderResources &resources,
-                        uint8_t *frame, const int32_t *heights,
+                        const RenderTarget &frame, const int32_t *heights,
                         const uint8_t *tiles, const uint8_t *tex_u,
                         RenderStats *stats) {
     bool needed[128];
@@ -366,9 +393,9 @@ RenderDetail draw_walls(const WorldMirror &world, const RenderResources &resourc
             for (int y = 0; y < destination_height; ++y) {
                 int source_y = fraction >> 16;
                 if (source_y >= kTextureSize) source_y = kTextureSize - 1;
-                frame[static_cast<uint32_t>(kViewY + clipped_top + y) *
-                          W3P_SCREEN_WIDTH + kViewX + col] =
-                    span.bytes[source_y * kTextureSize + source_x] & 63u;
+                put_pixel(frame, static_cast<uint32_t>(kViewX + col),
+                          static_cast<uint32_t>(kViewY + clipped_top + y),
+                          span.bytes[source_y * kTextureSize + source_x] & 63u);
                 fraction += step;
             }
         }
@@ -470,7 +497,8 @@ uint16_t collect_sprites(const WorldMirror &world, const ViewState &view,
     return count;
 }
 
-RenderDetail draw_sprites(const RenderResources &resources, uint8_t *frame,
+RenderDetail draw_sprites(const RenderResources &resources,
+                          const RenderTarget &frame,
                           const int32_t *wall_heights,
                           const VisSprite *sprites, uint16_t count,
                           RenderStats *stats) {
@@ -515,9 +543,10 @@ RenderDetail draw_sprites(const RenderResources &resources, uint8_t *frame,
                         const uint8_t pixel =
                             span.bytes[source_y * kTextureSize + source_x];
                         if ((pixel & 0xc0u) != 0) {
-                            frame[static_cast<uint32_t>(kViewY + clipped_top + y) *
-                                  W3P_SCREEN_WIDTH + kViewX + screen_x] =
-                                pixel & 63u;
+                            put_pixel(frame,
+                                static_cast<uint32_t>(kViewX + screen_x),
+                                static_cast<uint32_t>(kViewY + clipped_top + y),
+                                pixel & 63u);
                         }
                     }
                     x_fraction += x_step;
@@ -533,7 +562,7 @@ RenderDetail draw_sprites(const RenderResources &resources, uint8_t *frame,
 
 RenderDetail draw_view_weapon(const WorldMirror &world,
                               const RenderResources &resources,
-                              uint8_t *frame, RenderStats *stats) {
+                              const RenderTarget &frame, RenderStats *stats) {
     if (world.view_weapon_shape < 0) return RenderDetail::ok;
     AssetSpan span{};
     RenderDetail detail = resources.assets.acquire(
@@ -569,8 +598,8 @@ RenderDetail draw_view_weapon(const WorldMirror &world,
             if (source_x >= kTextureSize) source_x = kTextureSize - 1;
             const uint8_t pixel = span.bytes[source_y * kTextureSize + source_x];
             if ((pixel & 0xc0u) != 0) {
-                frame[static_cast<uint32_t>(kViewY + y) * W3P_SCREEN_WIDTH +
-                      kViewX + x] = pixel & 63u;
+                put_pixel(frame, static_cast<uint32_t>(kViewX + x),
+                          static_cast<uint32_t>(kViewY + y), pixel & 63u);
             }
             x_fraction += x_step;
         }
@@ -630,7 +659,7 @@ bool append_hud_number(HudDraw *draws, uint8_t &count, int x, int y,
     return true;
 }
 
-void blit_rgba2222(uint8_t *frame, const uint8_t *source,
+void blit_rgba2222(const RenderTarget &frame, const uint8_t *source,
                    uint16_t width, uint16_t height, int left, int top) {
     for (uint16_t source_y = 0; source_y < height; ++source_y) {
         const int destination_y = top + source_y;
@@ -643,8 +672,8 @@ void blit_rgba2222(uint8_t *frame, const uint8_t *source,
             const uint8_t pixel = source[static_cast<uint32_t>(source_y) * width +
                                          source_x];
             if ((pixel & 0xc0u) != 0) {
-                frame[static_cast<uint32_t>(destination_y) * W3P_SCREEN_WIDTH +
-                      destination_x] = pixel & 63u;
+                put_pixel(frame, static_cast<uint32_t>(destination_x),
+                          static_cast<uint32_t>(destination_y), pixel & 63u);
             }
         }
     }
@@ -652,7 +681,7 @@ void blit_rgba2222(uint8_t *frame, const uint8_t *source,
 
 RenderDetail draw_hud(const WorldMirror &world,
                       const RenderResources &resources,
-                      uint8_t *frame, RenderStats *stats) {
+                      const RenderTarget &frame, RenderStats *stats) {
     HudDraw draws[20];
     uint8_t count = 0;
     if (!append_hud_draw(draws, count, kHudStatusBar, 0, 200) ||
@@ -709,9 +738,16 @@ RenderDetail draw_hud(const WorldMirror &world,
 
 }  // namespace
 
-RenderDetail render_world(const WorldMirror &world,
-                          const RenderResources &resources,
-                          RenderStats *stats) {
+RenderDetail render_world_to_target(const WorldMirror &world,
+                                    const RenderResources &resources,
+                                    const RenderTarget &frame,
+                                    uint32_t height_offset,
+                                    uint32_t tile_offset,
+                                    uint32_t tex_u_offset,
+                                    uint32_t side_offset,
+                                    uint32_t sprite_offset,
+                                    uint32_t required_workspace,
+                                    RenderStats *stats) {
     clear_stats(stats);
     if (!world.ready || resources.tilemap == nullptr ||
         resources.workspace == nullptr || resources.assets.acquire == nullptr ||
@@ -721,17 +757,17 @@ RenderDetail render_world(const WorldMirror &world,
         resources.hud_base != W3P_DEFAULT_HUD_BASE)
         return RenderDetail::argument;
     if (resources.tilemap_bytes < W3P_MAP_SIZE * W3P_MAP_SIZE ||
-        resources.workspace_bytes < W3P_WORKSPACE_BYTES)
+        resources.workspace_bytes < required_workspace ||
+        (frame.linear == nullptr && frame.rows == nullptr))
         return RenderDetail::bounds;
 
-    uint8_t *const frame = resources.workspace;
     int32_t *const heights = reinterpret_cast<int32_t *>(
-        resources.workspace + W3P_WALL_HEIGHT_OFFSET);
-    uint8_t *const tiles = resources.workspace + W3P_WALL_TILE_OFFSET;
-    uint8_t *const tex_u = resources.workspace + W3P_WALL_TEXU_OFFSET;
-    uint8_t *const sides = resources.workspace + W3P_WALL_SIDE_OFFSET;
+        resources.workspace + height_offset);
+    uint8_t *const tiles = resources.workspace + tile_offset;
+    uint8_t *const tex_u = resources.workspace + tex_u_offset;
+    uint8_t *const sides = resources.workspace + side_offset;
     VisSprite *const sprites = reinterpret_cast<VisSprite *>(
-        resources.workspace + W3P_SPRITE_ARENA_OFFSET);
+        resources.workspace + sprite_offset);
 
     compose_background(frame);
     const ViewState view = setup_view(world);
@@ -747,6 +783,28 @@ RenderDetail render_world(const WorldMirror &world,
     detail = draw_view_weapon(world, resources, frame, stats);
     if (detail != RenderDetail::ok) return detail;
     return draw_hud(world, resources, frame, stats);
+}
+
+RenderDetail render_world(const WorldMirror &world,
+                          const RenderResources &resources,
+                          RenderStats *stats) {
+    const RenderTarget frame = {
+        resources.workspace, nullptr, 0, 0, 0x3fu, 0u};
+    return render_world_to_target(
+        world, resources, frame, W3P_WALL_HEIGHT_OFFSET,
+        W3P_WALL_TILE_OFFSET, W3P_WALL_TEXU_OFFSET, W3P_WALL_SIDE_OFFSET,
+        W3P_SPRITE_ARENA_OFFSET, W3P_WORKSPACE_BYTES, stats);
+}
+
+RenderDetail render_world_direct(const WorldMirror &world,
+                                 const RenderResources &resources,
+                                 const RenderTarget &target,
+                                 RenderStats *stats) {
+    return render_world_to_target(
+        world, resources, target, W3P_DIRECT_WALL_HEIGHT_OFFSET,
+        W3P_DIRECT_WALL_TILE_OFFSET, W3P_DIRECT_WALL_TEXU_OFFSET,
+        W3P_DIRECT_WALL_SIDE_OFFSET, W3P_DIRECT_SPRITE_ARENA_OFFSET,
+        W3P_DIRECT_WORKSPACE_BYTES, stats);
 }
 
 const char *render_detail_name(RenderDetail detail) {

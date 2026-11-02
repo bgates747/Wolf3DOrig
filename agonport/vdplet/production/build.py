@@ -18,11 +18,11 @@ RENDERER_TEST = BUILD / "test_renderer"
 RENDERER_ORACLE = BUILD / "renderer_oracle"
 MODULE_TEST = BUILD / "test_module"
 ORACLE_ROOT = Path("/Agon/mystuff/agon-vdp-wolf3d")
-SDK = Path("/Agon/mystuff/agon-vdplet/build/vdpl-012/sdk")
+SDK = Path("/Agon/mystuff/agon-vdplet/build/vdpl-014/baseline")
 SDK_PYTHON = Path("/Agon/mystuff/agon-vdplet/.venv/bin/python")
 TOOLCHAIN = Path("/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin")
 EXPECTED_PACKAGE_SHA256 = (
-    "12449bab795f4fd8ecfbbb2f4c547299632bba9bda88dc7ebf4e68160aac9c63"
+    "e1adfa24b8f015a7cc0c25e399417767febfa90ab35d3cbe84346f06b1e417b5"
 )
 FRAME_BYTES = 76800
 HUD_MANIFEST = (
@@ -119,7 +119,7 @@ def main() -> None:
     run([
         SDK_PYTHON, SDK / "tools/build_module.py", "wolf3d_module.cpp",
         "--output", module_dir, "--name", "wolf3d_production",
-        "--capabilities", "17", "--abi-minor", "3",
+        "--capabilities", "257", "--abi-minor", "6",
         "--text-limit", "65536", "--data-limit", "16384",
         "--stack-limit", "2048", "--image-limit", "131072",
         "--build-id", "0x20261031",
@@ -129,7 +129,7 @@ def main() -> None:
     package = manifest["module"]
     if package["sha256"] != EXPECTED_PACKAGE_SHA256:
         raise AssertionError("production package changed without pin update")
-    if (package["capabilities"], package["abi_minor"]) != (17, 3):
+    if (package["capabilities"], package["abi_minor"]) != (257, 6):
         raise AssertionError("production package ABI/capability drifted")
     undefined = subprocess.check_output([
         str(TOOLCHAIN / "xtensa-esp32-elf-nm"), "-u",
@@ -159,9 +159,10 @@ def main() -> None:
             stack_for("apply_update_batch") +
             stack_for("validate_batch")
         ),
-        "entry -> render_world -> asset acquire": (
+        "entry -> direct renderer -> compositor -> asset acquire": (
             stack_for("vdplet_entry") +
-            stack_for("render_world") +
+            stack_for("render_world_direct") +
+            stack_for("render_world_to_target") +
             stack_for("acquire_asset")
         ),
         "entry -> descriptor match -> descriptor copy": (

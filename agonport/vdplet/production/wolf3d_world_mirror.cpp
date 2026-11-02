@@ -397,7 +397,8 @@ BatchDetail validate_resource_descriptor(
     candidate.sprite_base = load_u16(bytes + W3P_ARG_SPRITE_BASE);
     candidate.hud_base = load_u16(bytes + W3P_ARG_HUD_BASE);
     candidate.generation_seed = load_u16(bytes + W3P_ARG_GENERATION_SEED);
-    if (candidate.flags != W3P_ARG_FLAG_COPIED_PIXELS ||
+    if ((candidate.flags != W3P_ARG_FLAG_COPIED_PIXELS &&
+         candidate.flags != W3P_ARG_FLAG_DIRECT_ROWS) ||
         (candidate.flags & ~W3P_ARG_KNOWN_FLAGS) != 0 ||
         candidate.workspace_id == 0 || candidate.update_id == 0 ||
         candidate.tilemap_id == 0 ||

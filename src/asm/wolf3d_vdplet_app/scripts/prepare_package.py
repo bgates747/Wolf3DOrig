@@ -46,7 +46,7 @@ def main() -> None:
         [
             sys.executable,
             str(GAME / "scripts/build.py"),
-            "--backend", "vdplet-copied",
+            "--backend", "vdplet-direct",
             "--module", str(module),
         ],
         cwd=PROJECT,
@@ -54,7 +54,7 @@ def main() -> None:
     )
 
     sources: list[tuple[Path, Path]] = [
-        (require(GAME / "tgt/wolf3d-vdplet-copied.bin"), Path("wolf3d.bin")),
+        (require(GAME / "tgt/wolf3d-vdplet-direct.bin"), Path("wolf3d.bin")),
         (require(GAME / "tgt/wolf3d.vdpl"), Path("wolf3d.vdpl")),
         (require(GENERATED / "hud/hud.agnb"), Path("hud.agnb")),
         (require(GENERATED / "audio/sfx.agnb"), Path("sfx.agnb")),
@@ -79,7 +79,7 @@ def main() -> None:
             shutil.copyfile(source, destination)
         receipt = {
             "scope": "complete stopped Wolf3DOrig production-VDPlet payload",
-            "backend": "vdplet-copied",
+            "backend": "vdplet-direct",
             "module_sha256": sha(temporary / "wolf3d.vdpl"),
             "application_sha256": sha(temporary / "wolf3d.bin"),
             "files": {

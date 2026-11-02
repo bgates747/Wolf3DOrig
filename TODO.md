@@ -127,23 +127,22 @@ was released cleanly without retry. Any path correction and successor require a
 new central selection.
 
 [ ] 8g. Replace production Wolf3D's copied full-frame publication with true
-ABI 1.6 scoped direct-row rendering. The current production module composes a
-76,800-byte RGB222 workspace frame, validates the whole source, and then copies
-it through `pixels_write`; this is not the intended zero-copy framebuffer
-optimization. Migrate the complete production renderer—not merely the bounded
-proof scene—to `BEGIN / ROW / END` access to the hidden native drawing surface.
+ABI 1.6 scoped direct-row rendering. The production implementation and its
+generation-79 human visual gate now pass: the complete renderer—not merely the
+bounded proof scene—uses `BEGIN / ROW / END` access to the hidden native drawing
+surface, the former wall-edge black-pixel noise is absent, and the target
+workspace fell from 92,160 to 11,552 bytes. The copied 76,800-byte RGB222 path
+remains explicitly named as a host-qualified fallback/oracle.
 Write each final background, wall, sprite, weapon, and HUD pixel directly to
 its native scanline while retaining only necessary mirror, DDA, depth, texture,
 and sprite scratch state. Preserve native lane ordering and sync bits, bound
 all row access, discard every row pointer before ending the surface lease or
 swapping, and never publish a partial frame after any render or asset failure.
-Keep the existing copied path only as an explicitly named diagnostic/fallback
-until parity and rollback requirements are settled. Add exact host regressions
-for complete-frame pixel parity, lease/failure cleanup, hidden-buffer selection,
-no-partial-publication behavior, and repeated-frame operation. Benchmark the
+Exact host regressions cover complete-frame parity, direct/copied equivalence,
+lease and mid-row failure cleanup, pointer destruction, sync-bit preservation,
+hidden-buffer mapping, retry behavior, and repeated-frame operation. Benchmark the
 same production fixture across copied workspace + `pixels_write`, true direct
 rows, and any already-real bitmap baseline using complete render/presentation
-boundaries; report workspace and speed separately, and presume no benefit until
-measured. Finish with stopped emulator staging and explicit human visual review
-of the formerly observed flickering black-pixel corruption before physical or
+boundaries; report workspace and speed separately, and presume no speed benefit
+until measured. A physical gate is still required before physical or
 default-cutover claims.

@@ -19,7 +19,7 @@ TARGET = PROJECT / "tgt"
 SELECTOR = "W3D_RENDER_BACKEND:"
 BACKENDS = {
     "standalone": "W3D_RENDER_BACKEND_STANDALONE",
-    "vdplet-copied": "W3D_RENDER_BACKEND_VDPLET_COPIED",
+    "vdplet-direct": "W3D_RENDER_BACKEND_VDPLET_DIRECT",
 }
 
 
@@ -98,10 +98,10 @@ def select_package(path: Path, size: int) -> None:
 
 
 def build(assembler: Path, backend: str, module: Path | None) -> dict[str, object]:
-    if backend == "vdplet-copied":
+    if backend == "vdplet-direct":
         if module is None:
             raise SystemExit(
-                "--backend vdplet-copied requires --module PACKAGE.vdpl"
+                "--backend vdplet-direct requires --module PACKAGE.vdpl"
             )
         module = module.expanduser().resolve()
         if not module.is_file():
@@ -109,7 +109,7 @@ def build(assembler: Path, backend: str, module: Path | None) -> dict[str, objec
         if not 0 < module.stat().st_size < 0x20000:
             raise SystemExit("VDPlet package must be 1..131071 bytes")
     elif module is not None:
-        raise SystemExit("--module is valid only with --backend vdplet-copied")
+        raise SystemExit("--module is valid only with --backend vdplet-direct")
 
     TARGET.mkdir(parents=True, exist_ok=True)
     output_name = "wolf3d.bin" if backend == "standalone" else f"wolf3d-{backend}.bin"

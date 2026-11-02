@@ -221,19 +221,27 @@ int32_t apply_and_render(const vdplet_host_v1 *host,
                          const vdplet_request_v1 *request) {
     int32_t status = require_matching_descriptor(host, request);
     if (status != VDPL_OK) return status;
-    const vdplet_host_v1_3 *media = vdplet_pixels_host(host);
-    if (media == nullptr) return VDPL_E_ABI;
-    vdplet_surface_v1 surface = {sizeof(surface), 0, 0, 0, 0, 0, 0};
-    status = media->surface_info(host->context, &surface);
-    if (status != VDPL_OK) return status;
-    if (surface.width != W3P_SCREEN_WIDTH ||
-        surface.height != W3P_SCREEN_HEIGHT ||
-        surface.native_format != VDPL_NATIVE_RGB222 ||
-        (surface.source_formats & VDPL_PIXELS_RGB222) == 0 ||
-        (surface.flags & (VDPL_SURFACE_PHYSICAL |
-                          VDPL_SURFACE_DOUBLE_BUFFERED)) !=
-            (VDPL_SURFACE_PHYSICAL | VDPL_SURFACE_DOUBLE_BUFFERED))
-        return VDPL_E_FORMAT;
+    const bool direct_rows =
+        g_module.resources.flags == W3P_ARG_FLAG_DIRECT_ROWS;
+    const vdplet_host_v1_6 *color = direct_rows
+        ? vdplet_color_frame_host(host) : nullptr;
+    const vdplet_host_v1_3 *media = direct_rows
+        ? nullptr : vdplet_pixels_host(host);
+    if ((direct_rows && color == nullptr) || (!direct_rows && media == nullptr))
+        return VDPL_E_ABI;
+    if (!direct_rows) {
+        vdplet_surface_v1 surface = {sizeof(surface), 0, 0, 0, 0, 0, 0};
+        status = media->surface_info(host->context, &surface);
+        if (status != VDPL_OK) return status;
+        if (surface.width != W3P_SCREEN_WIDTH ||
+            surface.height != W3P_SCREEN_HEIGHT ||
+            surface.native_format != VDPL_NATIVE_RGB222 ||
+            (surface.source_formats & VDPL_PIXELS_RGB222) == 0 ||
+            (surface.flags & (VDPL_SURFACE_PHYSICAL |
+                              VDPL_SURFACE_DOUBLE_BUFFERED)) !=
+                (VDPL_SURFACE_PHYSICAL | VDPL_SURFACE_DOUBLE_BUFFERED))
+            return VDPL_E_FORMAT;
+    }
 
     vdplet_view_v1 update = {sizeof(update), 0, nullptr, 0, 0};
     status = host->buffer_acquire(
@@ -250,9 +258,12 @@ int32_t apply_and_render(const vdplet_host_v1 *host,
 
     vdplet_view_v1 workspace = {sizeof(workspace), 0, nullptr, 0, 0};
     vdplet_view_v1 tilemap = {sizeof(tilemap), 0, nullptr, 0, 0};
+    const uint32_t workspace_bytes = direct_rows
+        ? static_cast<uint32_t>(W3P_DIRECT_WORKSPACE_BYTES)
+        : W3P_WORKSPACE_BYTES;
     status = host->buffer_acquire(
         host->context, g_module.resources.workspace_id, VDPL_WRITE, 0,
-        W3P_WORKSPACE_BYTES, &workspace);
+        workspace_bytes, &workspace);
     if (status != VDPL_OK) return status;
     status = host->buffer_acquire(
         host->context, g_module.resources.tilemap_id, VDPL_READ, 0,
@@ -268,15 +279,64 @@ int32_t apply_and_render(const vdplet_host_v1 *host,
         g_module.resources.wall_base, g_module.resources.sprite_base,
         g_module.resources.hud_base,
         {&service_assets, acquire_asset, release_asset}};
-    const RenderDetail rendered = render_world(g_module.mirror, resources);
-    status = service_assets.native_error != VDPL_OK
-        ? service_assets.native_error : render_status(rendered);
-    if (status == VDPL_OK) {
+    if (direct_rows) {
+        uintptr_t *const rows = reinterpret_cast<uintptr_t *>(workspace.data);
+        for (uint32_t row = 0; row < W3P_SCREEN_HEIGHT; ++row) rows[row] = 0;
+        vdplet_color_frame_v1 frame = {
+            sizeof(frame), 0, 0, 0, W3P_SCREEN_WIDTH, W3P_SCREEN_HEIGHT,
+            0, 0, nullptr, 0, 0, 0, 0, 0};
+        status = color->color_frame(
+            host->context, VDPL_COLOR_FRAME_BEGIN, &frame);
+        const bool began = status == VDPL_OK;
+        uint32_t acquired_rows = 0;
+        if (began) {
+            for (uint32_t row = 0; row < W3P_SCREEN_HEIGHT; ++row) {
+                frame.row = row;
+                status = color->color_frame(
+                    host->context, VDPL_COLOR_FRAME_ROW, &frame);
+                if (status != VDPL_OK) break;
+                if (frame.data == nullptr ||
+                    (reinterpret_cast<uintptr_t>(frame.data) & 3u) != 0 ||
+                    frame.x != 0 || frame.y != 0 ||
+                    frame.width != W3P_SCREEN_WIDTH ||
+                    frame.height != W3P_SCREEN_HEIGHT || frame.row != row ||
+                    frame.native_format != VDPL_NATIVE_RGB222 ||
+                    frame.row_bytes != W3P_SCREEN_WIDTH ||
+                    frame.x_bias != 0 || frame.pixel_xor != 2 ||
+                    frame.color_mask != 0x3fu ||
+                    frame.preserve_mask != 0xc0u) {
+                    status = VDPL_E_FORMAT;
+                    break;
+                }
+                rows[row] = reinterpret_cast<uintptr_t>(frame.data);
+                ++acquired_rows;
+            }
+        }
+        if (status == VDPL_OK) {
+            const RenderTarget target = {
+                nullptr, rows, frame.x_bias, frame.pixel_xor,
+                static_cast<uint8_t>(frame.color_mask),
+                static_cast<uint8_t>(frame.preserve_mask)};
+            const RenderDetail rendered = render_world_direct(
+                g_module.mirror, resources, target);
+            status = service_assets.native_error != VDPL_OK
+                ? service_assets.native_error : render_status(rendered);
+        }
+        for (uint32_t row = 0; row < acquired_rows; ++row) rows[row] = 0;
+        if (began) preserve_first_error(
+            status, color->color_frame(
+                host->context, VDPL_COLOR_FRAME_END, &frame));
+    } else {
+        const RenderDetail rendered = render_world(g_module.mirror, resources);
+        status = service_assets.native_error != VDPL_OK
+            ? service_assets.native_error : render_status(rendered);
+        if (status == VDPL_OK) {
         const vdplet_pixels_v1 pixels = {
             sizeof(pixels), VDPL_PIXELS_RGB222, 0, 0,
             W3P_SCREEN_WIDTH, W3P_SCREEN_HEIGHT, W3P_SCREEN_WIDTH,
             W3P_FRAME_BYTES, workspace.data};
-        status = media->pixels_write(host->context, &pixels);
+            status = media->pixels_write(host->context, &pixels);
+        }
     }
     preserve_first_error(
         status, host->buffer_release(host->context, tilemap.lease));

@@ -12,7 +12,7 @@ w3d_vdplet_backend_open:
     ld a,W3D_VDPLET_STAGE_WORKSPACE
     ld (w3d_vdplet_stage),a
     ld bc,W3D_VDPLET_WORKSPACE_BUFFER
-    ld de,W3P_WORKSPACE_BYTES
+    ld de,W3P_DIRECT_TARGET_WORKSPACE_BYTES
     call w3d_vdplet_create_zero_buffer
     jr c,@cleanup
     call w3d_vdplet_batch_initialize

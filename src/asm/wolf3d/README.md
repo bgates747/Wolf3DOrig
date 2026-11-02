@@ -114,11 +114,10 @@ tracked selector always remains on the accepted standalone default:
 ```
 
 This writes the compatibility output `src/asm/wolf3d/tgt/wolf3d.bin` plus an
-ignored JSON receipt and assembler listing. The `vdplet-copied` selection is
-reserved for the production client/module integration under TODO 8d/8e and
-requires an explicit `--module PACKAGE.vdpl`; it is not a release backend until
-those gates pass. The direct-row candidate remains a separately gated later
-variant rather than a first-integration dependency.
+ignored JSON receipt and assembler listing. The `vdplet-direct` selection
+requires an explicit `--module PACKAGE.vdpl` and renders directly into scoped
+ABI 1.6 hidden-framebuffer rows. The module retains its copied RGB222 path as
+an explicit host-qualified oracle and rollback implementation.
 
 The equivalent direct standalone assembly remains supported:
 

@@ -24,7 +24,7 @@ FLEXE_FRONTEND = (
     "flexe-agon-emulator"
 )
 DEFAULT_FRONTEND_SHA256 = (
-    "f7951314959be72ab7757579a9daf2a42383ccdb5187dec9d9653b42ad8a477c"
+    "28f50e87190f00de4039dc90c94432347f01c4771c4ea4a5dea8595d6cef7670"
 )
 FIRMWARE = HOME / "Agon/mystuff/agon-vdplet/build/vdpl-012/rows-r1/firmware.bin"
 FIRMWARE_ELF = HOME / "Agon/mystuff/agon-vdplet/build/vdpl-012/rows-r1/firmware.elf"
@@ -37,7 +37,7 @@ PINS = {
     "firmware.bin": "8d980025f891484cf7e6cc5f2992cf517cb80e0123ff7de712ae8d7f2dc1c807",
     "firmware.elf": "1a7c44482d4ba8c5bfb49976c0bd664b9a9c2a635c7027b30954929ca567f814",
     "flexe-vdp.so": "0866265bd6f3d73ad572f31dc1bb954f308ed9a5d857efa9414d37e1ade13374",
-    "wolf3d.vdpl": "12449bab795f4fd8ecfbbb2f4c547299632bba9bda88dc7ebf4e68160aac9c63",
+    "wolf3d.vdpl": "e1adfa24b8f015a7cc0c25e399417767febfa90ab35d3cbe84346f06b1e417b5",
 }
 
 
@@ -187,7 +187,7 @@ mkdir -p "$AGON_FLEXE_ARTIFACTS"
     if not launcher.is_file() or not os.access(launcher, os.X_OK):
         raise SystemExit(f"missing launcher: {launcher}")
     receipt = {
-        "scope": "stopped complete Wolf3DOrig production-VDPlet profile",
+        "scope": "stopped complete Wolf3DOrig production direct-row VDPlet profile",
         "profile": str(profile),
         "launcher": str(launcher),
         "stopped": True,

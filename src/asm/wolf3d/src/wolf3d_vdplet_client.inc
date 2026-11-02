@@ -21,7 +21,7 @@ W3D_VDPL_REPLY_ERROR:          equ 5
 W3D_VDPL_REPLY_IDENT:          equ 1
 
 W3D_VDPLET_RUNTIME_IDENTITY:   equ 0100h
-W3D_VDPLET_REQUIRED_CAPS:      equ 0011h ; buffers + copied pixels
+W3D_VDPLET_REQUIRED_CAPS:      equ 0101h ; buffers + direct colour rows
 W3D_VDPLET_MODULE_BUFFER:      equ 0ea77h
 W3D_VDPLET_WORKSPACE_BUFFER:   equ 07100h
 W3D_VDPLET_UPDATE_BUFFER:      equ 07101h
@@ -354,7 +354,7 @@ w3d_vdplet_query_identity:
     dw 0
 @end:
 
-; Send INFO1 and require every capability used by the copied-pixel candidate.
+; Send INFO1 and require every capability used by the direct-row candidate.
 w3d_vdplet_query_capabilities:
     ld a,W3D_VDPL_REPLY_VALUE
     ld hl,@token

@@ -14,7 +14,7 @@ PROJECT = HERE.parents[3]
 PACKAGE = HERE.parent / "tgt/package"
 REMOTE_ROOT = "/home/smith/Agon/mystuff/Wolf3dOrig"
 REMOTE_PROJECT = REMOTE_ROOT + "/src/asm/wolf3d_vdplet_app"
-REMOTE_PROFILE = REMOTE_ROOT + "/.emulator/wolf3d-vdplet-app"
+REMOTE_PROFILE = REMOTE_ROOT + "/.emulator/wolf3d-vdplet-direct-r01"
 
 
 def run(command: list[object], **kwargs) -> subprocess.CompletedProcess:
@@ -40,6 +40,7 @@ def main() -> None:
         REMOTE_ROOT + "/.venv/bin/python",
         REMOTE_PROJECT + "/scripts/prepare_profile.py",
         "--package", REMOTE_PROJECT + "/tgt/package",
+        "--profile", REMOTE_PROFILE,
     ]
     result = run([
         "ssh", "-o", "BatchMode=yes", "oryx-linuxlite", shlex.join(command),

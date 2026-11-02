@@ -1,6 +1,7 @@
 #include "../qualification/vdplet_host_shim.h"
 #include "renderer_fixture.h"
 #include "wolf3d_production_contract.h"
+#include "wolf3d_renderer.h"
 
 #include <algorithm>
 #include <cstdint>
@@ -34,6 +35,8 @@ struct Context {
     std::unordered_map<uint16_t, std::vector<uint8_t>> buffers;
     std::unordered_map<uint32_t, Lease> leases;
     std::vector<uint8_t> hidden = std::vector<uint8_t>(W3P_FRAME_BYTES, 0x2a);
+    std::vector<uint8_t> native_hidden =
+        std::vector<uint8_t>(W3P_FRAME_BYTES, 0x80);
     vdplet_surface_v1 surface = {
         sizeof(vdplet_surface_v1), W3P_SCREEN_WIDTH, W3P_SCREEN_HEIGHT,
         VDPL_NATIVE_RGB222, VDPL_PIXELS_RGB222, 64,
@@ -45,6 +48,13 @@ struct Context {
     uint32_t pixel_calls = 0;
     uint32_t max_leases = 0;
     int32_t pixel_error = VDPL_OK;
+    int32_t color_error_operation = 0;
+    int32_t color_fail_row = -1;
+    uint32_t color_begin_calls = 0;
+    uint32_t color_row_calls = 0;
+    uint32_t color_end_calls = 0;
+    uint32_t color_lease = 0;
+    bool color_active = false;
     std::set<uint16_t> acquired_buffers;
 };
 
@@ -135,7 +145,8 @@ int32_t release(void *opaque, uint32_t lease) {
     return context.leases.erase(lease) == 1 ? VDPL_OK : VDPL_E_HANDLE;
 }
 
-int32_t surface_info(void *opaque, vdplet_surface_v1 *surface) {
+[[maybe_unused]] int32_t surface_info(
+    void *opaque, vdplet_surface_v1 *surface) {
     Context &context = *static_cast<Context *>(opaque);
     ++context.surface_calls;
     if (surface == nullptr || surface->struct_bytes != sizeof(*surface))
@@ -144,7 +155,8 @@ int32_t surface_info(void *opaque, vdplet_surface_v1 *surface) {
     return VDPL_OK;
 }
 
-int32_t pixels_write(void *opaque, const vdplet_pixels_v1 *pixels) {
+[[maybe_unused]] int32_t pixels_write(
+    void *opaque, const vdplet_pixels_v1 *pixels) {
     Context &context = *static_cast<Context *>(opaque);
     ++context.pixel_calls;
     if (context.pixel_error != VDPL_OK) return context.pixel_error;
@@ -162,6 +174,55 @@ int32_t pixels_write(void *opaque, const vdplet_pixels_v1 *pixels) {
     return VDPL_OK;
 }
 
+int32_t color_frame(void *opaque, uint32_t operation,
+                    vdplet_color_frame_v1 *frame) {
+    Context &context = *static_cast<Context *>(opaque);
+    if (frame == nullptr || frame->struct_bytes != sizeof(*frame))
+        return VDPL_E_ARGUMENT;
+    if (context.color_error_operation == static_cast<int32_t>(operation))
+        return VDPL_E_FORMAT;
+    if (operation == VDPL_COLOR_FRAME_BEGIN) {
+        ++context.color_begin_calls;
+        if (context.color_active || frame->x != 0 || frame->y != 0 ||
+            frame->width != W3P_SCREEN_WIDTH ||
+            frame->height != W3P_SCREEN_HEIGHT) return VDPL_E_ARGUMENT;
+        context.color_active = true;
+        context.color_lease = context.next_lease++;
+        frame->lease = context.color_lease;
+        return VDPL_OK;
+    }
+    if (!context.color_active || frame->lease != context.color_lease)
+        return VDPL_E_HANDLE;
+    if (operation == VDPL_COLOR_FRAME_ROW) {
+        ++context.color_row_calls;
+        if (frame->row >= W3P_SCREEN_HEIGHT) return VDPL_E_BOUNDS;
+        if (frame->row == static_cast<uint32_t>(context.color_fail_row))
+            return VDPL_E_FORMAT;
+        frame->native_format = VDPL_NATIVE_RGB222;
+        frame->data = context.native_hidden.data() +
+            frame->row * W3P_SCREEN_WIDTH;
+        frame->row_bytes = W3P_SCREEN_WIDTH;
+        frame->x_bias = 0;
+        frame->pixel_xor = 2;
+        frame->color_mask = 0x3f;
+        frame->preserve_mask = 0xc0;
+        return VDPL_OK;
+    }
+    if (operation == VDPL_COLOR_FRAME_END) {
+        ++context.color_end_calls;
+        context.color_active = false;
+        for (uint32_t y = 0; y < W3P_SCREEN_HEIGHT; ++y) {
+            for (uint32_t x = 0; x < W3P_SCREEN_WIDTH; ++x) {
+                const uint32_t native = y * W3P_SCREEN_WIDTH + (x ^ 2u);
+                context.hidden[y * W3P_SCREEN_WIDTH + x] =
+                    context.native_hidden[native] & 0x3fu;
+            }
+        }
+        return VDPL_OK;
+    }
+    return VDPL_E_ARGUMENT;
+}
+
 vdplet_request_v1 request(uint16_t operation, uint16_t entry = 0,
                           uint16_t arguments = 0, uint32_t bytes = 0) {
     return {sizeof(vdplet_request_v1), operation, entry, arguments, 0, bytes};
@@ -172,7 +233,7 @@ std::vector<uint8_t> descriptor() {
     Batch::store_u32(bytes, W3P_ARG_MAGIC, W3P_ARGUMENT_MAGIC);
     bytes[W3P_ARG_SCHEMA] = W3P_SCHEMA_VERSION;
     bytes[W3P_ARG_BYTES] = W3P_ARGUMENT_BYTES;
-    Batch::store_u16(bytes, W3P_ARG_FLAGS, W3P_ARG_FLAG_COPIED_PIXELS);
+    Batch::store_u16(bytes, W3P_ARG_FLAGS, W3P_ARG_FLAG_DIRECT_ROWS);
     Batch::store_u16(bytes, W3P_ARG_WORKSPACE, kWorkspaceId);
     Batch::store_u16(bytes, W3P_ARG_UPDATE, kUpdateId);
     Batch::store_u16(bytes, W3P_ARG_TILEMAP, fixture::kMapId);
@@ -265,7 +326,8 @@ void install_assets(Context &context) {
     std::vector<uint8_t> map(fixture::kMapBytes);
     fixture::fill_map(map.data());
     context.buffers[fixture::kMapId] = std::move(map);
-    context.buffers[kWorkspaceId] = std::vector<uint8_t>(W3P_WORKSPACE_BYTES);
+    context.buffers[kWorkspaceId] =
+        std::vector<uint8_t>(W3P_DIRECT_WORKSPACE_BYTES);
     context.buffers[kArgumentId] = descriptor();
     for (uint16_t id : {uint16_t(1), uint16_t(2), uint16_t(3),
                         uint16_t(4), uint16_t(122)}) {
@@ -307,7 +369,7 @@ void export_target_fixture(const std::filesystem::path &directory,
     write_file(directory / "update-full.bin", full_update);
     write_file(directory / "update-retry.bin", retry_update);
     write_file(directory / "workspace.bin",
-               std::vector<uint8_t>(W3P_WORKSPACE_BYTES));
+               std::vector<uint8_t>(W3P_DIRECT_WORKSPACE_BYTES));
     write_file(directory / "tilemap.bin", context.buffers.at(fixture::kMapId));
     write_file(directory / "expected-full.bin", full_frame);
     write_file(directory / "expected-retry.bin", retry_frame);
@@ -344,17 +406,16 @@ int main(int argc, char **argv) {
     try {
         Context context;
         install_assets(context);
-        vdplet_host_v1_3 api{};
-        vdplet_host_v1 &host = api.base.base.base;
+        vdplet_host_v1_6 api{};
+        vdplet_host_v1 &host = api.base.base.base.base.base.base;
         host.struct_bytes = sizeof(api);
         host.abi_major = VDPL_ABI_MAJOR;
-        host.abi_minor = VDPL_ABI_MINOR_MEDIA;
-        host.capabilities = VDPL_CAP_BUFFERS | VDPL_CAP_PIXELS;
+        host.abi_minor = VDPL_ABI_MINOR_COLOR_FRAME;
+        host.capabilities = VDPL_CAP_BUFFERS | VDPL_CAP_COLOR_FRAME;
         host.context = &context;
         host.buffer_acquire = acquire;
         host.buffer_release = release;
-        api.surface_info = surface_info;
-        api.pixels_write = pixels_write;
+        api.color_frame = color_frame;
 
         auto init = request(VDPL_INIT);
         auto fini = request(VDPL_FINI);
@@ -376,6 +437,20 @@ int main(int argc, char **argv) {
         expect("full APPLY", vdplet_entry(&host, &apply), VDPL_OK);
         require_clean(context, "full APPLY");
         require(context.max_leases == 3, "production transaction exceeded 3 leases");
+        require(context.color_begin_calls == 1 &&
+                context.color_row_calls == W3P_SCREEN_HEIGHT &&
+                context.color_end_calls == 1,
+                "direct frame did not acquire exactly one complete row set");
+        const auto &direct_workspace = context.buffers.at(kWorkspaceId);
+        require(std::all_of(
+                    direct_workspace.begin(),
+                    direct_workspace.begin() + W3P_DIRECT_ROW_POINTER_BYTES,
+                    [](uint8_t value) { return value == 0; }),
+                "direct row pointers survived END");
+        require(std::all_of(
+                    context.native_hidden.begin(), context.native_hidden.end(),
+                    [](uint8_t value) { return (value & 0xc0u) == 0x80u; }),
+                "direct rendering damaged native sync bits");
         write_file(argv[1], context.hidden);
 
         const std::vector<uint8_t> accepted_frame = context.hidden;
@@ -388,10 +463,16 @@ int main(int argc, char **argv) {
 
         const auto retry_batch = hud_batch(2, 222222);
         context.buffers[kUpdateId] = retry_batch;
-        context.pixel_error = VDPL_E_FORMAT;
+        context.color_fail_row = 117;
         expect("publication failure", vdplet_entry(&host, &apply), VDPL_E_FORMAT);
-        context.pixel_error = VDPL_OK;
-        require(context.hidden == accepted_frame, "failed publication changed pixels");
+        context.color_fail_row = -1;
+        require(context.color_end_calls == 2,
+                "failed row acquisition did not close the frame transaction");
+        require(std::all_of(
+                    direct_workspace.begin(),
+                    direct_workspace.begin() + W3P_DIRECT_ROW_POINTER_BYTES,
+                    [](uint8_t value) { return value == 0; }),
+                "failed row acquisition retained a native pointer");
         require_clean(context, "publication failure");
 
         context.buffers[kUpdateId] = hud_batch(2, 333333);
@@ -432,8 +513,41 @@ int main(int argc, char **argv) {
         expect("FINI", vdplet_entry(&host, &fini), VDPL_OK);
         expect("repeated FINI", vdplet_entry(&host, &fini), VDPL_OK);
         require_clean(context, "FINI");
+
+        Context copied;
+        install_assets(copied);
+        copied.buffers[kWorkspaceId].assign(W3P_WORKSPACE_BYTES, 0);
+        copied.buffers[kArgumentId] = descriptor();
+        Batch::store_u16(copied.buffers[kArgumentId], W3P_ARG_FLAGS,
+                         W3P_ARG_FLAG_COPIED_PIXELS);
+        copied.buffers[kUpdateId] = initial_batch;
+        vdplet_host_v1_6 copied_api{};
+        vdplet_host_v1 &copied_host =
+            copied_api.base.base.base.base.base.base;
+        vdplet_host_v1_3 &copied_media = copied_api.base.base.base;
+        copied_host.struct_bytes = sizeof(copied_api);
+        copied_host.abi_major = VDPL_ABI_MAJOR;
+        copied_host.abi_minor = VDPL_ABI_MINOR_COLOR_FRAME;
+        copied_host.capabilities =
+            VDPL_CAP_BUFFERS | VDPL_CAP_PIXELS | VDPL_CAP_COLOR_FRAME;
+        copied_host.context = &copied;
+        copied_host.buffer_acquire = acquire;
+        copied_host.buffer_release = release;
+        copied_media.surface_info = surface_info;
+        copied_media.pixels_write = pixels_write;
+        copied_api.color_frame = color_frame;
+        expect("copied INIT", vdplet_entry(&copied_host, &init), VDPL_OK);
+        expect("copied CONFIG", vdplet_entry(&copied_host, &config), VDPL_OK);
+        expect("copied APPLY", vdplet_entry(&copied_host, &apply), VDPL_OK);
+        require(copied.hidden == accepted_frame,
+                "named copied fallback differs from direct rows");
+        require(copied.pixel_calls == 1 && copied.color_begin_calls == 0,
+                "copied fallback used the wrong publication service");
+        expect("copied FINI", vdplet_entry(&copied_host, &fini), VDPL_OK);
+        require_clean(copied, "copied fallback");
         std::cout << "production module: lifecycle, retry, recovery passed"
-                  << " max_leases=" << context.max_leases << "\n";
+                  << " direct/copy parity max_leases="
+                  << context.max_leases << "\n";
     } catch (const std::exception &error) {
         std::cerr << "production module: " << error.what() << "\n";
         return 1;
