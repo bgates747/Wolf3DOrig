@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-01",
+  "state": "stopped_profile_staged_manual_review_not_selected",
+  "scope": "Wolf3DOrig production-VDPlet FX-114 sender observer",
+  "oryx_contacted": true,
+  "profile_staged": true,
+  "queue_request_created": false,
+  "emulator_run": false,
+  "gui_launched": false,
+  "profile": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-app-observed-r01",
+  "launcher": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-app-observed-r01/flexe-agon-emulator",
+  "observer_output": "/home/smith/Agon/mystuff/Wolf3dOrig/agonport/emulator/evidence/uart-observer-r01/wolf3d-uart-observer.jsonl",
+  "observer_output_fresh_absent": true,
+  "whole_host_stopped_proof": {
+    "machine": "oryx-linuxlite",
+    "epoch": 1793559144.1417303,
+    "emulators": []
+  },
+  "pins": {
+    "frontend_sha256": "7e7d0e1bc89af72bde7ffbd6c06446aaefda4d1803f89eb1faf3167307ee1e01",
+    "backend_sha256": "0866265bd6f3d73ad572f31dc1bb954f308ed9a5d857efa9414d37e1ade13374",
+    "firmware_sha256": "8d980025f891484cf7e6cc5f2992cf517cb80e0123ff7de712ae8d7f2dc1c807",
+    "mos_sha256": "d564243283972690933a4554296ad6202ca4ef54572279533a942960846bebae",
+    "application_sha256": "5723cd60234e46a8c34809fa8fba5f5286058f3cf7ad9d5bfc27c9f72a4d4ae7",
+    "module_sha256": "12449bab795f4fd8ecfbbb2f4c547299632bba9bda88dc7ebf4e68160aac9c63",
+    "reader_sha256": "12817411df487931407d1ec7cf4e51c9742a5f350582af2efce5db3fb4a96cde",
+    "runtime_manifest_sha256": "063bb54755e8e64716417d00c12c68b61edaa7e0d1ba1c463496778351921fbd",
+    "runtime_manifest_entries": 73,
+    "profile_receipt_sha256": "b719843e04af4ca4358a288f16d5a5d1c87568367ca3d98d87aacd5b61321315",
+    "launcher_sha256": "ee48353d322fa3b354f1cbac2c46ce7ca200d7a3a23d808c002be9a1eed02248",
+    "autoexec_sha256": "a0e8515191024710aef4ce1bfad5783f1571f7051aa4a8e719b37ca532b25277"
+  },
+  "manual_review": {
+    "whole_session_ceiling_seconds": 180,
+    "startup_input": "none; do not press keys during asset loading",
+    "launch_after_separate_fifo_checkout": "cd /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-app-observed-r01 && ./flexe-agon-emulator",
+    "stalled_boundary": "leave open at least 55 seconds after last visible loading progress, then Author closes normally",
+    "progress_boundary": "observe the stable scene briefly without gameplay input, then Author closes normally",
+    "deadline_policy": "at 180 seconds request Author closure and report overrun; elapsed time alone does not authorize forced teardown",
+    "reader_after_close": "/home/smith/Agon/mystuff/Wolf3dOrig/.venv/bin/python /home/smith/Agon/mystuff/flexe-agon-emulator/build/fx114/contract-r02/read_record.py /home/smith/Agon/mystuff/Wolf3dOrig/agonport/emulator/evidence/uart-observer-r01/wolf3d-uart-observer.jsonl",
+    "normal_close_owner": "Author",
+    "lease_evidence_cleanup_owner": "wolf3dorig"
+  },
+  "cleanup": [
+    "preserve the first JSONL and existing UART, delivered, console, frame and stats evidence",
+    "run the pinned offline reader without extending the session",
+    "prove the whole host idle after Author close",
+    "release the Wolf FIFO lease and immediately steer the next owner"
+  ],
+  "limits": [
+    "observer lifetime 630 seconds does not stop the emulator",
+    "no automatic input or retry",
+    "no timeout, chunk, pacing, firmware, backend, payload or consumer change",
+    "no CTS, FIFO, IRQ, PC, cause or repair inference from this staging"
+  ]
+}

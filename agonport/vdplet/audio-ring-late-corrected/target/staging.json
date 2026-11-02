@@ -1,0 +1,230 @@
+{
+  "schema": "wolf3d-corrected-late-ring-staged-profile-v1",
+  "profile": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-late-corrected-r01",
+  "stopped": true,
+  "emulator_launched": false,
+  "audio_device_opened": false,
+  "build_performed": false,
+  "measurement_mode": "late-corrected",
+  "application_sha256": "5723cd60234e46a8c34809fa8fba5f5286058f3cf7ad9d5bfc27c9f72a4d4ae7",
+  "module_sha256": "12449bab795f4fd8ecfbbb2f4c547299632bba9bda88dc7ebf4e68160aac9c63",
+  "frontend_sha256": "7e7d0e1bc89af72bde7ffbd6c06446aaefda4d1803f89eb1faf3167307ee1e01",
+  "firmware_sha256": "8d980025f891484cf7e6cc5f2992cf517cb80e0123ff7de712ae8d7f2dc1c807",
+  "firmware_elf_sha256": "1a7c44482d4ba8c5bfb49976c0bd664b9a9c2a635c7027b30954929ca567f814",
+  "mos_sha256": "d564243283972690933a4554296ad6202ca4ef54572279533a942960846bebae",
+  "backend_sha256": "943f432fecb96689f3a0d2ae80c72d08e20903dfe2a58a00ba88d8c7727ad400",
+  "helper_source_sha256": "215bd2480a224827787b651db5685342e2f9cfe68a02f984d1988b661d119d10",
+  "helper_binary_sha256": "7d9f52a705776bf9db3ab84d16fcf66902a589e3a494ff42103fda27f60315e4",
+  "runner_sha256": "f0ffe79892f9a93edc41f590bb02551583580e899b7232545253b1141962ca98",
+  "oracle_sha256": "ea4f7e644d3fb8ba21ab2545007e12f501113f22c980205d8fe4963d060f0b8d",
+  "reader_sha256": "584e9d2a9e59606a1f9ce667d59e0ff0d04dc1eb59b0681b8a5d6354835d3d12",
+  "launcher_sha256": "1731cffc37908a17f14c64936c9da16b600b61926b62b7abbd1f1842fe370b70",
+  "runtime_manifest_sha256": "a2a3e732feb6c09c5f6f445612f32ef214c6c23b3dea8499f4918b6674242a76",
+  "runtime_members": 80,
+  "unchanged_runtime_members": 78,
+  "runtime_differences_from_old_r02": [
+    "flexe-agon-emulator",
+    "flexe-vdp.so"
+  ],
+  "observer_directory": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-late-corrected-r01/ring-output-late-corrected",
+  "observer_directory_empty": true,
+  "observer_window_after_ms": 90000,
+  "shot_overlap_required": true,
+  "initial_empty_history_required": false,
+  "helper_dependency_pins": [
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "sha256": "85e64f97e348786a8fb4d9f3d52fec289e2fb86bba20f0731dfe61990525e0f7"
+    },
+    {
+      "path": "/lib64/ld-linux-x86-64.so.2",
+      "sha256": "bda779ea9e9ad234f60315477d7cfd0bdde861cd8ddd9df8cdaf62f18c4cec14"
+    }
+  ],
+  "frontend_dependency_pins": [
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libSDL3.so.0",
+      "sha256": "6c68aecb2057c78c02cb694edc691a81f92bda2b186e6e8ad156d79638c19048"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libgcc_s.so.1",
+      "sha256": "9d339ecb409578d6a5d587e6c537a8f9589b8a13fefba30d167433a4b5758bee"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+      "sha256": "85e64f97e348786a8fb4d9f3d52fec289e2fb86bba20f0731dfe61990525e0f7"
+    },
+    {
+      "path": "/lib64/ld-linux-x86-64.so.2",
+      "sha256": "bda779ea9e9ad234f60315477d7cfd0bdde861cd8ddd9df8cdaf62f18c4cec14"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+      "sha256": "1c488db6f4fe8cecb72456bc018de000b7a9b539c2994864b0416b5e8371b3d8"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libasound.so.2",
+      "sha256": "40247a1edec481d7bbb229bbad85f3574448f689c3da7efc4768d4dcc7ef2dff"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libX11.so.6",
+      "sha256": "badd43566333da97d916ab365c61227751d49cd5c0df5d49dabdbd67b8c6fd19"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXext.so.6",
+      "sha256": "9e358938dc783704b75a8a27f07b9a2cc7dfb7ff73fd05cbcfe634b8c2afc74a"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXcursor.so.1",
+      "sha256": "0d8321ceafa73ca8f3921221055051be4e4a2ad75aa59f946578182e1ca45832"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXi.so.6",
+      "sha256": "05aeb2b462c5bd22e969a47c269c7fe0c77edd7bc1e89f3f0dead169f5df222c"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXfixes.so.3",
+      "sha256": "04f371370ab65d552b214c9d57ac8b05c8fd9127b1bd55e29bd297f417241de0"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXrandr.so.2",
+      "sha256": "de834ac7818cdfd326ddea6859781780a20397ff5877508c203eb07b694a412c"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXss.so.1",
+      "sha256": "04e9f6b5706ffc0397fecce4aed3c23875346b9f770a029ecac575254219b312"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXtst.so.6",
+      "sha256": "4494cd499423eeae05077943a3c0e0adc6f6b68ce524d3b4d3c9a8c052eb52d5"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libpulse.so.0",
+      "sha256": "07882f385f01f6c8ef0beb151521a3276f6305fa1917bdb7d9008bbfefc4789e"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libfribidi.so.0",
+      "sha256": "c122a34c3e9cab264c9a07b21b75f16443a646cc8db4e84ac91e800daa7e03ce"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libdrm.so.2",
+      "sha256": "92475538cb81e1063189b9e95ba6eeca7085d4e74eb350e715b282c43ff85b21"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libgbm.so.1",
+      "sha256": "1a244b8274ae66b1d82f7dd2874ded320156b36e3bdb8b470ff43d4ec37f33ea"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libwayland-egl.so.1",
+      "sha256": "876d46c04d35fde63a9ebf9ab7bf1f39b6d1c7f5c7bbc21c74c711fccc173ad0"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libwayland-cursor.so.0",
+      "sha256": "22ea2b5f2c5290a356bb73b3c1dab09535cd2126f1227a89cca148ccfc71422d"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libwayland-client.so.0",
+      "sha256": "f27b9eecd96d76ae49ec9f7d4da17dcc43df3411ef3d432ce56d710c8b62930c"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libxkbcommon.so.0",
+      "sha256": "8b7d244ea1df8b1c073069344f8c705bab90d6b6bcafb96f1c2eccc2312f4946"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libdecor-0.so.0",
+      "sha256": "78665b57f55f602c782c01f4d7e92066a79b1418ba2ea338c3aafe7bcc348365"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libxcb.so.1",
+      "sha256": "6af94be329e17e57f1cc0f5e4afb5bdfe669a5168accdc31b03274110b937b41"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXrender.so.1",
+      "sha256": "708d1c6a5d8aa5169d61e5b79973bf012047de0fb881d2836d44b3167a1a51a5"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/pulseaudio/libpulsecommon-17.0.so",
+      "sha256": "6a374d51a541e98f124434cd9de2cae76208a82113fd94574c4314dad4f4d104"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libdbus-1.so.3",
+      "sha256": "bb0b37afa67c7b6d664ca189f63fb92e75a690a340c4c13a149cc4dfbd8249ff"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libexpat.so.1",
+      "sha256": "2e5f66e2784c2746775567ff9916f6e7503182a8f1f2deb8ca729dfc1463849f"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libffi.so.8",
+      "sha256": "1a0dc86f787f73e025a6e521056360afcbe70f2a82cd808132fefc2b4ee95daa"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXau.so.6",
+      "sha256": "2b742de65acd00f154ed156720af66c0c0af9a58360ba041f25a41e2f775fab5"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libXdmcp.so.6",
+      "sha256": "24beecbb0faf600d1a646b5edfc8c144da6f2965cb427598f4e17edc1285a733"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libsndfile.so.1",
+      "sha256": "dd944b9bf1d06df6bb1c4f730fdcb3321d114aace43f66560ece7eeb726ed1c4"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libX11-xcb.so.1",
+      "sha256": "6a9047ac83e4e1afb8032e62332aa449e7c6307c731f621054c9c0573a460899"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libsystemd.so.0",
+      "sha256": "9405c27411b652140806ab7576f7d76610f67bde662ba730efc7aa7171785011"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libasyncns.so.0",
+      "sha256": "3ac7affcdca7e7e71934378bd988de033dea97644b9e6c15454d746dda948670"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libapparmor.so.1",
+      "sha256": "fba87c63e1c716620ed844df5d2fcee7de06cbfb0895d109f9de9a9d6f0245cd"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libFLAC.so.14",
+      "sha256": "575e74dd5c9f2c3e6acfe7d3647f7dc10eb9c37f106d588c66aba8d7648aae5d"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libvorbis.so.0",
+      "sha256": "518db59c055b4754e6c07ac81e86ed30ef5dfc0c10a1d2a3cbb19eb120fe3ec5"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libvorbisenc.so.2",
+      "sha256": "66a7009084fa7eef7a21321fd5462b9e7dd355bcfcf35ddcc39852a65e600501"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libopus.so.0",
+      "sha256": "5f01eaf11e7326d83f9c341a1d943851a0b00e3444668697dd663c14b138476e"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libogg.so.0",
+      "sha256": "cb4b444d7f473530c04e31a70347bd572abd5e53a8b28e0f653fe76cf2255bc8"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libmpg123.so.0",
+      "sha256": "97c50f2bc117d0edd3721d7886809a76e92a96c9572b84549d4c34fea4fe11e0"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libmp3lame.so.0",
+      "sha256": "250a2c40cd76bd3019f00685f5cf4f5d638bd6698eb419d08560a2810a8e944a"
+    },
+    {
+      "path": "/usr/lib/x86_64-linux-gnu/libmvec.so.1",
+      "sha256": "2f2e7f4ad88e1b13f2f8345c826b25f85ba61c93527d91e59dd0d2943eac6e80"
+    }
+  ],
+  "kernel": "7.1.5-76070105-generic",
+  "boot_id": "9ba12fbc-c204-4332-9ff9-8bda03dfe2b2",
+  "preparation_sha256": "2d5c93e5851f4ab34e93fe927126bea2c65f96b2053919650e7714d6c35182f9",
+  "central_run_sha256": "da3cb10cbde6176967b65dcce29c37eabefe0274db11787c2c7f2d605dbe26c6",
+  "source_profiles": {
+    "old_late": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-r02",
+    "corrected": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-startup-r01"
+  }
+}

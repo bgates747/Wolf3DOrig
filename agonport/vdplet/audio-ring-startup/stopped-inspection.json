@@ -1,0 +1,7 @@
+{
+  "schema": "wolf3d-startup-ring-stopped-inspection-v1",
+  "machine": "oryx-linuxlite",
+  "epoch": 1793573635.6000762,
+  "emulators": [],
+  "scope": "read-only whole-host inspection after startup-ring profile staging; no checkout or run"
+}

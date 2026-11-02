@@ -1,0 +1,16 @@
+{
+  "schema": "wolf3d-startup-ring-custody-v1",
+  "owner": "wolf3dorig",
+  "task": "G057-WLF-STARTUP-RING-R01",
+  "request": "7acfd353c5e1",
+  "lease": "32fd9d9ff8c04563bdb28659f3a74ce1",
+  "generation": 75,
+  "checkout_idle_epoch": 1793574003.9467065,
+  "checkout_idle_emulators": [],
+  "released": "2026-11-01T23:02:38.860346+00:00",
+  "release_idle_epoch": 1793574152.315149,
+  "release_idle_emulators": [],
+  "next_request": null,
+  "invocations": 1,
+  "retry": false
+}

@@ -1,0 +1,18 @@
+key 40 1
+key 40 0
+key 40 1
+key 40 0
+key 40 1
+key 40 0
+key 40 1
+key 40 0
+capture /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-r02/audio-ring-run/gameplay.ppm
+capture /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-r02/audio-ring-run/gameplay.ppm
+capture /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-r02/audio-ring-run/gameplay.ppm
+capture /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-r02/audio-ring-run/gameplay.ppm
+capture /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-r02/audio-ring-run/gameplay.ppm
+key 44 1
+key 44 0
+key 41 1
+key 41 0
+quit

@@ -1,0 +1,185 @@
+{
+  "schema": "wolf3d-audio-ring-startup-session-v1",
+  "measurement_mode": "startup",
+  "scope": "host ring only; no event/sample/device/speaker attribution",
+  "outcomes": {
+    "startup": "title_ready",
+    "functional": "gameplay_ready",
+    "window": "complete_startup",
+    "finalization": "complete",
+    "cleanup": "normal_process_exit"
+  },
+  "commands": [
+    {
+      "command": "key 40 1",
+      "before_ns": 2776742086251,
+      "after_ns": 2776746974825,
+      "runner_seconds": 7.944319993
+    },
+    {
+      "command": "key 40 0",
+      "before_ns": 2776847058504,
+      "after_ns": 2776853841586,
+      "runner_seconds": 8.049292246
+    },
+    {
+      "command": "key 40 1",
+      "before_ns": 2777503933450,
+      "after_ns": 2777511257836,
+      "runner_seconds": 8.706167192
+    },
+    {
+      "command": "key 40 0",
+      "before_ns": 2777611336255,
+      "after_ns": 2777615954072,
+      "runner_seconds": 8.813569997
+    },
+    {
+      "command": "key 40 1",
+      "before_ns": 2778266059374,
+      "after_ns": 2778273393250,
+      "runner_seconds": 9.468293116
+    },
+    {
+      "command": "key 40 0",
+      "before_ns": 2778373490049,
+      "after_ns": 2778379195353,
+      "runner_seconds": 9.575723791
+    },
+    {
+      "command": "key 40 1",
+      "before_ns": 2779029295405,
+      "after_ns": 2779036241005,
+      "runner_seconds": 10.231529147
+    },
+    {
+      "command": "key 40 0",
+      "before_ns": 2779136321314,
+      "after_ns": 2779141974479,
+      "runner_seconds": 10.338555056
+    },
+    {
+      "command": "capture /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-startup-r01/audio-ring-startup-run/gameplay.ppm",
+      "before_ns": 2792009345922,
+      "after_ns": 2792015402442,
+      "runner_seconds": 23.211579664
+    },
+    {
+      "command": "capture /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-startup-r01/audio-ring-startup-run/gameplay.ppm",
+      "before_ns": 2792272182101,
+      "after_ns": 2792279198610,
+      "runner_seconds": 23.474415843
+    },
+    {
+      "command": "capture /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-startup-r01/audio-ring-startup-run/gameplay.ppm",
+      "before_ns": 2792537108476,
+      "after_ns": 2792544326503,
+      "runner_seconds": 23.739342218
+    },
+    {
+      "command": "capture /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-startup-r01/audio-ring-startup-run/gameplay.ppm",
+      "before_ns": 2792854137029,
+      "after_ns": 2792862091608,
+      "runner_seconds": 24.056370771
+    },
+    {
+      "command": "capture /home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-startup-r01/audio-ring-startup-run/gameplay.ppm",
+      "before_ns": 2793119571218,
+      "after_ns": 2793127019812,
+      "runner_seconds": 24.32180496
+    },
+    {
+      "command": "key 44 1",
+      "before_ns": 2860797875835,
+      "after_ns": 2860805542675,
+      "runner_seconds": 92.000109577
+    },
+    {
+      "command": "key 44 0",
+      "before_ns": 2860855627071,
+      "after_ns": 2860861468703,
+      "runner_seconds": 92.057860813
+    },
+    {
+      "command": "key 41 1",
+      "before_ns": 2871797861747,
+      "after_ns": 2871802573902,
+      "runner_seconds": 103.000095489
+    },
+    {
+      "command": "key 41 0",
+      "before_ns": 2871852650627,
+      "after_ns": 2871858308711,
+      "runner_seconds": 103.054884369
+    },
+    {
+      "command": "quit",
+      "before_ns": 2872110418967,
+      "after_ns": 2872117829050,
+      "runner_seconds": 103.312652709
+    }
+  ],
+  "runner_t0_ns": 2768797766258,
+  "gameplay_capture_sha256": "966739acc0ee40c618a0117b3dcb2e49568ed86b1c175866b7877674e6370987",
+  "gameplay_readiness": {
+    "ready": true,
+    "reason": "accepted",
+    "hud_blue_fraction": 0.59234375,
+    "hud_bright_fraction": 0.02984375,
+    "playfield_nonblack_fraction": 0.9635625,
+    "playfield_distinct_colours": 24
+  },
+  "gameplay_ready_ns": 2793185874953,
+  "shot_command_bracket_ns": [
+    2860797875835,
+    2860861468703
+  ],
+  "farewell_and_prompt": true,
+  "reader_returncode": 0,
+  "reader": {
+    "schema_valid": true,
+    "window_complete": true,
+    "rows": 4089,
+    "known_residence_samples": 155702,
+    "left_censored_dequeued_samples": 0,
+    "right_censored_pending_samples": 330,
+    "dequeued_real": 155702,
+    "filled127": 8171,
+    "original_drop_oldest": 0,
+    "weighted_mean_residence_ns_bounds": [
+      19286677.31119061,
+      19287097.046222914
+    ],
+    "observed_residence_min_lower_ns": 235087,
+    "observed_residence_max_upper_ns": 32066861,
+    "matched_ranges": 3977,
+    "max_observed_depth": 529,
+    "nominal_depth_seconds": 0.03228759765625,
+    "measurement": "host extracted-U8 enqueue-to-dequeue only; no firmware/event/SDL/speaker alignment"
+  },
+  "observer_window_ns": [
+    2768895646304,
+    2778895646304
+  ],
+  "observer_setup_origin_ns": 2768895646304,
+  "observer_window_after_ms": 0,
+  "startup_eligibility": {
+    "mode": "startup",
+    "shot_overlap": false,
+    "expected_shot_overlap": false,
+    "first_event_present": true,
+    "first_produced_before": 0,
+    "first_depth_before": 0,
+    "reasons": [],
+    "eligible": true
+  },
+  "shot_command_overlaps_observer_window": false,
+  "observer_summary_sha256": "3c0173e55c708613950f465fc8ca80286035c41baf6a750c10e67eb3a9d3d089",
+  "observer_events_sha256": "8d3f224f9724f7435eed40070258776a652f03fe653d1b63c8664d9951c6c02f",
+  "uart_sha256": "b99192bc81814e51a3c4538553702d15b61b51d7786201b3b649e5724bf2040e",
+  "frontend_returncode": 0,
+  "elapsed_seconds": 103.473,
+  "forced_cleanup": false,
+  "cleanup_disposition": "not_needed",
+  "session_passed": true
+}

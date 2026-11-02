@@ -1,0 +1,14 @@
+{
+  "schema": "wolf3d-gameplay-ready-v1",
+  "authority": "accepted generation-64 package layout and original HUD assets; no new emulator capture",
+  "width": 320,
+  "height": 240,
+  "hud_y": 200,
+  "hud_height": 40,
+  "hud_agnb_sha256": "b2ae0f9af36f178b8f776131c7275d7c5de28534ee684495f610b5c831e65789",
+  "minimum_hud_blue_fraction": 0.15,
+  "minimum_hud_bright_fraction": 0.02,
+  "minimum_playfield_nonblack_fraction": 0.20,
+  "minimum_playfield_distinct_colours": 6,
+  "scope": "structural gameplay-ready witness only; not pixel acceptance or event/audio evidence"
+}

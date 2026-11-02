@@ -1,0 +1,18 @@
+{
+  "schema": "wolf3d-startup-ring-oracle-v1",
+  "authority": "accepted generation-64 package layout, original HUD assets, and corrected observer empty-ring setup; no new emulator capture",
+  "width": 320,
+  "height": 240,
+  "hud_y": 200,
+  "hud_height": 40,
+  "hud_agnb_sha256": "b2ae0f9af36f178b8f776131c7275d7c5de28534ee684495f610b5c831e65789",
+  "minimum_hud_blue_fraction": 0.15,
+  "minimum_hud_bright_fraction": 0.02,
+  "minimum_playfield_nonblack_fraction": 0.20,
+  "minimum_playfield_distinct_colours": 6,
+  "observer_window_after_ms": 0,
+  "expected_first_produced_before": 0,
+  "expected_first_depth_before": 0,
+  "shot_overlap_expected": false,
+  "scope": "startup host-ring and structural gameplay witnesses only; not pixel acceptance or event/audio evidence"
+}

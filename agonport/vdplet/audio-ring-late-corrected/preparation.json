@@ -1,0 +1,71 @@
+{
+  "schema": "wolf3d-corrected-late-ring-pi-preparation-v1",
+  "status": "pi-device-free-ready",
+  "authority_sha256": "107d85f20df2796e3d8af75600e28ce120b7ae8f97f582fd2d1202d685ff08ef",
+  "plan_sha256": "5bc32ee06b1e0b3aec85391248a1b7b79e8289b90e8d1355d09f3b9286dcf33f",
+  "retained_receipts": {
+    "original_late_staging_sha256": "6f463041d7517e2e7062f2ff9bbec66f9df5f7eadf150012066cf129301b6750",
+    "corrected_startup_staging_sha256": "8abadc27c357f06975ab78a72a85c99808acaf1fe7a6e49baba649f6342b3202"
+  },
+  "proposed_profile": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-late-corrected-r01",
+  "proposed_output": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-vdplet-audio-ring-late-corrected-r01/ring-output-late-corrected",
+  "selected": {
+    "application_sha256": "5723cd60234e46a8c34809fa8fba5f5286058f3cf7ad9d5bfc27c9f72a4d4ae7",
+    "module_sha256": "12449bab795f4fd8ecfbbb2f4c547299632bba9bda88dc7ebf4e68160aac9c63",
+    "frontend_sha256": "7e7d0e1bc89af72bde7ffbd6c06446aaefda4d1803f89eb1faf3167307ee1e01",
+    "firmware_sha256": "8d980025f891484cf7e6cc5f2992cf517cb80e0123ff7de712ae8d7f2dc1c807",
+    "firmware_elf_sha256": "1a7c44482d4ba8c5bfb49976c0bd664b9a9c2a635c7027b30954929ca567f814",
+    "mos_sha256": "d564243283972690933a4554296ad6202ca4ef54572279533a942960846bebae",
+    "backend_sha256": "943f432fecb96689f3a0d2ae80c72d08e20903dfe2a58a00ba88d8c7727ad400",
+    "helper_source_sha256": "215bd2480a224827787b651db5685342e2f9cfe68a02f984d1988b661d119d10",
+    "helper_binary_sha256": "7d9f52a705776bf9db3ab84d16fcf66902a589e3a494ff42103fda27f60315e4",
+    "reader_sha256": "584e9d2a9e59606a1f9ce667d59e0ff0d04dc1eb59b0681b8a5d6354835d3d12",
+    "runner_sha256": "f0ffe79892f9a93edc41f590bb02551583580e899b7232545253b1141962ca98",
+    "oracle_sha256": "ea4f7e644d3fb8ba21ab2545007e12f501113f22c980205d8fe4963d060f0b8d"
+  },
+  "measurement": {
+    "mode": "late-corrected",
+    "observer_window_after_ms": 90000,
+    "observer_window_seconds": 10,
+    "shot_overlap_required": true,
+    "initial_empty_history_required": false,
+    "preserve_censoring": true
+  },
+  "finite_invocation": {
+    "count": 1,
+    "profile_command": "python3 runner.py",
+    "canonical_wrapper": "./flexe-agon-emulator",
+    "gameplay_ready_seconds": 85,
+    "shot_seconds": 92,
+    "escape_seconds": 103,
+    "farewell_seconds": 150,
+    "normal_exit_seconds": 15,
+    "whole_session_seconds": 180,
+    "retry": false,
+    "alternate_offset": false,
+    "extra_control": false
+  },
+  "differences_from_corrected_startup": [
+    "fresh proposed profile and output identity",
+    "observer offset 0ms becomes 90000ms",
+    "expected shot non-overlap becomes required actual overlap",
+    "initial-empty history gate is not applicable to a late window",
+    "accepted original late runner and oracle replace the startup-specific runner and oracle"
+  ],
+  "differences_from_original_late_r02": [
+    "fresh proposed profile and output identity",
+    "observer backend 0f4bdc1b... becomes corrected 943f432f..."
+  ],
+  "not_performed": {
+    "emulator": true,
+    "audio_device": true,
+    "oryx_access": true,
+    "staging": true,
+    "build": true,
+    "reservation": true,
+    "hardware": true,
+    "publication": true
+  },
+  "physical_priority_conflict": false,
+  "scope": "preparation only; no repair, matched-baseline, shot identity, or total audible-latency claim"
+}

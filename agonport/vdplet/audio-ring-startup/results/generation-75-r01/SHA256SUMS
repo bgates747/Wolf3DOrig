@@ -1,0 +1,15 @@
+b9c0c25c9424997364244329604fd6f62c68fff1fac3ef7106bcfa53618fee04  ./audio-ring-startup-run/events.txt
+e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855  ./audio-ring-startup-run/frontend.log
+966739acc0ee40c618a0117b3dcb2e49568ed86b1c175866b7877674e6370987  ./audio-ring-startup-run/gameplay.ppm
+d583101cfb93b05e512e43dd6d5bf66d9c9a35019763506f8358e584a06d42c2  ./audio-ring-startup-run/session.json
+76cc9b10da15bc3bbbd887c557a711311ef4ca70cf2cfe40bbb24bca8135f7ba  ./custody.json
+cf90a68fcfce6fa74bed834c8f67a06ffdaee700d33efe16b6c5cb65614380ca  ./host-context-after.txt
+f2ad8d6cad930632a63c32be0c0db8126f7e98990da46f8a8857b4d39479991e  ./host-context-before.txt
+b99192bc81814e51a3c4538553702d15b61b51d7786201b3b649e5724bf2040e  ./last-run/esp32-uart0.log
+5530651c14ffe1322ab9d1df733409efb99c8c0a3872d9068579fb4732fab637  ./last-run/final.ppm
+b0f1a9a1a0315d5b22e99ff0a610deef8a6838feeaf20b18436140ba42a7812f  ./last-run/mos-to-vdp.bin
+08be2e94e1c5d4f8045123d4a8781b2c75d63aba6c861885f4ad736e81cae04f  ./last-run/stats.json
+3511572d33ce8c4b8c4efbe2b74b6ef15716cfe4cb896a03a019d85af5a2becf  ./last-run/vdp-to-mos-delivered.bin
+3511572d33ce8c4b8c4efbe2b74b6ef15716cfe4cb896a03a019d85af5a2becf  ./last-run/vdp-to-mos.bin
+8d3f224f9724f7435eed40070258776a652f03fe653d1b63c8664d9951c6c02f  ./ring-output-startup/ring-events.csv
+3c0173e55c708613950f465fc8ca80286035c41baf6a750c10e67eb3a9d3d089  ./ring-output-startup/ring-summary.json

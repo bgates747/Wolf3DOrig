@@ -1,0 +1,16 @@
+{
+  "schema": "wolf3d-audio-ring-custody-v1",
+  "owner": "wolf3dorig",
+  "task": "G057-WLF-AUDIO-RING-R02",
+  "request": "5366f6a34b90",
+  "lease": "1676c32b57224d60a88897a68bd42489",
+  "generation": 71,
+  "checkout_idle_epoch": 1793567913.410119,
+  "checkout_idle_emulators": [],
+  "released": "2026-11-01T21:21:31.576218+00:00",
+  "release_idle_epoch": 1793568087.054248,
+  "release_idle_emulators": [],
+  "next_request": null,
+  "invocations": 1,
+  "retry": false
+}

@@ -1,0 +1,540 @@
+2026-11-01T18:00:29,667776625-05:00
+Linux oryx-linuxlite 7.1.5-76070105-generic #202607241434~1787955069~26.04~9520501~dev SMP PREEMPT_DYNAMIC F x86_64 GNU/Linux
+9ba12fbc-c204-4332-9ff9-8bda03dfe2b2
+ 18:00:29 up 46 min,  2 users,  load average: 1.01, 1.31, 1.14
+1.01 1.31 1.14 1/2174 22305
+               total        used        free      shared  buff/cache   available
+Mem:     32887541760 10637168640 16865595392   319950848  5050396672 22250373120
+Swap:    34359734272           0 34359734272
+    PID    PPID STAT %CPU %MEM COMMAND         COMMAND
+  22300   22299 Rs   50.0  0.0 ps              ps -eo pid,ppid,stat,pcpu,pmem,comm,args --sort=-pcpu
+  11294   10900 Sl   15.0  2.7 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --owl-scoped-user-agent-additional-hosts=openai.com,chatgpt.com,chatgpt.site,chatgpt-team.site --owl-scoped-user-agent-prefix=CodexBrowser --change-stack-guard-on-fork=enable --ozone-platform=x11 --enable-blink-features=WebMCP --disable-blink-features=ReplacedNormalFlowStackingInlinePaint --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=5 --launch-time-ticks=56825641 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,10355636616541281645,11706449803213239400,1572864 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190708990997080739 --force-fieldtrials=WebRTC-Sctp-Snap/Enabled/WebRTC-IceHandshakeDtls/Enabled/WebRTC-ForceDtls13/Enabled/
+  18868    5456 Sl   13.2  2.0 thunderbird     /usr/lib/thunderbird/thunderbird
+  12888    4184 Sl   10.4  2.9 firefox         /usr/lib/firefox/firefox
+  11015   10893 Sl    9.4  0.6 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=gpu-process --gpu-recent-crash-count=0 --ozone-platform=x11 --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --change-stack-guard-on-fork=enable --gpu-preferences=YAAAAAAAAAAgAQAEAAAAAAAAAAAAAGAASAAAAAAAAAABAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAEAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --metrics-shmem-handle=4,i,4497965257850999572,6698715241129250129,262144 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190708988185955192
+  13792   13012 Sl    4.7  2.4 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {28e91f49-7563-4d65-969d-0fec6b909f7c} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 11 tab
+   1517    1489 Ssl+  4.1  0.6 Xorg            /usr/lib/xorg/Xorg :0 -seat seat0 -auth /var/run/lightdm/root/:0 -nolisten tcp vt7 -novtswitch
+  14367   13012 Sl    3.2  1.9 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {8e9899b6-6b29-4615-9517-973c1208bf0a} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 14 tab
+   2191    2164 S<sl  3.0  0.1 pulseaudio      /usr/bin/pulseaudio --daemonize=no --log-target=journal
+  10883    4184 Sl    2.8  1.6 ChatGPT         /usr/lib/chatgpt/ChatGPT
+   2897    2844 Sl    2.3  0.4 xfwm4           xfwm4
+  16320   13012 Sl    2.3  1.7 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {ed0414d7-4c59-45ce-85c5-43c8b94f1023} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 20 tab
+  13683   13012 Sl    1.7  2.3 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {90e46910-c805-48bf-af45-52536aaf8ec8} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 8 tab
+  13599   13012 Sl    1.1  1.0 WebExtensions   /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:39779 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {22baf366-8065-436b-b3b1-38aca0d9f1f0} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 6 tab
+  19946   13012 Sl    0.9  1.0 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {cb488e27-a0de-4acb-870c-4056fdf98b9e} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 22 tab
+  13901   13012 Sl    0.9  1.5 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {74eea434-5c0d-4402-adf4-8964bc36f64c} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 13 tab
+  16775       2 I     0.8  0.0 kworker/4:0-eve [kworker/4:0-events]
+  13802   13012 Sl    0.8  0.6 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {d92d3105-0eca-41fd-954d-e58805fe1c48} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 12 tab
+  11684   10900 Sl    0.7  1.1 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --owl-scoped-user-agent-additional-hosts=openai.com,chatgpt.com,chatgpt.site,chatgpt-team.site --owl-scoped-user-agent-prefix=CodexBrowser --change-stack-guard-on-fork=enable --ozone-platform=x11 --enable-blink-features=WebMCP --disable-blink-features=ReplacedNormalFlowStackingInlinePaint --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=9 --launch-time-ticks=59568125 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,83286074209815879,1277148369557875224,1572864 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190708994745248135
+  19953   13012 Sl    0.7  0.6 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {a24ebceb-5ab3-4cff-9ede-d09f7224903f} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 23 tab
+  21710       2 I     0.5  0.0 kworker/u96:3-d [kworker/u96:3-dm_vblank_control_workqueue]
+  13278   13012 Sl    0.5  0.8 Privileged Cont /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:39667 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {14d9a904-21c3-4744-8019-762f949ca7b0} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 3 tab
+  13790   13012 Sl    0.4  1.9 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {3241a1da-7433-4648-b512-7300ac502725} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 10 tab
+  15458   13012 Sl    0.4  0.3 Isolated Servic /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {55de7257-6c15-4c6a-a07f-8d519b7ac3cf} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 15 tab
+  20184       2 I     0.4  0.0 kworker/u96:0-g [kworker/u96:0-gfx_0.0.0]
+  12580   10900 Sl    0.4  1.1 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --owl-scoped-user-agent-additional-hosts=openai.com,chatgpt.com,chatgpt.site,chatgpt-team.site --owl-scoped-user-agent-prefix=CodexBrowser --change-stack-guard-on-fork=enable --ozone-platform=x11 --enable-blink-features=WebMCP --disable-blink-features=ReplacedNormalFlowStackingInlinePaint --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=19 --launch-time-ticks=66703390 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,1394946805335488948,13592398186689972228,1572864 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190709004115666625
+  15871   13012 Sl    0.3  0.9 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {a195d283-5baf-45b7-be6a-407faaef0c7b} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 17 tab
+  16254       2 I     0.3  0.0 kworker/u96:2-s [kworker/u96:2-sdma0]
+  15952   13012 Sl    0.3  1.1 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {c1724c75-44c1-416c-9812-64cc195b3f0e} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 18 tab
+  12327   10900 Sl    0.3  1.0 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --owl-scoped-user-agent-additional-hosts=openai.com,chatgpt.com,chatgpt.site,chatgpt-team.site --owl-scoped-user-agent-prefix=CodexBrowser --change-stack-guard-on-fork=enable --ozone-platform=x11 --enable-blink-features=WebMCP --disable-blink-features=ReplacedNormalFlowStackingInlinePaint --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=12 --launch-time-ticks=66235455 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,5436059607279016154,8362361606025886869,1572864 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190708997556373682 --force-fieldtrials=WebRTC-Sctp-Snap/Enabled/WebRTC-IceHandshakeDtls/Enabled/WebRTC-ForceDtls13/Enabled/
+  22068   13012 Sl    0.3  0.2 Web Content     /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {6771f1ac-855c-44cf-9721-cc931b11d735} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 27 tab
+  15360       2 I     0.2  0.0 kworker/u96:1-g [kworker/u96:1-gfx_0.0.0]
+  11423   10883 Sl    0.1  0.6 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=utility --utility-sub-type=node.mojom.NodeService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,5631525715587830408,9913383096352401017,524288 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190708992871164437
+    237       2 I     0.1  0.0 kworker/u97:5-f [kworker/u97:5-flush-259:0]
+  21377       2 I     0.1  0.0 kworker/u98:0-e [kworker/u98:0-events_unbound]
+    360       2 S     0.1  0.0 irq/69-FTCS1041 [irq/69-FTCS1041:00]
+     15       2 I     0.1  0.0 rcu_preempt     [rcu_preempt]
+  16520       2 I     0.1  0.0 kworker/u98:2-e [kworker/u98:2-events_unbound]
+  14497       2 I     0.1  0.0 kworker/u97:6-e [kworker/u97:6-events_power_efficient]
+    171       2 I     0.1  0.0 kworker/u97:2-e [kworker/u97:2-events_unbound]
+  14835    2164 SNsl  0.1  0.0 python3         /usr/bin/python3 /home/smith/.local/lib/oryx-battery-monitor/monitor.py
+  15958   13012 Sl    0.1  0.6 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {db64f48d-2b9c-4335-acc6-da44633b8713} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 19 tab
+  15273       2 I     0.1  0.0 kworker/u98:1-w [kworker/u98:1-writeback]
+  11017   10883 Sl    0.1  0.4 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --owl-scoped-user-agent-additional-hosts=openai.com,chatgpt.com,chatgpt.site,chatgpt-team.site --owl-scoped-user-agent-prefix=CodexBrowser --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,10253171082142170812,15336000405162086547,524288 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190708989122997041
+   4184    2844 Sl    0.1  0.2 xfce4-panel     xfce4-panel
+  11321   10883 Sl    0.1  0.6 codex           /usr/lib/chatgpt/resources/codex -c features.code_mode_host=true app-server --analytics-default-enabled -c plugins.codex-app-tools@openai-bundled.mcp_servers.codex_app.enabled=true
+  16426       2 I     0.1  0.0 kworker/u97:0-e [kworker/u97:0-events_unbound]
+  11821   10900 Sl    0.1  0.5 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --owl-scoped-user-agent-additional-hosts=openai.com,chatgpt.com,chatgpt.site,chatgpt-team.site --owl-scoped-user-agent-prefix=CodexBrowser --change-stack-guard-on-fork=enable --ozone-platform=x11 --enable-blink-features=WebMCP --disable-blink-features=ReplacedNormalFlowStackingInlinePaint --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=11 --launch-time-ticks=61391439 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,15955459889315679531,4187618852901222193,1572864 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190708996619331833 --force-fieldtrials=WebRTC-Sctp-Snap/Enabled/WebRTC-IceHandshakeDtls/Enabled/WebRTC-ForceDtls13/Enabled/
+  14498       2 I     0.0  0.0 kworker/u98:6-e [kworker/u98:6-events_unbound]
+    179       2 S     0.0  0.0 irq/9-acpi      [irq/9-acpi]
+   5681    4184 Sl    0.0  0.1 wrapper-2.0     /usr/lib/x86_64-linux-gnu/xfce4/panel/wrapper-2.0 /usr/lib/x86_64-linux-gnu/xfce4/panel/plugins/libdatetime.so 7 16777227 datetime DateTime Date and Time plugin with a simple calendar
+  15498   13012 Sl    0.0  0.4 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {55326573-17af-4856-8ffd-06b0edc66e05} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 16 tab
+  21389       2 I     0.0  0.0 kworker/u97:1-e [kworker/u97:1-ext4-rsv-conversion]
+  13745   13012 Sl    0.0  0.4 Isolated Web Co /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {d7895dd6-7d07-4cad-a13e-23620b1702b6} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 9 tab
+  19453   18868 Sl    0.0  0.3 Isolated Web Co /usr/lib/thunderbird/thunderbird -contentproc -isForBrowser -prefsHandle 0:9922 -prefMapHandle 1:282664 -jsInitHandle 2:242832 -parentBuildID 20260929234105 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {91592bc6-d882-4523-8397-fe1f9cad03fe} -parentPid 18868 -crashReporter 6 -greomni /usr/lib/thunderbird/omni.ja -appDir /usr/lib/thunderbird 1 tab
+   5456    4184 Sl    0.0  0.1 wrapper-2.0     /usr/lib/x86_64-linux-gnu/xfce4/panel/wrapper-2.0 /usr/lib/x86_64-linux-gnu/xfce4/panel/plugins/libwhiskermenu.so 10 16777223 whiskermenu Lite Whisker Menu Show a menu to easily access installed applications
+  20022   13012 Sl    0.0  0.2 Isolated Servic /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {5af0bd3d-fa70-4b16-a3f3-765e680b2a64} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 24 tab
+  11549   10883 S     0.0  0.0 ssh             /usr/bin/ssh -T -v -o BatchMode=yes -o ServerAliveInterval=15 -o ServerAliveCountMax=12 -o ControlMaster=no -o ControlPath=none -o ExitOnForwardFailure=yes -R 127.0.0.1:36797:127.0.0.1:36797 raspberrypi sh -c 'if [ -z "$SHELL" ] || [ ! -x "$SHELL" ]; then echo "Codex remote SSH requires SHELL to point to an executable login shell" >&2; exit 127; fi; CODEX_REMOTE_PAYLOAD="$1"; export CODEX_REMOTE_PAYLOAD; case "${SHELL##*/}" in csh|tcsh) exec "$SHELL" -i -c '\''set loginsh=1; if ( -r /etc/csh.login ) source /etc/csh.login; if ( -r ~/.login ) source ~/.login; exec /bin/sh -c "$CODEX_REMOTE_PAYLOAD"'\'' ;; nu) exec "$SHELL" -l -i -c '\''exec /bin/sh -c $env.CODEX_REMOTE_PAYLOAD'\'' ;; fish|xonsh) exec "$SHELL" -l -i -c '\''exec /bin/sh -c "$CODEX_REMOTE_PAYLOAD"'\'' ;; *) exec "$SHELL" -l -i -c '\''CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"; export CODEX_HOME; exec /bin/sh -c "$CODEX_REMOTE_PAYLOAD"'\'' ;; esac' sh 'printf '\''%b'\'' '\''\255\272\037\063\003\007\315\132'\''; PATH="${CODEX_INSTALL_DIR:-$HOME/.local/bin}:$PATH"; export PATH; listeners=$(awk '\''$4 == "0A" && $2 ~ /:8FBD$/ {print $2}'\'' /proc/net/tcp /proc/net/tcp6) || exit 1 [ "$listeners" = '\''0100007F:8FBD'\'' ] || exit 1 if [ -S "${SSH_AUTH_SOCK:-}" ]; then ln -sfn -- "$SSH_AUTH_SOCK" "${CODEX_HOME:-$HOME/.codex}/app-server-control/forwarded-ssh-agent.sock"; elif [ ! -S "${CODEX_HOME:-$HOME/.codex}/app-server-control/forwarded-ssh-agent.sock" ]; then rm -f -- "${CODEX_HOME:-$HOME/.codex}/app-server-control/forwarded-ssh-agent.sock"; fi && exec codex app-server proxy'
+  20825   13012 Sl    0.0  0.2 Web Content     /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {25dd6677-25ea-4cba-91f6-3bd44aeb00be} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 26 tab
+  20764   13012 Sl    0.0  0.2 Web Content     /usr/lib/firefox/firefox -contentproc -isForBrowser -prefsHandle 0:52755 -prefMapHandle 1:302075 -jsInitHandle 2:161360 -parentBuildID 20261022150525 -sandboxReporter 3 -chrootClient 4 -ipcHandle 5 -initialChannelId {a899678d-8752-4973-8e46-2b27c73a2560} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 25 tab
+    917       1 Ss    0.0  0.0 system76-power  /usr/bin/system76-power daemon
+      1       0 Ss    0.0  0.0 systemd         /sbin/init splash
+   5451    2844 Sl    0.0  0.2 xfdesktop       xfdesktop
+   5647    4184 Sl    0.0  0.1 wrapper-2.0     /usr/lib/x86_64-linux-gnu/xfce4/panel/wrapper-2.0 /usr/lib/x86_64-linux-gnu/xfce4/panel/plugins/libsystray.so 15 16777225 systray Status Tray Plugin Provides status notifier items (application indicators) and legacy systray items
+   5604    2844 Sl    0.0  0.1 nm-applet       nm-applet
+  12968   12888 Sl    0.0  0.1 Socket Process  /usr/lib/firefox/firefox -contentproc -parentBuildID 20261022150525 -prefsHandle 0:39138 -prefMapHandle 1:302075 -sandboxReporter 2 -chrootClient 3 -ipcHandle 4 -initialChannelId {c5473b2a-39cb-48ca-a8ee-1571f4905aa6} -parentPid 12888 -appDir /usr/lib/firefox/browser 1 socket
+   2844    2195 Sl    0.0  0.1 xfce4-session   /usr/bin/xfce4-session
+    921       1 Ss    0.0  0.0 dbus-daemon     @dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+   5528    2844 Sl    0.0  0.1 xfce4-screensav xfce4-screensaver
+   5652       1 S     0.0  0.1 python3         python3 /usr/lib/myai/server.py
+  11293   10900 Sl    0.0  0.4 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --owl-scoped-user-agent-additional-hosts=openai.com,chatgpt.com,chatgpt.site,chatgpt-team.site --owl-scoped-user-agent-prefix=CodexBrowser --change-stack-guard-on-fork=enable --ozone-platform=x11 --enable-blink-features=WebMCP --disable-blink-features=ReplacedNormalFlowStackingInlinePaint --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=6 --launch-time-ticks=56823976 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,1545987444756966046,3555879214077638260,1572864 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190708991934122588
+  12131   10883 Sl    0.0  0.5 MainThread      /home/smith/.config/Codex/artifact-sessions/runtime-generations/generation-ba6Ztg/runtime/bin/node /home/smith/.config/Codex/artifact-sessions/runtime-generations/generation-ba6Ztg/runtime/node_modules/@oai/artifact-tool/dist/artifact-session/host-daemon.mjs
+   5514       1 Ssl   0.0  0.1 fwupd           /usr/libexec/fwupd/fwupd
+    911       1 Ss    0.0  0.0 acpid           /usr/sbin/acpid
+  12016   10883 Sl    0.0  0.2 codex           /usr/lib/chatgpt/resources/codex -c forced_login_method="chatgpt" exec-server --remote https://codex-cloud-environments.chatgpt.com/api --environment-id ccarenv_b64_Y2NhcmVudl82YWNhZGJiOGE4OTQ4MTkxOWNhMTRkN2ZkNmQ4OGM2MA
+   5625    2164 Ssl   0.0  0.1 xfce4-notifyd   /usr/lib/x86_64-linux-gnu/xfce4/notifyd/xfce4-notifyd
+    359       2 S     0.0  0.0 system76-polld  [system76-polld]
+   2193    2164 Ss    0.0  0.0 dbus-daemon     /usr/bin/dbus-daemon --session --address=systemd: --nofork --nopidfile --systemd-activation --syslog-only
+   4176    2844 Sl    0.0  0.1 xfsettingsd     xfsettingsd
+    974       1 Ssl   0.0  0.1 snapd           /usr/lib/snapd/snapd
+     18       2 S     0.0  0.0 migration/0     [migration/0]
+   2164       1 Ss    0.0  0.0 systemd         /usr/lib/systemd/systemd --user
+   1113       1 Ssl   0.0  0.0 NetworkManager  /usr/sbin/NetworkManager --no-daemon
+    147       2 I     0.0  0.0 kworker/21:0-mm [kworker/21:0-mm_percpu_wq]
+    475       1 S<s   0.0  0.0 systemd-journal /usr/lib/systemd/systemd-journald
+     90       2 S     0.0  0.0 migration/12    [migration/12]
+   1346       1 Ssl   0.0  0.0 canonical-livep /snap/canonical-livepatch/418/canonical-livepatchd
+    499       2 I     0.0  0.0 kworker/5:2-eve [kworker/5:2-events]
+   2878    2164 Sl    0.0  0.0 at-spi2-registr /usr/libexec/at-spi2-registryd --use-gnome-session
+   1368       1 SLs   0.0  0.0 ntpd            /usr/sbin/ntpd -p /run/ntpd.pid -c /etc/ntpsec/ntp.conf -g -u ntpsec:ntpsec
+    418       2 S     0.0  0.0 jbd2/nvme0n1p5- [jbd2/nvme0n1p5-8]
+   2021       1 Ssl   0.0  0.0 upowerd         /usr/libexec/upowerd
+     24       2 S     0.0  0.0 migration/1     [migration/1]
+     42       2 S     0.0  0.0 migration/4     [migration/4]
+    965       1 Ssl   0.0  0.0 polkitd         /usr/lib/polkit-1/polkitd --no-debug --log-level=notice
+    948       1 Ssl   0.0  0.0 irqbalance      /usr/sbin/irqbalance
+   5524    2844 Sl    0.0  0.2 python3         python3 /usr/bin/lite-update-tray
+   5526    2844 Sl    0.0  0.0 xfce4-power-man xfce4-power-manager
+  11539   10883 Sl    0.0  0.3 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=utility --utility-sub-type=audio.mojom.AudioService --lang=en-US --service-sandbox-type=none --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,2090773838630666314,9340388442453453157,524288 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190708993808206286
+  16224   16223 Sl    0.0  0.0 glycin-image-rs /usr/libexec/glycin-loaders/2+/glycin-image-rs --dbus-fd 196
+  11030   10900 Sl    0.0  0.1 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=utility --utility-sub-type=storage.mojom.StorageService --lang=en-US --service-sandbox-type=utility --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --change-stack-guard-on-fork=enable --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,8940978558673894384,9673662786648826027,524288 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190708990060038890
+    983       1 Ss    0.0  0.0 systemd-logind  /usr/lib/systemd/systemd-logind
+     30       2 S     0.0  0.0 migration/2     [migration/2]
+   5669    4184 Sl    0.0  0.1 wrapper-2.0     /usr/lib/x86_64-linux-gnu/xfce4/panel/wrapper-2.0 /usr/lib/x86_64-linux-gnu/xfce4/panel/plugins/libpulseaudio-plugin.so 8 16777226 pulseaudio PulseAudio Plugin Adjust the audio volume of the PulseAudio sound system
+     97       2 S     0.0  0.0 migration/13    [migration/13]
+  14436   14422 Sl    0.0  0.0 sd_dummy        /usr/lib/speech-dispatcher-modules/sd_dummy /etc/speech-dispatcher/modules/dummy.conf
+    519       1 Ss    0.0  0.0 systemd-udevd   /usr/lib/systemd/systemd-udevd
+  12526   10900 Sl    0.0  0.4 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --owl-scoped-user-agent-additional-hosts=openai.com,chatgpt.com,chatgpt.site,chatgpt-team.site --owl-scoped-user-agent-prefix=CodexBrowser --change-stack-guard-on-fork=enable --ozone-platform=x11 --enable-blink-features=WebMCP --disable-blink-features=ReplacedNormalFlowStackingInlinePaint --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=15 --launch-time-ticks=66582892 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,3719006492833782775,14411622736899634598,1572864 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190709000367499229
+     36       2 S     0.0  0.0 migration/3     [migration/3]
+     48       2 S     0.0  0.0 migration/5     [migration/5]
+  14504       2 I     0.0  0.0 kworker/6:0-mm_ [kworker/6:0-mm_percpu_wq]
+   5483    2164 Ssl   0.0  0.0 gvfsd-metadata  /usr/libexec/gvfsd-metadata
+  19457   18868 Sl    0.0  0.1 RDD Process     /usr/lib/thunderbird/thunderbird -contentproc -parentBuildID 20260929234105 -prefsHandle 0:17851 -prefMapHandle 1:282664 -sandboxReporter 2 -chrootClient 3 -ipcHandle 4 -initialChannelId {b8c3b68e-3de1-4baa-bb9c-0f21ce7f1a8c} -parentPid 18868 -crashReporter 5 -appDir /usr/lib/thunderbird 2 rdd
+  14422    2164 Ssl   0.0  0.0 speech-dispatch /usr/bin/speech-dispatcher -s -t 0
+   5557    2844 S     0.0  0.1 applet.py       /usr/bin/python3 /usr/share/system-config-printer/applet.py
+    913       1 Ss    0.0  0.0 avahi-daemon    avahi-daemon: running [oryx-linuxlite.local]
+   6116    6103 Sl    0.0  0.0 glycin-image-rs /usr/libexec/glycin-loaders/2+/glycin-image-rs --dbus-fd 20
+   2870    2863 S     0.0  0.0 dbus-daemon     /usr/bin/dbus-daemon --config-file=/usr/share/defaults/at-spi2/accessibility.conf --nofork --print-address 11 --address=unix:path=/run/user/1000/at-spi/bus_0
+     54       2 S     0.0  0.0 migration/6     [migration/6]
+   6681    2164 Ssl   0.0  0.0 xdg-desktop-por /usr/libexec/xdg-desktop-portal-gtk
+    522       1 Ss    0.0  0.0 systemd-resolve /usr/lib/systemd/systemd-resolved
+    238       2 I     0.0  0.0 kworker/1:2-rcu [kworker/1:2-rcu_gp]
+     60       2 S     0.0  0.0 migration/7     [migration/7]
+   5597    2844 Sl    0.0  0.0 polkit-gnome-au /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1
+   5563    2844 S     0.0  0.1 system76-user-d /usr/bin/python3 /usr/lib/system76-driver/system76-user-daemon
+   1311       2 I     0.0  0.0 kworker/13:2-ev [kworker/13:2-events]
+    976       1 Ssl   0.0  0.0 switcheroo-cont /usr/libexec/switcheroo-control
+     66       2 S     0.0  0.0 migration/8     [migration/8]
+  16124       2 I     0.0  0.0 kworker/14:2-ev [kworker/14:2-events]
+     72       2 S     0.0  0.0 migration/9     [migration/9]
+     78       2 S     0.0  0.0 migration/10    [migration/10]
+  20364       2 I     0.0  0.0 kworker/6:1-eve [kworker/6:1-events]
+  13244   10900 Sl    0.0  0.4 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --owl-scoped-user-agent-additional-hosts=openai.com,chatgpt.com,chatgpt.site,chatgpt-team.site --owl-scoped-user-agent-prefix=CodexBrowser --change-stack-guard-on-fork=enable --ozone-platform=x11 --enable-blink-features=WebMCP --disable-blink-features=ReplacedNormalFlowStackingInlinePaint --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=22 --launch-time-ticks=69709406 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,12531017884487835286,7494471128217388632,1572864 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190709006926792172
+    985       1 Ssl   0.0  0.0 udisksd         /usr/libexec/udisks2/udisksd
+    910       1 Ssl   0.0  0.0 accounts-daemon /usr/libexec/accounts-daemon
+     84       2 S     0.0  0.0 migration/11    [migration/11]
+  19639       2 I     0.0  0.0 kworker/3:0-eve [kworker/3:0-events]
+    981       1 Ss    0.0  0.0 system76-firmwa /usr/lib/system76-firmware/system76-firmware-daemon
+  19617       2 I     0.0  0.0 kworker/7:1-eve [kworker/7:1-events]
+   6144    2164 Ssl   0.0  0.0 gvfs-afc-volume /usr/libexec/gvfs-afc-volume-monitor
+    961       1 Ss    0.0  0.0 networkd-dispat /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+    979       1 Ss    0.0  0.0 system76-daemon /usr/bin/python3 /usr/lib/system76-driver/system76-daemon
+  15266       2 I     0.0  0.0 kworker/0:1-cgr [kworker/0:1-cgroup_bpf_destroy]
+  14837   14835 SNl   0.0  0.0 upower          /usr/bin/upower --monitor-detail
+   2094       1 Ss    0.0  0.0 nmbd            /usr/sbin/nmbd --foreground --no-process-group
+   1117       1 Ss    0.0  0.0 wpa_supplicant  /usr/sbin/wpa_supplicant -u -s -O DIR=/run/wpa_supplicant GROUP=netdev
+   1120       1 Ssl   0.0  0.0 rsyslogd        /usr/sbin/rsyslogd -n -iNONE
+    368       2 I     0.0  0.0 kworker/8:2-mm_ [kworker/8:2-mm_percpu_wq]
+    357       2 S     0.0  0.0 usb-storage     [usb-storage]
+    115       2 S     0.0  0.0 migration/16    [migration/16]
+    121       2 S     0.0  0.0 migration/17    [migration/17]
+    127       2 S     0.0  0.0 migration/18    [migration/18]
+    139       2 S     0.0  0.0 migration/20    [migration/20]
+  16436       2 I     0.0  0.0 kworker/2:1-eve [kworker/2:1-events]
+  13655   13012 Sl    0.0  0.1 Utility Process /usr/lib/firefox/firefox -contentproc -parentBuildID 20261022150525 -sandboxingKind 0 -prefsHandle 0:57715 -prefMapHandle 1:302075 -sandboxReporter 2 -chrootClient 3 -ipcHandle 4 -initialChannelId {0ceaed00-4c03-40bf-b100-dea23527a9a2} -parentPid 12888 -appDir /usr/lib/firefox/browser 7 utility
+   1327       2 I     0.0  0.0 kworker/23:3-ev [kworker/23:3-events]
+    173       2 S     0.0  0.0 kcompactd0      [kcompactd0]
+    133       2 S     0.0  0.0 migration/19    [migration/19]
+    145       2 S     0.0  0.0 migration/21    [migration/21]
+    151       2 S     0.0  0.0 migration/22    [migration/22]
+    157       2 S     0.0  0.0 migration/23    [migration/23]
+     14       2 S     0.0  0.0 ksoftirqd/0     [ksoftirqd/0]
+  13287   13012 Sl    0.0  0.3 RDD Process     /usr/lib/firefox/firefox -contentproc -parentBuildID 20261022150525 -prefsHandle 0:39667 -prefMapHandle 1:302075 -sandboxReporter 2 -chrootClient 3 -ipcHandle 4 -initialChannelId {733b47c4-179f-40f4-a21b-56f64ccae48a} -parentPid 12888 -appDir /usr/lib/firefox/browser 4 rdd
+  12859       2 I     0.0  0.0 kworker/7:2-eve [kworker/7:2-events]
+   7780       2 I     0.0  0.0 kworker/9:2-eve [kworker/9:2-events]
+   4894    2844 Sl    0.0  0.1 Thunar          Thunar --daemon
+   1266       2 I     0.0  0.0 kworker/15:3-ev [kworker/15:3-events]
+   1128       1 Ssl   0.0  0.0 ModemManager    /usr/sbin/ModemManager
+   1130       1 Ssl   0.0  0.0 boltd           /usr/libexec/boltd
+   1116       2 I     0.0  0.0 kworker/10:2-mm [kworker/10:2-mm_percpu_wq]
+    205       2 I     0.0  0.0 kworker/16:1-ev [kworker/16:1-events]
+   1372       1 Ss    0.0  0.0 sshd            sshd: /usr/sbin/sshd -D [listener] 0 of 10-100 startups
+    925       2 I     0.0  0.0 kworker/19:2-ev [kworker/19:2-events]
+    207       2 I     0.0  0.0 kworker/20:1-ev [kworker/20:1-events]
+    209       2 I     0.0  0.0 kworker/22:1-mm [kworker/22:1-mm_percpu_wq]
+    210       2 I     0.0  0.0 kworker/18:1-ev [kworker/18:1-events]
+     86       2 I     0.0  0.0 kworker/11:0-ev [kworker/11:0-events]
+  19542       2 I     0.0  0.0 kworker/12:1-ev [kworker/12:1-events]
+  15311       2 I     0.0  0.0 kworker/17:0-ev [kworker/17:0-events]
+  13265   10900 Sl    0.0  0.2 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=renderer --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --standard-schemes=app,codex-sandbox --service-worker-schemes=codex-sandbox --secure-schemes=app,codex-sandbox --fetch-schemes=app,codex-sandbox --cors-schemes=codex-sandbox --streaming-schemes=app,codex-sandbox --owl-scoped-user-agent-additional-hosts=openai.com,chatgpt.com,chatgpt.site,chatgpt-team.site --owl-scoped-user-agent-prefix=CodexBrowser --change-stack-guard-on-fork=enable --ozone-platform=x11 --enable-blink-features=WebMCP --disable-blink-features=ReplacedNormalFlowStackingInlinePaint --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=23 --launch-time-ticks=69745890 --shared-files=v8_context_snapshot_data:100 --metrics-shmem-handle=4,i,1256017923599919415,13852791116108507304,1572864 --field-trial-handle=3,i,3212525991010204055,1443214034664660369,262144 --enable-features=DevToolsWebMCPSupport,DocumentPolicyIncludeJSCallStacksInCrashReports,ReportStuckThrottle --disable-features=DropInputEventsWhilePaintHolding,OwlNativeCaret,WebUIOmniboxAimPopup,WebUIOmniboxPopup --variations-seed-version --pseudonymization-salt-handle=7,i,299908106947796381,8320182403708931647,4 --trace-process-track-uuid=3190709007863834021
+  13012   12888 S     0.0  0.1 forkserver      /usr/lib/firefox/firefox -contentproc -ipcHandle 0 -signalPipe 1 -initialChannelId {59c53043-5654-41da-bb72-8a13fe4bd333} -parentPid 12888 -greomni /usr/lib/firefox/omni.ja -appomni /usr/lib/firefox/browser/omni.ja -appDir /usr/lib/firefox/browser 2 forkserver
+   6336    2164 Ssl   0.0  0.0 xdg-desktop-por /usr/libexec/xdg-desktop-portal
+   2104       1 Ss    0.0  0.0 smbd            /usr/sbin/smbd --foreground --no-process-group
+   1379       1 Ssl   0.0  0.0 colord          /usr/libexec/colord
+    711       2 S     0.0  0.0 irq/108-iwlwifi [irq/108-iwlwifi:default_queue]
+    223       2 S     0.0  0.0 hwrng           [hwrng]
+  16732       2 I     0.0  0.0 kworker/0:2-cgr [kworker/0:2-cgroup_release]
+   2894    2164 SLsl  0.0  0.0 gpg-agent       /usr/bin/gpg-agent --supervised
+   2190    2164 Ss    0.0  0.0 ssh             /usr/bin/ssh -NT -o BatchMode=yes -o ExitOnForwardFailure=yes -o ServerAliveInterval=30 -o ServerAliveCountMax=3 -L 127.0.0.1:1445:127.0.0.1:445 raspberrypi
+   2079       1 Ssl   0.0  0.0 cups-browsed    /usr/sbin/cups-browsed
+   1586       1 SNsl  0.0  0.0 rtkit-daemon    /usr/libexec/rtkit-daemon
+    103       2 S     0.0  0.0 migration/14    [migration/14]
+    109       2 S     0.0  0.0 migration/15    [migration/15]
+     17       2 S     0.0  0.0 rcu_exp_gp_kthr [rcu_exp_gp_kthread_worker]
+  16510       2 I     0.0  0.0 kworker/15:1-ev [kworker/15:1-events]
+  16434       2 I     0.0  0.0 kworker/3:2-eve [kworker/3:2-events]
+  16221   12888 S     0.0  0.0 bwrap           bwrap --unshare-all --die-with-parent --chdir / --ro-bind /usr /usr --dev /dev --ro-bind-try /etc/ld.so.cache /etc/ld.so.cache --ro-bind-try /nix/store /nix/store --tmpfs /tmp-home --tmpfs /tmp-run --clearenv --setenv HOME /tmp-home --setenv XDG_RUNTIME_DIR /tmp-run --setenv XDG_RUNTIME_DIR /run/user/1000 --symlink /usr/lib64 /lib64 --symlink /usr/libx32 /libx32 --symlink /usr/lib32 /lib32 --symlink /usr/lib /lib --seccomp 203 /usr/libexec/glycin-loaders/2+/glycin-image-rs --dbus-fd 196
+  10900   10894 S     0.0  0.0 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=zygote --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --change-stack-guard-on-fork=enable
+   2195    1908 Ss    0.0  0.0 xfce4-session   /bin/bash /usr/local/bin/xfce4-session
+   1489       1 SLsl  0.0  0.0 lightdm         /usr/sbin/lightdm
+    916       1 Ss    0.0  0.0 bluetoothd      /usr/libexec/bluetooth/bluetoothd
+    870       2 I<    0.0  0.0 kworker/u99:1-h [kworker/u99:1-hci0]
+     25       2 S     0.0  0.0 ksoftirqd/1     [ksoftirqd/1]
+  10893   10883 S     0.0  0.2 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=zygote --no-zygote-sandbox --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --change-stack-guard-on-fork=enable
+  10894   10883 S     0.0  0.2 ChatGPT         /usr/lib/chatgpt/ChatGPT --type=zygote --crashpad-handler-pid=10887 --enable-crash-reporter=, --user-data-dir=/home/smith/.config/Codex --owl-electron-scheme-replay --change-stack-guard-on-fork=enable
+   6751    2164 SLsl  0.0  0.0 gnome-keyring-d /usr/bin/gnome-keyring-daemon --foreground --components=pkcs11,secrets --control-directory=/run/user/1000/keyring
+   5962    2164 Ssl   0.0  0.0 gvfs-udisks2-vo /usr/libexec/gvfs-udisks2-volume-monitor
+   2849    2164 Ssl   0.0  0.0 gvfsd           /usr/libexec/gvfsd
+    971       1 Ss    0.0  0.0 smartd          /usr/sbin/smartd -n
+    217       2 I<    0.0  0.0 kworker/u99:0-h [kworker/u99:0-hci0]
+    168       2 S     0.0  0.0 khungtaskd      [khungtaskd]
+     16       2 S     0.0  0.0 rcu_exp_par_gp_ [rcu_exp_par_gp_kthread_worker/1]
+     31       2 S     0.0  0.0 ksoftirqd/2     [ksoftirqd/2]
+      2       0 S     0.0  0.0 kthreadd        [kthreadd]
+      3       2 S     0.0  0.0 pool_workqueue_ [pool_workqueue_release]
+      4       2 I<    0.0  0.0 kworker/R-rcu_g [kworker/R-rcu_gp]
+      5       2 I<    0.0  0.0 kworker/R-sync_ [kworker/R-sync_wq]
+      6       2 I<    0.0  0.0 kworker/R-kvfre [kworker/R-kvfree_rcu_reclaim]
+      7       2 I<    0.0  0.0 kworker/R-slub_ [kworker/R-slub_flushwq]
+      8       2 I<    0.0  0.0 kworker/R-netns [kworker/R-netns]
+     10       2 I<    0.0  0.0 kworker/0:0H-kb [kworker/0:0H-kblockd]
+     13       2 I<    0.0  0.0 kworker/R-mm_pe [kworker/R-mm_percpu_wq]
+     19       2 S     0.0  0.0 kprobe-optimize [kprobe-optimizer]
+     20       2 S     0.0  0.0 idle_inject/0   [idle_inject/0]
+     21       2 S     0.0  0.0 cpuhp/0         [cpuhp/0]
+     22       2 S     0.0  0.0 cpuhp/1         [cpuhp/1]
+     23       2 S     0.0  0.0 idle_inject/1   [idle_inject/1]
+     27       2 I<    0.0  0.0 kworker/1:0H-kb [kworker/1:0H-kblockd]
+     28       2 S     0.0  0.0 cpuhp/2         [cpuhp/2]
+     29       2 S     0.0  0.0 idle_inject/2   [idle_inject/2]
+     33       2 I<    0.0  0.0 kworker/2:0H-kb [kworker/2:0H-kblockd]
+     34       2 S     0.0  0.0 cpuhp/3         [cpuhp/3]
+     35       2 S     0.0  0.0 idle_inject/3   [idle_inject/3]
+     37       2 S     0.0  0.0 ksoftirqd/3     [ksoftirqd/3]
+     39       2 I<    0.0  0.0 kworker/3:0H-kb [kworker/3:0H-kblockd]
+     40       2 S     0.0  0.0 cpuhp/4         [cpuhp/4]
+     41       2 S     0.0  0.0 idle_inject/4   [idle_inject/4]
+     43       2 S     0.0  0.0 ksoftirqd/4     [ksoftirqd/4]
+     45       2 I<    0.0  0.0 kworker/4:0H-kb [kworker/4:0H-kblockd]
+     46       2 S     0.0  0.0 cpuhp/5         [cpuhp/5]
+     47       2 S     0.0  0.0 idle_inject/5   [idle_inject/5]
+     49       2 S     0.0  0.0 ksoftirqd/5     [ksoftirqd/5]
+     51       2 I<    0.0  0.0 kworker/5:0H-kb [kworker/5:0H-kblockd]
+     52       2 S     0.0  0.0 cpuhp/6         [cpuhp/6]
+     53       2 S     0.0  0.0 idle_inject/6   [idle_inject/6]
+     55       2 S     0.0  0.0 ksoftirqd/6     [ksoftirqd/6]
+     57       2 I<    0.0  0.0 kworker/6:0H-kb [kworker/6:0H-kblockd]
+     58       2 S     0.0  0.0 cpuhp/7         [cpuhp/7]
+     59       2 S     0.0  0.0 idle_inject/7   [idle_inject/7]
+     61       2 S     0.0  0.0 ksoftirqd/7     [ksoftirqd/7]
+     63       2 I<    0.0  0.0 kworker/7:0H-kb [kworker/7:0H-kblockd]
+     64       2 S     0.0  0.0 cpuhp/8         [cpuhp/8]
+     65       2 S     0.0  0.0 idle_inject/8   [idle_inject/8]
+     67       2 S     0.0  0.0 ksoftirqd/8     [ksoftirqd/8]
+     69       2 I<    0.0  0.0 kworker/8:0H-kb [kworker/8:0H-kblockd]
+     70       2 S     0.0  0.0 cpuhp/9         [cpuhp/9]
+     71       2 S     0.0  0.0 idle_inject/9   [idle_inject/9]
+     73       2 S     0.0  0.0 ksoftirqd/9     [ksoftirqd/9]
+     75       2 I<    0.0  0.0 kworker/9:0H-kb [kworker/9:0H-kblockd]
+     76       2 S     0.0  0.0 cpuhp/10        [cpuhp/10]
+     77       2 S     0.0  0.0 idle_inject/10  [idle_inject/10]
+     79       2 S     0.0  0.0 ksoftirqd/10    [ksoftirqd/10]
+     81       2 I<    0.0  0.0 kworker/10:0H-k [kworker/10:0H-kblockd]
+     82       2 S     0.0  0.0 cpuhp/11        [cpuhp/11]
+     83       2 S     0.0  0.0 idle_inject/11  [idle_inject/11]
+     85       2 S     0.0  0.0 ksoftirqd/11    [ksoftirqd/11]
+     87       2 I<    0.0  0.0 kworker/11:0H-k [kworker/11:0H-kblockd]
+     88       2 S     0.0  0.0 cpuhp/12        [cpuhp/12]
+     89       2 S     0.0  0.0 idle_inject/12  [idle_inject/12]
+     91       2 S     0.0  0.0 ksoftirqd/12    [ksoftirqd/12]
+     93       2 I<    0.0  0.0 kworker/12:0H-k [kworker/12:0H-kblockd]
+     94       2 S     0.0  0.0 rcu_exp_par_gp_ [rcu_exp_par_gp_kthread_worker/2]
+     95       2 S     0.0  0.0 cpuhp/13        [cpuhp/13]
+     96       2 S     0.0  0.0 idle_inject/13  [idle_inject/13]
+     98       2 S     0.0  0.0 ksoftirqd/13    [ksoftirqd/13]
+    100       2 I<    0.0  0.0 kworker/13:0H-k [kworker/13:0H-kblockd]
+    101       2 S     0.0  0.0 cpuhp/14        [cpuhp/14]
+    102       2 S     0.0  0.0 idle_inject/14  [idle_inject/14]
+    104       2 S     0.0  0.0 ksoftirqd/14    [ksoftirqd/14]
+    106       2 I<    0.0  0.0 kworker/14:0H-k [kworker/14:0H-kblockd]
+    107       2 S     0.0  0.0 cpuhp/15        [cpuhp/15]
+    108       2 S     0.0  0.0 idle_inject/15  [idle_inject/15]
+    110       2 S     0.0  0.0 ksoftirqd/15    [ksoftirqd/15]
+    112       2 I<    0.0  0.0 kworker/15:0H-k [kworker/15:0H-kblockd]
+    113       2 S     0.0  0.0 cpuhp/16        [cpuhp/16]
+    114       2 S     0.0  0.0 idle_inject/16  [idle_inject/16]
+    116       2 S     0.0  0.0 ksoftirqd/16    [ksoftirqd/16]
+    118       2 I<    0.0  0.0 kworker/16:0H-k [kworker/16:0H-kblockd]
+    119       2 S     0.0  0.0 cpuhp/17        [cpuhp/17]
+    120       2 S     0.0  0.0 idle_inject/17  [idle_inject/17]
+    122       2 S     0.0  0.0 ksoftirqd/17    [ksoftirqd/17]
+    124       2 I<    0.0  0.0 kworker/17:0H-k [kworker/17:0H-kblockd]
+    125       2 S     0.0  0.0 cpuhp/18        [cpuhp/18]
+    126       2 S     0.0  0.0 idle_inject/18  [idle_inject/18]
+    128       2 S     0.0  0.0 ksoftirqd/18    [ksoftirqd/18]
+    130       2 I<    0.0  0.0 kworker/18:0H-k [kworker/18:0H-kblockd]
+    131       2 S     0.0  0.0 cpuhp/19        [cpuhp/19]
+    132       2 S     0.0  0.0 idle_inject/19  [idle_inject/19]
+    134       2 S     0.0  0.0 ksoftirqd/19    [ksoftirqd/19]
+    136       2 I<    0.0  0.0 kworker/19:0H-k [kworker/19:0H-kblockd]
+    137       2 S     0.0  0.0 cpuhp/20        [cpuhp/20]
+    138       2 S     0.0  0.0 idle_inject/20  [idle_inject/20]
+    140       2 S     0.0  0.0 ksoftirqd/20    [ksoftirqd/20]
+    142       2 I<    0.0  0.0 kworker/20:0H-k [kworker/20:0H-kblockd]
+    143       2 S     0.0  0.0 cpuhp/21        [cpuhp/21]
+    144       2 S     0.0  0.0 idle_inject/21  [idle_inject/21]
+    146       2 S     0.0  0.0 ksoftirqd/21    [ksoftirqd/21]
+    148       2 I<    0.0  0.0 kworker/21:0H-k [kworker/21:0H-kblockd]
+    149       2 S     0.0  0.0 cpuhp/22        [cpuhp/22]
+    150       2 S     0.0  0.0 idle_inject/22  [idle_inject/22]
+    152       2 S     0.0  0.0 ksoftirqd/22    [ksoftirqd/22]
+    154       2 I<    0.0  0.0 kworker/22:0H-k [kworker/22:0H-kblockd]
+    155       2 S     0.0  0.0 cpuhp/23        [cpuhp/23]
+    156       2 S     0.0  0.0 idle_inject/23  [idle_inject/23]
+    158       2 S     0.0  0.0 ksoftirqd/23    [ksoftirqd/23]
+    160       2 I<    0.0  0.0 kworker/23:0H-k [kworker/23:0H-kblockd]
+    163       2 S     0.0  0.0 kdevtmpfs       [kdevtmpfs]
+    164       2 I<    0.0  0.0 kworker/R-inet_ [kworker/R-inet_frag_wq]
+    165       2 I     0.0  0.0 rcu_tasks_kthre [rcu_tasks_kthread]
+    166       2 I     0.0  0.0 rcu_tasks_rude_ [rcu_tasks_rude_kthread]
+    167       2 S     0.0  0.0 kauditd         [kauditd]
+    169       2 S     0.0  0.0 oom_reaper      [oom_reaper]
+    172       2 I<    0.0  0.0 kworker/R-write [kworker/R-writeback]
+    174       2 SN    0.0  0.0 ksmd            [ksmd]
+    175       2 SN    0.0  0.0 khugepaged      [khugepaged]
+    176       2 I<    0.0  0.0 kworker/R-kbloc [kworker/R-kblockd]
+    177       2 I<    0.0  0.0 kworker/R-blkcg [kworker/R-blkcg_punt_bio]
+    178       2 I<    0.0  0.0 kworker/R-kinte [kworker/R-kintegrityd]
+    181       2 I<    0.0  0.0 kworker/R-tpm_d [kworker/R-tpm_dev_wq]
+    182       2 I<    0.0  0.0 kworker/R-ata_s [kworker/R-ata_sff]
+    184       2 I<    0.0  0.0 kworker/R-md_bi [kworker/R-md_bitmap]
+    185       2 I<    0.0  0.0 kworker/R-md_ll [kworker/R-md_llbitmap_io]
+    186       2 I<    0.0  0.0 kworker/R-md_ll [kworker/R-md_llbitmap_unplug]
+    187       2 I<    0.0  0.0 kworker/R-edac- [kworker/R-edac-poller]
+    189       2 I<    0.0  0.0 kworker/R-devfr [kworker/R-devfreq_wq]
+    190       2 S     0.0  0.0 watchdogd       [watchdogd]
+    192       2 I<    0.0  0.0 kworker/R-quota [kworker/R-quota_events_unbound]
+    201       2 I     0.0  0.0 kworker/10:1-ev [kworker/10:1-events_freezable]
+    204       2 I     0.0  0.0 kworker/19:1-mm [kworker/19:1-mm_percpu_wq]
+    211       2 I     0.0  0.0 kworker/21:1-ev [kworker/21:1-events]
+    213       2 S     0.0  0.0 irq/27-AMD-Vi   [irq/27-AMD-Vi]
+    214       2 S     0.0  0.0 kswapd0         [kswapd0]
+    215       2 S     0.0  0.0 ecryptfs-kthrea [ecryptfs-kthread]
+    216       2 I<    0.0  0.0 kworker/R-kthro [kworker/R-kthrotld]
+    218       2 S     0.0  0.0 irq/34-pciehp   [irq/34-pciehp]
+    219       2 S     0.0  0.0 irq/35-pciehp   [irq/35-pciehp]
+    220       2 S     0.0  0.0 irq/39-pciehp   [irq/39-pciehp]
+    221       2 I<    0.0  0.0 kworker/R-acpi_ [kworker/R-acpi_thermal_pm]
+    225       2 I<    0.0  0.0 kworker/R-mld   [kworker/R-mld]
+    226       2 I<    0.0  0.0 kworker/R-ipv6_ [kworker/R-ipv6_addrconf]
+    227       2 I<    0.0  0.0 kworker/R-kstrp [kworker/R-kstrp]
+    247       2 I<    0.0  0.0 kworker/R-charg [kworker/R-charger_manager]
+    248       2 S     0.0  0.0 irq/28-ACPI:Eve [irq/28-ACPI:Event]
+    249       2 S     0.0  0.0 irq/29-ACPI:Eve [irq/29-ACPI:Event]
+    250       2 S     0.0  0.0 irq/30-ACPI:Eve [irq/30-ACPI:Event]
+    251       2 S     0.0  0.0 irq/31-ACPI:Eve [irq/31-ACPI:Event]
+    252       2 S     0.0  0.0 irq/32-ACPI:Eve [irq/32-ACPI:Event]
+    253       2 S     0.0  0.0 irq/33-ACPI:Eve [irq/33-ACPI:Event]
+    349       2 I<    0.0  0.0 kworker/R-nvme- [kworker/R-nvme-wq]
+    350       2 I<    0.0  0.0 kworker/R-nvme- [kworker/R-nvme-reset-wq]
+    351       2 I<    0.0  0.0 kworker/R-nvme- [kworker/R-nvme-delete-wq]
+    352       2 I<    0.0  0.0 kworker/R-nvme- [kworker/R-nvme-auth-wq]
+    355       2 S     0.0  0.0 scsi_eh_0       [scsi_eh_0]
+    356       2 I<    0.0  0.0 kworker/R-scsi_ [kworker/R-scsi_tmf_0]
+    361       2 I<    0.0  0.0 kworker/R-uas   [kworker/R-uas]
+    395       2 I<    0.0  0.0 kworker/R-USBC0 [kworker/R-USBC000:00-con1]
+    396       2 I<    0.0  0.0 kworker/R-USBC0 [kworker/R-USBC000:00-con2]
+    415       2 I<    0.0  0.0 kworker/18:1H-k [kworker/18:1H-kblockd]
+    416       2 I<    0.0  0.0 kworker/0:1H-kb [kworker/0:1H-kblockd]
+    419       2 I<    0.0  0.0 kworker/R-ext4- [kworker/R-ext4-rsv-conversion]
+    470       2 S     0.0  0.0 psimon          [psimon]
+    509       2 I<    0.0  0.0 kworker/21:1H-k [kworker/21:1H-kblockd]
+    517       2 I<    0.0  0.0 kworker/9:1H-kb [kworker/9:1H-kblockd]
+    518       2 I<    0.0  0.0 kworker/17:1H-k [kworker/17:1H-kblockd]
+    546       2 I<    0.0  0.0 kworker/1:1H-kb [kworker/1:1H-kblockd]
+    547       2 I<    0.0  0.0 kworker/2:1H-kb [kworker/2:1H-kblockd]
+    548       2 I<    0.0  0.0 kworker/13:1H-k [kworker/13:1H-kblockd]
+    550       2 S     0.0  0.0 psimon          [psimon]
+    640       2 I<    0.0  0.0 kworker/14:1H-k [kworker/14:1H-kblockd]
+    647       2 I     0.0  0.0 kworker/18:2-ev [kworker/18:2-events]
+    675       2 I<    0.0  0.0 kworker/R-cfg80 [kworker/R-cfg80211]
+    686       2 I     0.0  0.0 kworker/16:2-cg [kworker/16:2-cgroup_free]
+    696       2 S     0.0  0.0 nv_queue        [nv_queue]
+    697       2 S     0.0  0.0 nv_queue        [nv_queue]
+    705       2 S     0.0  0.0 nv_open_q       [nv_open_q]
+    712       2 S     0.0  0.0 irq/109-iwlwifi [irq/109-iwlwifi:queue_1]
+    713       2 S     0.0  0.0 irq/110-iwlwifi [irq/110-iwlwifi:queue_2]
+    714       2 S     0.0  0.0 irq/111-iwlwifi [irq/111-iwlwifi:queue_3]
+    715       2 S     0.0  0.0 irq/112-iwlwifi [irq/112-iwlwifi:queue_4]
+    716       2 S     0.0  0.0 irq/113-iwlwifi [irq/113-iwlwifi:queue_5]
+    717       2 S     0.0  0.0 irq/114-iwlwifi [irq/114-iwlwifi:queue_6]
+    718       2 S     0.0  0.0 irq/115-iwlwifi [irq/115-iwlwifi:queue_7]
+    719       2 S     0.0  0.0 irq/116-iwlwifi [irq/116-iwlwifi:queue_8]
+    720       2 S     0.0  0.0 irq/117-iwlwifi [irq/117-iwlwifi:queue_9]
+    721       2 S     0.0  0.0 irq/119-iwlwifi [irq/119-iwlwifi:queue_10]
+    722       2 S     0.0  0.0 irq/120-iwlwifi [irq/120-iwlwifi:queue_11]
+    723       2 S     0.0  0.0 irq/121-iwlwifi [irq/121-iwlwifi:queue_12]
+    724       2 S     0.0  0.0 irq/122-iwlwifi [irq/122-iwlwifi:queue_13]
+    725       2 S     0.0  0.0 irq/123-iwlwifi [irq/123-iwlwifi:queue_14]
+    726       2 S     0.0  0.0 irq/124-iwlwifi [irq/124-iwlwifi:exception]
+    733       2 I<    0.0  0.0 kworker/R-notif [kworker/R-notifier_wq]
+    740       2 S     0.0  0.0 nvidia-modeset/ [nvidia-modeset/kthread_q]
+    741       2 S     0.0  0.0 nvidia-modeset/ [nvidia-modeset/deferred_close_kthread_q]
+    746       2 I<    0.0  0.0 kworker/3:1H-kb [kworker/3:1H-kblockd]
+    748       2 I<    0.0  0.0 kworker/7:1H-kb [kworker/7:1H-kblockd]
+    749       2 I<    0.0  0.0 kworker/8:1H-kb [kworker/8:1H-kblockd]
+    752       2 I<    0.0  0.0 kworker/6:1H-kb [kworker/6:1H-kblockd]
+    753       2 I<    0.0  0.0 kworker/11:1H-k [kworker/11:1H-kblockd]
+    758       2 I<    0.0  0.0 kworker/23:1H-k [kworker/23:1H-kblockd]
+    763       2 I<    0.0  0.0 kworker/20:1H-k [kworker/20:1H-kblockd]
+    812       2 I<    0.0  0.0 kworker/12:1H-k [kworker/12:1H-kblockd]
+    813       2 I<    0.0  0.0 kworker/5:1H-kb [kworker/5:1H-kblockd]
+    839       2 I<    0.0  0.0 kworker/22:1H-k [kworker/22:1H-kblockd]
+    869       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu-reset-dev]
+    904       2 I<    0.0  0.0 kworker/R-ttm   [kworker/R-ttm]
+    918       1 Ss    0.0  0.0 cron            /usr/sbin/cron -f -P
+    988       1 Ss    0.0  0.0 atd             /usr/sbin/atd -f
+   1030     913 S     0.0  0.0 avahi-daemon    avahi-daemon: chroot helper
+   1032       2 I<    0.0  0.0 kworker/4:1H-kb [kworker/4:1H-kblockd]
+   1053       2 S     0.0  0.0 irq/160-nvidia  [irq/160-nvidia]
+   1054       2 S     0.0  0.0 irq/161-nvidia  [irq/161-nvidia]
+   1055       2 S     0.0  0.0 irq/162-nvidia  [irq/162-nvidia]
+   1056       2 S     0.0  0.0 irq/163-nvidia  [irq/163-nvidia]
+   1057       2 S     0.0  0.0 irq/164-nvidia  [irq/164-nvidia]
+   1058       2 S     0.0  0.0 irq/165-nvidia  [irq/165-nvidia]
+   1059       2 S     0.0  0.0 irq/166-nvidia  [irq/166-nvidia]
+   1060       2 S     0.0  0.0 irq/167-nvidia  [irq/167-nvidia]
+   1061       2 S     0.0  0.0 nvidia          [nvidia]
+   1062       2 S     0.0  0.0 nv_queue        [nv_queue]
+   1248       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_rx_offload_wq]
+   1250       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_rx_offload_wq]
+   1251       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_rx_offload_wq]
+   1252       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_rx_offload_wq]
+   1253       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_rx_offload_wq]
+   1254       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_rx_offload_wq]
+   1255       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_rx_offload_wq]
+   1256       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_rx_offload_wq]
+   1257       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_rx_offload_wq]
+   1258       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_rx_offload_wq]
+   1259       2 I<    0.0  0.0 kworker/R-dm_vb [kworker/R-dm_vblank_control_workqueue]
+   1260       2 I<    0.0  0.0 kworker/R-amdgp [kworker/R-amdgpu_dm_hpd_wq]
+   1276       2 I<    0.0  0.0 kworker/15:1H-k [kworker/15:1H-kblockd]
+   1279       2 S     0.0  0.0 card2-crtc0     [card2-crtc0]
+   1280       2 S     0.0  0.0 card2-crtc1     [card2-crtc1]
+   1281       2 S     0.0  0.0 card2-crtc2     [card2-crtc2]
+   1282       2 S     0.0  0.0 card2-crtc3     [card2-crtc3]
+   1283       2 I<    0.0  0.0 kworker/R-gfx_0 [kworker/R-gfx_0.0.0]
+   1284       2 I<    0.0  0.0 kworker/R-comp_ [kworker/R-comp_1.0.0]
+   1285       2 I<    0.0  0.0 kworker/R-comp_ [kworker/R-comp_1.1.0]
+   1286       2 I<    0.0  0.0 kworker/R-comp_ [kworker/R-comp_1.2.0]
+   1287       2 I<    0.0  0.0 kworker/R-comp_ [kworker/R-comp_1.3.0]
+   1288       2 I<    0.0  0.0 kworker/R-comp_ [kworker/R-comp_1.0.1]
+   1289       2 I<    0.0  0.0 kworker/R-comp_ [kworker/R-comp_1.1.1]
+   1290       2 I<    0.0  0.0 kworker/R-comp_ [kworker/R-comp_1.2.1]
+   1291       2 I<    0.0  0.0 kworker/R-comp_ [kworker/R-comp_1.3.1]
+   1292       2 I<    0.0  0.0 kworker/R-sdma0 [kworker/R-sdma0]
+   1293       2 I<    0.0  0.0 kworker/R-vcn_u [kworker/R-vcn_unified_0]
+   1294       2 I<    0.0  0.0 kworker/R-jpeg_ [kworker/R-jpeg_dec_0]
+   1295       2 I<    0.0  0.0 kworker/R-vpe   [kworker/R-vpe]
+   1344       1 Ss    0.0  0.0 cupsd           /usr/sbin/cupsd -l
+   1408    1344 S     0.0  0.0 dbus            /usr/lib/cups/notifier/dbus dbus://
+   1498       2 S     0.0  0.0 UVM global queu [UVM global queue]
+   1499       2 S     0.0  0.0 UVM deferred re [UVM deferred release queue]
+   1500       2 S     0.0  0.0 UVM Tools Event [UVM Tools Event Queue]
+   1509       1 Ss    0.0  0.0 nvidia-persiste /usr/bin/nvidia-persistenced --user nvidia-persistenced --no-persistence-mode --verbose
+   1521       1 Ss+   0.0  0.0 agetty          /usr/sbin/agetty --noreset --noclear --issue-file=/etc/issue:/etc/issue.d:/run/issue.d:/usr/lib/issue.d - linux
+   1535       2 S     0.0  0.0 nvidia-drm/time [nvidia-drm/timeline-134]
+   1897       2 I<    0.0  0.0 kworker/u101:6- [kworker/u101:6-ttm]
+   1901       2 I<    0.0  0.0 kworker/u101:10 [kworker/u101:10-ttm]
+   1908    1489 Sl    0.0  0.0 lightdm         lightdm --session-child 13 20
+   2022       2 S<    0.0  0.0 krfcommd        [krfcommd]
+   2108    2104 S     0.0  0.0 smbd-notifyd    smbd: notifyd .
+   2109    2104 S     0.0  0.0 smbd-cleanupd   smbd: cleanupd 
+   2166    2164 S     0.0  0.0 (sd-pam)        (sd-pam)
+   2189    2164 Ss    0.0  0.0 mpris-proxy     /usr/bin/mpris-proxy
+   2855    2164 Sl    0.0  0.0 gvfsd-fuse      /usr/libexec/gvfsd-fuse /run/user/1000/gvfs -f
+   2863    2164 Ssl   0.0  0.0 at-spi-bus-laun /usr/libexec/at-spi-bus-launcher
+   2885       1 Ss    0.0  0.0 ssh-agent       /usr/bin/ssh-agent -s
+   4183    2164 Ssl   0.0  0.0 dconf-service   /usr/libexec/dconf-service
+   6099    5604 S     0.0  0.0 bwrap           bwrap --unshare-all --die-with-parent --chdir / --ro-bind /usr /usr --dev /dev --ro-bind-try /etc/ld.so.cache /etc/ld.so.cache --ro-bind-try /nix/store /nix/store --tmpfs /tmp-home --tmpfs /tmp-run --clearenv --setenv HOME /tmp-home --setenv XDG_RUNTIME_DIR /tmp-run --setenv XDG_RUNTIME_DIR /run/user/1000 --symlink /usr/lib64 /lib64 --symlink /usr/libx32 /libx32 --symlink /usr/lib32 /lib32 --symlink /usr/lib /lib --seccomp 23 /usr/libexec/glycin-loaders/2+/glycin-image-rs --dbus-fd 20
+   6103    6099 S     0.0  0.0 bwrap           bwrap --unshare-all --die-with-parent --chdir / --ro-bind /usr /usr --dev /dev --ro-bind-try /etc/ld.so.cache /etc/ld.so.cache --ro-bind-try /nix/store /nix/store --tmpfs /tmp-home --tmpfs /tmp-run --clearenv --setenv HOME /tmp-home --setenv XDG_RUNTIME_DIR /tmp-run --setenv XDG_RUNTIME_DIR /run/user/1000 --symlink /usr/lib64 /lib64 --symlink /usr/libx32 /libx32 --symlink /usr/lib32 /lib32 --symlink /usr/lib /lib --seccomp 23 /usr/libexec/glycin-loaders/2+/glycin-image-rs --dbus-fd 20
+   6110    2164 Ssl   0.0  0.0 gvfs-mtp-volume /usr/libexec/gvfs-mtp-volume-monitor
+   6342    2164 Ssl   0.0  0.0 gvfs-goa-volume /usr/libexec/gvfs-goa-volume-monitor
+   6560    2164 Ssl   0.0  0.0 gvfs-gphoto2-vo /usr/libexec/gvfs-gphoto2-volume-monitor
+   6614    2164 Ssl   0.0  0.0 xdg-permission- /usr/libexec/xdg-permission-store
+   6622    2164 Ssl   0.0  0.0 xdg-document-po /usr/libexec/xdg-document-portal
+   6677    6622 Ss    0.0  0.0 fusermount3     fusermount3 -o rw,nosuid,nodev,fsname=portal,auto_unmount,subtype=portal -- /run/user/1000/doc
+   6683    2849 Sl    0.0  0.0 gvfsd-trash     /usr/libexec/gvfsd-trash --spawner :1.11 /org/gtk/gvfs/exec_spaw/0
+   6725    2164 Sl    0.0  0.0 gnome-keyring-d /usr/bin/gnome-keyring-daemon --start --foreground --components=secrets
+   6753       2 I<    0.0  0.0 kworker/16:1H-k [kworker/16:1H-kblockd]
+   7550       2 I<    0.0  0.0 kworker/10:1H-k [kworker/10:1H-kblockd]
+  10887       1 Sl    0.0  0.0 browser_crashpa /usr/lib/chatgpt/browser_crashpad_handler --monitor-self --monitor-self-annotation=ptype=crashpad-handler --user-stream-region=4,65568 --database=/home/smith/.config/Codex/Crash Reports --annotation=lsb-release=Linux Lite 8.0 --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=156.0.8078.79 --initial-client-fd=7 --shared-client-connection
+  10889       1 S     0.0  0.0 browser_crashpa /usr/lib/chatgpt/browser_crashpad_handler --no-periodic-tasks --monitor-self-annotation=ptype=crashpad-handler --database=/home/smith/.config/Codex/Crash Reports --annotation=lsb-release=Linux Lite 8.0 --annotation=plat=Linux --annotation=prod=Chrome_Linux --annotation=ver=156.0.8078.79 --initial-client-fd=4 --shared-client-connection
+  12000       2 I     0.0  0.0 kworker/11:2-ev [kworker/11:2-events]
+  13736       2 I<    0.0  0.0 kworker/19:1H-k [kworker/19:1H-kblockd]
+  14434   14422 Z     0.0  0.0 sd_espeak-ng-mb [sd_espeak-ng-mb] <defunct>
+  14435   14422 S     0.0  0.0 sd_espeak-ng    /usr/lib/speech-dispatcher-modules/sd_espeak-ng /etc/speech-dispatcher/modules/espeak-ng.conf
+  14440   14422 S     0.0  0.0 sd_espeak-ng    /usr/lib/speech-dispatcher-modules/sd_espeak-ng /etc/speech-dispatcher/modules/
+  15146       2 I<    0.0  0.0 kworker/u100:0- [kworker/u100:0-ttm]
+  15387       2 I     0.0  0.0 kworker/20:0    [kworker/20:0]
+  15529       2 I     0.0  0.0 kworker/13:0-ev [kworker/13:0-events]
+  15715       2 I<    0.0  0.0 kworker/u101:1- [kworker/u101:1-ttm]
+  15724       2 I     0.0  0.0 kworker/12:0-ev [kworker/12:0-events]
+  15768       2 I     0.0  0.0 kworker/17:1    [kworker/17:1]
+  16146       2 I<    0.0  0.0 kworker/u100:1- [kworker/u100:1-ttm]
+  16223   16221 S     0.0  0.0 bwrap           bwrap --unshare-all --die-with-parent --chdir / --ro-bind /usr /usr --dev /dev --ro-bind-try /etc/ld.so.cache /etc/ld.so.cache --ro-bind-try /nix/store /nix/store --tmpfs /tmp-home --tmpfs /tmp-run --clearenv --setenv HOME /tmp-home --setenv XDG_RUNTIME_DIR /tmp-run --setenv XDG_RUNTIME_DIR /run/user/1000 --symlink /usr/lib64 /lib64 --symlink /usr/libx32 /libx32 --symlink /usr/lib32 /lib32 --symlink /usr/lib /lib --seccomp 203 /usr/libexec/glycin-loaders/2+/glycin-image-rs --dbus-fd 196
+  16273       2 I     0.0  0.0 kworker/8:0-eve [kworker/8:0-events]
+  16630       2 I<    0.0  0.0 kworker/u100:2- [kworker/u100:2-ttm]
+  16651       2 I<    0.0  0.0 kworker/u100:4- [kworker/u100:4-ttm]
+  19604       2 I     0.0  0.0 kworker/23:0-mm [kworker/23:0-mm_percpu_wq]
+  19738       2 I     0.0  0.0 kworker/14:0    [kworker/14:0]
+  20122       2 I     0.0  0.0 kworker/1:0-eve [kworker/1:0-events]
+  20182       2 I<    0.0  0.0 kworker/u101:0- [kworker/u101:0-ttm]
+  20250       2 I<    0.0  0.0 kworker/u101:3- [kworker/u101:3-ttm]
+  20410       2 I     0.0  0.0 kworker/5:0-mm_ [kworker/5:0-mm_percpu_wq]
+  20415       2 I     0.0  0.0 kworker/2:0-eve [kworker/2:0-events]
+  20859       2 I     0.0  0.0 kworker/9:0     [kworker/9:0]
+  21122       2 I     0.0  0.0 kworker/4:2-eve [kworker/4:2-events]
+  21320       2 I     0.0  0.0 kworker/22:0-me [kworker/22:0-memcg]
+  21424       2 I     0.0  0.0 kworker/12:2-mm [kworker/12:2-mm_percpu_wq]
+  21492       2 I     0.0  0.0 kworker/10:0    [kworker/10:0]
+  21623       2 I     0.0  0.0 kworker/16:0    [kworker/16:0]
+  21678       2 I     0.0  0.0 kworker/0:0-cgr [kworker/0:0-cgroup_free]
+  21688       2 I     0.0  0.0 kworker/3:1     [kworker/3:1]
+  21735       2 I<    0.0  0.0 kworker/u101:2  [kworker/u101:2]
+  21929       2 I     0.0  0.0 kworker/15:0-mm [kworker/15:0-mm_percpu_wq]
+  22025       2 I     0.0  0.0 kworker/4:1-eve [kworker/4:1-events]
+  22028       2 I     0.0  0.0 kworker/5:1     [kworker/5:1]
+  22046       2 I     0.0  0.0 kworker/14:1-ev [kworker/14:1-events]
+  22249    1372 Ss    0.0  0.0 sshd-session    sshd-session: smith [priv]
+  22299   22249 S     0.0  0.0 sshd-session    sshd-session: smith@notty

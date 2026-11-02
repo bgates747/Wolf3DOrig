@@ -1,0 +1,7 @@
+{
+  "schema": "wolf3d-audio-ring-stopped-inspection-v1",
+  "machine": "oryx-linuxlite",
+  "epoch": 1793567759.0679977,
+  "emulators": [],
+  "scope": "read-only whole-host inspection after corrected r02 stopped profile staging; no checkout or run"
+}
