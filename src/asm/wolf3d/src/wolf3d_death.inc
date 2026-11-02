@@ -233,9 +233,15 @@ w3d_death_render_permitted:
 ; This routine never presents fizzle event 2; render_async validates it and
 ; publishes only the one-shot completion token.
 w3d_death_foreground_update:
+    .if W3D_RENDER_BACKEND
+    ld a,(w3d_vdplet_reply_ready)
+    or a
+    call nz,w3d_vdplet_consume_render_completion
+    .else
     ld a,(w3d_completion_ready)
     or a
     call nz,w3d_consume_render_completion
+    .endif
 
     call w3d_take_render_event
     jr nc,@no_render_event
@@ -563,6 +569,19 @@ w3d_death_choose_turn_route:
     ret
 
 w3d_death_begin_fizzle:
+    .if W3D_RENDER_BACKEND
+; Production module release 1 deliberately reports fizzle unsupported. Keep
+; the death lifecycle finite until the later app-paced fizzle tranche: the
+; accepted target-facing frame remains visible during the ordinary hold.
+    ld a,W3D_DEATH_HOLD_STEPS
+    ld (w3d_death_hold_remaining),a
+    xor a
+    ld (w3d_death_ack_armed),a
+    ld a,W3D_DEATH_PHASE_HOLD
+    ld (w3d_death_phase),a
+    or a
+    ret
+    .else
 ; A new token on every attempt makes a delayed event from a previous death
 ; fail validation even if its independent sequence were somehow replayed.
     ld hl,w3d_death_fizzle_token
@@ -589,6 +608,7 @@ w3d_death_begin_fizzle:
     ld (w3d_death_phase),a
     scf
     ret
+    .endif
 
 w3d_death_finish_hold:
 ; Original lives are signed: displayed zero is one final playable attempt.

@@ -2500,6 +2500,9 @@ w3d_mark_current_door_dirty:
 ; that no asynchronous owner is active. Ownership is nevertheless acquired
 ; here before destructive init_level bytes are allowed onto the wire.
 w3d_submit_level_reset:
+    .if W3D_RENDER_BACKEND
+    jp w3d_vdplet_submit_level_reset
+    .else
     call w3d_mark_render_submitted
     ret c
     ld hl,@init_level_command
@@ -2512,6 +2515,7 @@ w3d_submit_level_reset:
     db 4Ah,1
     dw W3D_FIXTURE_TILEMAP_BUFFER_ID
 @init_level_end:
+    .endif
 
 ; Send every changed door/static/HUD field, then the changed player pose,
 ; followed by one render request. Assets/map remain resident. Each dirty flag
@@ -2519,6 +2523,9 @@ w3d_submit_level_reset:
 ; boundary. Mark ownership first: a rejected overlapping submission must emit
 ; no state bytes and must leave every dirty flag intact for diagnosis/retry.
 w3d_submit_dirty_world_render:
+    .if W3D_RENDER_BACKEND
+    jp w3d_vdplet_submit_dirty_world_render
+    .else
     call w3d_mark_render_submitted
     ret c
 
@@ -2685,6 +2692,7 @@ w3d_submit_dirty_world_render_marked:
     dw W3D_FIXTURE_CONTROL_BUFFER_ID
     db 4Ah,7
 @render_end:
+    .endif
 
 ; Submit only changed status fields. The VDP persists these values and draws
 ; the complete panel into each hidden buffer during render_frame.

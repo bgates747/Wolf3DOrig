@@ -65,6 +65,7 @@ sysvar_scrMode:  equ 27h
     include "wolf3d_actors.inc"
     .if W3D_RENDER_BACKEND
     include "wolf3d_vdplet_batch.inc"
+    include "wolf3d_vdplet_backend.inc"
     .endif
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
@@ -626,6 +627,10 @@ w3d_run_gameplay_session:
     call w3d_install_render_callback
     call w3d_enable_render_notifications
     ei
+    .if W3D_RENDER_BACKEND
+    call w3d_vdplet_backend_open
+    jp c,w3d_gameplay_fatal_shutdown
+    .endif
 
 ; The initial world snapshot is complete. Use the same generic init/full-replay
 ; path as a later floor transition; the generated fixture command stream is no
@@ -810,6 +815,13 @@ w3d_gameplay_shutdown:
     ld (w3d_gameplay_result),a
     call w3d_audio_shutdown
     call w3d_disable_render_notifications
+    .if W3D_RENDER_BACKEND
+    call w3d_vdplet_backend_close
+    jr nc,@renderer_closed
+    ld a,W3D_GAMEPLAY_RESULT_FATAL
+    ld (w3d_gameplay_result),a
+@renderer_closed:
+    .endif
     call w3d_remove_render_callback
     ld a,(w3d_gameplay_result)
     ret

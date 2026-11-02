@@ -22,7 +22,7 @@ SDK = Path("/Agon/mystuff/agon-vdplet/build/vdpl-012/sdk")
 SDK_PYTHON = Path("/Agon/mystuff/agon-vdplet/.venv/bin/python")
 TOOLCHAIN = Path("/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin")
 EXPECTED_PACKAGE_SHA256 = (
-    "badfb6e398cbebc8a1fe843578512c9631ad61551c66625c19053064f35bf734"
+    "12449bab795f4fd8ecfbbb2f4c547299632bba9bda88dc7ebf4e68160aac9c63"
 )
 FRAME_BYTES = 76800
 HUD_MANIFEST = (

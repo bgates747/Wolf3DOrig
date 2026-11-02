@@ -161,6 +161,24 @@ w3d_cancel_fizzle_submission:
     ld (w3d_async_owner),a
     ret
 
+; Undo render ownership when no RUN/render command was accepted. Restore the
+; purpose selected by the death state machine so an exact retry cannot be
+; mistaken for a newer semantic frame.
+    .if W3D_RENDER_BACKEND
+w3d_cancel_render_submission:
+    ld a,(w3d_render_in_flight_purpose)
+    ld (w3d_next_render_purpose),a
+    xor a
+    ld (w3d_render_in_flight),a
+    ld (w3d_completion_ready),a
+    ld a,(w3d_async_owner)
+    cp W3D_ASYNC_OWNER_RENDER
+    ret nz
+    xor a
+    ld (w3d_async_owner),a
+    ret
+    .endif
+
 ; Atomically snapshot and validate the completion mailbox. A valid completed
 ; frame is presented exactly once from foreground code.
 w3d_consume_render_completion:
@@ -228,6 +246,9 @@ w3d_consume_render_completion:
     cp W3D_ASYNC_OWNER_RENDER
     jp nz,@reject
     call w3d_increment_expected_sequence
+    .if W3D_RENDER_BACKEND
+    jp w3d_publish_render_completion
+    .else
     di
     xor a
     ld (w3d_render_in_flight),a
@@ -242,6 +263,7 @@ w3d_consume_render_completion:
     ld (w3d_frame_presented),a
     ld (w3d_render_event_ready),a
     ret
+    .endif
 
 @reject:
 ; Keep render_in_flight asserted. Remaining resident is safer than returning
@@ -250,6 +272,26 @@ w3d_consume_render_completion:
     ld (w3d_callback_error),a
     ld (w3d_exit_requested),a
     ret
+
+; Shared acceptance tail for standalone W3DR and VDPlet DONE. The caller has
+; already validated the backend-specific reply and any generation ownership.
+    .if W3D_RENDER_BACKEND
+w3d_publish_render_completion:
+    di
+    xor a
+    ld (w3d_render_in_flight),a
+    ld (w3d_async_owner),a
+    ei
+; Mode 8+128 is double buffered: present exactly once, only after the VDP has
+; completed the hidden surface associated with this validated sequence.
+    call w3d_vdu_present
+    ld a,(w3d_render_in_flight_purpose)
+    ld (w3d_completed_render_purpose),a
+    ld a,1
+    ld (w3d_frame_presented),a
+    ld (w3d_render_event_ready),a
+    ret
+    .endif
 
 w3d_increment_expected_sequence:
     ld hl,w3d_expected_sequence
@@ -414,6 +456,9 @@ w3d_remove_render_callback:
     ret
 
 w3d_enable_render_notifications:
+    .if W3D_RENDER_BACKEND
+    ret
+    .else
     ld hl,@command
     ld bc,@end-@command
     rst.lil 18h
@@ -424,8 +469,12 @@ w3d_enable_render_notifications:
     db 4Ah,41,1
     dw w3d_render_notify_token
 @end:
+    .endif
 
 w3d_disable_render_notifications:
+    .if W3D_RENDER_BACKEND
+    ret
+    .else
     ld hl,@command
     ld bc,@end-@command
     rst.lil 18h
@@ -436,6 +485,7 @@ w3d_disable_render_notifications:
     db 4Ah,41,0
     dw 0
 @end:
+    .endif
 
 w3d_vdu_present:
     ld hl,@command

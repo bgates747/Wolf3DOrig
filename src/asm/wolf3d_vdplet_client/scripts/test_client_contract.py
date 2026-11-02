@@ -164,6 +164,17 @@ class AssembledWireTests(unittest.TestCase):
         self.assertIn(bytes((23, 0, 0xA0, 0, 0, 0, 0, 0)), self.binary)
         self.assertIn(bytes((23, 0, 0xA0, 0, 0, 14)), self.binary)
 
+    def test_large_zero_buffer_reuses_one_package_staging_page(self) -> None:
+        expected = """\
+w3d_vdplet_create_zero_buffer:
+    ld a,c
+    ld (@zero_clear_id+0),a"""
+        self.assertIn(expected, self.source)
+        self.assertIn("ld hl,W3D_VDPLET_PACKAGE_ADDRESS\n"
+                      "    ld bc,(w3d_vdplet_upload_chunk)\n"
+                      "    rst.lil 18h", self.source)
+        self.assertIn("@zero_finish_id:\n    dw 0\n    db 14", self.source)
+
     def test_source_pins_copied_pixel_capability_subset(self) -> None:
         self.assertIn("W3D_VDPLET_REQUIRED_CAPS:      equ 0011h", self.source)
         self.assertIn("and e", self.source)

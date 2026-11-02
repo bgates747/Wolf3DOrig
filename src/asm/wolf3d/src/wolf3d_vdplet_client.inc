@@ -41,6 +41,22 @@ W3D_VDPLET_STATUS_FILE:        equ 5
 W3D_VDPLET_STATUS_PACKAGE:     equ 6
 W3D_VDPLET_STATUS_TOKEN:       equ 7
 
+; Human-readable startup diagnostics use these stable stage numbers. They are
+; deliberately client-local and are not part of the VDPL wire ABI.
+W3D_VDPLET_STAGE_NONE:         equ 00h
+W3D_VDPLET_STAGE_DISCOVER:     equ 01h
+W3D_VDPLET_STAGE_IDENTITY:     equ 02h
+W3D_VDPLET_STAGE_CAPABILITIES: equ 03h
+W3D_VDPLET_STAGE_SLOT:         equ 04h
+W3D_VDPLET_STAGE_READ_PACKAGE: equ 05h
+W3D_VDPLET_STAGE_UPLOAD_PACKAGE: equ 06h
+W3D_VDPLET_STAGE_LOAD_MODULE:  equ 07h
+W3D_VDPLET_STAGE_WORKSPACE:    equ 08h
+W3D_VDPLET_STAGE_DESCRIPTOR:   equ 09h
+W3D_VDPLET_STAGE_CONFIG:       equ 0ah
+W3D_VDPLET_STAGE_RESET:        equ 0bh
+W3D_VDPLET_STAGE_RENDER:       equ 0ch
+
 ; Reset all application-side runtime ownership. The caller installs the shared
 ; keyboard/render callback before issuing the first request.
 w3d_vdplet_initialize:
@@ -58,6 +74,7 @@ w3d_vdplet_initialize:
     ld (w3d_vdplet_last_value+1),a
     ld (w3d_vdplet_native_error+0),a
     ld (w3d_vdplet_native_error+1),a
+    ld (w3d_vdplet_stage),a
     push ix
     MOSCALL mos_sysvars
     ld (w3d_vdplet_sysvars),ix       ; ADL24 OK: destination is dl storage.
@@ -541,6 +558,104 @@ w3d_vdplet_upload_buffer:
     db 14
 @finish_end:
 
+; BC=destination buffer ID and DE=nonzero 24-bit byte count. Construct a
+; contiguous zero-filled VDP buffer without reserving the complete object in
+; eZ80 RAM. LOAD has already copied the module into VDP-owned memory before
+; this helper is used, so its former package staging page is safe scratch.
+; Reusing that one 4096-byte page for every stock WRITE keeps the 92 KiB
+; production workspace out of the application's address-space budget.
+w3d_vdplet_create_zero_buffer:
+    ld a,c
+    ld (@zero_clear_id+0),a
+    ld (@zero_write_id+0),a
+    ld (@zero_finish_id+0),a
+    ld a,b
+    ld (@zero_clear_id+1),a
+    ld (@zero_write_id+1),a
+    ld (@zero_finish_id+1),a
+    push de
+    pop hl
+    ld bc,0
+    or a
+    sbc hl,bc
+    jp z,@bad_zero_size
+    ld (w3d_vdplet_upload_remaining),de ; ADL24 OK: dl storage.
+
+    ld hl,W3D_VDPLET_PACKAGE_ADDRESS
+    xor a
+    ld (hl),a
+    ld de,W3D_VDPLET_PACKAGE_ADDRESS+1
+    ld bc,W3D_VDPLET_UPLOAD_CHUNK-1
+    ldir
+
+    ld hl,@zero_clear
+    ld bc,@zero_clear_end-@zero_clear
+    rst.lil 18h
+@zero_loop:
+    ld hl,(w3d_vdplet_upload_remaining)
+    ld de,0
+    or a
+    sbc hl,de
+    jr z,@zero_consolidate
+    ld hl,(w3d_vdplet_upload_remaining)
+    ld de,W3D_VDPLET_UPLOAD_CHUNK
+    or a
+    sbc hl,de
+    jr c,@zero_use_remaining
+    ld bc,W3D_VDPLET_UPLOAD_CHUNK
+    jr @zero_chunk_ready
+@zero_use_remaining:
+    ld bc,(w3d_vdplet_upload_remaining)
+@zero_chunk_ready:
+    ld (w3d_vdplet_upload_chunk),bc ; ADL24 OK: dl storage.
+    ld a,c
+    ld (@zero_length+0),a
+    ld a,b
+    ld (@zero_length+1),a
+    ld hl,@zero_write
+    ld bc,@zero_write_end-@zero_write
+    rst.lil 18h
+    ld hl,W3D_VDPLET_PACKAGE_ADDRESS
+    ld bc,(w3d_vdplet_upload_chunk)
+    rst.lil 18h
+    ld hl,(w3d_vdplet_upload_remaining)
+    ld de,(w3d_vdplet_upload_chunk)
+    or a
+    sbc hl,de
+    ld (w3d_vdplet_upload_remaining),hl ; ADL24 OK: dl storage.
+    jr @zero_loop
+@zero_consolidate:
+    ld hl,@zero_finish
+    ld bc,@zero_finish_end-@zero_finish
+    rst.lil 18h
+    or a
+    ret
+@bad_zero_size:
+    ld a,W3D_VDPLET_STATUS_PACKAGE
+    ld (w3d_vdplet_status),a
+    scf
+    ret
+@zero_clear:
+    db 23,0,0a0h
+@zero_clear_id:
+    dw 0
+    db 2
+@zero_clear_end:
+@zero_write:
+    db 23,0,0a0h
+@zero_write_id:
+    dw 0
+    db 0
+@zero_length:
+    dw 0
+@zero_write_end:
+@zero_finish:
+    db 23,0,0a0h
+@zero_finish_id:
+    dw 0
+    db 14
+@zero_finish_end:
+
 ; LOAD the consolidated package and retain only the fresh nonzero handle.
 w3d_vdplet_load_module:
     ld hl,W3D_VDPLET_PACKAGE_BYTES
@@ -744,18 +859,32 @@ w3d_vdplet_clear_owned_buffers:
 ; Finite startup foundation: identify the runtime, upload and LOAD the package.
 w3d_vdplet_open:
     call w3d_vdplet_initialize
+    ld a,W3D_VDPLET_STAGE_DISCOVER
+    ld (w3d_vdplet_stage),a
     call w3d_vdplet_discover
     ret c
+    ld a,W3D_VDPLET_STAGE_IDENTITY
+    ld (w3d_vdplet_stage),a
     call w3d_vdplet_query_identity
     ret c
+    ld a,W3D_VDPLET_STAGE_CAPABILITIES
+    ld (w3d_vdplet_stage),a
     call w3d_vdplet_query_capabilities
     ret c
+    ld a,W3D_VDPLET_STAGE_SLOT
+    ld (w3d_vdplet_stage),a
     call w3d_vdplet_require_empty_slot
     ret c
+    ld a,W3D_VDPLET_STAGE_READ_PACKAGE
+    ld (w3d_vdplet_stage),a
     call w3d_vdplet_read_package
     ret c
+    ld a,W3D_VDPLET_STAGE_UPLOAD_PACKAGE
+    ld (w3d_vdplet_stage),a
     call w3d_vdplet_upload_package
     ret c
+    ld a,W3D_VDPLET_STAGE_LOAD_MODULE
+    ld (w3d_vdplet_stage),a
     call w3d_vdplet_load_module
     ret
 
@@ -813,6 +942,8 @@ w3d_vdplet_last_value:
     dw 0
 w3d_vdplet_native_error:
     dw 0
+w3d_vdplet_stage:
+    db W3D_VDPLET_STAGE_NONE
 w3d_vdplet_mailbox:
     ds 10
 w3d_vdplet_snapshot:
