@@ -30,7 +30,9 @@ KNIFE_RANGE_Q8 = 0x180
 
 ITEM_CLIP2 = "bo_clip2"
 ITEM_MACHINEGUN = "bo_machinegun"
+ITEM_KEY1 = "bo_key1"
 DROP_SHAPES = {
+    ITEM_KEY1: 22,           # SPR_STAT_20
     ITEM_CLIP2: 28,          # SPR_STAT_26
     ITEM_MACHINEGUN: 29,    # SPR_STAT_27
 }
@@ -316,6 +318,11 @@ class StaticPool:
             give_ammo(player, 4, attack_frame=0)
         elif slot.item == ITEM_MACHINEGUN:
             give_weapon(player, Weapon.MACHINEGUN, attack_frame=0)
+        elif slot.item == ITEM_KEY1:
+            # Key ownership is modeled by the gameplay/pickup oracle. This
+            # combat oracle only needs to prove the runtime slot is valid and
+            # collectable, so consuming it has no additional player mutation.
+            pass
         else:
             raise CombatContractError(f"unsupported runtime drop {slot.item!r}")
 

@@ -1773,17 +1773,22 @@ w3d_mark_current_static_dirty:
 ; Runtime item drops
 ; ---------------------------------------------------------------------------
 
-; PlaceItemType's ordinary-combat subset. A=itemnumber, B=tilex, C=tiley.
+; PlaceItemType's implemented combat subset. A=itemnumber, B=tilex, C=tiley.
 ; Reuse the first collected/removed slot (shapenum=-1), otherwise append one
 ; stable VDP identity up to the original MAXSTATS=400 capacity. Carry is set
 ; on success and clear if the item is unsupported or the pool is full.
 w3d_place_item_type:
+    cp W3D_ITEM_KEY1
+    jr z,@key1
     cp W3D_ITEM_CLIP2
     jr z,@clip2
     cp W3D_ITEM_MACHINEGUN
     jr z,@machinegun
     or a
     ret
+@key1:
+    ld d,22                         ; SPR_STAT_20
+    jr @shape_ready
 @clip2:
     ld d,28                         ; SPR_STAT_26
     jr @shape_ready

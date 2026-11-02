@@ -175,8 +175,8 @@ w3d_vdplet_create_zero_buffer:
                       "    rst.lil 18h", self.source)
         self.assertIn("@zero_finish_id:\n    dw 0\n    db 14", self.source)
 
-    def test_source_pins_copied_pixel_capability_subset(self) -> None:
-        self.assertIn("W3D_VDPLET_REQUIRED_CAPS:      equ 0011h", self.source)
+    def test_source_pins_direct_row_capability_subset(self) -> None:
+        self.assertIn("W3D_VDPLET_REQUIRED_CAPS:      equ 0101h", self.source)
         self.assertIn("and e", self.source)
         self.assertIn("and d", self.source)
 

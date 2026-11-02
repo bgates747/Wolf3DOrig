@@ -26,6 +26,7 @@ fa_create_always:    equ 08h
         rst.lil 08h
     endmacro
 
+    include "wolf3d_backend.inc"
     include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"

@@ -18,205 +18,252 @@
 ; ---------------------------------------------------------------------------
 
 ; record: int16 base shapenum, uint8 rotations (0/2/8), uint16 original
-; 70-Hz tictime, uint8 think id, uint8 end-action id, uint8 next-state id.
+; 70-Hz tictime, uint8 think id, uint8 end-action id, uint16 next-state id.
 ; The 30-Hz client advances original time with one shared exact 2,2,3-tic
 ; cadence, retaining the DOS state graph and its initial random phases.
 w3d_actor_states:
     dw -1              ; 0 invalid/free
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,0
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw 0
     dw 50              ; 1 s_grdstand / SPR_GRD_S_1
     db 8
     dw 0
-    db W3D_STATE_THINK_STAND,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_STAND
+    db W3D_STATE_THINK_STAND,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_STAND
     dw 58              ; 2 s_grdpath1 / SPR_GRD_W1_1
     db 8
     dw 20
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_PATH1S
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_PATH1S
     dw 99              ; 3 s_dogpath1 / SPR_DOG_W1_1
     db 8
     dw 20
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_PATH1S
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_PATH1S
     dw 238             ; 4 s_ofcstand / SPR_OFC_S_1
     db 8
     dw 0
-    db W3D_STATE_THINK_STAND,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_STAND
+    db W3D_STATE_THINK_STAND,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_STAND
     dw 246             ; 5 s_ofcpath1 / SPR_OFC_W1_1
     db 8
     dw 20
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_PATH1S
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_PATH1S
     dw 187             ; 6 s_mutstand / SPR_MUT_S_1
     db 8
     dw 0
-    db W3D_STATE_THINK_STAND,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_STAND
+    db W3D_STATE_THINK_STAND,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_STAND
     dw 195             ; 7 s_mutpath1 / SPR_MUT_W1_1
     db 8
     dw 20
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_PATH1S
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_PATH1S
     dw 138             ; 8 s_ssstand / SPR_SS_S_1
     db 8
     dw 0
-    db W3D_STATE_THINK_STAND,W3D_STATE_ACTION_NONE,W3D_STATE_SS_STAND
+    db W3D_STATE_THINK_STAND,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_STAND
     dw 146             ; 9 s_sspath1 / SPR_SS_W1_1
     db 8
     dw 20
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_SS_PATH1S
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_PATH1S
     dw 95              ; 10 s_grddie4 / SPR_GRD_DEAD
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_DEAD
-    dw 288             ; 11 s_blinkychase1 (AI later)
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_DEAD
+    dw 288             ; 11 s_blinkychase1 / SPR_BLINKY_W1
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_BLINKY_CHASE1
-    dw 292             ; 12 s_clydechase1 (AI later)
+    db W3D_STATE_THINK_GHOST,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BLINKY_CHASE2
+    dw 292             ; 12 s_clydechase1 / SPR_CLYDE_W1
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_CLYDE_CHASE1
-    dw 290             ; 13 s_pinkychase1 (AI later)
+    db W3D_STATE_THINK_GHOST,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_CLYDE_CHASE2
+    dw 290             ; 13 s_pinkychase1 / SPR_PINKY_W1
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_PINKY_CHASE1
-    dw 294             ; 14 s_inkychase1 (AI later)
+    db W3D_STATE_THINK_GHOST,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_PINKY_CHASE2
+    dw 294             ; 14 s_inkychase1 / SPR_INKY_W1
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_INKY_CHASE1
+    db W3D_STATE_THINK_GHOST,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_INKY_CHASE2
     dw 296             ; 15 s_bossstand
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_BOSS_STAND
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_STAND
     dw 385             ; 16 s_gretelstand
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRETEL_STAND
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRETEL_STAND
     dw 307             ; 17 s_schabbstand
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SCHABBS_STAND
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SCHABBS_STAND
     dw 360             ; 18 s_giftstand
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GIFT_STAND
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GIFT_STAND
     dw 396             ; 19 s_fatstand
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_FAT_STAND
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_FAT_STAND
     dw 321             ; 20 s_fakestand / SPR_FAKE_W1
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_FAKE_STAND
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_FAKE_STAND
     dw 334             ; 21 s_mechastand
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MECHA_STAND
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MECHA_STAND
 
 ; Complete ordinary-enemy path animation chains. The silent W1/W3 pause
 ; states intentionally retain the same shape as their preceding frame.
     dw 58              ; 22 s_grdpath1s
     db 8
     dw 5
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_PATH2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_PATH2
     dw 66              ; 23 s_grdpath2
     db 8
     dw 15
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_PATH3
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_PATH3
     dw 74              ; 24 s_grdpath3
     db 8
     dw 20
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_PATH3S
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_PATH3S
     dw 74              ; 25 s_grdpath3s
     db 8
     dw 5
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_PATH4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_PATH4
     dw 82              ; 26 s_grdpath4
     db 8
     dw 15
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_PATH1
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_PATH1
 
     dw 99              ; 27 s_dogpath1s
     db 8
     dw 5
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_PATH2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_PATH2
     dw 107             ; 28 s_dogpath2
     db 8
     dw 15
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_PATH3
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_PATH3
     dw 115             ; 29 s_dogpath3
     db 8
     dw 20
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_PATH3S
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_PATH3S
     dw 115             ; 30 s_dogpath3s
     db 8
     dw 5
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_PATH4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_PATH4
     dw 123             ; 31 s_dogpath4
     db 8
     dw 15
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_PATH1
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_PATH1
 
     dw 246             ; 32 s_ofcpath1s
     db 8
     dw 5
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_PATH2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_PATH2
     dw 254             ; 33 s_ofcpath2
     db 8
     dw 15
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_PATH3
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_PATH3
     dw 262             ; 34 s_ofcpath3
     db 8
     dw 20
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_PATH3S
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_PATH3S
     dw 262             ; 35 s_ofcpath3s
     db 8
     dw 5
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_PATH4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_PATH4
     dw 270             ; 36 s_ofcpath4
     db 8
     dw 15
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_PATH1
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_PATH1
 
     dw 195             ; 37 s_mutpath1s
     db 8
     dw 5
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_PATH2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_PATH2
     dw 203             ; 38 s_mutpath2
     db 8
     dw 15
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_PATH3
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_PATH3
     dw 211             ; 39 s_mutpath3
     db 8
     dw 20
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_PATH3S
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_PATH3S
     dw 211             ; 40 s_mutpath3s
     db 8
     dw 5
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_PATH4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_PATH4
     dw 219             ; 41 s_mutpath4
     db 8
     dw 15
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_PATH1
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_PATH1
 
     dw 146             ; 42 s_sspath1s
     db 8
     dw 5
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_PATH2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_PATH2
     dw 154             ; 43 s_sspath2
     db 8
     dw 15
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_SS_PATH3
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_PATH3
     dw 162             ; 44 s_sspath3
     db 8
     dw 20
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_SS_PATH3S
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_PATH3S
     dw 162             ; 45 s_sspath3s
     db 8
     dw 5
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_PATH4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_PATH4
     dw 170             ; 46 s_sspath4
     db 8
     dw 15
-    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE,W3D_STATE_SS_PATH1
+    db W3D_STATE_THINK_PATH,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_PATH1
 
 ; Stable FirstSighting targets. The remaining five frames of each chain append
 ; below ids 47..51, preserving the awareness ABI while restoring the original
@@ -224,128 +271,158 @@ w3d_actor_states:
     dw 58              ; 47 s_grdchase1 / SPR_GRD_W1_1
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE1S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE1S
     dw 99              ; 48 s_dogchase1 / SPR_DOG_W1_1
     db 8
     dw 10
-    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE1S
+    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE1S
     dw 246             ; 49 s_ofcchase1 / SPR_OFC_W1_1
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE1S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE1S
     dw 195             ; 50 s_mutchase1 / SPR_MUT_W1_1
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE1S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE1S
     dw 146             ; 51 s_sschase1 / SPR_SS_W1_1
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE1S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE1S
 
     dw 58              ; 52 s_grdchase1s
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE2
     dw 66              ; 53 s_grdchase2
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE3
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE3
     dw 74              ; 54 s_grdchase3
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE3S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE3S
     dw 74              ; 55 s_grdchase3s
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE4
     dw 82              ; 56 s_grdchase4
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE1
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE1
 
     dw 99              ; 57 s_dogchase1s
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE2
     dw 107             ; 58 s_dogchase2
     db 8
     dw 8
-    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE3
+    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE3
     dw 115             ; 59 s_dogchase3
     db 8
     dw 10
-    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE3S
+    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE3S
     dw 115             ; 60 s_dogchase3s
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE4
     dw 123             ; 61 s_dogchase4
     db 8
     dw 8
-    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE1
+    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE1
 
     dw 246             ; 62 s_ofcchase1s
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE2
     dw 254             ; 63 s_ofcchase2
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE3
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE3
     dw 262             ; 64 s_ofcchase3
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE3S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE3S
     dw 262             ; 65 s_ofcchase3s
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE4
     dw 270             ; 66 s_ofcchase4
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE1
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE1
 
     dw 195             ; 67 s_mutchase1s
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE2
     dw 203             ; 68 s_mutchase2
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE3
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE3
     dw 211             ; 69 s_mutchase3
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE3S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE3S
     dw 211             ; 70 s_mutchase3s
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE4
     dw 219             ; 71 s_mutchase4
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE1
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE1
 
     dw 146             ; 72 s_sschase1s
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE2
     dw 154             ; 73 s_sschase2
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE3
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE3
     dw 162             ; 74 s_sschase3
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE3S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE3S
     dw 162             ; 75 s_sschase3s
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE4
     dw 170             ; 76 s_sschase4
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE1
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE1
 
 ; Original ordinary-enemy attack animations. End actions run before NEXT,
 ; exactly as in DoActor: T_Shoot on the muzzle-flash records and T_Bite on
@@ -353,103 +430,127 @@ w3d_actor_states:
     dw 96              ; 77 s_grdshoot1 / SPR_GRD_SHOOT1
     db 0
     dw 20
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_SHOOT2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_SHOOT2
     dw 97              ; 78 s_grdshoot2 / SPR_GRD_SHOOT2
     db 0
     dw 20
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT,W3D_STATE_GRD_SHOOT3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_GRD_SHOOT3
     dw 98              ; 79 s_grdshoot3 / SPR_GRD_SHOOT3
     db 0
     dw 20
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE1
 
     dw 135             ; 80 s_dogjump1 / SPR_DOG_JUMP1
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_JUMP2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_JUMP2
     dw 136             ; 81 s_dogjump2 / SPR_DOG_JUMP2
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_BITE,W3D_STATE_DOG_JUMP3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_BITE
+    dw W3D_STATE_DOG_JUMP3
     dw 137             ; 82 s_dogjump3 / SPR_DOG_JUMP3
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_JUMP4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_JUMP4
     dw 135             ; 83 s_dogjump4 / SPR_DOG_JUMP1
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_JUMP5
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_JUMP5
     dw 99              ; 84 s_dogjump5 / SPR_DOG_W1_1
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE1
 
     dw 285             ; 85 s_ofcshoot1 / SPR_OFC_SHOOT1
     db 0
     dw 6
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_SHOOT2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_SHOOT2
     dw 286             ; 86 s_ofcshoot2 / SPR_OFC_SHOOT2
     db 0
     dw 20
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT,W3D_STATE_OFC_SHOOT3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_OFC_SHOOT3
     dw 287             ; 87 s_ofcshoot3 / SPR_OFC_SHOOT3
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE1
 
     dw 234             ; 88 s_mutshoot1 / SPR_MUT_SHOOT1
     db 0
     dw 6
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT,W3D_STATE_MUT_SHOOT2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_MUT_SHOOT2
     dw 235             ; 89 s_mutshoot2 / SPR_MUT_SHOOT2
     db 0
     dw 20
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_SHOOT3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_SHOOT3
     dw 236             ; 90 s_mutshoot3 / SPR_MUT_SHOOT3
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT,W3D_STATE_MUT_SHOOT4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_MUT_SHOOT4
     dw 237             ; 91 s_mutshoot4 / SPR_MUT_SHOOT4
     db 0
     dw 20
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE1
 
     dw 184             ; 92 s_ssshoot1 / SPR_SS_SHOOT1
     db 0
     dw 20
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_SHOOT2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_SHOOT2
     dw 185             ; 93 s_ssshoot2 / SPR_SS_SHOOT2
     db 0
     dw 20
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT,W3D_STATE_SS_SHOOT3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_SS_SHOOT3
     dw 186             ; 94 s_ssshoot3 / SPR_SS_SHOOT3
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_SHOOT4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_SHOOT4
     dw 185             ; 95 s_ssshoot4 / SPR_SS_SHOOT2
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT,W3D_STATE_SS_SHOOT5
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_SS_SHOOT5
     dw 186             ; 96 s_ssshoot5 / SPR_SS_SHOOT3
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_SHOOT6
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_SHOOT6
     dw 185             ; 97 s_ssshoot6 / SPR_SS_SHOOT2
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT,W3D_STATE_SS_SHOOT7
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_SS_SHOOT7
     dw 186             ; 98 s_ssshoot7 / SPR_SS_SHOOT3
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_SHOOT8
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_SHOOT8
     dw 185             ; 99 s_ssshoot8 / SPR_SS_SHOOT2
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT,W3D_STATE_SS_SHOOT9
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_SS_SHOOT9
     dw 186             ; 100 s_ssshoot9 / SPR_SS_SHOOT3
     db 0
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE1
 
 ; Original ordinary-enemy pain and death animations.  Pain records use the
 ; source's rotate=2 rule.  A_DeathScream is an end action on the first death
@@ -458,123 +559,270 @@ w3d_actor_states:
     dw 90              ; 101 s_grdpain / SPR_GRD_PAIN_1
     db 2
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE1
     dw 94              ; 102 s_grdpain1 / SPR_GRD_PAIN_2
     db 2
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE1
     dw 91              ; 103 s_grddie1 / SPR_GRD_DIE_1
     db 0
     dw 15
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_GRD_DIE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_GRD_DIE2
     dw 92              ; 104 s_grddie2 / SPR_GRD_DIE_2
     db 0
     dw 15
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_DIE3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_DIE3
     dw 93              ; 105 s_grddie3 / SPR_GRD_DIE_3
     db 0
     dw 15
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_DEAD
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_DEAD
 
     dw 131             ; 106 s_dogdie1 / SPR_DOG_DIE_1
     db 0
     dw 15
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_DOG_DIE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_DOG_DIE2
     dw 132             ; 107 s_dogdie2 / SPR_DOG_DIE_2
     db 0
     dw 15
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_DIE3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_DIE3
     dw 133             ; 108 s_dogdie3 / SPR_DOG_DIE_3
     db 0
     dw 15
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_DEAD
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_DEAD
     dw 134             ; 109 s_dogdead / SPR_DOG_DEAD
     db 0
     dw 15
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_DEAD
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_DEAD
 
     dw 278             ; 110 s_ofcpain / SPR_OFC_PAIN_1
     db 2
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE1
     dw 282             ; 111 s_ofcpain1 / SPR_OFC_PAIN_2
     db 2
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE1
     dw 279             ; 112 s_ofcdie1 / SPR_OFC_DIE_1
     db 0
     dw 11
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_OFC_DIE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_OFC_DIE2
     dw 280             ; 113 s_ofcdie2 / SPR_OFC_DIE_2
     db 0
     dw 11
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_DIE3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_DIE3
     dw 281             ; 114 s_ofcdie3 / SPR_OFC_DIE_3
     db 0
     dw 11
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_DIE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_DIE4
     dw 283             ; 115 s_ofcdie4 / SPR_OFC_DIE_4
     db 0
     dw 11
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_DEAD
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_DEAD
     dw 284             ; 116 s_ofcdie5 / SPR_OFC_DEAD
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_DEAD
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_DEAD
 
     dw 227             ; 117 s_mutpain / SPR_MUT_PAIN_1
     db 2
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE1
     dw 231             ; 118 s_mutpain1 / SPR_MUT_PAIN_2
     db 2
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE1
     dw 228             ; 119 s_mutdie1 / SPR_MUT_DIE_1
     db 0
     dw 7
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_MUT_DIE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_MUT_DIE2
     dw 229             ; 120 s_mutdie2 / SPR_MUT_DIE_2
     db 0
     dw 7
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_DIE3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_DIE3
     dw 230             ; 121 s_mutdie3 / SPR_MUT_DIE_3
     db 0
     dw 7
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_DIE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_DIE4
     dw 232             ; 122 s_mutdie4 / SPR_MUT_DIE_4
     db 0
     dw 7
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_DEAD
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_DEAD
     dw 233             ; 123 s_mutdie5 / SPR_MUT_DEAD
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_DEAD
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_DEAD
 
     dw 178             ; 124 s_sspain / SPR_SS_PAIN_1
     db 2
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE1
     dw 182             ; 125 s_sspain1 / SPR_SS_PAIN_2
     db 2
     dw 10
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE1
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE1
     dw 179             ; 126 s_ssdie1 / SPR_SS_DIE_1
     db 0
     dw 15
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_SS_DIE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_SS_DIE2
     dw 180             ; 127 s_ssdie2 / SPR_SS_DIE_2
     db 0
     dw 15
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_DIE3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_DIE3
     dw 181             ; 128 s_ssdie3 / SPR_SS_DIE_3
     db 0
     dw 15
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_DEAD
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_DEAD
     dw 183             ; 129 s_ssdie4 / SPR_SS_DEAD
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_DEAD
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_DEAD
+
+; Hans Grosse: exact shareware boss chase, death, and eight-frame firing
+; graph. T_Shoot remains the ordinary synchronous hitscan action, with the
+; boss accuracy and sound distinctions applied by its dispatcher.
+    dw 296             ; 130 s_bosschase1 / SPR_BOSS_W1
+    db 0
+    dw 10
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_CHASE1S
+    dw 296             ; 131 s_bosschase1s
+    db 0
+    dw 3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_CHASE2
+    dw 297             ; 132 s_bosschase2 / SPR_BOSS_W2
+    db 0
+    dw 8
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_CHASE3
+    dw 298             ; 133 s_bosschase3 / SPR_BOSS_W3
+    db 0
+    dw 10
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_CHASE3S
+    dw 298             ; 134 s_bosschase3s
+    db 0
+    dw 3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_CHASE4
+    dw 299             ; 135 s_bosschase4 / SPR_BOSS_W4
+    db 0
+    dw 8
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_CHASE1
+
+    dw 300             ; 136 s_bossdie1 / SPR_BOSS_DIE1
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_BOSS_DIE2
+    dw 301             ; 137 s_bossdie2 / SPR_BOSS_DIE2
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_DIE3
+    dw 302             ; 138 s_bossdie3 / SPR_BOSS_DIE3
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_DEAD
+    dw 303             ; 139 s_bossdie4 / SPR_BOSS_DEAD
+    db 0
+    dw 0
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_DEAD
+
+    dw 304             ; 140 s_bossshoot1 / SPR_BOSS_SHOOT1
+    db 0
+    dw 30
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_SHOOT2
+    dw 305             ; 141 s_bossshoot2 / SPR_BOSS_SHOOT2
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT3
+    dw 306             ; 142 s_bossshoot3 / SPR_BOSS_SHOOT3
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT4
+    dw 305             ; 143 s_bossshoot4 / SPR_BOSS_SHOOT2
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT5
+    dw 306             ; 144 s_bossshoot5 / SPR_BOSS_SHOOT3
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT6
+    dw 305             ; 145 s_bossshoot6 / SPR_BOSS_SHOOT2
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT7
+    dw 306             ; 146 s_bossshoot7 / SPR_BOSS_SHOOT3
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT8
+    dw 304             ; 147 s_bossshoot8 / SPR_BOSS_SHOOT1
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_CHASE1
+
+; E1 secret-floor ghosts retain their two-frame T_Ghosts cycles.
+    dw 289             ; 148 s_blinkychase2 / SPR_BLINKY_W2
+    db 0
+    dw 10
+    db W3D_STATE_THINK_GHOST,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BLINKY_CHASE1
+    dw 293             ; 149 s_clydechase2 / SPR_CLYDE_W2
+    db 0
+    dw 10
+    db W3D_STATE_THINK_GHOST,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_CLYDE_CHASE1
+    dw 291             ; 150 s_pinkychase2 / SPR_PINKY_W2
+    db 0
+    dw 10
+    db W3D_STATE_THINK_GHOST,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_PINKY_CHASE1
+    dw 295             ; 151 s_inkychase2 / SPR_INKY_W2
+    db 0
+    dw 10
+    db W3D_STATE_THINK_GHOST,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_INKY_CHASE1
 w3d_actor_states_end:
 
 ; ---------------------------------------------------------------------------
@@ -706,21 +954,42 @@ w3d_actor_pointer_from_id:
     pop af
     ret
 
-; A=state id -> IY=state. Invalid/high-byte ids resolve to state zero.
+; Compatibility entry for existing byte-sized callers. New state families use
+; the uint16 HL entry directly.
 w3d_actor_state_pointer_from_id:
-    cp W3D_STATE_COUNT
+    ld hl,0
+    ld l,a
+
+; HL=uint16 state id -> IY=state. Invalid ids resolve to state zero. State
+; records are nine bytes, so the offset helper remains pure 16-bit arithmetic
+; for the deliberately bounded table while the final base addition is ADL.
+w3d_actor_state_pointer_from_id16:
+    push hl
+    ld de,W3D_STATE_COUNT
+    or a
+    sbc.s hl,de
+    pop hl
     jr c,@valid
-    xor a
+    ld hl,0
 @valid:
-    ld d,a
-    ld e,W3D_STATE_SIZE
-    mlt de
-    inc de
-    dec.s de
-    ld hl,w3d_actor_states
+    call w3d_actor_state_offset_from_id
+    ld de,w3d_actor_states
     add hl,de
     push hl
     pop iy
+    ret
+
+; HL=uint16 id -> HL=id*W3D_STATE_SIZE. This independently regression-testable
+; seam proves the dispatcher arithmetic across the former 255-id boundary.
+w3d_actor_state_offset_from_id:
+    ld d,h
+    ld e,l
+    add.s hl,hl
+    add.s hl,hl
+    add.s hl,hl
+    add.s hl,de
+    inc de
+    dec.s de
     ret
 
 ; Allocate one detached zeroed slot. Carry set on success with A=slot and
@@ -1094,17 +1363,12 @@ w3d_build_actor_wire_record:
     ld a,(w3d_actor_wire_record+W3D_ACTOR_WIRE_ID+0)
     call w3d_actor_pointer_from_id
 
-; Resolve state render metadata. A high state byte or out-of-range low byte
-; maps to invalid state zero. Shape -1 retains the original temp1 override.
-    ld a,(ix+W3D_ACTOR_STATE+1)
-    or a
-    jr nz,@invalid_state
-    ld a,(ix+W3D_ACTOR_STATE+0)
-    jr @state_id_ready
-@invalid_state:
-    xor a
-@state_id_ready:
-    call w3d_actor_state_pointer_from_id
+; Resolve full uint16 state render metadata. Invalid ids map to state zero.
+; Shape -1 retains the original temp1 override.
+    ld hl,0
+    ld l,(ix+W3D_ACTOR_STATE+0)
+    ld h,(ix+W3D_ACTOR_STATE+1)
+    call w3d_actor_state_pointer_from_id16
     ld a,(iy+W3D_STATE_SHAPENUM+0)
     ld (w3d_actor_wire_record+W3D_ACTOR_WIRE_SHAPENUM+0),a
     ld b,a

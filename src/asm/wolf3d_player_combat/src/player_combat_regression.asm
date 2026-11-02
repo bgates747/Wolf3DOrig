@@ -34,6 +34,7 @@ fa_create_always:   equ 0x08
         CHECK_A expected,why
     endmacro
 
+    include "wolf3d_backend.inc"
     include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
@@ -101,13 +102,13 @@ test_state_table:
     ld a,phase_states
     ld (test_phase),a
     ld a,W3D_STATE_COUNT
-    CHECK_A 130,reason_scalar
+    CHECK_A 152,reason_scalar
     ld hl,w3d_actor_states_end-w3d_actor_states
     ld a,l
-    CHECK_A 010h,reason_scalar
+    CHECK_A 058h,reason_scalar
     ld a,h
-    CHECK_A 4,reason_scalar
-    ld ix,w3d_actor_states+808        ; 101 * 8, literal avoids precedence
+    CHECK_A 5,reason_scalar
+    ld ix,w3d_actor_states+909        ; 101 * 9, literal avoids precedence
     ld iy,expected_injury_states
     ld de,expected_injury_states_end-expected_injury_states
     ld c,reason_table
@@ -258,7 +259,7 @@ test_target_boundaries:
     ret
 
 ; ---------------------------------------------------------------------------
-; 4. Guard and SS death ownership, points, corpse flags and runtime drops.
+; 4. Ordinary and shareware-boss death ownership, points and runtime drops.
 ; ---------------------------------------------------------------------------
 
 test_damage_death_drops:
@@ -309,6 +310,34 @@ test_damage_death_drops:
     call w3d_static_pointer_from_current
     CHECK_IX8 W3D_STATIC_SHAPENUM,29,reason_drop
     CHECK_IX8 W3D_STATIC_ITEMNUMBER,W3D_ITEM_MACHINEGUN,reason_drop
+
+; Hans has no pain arm. A lethal hit enters the widened death chain, awards
+; 5000 points, and places the gold key using its original SPR_STAT_20 shape.
+    call prepare_test_world
+    ld ix,w3d_actors+W3D_ACTOR_SIZE
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_BOSS
+    ld (ix+W3D_ACTOR_STATE+0),W3D_STATE_BOSS_CHASE1
+    xor a
+    ld (ix+W3D_ACTOR_STATE+1),a
+    ld (ix+W3D_ACTOR_HITPOINTS+0),1
+    ld hl,1
+    ld a,1
+    call w3d_damage_actor
+    CHECK_A W3D_DAMAGE_RESULT_KILLED,reason_scalar
+    ld a,1
+    call w3d_actor_pointer_from_id
+    CHECK_IX8 W3D_ACTOR_STATE+0,W3D_STATE_BOSS_DIE1,reason_state
+    CHECK_IX8 W3D_ACTOR_STATE+1,0,reason_state
+    CHECK_IX8 W3D_ACTOR_TICCOUNT,15,reason_state
+    CHECK_MEM8 w3d_player_score+0,088h,reason_inventory
+    CHECK_MEM8 w3d_player_score+1,013h,reason_inventory
+    CHECK_MEM8 w3d_player_kill_count,1,reason_inventory
+    CHECK_MEM8 w3d_static_count,W3D_FIXTURE_STATIC_COUNT+1,reason_drop
+    ld hl,W3D_FIXTURE_STATIC_COUNT
+    ld (w3d_current_static_index),hl
+    call w3d_static_pointer_from_current
+    CHECK_IX8 W3D_STATIC_SHAPENUM,22,reason_drop
+    CHECK_IX8 W3D_STATIC_ITEMNUMBER,W3D_ITEM_KEY1,reason_drop
     ret
 
 ; ---------------------------------------------------------------------------
@@ -744,119 +773,148 @@ expected_injury_states:
     dw 90
     db 2
     dw 10
-    db 0,0,W3D_STATE_GRD_CHASE1
+    db 0,0
+    dw W3D_STATE_GRD_CHASE1
     dw 94
     db 2
     dw 10
-    db 0,0,W3D_STATE_GRD_CHASE1
+    db 0,0
+    dw W3D_STATE_GRD_CHASE1
     dw 91
     db 0
     dw 15
-    db 0,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_GRD_DIE2
+    db 0,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_GRD_DIE2
     dw 92
     db 0
     dw 15
-    db 0,0,W3D_STATE_GRD_DIE3
+    db 0,0
+    dw W3D_STATE_GRD_DIE3
     dw 93
     db 0
     dw 15
-    db 0,0,W3D_STATE_GRD_DEAD
+    db 0,0
+    dw W3D_STATE_GRD_DEAD
     dw 131
     db 0
     dw 15
-    db 0,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_DOG_DIE2
+    db 0,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_DOG_DIE2
     dw 132
     db 0
     dw 15
-    db 0,0,W3D_STATE_DOG_DIE3
+    db 0,0
+    dw W3D_STATE_DOG_DIE3
     dw 133
     db 0
     dw 15
-    db 0,0,W3D_STATE_DOG_DEAD
+    db 0,0
+    dw W3D_STATE_DOG_DEAD
     dw 134
     db 0
     dw 15
-    db 0,0,W3D_STATE_DOG_DEAD
+    db 0,0
+    dw W3D_STATE_DOG_DEAD
     dw 278
     db 2
     dw 10
-    db 0,0,W3D_STATE_OFC_CHASE1
+    db 0,0
+    dw W3D_STATE_OFC_CHASE1
     dw 282
     db 2
     dw 10
-    db 0,0,W3D_STATE_OFC_CHASE1
+    db 0,0
+    dw W3D_STATE_OFC_CHASE1
     dw 279
     db 0
     dw 11
-    db 0,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_OFC_DIE2
+    db 0,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_OFC_DIE2
     dw 280
     db 0
     dw 11
-    db 0,0,W3D_STATE_OFC_DIE3
+    db 0,0
+    dw W3D_STATE_OFC_DIE3
     dw 281
     db 0
     dw 11
-    db 0,0,W3D_STATE_OFC_DIE4
+    db 0,0
+    dw W3D_STATE_OFC_DIE4
     dw 283
     db 0
     dw 11
-    db 0,0,W3D_STATE_OFC_DEAD
+    db 0,0
+    dw W3D_STATE_OFC_DEAD
     dw 284
     db 0
     dw 0
-    db 0,0,W3D_STATE_OFC_DEAD
+    db 0,0
+    dw W3D_STATE_OFC_DEAD
     dw 227
     db 2
     dw 10
-    db 0,0,W3D_STATE_MUT_CHASE1
+    db 0,0
+    dw W3D_STATE_MUT_CHASE1
     dw 231
     db 2
     dw 10
-    db 0,0,W3D_STATE_MUT_CHASE1
+    db 0,0
+    dw W3D_STATE_MUT_CHASE1
     dw 228
     db 0
     dw 7
-    db 0,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_MUT_DIE2
+    db 0,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_MUT_DIE2
     dw 229
     db 0
     dw 7
-    db 0,0,W3D_STATE_MUT_DIE3
+    db 0,0
+    dw W3D_STATE_MUT_DIE3
     dw 230
     db 0
     dw 7
-    db 0,0,W3D_STATE_MUT_DIE4
+    db 0,0
+    dw W3D_STATE_MUT_DIE4
     dw 232
     db 0
     dw 7
-    db 0,0,W3D_STATE_MUT_DEAD
+    db 0,0
+    dw W3D_STATE_MUT_DEAD
     dw 233
     db 0
     dw 0
-    db 0,0,W3D_STATE_MUT_DEAD
+    db 0,0
+    dw W3D_STATE_MUT_DEAD
     dw 178
     db 2
     dw 10
-    db 0,0,W3D_STATE_SS_CHASE1
+    db 0,0
+    dw W3D_STATE_SS_CHASE1
     dw 182
     db 2
     dw 10
-    db 0,0,W3D_STATE_SS_CHASE1
+    db 0,0
+    dw W3D_STATE_SS_CHASE1
     dw 179
     db 0
     dw 15
-    db 0,W3D_STATE_ACTION_DEATH_SCREAM,W3D_STATE_SS_DIE2
+    db 0,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_SS_DIE2
     dw 180
     db 0
     dw 15
-    db 0,0,W3D_STATE_SS_DIE3
+    db 0,0
+    dw W3D_STATE_SS_DIE3
     dw 181
     db 0
     dw 15
-    db 0,0,W3D_STATE_SS_DEAD
+    db 0,0
+    dw W3D_STATE_SS_DEAD
     dw 183
     db 0
     dw 0
-    db 0,0,W3D_STATE_SS_DEAD
+    db 0,0
+    dw W3D_STATE_SS_DEAD
 expected_injury_states_end:
 
 report_banner:      db 13,10,"Wolf3D player combat direct regression",13,10,0

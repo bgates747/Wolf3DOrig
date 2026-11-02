@@ -41,6 +41,15 @@ W3D_AUDIO_FLAG_POSITIONED:     equ 00000001b
 W3D_AUDIO_TRANSPORT_BUFFERED:  equ 0
 W3D_AUDIO_TRANSPORT_DIRECT:    equ 1
 
+; Installing all loaded-sample playback procedures is a uniquely dense VDU
+; burst: unlike AGNB streaming, it contains no intervening FatFS reads.  The
+; mode-info reply is used as an ordered ingress fence after each sample's
+; three procedures.  These names remain local to the audio unit so its direct
+; regression can include this file without depending on wolf3d.asm constants.
+W3D_AUDIO_MOS_CLEARVDPFLAGS:   equ 040h
+W3D_AUDIO_MOS_WAITFORVDPFLAGS: equ 041h
+W3D_AUDIO_VDP_PFLAG_MODE:      equ 00010000b
+
 W3D_AUDIO_PENDING_SOUND:       equ 0
 W3D_AUDIO_PENDING_GAIN:        equ 1
 W3D_AUDIO_PENDING_PRIORITY:    equ 2
@@ -565,6 +574,14 @@ w3d_audio_direct_commands_end:
 ; idempotent instead of concatenating another playback procedure.
 w3d_audio_install_available_command_buffers:
     push ix
+; Fence the final asynchronous buffer-to-sound conversion before beginning
+; the command-buffer burst.  Capture-mode regressions have no physical VDP.
+    ld a,(w3d_audio_capture_enabled)
+    or a
+    jr nz,@start
+    call w3d_audio_wait_for_vdp_ingress
+    jr c,@failed
+@start:
     xor a
     ld (w3d_audio_install_sound),a
 @sound_loop:
@@ -586,6 +603,14 @@ w3d_audio_install_available_command_buffers:
     ld (w3d_audio_install_channel),a
     cp W3D_AUDIO_CHANNEL_COUNT
     jr c,@channel_loop
+; A screen-info query cannot reply until every preceding VDU byte has been
+; parsed.  Waiting here bounds the burst to 111 procedure bytes and prevents
+; the VDP UART/parser from being outrun by the eZ80's tight memory-only loop.
+    ld a,(w3d_audio_capture_enabled)
+    or a
+    jr nz,@next_sound
+    call w3d_audio_wait_for_vdp_ingress
+    jr c,@failed
 @next_sound:
     ld a,(w3d_audio_install_sound)
     inc a
@@ -593,7 +618,38 @@ w3d_audio_install_available_command_buffers:
     cp W3D_AUDIO_LOGICAL_COUNT
     jr c,@sound_loop
     pop ix
+    or a
     ret
+@failed:
+    pop ix
+    scf
+    ret
+
+; Emit an ordered mode-info query and wait for MOS to receive its reply.
+; Carry clear means all VDU input before the query has been consumed; carry
+; set is the finite one-second MOS timeout.  BC is preserved for callers.
+w3d_audio_wait_for_vdp_ingress:
+    push bc
+    ld c,W3D_AUDIO_VDP_PFLAG_MODE
+    MOSCALL W3D_AUDIO_MOS_CLEARVDPFLAGS
+    ld hl,w3d_audio_ingress_fence_command
+    ld bc,w3d_audio_ingress_fence_command_end-w3d_audio_ingress_fence_command
+    rst.lil 018h
+    ld c,W3D_AUDIO_VDP_PFLAG_MODE
+    MOSCALL W3D_AUDIO_MOS_WAITFORVDPFLAGS
+    or a
+    jr nz,@timeout
+    pop bc
+    or a
+    ret
+@timeout:
+    pop bc
+    scf
+    ret
+
+w3d_audio_ingress_fence_command:
+    db 23,0,086h                 ; fetch screen dimensions/mode info
+w3d_audio_ingress_fence_command_end:
 
 ; A=logical id, C=channel; uploads one 23-byte command procedure.
 w3d_audio_install_command_buffer:

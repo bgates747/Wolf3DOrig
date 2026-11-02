@@ -26,7 +26,7 @@ FIXTURE = (
 FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
 MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
 VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
-RESULT_SIZE = 16
+RESULT_SIZE = 16 + 37 * 6
 
 REASONS = {
     1: "level-time subticks",
@@ -53,6 +53,8 @@ REASONS = {
     22: "Escape latch",
     23: "post-acknowledgment release latch",
     24: "application-exit query count",
+    25: "ordered-ingress fence count",
+    26: "ordered-ingress failure latch",
 }
 
 
@@ -150,6 +152,12 @@ def main() -> int:
             f"first case={first_case} reason={REASONS.get(reason, reason)} "
             f"expected={expected:#04x} actual={actual:#04x}"
         )
+        for index in range(37):
+            offset = 16 + index * 6
+            buffer_id = int.from_bytes(payload[offset : offset + 2], "little")
+            x = int.from_bytes(payload[offset + 2 : offset + 4], "little")
+            y = int.from_bytes(payload[offset + 4 : offset + 6], "little")
+            print(f"  plot {index:02d}: buffer={buffer_id:#06x} x={x} y={y}")
         return 1
     print(f"PASS: {checks}/{checks} direct production-intermission eZ80 checks")
     return 0

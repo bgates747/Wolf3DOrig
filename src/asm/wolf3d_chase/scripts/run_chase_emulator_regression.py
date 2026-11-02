@@ -24,7 +24,7 @@ STAGED_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
 FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
 MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
 VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
-RESULT_SIZE = 32
+RESULT_SIZE = 33
 TIMING_ITERATIONS = 10_000
 
 PHASES = {
@@ -37,6 +37,7 @@ PHASES = {
     7: "corrupt containment",
     8: "scheduler composition",
     9: "chase timing",
+    10: "shareware special actors",
 }
 
 REASONS = {
@@ -153,7 +154,7 @@ def main() -> int:
     if errors:
         phase_errors = [
             f"{PHASES.get(i + 1, i + 1)}={count}"
-            for i, count in enumerate(payload[16:25])
+            for i, count in enumerate(payload[16:26])
             if count
         ]
         print(
@@ -166,11 +167,11 @@ def main() -> int:
             print("Mismatches by phase: " + ", ".join(phase_errors))
         return 1
 
-    ordinary_ms = int.from_bytes(payload[25:28], "little")
-    dog_ms = int.from_bytes(payload[28:31], "little")
-    if payload[31] != 1:
-        raise RuntimeError(f"unsupported chase mailbox schema {payload[31]}")
-    print(f"PASS: {checks} direct production-chase eZ80 checks across 9 cases")
+    ordinary_ms = int.from_bytes(payload[26:29], "little")
+    dog_ms = int.from_bytes(payload[29:32], "little")
+    if payload[32] != 1:
+        raise RuntimeError(f"unsupported chase mailbox schema {payload[32]}")
+    print(f"PASS: {checks} direct production-chase eZ80 checks across 10 cases")
     if ordinary_ms:
         print(
             f"PRT1 timing: {TIMING_ITERATIONS:,} clear close-range chase "

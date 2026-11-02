@@ -78,8 +78,9 @@ class ActorState(IntEnum):
     These are indices into the eZ80 state table, not VSWAP shape ids.  Map
     actors initially use ids 1..21; ids 22..46 complete the ordinary-enemy
     path cycles, ids 47..76 are the stable chase chains, ids 77..100 are the
-    ordinary ranged/dog attack animations, and ids 101..129 are the ordinary
-    pain/death chains installed by player combat.
+    ordinary ranged/dog attack animations, ids 101..129 are the ordinary
+    pain/death chains, and ids 130..151 hold the Episode-one Hans and secret-
+    floor ghost runtime graphs.
     """
 
     GRD_STAND = 1
@@ -211,6 +212,28 @@ class ActorState(IntEnum):
     SS_DIE2 = 127
     SS_DIE3 = 128
     SS_DEAD = 129
+    BOSS_CHASE1 = 130
+    BOSS_CHASE1S = 131
+    BOSS_CHASE2 = 132
+    BOSS_CHASE3 = 133
+    BOSS_CHASE3S = 134
+    BOSS_CHASE4 = 135
+    BOSS_DIE1 = 136
+    BOSS_DIE2 = 137
+    BOSS_DIE3 = 138
+    BOSS_DEAD = 139
+    BOSS_SHOOT1 = 140
+    BOSS_SHOOT2 = 141
+    BOSS_SHOOT3 = 142
+    BOSS_SHOOT4 = 143
+    BOSS_SHOOT5 = 144
+    BOSS_SHOOT6 = 145
+    BOSS_SHOOT7 = 146
+    BOSS_SHOOT8 = 147
+    BLINKY_CHASE2 = 148
+    CLYDE_CHASE2 = 149
+    PINKY_CHASE2 = 150
+    INKY_CHASE2 = 151
 
 
 # John Carmack's original 256-byte table from ID_US_A.ASM.  ``US_InitRndT

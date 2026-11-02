@@ -287,6 +287,11 @@ class ReactionDelayTests(unittest.TestCase):
         self.assertEqual(aw.reaction_delay(aw.CLASS_OFFICER, rng), 2)
         self.assertEqual(rng.draws, 0)
 
+    def test_boss_delay_is_one_tic_and_consumes_no_random_byte(self) -> None:
+        rng = aw.SequenceRng([])
+        self.assertEqual(aw.reaction_delay(aw.CLASS_BOSS, rng), 1)
+        self.assertEqual(rng.draws, 0)
+
     def test_guard_delay_counts_down_on_shared_223_cadence(self) -> None:
         subject = actor()
         rng = aw.SequenceRng([27])  # 1 + 27//4 == 7 tics
@@ -357,7 +362,7 @@ class ReactionDelayTests(unittest.TestCase):
 
 
 class ActivationTests(unittest.TestCase):
-    def test_each_ordinary_class_gets_chase_state_speed_and_tics(self) -> None:
+    def test_each_supported_class_gets_chase_state_speed_and_tics(self) -> None:
         for actor_class, multiplier in aw.SPEED_MULTIPLIER_BY_CLASS.items():
             with self.subTest(actor_class=actor_class):
                 subject = actor(

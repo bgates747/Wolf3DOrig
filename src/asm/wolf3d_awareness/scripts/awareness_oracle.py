@@ -39,6 +39,7 @@ CLASS_GUARD = 3
 CLASS_OFFICER = 4
 CLASS_SS = 5
 CLASS_DOG = 6
+CLASS_BOSS = 7
 CLASS_MUTANT = 11
 
 FLAG_SHOOTABLE = 0x01
@@ -56,6 +57,7 @@ CHASE_STATE_BY_CLASS = {
     CLASS_OFFICER: "officer_chase1",
     CLASS_SS: "ss_chase1",
     CLASS_DOG: "dog_chase1",
+    CLASS_BOSS: "boss_chase1",
     CLASS_MUTANT: "mutant_chase1",
 }
 
@@ -64,6 +66,7 @@ SPEED_MULTIPLIER_BY_CLASS = {
     CLASS_OFFICER: 5,
     CLASS_SS: 4,
     CLASS_DOG: 2,
+    CLASS_BOSS: 3,
     CLASS_MUTANT: 3,
 }
 
@@ -224,6 +227,8 @@ def visual_sight(
 def reaction_delay(actor_class: int, rng: ByteRng) -> int:
     """Seed the original class-specific detection delay in 70-Hz tics."""
 
+    if actor_class == CLASS_BOSS:
+        return 1
     if actor_class == CLASS_OFFICER:
         return 2
     try:

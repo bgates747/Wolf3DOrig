@@ -34,6 +34,7 @@ timing_iterations:  equ 10000
         rst.lil 08h
     endmacro
 
+    include "wolf3d_backend.inc"
     include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
@@ -165,7 +166,7 @@ test_rng_contract:
     jp assert_equal
 
 ; ---------------------------------------------------------------------------
-; Case 2: all five class formulas and officer's no-consume exception.
+; Case 2: all five ordinary formulas plus the boss fixed-delay path.
 ; ---------------------------------------------------------------------------
 
 test_reaction_delays:
@@ -247,6 +248,98 @@ test_reaction_delays:
     ld a,(w3d_random_index)
     ld b,158
     ld c,reason_rng
+    call assert_equal
+
+; Bosses use the original fixed one-tic delay and consume no random byte.
+    ld a,6
+    ld (test_detail),a
+    ld a,W3D_CLASS_BOSS
+    ld (ix+W3D_ACTOR_CLASS),a
+    ld a,157
+    ld (w3d_random_index),a
+    call w3d_actor_reaction_delay
+    ld b,1
+    ld c,reason_scalar
+    call assert_equal
+    ld a,(w3d_random_index)
+    ld b,157
+    ld c,reason_rng
+    call assert_equal
+
+; Reproduce the real map lifecycle through DoActor: zero-duration boss stand,
+; visual acquisition, one pending reaction tick, FirstSighting and chase.
+; The actor must remain live throughout; the omitted boss delay used to fault
+; and remove it before its global GUTENTAG request.
+    ld a,7
+    ld (test_detail),a
+    call prepare_one_actor
+    ld a,W3D_CLASS_BOSS
+    ld (ix+W3D_ACTOR_CLASS),a
+    ld a,W3D_STATE_BOSS_STAND
+    ld (ix+W3D_ACTOR_STATE+0),a
+    xor a
+    ld (ix+W3D_ACTOR_STATE+1),a
+    ld a,W3D_ACTOR_FLAG_SHOOTABLE|W3D_ACTOR_FLAG_AMBUSH
+    ld (ix+W3D_ACTOR_FLAGS),a
+    call set_player_ahead
+    call w3d_simulate_actors
+    ld a,1
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_TEMP2+0)
+    ld b,1
+    ld c,reason_temp2
+    call assert_equal
+    ld a,(w3d_actor_count)
+    ld b,1
+    ld c,reason_containment
+    call assert_equal
+    ld a,(w3d_actor_fault_count+0)
+    ld b,0
+    ld c,reason_containment
+    call assert_equal
+
+    call w3d_simulate_actors
+    ld a,1
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_STATE+0)
+    ld b,W3D_STATE_BOSS_CHASE1
+    ld c,reason_state_tics
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_STATE+1)
+    ld b,0
+    ld c,reason_state_tics
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_TICCOUNT+0)
+    ld b,10
+    ld c,reason_state_tics
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_SPEED+0)
+    ld b,0
+    ld c,reason_speed
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_SPEED+1)
+    ld b,6
+    ld c,reason_speed
+    call assert_equal
+    ld a,(w3d_actor_count)
+    ld b,1
+    ld c,reason_containment
+    call assert_equal
+    ld a,(w3d_actor_fault_count+0)
+    ld b,0
+    ld c,reason_containment
+    call assert_equal
+    ld a,(test_audio_count)
+    ld b,1
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,W3D_AUDIO_SOUND_GUTENTAG
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_kind)
+    ld b,0
+    ld c,reason_audio
     jp assert_equal
 
 ; ---------------------------------------------------------------------------

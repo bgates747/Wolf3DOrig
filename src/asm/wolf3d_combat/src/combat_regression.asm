@@ -51,6 +51,7 @@ timing_iterations:  equ 10000
         CHECK_IX8 offset+2,b2,why
     endmacro
 
+    include "wolf3d_backend.inc"
     include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
@@ -130,7 +131,7 @@ run_tests:
     ret
 
 ; ---------------------------------------------------------------------------
-; 1. All 24 attack records and total state count.
+; 1. All ordinary attack records and the widened complete state table.
 ; ---------------------------------------------------------------------------
 
 test_state_table:
@@ -139,13 +140,13 @@ test_state_table:
     ld a,1
     ld (test_detail),a
     ld a,W3D_STATE_COUNT
-    CHECK_A 130,reason_scalar
+    CHECK_A 152,reason_scalar
     ld hl,w3d_actor_states_end-w3d_actor_states
     ld a,l
-    CHECK_A 010h,reason_scalar
+    CHECK_A 058h,reason_scalar
     ld a,h
-    CHECK_A 4,reason_scalar
-    ld ix,w3d_actor_states+616       ; 77 * 8
+    CHECK_A 5,reason_scalar
+    ld ix,w3d_actor_states+693       ; 77 * 9
     ld iy,expected_attack_states
     ld de,expected_attack_states_end-expected_attack_states
     ld c,reason_table
@@ -201,6 +202,20 @@ test_entry_latches:
     call w3d_actor_new_state
     CHECK_IX8 W3D_ACTOR_STATE,W3D_STATE_DOG_JUMP1,reason_state
     CHECK_IX8 W3D_ACTOR_TICCOUNT,10,reason_state
+
+; Hans's state id crosses the original byte-table boundary and therefore also
+; pins the uint16 NewState path used by all newly appended special actors.
+    ld a,6
+    ld (test_detail),a
+    call prepare_guard
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_BOSS
+    call w3d_actor_begin_ranged_attack
+    ld a,0
+    adc a,0
+    CHECK_A 0,reason_scalar
+    CHECK_IX8 W3D_ACTOR_STATE+0,W3D_STATE_BOSS_SHOOT1,reason_state
+    CHECK_IX8 W3D_ACTOR_STATE+1,0,reason_state
+    CHECK_IX8 W3D_ACTOR_TICCOUNT,30,reason_state
     ret
 
 ; ---------------------------------------------------------------------------
@@ -399,6 +414,23 @@ test_shoot:
     CHECK_MEM8 w3d_actor_combat_hitchance+0,208,reason_scalar
     CHECK_MEM8 w3d_random_index,39,reason_rng
     CHECK_MEM8 w3d_player_health,94,reason_health
+
+; Hans uses the same source accuracy scaling as SS, but his own firing sound.
+    ld a,11
+    ld (test_detail),a
+    call prepare_shoot_east5
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_BOSS
+    ld a,37
+    ld (w3d_random_index),a
+    call w3d_actor_action_shoot
+    CHECK_MEM8 w3d_actor_combat_distance,3,reason_scalar
+    CHECK_MEM8 w3d_actor_combat_hitchance+0,208,reason_scalar
+    CHECK_MEM8 w3d_random_index,39,reason_rng
+    CHECK_MEM8 w3d_player_health,94,reason_health
+    CHECK_MEM8 test_audio_count+0,2,reason_audio
+    CHECK_MEM8 test_audio_previous_id,W3D_AUDIO_SOUND_BOSSFIRE,reason_audio
+    CHECK_MEM8 test_audio_last_id,W3D_AUDIO_SOUND_TAKEDAMAGE,reason_audio
+    CHECK_MEM8 test_audio_kind,0,reason_audio
     ret
 
 ; ---------------------------------------------------------------------------
@@ -774,6 +806,22 @@ test_audio_events:
     call w3d_actor_action_death_scream
     CHECK_MEM8 test_audio_last_id,10,reason_audio
     CHECK_MEM8 test_audio_count+0,1,reason_audio
+
+; Hans's sight/death calls are deliberately unpositioned, matching the source
+; boss voice treatment while retaining the common request ABI.
+    call prepare_guard
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_BOSS
+    call w3d_actor_first_sighting_sound
+    CHECK_MEM8 test_audio_last_id,W3D_AUDIO_SOUND_GUTENTAG,reason_audio
+    CHECK_MEM8 test_audio_kind,0,reason_audio
+    CHECK_MEM8 test_audio_arg_b,127,reason_audio
+    CHECK_MEM8 test_audio_arg_c,0,reason_audio
+    call test_audio_reset
+    call w3d_actor_action_death_scream
+    CHECK_MEM8 test_audio_last_id,W3D_AUDIO_SOUND_MUTTI,reason_audio
+    CHECK_MEM8 test_audio_kind,0,reason_audio
+    CHECK_MEM8 test_audio_arg_b,127,reason_audio
+    CHECK_MEM8 test_audio_arg_c,0,reason_audio
     ret
 
 ; ---------------------------------------------------------------------------
@@ -1508,104 +1556,128 @@ test_audio_arg_b:       db 0
 test_audio_arg_c:       db 0
 test_audio_end:
 
-; Literal source-derived attack records, ids 77..100.
+; Literal source-derived ordinary attack records, ids 77..100.
 expected_attack_states:
     dw 96
     db 0
     dw 20
-    db 0,0,78
+    db 0,0
+    dw 78
     dw 97
     db 0
     dw 20
-    db 0,1,79
+    db 0,1
+    dw 79
     dw 98
     db 0
     dw 20
-    db 0,0,47
+    db 0,0
+    dw 47
     dw 135
     db 0
     dw 10
-    db 0,0,81
+    db 0,0
+    dw 81
     dw 136
     db 0
     dw 10
-    db 0,2,82
+    db 0,2
+    dw 82
     dw 137
     db 0
     dw 10
-    db 0,0,83
+    db 0,0
+    dw 83
     dw 135
     db 0
     dw 10
-    db 0,0,84
+    db 0,0
+    dw 84
     dw 99
     db 0
     dw 10
-    db 0,0,48
+    db 0,0
+    dw 48
     dw 285
     db 0
     dw 6
-    db 0,0,86
+    db 0,0
+    dw 86
     dw 286
     db 0
     dw 20
-    db 0,1,87
+    db 0,1
+    dw 87
     dw 287
     db 0
     dw 10
-    db 0,0,49
+    db 0,0
+    dw 49
     dw 234
     db 0
     dw 6
-    db 0,1,89
+    db 0,1
+    dw 89
     dw 235
     db 0
     dw 20
-    db 0,0,90
+    db 0,0
+    dw 90
     dw 236
     db 0
     dw 10
-    db 0,1,91
+    db 0,1
+    dw 91
     dw 237
     db 0
     dw 20
-    db 0,0,50
+    db 0,0
+    dw 50
     dw 184
     db 0
     dw 20
-    db 0,0,93
+    db 0,0
+    dw 93
     dw 185
     db 0
     dw 20
-    db 0,1,94
+    db 0,1
+    dw 94
     dw 186
     db 0
     dw 10
-    db 0,0,95
+    db 0,0
+    dw 95
     dw 185
     db 0
     dw 10
-    db 0,1,96
+    db 0,1
+    dw 96
     dw 186
     db 0
     dw 10
-    db 0,0,97
+    db 0,0
+    dw 97
     dw 185
     db 0
     dw 10
-    db 0,1,98
+    db 0,1
+    dw 98
     dw 186
     db 0
     dw 10
-    db 0,0,99
+    db 0,0
+    dw 99
     dw 185
     db 0
     dw 10
-    db 0,1,100
+    db 0,1
+    dw 100
     dw 186
     db 0
     dw 10
-    db 0,0,51
+    db 0,0
+    dw 51
 expected_attack_states_end:
 
 clock_12:

@@ -266,13 +266,29 @@ test_pointer_helpers:
     ld a,W3D_STATE_COUNT-1
     ld (test_detail),a
     call w3d_actor_state_pointer_from_id
-    ld hl,w3d_actor_states+1032 ; 129 * 8, literal avoids assembler precedence
+    ld hl,w3d_actor_states+1359 ; 151 * 9, literal avoids assembler precedence
     call assert_iy_equals_hl
     ld a,W3D_STATE_COUNT
     ld (test_detail),a
     call w3d_actor_state_pointer_from_id
     ld hl,w3d_actor_states
     call assert_iy_equals_hl
+
+; The uint16 entry rejects an out-of-range high byte without truncation, while
+; the shared offset seam crosses the former byte ceiling exactly.
+    ld hl,0100h
+    ld (test_detail),a
+    call w3d_actor_state_pointer_from_id16
+    ld hl,w3d_actor_states
+    call assert_iy_equals_hl
+    ld hl,255
+    call w3d_actor_state_offset_from_id
+    ld de,2295                       ; 255 * 9
+    call assert_hl_equals_de
+    ld hl,256
+    call w3d_actor_state_offset_from_id
+    ld de,2304                       ; 256 * 9
+    call assert_hl_equals_de
     ld a,0ffh
     ld (test_detail),a
     call w3d_actor_state_pointer_from_id
@@ -293,11 +309,11 @@ test_pointer_helpers:
     ld a,W3D_STATE_COUNT-1
     call w3d_actor_state_pointer_from_id
     ld a,(iy+W3D_STATE_SHAPENUM+0)
-    ld b,0b7h                         ; terminal SS corpse shape 183
+    ld b,027h                         ; terminal Inky frame shape 295
     ld c,reason_pointer
     call assert_equal
     ld a,(iy+W3D_STATE_SHAPENUM+1)
-    ld b,0
+    ld b,1
     ld c,reason_pointer
     jp assert_equal
 
@@ -780,6 +796,17 @@ assert_iy_equals_hl:
     pop de
     or a
     sbc hl,de
+    ld a,0
+    jr nz,@different
+    inc a
+@different:
+    ld b,1
+    ld c,reason_pointer
+    jp assert_equal
+
+assert_hl_equals_de:
+    or a
+    sbc.s hl,de
     ld a,0
     jr nz,@different
     inc a

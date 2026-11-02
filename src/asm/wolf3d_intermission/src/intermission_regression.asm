@@ -63,6 +63,13 @@ w3d_level_static_seed_ptr:  dl test_static_seeds
 w3d_level_static_count:     dw 0
 w3d_player_kill_count:      dw 0
 w3d_player_treasure_count:  dw 0
+w3d_player_health:          db 100
+w3d_player_ammo:            db 8
+w3d_player_key_flags:       db 0
+w3d_player_weapon:          db 1
+w3d_player_lives:           db 3
+w3d_player_score:           dl 0
+                            db 0
 
     include "wolf3d_level_time.inc"
     include "wolf3d_intermission.inc"
@@ -91,6 +98,8 @@ REASON_READ_COUNT:     equ 21
 REASON_ESCAPE_LATCH:   equ 22
 REASON_ACK_RELEASED:   equ 23
 REASON_EXIT_QUERY_COUNT: equ 24
+REASON_INGRESS_FENCE_COUNT: equ 25
+REASON_INGRESS_FAILURE: equ 26
 
 start:
     push af
@@ -133,6 +142,8 @@ run_tests:
     call test_finish_escape_abort
     call test_loading_hook_only_escape_abort
     call test_finish_hook_only_escape_abort
+    call test_loading_ingress_fence
+    call test_loading_ingress_failure
     call write_result
     ret
 
@@ -298,12 +309,25 @@ test_ordinary_draw:
     ld (w3d_level_static_count+0),a
     xor a
     ld (w3d_level_static_count+1),a
+    ld a,7
+    ld (w3d_player_health),a
+    ld a,8
+    ld (w3d_player_ammo),a
+    ld a,1
+    ld (w3d_player_key_flags),a
+    ld (w3d_player_weapon),a
+    ld a,3
+    ld (w3d_player_lives),a
+    ld hl,12345
+    ld (w3d_player_score),hl
+    xor a
+    ld (w3d_player_score+3),a
     call w3d_intermission_begin
     call capture_result
 
     CHECK_MEM8 test_setup_count,1,REASON_SETUP_COUNT
     CHECK_MEM8 test_wait_count,0,REASON_WAIT_COUNT
-    CHECK_MEM8 test_plot_count,19,REASON_PLOT_COUNT
+    CHECK_MEM8 test_plot_count,37,REASON_PLOT_COUNT
     CHECK_MEM8 test_result_a,W3D_INTERMISSION_RESULT_CONTINUE,REASON_RESULT
     CHECK_MEM8 test_result_carry,0,REASON_CARRY
     CHECK_MEM8 w3d_intermission_input_armed,0,REASON_INPUT_ARMED
@@ -317,24 +341,48 @@ test_ordinary_draw:
 
     CHECK_PLOT 0,W3D_INTERMISSION_FLOOR_BASE_BUFFER,0,0
     CHECK_PLOT 6,W3D_INTERMISSION_STATUSBAR_BUFFER,0,200
-    CHECK_PLOT 12,W3D_INTERMISSION_DIGIT_0_BUFFER+1,208,16
-    CHECK_PLOT 18,W3D_INTERMISSION_DIGIT_0_BUFFER+0,208,80
-    CHECK_PLOT 24,W3D_INTERMISSION_DIGIT_0_BUFFER+1,224,80
-    CHECK_PLOT 30,W3D_INTERMISSION_COLON_BUFFER,240,80
-    CHECK_PLOT 36,W3D_INTERMISSION_DIGIT_0_BUFFER+0,248,80
-    CHECK_PLOT 42,W3D_INTERMISSION_DIGIT_0_BUFFER+2,264,80
-    CHECK_PLOT 48,W3D_INTERMISSION_DIGIT_0_BUFFER+0,208,96
-    CHECK_PLOT 54,W3D_INTERMISSION_DIGIT_0_BUFFER+1,224,96
-    CHECK_PLOT 60,W3D_INTERMISSION_COLON_BUFFER,240,96
-    CHECK_PLOT 66,W3D_INTERMISSION_DIGIT_0_BUFFER+3,248,96
-    CHECK_PLOT 72,W3D_INTERMISSION_DIGIT_0_BUFFER+0,264,96
+; Live status-bar overlay: floor 1, score 012345 with one leading blank,
+; lives 3, health-band face 6A, health 7, ammo 8, gold key, pistol.
+    CHECK_PLOT 12,W3D_INTERMISSION_HUD_BLANK_BUFFER,16,216
+    CHECK_PLOT 18,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+1,24,216
+    CHECK_PLOT 24,W3D_INTERMISSION_HUD_BLANK_BUFFER,48,216
+    CHECK_PLOT 30,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+1,56,216
+    CHECK_PLOT 36,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+2,64,216
+    CHECK_PLOT 42,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+3,72,216
+    CHECK_PLOT 48,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+4,80,216
+    CHECK_PLOT 54,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+5,88,216
+    CHECK_PLOT 60,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+3,112,216
+    CHECK_PLOT 66,W3D_INTERMISSION_FACE_1_A_BUFFER+15,136,204
+    CHECK_PLOT 72,W3D_INTERMISSION_HUD_BLANK_BUFFER,168,216
+    CHECK_PLOT 78,W3D_INTERMISSION_HUD_BLANK_BUFFER,176,216
+    CHECK_PLOT 84,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+7,184,216
+    CHECK_PLOT 90,W3D_INTERMISSION_HUD_BLANK_BUFFER,216,216
+    CHECK_PLOT 96,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+8,224,216
+    CHECK_PLOT 102,W3D_INTERMISSION_KEY_GOLD_BUFFER,240,204
+    CHECK_PLOT 108,W3D_INTERMISSION_KEY_NONE_BUFFER,240,220
+    CHECK_PLOT 114,W3D_INTERMISSION_WEAPON_KNIFE_BUFFER+1,256,208
+    CHECK_PLOT 120,W3D_INTERMISSION_DIGIT_0_BUFFER+1,208,16
+    CHECK_PLOT 126,W3D_INTERMISSION_DIGIT_0_BUFFER+0,208,80
+    CHECK_PLOT 132,W3D_INTERMISSION_DIGIT_0_BUFFER+1,224,80
+    CHECK_PLOT 138,W3D_INTERMISSION_COLON_BUFFER,240,80
+    CHECK_PLOT 144,W3D_INTERMISSION_DIGIT_0_BUFFER+0,248,80
+    CHECK_PLOT 150,W3D_INTERMISSION_DIGIT_0_BUFFER+2,264,80
+    CHECK_PLOT 156,W3D_INTERMISSION_DIGIT_0_BUFFER+0,208,96
+    CHECK_PLOT 162,W3D_INTERMISSION_DIGIT_0_BUFFER+1,224,96
+    CHECK_PLOT 168,W3D_INTERMISSION_COLON_BUFFER,240,96
+    CHECK_PLOT 174,W3D_INTERMISSION_DIGIT_0_BUFFER+3,248,96
+    CHECK_PLOT 180,W3D_INTERMISSION_DIGIT_0_BUFFER+0,264,96
 ; 2/3 kills -> 66%, secret -> 0%, 5/5 treasures -> 100%.
-    CHECK_PLOT 78,W3D_INTERMISSION_DIGIT_0_BUFFER+6,264,112
-    CHECK_PLOT 84,W3D_INTERMISSION_DIGIT_0_BUFFER+6,280,112
-    CHECK_PLOT 90,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,128
-    CHECK_PLOT 96,W3D_INTERMISSION_DIGIT_0_BUFFER+1,248,144
-    CHECK_PLOT 102,W3D_INTERMISSION_DIGIT_0_BUFFER+0,264,144
-    CHECK_PLOT 108,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,144
+    CHECK_PLOT 186,W3D_INTERMISSION_DIGIT_0_BUFFER+6,264,112
+    CHECK_PLOT 192,W3D_INTERMISSION_DIGIT_0_BUFFER+6,280,112
+    CHECK_PLOT 198,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,128
+    CHECK_PLOT 204,W3D_INTERMISSION_DIGIT_0_BUFFER+1,248,144
+    CHECK_PLOT 210,W3D_INTERMISSION_DIGIT_0_BUFFER+0,264,144
+    CHECK_PLOT 216,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,144
+    ld hl,test_plot_log
+    ld de,test_ordinary_plot_log
+    ld bc,37*6
+    ldir
     ret
 
 test_secret_draw:
@@ -347,11 +395,12 @@ test_secret_draw:
     call capture_result
     CHECK_MEM8 test_setup_count,1,REASON_SETUP_COUNT
     CHECK_MEM8 test_wait_count,0,REASON_WAIT_COUNT
-    CHECK_MEM8 test_plot_count,2,REASON_PLOT_COUNT
+    CHECK_MEM8 test_plot_count,20,REASON_PLOT_COUNT
     CHECK_MEM8 test_result_a,W3D_INTERMISSION_RESULT_CONTINUE,REASON_RESULT
     CHECK_MEM8 test_result_carry,0,REASON_CARRY
     CHECK_PLOT 0,W3D_INTERMISSION_SECRET_BASE_BUFFER,0,0
     CHECK_PLOT 6,W3D_INTERMISSION_STATUSBAR_BUFFER,0,200
+    CHECK_PLOT 114,W3D_INTERMISSION_WEAPON_KNIFE_BUFFER+1,256,208
     ret
 
 test_animation_cadence:
@@ -550,6 +599,43 @@ test_finish_hook_only_escape_abort:
     CHECK_A 1,REASON_ESCAPE_LATCH
     ret
 
+test_loading_ingress_fence:
+    ld a,22
+    ld (test_case),a
+    call test_reset_shell_stubs
+    ld hl,test_ingress_fence
+    call w3d_intermission_set_ingress_fence_hook
+    ld a,9
+    ld (w3d_level_requested_index),a
+    call w3d_intermission_begin
+    call w3d_intermission_loading_tick
+    call capture_result
+    CHECK_MEM8 test_result_a,W3D_INTERMISSION_RESULT_CONTINUE,REASON_RESULT
+    CHECK_MEM8 test_result_carry,0,REASON_CARRY
+    CHECK_MEM8 test_ingress_fence_count,1,REASON_INGRESS_FENCE_COUNT
+    CHECK_MEM8 w3d_intermission_ingress_failed,0,REASON_INGRESS_FAILURE
+    ret
+
+test_loading_ingress_failure:
+    ld a,23
+    ld (test_case),a
+    call test_reset_shell_stubs
+    ld hl,test_ingress_fence
+    call w3d_intermission_set_ingress_fence_hook
+    ld a,1
+    ld (test_ingress_fence_failure),a
+    ld a,9
+    ld (w3d_level_requested_index),a
+    call w3d_intermission_begin
+    call w3d_intermission_loading_tick
+    call capture_result
+    CHECK_MEM8 test_result_a,W3D_INTERMISSION_RESULT_INGRESS,REASON_RESULT
+    CHECK_MEM8 test_result_carry,1,REASON_CARRY
+    CHECK_MEM8 test_ingress_fence_count,1,REASON_INGRESS_FENCE_COUNT
+    CHECK_MEM8 w3d_intermission_ingress_failed,1,REASON_INGRESS_FAILURE
+    CHECK_MEM8 w3d_intermission_animation_counter,0,REASON_ANIMATION_COUNT
+    ret
+
 ; -----------------------------------------------------------------------------
 ; Shell/VDP seams. Every plot is recorded as buffer:u16, x:u16, y:u16.
 ; -----------------------------------------------------------------------------
@@ -566,6 +652,17 @@ test_application_exit_query:
     inc (hl)
     ld a,(test_application_exit)
     or a
+    ret
+
+; Ordered-ingress seam. Carry set models the finite timeout returned by the
+; production screen-info fence after a destination image boundary.
+test_ingress_fence:
+    ld hl,test_ingress_fence_count
+    inc (hl)
+    ld a,(test_ingress_fence_failure)
+    or a
+    ret z
+    scf
     ret
 
 ; Deterministic keymap seam. With zero scripted frames this returns the
@@ -629,7 +726,7 @@ plotBitmap:
     push de
     push hl
     ld a,(test_plot_count)
-    cp 32
+    cp 64
     jr nc,@done
     ld hl,test_plot_log
     or a
@@ -673,12 +770,15 @@ test_reset_shell_stubs:
     ld (test_read_count),a
     ld (test_exit_query_count),a
     ld (test_application_exit),a
+    ld (test_ingress_fence_count),a
+    ld (test_ingress_fence_failure),a
     ld (test_result_a),a
     ld (test_result_carry),a
     ld (test_keyboard_script_frames),a
     ld hl,test_keymap
     ld (test_keyboard_script_ptr),hl
     call w3d_intermission_reset_application_exit_query_hook
+    call w3d_intermission_reset_ingress_fence_hook
     ld hl,test_keymap
     ld (hl),a
     ld de,test_keymap+1
@@ -740,6 +840,11 @@ write_result:
     MOSCALL mos_fwrite
     ld a,(output_handle)
     ld c,a
+    ld hl,test_ordinary_plot_log
+    ld de,37*6
+    MOSCALL mos_fwrite
+    ld a,(output_handle)
+    ld c,a
     MOSCALL mos_fclose
     ret
 
@@ -784,6 +889,8 @@ test_wait_count: db 0
 test_read_count: db 0
 test_exit_query_count: db 0
 test_application_exit: db 0
+test_ingress_fence_count: db 0
+test_ingress_fence_failure: db 0
 test_result_a: db 0
 test_result_carry: db 0
 test_keyboard_script_ptr: dl test_keymap
@@ -794,8 +901,9 @@ test_finish_input_script:
     db 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; fresh non-Escape key
     db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; release after acknowledgment
 test_plot_count: db 0
-test_plot_log: ds 32*6
+test_plot_log: ds 64*6
 test_plot_log_end:
+test_ordinary_plot_log: ds 37*6
 
 result_data:
     db "W3I1"

@@ -29,8 +29,13 @@ mos_load:        equ 01h
 mos_sysvars:     equ 08h
 mos_setkbvector: equ 1Dh
 mos_getkbmap:    equ 1Eh
+mos_clearvdpflags: equ 40h
+mos_waitforvdpflags: equ 41h
 sysvar_time:     equ 00h
 sysvar_scrMode:  equ 27h
+
+vdp_pflag_mode:                 equ 00010000b
+W3D_MODE_FENCE_WAIT_PASSES:     equ 10
 
     MACRO MOSCALL function
         ld a,function
@@ -46,6 +51,7 @@ sysvar_scrMode:  equ 27h
     .db "MOS",0,1
 
     include "wolf3d_backend.inc"
+    include "wolf3d_start.inc"
     include "wolf3d_sight.inc"
     include "agnb_dependencies.inc"
     include "agnb_api.inc"
@@ -134,6 +140,8 @@ assets_error_msg:
     db "AGNB texture load failed; render not submitted.",0
 sfx_error_msg:
     db "AGNB sound load incomplete; continuing with available effects.",0
+audio_install_error_msg:
+    db "VDP audio procedure installation timed out.",0
 gallery_msg:
     db "VDP-uploaded texture gallery (one dot per finalized bitmap):",0
 gallery_done_msg:
@@ -188,18 +196,60 @@ w3d_capture_original_screen_mode:
 
 ; Return MOS to the display mode from which the game was launched. Clear both
 ; the text and graphics surfaces so neither the last 3D frame nor stale MOS
-; text survives the handoff.
+; text survives the handoff. VDU 22 remains asynchronous here: do not expose a
+; live MOS prompt (and a possible immediate second RUN) until the matching
+; mode-reply flag proves framebuffer reconstruction is complete.
 w3d_restore_original_screen_mode:
+    call w3d_arm_gameplay_mode_fence
     ld hl,w3d_restore_mode_command
     ld bc,w3d_restore_mode_command_end-w3d_restore_mode_command
     rst.lil 18h
-    ret
+    jp w3d_wait_for_gameplay_mode
 
 w3d_restore_mode_command:
     db 22,0                 ; saved base mode, patched during startup
     db 12                   ; CLS: clear text viewport
     db 16                   ; CLG: clear graphics viewport
 w3d_restore_mode_command_end:
+
+; A mode change is asynchronous: RST 18h returns after queuing VDU 22, while
+; the VDP rebuilds its framebuffer and MOS consumes the resulting mode packet.
+; Do not issue the first VDPlet discovery command into that ownership window.
+; Physical tracing caught the otherwise intermittent failure as a completed
+; mode 136 transition followed by MOS mode queries but no D9 arrival; every
+; later VDU byte was then stranded even though the eZ80 returned to MOS.
+;
+; Clear MOS's canonical mode-reply semaphore before emitting VDU 22.
+w3d_arm_gameplay_mode_fence:
+    ld c,vdp_pflag_mode
+    MOSCALL mos_clearvdpflags
+    ret
+
+; MOS wait-for-VDP-flags is the authoritative mode-reply fence. One pass has
+; its own finite timeout; repeat without clearing so a slow physical mode
+; rebuild may still publish the same flag. Carry clear means MOS consumed the
+; mode packet. Carry set selects a durable startup error after ten passes.
+w3d_wait_for_gameplay_mode:
+    push bc
+    ld b,W3D_MODE_FENCE_WAIT_PASSES
+@wait:
+    ld c,vdp_pflag_mode
+    MOSCALL mos_waitforvdpflags
+    or a
+    jr z,@ready
+    djnz @wait
+    pop bc
+    ld hl,w3d_mode_fence_error_msg
+    ld (w3d_exit_message_ptr),hl
+    scf
+    ret
+@ready:
+    pop bc
+    or a
+    ret
+
+w3d_mode_fence_error_msg:
+    db "VDP gameplay mode transition did not complete.",10,0
 
 ; ---------------------------------------------------------------------------
 ; VDU helpers
@@ -506,7 +556,11 @@ w3d_run_gameplay_session:
     jp nz,w3d_gameplay_exit_before_runtime
     ld a,(w3d_requested_difficulty)
     ld b,a
+    .if W3D_INITIAL_LEVEL
+    ld a,W3D_INITIAL_LEVEL
+    .else
     xor a
+    .endif
     call w3d_load_level_package
     push af
     call w3d_poll_application_escape
@@ -595,6 +649,11 @@ w3d_run_gameplay_session:
     call w3d_poll_application_escape
     jp nz,w3d_gameplay_exit_before_runtime
     call w3d_audio_install_available_command_buffers
+    jr nc,@audio_commands_installed
+    ld hl,audio_install_error_msg
+    ld (w3d_exit_message_ptr),hl
+    jp w3d_gameplay_fatal_before_runtime
+@audio_commands_installed:
     call w3d_poll_application_escape
     jp nz,w3d_gameplay_exit_before_runtime
 
@@ -609,9 +668,16 @@ w3d_run_gameplay_session:
     call printNewLine
     call w3d_replace_level_tilemap_buffer
 
+    .if W3D_RENDER_BACKEND
+    call w3d_arm_gameplay_mode_fence
+    .endif
     ld hl,w3d_display_setup
     ld bc,w3d_display_setup_end-w3d_display_setup
     rst.lil 18h
+    .if W3D_RENDER_BACKEND
+    call w3d_wait_for_gameplay_mode
+    jp c,w3d_gameplay_fatal_before_runtime
+    .endif
 
     call w3d_initialize_control_clock
     call w3d_initialize_render_state
@@ -620,6 +686,11 @@ w3d_run_gameplay_session:
 ; boundaries. Give it the same common predicate so that event cannot be lost.
     ld hl,w3d_query_application_exit
     call w3d_intermission_set_application_exit_query_hook
+; Transition-time AGNB streaming has no textual breadcrumb delay. Reuse the
+; proven audio-loader screen-info round trip as an ordered VDP ingress fence
+; after every finalized destination image.
+    ld hl,w3d_audio_wait_for_vdp_ingress
+    call w3d_intermission_set_ingress_fence_hook
     call w3d_initialize_motion_state
     call w3d_initialize_death_state
     ld hl,w3d_reseed_level_attempt

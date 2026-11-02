@@ -59,6 +59,7 @@ timing_iterations:  equ 10000
         CHECK_IX8 offset+3,b3,why
     endmacro
 
+    include "wolf3d_backend.inc"
     include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
@@ -77,7 +78,8 @@ phase_dog:              equ 6
 phase_containment:      equ 7
 phase_scheduler_states: equ 8
 phase_timing:           equ 9
-phase_count:            equ 9
+phase_specials:         equ 10
+phase_count:            equ 10
 
 reason_scalar:          equ 1
 reason_direction_tile:  equ 2
@@ -135,6 +137,7 @@ run_tests:
     call test_dog_chase
     call test_corrupt_containment
     call test_state_table_and_scheduler
+    call test_shareware_specials
     call time_chase_paths
     call prt_irq_restore
     call write_result
@@ -786,7 +789,7 @@ test_corrupt_containment:
     ret
 
 ; ---------------------------------------------------------------------------
-; Case 8: all 30 chase-state records plus one complete scheduler composition.
+; Case 8: all 30 ordinary chase records plus one scheduler composition.
 ; ---------------------------------------------------------------------------
 
 test_state_table_and_scheduler:
@@ -810,11 +813,11 @@ test_state_table_and_scheduler:
     CHECK_A 76,reason_scalar
     ld hl,w3d_actor_states_end-w3d_actor_states
     ld a,l
-    CHECK_A 010h,reason_scalar          ; 130 * 8 = 0x0410
+    CHECK_A 058h,reason_scalar          ; 152 * 9 = 0x0558
     ld a,h
-    CHECK_A 4,reason_scalar
+    CHECK_A 5,reason_scalar
 
-    ld ix,w3d_actor_states+376         ; 47 * 8, literal avoids precedence
+    ld ix,w3d_actor_states+423         ; 47 * 9, literal avoids precedence
     ld iy,expected_chase_states
     ld de,expected_chase_states_end-expected_chase_states
     ld c,reason_actor_record
@@ -856,7 +859,70 @@ test_state_table_and_scheduler:
     ret
 
 ; ---------------------------------------------------------------------------
-; Case 9: hardware-compatible PRT budgets; assertions/file I/O are outside.
+; Case 9: Episode-one specials: Hans activation and secret-floor ghosts.
+; ---------------------------------------------------------------------------
+
+test_shareware_specials:
+    ld a,phase_specials
+    ld (test_phase),a
+
+; FirstSighting gives Hans the source three-times patrol speed, widened chase
+; state, and both attack latches without consuming movement in this call.
+    ld a,1
+    ld (test_detail),a
+    call prepare_center_guard
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_BOSS
+    call w3d_actor_first_sighting
+    CHECK_A 1,reason_scalar
+    CHECK_IX8 W3D_ACTOR_STATE+0,W3D_STATE_BOSS_CHASE1,reason_actor_record
+    CHECK_IX8 W3D_ACTOR_STATE+1,0,reason_actor_record
+    CHECK_IX8 W3D_ACTOR_TICCOUNT,10,reason_actor_record
+    CHECK_IX8 W3D_ACTOR_SPEED+0,0,reason_distance
+    CHECK_IX8 W3D_ACTOR_SPEED+1,6,reason_distance
+    ld a,(ix+W3D_ACTOR_FLAGS)
+    and W3D_ACTOR_FLAG_ATTACKMODE|W3D_ACTOR_FLAG_FIRSTATTACK
+    CHECK_A W3D_ACTOR_FLAG_ATTACKMODE|W3D_ACTOR_FLAG_FIRSTATTACK,reason_flags
+
+; A ghost with a cached east leg uses the same fixed-step budget but never
+; requests a ranged state or consumes the deterministic combat RNG.
+    ld a,2
+    ld (test_detail),a
+    call prepare_east_leg_guard
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_GHOST
+    ld (ix+W3D_ACTOR_STATE+0),W3D_STATE_BLINKY_CHASE1
+    ld a,42
+    ld (w3d_random_index),a
+    call w3d_actor_think_ghost
+    CHECK_A W3D_CHASE_RESULT_NONE,reason_scalar
+    CHECK_IX32 W3D_ACTOR_X,0,084h,014h,0,reason_pose
+    CHECK_IX32 W3D_ACTOR_DISTANCE,0,0fch,0,0,reason_distance
+    CHECK_MEM8 w3d_random_index,42,reason_rng
+
+; Contact damage is exactly tics*2 and the overlapping move is backed out.
+    ld a,3
+    ld (test_detail),a
+    call prepare_east_leg_guard
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_GHOST
+    ld (ix+W3D_ACTOR_STATE+0),W3D_STATE_BLINKY_CHASE1
+    ld hl,0148400h
+    ld de,0148000h
+    call set_player_xy
+    ld a,100
+    ld (w3d_player_health),a
+    xor a
+    ld (w3d_player_dead),a
+    ld a,2
+    ld (w3d_actor_frame_tics),a
+    call w3d_actor_think_ghost
+    CHECK_A W3D_CHASE_RESULT_NONE,reason_scalar
+    CHECK_MEM8 w3d_player_health,96,reason_scalar
+    CHECK_MEM8 w3d_player_last_attacker,1,reason_scalar
+    CHECK_IX32 W3D_ACTOR_X,0,080h,014h,0,reason_pose
+    CHECK_IX32 W3D_ACTOR_DISTANCE,0,0,1,0,reason_distance
+    ret
+
+; ---------------------------------------------------------------------------
+; Case 10: hardware-compatible PRT budgets; assertions/file I/O are outside.
 ; ---------------------------------------------------------------------------
 
 time_chase_paths:
@@ -1475,133 +1541,163 @@ expected_chase_states:
     dw 58
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE1S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE1S
     dw 99
     db 8
     dw 10
-    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE1S
+    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE1S
     dw 246
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE1S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE1S
     dw 195
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE1S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE1S
     dw 146
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE1S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE1S
 
     ; Guard W1s/W2/W3/W3s/W4.
     dw 58
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE2
     dw 66
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE3
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE3
     dw 74
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE3S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE3S
     dw 74
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE4
     dw 82
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_GRD_CHASE1
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_GRD_CHASE1
 
     ; Dog W1s/W2/W3/W3s/W4.
     dw 99
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE2
     dw 107
     db 8
     dw 8
-    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE3
+    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE3
     dw 115
     db 8
     dw 10
-    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE3S
+    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE3S
     dw 115
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE4
     dw 123
     db 8
     dw 8
-    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_DOG_CHASE1
+    db W3D_STATE_THINK_DOG_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_DOG_CHASE1
 
     ; Officer W1s/W2/W3/W3s/W4.
     dw 246
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE2
     dw 254
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE3
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE3
     dw 262
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE3S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE3S
     dw 262
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE4
     dw 270
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_OFC_CHASE1
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_OFC_CHASE1
 
     ; Mutant W1s/W2/W3/W3s/W4.
     dw 195
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE2
     dw 203
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE3
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE3
     dw 211
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE3S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE3S
     dw 211
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE4
     dw 219
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_MUT_CHASE1
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_MUT_CHASE1
 
     ; SS W1s/W2/W3/W3s/W4.
     dw 146
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE2
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE2
     dw 154
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE3
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE3
     dw 162
     db 8
     dw 10
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE3S
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE3S
     dw 162
     db 8
     dw 3
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE4
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE4
     dw 170
     db 8
     dw 8
-    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE,W3D_STATE_SS_CHASE1
+    db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_SS_CHASE1
 expected_chase_states_end:
 
 result_filename:            asciz "chase_result.bin"

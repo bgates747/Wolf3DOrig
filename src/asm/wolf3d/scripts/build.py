@@ -17,6 +17,7 @@ PROJECT = HERE.parent
 SOURCE = PROJECT / "src"
 TARGET = PROJECT / "tgt"
 SELECTOR = "W3D_RENDER_BACKEND:"
+START_SELECTOR = "W3D_INITIAL_LEVEL:"
 BACKENDS = {
     "standalone": "W3D_RENDER_BACKEND_STANDALONE",
     "vdplet-direct": "W3D_RENDER_BACKEND_VDPLET_DIRECT",
@@ -97,7 +98,26 @@ def select_package(path: Path, size: int) -> None:
     path.write_text("\n".join(lines) + "\n")
 
 
-def build(assembler: Path, backend: str, module: Path | None) -> dict[str, object]:
+def select_initial_level(path: Path, level: int) -> None:
+    if not 0 <= level <= 9:
+        raise SystemExit("initial level must be in 0..9")
+    lines = path.read_text().splitlines()
+    matches = [
+        index for index, line in enumerate(lines)
+        if line.startswith(START_SELECTOR)
+    ]
+    if matches != [3]:
+        raise SystemExit("wolf3d_start.inc selector layout changed")
+    lines[matches[0]] = f"W3D_INITIAL_LEVEL: equ {level}"
+    path.write_text("\n".join(lines) + "\n")
+
+
+def build(
+    assembler: Path,
+    backend: str,
+    module: Path | None,
+    initial_level: int = 0,
+) -> dict[str, object]:
     if backend == "vdplet-direct":
         if module is None:
             raise SystemExit(
@@ -112,13 +132,20 @@ def build(assembler: Path, backend: str, module: Path | None) -> dict[str, objec
         raise SystemExit("--module is valid only with --backend vdplet-direct")
 
     TARGET.mkdir(parents=True, exist_ok=True)
-    output_name = "wolf3d.bin" if backend == "standalone" else f"wolf3d-{backend}.bin"
+    if not 0 <= initial_level <= 9:
+        raise SystemExit("initial level must be in 0..9")
+    base_name = "wolf3d" if backend == "standalone" else f"wolf3d-{backend}"
+    # ez80asm retains a DOS-era output-filename ceiling. Keep diagnostic
+    # suffixes compact even though their surrounding manifests are descriptive.
+    suffix = "" if initial_level == 0 else f"-l{initial_level:02d}"
+    output_name = f"{base_name}{suffix}.bin"
     output = TARGET / output_name
-    with tempfile.TemporaryDirectory(prefix=f"wolf3d-{backend}-") as name:
+    with tempfile.TemporaryDirectory(prefix="w3b") as name:
         temporary = Path(name)
         source = temporary / "src"
         shutil.copytree(SOURCE, source)
         select_backend(source / "wolf3d_backend.inc", backend)
+        select_initial_level(source / "wolf3d_start.inc", initial_level)
         if module is not None:
             select_package(source / "wolf3d_vdplet_package.inc", module.stat().st_size)
         temporary_output = temporary / output_name
@@ -134,6 +161,7 @@ def build(assembler: Path, backend: str, module: Path | None) -> dict[str, objec
 
     receipt = {
         "backend": backend,
+        "initial_level": initial_level,
         "assembler": str(assembler),
         "output": str(output.relative_to(PROJECT.parents[2])),
         "bytes": output.stat().st_size,
@@ -158,8 +186,14 @@ def main() -> None:
     parser.add_argument("--backend", choices=tuple(BACKENDS), default="standalone")
     parser.add_argument("--assembler", type=Path)
     parser.add_argument("--module", type=Path)
+    parser.add_argument("--initial-level", type=int, default=0)
     args = parser.parse_args()
-    receipt = build(resolve_assembler(args.assembler), args.backend, args.module)
+    receipt = build(
+        resolve_assembler(args.assembler),
+        args.backend,
+        args.module,
+        args.initial_level,
+    )
     print(json.dumps(receipt, indent=2))
 
 

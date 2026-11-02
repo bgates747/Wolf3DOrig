@@ -3,10 +3,19 @@
 ; renderer lifecycle. Standalone remains the tracked/default backend.
 ; =============================================================================
 
+; A transient native publication failure may be retried once with the exact
+; frozen generation. A second rejection of those same bytes is deterministic
+; for this client lifetime: continuing to retry would leave simulation and
+; audio live behind a permanently frozen visible frame. Fail closed instead
+; and preserve the native result in the ordinary post-MOS diagnostic.
+W3D_VDPLET_RENDER_RETRY_LIMIT: equ 1
+
 ; Open the shared runtime/module, construct application-owned workspace and
 ; descriptor buffers, and CONFIG the module. The keyboard packet callback is
 ; already live, so every requested VDPL transaction has a valid reply path.
 w3d_vdplet_backend_open:
+    xor a
+    ld (w3d_vdplet_render_retry_count),a
     call w3d_vdplet_open
     jr c,@failed
     ld a,W3D_VDPLET_STAGE_WORKSPACE
@@ -108,12 +117,19 @@ w3d_vdplet_consume_render_completion:
     jr c,@failed
     call w3d_vdplet_batch_accept_success
     jr c,@fatal
+    xor a
+    ld (w3d_vdplet_render_retry_count),a
     jp w3d_publish_render_completion
 
 @failed:
     ld a,(w3d_vdplet_status)
     cp W3D_VDPLET_STATUS_RUNTIME
     jr nz,@fatal
+    ld a,(w3d_vdplet_render_retry_count)
+    cp W3D_VDPLET_RENDER_RETRY_LIMIT
+    jr nc,@fatal
+    inc a
+    ld (w3d_vdplet_render_retry_count),a
     call w3d_vdplet_batch_accept_failure
     jr c,@fatal
     ld a,(w3d_render_in_flight_purpose)
@@ -192,3 +208,6 @@ w3d_vdplet_failure_value:
     db "0000 callback="
 w3d_vdplet_failure_callback:
     db "00",10,0
+
+w3d_vdplet_render_retry_count:
+    db 0

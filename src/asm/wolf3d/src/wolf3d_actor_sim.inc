@@ -219,7 +219,7 @@ w3d_actor_run_current:
 
 ; End-state actions run before NEXT, matching DoActor. Dispatch may borrow
 ; index registers, so reacquire both the actor and its (possibly replaced)
-; current state before following the successor byte.
+; current state before following the uint16 successor id.
     ld a,(iy+W3D_STATE_ACTION)
     call w3d_actor_dispatch_action
     jp c,w3d_actor_fault_current
@@ -227,16 +227,21 @@ w3d_actor_run_current:
     call w3d_actor_pointer_from_id
     call w3d_actor_resolve_current_state
     jp c,w3d_actor_fault_current
-    ld a,(iy+W3D_STATE_NEXT)
-    or a
+    ld hl,0
+    ld l,(iy+W3D_STATE_NEXT+0)
+    ld h,(iy+W3D_STATE_NEXT+1)
+    ld a,h
+    or l
     jp z,w3d_actor_remove_current
-    cp W3D_STATE_COUNT
+    push hl
+    ld de,W3D_STATE_COUNT
+    or a
+    sbc.s hl,de
+    pop hl
     jp nc,w3d_actor_fault_current
-    ld (ix+W3D_ACTOR_STATE+0),a
-    xor a
-    ld (ix+W3D_ACTOR_STATE+1),a
-    ld a,(ix+W3D_ACTOR_STATE+0)
-    call w3d_actor_state_pointer_from_id
+    ld (ix+W3D_ACTOR_STATE+0),l
+    ld (ix+W3D_ACTOR_STATE+1),h
+    call w3d_actor_state_pointer_from_id16
 
     ld e,(iy+W3D_STATE_TICTIME+0)
     ld d,(iy+W3D_STATE_TICTIME+1)
@@ -273,7 +278,14 @@ w3d_actor_run_current:
     cp W3D_STATE_THINK_CHASE
     jr z,@chase
     cp W3D_STATE_THINK_DOG_CHASE
+    jr z,@dog_chase
+    cp W3D_STATE_THINK_GHOST
     jp nz,w3d_actor_fault_current
+    call w3d_actor_think_ghost
+    cp W3D_CHASE_RESULT_CORRUPT
+    jp z,w3d_actor_fault_current
+    jr @thought
+@dog_chase:
     call w3d_actor_think_dog_chase
     cp W3D_CHASE_RESULT_CORRUPT
     jp z,w3d_actor_fault_current
@@ -307,19 +319,27 @@ w3d_actor_run_current:
     or a                              ; clear carry: actor remains live
     ret
 
-; A=state id. Exact NewState semantics: replace the state and reset ticcount
-; to that state's full duration without changing pose, direction or distance.
-; Carry reports an invalid id.
+; Compatibility entry for existing byte-sized callers.
 w3d_actor_new_state:
-    or a
+    ld hl,0
+    ld l,a
+
+; HL=uint16 state id. Exact NewState semantics: replace the state and reset
+; ticcount to that state's full duration without changing pose, direction or
+; distance. Carry reports zero or an out-of-range id.
+w3d_actor_new_state16:
+    ld a,h
+    or l
     jr z,@invalid
-    cp W3D_STATE_COUNT
+    push hl
+    ld de,W3D_STATE_COUNT
+    or a
+    sbc.s hl,de
+    pop hl
     jr nc,@invalid
-    ld (ix+W3D_ACTOR_STATE+0),a
-    xor a
-    ld (ix+W3D_ACTOR_STATE+1),a
-    ld a,(ix+W3D_ACTOR_STATE+0)
-    call w3d_actor_state_pointer_from_id
+    ld (ix+W3D_ACTOR_STATE+0),l
+    ld (ix+W3D_ACTOR_STATE+1),h
+    call w3d_actor_state_pointer_from_id16
     ld a,(iy+W3D_STATE_TICTIME+0)
     ld (ix+W3D_ACTOR_TICCOUNT+0),a
     ld a,(iy+W3D_STATE_TICTIME+1)
@@ -341,7 +361,12 @@ w3d_actor_begin_ranged_attack:
     cp W3D_CLASS_MUTANT
     jr z,@mutant
     cp W3D_CLASS_SS
+    jr z,@ss
+    cp W3D_CLASS_BOSS
     jr nz,@invalid
+    ld hl,W3D_STATE_BOSS_SHOOT1
+    jp w3d_actor_new_state16
+@ss:
     ld a,W3D_STATE_SS_SHOOT1
     jp w3d_actor_new_state
 @guard:
@@ -400,7 +425,15 @@ w3d_actor_action_death_scream:
     cp W3D_CLASS_SS
     jr z,@ss
     cp W3D_CLASS_DOG
+    jr z,@dog
+    cp W3D_CLASS_BOSS
     jr nz,@done
+    ld a,W3D_AUDIO_SOUND_MUTTI
+    ld b,127
+    ld c,0
+    call w3d_audio_request
+    jr @done
+@dog:
     ld a,W3D_AUDIO_SOUND_DOGDEATH
     jr @request
 @guard:
@@ -441,6 +474,8 @@ w3d_actor_request_sound:
 w3d_actor_action_shoot:
     xor a
     ld (w3d_actor_combat_is_ss),a
+    ld a,W3D_AUDIO_SOUND_NAZIFIRE
+    ld (w3d_actor_combat_shoot_sound),a
     ld a,(ix+W3D_ACTOR_CLASS)
     cp W3D_CLASS_GUARD
     jr z,@class_ok
@@ -449,9 +484,19 @@ w3d_actor_action_shoot:
     cp W3D_CLASS_MUTANT
     jr z,@class_ok
     cp W3D_CLASS_SS
+    jr z,@accurate_ss
+    cp W3D_CLASS_BOSS
     jp nz,@corrupt
     ld a,1
     ld (w3d_actor_combat_is_ss),a
+    ld a,W3D_AUDIO_SOUND_BOSSFIRE
+    ld (w3d_actor_combat_shoot_sound),a
+    jr @class_ok
+@accurate_ss:
+    ld a,1
+    ld (w3d_actor_combat_is_ss),a
+    ld a,W3D_AUDIO_SOUND_SSFIRE
+    ld (w3d_actor_combat_shoot_sound),a
 @class_ok:
     ld a,(ix+W3D_ACTOR_AREA)
     cp W3D_NUM_AREAS
@@ -473,12 +518,7 @@ w3d_actor_action_shoot:
 
 ; T_Shoot emits only after both connected-area and LOS gates succeed, whether
 ; the later accuracy roll hits or misses.
-    ld a,(w3d_actor_combat_is_ss)
-    or a
-    ld a,W3D_AUDIO_SOUND_NAZIFIRE
-    jr z,@shoot_sound_ready
-    ld a,W3D_AUDIO_SOUND_SSFIRE
-@shoot_sound_ready:
+    ld a,(w3d_actor_combat_shoot_sound)
     call w3d_actor_request_sound
 
     call w3d_actor_tile_deltas_abs
@@ -739,6 +779,8 @@ w3d_damage_actor:
     cp W3D_CLASS_SS
     jr z,@class_ok
     cp W3D_CLASS_DOG
+    jr z,@class_ok
+    cp W3D_CLASS_BOSS
     jp nz,@rejected
 @class_ok:
     call w3d_mark_player_noise
@@ -784,6 +826,8 @@ w3d_damage_actor:
     ld a,(ix+W3D_ACTOR_CLASS)
     cp W3D_CLASS_DOG
     jr z,@mark_pain                 ; source dogs have no pain-state arm
+    cp W3D_CLASS_BOSS
+    jr z,@mark_pain                 ; Hans has no pain animation
     ld b,W3D_STATE_GRD_PAIN
     ld c,W3D_STATE_GRD_PAIN1
     cp W3D_CLASS_GUARD
@@ -856,40 +900,47 @@ w3d_kill_actor:
     jr z,@ss
     cp W3D_CLASS_DOG
     jr z,@dog
+    cp W3D_CLASS_BOSS
+    jr z,@boss
     ld a,W3D_DAMAGE_RESULT_CORRUPT
     ret
 @guard:
-    ld a,W3D_STATE_GRD_DIE1
+    ld de,W3D_STATE_GRD_DIE1
     ld hl,100
     ld b,W3D_ITEM_CLIP2
     jr @class_ready
 @officer:
-    ld a,W3D_STATE_OFC_DIE1
+    ld de,W3D_STATE_OFC_DIE1
     ld hl,400
     ld b,W3D_ITEM_CLIP2
     jr @class_ready
 @mutant:
-    ld a,W3D_STATE_MUT_DIE1
+    ld de,W3D_STATE_MUT_DIE1
     ld hl,700
     ld b,W3D_ITEM_CLIP2
     jr @class_ready
 @ss:
-    ld a,W3D_STATE_SS_DIE1
+    ld de,W3D_STATE_SS_DIE1
     ld hl,500
     ld b,W3D_ITEM_CLIP2
-    ld c,a
+    ld c,e
     ld a,(w3d_player_best_weapon)
     cp 2
-    ld a,c
+    ld e,c
     jr nc,@class_ready
     ld b,W3D_ITEM_MACHINEGUN
     jr @class_ready
 @dog:
-    ld a,W3D_STATE_DOG_DIE1
+    ld de,W3D_STATE_DOG_DIE1
     ld hl,200
     ld b,0ffh
+    jr @class_ready
+@boss:
+    ld de,W3D_STATE_BOSS_DIE1
+    ld hl,5000
+    ld b,W3D_ITEM_KEY1
 @class_ready:
-    ld (w3d_actor_kill_state),a
+    ld (w3d_actor_kill_state),de
     ld a,l
     ld (w3d_actor_kill_points+0),a
     ld a,h
@@ -897,8 +948,8 @@ w3d_kill_actor:
     ld a,b
     ld (w3d_actor_kill_drop_item),a
 
-    ld a,(w3d_actor_kill_state)
-    call w3d_actor_new_state
+    ld hl,(w3d_actor_kill_state)
+    call w3d_actor_new_state16
     jr c,@kill_corrupt
     ld a,(ix+W3D_ACTOR_FLAGS)
     and 0ffh-W3D_ACTOR_FLAG_SHOOTABLE
@@ -1228,17 +1279,21 @@ w3d_actor_mul_q8_q12:
     ld l,c
     ret
 
-; Resolve IX's uint16 state id. Carry marks zero, high-byte, or range faults.
+; Resolve IX's uint16 state id. Carry marks zero or range faults.
 w3d_actor_resolve_current_state:
-    ld a,(ix+W3D_ACTOR_STATE+1)
-    or a
-    jr nz,@invalid
-    ld a,(ix+W3D_ACTOR_STATE+0)
-    or a
+    ld hl,0
+    ld l,(ix+W3D_ACTOR_STATE+0)
+    ld h,(ix+W3D_ACTOR_STATE+1)
+    ld a,h
+    or l
     jr z,@invalid
-    cp W3D_STATE_COUNT
+    push hl
+    ld de,W3D_STATE_COUNT
+    or a
+    sbc.s hl,de
+    pop hl
     jr nc,@invalid
-    call w3d_actor_state_pointer_from_id
+    call w3d_actor_state_pointer_from_id16
     or a
     ret
 @invalid:
@@ -1469,6 +1524,8 @@ w3d_actor_reaction_delay:
     jr z,@sixth
     cp W3D_CLASS_DOG
     jr z,@dog
+    cp W3D_CLASS_BOSS
+    jr z,@boss
     xor a
     ret
 @guard:
@@ -1491,6 +1548,12 @@ w3d_actor_reaction_delay:
     srl a
     srl a
     inc a
+    ret
+@boss:
+; Original SightPlayer gives every boss-class actor a fixed one-tic reaction
+; delay and consumes no random byte. Without this arm Hans is misclassified as
+; corrupt immediately after acquiring sight and is removed before FirstSighting.
+    ld a,1
     ret
 
 ; Rare cold-path division used once per mutant/SS acquisition. Input A is
@@ -1540,6 +1603,8 @@ w3d_actor_first_sighting:
     jr z,@ss
     cp W3D_CLASS_DOG
     jr z,@dog
+    cp W3D_CLASS_BOSS
+    jr z,@boss
     ld a,0ffh
     ret
 @guard:
@@ -1561,6 +1626,10 @@ w3d_actor_first_sighting:
 @dog:
     ld b,W3D_STATE_DOG_CHASE1
     ld c,2
+    jr @apply
+@boss:
+    ld b,W3D_STATE_BOSS_CHASE1
+    ld c,3
 
 @apply:
     ld a,b
@@ -1621,6 +1690,8 @@ w3d_actor_first_sighting_sound:
     jr z,@ss
     cp W3D_CLASS_DOG
     jr z,@dog
+    cp W3D_CLASS_BOSS
+    jr z,@boss
     or a                             ; mutant/unsupported: no request
     ret
 @guard:
@@ -1634,6 +1705,14 @@ w3d_actor_first_sighting_sound:
     jr @request
 @dog:
     ld a,W3D_AUDIO_SOUND_DOGBARK
+    jr @request
+@boss:
+    ld a,W3D_AUDIO_SOUND_GUTENTAG
+    ld b,127
+    ld c,0
+    call w3d_audio_request
+    or a
+    ret
 @request:
     call w3d_actor_request_sound
     or a
@@ -1658,7 +1737,7 @@ w3d_actor_fault_current:
 ; Ordinary chase movement and explicit attack-request seams
 ; ---------------------------------------------------------------------------
 
-; IX=current guard/officer/mutant/SS actor. Preserve the complete original
+; IX=current guard/officer/mutant/SS/Hans actor. Preserve the complete original
 ; one-think ordering through the shooting-state decision. Return NONE after
 ; movement/blocking, RANGED when the original strict random attack roll
 ; succeeds, or CORRUPT for a bad class/dir; the runner maps RANGED to NewState.
@@ -1671,6 +1750,8 @@ w3d_actor_think_chase:
     cp W3D_CLASS_MUTANT
     jr z,@class_ok
     cp W3D_CLASS_SS
+    jr z,@class_ok
+    cp W3D_CLASS_BOSS
     jp nz,@corrupt
 @class_ok:
     ld a,(ix+W3D_ACTOR_DIR)
@@ -1814,6 +1895,59 @@ w3d_actor_think_dog_chase:
     ret
 @jump:
     ld a,W3D_CHASE_RESULT_DOG_JUMP
+    ret
+@corrupt:
+    ld a,W3D_CHASE_RESULT_CORRUPT
+    ret
+
+; IX=current E1 secret-floor ghost. This is the original T_Ghosts movement:
+; choose a direct chase direction when needed, consume speed*tics across tile
+; centers, and never request a weapon state. Contact damage is applied by the
+; shared MoveObj seam before the overlapping move is backed out.
+w3d_actor_think_ghost:
+    ld a,(ix+W3D_ACTOR_CLASS)
+    cp W3D_CLASS_GHOST
+    jr nz,@corrupt
+    ld a,(ix+W3D_ACTOR_DIR)
+    cp W3D_DIR_NODIR+1
+    jr nc,@corrupt
+    cp W3D_DIR_NODIR
+    jr nz,@have_direction
+    call w3d_actor_select_chase_dir
+    cp W3D_CHASE_RESULT_CORRUPT
+    ret z
+    or a
+    jr z,@none
+@have_direction:
+    call w3d_actor_set_move_budget
+@movement_loop:
+    ld hl,(w3d_actor_move_remaining)
+    ld a,h
+    or l
+    jr z,@none
+    bit 7,(ix+W3D_ACTOR_DISTANCE+3)
+    jr nz,@corrupt
+    ld de,(ix+W3D_ACTOR_DISTANCE)
+    or a
+    sbc hl,de
+    jr nc,@reach_center
+    ld hl,(w3d_actor_move_remaining)
+    ld (w3d_actor_move_amount),hl
+    call w3d_actor_move_obj
+    ld hl,0
+    ld (w3d_actor_move_remaining),hl
+    jr @none
+@reach_center:
+    ld (w3d_actor_move_remaining),hl
+    call w3d_actor_snap_to_cached_center
+    call w3d_actor_select_chase_dir
+    cp W3D_CHASE_RESULT_CORRUPT
+    ret z
+    or a
+    jr z,@none
+    jr @movement_loop
+@none:
+    ld a,W3D_CHASE_RESULT_NONE
     ret
 @corrupt:
     ld a,W3D_CHASE_RESULT_CORRUPT
@@ -2739,6 +2873,13 @@ w3d_actor_move_obj:
     call w3d_actor_clear_of_player
     or a
     jr nz,@accepted
+    ld a,(ix+W3D_ACTOR_CLASS)
+    cp W3D_CLASS_GHOST
+    jr nz,@restore
+    ld a,(w3d_actor_frame_tics)
+    add a,a                         ; original TakeDamage(tics*2, ghost)
+    call w3d_take_player_damage
+@restore:
     ld hl,(w3d_actor_saved_x)
     ld (ix+W3D_ACTOR_X),hl
     ld hl,(w3d_actor_saved_y)
@@ -2912,6 +3053,8 @@ w3d_actor_dog_jump_threshold:
     dl 0
 w3d_actor_combat_is_ss:
     db 0
+w3d_actor_combat_shoot_sound:
+    db W3D_AUDIO_SOUND_NAZIFIRE
 w3d_actor_combat_distance:
     db 0
 w3d_actor_combat_visible:
@@ -2941,7 +3084,7 @@ w3d_actor_damage_amount:
 w3d_actor_damage_was_active:
     db 0
 w3d_actor_kill_state:
-    db 0
+    dw 0
 w3d_actor_kill_points:
     dw 0
 w3d_actor_kill_drop_item:

@@ -570,9 +570,18 @@ class StaticPoolTests(unittest.TestCase):
                 self.assertEqual((placement.index, placement.reused),
                                  (capacity - 1, True))
 
+    def test_boss_key_drop_uses_original_static_shape(self) -> None:
+        pool = pc.StaticPool()
+        placement = pool.place_item(pc.ITEM_KEY1, 1, 2)
+        self.assertIsNotNone(placement)
+        self.assertEqual(
+            (pool.slots[0].shapenum, pool.slots[0].item, pool.slots[0].bonus),
+            (22, pc.ITEM_KEY1, True),
+        )
+
     def test_unsupported_item_does_not_mutate_pool(self) -> None:
         pool = pc.StaticPool()
-        self.assertIsNone(pool.place_item("bo_key1", 1, 2))
+        self.assertIsNone(pool.place_item("bo_key3", 1, 2))
         self.assertEqual(pool.slots, [])
 
     def test_clip_collection_refusal_then_free_and_reuse(self) -> None:

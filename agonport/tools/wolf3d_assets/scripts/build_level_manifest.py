@@ -28,6 +28,13 @@ manifest's actually-converted shapenums -- i.e. every real frame the eZ80
 actor state machine could ever select for that creature, not just one
 representative frame (Author decision 2026-07-31).
 
+The scope also closes over runtime-created pickup art. Killing an ordinary
+enemy can call ``PlaceItemType()`` even when that pickup never appeared in the
+map plane: guards/officers/mutants drop clip2, SS may drop clip2 or a machine
+gun depending on the player's inventory, and Hans drops the gold key. These
+shapes must be resident before combat; otherwise the first death/drop update
+is valid simulation state but the renderer cannot acquire its sprite buffer.
+
 Every playable level also carries the twenty first-person weapon shapes
 416..435 (knife, pistol, machine gun, and chaingun READY + ATK1..4). They are
 player presentation state rather than plane-1 objects, so map scanning can
@@ -43,7 +50,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from agnb.manifest import ImageManifestEntry, KIND_SPRITE, KIND_WALL  # noqa: E402
-from formats import mapfile, sprite_kinds, spritenames  # noqa: E402
+from formats import mapfile, sprite_kinds, spritenames, staticinfo  # noqa: E402
 
 GENERATED_DIR = Path(__file__).resolve().parents[3] / "assets" / "generated" / "wolf3d"
 DEFAULT_MAPHEAD = Path(__file__).resolve().parents[4] / "orig" / "data" / "MAPHEAD.WL1"
@@ -66,6 +73,23 @@ BOSS_NAMES = {214: "HANS", 197: "GRETEL", 215: "OTTO", 179: "FAT", 196: "SCHABBS
               160: "HTLR-FAKE", 178: "HITLER"}
 GHOST_NAMES = {224: "BLINKY", 225: "CLYDE", 226: "PINKY", 227: "INKY"}
 PLAYER_WEAPON_SHAPENUMS = range(416, 436)
+
+
+def _static_shape(kind: staticinfo.StatKind) -> int:
+    return next(item.shapenum for item in staticinfo.STATIC_INFO
+                if item.kind == kind)
+
+
+CREATURE_RUNTIME_DROP_SHAPENUMS = {
+    "GRD": {_static_shape(staticinfo.StatKind.BO_CLIP2)},
+    "OFC": {_static_shape(staticinfo.StatKind.BO_CLIP2)},
+    "MUT": {_static_shape(staticinfo.StatKind.BO_CLIP2)},
+    "SS": {
+        _static_shape(staticinfo.StatKind.BO_CLIP2),
+        _static_shape(staticinfo.StatKind.BO_MACHINEGUN),
+    },
+    "HANS": {_static_shape(staticinfo.StatKind.BO_KEY1)},
+}
 
 
 def plane1_creature_kind(value: int) -> str | None:
@@ -113,6 +137,11 @@ def scope_level(plane0: list[list[int]], plane1: list[list[int]], max_shapenum: 
                 if kind:
                     start, end = sprite_kinds.kind_shapenum_block(kind, max_shapenum)
                     sprite_shapenums.update(range(start, end + 1))
+                    sprite_shapenums.update(
+                        shape for shape in CREATURE_RUNTIME_DROP_SHAPENUMS.get(
+                            kind, ()
+                        ) if shape <= max_shapenum
+                    )
 
     door_texture_ids = {DOOR_KIND_TEXTURE_ID[kind] for kind in door_kinds}
     return wall_ids, door_texture_ids, sprite_shapenums

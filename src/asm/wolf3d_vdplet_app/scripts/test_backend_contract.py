@@ -17,7 +17,10 @@ class BackendContractTests(unittest.TestCase):
         cls.client = (SOURCE / "wolf3d_vdplet_client.inc").read_text()
         cls.main = (SOURCE / "wolf3d.asm").read_text()
         cls.selector = (SOURCE / "wolf3d_backend.inc").read_text()
+        cls.start_selector = (SOURCE / "wolf3d_start.inc").read_text()
         cls.death = (SOURCE / "wolf3d_death.inc").read_text()
+        cls.intermission = (SOURCE / "wolf3d_intermission.inc").read_text()
+        cls.level_loader = (SOURCE / "wolf3d_level_loader.inc").read_text()
         cls.packager = (HERE / "prepare_package.py").read_text()
         cls.profiler = (HERE / "prepare_profile.py").read_text()
         cls.observer_stage = (HERE / "stage_observer_oryx.py").read_text()
@@ -31,6 +34,12 @@ class BackendContractTests(unittest.TestCase):
             self.selector,
         )
 
+    def test_production_start_floor_remains_tracked_default(self) -> None:
+        self.assertIn("W3D_INITIAL_LEVEL: equ 0", self.start_selector)
+        self.assertIn("ld a,W3D_INITIAL_LEVEL", self.main)
+        self.assertIn(".if W3D_INITIAL_LEVEL", self.main)
+        self.assertIn("xor a", self.main)
+
     def test_callback_brackets_runtime_lifetime(self) -> None:
         startup = self.main.index("call w3d_install_render_callback")
         runtime_open = self.main.index("call w3d_vdplet_backend_open")
@@ -38,6 +47,49 @@ class BackendContractTests(unittest.TestCase):
         callback_remove = self.main.rindex("call w3d_remove_render_callback")
         self.assertLess(startup, runtime_open)
         self.assertLess(runtime_close, callback_remove)
+
+    def test_mode_transition_is_fenced_before_vdplet_discovery(self) -> None:
+        display = self.main.index("ld hl,w3d_display_setup")
+        fence = self.main.index("call w3d_wait_for_gameplay_mode", display)
+        callback = self.main.index("call w3d_install_render_callback", fence)
+        runtime_open = self.main.index("call w3d_vdplet_backend_open", callback)
+        self.assertLess(display, fence)
+        self.assertLess(fence, callback)
+        self.assertLess(callback, runtime_open)
+        arm = self.main.index("call w3d_arm_gameplay_mode_fence", display - 100)
+        self.assertLess(arm, display)
+        self.assertIn("MOSCALL mos_clearvdpflags", self.main)
+        self.assertIn("MOSCALL mos_waitforvdpflags", self.main)
+        self.assertIn("W3D_MODE_FENCE_WAIT_PASSES:     equ 10", self.main)
+        fence_body = self.main.split("w3d_wait_for_gameplay_mode:", 1)[1]
+        fence_body = fence_body.split("w3d_mode_fence_error_msg:", 1)[0]
+        self.assertIn("ld c,vdp_pflag_mode", fence_body)
+        self.assertIn("djnz @wait", fence_body)
+        self.assertIn("jp c,w3d_gameplay_fatal_before_runtime", self.main)
+
+    def test_exit_mode_restore_is_fenced_before_returning_to_mos(self) -> None:
+        restore = self.main.split("w3d_restore_original_screen_mode:", 1)[1]
+        restore = restore.split("w3d_restore_mode_command:", 1)[0]
+        arm = restore.index("call w3d_arm_gameplay_mode_fence")
+        send = restore.index("rst.lil 18h")
+        wait = restore.index("jp w3d_wait_for_gameplay_mode")
+        self.assertLess(arm, send)
+        self.assertLess(send, wait)
+
+    def test_floor_transition_fences_mode_before_vdplet_reset(self) -> None:
+        loader = (SOURCE / "wolf3d_level_loader.inc").read_text()
+        display = loader.index("ld hl,w3d_display_setup")
+        arm = loader.rindex("call w3d_arm_gameplay_mode_fence", 0, display)
+        fence = loader.index("call w3d_wait_for_gameplay_mode", display)
+        seed = loader.index("call w3d_seed_level_transition_state", fence)
+        reset = loader.index("call w3d_submit_level_reset", seed)
+        self.assertLess(arm, display)
+        self.assertLess(display, fence)
+        self.assertLess(fence, seed)
+        self.assertLess(seed, reset)
+        guarded = loader[arm:seed]
+        self.assertIn(".if W3D_RENDER_BACKEND", guarded)
+        self.assertIn("ret c", guarded)
 
     def test_physical_startup_failure_preserves_stage_and_status(self) -> None:
         self.assertIn("W3D_VDPLET_STAGE_DISCOVER", self.client)
@@ -70,10 +122,55 @@ class BackendContractTests(unittest.TestCase):
 
     def test_native_error_preserves_exact_retry_without_presentation(self) -> None:
         body = self.backend.split("@failed:", 1)[1].split("@fatal:", 1)[0]
+        self.assertIn("W3D_VDPLET_RENDER_RETRY_LIMIT: equ 1", self.backend)
+        self.assertIn("cp W3D_VDPLET_RENDER_RETRY_LIMIT", body)
+        self.assertIn("jr nc,@fatal", body)
         self.assertIn("call w3d_vdplet_batch_accept_failure", body)
         self.assertIn("ld (w3d_next_render_purpose),a", body)
         self.assertIn("ld (w3d_world_dirty),a", body)
         self.assertNotIn("w3d_vdu_present", body)
+
+    def test_success_rearms_bounded_native_retry(self) -> None:
+        body = self.backend.split(
+            "w3d_vdplet_consume_render_completion:", 1
+        )[1].split("@failed:", 1)[0]
+        self.assertIn("ld (w3d_vdplet_render_retry_count),a", body)
+
+    def test_audio_command_install_is_ordered_and_finite(self) -> None:
+        audio = (SOURCE / "wolf3d_audio.inc").read_text()
+        install = audio.split(
+            "w3d_audio_install_available_command_buffers:", 1
+        )[1].split("w3d_audio_install_command_buffer:", 1)[0]
+        fence = audio.split("w3d_audio_wait_for_vdp_ingress:", 1)[1].split(
+            "w3d_audio_install_command_buffer:", 1
+        )[0]
+        self.assertGreaterEqual(
+            install.count("call w3d_audio_wait_for_vdp_ingress"), 2
+        )
+        self.assertIn("MOSCALL W3D_AUDIO_MOS_CLEARVDPFLAGS", fence)
+        self.assertIn("db 23,0,086h", fence)
+        self.assertIn("MOSCALL W3D_AUDIO_MOS_WAITFORVDPFLAGS", fence)
+        self.assertIn("jr nz,@timeout", fence)
+        self.assertIn("jp w3d_gameplay_fatal_before_runtime", self.main)
+
+    def test_transition_images_share_the_ordered_ingress_fence(self) -> None:
+        setup = self.main.index("ld hl,w3d_audio_wait_for_vdp_ingress")
+        install = self.main.index(
+            "call w3d_intermission_set_ingress_fence_hook", setup
+        )
+        self.assertLess(setup, install)
+        tick = self.intermission.split("w3d_intermission_loading_tick:", 1)[1]
+        tick = tick.split("w3d_intermission_finish:", 1)[0]
+        self.assertIn("call w3d_intermission_run_ingress_fence", tick)
+        self.assertIn("ld a,W3D_INTERMISSION_RESULT_INGRESS", tick)
+        self.assertIn("ld (w3d_intermission_ingress_failed),a", tick)
+        transition = self.level_loader.split("w3d_transition_to_next_level:", 1)[1]
+        transition = transition.split("w3d_level_state_filename_table:", 1)[0]
+        self.assertGreaterEqual(
+            transition.count("ld hl,w3d_intermission_loading_tick"), 2
+        )
+        self.assertIn("jp c,@asset_failed", transition)
+        self.assertIn("jr c,@asset_failed", transition)
 
     def test_fizzle_deferral_is_explicit_and_finite(self) -> None:
         body = self.death.split("w3d_death_begin_fizzle:", 1)[1]

@@ -378,7 +378,7 @@ w3d_transition_to_next_level:
 ; Poll once before the single synchronous W3L operation, then once afterward.
 ; Image containers below provide much finer finalized-record boundaries.
     call w3d_intermission_loading_tick
-    jr c,@user_aborted
+    jp c,@asset_failed
     ld a,(w3d_game_difficulty)
     ld b,a
     ld a,(w3d_level_transition_target)
@@ -400,7 +400,7 @@ w3d_transition_to_next_level:
 
     call w3d_replace_level_tilemap_buffer
     call w3d_intermission_loading_tick
-    jr c,@user_aborted
+    jr c,@asset_failed
 ; If a fresh non-Escape press occurred during streaming this is immediate;
 ; otherwise remain on the completed-floor screen until acknowledgment. Escape
 ; retains its own terminal result in either case.
@@ -410,9 +410,20 @@ w3d_transition_to_next_level:
 ; Do not restore the gameplay double buffer until the complete destination
 ; package, image set, and tilemap are resident.  No asynchronous owner exists
 ; here; the reset render below acquires the freshly restored hidden surface.
+; As at initial startup, RST 18h only queues VDU 22.  Arm and consume MOS's
+; canonical mode-reply flag before RESET/CONFIG emits any VDPlet traffic.  A
+; missing fence here is intermittent: the first destination frame may appear,
+; while a later dirty render remains permanently in flight.
+    .if W3D_RENDER_BACKEND
+    call w3d_arm_gameplay_mode_fence
+    .endif
     ld hl,w3d_display_setup
     ld bc,w3d_display_setup_end-w3d_display_setup
     rst.lil 18h
+    .if W3D_RENDER_BACKEND
+    call w3d_wait_for_gameplay_mode
+    ret c
+    .endif
     call w3d_seed_level_transition_state
 ; Loading may take seconds. Re-prime the fixed-step clock so disk/VDU transfer
 ; time never appears as a simulation backlog on the new floor.
@@ -423,7 +434,7 @@ w3d_transition_to_next_level:
 
 @package_aborted:
     pop af
-    jr @user_aborted
+    jr @asset_failed
 
 @package_failed:
     call w3d_set_level_load_error

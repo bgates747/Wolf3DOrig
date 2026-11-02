@@ -179,8 +179,8 @@ W3D_SIGHT_ACTOR_AREA:       equ W3D_ACTOR_AREA
 W3D_SIGHT_ACTOR_DIR:        equ W3D_ACTOR_DIR
 W3D_SIGHT_ACTOR_SIZE:       equ 12
 
-; Stable actor state ids. Zero is reserved as invalid/free; generated map
-; seeds use the initial subset while the runner owns the complete path chains.
+; Stable uint16 actor-state ids. Zero is reserved as invalid/free; generated
+; map seeds use the initial subset while the runner owns the complete graph.
 W3D_STATE_GRD_STAND:        equ 1
 W3D_STATE_GRD_PATH1:        equ 2
 W3D_STATE_DOG_PATH1:        equ 3
@@ -321,13 +321,38 @@ W3D_STATE_SS_DIE1:          equ 126
 W3D_STATE_SS_DIE2:          equ 127
 W3D_STATE_SS_DIE3:          equ 128
 W3D_STATE_SS_DEAD:          equ 129
-W3D_STATE_COUNT:            equ 130
+; Shareware special actors. Initial map states 11..15 remain stable; these
+; append the runtime graph without renumbering generated fixtures.
+W3D_STATE_BOSS_CHASE1:      equ 130
+W3D_STATE_BOSS_CHASE1S:     equ 131
+W3D_STATE_BOSS_CHASE2:      equ 132
+W3D_STATE_BOSS_CHASE3:      equ 133
+W3D_STATE_BOSS_CHASE3S:     equ 134
+W3D_STATE_BOSS_CHASE4:      equ 135
+W3D_STATE_BOSS_DIE1:        equ 136
+W3D_STATE_BOSS_DIE2:        equ 137
+W3D_STATE_BOSS_DIE3:        equ 138
+W3D_STATE_BOSS_DEAD:        equ 139
+W3D_STATE_BOSS_SHOOT1:      equ 140
+W3D_STATE_BOSS_SHOOT2:      equ 141
+W3D_STATE_BOSS_SHOOT3:      equ 142
+W3D_STATE_BOSS_SHOOT4:      equ 143
+W3D_STATE_BOSS_SHOOT5:      equ 144
+W3D_STATE_BOSS_SHOOT6:      equ 145
+W3D_STATE_BOSS_SHOOT7:      equ 146
+W3D_STATE_BOSS_SHOOT8:      equ 147
+W3D_STATE_BLINKY_CHASE2:    equ 148
+W3D_STATE_CLYDE_CHASE2:     equ 149
+W3D_STATE_PINKY_CHASE2:     equ 150
+W3D_STATE_INKY_CHASE2:      equ 151
+W3D_STATE_COUNT:            equ 152
 
 W3D_STATE_THINK_NONE:       equ 0
 W3D_STATE_THINK_PATH:       equ 1
 W3D_STATE_THINK_STAND:      equ 2
 W3D_STATE_THINK_CHASE:      equ 3
 W3D_STATE_THINK_DOG_CHASE:  equ 4
+W3D_STATE_THINK_GHOST:      equ 5
 W3D_STATE_ACTION_NONE:      equ 0
 W3D_STATE_ACTION_SHOOT:     equ 1
 W3D_STATE_ACTION_BITE:      equ 2
@@ -355,8 +380,8 @@ W3D_STATE_ROTATIONS:        equ 2       ; uint8 0,2,8
 W3D_STATE_TICTIME:          equ 3       ; uint16 original 70-Hz tics
 W3D_STATE_THINK:            equ 5       ; uint8 W3D_STATE_THINK_*
 W3D_STATE_ACTION:           equ 6       ; uint8 W3D_STATE_ACTION_*
-W3D_STATE_NEXT:             equ 7       ; uint8 W3D_STATE_* / 0 removes
-W3D_STATE_SIZE:             equ 8
+W3D_STATE_NEXT:             equ 7       ; uint16 W3D_STATE_* / 0 removes
+W3D_STATE_SIZE:             equ 9
 
 ; Durable set_actor render payload (including uint16 actorId). Gameplay-only
 ; tile/HP/flags never cross the write-only VDP boundary.

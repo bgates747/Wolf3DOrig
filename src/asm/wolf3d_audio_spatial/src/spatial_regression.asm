@@ -45,6 +45,7 @@ fa_create_always:   equ 0x08
 
 ; Mirror the production dependency order, omitting wolf3d_audio.inc so the
 ; request sink below can capture the adapter's exact public ABI.
+    include "wolf3d_backend.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_audio_assets.inc"
     include "wolf3d_fixture.inc"
