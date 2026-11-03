@@ -9,8 +9,10 @@ TOOLS_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS_ROOT))
 
 from scripts.build_level_manifest import (
+    EPISODE_1_VICTORY_SHAPENUMS,
     CREATURE_RUNTIME_DROP_SHAPENUMS,
     PLAYER_WEAPON_SHAPENUMS,
+    add_level_runtime_shapes,
     scope_level,
 )
 
@@ -55,6 +57,19 @@ class LevelManifestCombatAssetsTests(unittest.TestCase):
         _, _, shapes = scope_level(self.empty_plane(), plane1, 28)
         self.assertIn(28, shapes)
         self.assertNotIn(29, shapes)
+
+    def test_only_boss_floor_adds_complete_bj_victory_animation(self) -> None:
+        boss_shapes: set[int] = set()
+        ordinary_shapes: set[int] = set()
+        add_level_runtime_shapes(8, boss_shapes, 435)
+        add_level_runtime_shapes(7, ordinary_shapes, 435)
+        self.assertEqual(set(EPISODE_1_VICTORY_SHAPENUMS), boss_shapes)
+        self.assertEqual(set(), ordinary_shapes)
+
+    def test_bj_victory_shapes_respect_truncated_vswap_domain(self) -> None:
+        shapes: set[int] = set()
+        add_level_runtime_shapes(8, shapes, 411)
+        self.assertEqual(set(range(408, 412)), shapes)
 
 
 if __name__ == "__main__":

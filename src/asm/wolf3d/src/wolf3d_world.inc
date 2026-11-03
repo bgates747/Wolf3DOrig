@@ -88,6 +88,7 @@ W3D_CLASS_SCHABBS:           equ 8
 W3D_CLASS_FAKE:              equ 9
 W3D_CLASS_MECHA_HITLER:      equ 10
 W3D_CLASS_MUTANT:            equ 11
+W3D_CLASS_BJ:                equ 14
 W3D_CLASS_GHOST:             equ 15
 
 W3D_DOOR_ACTION_CLOSED:     equ 0
@@ -347,7 +348,17 @@ W3D_STATE_BLINKY_CHASE2:    equ 148
 W3D_STATE_CLYDE_CHASE2:     equ 149
 W3D_STATE_PINKY_CHASE2:     equ 150
 W3D_STATE_INKY_CHASE2:      equ 151
-W3D_STATE_COUNT:            equ 152
+W3D_STATE_BJ_RUN1:          equ 152
+W3D_STATE_BJ_RUN1S:         equ 153
+W3D_STATE_BJ_RUN2:          equ 154
+W3D_STATE_BJ_RUN3:          equ 155
+W3D_STATE_BJ_RUN3S:         equ 156
+W3D_STATE_BJ_RUN4:          equ 157
+W3D_STATE_BJ_JUMP1:         equ 158
+W3D_STATE_BJ_JUMP2:         equ 159
+W3D_STATE_BJ_JUMP3:         equ 160
+W3D_STATE_BJ_JUMP4:         equ 161
+W3D_STATE_COUNT:            equ 162
 
 W3D_STATE_THINK_NONE:       equ 0
 W3D_STATE_THINK_PATH:       equ 1
@@ -355,10 +366,14 @@ W3D_STATE_THINK_STAND:      equ 2
 W3D_STATE_THINK_CHASE:      equ 3
 W3D_STATE_THINK_DOG_CHASE:  equ 4
 W3D_STATE_THINK_GHOST:      equ 5
+W3D_STATE_THINK_BJ_RUN:     equ 6
+W3D_STATE_THINK_BJ_JUMP:    equ 7
 W3D_STATE_ACTION_NONE:      equ 0
 W3D_STATE_ACTION_SHOOT:     equ 1
 W3D_STATE_ACTION_BITE:      equ 2
 W3D_STATE_ACTION_DEATH_SCREAM: equ 3
+W3D_STATE_ACTION_BJ_YELL:   equ 4
+W3D_STATE_ACTION_BJ_DONE:   equ 5
 
 ; Public DamageActor result values returned by w3d_damage_actor.
 W3D_DAMAGE_RESULT_PAIN:     equ 0

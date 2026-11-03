@@ -37,6 +37,27 @@ REASONS = {
     10: "plot x coordinate",
     11: "plot y coordinate",
     12: "application-global exit latch",
+    13: "victory presentation handoff",
+    14: "high-score handoff/view",
+    15: "End Game confirmation plot sequence",
+    16: "sound-effects preference",
+}
+
+STAGES = {
+    1: "input actions",
+    2: "main-menu results",
+    3: "episode selection",
+    4: "difficulty selection",
+    5: "lifecycle entries",
+    6: "pause menu",
+    7: "control pages",
+    8: "attract timing",
+    9: "draw contracts",
+    109: "main-menu Quit",
+    110: "main-menu Escape",
+    111: "main-menu New Game",
+    136: "main-menu View Scores",
+    147: "main-menu Load Game",
 }
 
 
@@ -98,11 +119,18 @@ def main() -> int:
                 raise RuntimeError(f"emulator exited with {process.returncode}")
             if result.exists():
                 payload = result.read_bytes()
-                if len(payload) == RESULT_SIZE and payload[:4] == b"W3S1":
+                if (
+                    len(payload) == RESULT_SIZE
+                    and payload[:4] == b"W3S1"
+                    and payload[11] == 1
+                ):
                     break
             time.sleep(0.05)
         else:
-            raise RuntimeError("timed out waiting for shell regression result")
+            detail = ""
+            if len(payload) == RESULT_SIZE and payload[:4] == b"W3S1":
+                detail = f"; stalled in {STAGES.get(payload[10], payload[10])}"
+            raise RuntimeError(f"timed out waiting for shell regression result{detail}")
     finally:
         process.terminate()
         try:

@@ -22,9 +22,12 @@ from formats.shell import (  # noqa: E402
     BORD2COLOR,
     BORDCOLOR,
     COMPOSED_DEACTIVE_RGB,
+    CONTROL_PAGE_LINES,
+    CHANGE_VIEW_PAGE_LINES,
     DEACTIVE,
     DIFFICULTY_LABELS,
     DIFFICULTY_NAMES,
+    END_GAME_MESSAGE,
     EPISODE_LABELS,
     EPISODE_UNAVAILABLE_MESSAGE,
     HIGHLIGHT,
@@ -32,6 +35,7 @@ from formats.shell import (  # noqa: E402
     ORDER_HIGHLIGHT,
     ORDER_NORMAL,
     READHCOLOR,
+    READ_THIS_PAGE_LINES,
     SHELL_CHUNKS,
     SHELL_CHUNK_BUFFER_BASE,
     SHELL_CHUNK_NAMES,
@@ -185,10 +189,53 @@ def _compose_main(raw: dict[str, Image.Image], font: WolfFont) -> Image.Image:
     image.paste(raw["options_heading"], (84, 0))
     _draw_window(image, 68, 52, 178, 136, BKGDCOLOR)
     for index, label in enumerate(MAIN_LABELS):
-        # Only these two commands are live in the first shell implementation.
-        color = TEXTCOLOR if index in (0, 9) else COMPOSED_DEACTIVE_RGB
+        # Save Game alone requires an active game. Back to Demo now returns
+        # to the source-timed title/credits/high-score attract cycle.
+        color = TEXTCOLOR if index != 4 else COMPOSED_DEACTIVE_RGB
         _draw_text(image, font, (100, 55 + index * 13), label, color)
     return image
+
+
+def _compose_information_page(
+    raw: dict[str, Image.Image],
+    font: WolfFont,
+    title: str,
+    lines: tuple[str, ...],
+) -> Image.Image:
+    """Build one source-styled control-panel information page."""
+
+    image = Image.new("RGB", SCREEN_SIZE, _color(BORDCOLOR))
+    image.paste(raw["mouse_back"], (112, 184))
+    _draw_stripes(image)
+    _draw_centered(image, font, 15, title, READHCOLOR)
+    _draw_window(image, 20, 45, 280, 133, BKGDCOLOR)
+    y = 52
+    for line in lines:
+        if line:
+            _draw_centered(image, font, y, line, TEXTCOLOR)
+        y += font.height
+    return image
+
+
+def _compose_sound_page(
+    raw: dict[str, Image.Image], font: WolfFont, enabled: bool
+) -> Image.Image:
+    state = "ON" if enabled else "OFF"
+    return _compose_information_page(
+        raw,
+        font,
+        "Sound",
+        (
+            "Agon sound effects",
+            "",
+            state,
+            "",
+            "Enter toggles sound.",
+            "Escape returns.",
+            "",
+            "Music is not yet available.",
+        ),
+    )
 
 
 def _compose_episode(raw: dict[str, Image.Image], font: WolfFont) -> Image.Image:
@@ -219,6 +266,35 @@ def _compose_difficulty(raw: dict[str, Image.Image], font: WolfFont) -> Image.Im
     return image
 
 
+def _compose_high_scores(
+    raw: dict[str, Image.Image], font: WolfFont
+) -> Image.Image:
+    """Reproduce the invariant shareware ``DrawHighScores`` backdrop.
+
+    The bundled UPLOAD archive retains HIGHSCORESPIC but omits the separate
+    C_NAME/C_LEVEL/C_SCORE pictures used by registered builds.  Their visible
+    labels are reconstructed with the same original proportional font.
+    """
+
+    image = Image.new("RGB", SCREEN_SIZE, _color(BORDCOLOR))
+    _draw_stripes(image)
+    image.paste(raw["high_scores_heading"], (48, 0))
+    _draw_text(image, font, (4 * 8, 68), "Name", 15)
+    _draw_text(image, font, (20 * 8, 68), "Level", 15)
+    _draw_text(image, font, (28 * 8, 68), "Score", 15)
+    return image
+
+
+def _compose_ingame_tail(font: WolfFont) -> Image.Image:
+    """Original in-game control-panel tail: End/Back to Game/Quit."""
+
+    image = Image.new("RGB", (145, 44), _color(BKGDCOLOR))
+    _draw_text(image, font, (4, 3), "End Game", TEXTCOLOR)
+    _draw_text(image, font, (4, 16), "Back to Game", TEXTCOLOR)
+    _draw_text(image, font, (4, 29), "Quit", TEXTCOLOR)
+    return image
+
+
 def _compose_unavailable_notice(font: WolfFont) -> Image.Image:
     text_width, text_height = font.measure(EPISODE_UNAVAILABLE_MESSAGE)
     if (text_width, text_height) != (240, 52):
@@ -236,6 +312,25 @@ def _compose_unavailable_notice(font: WolfFont) -> Image.Image:
     return image
 
 
+def _compose_end_game_notice(font: WolfFont) -> Image.Image:
+    """Reproduce ``Message(ENDGAMESTR)`` from the shareware control panel."""
+
+    text_width, text_height = font.measure(END_GAME_MESSAGE)
+    if (text_width, text_height) != (204, 39):
+        raise ValueError(
+            "Unexpected ENDGAMESTR metrics: "
+            f"{text_width}x{text_height}, expected 204x39"
+        )
+
+    # Message() centers mw=204 and h=39, then DrawWindow uses mw+10 by h+10.
+    # DrawOutline's inclusive right/bottom edges make the stored crop 215x50.
+    image = Image.new("RGB", (215, 50), _color(TEXTCOLOR))
+    _draw_window(image, 0, 0, 214, 49, TEXTCOLOR)
+    _draw_outline(image, 0, 0, 214, 49, 0, HIGHLIGHT)
+    _draw_text(image, font, (5, 5), END_GAME_MESSAGE, 0)
+    return image
+
+
 def _compose_images(
     raw: dict[str, Image.Image], font: WolfFont
 ) -> dict[str, ComposedImage]:
@@ -246,11 +341,70 @@ def _compose_images(
         "episode_unavailable_notice": ComposedImage(
             _compose_unavailable_notice(font), 35, 69
         ),
+        "high_scores_base": ComposedImage(_compose_high_scores(raw, font), 0, 0),
+        "main_ingame_tail": ComposedImage(_compose_ingame_tail(font), 96, 143),
+        "end_game_notice": ComposedImage(_compose_end_game_notice(font), 53, 76),
+        "main_save_game_active": ComposedImage(
+            _text_overlay(font, MAIN_LABELS[4], TEXTCOLOR), 100, 107
+        ),
         "main_new_game_selected": ComposedImage(
             _text_overlay(font, MAIN_LABELS[0], HIGHLIGHT), 100, 55
         ),
         "main_quit_selected": ComposedImage(
             _text_overlay(font, MAIN_LABELS[9], HIGHLIGHT), 100, 172
+        ),
+        "main_view_scores_selected": ComposedImage(
+            _text_overlay(font, MAIN_LABELS[7], HIGHLIGHT), 100, 146
+        ),
+        "main_end_game_selected": ComposedImage(
+            _text_overlay(font, "End Game", HIGHLIGHT), 100, 146
+        ),
+        "main_back_to_game_selected": ComposedImage(
+            _text_overlay(font, "Back to Game", HIGHLIGHT), 100, 159
+        ),
+        "main_load_game_selected": ComposedImage(
+            _text_overlay(font, MAIN_LABELS[3], HIGHLIGHT), 100, 94
+        ),
+        "main_save_game_selected": ComposedImage(
+            _text_overlay(font, MAIN_LABELS[4], HIGHLIGHT), 100, 107
+        ),
+        "main_sound_selected": ComposedImage(
+            _text_overlay(font, MAIN_LABELS[1], HIGHLIGHT), 100, 68
+        ),
+        "main_control_selected": ComposedImage(
+            _text_overlay(font, MAIN_LABELS[2], HIGHLIGHT), 100, 81
+        ),
+        "main_change_view_selected": ComposedImage(
+            _text_overlay(font, MAIN_LABELS[5], HIGHLIGHT), 100, 120
+        ),
+        "main_read_this_selected": ComposedImage(
+            _text_overlay(font, MAIN_LABELS[6], HIGHLIGHT), 100, 133
+        ),
+        "main_back_to_demo_selected": ComposedImage(
+            _text_overlay(font, MAIN_LABELS[8], HIGHLIGHT), 100, 159
+        ),
+        "sound_on_page": ComposedImage(
+            _compose_sound_page(raw, font, True), 0, 0
+        ),
+        "sound_off_page": ComposedImage(
+            _compose_sound_page(raw, font, False), 0, 0
+        ),
+        "control_page": ComposedImage(
+            _compose_information_page(raw, font, "Control", CONTROL_PAGE_LINES),
+            0,
+            0,
+        ),
+        "change_view_page": ComposedImage(
+            _compose_information_page(
+                raw, font, "Change View", CHANGE_VIEW_PAGE_LINES
+            ),
+            0,
+            0,
+        ),
+        "read_this_page": ComposedImage(
+            _compose_information_page(raw, font, "Read This!", READ_THIS_PAGE_LINES),
+            0,
+            0,
         ),
     }
     for index, label in enumerate(EPISODE_LABELS, start=1):

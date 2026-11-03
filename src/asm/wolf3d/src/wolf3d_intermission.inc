@@ -47,6 +47,7 @@ W3D_INTERMISSION_GUY_1_BUFFER:      equ 04037h
 W3D_INTERMISSION_GUY_2_BUFFER:      equ 04060h
 W3D_INTERMISSION_FLOOR_BASE_BUFFER:  equ 04100h
 W3D_INTERMISSION_SECRET_BASE_BUFFER: equ 04101h
+W3D_INTERMISSION_VICTORY_BASE_BUFFER: equ 04102h
 W3D_INTERMISSION_STATUSBAR_BUFFER:   equ 04062h
 W3D_INTERMISSION_WEAPON_KNIFE_BUFFER: equ 04067h
 W3D_INTERMISSION_KEY_NONE_BUFFER:    equ 0406Bh
@@ -70,6 +71,12 @@ W3D_INTERMISSION_SECRET_RATIO_Y:     equ 128
 W3D_INTERMISSION_TREASURE_RATIO_Y:   equ 144
 W3D_INTERMISSION_BONUS_Y:            equ 56
 W3D_INTERMISSION_STATUSBAR_Y:        equ 200
+
+W3D_VICTORY_TIME_X:                  equ 113
+W3D_VICTORY_TIME_Y:                  equ 64
+W3D_VICTORY_KILL_Y:                  equ 112
+W3D_VICTORY_SECRET_Y:                equ 128
+W3D_VICTORY_TREASURE_Y:              equ 144
 
 W3D_INTERMISSION_HUD_NUMBER_Y:       equ 216
 W3D_INTERMISSION_HUD_LEVEL_X:        equ 16
@@ -1447,6 +1454,232 @@ w3d_intermission_draw_digit:
     pop af
     ret
 
+; ---------------------------------------------------------------------------
+; Episode 1 Victory() presentation
+; ---------------------------------------------------------------------------
+
+; Reproduce the non-SPEAR WL_INTER.C victory summary from the eight ordinary
+; LevelRatios records, then show the two pages of the bundled WL1 ENDART1
+; article.  The in-world BJ sequence owns the preceding gameplay phase; this
+; routine begins only after its renderer and VDPlet have shut down cleanly.
+w3d_victory_present:
+    call w3d_victory_calculate_totals
+    ld hl,W3D_INTERMISSION_VICTORY_BASE_BUFFER
+    call w3d_shell_plot_full_screen
+    call w3d_victory_draw_totals
+    call w3d_shell_wait_any_press
+    call w3d_shell_query_exit_request
+    ret nz
+    call w3d_victory_draw_end_page_1
+    call w3d_shell_wait_any_press
+    call w3d_shell_query_exit_request
+    ret nz
+    call w3d_victory_draw_end_page_2
+    call w3d_shell_wait_any_press
+    jp w3d_shell_query_exit_request
+
+; Sum u32 time and three u16 percentages, then divide the ratios by eight.
+w3d_victory_calculate_totals:
+    xor a
+    ld hl,w3d_victory_total_seconds
+    ld (hl),a
+    ld de,w3d_victory_total_seconds+1
+    ld bc,9
+    ldir
+    ld ix,w3d_level_ratios
+    ld b,W3D_LEVEL_RATIO_COUNT
+@ratio_loop:
+    ld a,(w3d_victory_kill_sum+0)
+    add a,(ix+W3D_LEVEL_RATIO_KILL+0)
+    ld (w3d_victory_kill_sum+0),a
+    ld a,(w3d_victory_kill_sum+1)
+    adc a,(ix+W3D_LEVEL_RATIO_KILL+1)
+    ld (w3d_victory_kill_sum+1),a
+    ld a,(w3d_victory_secret_sum+0)
+    add a,(ix+W3D_LEVEL_RATIO_SECRET+0)
+    ld (w3d_victory_secret_sum+0),a
+    ld a,(w3d_victory_secret_sum+1)
+    adc a,(ix+W3D_LEVEL_RATIO_SECRET+1)
+    ld (w3d_victory_secret_sum+1),a
+    ld a,(w3d_victory_treasure_sum+0)
+    add a,(ix+W3D_LEVEL_RATIO_TREASURE+0)
+    ld (w3d_victory_treasure_sum+0),a
+    ld a,(w3d_victory_treasure_sum+1)
+    adc a,(ix+W3D_LEVEL_RATIO_TREASURE+1)
+    ld (w3d_victory_treasure_sum+1),a
+    ld a,(w3d_victory_total_seconds+0)
+    add a,(ix+W3D_LEVEL_RATIO_TIME+0)
+    ld (w3d_victory_total_seconds+0),a
+    ld a,(w3d_victory_total_seconds+1)
+    adc a,(ix+W3D_LEVEL_RATIO_TIME+1)
+    ld (w3d_victory_total_seconds+1),a
+    ld a,(w3d_victory_total_seconds+2)
+    adc a,(ix+W3D_LEVEL_RATIO_TIME+2)
+    ld (w3d_victory_total_seconds+2),a
+    ld a,(w3d_victory_total_seconds+3)
+    adc a,(ix+W3D_LEVEL_RATIO_TIME+3)
+    ld (w3d_victory_total_seconds+3),a
+    lea ix,ix+W3D_LEVEL_RATIO_SIZE
+    djnz @ratio_loop
+
+    ld hl,(w3d_victory_kill_sum)
+    srl h
+    rr l
+    srl h
+    rr l
+    srl h
+    rr l
+    ld a,l
+    ld (w3d_victory_kill_average),a
+    ld hl,(w3d_victory_secret_sum)
+    srl h
+    rr l
+    srl h
+    rr l
+    srl h
+    rr l
+    ld a,l
+    ld (w3d_victory_secret_average),a
+    ld hl,(w3d_victory_treasure_sum)
+    srl h
+    rr l
+    srl h
+    rr l
+    srl h
+    rr l
+    ld a,l
+    ld (w3d_victory_treasure_average),a
+    jp w3d_victory_split_time
+
+; Convert the accumulated u32 seconds by bounded repeated subtraction.  The
+; original clamps any result beyond 99 minutes to 99:99.
+w3d_victory_split_time:
+    ld hl,0
+    ld (w3d_victory_minutes),hl
+@minute_loop:
+    ld a,(w3d_victory_total_seconds+3)
+    or a
+    jr nz,@subtract
+    ld a,(w3d_victory_total_seconds+2)
+    or a
+    jr nz,@subtract
+    ld hl,(w3d_victory_total_seconds)
+    ld de,60
+    or a
+    sbc.s hl,de
+    jr c,@seconds_ready
+@subtract:
+    ld a,(w3d_victory_total_seconds+0)
+    sub 60
+    ld (w3d_victory_total_seconds+0),a
+    ld a,(w3d_victory_total_seconds+1)
+    sbc a,0
+    ld (w3d_victory_total_seconds+1),a
+    ld a,(w3d_victory_total_seconds+2)
+    sbc a,0
+    ld (w3d_victory_total_seconds+2),a
+    ld a,(w3d_victory_total_seconds+3)
+    sbc a,0
+    ld (w3d_victory_total_seconds+3),a
+    ld hl,(w3d_victory_minutes)
+    inc hl
+    ld (w3d_victory_minutes),hl
+    ld de,100
+    or a
+    sbc.s hl,de
+    jr c,@minute_loop
+    ld a,99
+    ld (w3d_victory_minutes),a
+    ld (w3d_victory_seconds),a
+    ret
+@seconds_ready:
+    ld a,(w3d_victory_total_seconds)
+    ld (w3d_victory_seconds),a
+    ret
+
+w3d_victory_draw_totals:
+    ld a,(w3d_victory_minutes)
+    ld bc,W3D_VICTORY_TIME_X
+    ld de,W3D_VICTORY_TIME_Y
+    call w3d_intermission_draw_two_digits
+    ld hl,W3D_INTERMISSION_COLON_BUFFER
+    ld bc,W3D_VICTORY_TIME_X+32
+    ld de,W3D_VICTORY_TIME_Y
+    call w3d_shell_plot_at
+    ld a,(w3d_victory_seconds)
+    ld bc,W3D_VICTORY_TIME_X+40
+    ld de,W3D_VICTORY_TIME_Y
+    call w3d_intermission_draw_two_digits
+    ld a,(w3d_victory_kill_average)
+    ld de,W3D_VICTORY_KILL_Y
+    call w3d_victory_draw_average
+    ld a,(w3d_victory_secret_average)
+    ld de,W3D_VICTORY_SECRET_Y
+    call w3d_victory_draw_average
+    ld a,(w3d_victory_treasure_average)
+    ld de,W3D_VICTORY_TREASURE_Y
+    jp w3d_victory_draw_average
+
+; A=0..100, DE=y.  Victory() right-aligns against column 30 (x=240).
+w3d_victory_draw_average:
+    cp 100
+    jr z,@hundred
+    cp 10
+    jr c,@one
+    ld bc,208
+    jp w3d_intermission_draw_two_digits
+@one:
+    ld bc,224
+    jp w3d_intermission_draw_digit
+@hundred:
+    ld a,1
+    ld bc,192
+    call w3d_intermission_draw_digit
+    xor a
+    ld bc,208
+    call w3d_intermission_draw_digit
+    ld bc,224
+    jp w3d_intermission_draw_digit
+
+; ENDART1 is the bundled shareware article at VGAGRAPH.WL1 chunk 155.  These
+; page strings retain its exact prose while mapping the DOS article markup to
+; the Agon's native 40-column text surface.
+w3d_victory_draw_end_page_1:
+    call w3d_shell_clear
+    ld hl,@text
+    jp printString
+@text:
+    db 17,15,62,31,11,2,"CONGRATULATIONS!"
+    db 17,15,63,31,2,5,"You run out of the castle and hook up"
+    db 31,2,6,"with the Underground. They inform you that"
+    db 31,2,7,"the rumors were true: some hideous human"
+    db 31,2,8,"experiments were seen around Castle"
+    db 31,2,9,"Hollehammer. So Operation Eisenfaust is"
+    db 31,2,10,"real!"
+    db 31,2,13,"You must journey there and terminate the"
+    db 31,2,14,"maniacal Dr. Schabbs before his undead"
+    db 31,2,15,"army marches against humanity!"
+    db 31,10,22,"Press any key",0
+
+w3d_victory_draw_end_page_2:
+    call w3d_shell_clear
+    ld hl,@text
+    jp printString
+@text:
+    db 17,15,62,31,11,2,"MORE WOLFENSTEIN"
+    db 17,15,63,31,2,5,"And in episode three, Hitler hides in"
+    db 31,2,6,"his titanic bunker as the Third Reich"
+    db 31,2,7,"crumbles about him. It is your job to"
+    db 31,2,8,"assassinate him, ending his mad reign."
+    db 31,2,11,"And if you like Wolfenstein, you'll love"
+    db 31,2,12,"the prequel trilogy of Nocturnal Missions!"
+    db 31,2,13,"Thirty more action-packed, super-"
+    db 31,2,14,"challenging levels!"
+    db 31,2,17,"See the \"Read Me\" choice in the menu"
+    db 31,2,18,"for more information or call Apogee at"
+    db 31,2,19,"1-800-GAME123!"
+    db 31,10,24,"Press any key",0
+
 w3d_intermission_par_times:
     db 1,30, 2,0, 2,0, 3,30, 3,0, 3,0, 2,30, 2,30, 0,0, 0,0
 
@@ -1468,6 +1701,24 @@ w3d_intermission_score_work:
     ds 4
 w3d_intermission_score_digits:
     ds 6
+w3d_victory_total_seconds:
+    ds 4
+w3d_victory_kill_sum:
+    dw 0
+w3d_victory_secret_sum:
+    dw 0
+w3d_victory_treasure_sum:
+    dw 0
+w3d_victory_minutes:
+    dw 0
+w3d_victory_seconds:
+    db 0
+w3d_victory_kill_average:
+    db 0
+w3d_victory_secret_average:
+    db 0
+w3d_victory_treasure_average:
+    db 0
 w3d_intermission_kill_ratio:
     db 0
 w3d_intermission_secret_ratio:

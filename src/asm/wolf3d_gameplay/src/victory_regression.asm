@@ -25,10 +25,11 @@ fa_create_always:   equ 0x08
     include "wolf3d_actors.inc"
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
+    include "wolf3d_victory.inc"
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
 
-victory_case_count: equ 4
+victory_case_count: equ 5
 
 start:
     push af
@@ -56,6 +57,7 @@ run_tests:
     call case_adjacent_none
     call case_victory_latch
     call case_victory_stops_quantum
+    call case_victory_sequence_completes
     call case_completion_freezes_catchup
     call write_result
     ret
@@ -77,8 +79,10 @@ initialize_world:
 ; Previous LDIR leaves HL at test_paths+4095; bind the actual base explicitly.
     ld hl,test_paths
     ld (w3d_path_directions_ptr),hl
+    ld (w3d_level_path_ptr),hl
     ld hl,test_areas
     ld (w3d_area_map_ptr),hl
+    ld (w3d_level_area_ptr),hl
     ld hl,test_static_bits
     xor a
     ld (hl),a
@@ -96,9 +100,8 @@ initialize_world:
     ld (w3d_doors_ptr),hl
     xor a
     ld (w3d_level_actor_count),a
-    ld (w3d_actor_live_head),a
-    dec a
-    ld (w3d_actor_live_head),a
+    ld (w3d_level_random_index),a
+    ld (w3d_level_door_count),a
     ret
 
 reset_case:
@@ -138,6 +141,11 @@ reset_case:
 ; row-major offset 10*64+11 rather than a misleading symbolic expression.
     ld hl,test_paths+651
     ld (hl),W3D_PATH_NONE
+    call w3d_initialize_actor_state
+    call w3d_initialize_actor_simulation
+    call w3d_initialize_victory_state
+    ld a,1
+    ld (w3d_area_by_player+0),a
     ret
 
 finish_case:
@@ -164,7 +172,9 @@ case_adjacent_none:
     call assert_a
     jp finish_case
 
-; The same accepted move onto 0xfe latches victory and hides the view weapon.
+; The same accepted move onto 0xfe starts the original in-world sequence,
+; dynamically spawns BJ, and hides the view weapon. ex_victorious remains
+; clear until the run/jump state graph reaches T_BJDone.
 case_victory_latch:
     call reset_case
     ld hl,test_paths+651
@@ -175,7 +185,7 @@ case_victory_latch:
     ld c,4
     call assert_a
     ld a,(w3d_level_completion)
-    ld b,W3D_LEVEL_COMPLETION_VICTORY
+    ld b,W3D_LEVEL_COMPLETION_NONE
     ld c,5
     call assert_a
     ld a,(w3d_player_weapon_shape+0)
@@ -185,6 +195,23 @@ case_victory_latch:
     ld a,(w3d_player_weapon_shape+1)
     ld b,0ffh
     ld c,7
+    call assert_a
+    ld a,(w3d_victory_active)
+    ld b,1
+    ld c,8
+    call assert_a
+    ld a,(w3d_victory_bj_slot)
+    ld b,1
+    ld c,9
+    call assert_a
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_CLASS)
+    ld b,W3D_CLASS_BJ
+    ld c,10
+    call assert_a
+    ld a,(ix+W3D_ACTOR_TEMP1+0)
+    ld b,W3D_VICTORY_RUN_TILES
+    ld c,11
     call assert_a
     jp finish_case
 
@@ -202,24 +229,75 @@ case_victory_stops_quantum:
     ld (w3d_keyboard_masks+6),a
     call w3d_simulate_player_step
     ld a,(w3d_level_completion)
-    ld b,W3D_LEVEL_COMPLETION_VICTORY
-    ld c,8
+    ld b,W3D_LEVEL_COMPLETION_NONE
+    ld c,12
     call assert_a
     ld a,(w3d_player_pose+6)
     ld b,10
-    ld c,9
+    ld c,13
     call assert_a
     ld a,(w3d_pickup_scan_needed)
     ld b,1
-    ld c,10
+    ld c,14
     call assert_a
     ld a,(w3d_actor_tics_prepared)
     ld b,0
-    ld c,11
+    ld c,15
     call assert_a
     ld a,(w3d_actor_tic_phase)
     ld b,0
-    ld c,12
+    ld c,16
+    call assert_a
+    jp finish_case
+
+; The complete scripted graph must terminate without controls or ordinary
+; hostile simulation. This also exercises the 2,2,3 source-tic cadence,
+; six-cell path following, jump states, player spin, and final clamp.
+case_victory_sequence_completes:
+    call reset_case
+    ld hl,test_paths+651
+    ld (hl),W3D_PATH_VICTORY
+    ld hl,test_delta_east
+    call w3d_clip_move_delta24
+    ld bc,420
+@advance:
+    push bc
+    call w3d_simulate_player_step
+    pop bc
+    ld a,(w3d_level_completion)
+    cp W3D_LEVEL_COMPLETION_VICTORY
+    jr z,@complete
+    dec bc
+    ld a,b
+    or c
+    jr nz,@advance
+@complete:
+    ld a,(w3d_level_completion)
+    ld b,W3D_LEVEL_COMPLETION_VICTORY
+    ld c,17
+    call assert_a
+    ld a,(w3d_player_pose+8)
+    ld b,W3D_VICTORY_PLAYER_ANGLE & 0ffh
+    ld c,18
+    call assert_a
+    ld a,(w3d_player_pose+9)
+    ld b,W3D_VICTORY_PLAYER_ANGLE >> 8
+    ld c,19
+    call assert_a
+    ld hl,(w3d_player_pose+4)
+    ld de,(w3d_victory_player_target_y)
+    or a
+    sbc hl,de
+    ld a,l
+    or h
+    ld b,0
+    ld c,20
+    call assert_a
+    ld a,(w3d_victory_bj_slot)
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_STATE+0)
+    ld b,W3D_STATE_BJ_JUMP4
+    ld c,21
     call assert_a
     jp finish_case
 
@@ -234,11 +312,11 @@ case_completion_freezes_catchup:
     call w3d_simulate_player_step
     ld a,(w3d_controls)
     ld b,0a5h
-    ld c,13
+    ld c,22
     call assert_a
     ld a,(w3d_pickup_scan_needed)
     ld b,0
-    ld c,14
+    ld c,23
     call assert_a
     jp finish_case
 

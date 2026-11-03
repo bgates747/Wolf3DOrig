@@ -826,6 +826,60 @@ w3d_actor_states:
     dw 10
     db W3D_STATE_THINK_GHOST,W3D_STATE_ACTION_NONE
     dw W3D_STATE_INKY_CHASE1
+
+; Episode 1 victory actor. These are the original non-rotating BJ run/jump
+; frames and durations from WL_ACT2.C. The special think/action dispatchers
+; keep the cut-scene lifecycle separate from hostile actor simulation.
+    dw 408             ; 152 s_bjrun1 / SPR_BJ_W1
+    db 0
+    dw 12
+    db W3D_STATE_THINK_BJ_RUN,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BJ_RUN1S
+    dw 408             ; 153 s_bjrun1s
+    db 0
+    dw 3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BJ_RUN2
+    dw 409             ; 154 s_bjrun2 / SPR_BJ_W2
+    db 0
+    dw 8
+    db W3D_STATE_THINK_BJ_RUN,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BJ_RUN3
+    dw 410             ; 155 s_bjrun3 / SPR_BJ_W3
+    db 0
+    dw 12
+    db W3D_STATE_THINK_BJ_RUN,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BJ_RUN3S
+    dw 410             ; 156 s_bjrun3s
+    db 0
+    dw 3
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BJ_RUN4
+    dw 411             ; 157 s_bjrun4 / SPR_BJ_W4
+    db 0
+    dw 8
+    db W3D_STATE_THINK_BJ_RUN,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BJ_RUN1
+    dw 412             ; 158 s_bjjump1 / SPR_BJ_JUMP1
+    db 0
+    dw 14
+    db W3D_STATE_THINK_BJ_JUMP,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BJ_JUMP2
+    dw 413             ; 159 s_bjjump2 / SPR_BJ_JUMP2
+    db 0
+    dw 14
+    db W3D_STATE_THINK_BJ_JUMP,W3D_STATE_ACTION_BJ_YELL
+    dw W3D_STATE_BJ_JUMP3
+    dw 414             ; 160 s_bjjump3 / SPR_BJ_JUMP3
+    db 0
+    dw 14
+    db W3D_STATE_THINK_BJ_JUMP,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BJ_JUMP4
+    dw 415             ; 161 s_bjjump4 / SPR_BJ_JUMP4
+    db 0
+    dw 300
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_BJ_DONE
+    dw W3D_STATE_BJ_JUMP4
 w3d_actor_states_end:
 
 ; ---------------------------------------------------------------------------

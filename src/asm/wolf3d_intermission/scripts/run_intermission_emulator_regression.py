@@ -26,6 +26,9 @@ FIXTURE = (
 FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
 MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
 VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+ASSEMBLER = os.environ.get("W3D_ASSEMBLER") or shutil.which("ez80asm") or str(
+    STAGED_ROOT / "src/asm/wolf3d/tgt/.tools/ez80asm"
+)
 RESULT_SIZE = 16 + 37 * 6
 
 REASONS = {
@@ -62,6 +65,11 @@ REASONS = {
     31: "count-up sound count",
     32: "count-up logical sound id",
     33: "count-up stage",
+    34: "victory minutes",
+    35: "victory seconds",
+    36: "victory kill average",
+    37: "victory secret average",
+    38: "victory treasure average",
 }
 
 
@@ -94,7 +102,7 @@ def main() -> int:
     app = sdcard / "i"
     app.mkdir(parents=True)
     binary = app / "i.bin"
-    run(["ez80asm", entry.name, str(binary)], cwd=build_src)
+    run([ASSEMBLER, entry.name, str(binary)], cwd=build_src)
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\ncd i\r\nload i.bin\r\nrun\r\n"
     )

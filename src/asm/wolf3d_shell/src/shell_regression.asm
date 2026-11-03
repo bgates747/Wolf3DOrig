@@ -8,9 +8,11 @@
     db "MOS",0,1
 
 mos_fopen: equ 0ah
+mos_getkey: equ 00h
 mos_fclose: equ 0bh
 mos_fwrite: equ 1bh
 mos_getkbmap: equ 1eh
+sysvar_time: equ 0
 fa_write: equ 02h
 fa_create_always: equ 08h
 
@@ -72,6 +74,50 @@ fa_create_always: equ 08h
     include "wolf3d_shell_assets.inc"
 w3d_app_version_text: db "Wolf3DOrig App 0.1.0 Alpha 1",0
 w3d_requested_difficulty: db 2
+w3d_sysvars_pointer: dl test_sysvars
+
+; Save/load persistence itself has a separate direct regression. This shell
+; fixture exposes one validated slot and records load dispatch.
+w3d_save_slot_load:
+    ld hl,test_save_load_count
+    inc (hl)
+    or a
+    ret
+w3d_save_slot_store:
+    ld hl,test_save_store_count
+    inc (hl)
+    or a
+    ret
+w3d_save_slot_available:
+    db 1,0,0,0,0,0,0,0,0,0
+w3d_save_slot_names:
+    db "Regression slot",0
+    ds 32-16
+    ds 9*32
+
+; The full victory presentation has its own direct regression.  This shell
+; seam records that the production lifecycle invokes it exactly once before
+; returning to the main menu.
+w3d_victory_present:
+    ld hl,test_victory_present_count
+    inc (hl)
+    ret
+
+w3d_highscores_handle_game_end:
+    ld hl,test_highscore_handoff_count
+    inc (hl)
+    ret
+
+w3d_highscores_view:
+    ld hl,test_highscore_view_count
+    inc (hl)
+    ret
+
+w3d_highscores_draw:
+    ld hl,test_highscore_draw_count
+    inc (hl)
+    ret
+
     include "wolf3d_shell.inc"
 
 SCRIPT_RELEASE: equ 0
@@ -83,6 +129,7 @@ SCRIPT_SPACE: equ 5
 SCRIPT_ESCAPE: equ 6
 SCRIPT_ANY: equ 7
 SCRIPT_ESCAPE_ACCEPT: equ 8
+SCRIPT_TICK: equ 9
 
 REASON_ACTION: equ 1
 REASON_RESULT: equ 2
@@ -96,6 +143,10 @@ REASON_PLOT_BUFFER: equ 9
 REASON_PLOT_X: equ 10
 REASON_PLOT_Y: equ 11
 REASON_EXIT_LATCH: equ 12
+REASON_VICTORY_PRESENT: equ 13
+REASON_HIGHSCORE_HANDOFF: equ 14
+REASON_CONFIRM_PLOTS: equ 15
+REASON_SFX_PREFERENCE: equ 16
 
 start:
     push af
@@ -123,14 +174,45 @@ run_tests:
     ld (result_first_case),a
     ld hl,test_keyboard_hook
     call w3d_shell_set_keyboard_read_hook
+    ld hl,test_key_hook
+    call w3d_shell_set_key_read_hook
+    ld a,1
+    call mark_stage
     call test_input_actions
+    ld a,2
+    call mark_stage
     call test_main_results
+    ld a,3
+    call mark_stage
     call test_episode_semantics
+    ld a,4
+    call mark_stage
     call test_difficulty_semantics
+    ld a,5
+    call mark_stage
     call test_lifecycle_entries
+    ld a,6
+    call mark_stage
+    call test_pause_menu
+    ld a,7
+    call mark_stage
+    call test_control_pages
+    ld a,8
+    call mark_stage
+    call test_attract_timing
+    ld a,9
+    call mark_stage
     call test_draw_contract
+    ld a,1
+    ld (result_done),a
     call write_result
     ret
+
+; Publish a partial receipt before each finite group. The host runner waits
+; for result_done, but can name the exact group if a target-side loop stalls.
+mark_stage:
+    ld (result_stage),a
+    jp write_result
 
 test_input_actions:
     call w3d_shell_reset_exit_request
@@ -206,6 +288,8 @@ test_input_actions:
 test_main_results:
     ld a,9
     ld (test_case),a
+    add a,100
+    call mark_stage
     call w3d_shell_reset_exit_request
     ld hl,script_main_quit
     call test_set_script
@@ -221,6 +305,8 @@ test_main_results:
     CHECK_EXIT 0
     ld a,10
     ld (test_case),a
+    add a,100
+    call mark_stage
     call w3d_shell_reset_exit_request
     ld hl,script_main_escape
     call test_set_script
@@ -229,6 +315,8 @@ test_main_results:
     CHECK_EXIT 1
     ld a,11
     ld (test_case),a
+    add a,100
+    call mark_stage
     call w3d_shell_reset_exit_request
     ld hl,script_new_game_medium
     call test_set_script
@@ -241,6 +329,32 @@ test_main_results:
 @new_flag:
     CHECK_A 1,REASON_FLAGS
     CHECK_MEM8 w3d_requested_difficulty,2,REASON_DIFFICULTY
+    CHECK_EXIT 0
+    ld a,36
+    ld (test_case),a
+    add a,100
+    call mark_stage
+    call w3d_shell_reset_exit_request
+    xor a
+    ld (test_highscore_view_count),a
+    ld hl,script_main_view_scores
+    call test_set_script
+    call w3d_shell_main_menu
+    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_MEM8 test_highscore_view_count,1,REASON_HIGHSCORE_HANDOFF
+    CHECK_EXIT 1
+    ld a,47
+    ld (test_case),a
+    add a,100
+    call mark_stage
+    call w3d_shell_reset_exit_request
+    xor a
+    ld (test_save_load_count),a
+    ld hl,script_main_load_game
+    call test_set_script
+    call w3d_shell_main_menu
+    CHECK_A W3D_SHELL_RESULT_LOAD_GAME,REASON_RESULT
+    CHECK_MEM8 test_save_load_count,1,REASON_SELECTION
     CHECK_EXIT 0
     ret
 
@@ -363,40 +477,220 @@ test_lifecycle_entries:
     ld a,24
     ld (test_case),a
     call w3d_shell_reset_exit_request
+    xor a
+    ld (test_victory_present_count),a
+    ld (test_highscore_handoff_count),a
     ld hl,script_victory_escape
     call test_set_script
     call w3d_shell_resume_after_victory
     CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_MEM8 test_victory_present_count,1,REASON_VICTORY_PRESENT
+    CHECK_MEM8 test_highscore_handoff_count,1,REASON_HIGHSCORE_HANDOFF
     CHECK_EXIT 1
     ld a,25
     ld (test_case),a
     call w3d_shell_reset_exit_request
+    xor a
+    ld (test_victory_present_count),a
+    ld (test_highscore_handoff_count),a
     ld hl,script_ack_then_escape
     call test_set_script
     call w3d_shell_resume_after_victory
     CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_MEM8 test_victory_present_count,1,REASON_VICTORY_PRESENT
+    CHECK_MEM8 test_highscore_handoff_count,1,REASON_HIGHSCORE_HANDOFF
     CHECK_EXIT 1
+    ld a,35
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    xor a
+    ld (test_victory_present_count),a
+    ld (test_highscore_handoff_count),a
+    ld hl,script_action_escape
+    call test_set_script
+    call w3d_shell_resume_after_game_over
+    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_MEM8 test_victory_present_count,0,REASON_VICTORY_PRESENT
+    CHECK_MEM8 test_highscore_handoff_count,1,REASON_HIGHSCORE_HANDOFF
+    CHECK_EXIT 1
+    ret
+
+test_pause_menu:
+    ld a,39
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_pause_escape
+    call test_set_script
+    call w3d_shell_pause_menu
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+    CHECK_EXIT 0
+    ld a,40
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_pause_end
+    call test_set_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
+    call w3d_shell_pause_menu
+    CHECK_A W3D_SHELL_PAUSE_END_GAME,REASON_RESULT
+    CHECK_EXIT 0
+    ld a,45
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    call test_reset_plots
+    ld hl,script_pause_end_then_back
+    call test_set_script
+    ld hl,script_confirm_no
+    call test_set_key_script
+    call w3d_shell_pause_menu
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+    CHECK_EXIT 0
+    CHECK_MEM8 test_plot_count,21,REASON_CONFIRM_PLOTS
+    CHECK_PLOT 60,W3D_SHELL_END_GAME_NOTICE_BUFFER,53,76
+    ld a,46
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_pause_end_then_back
+    call test_set_script
+    ld hl,script_confirm_escape
+    call test_set_key_script
+    call w3d_shell_pause_menu
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+    CHECK_EXIT 0
+    ld a,41
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_pause_quit
+    call test_set_script
+    call w3d_shell_pause_menu
+    CHECK_A W3D_SHELL_PAUSE_QUIT,REASON_RESULT
+    CHECK_EXIT 1
+    ld a,42
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_pause_accept_back
+    call test_set_script
+    call w3d_shell_pause_menu
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+    CHECK_EXIT 0
+    ld a,48
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld hl,script_pause_new_game
+    call test_set_script
+    call w3d_shell_pause_menu
+    CHECK_A W3D_SHELL_PAUSE_NEW_GAME,REASON_RESULT
+    CHECK_MEM8 w3d_requested_difficulty,2,REASON_DIFFICULTY
+    CHECK_EXIT 0
+    ret
+
+test_control_pages:
+    ld a,49
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    ld a,1
+    ld (w3d_audio_sfx_enabled),a
+    call test_reset_plots
+    ld hl,script_sound_toggle_return
+    call test_set_script
+    call w3d_shell_sound_page
+    CHECK_MEM8 w3d_audio_sfx_enabled,0,REASON_SFX_PREFERENCE
+    CHECK_EXIT 0
+    CHECK_MEM8 test_plot_count,2,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_SOUND_ON_PAGE_BUFFER,0,0
+    CHECK_PLOT 6,W3D_SHELL_SOUND_OFF_PAGE_BUFFER,0,0
+    ld a,1
+    ld (w3d_audio_sfx_enabled),a
+    ld a,50
+    ld (test_case),a
+    call test_reset_plots
+    ld hl,script_local_escape
+    call test_set_script
+    ld hl,W3D_SHELL_CONTROL_PAGE_BUFFER
+    call w3d_shell_information_page
+    CHECK_EXIT 0
+    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_CONTROL_PAGE_BUFFER,0,0
+    ret
+
+test_attract_timing:
+    ld a,51
+    ld (test_case),a
+    xor a
+    ld (test_highscore_draw_count),a
+    ld hl,test_sysvars
+    ld (hl),a
+    ld de,test_sysvars+1
+    ld bc,23
+    ldir
+    call test_reset_plots
+    ld hl,script_attract_cycle
+    call test_set_script
+    call w3d_shell_attract_until_input
+    CHECK_MEM8 test_highscore_draw_count,1,REASON_HIGHSCORE_HANDOFF
+    CHECK_MEM8 test_plot_count,3,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_TITLE_BUFFER,0,0
+    CHECK_PLOT 6,W3D_SHELL_CREDITS_BUFFER,0,0
+    CHECK_PLOT 12,W3D_SHELL_TITLE_BUFFER,0,0
+    CHECK_EXIT 0
     ret
 
 test_draw_contract:
     ld a,26
     ld (test_case),a
     call test_reset_plots
+    CHECK_MEM8 w3d_shell_main_selected_buffers+0,W3D_SHELL_MAIN_NEW_GAME_SELECTED_BUFFER&0ffh,REASON_PLOT_BUFFER
+    CHECK_MEM8 w3d_shell_main_selected_buffers+1,W3D_SHELL_MAIN_NEW_GAME_SELECTED_BUFFER>>8,REASON_PLOT_BUFFER
     xor a
     ld (w3d_shell_main_choice),a
     call w3d_shell_draw_main_menu
     CHECK_MEM8 test_plot_count,3,REASON_PLOT_COUNT
+    CHECK_MEM8 test_plot_log+0,W3D_SHELL_MAIN_BASE_BUFFER&0ffh,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_selected_bitmap+0,W3D_SHELL_CURSOR_1_BUFFER&0ffh,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_select_history+2,W3D_SHELL_MAIN_NEW_GAME_SELECTED_BUFFER&0ffh,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_select_history+3,W3D_SHELL_MAIN_NEW_GAME_SELECTED_BUFFER>>8,REASON_PLOT_BUFFER
     CHECK_PLOT 6,W3D_SHELL_MAIN_NEW_GAME_SELECTED_BUFFER,100,55
     CHECK_PLOT 12,W3D_SHELL_CURSOR_1_BUFFER,72,53
     ld a,27
     ld (test_case),a
     call test_reset_plots
-    ld a,1
+    ld a,W3D_SHELL_MAIN_VIEW_SCORES
+    ld (w3d_shell_main_choice),a
+    call w3d_shell_draw_main_menu
+    CHECK_MEM8 test_plot_count,3,REASON_PLOT_COUNT
+    CHECK_PLOT 6,W3D_SHELL_MAIN_VIEW_SCORES_SELECTED_BUFFER,100,146
+    CHECK_PLOT 12,W3D_SHELL_CURSOR_1_BUFFER,72,144
+    ld a,38
+    ld (test_case),a
+    call test_reset_plots
+    ld a,W3D_SHELL_MAIN_QUIT
     ld (w3d_shell_main_choice),a
     call w3d_shell_draw_main_menu
     CHECK_MEM8 test_plot_count,3,REASON_PLOT_COUNT
     CHECK_PLOT 6,W3D_SHELL_MAIN_QUIT_SELECTED_BUFFER,100,172
     CHECK_PLOT 12,W3D_SHELL_CURSOR_1_BUFFER,72,170
+    ld a,43
+    ld (test_case),a
+    call test_reset_plots
+    ld a,W3D_SHELL_PAUSE_CHOICE_END
+    ld (w3d_shell_pause_choice),a
+    call w3d_shell_draw_pause_menu
+    CHECK_MEM8 test_plot_count,5,REASON_PLOT_COUNT
+    CHECK_PLOT 6,W3D_SHELL_MAIN_INGAME_TAIL_BUFFER,96,143
+    CHECK_PLOT 12,W3D_SHELL_MAIN_SAVE_GAME_ACTIVE_BUFFER,100,107
+    CHECK_PLOT 18,W3D_SHELL_MAIN_END_GAME_SELECTED_BUFFER,100,146
+    CHECK_PLOT 24,W3D_SHELL_CURSOR_1_BUFFER,72,144
+    ld a,44
+    ld (test_case),a
+    call test_reset_plots
+    ld a,W3D_SHELL_PAUSE_CHOICE_BACK
+    ld (w3d_shell_pause_choice),a
+    call w3d_shell_draw_pause_menu
+    CHECK_MEM8 test_plot_count,5,REASON_PLOT_COUNT
+    CHECK_PLOT 6,W3D_SHELL_MAIN_INGAME_TAIL_BUFFER,96,143
+    CHECK_PLOT 12,W3D_SHELL_MAIN_SAVE_GAME_ACTIVE_BUFFER,100,107
+    CHECK_PLOT 18,W3D_SHELL_MAIN_BACK_TO_GAME_SELECTED_BUFFER,100,159
+    CHECK_PLOT 24,W3D_SHELL_CURSOR_1_BUFFER,72,157
     TEST_EPISODE_DRAW 0,W3D_SHELL_EPISODE_1_SELECTED_BUFFER,23,21,28
     TEST_EPISODE_DRAW 1,W3D_SHELL_EPISODE_2_SELECTED_BUFFER,49,47,29
     TEST_EPISODE_DRAW 2,W3D_SHELL_EPISODE_3_SELECTED_BUFFER,75,73,30
@@ -411,6 +705,17 @@ test_draw_contract:
 
 test_set_script:
     ld (test_script_pointer),hl
+    ret
+
+test_set_key_script:
+    ld (test_key_script_pointer),hl
+    ret
+
+test_key_hook:
+    ld hl,(test_key_script_pointer)
+    ld a,(hl)
+    inc hl
+    ld (test_key_script_pointer),hl
     ret
 
 test_keyboard_hook:
@@ -440,6 +745,8 @@ test_keyboard_hook:
     jr z,@any
     cp SCRIPT_ESCAPE_ACCEPT
     jr z,@escape_accept
+    cp SCRIPT_TICK
+    jr z,@tick
     jr @done
 @up:
     ld a,00000010b
@@ -474,6 +781,12 @@ test_keyboard_hook:
 @any:
     ld a,1
     ld (test_keymap+1),a
+    jr @done
+@tick:
+    ld hl,(test_sysvars+sysvar_time)
+    ld de,2000
+    add hl,de
+    ld (test_sysvars+sysvar_time),hl
 @done:
     ld ix,test_keymap
     ret
@@ -483,6 +796,30 @@ selectBitmap:
     ld (test_selected_bitmap+0),a
     ld a,h
     ld (test_selected_bitmap+1),a
+    push bc
+    push de
+    push hl
+    ld a,(test_select_count)
+    cp 16
+    jr nc,@history_done
+    ld e,a
+    ld d,2
+    mlt de
+    inc de
+    dec.s de
+    ld hl,test_select_history
+    add hl,de
+    ld a,(test_selected_bitmap+0)
+    ld (hl),a
+    inc hl
+    ld a,(test_selected_bitmap+1)
+    ld (hl),a
+    ld hl,test_select_count
+    inc (hl)
+@history_done:
+    pop hl
+    pop de
+    pop bc
     ret
 
 plotBitmap:
@@ -564,6 +901,7 @@ printString:
 test_reset_plots:
     xor a
     ld (test_plot_count),a
+    ld (test_select_count),a
     ld (test_notice_plots),a
     ld hl,test_plot_log
     ld (hl),a
@@ -614,13 +952,22 @@ result_filename: db "shell_result.bin",0
 output_handle: db 0
 test_case: db 0
 test_script_pointer: dl 0
+test_key_script_pointer: dl 0
 test_keymap: ds 16
 test_selected_bitmap: dw 0
+test_select_count: db 0
+test_select_history: ds 16*2
 test_plot_x: dw 0
 test_plot_y: dw 0
 test_plot_count: db 0
 test_notice_plots: db 0
 test_version_prints: db 0
+test_victory_present_count: db 0
+test_highscore_handoff_count: db 0
+test_highscore_view_count: db 0
+test_highscore_draw_count: db 0
+test_save_load_count: db 0
+test_save_store_count: db 0
 test_plot_log: ds 32*6
 test_plot_log_end:
 
@@ -632,7 +979,9 @@ result_first_case: db 0ffh
 result_first_reason: db 0
 result_first_expected: db 0
 result_first_actual: db 0
-    db 0,0,0,0,0,0
+result_stage: db 0
+result_done: db 0
+    db 0,0,0,0
 result_end:
 
 script_action_up: db SCRIPT_UP,SCRIPT_RELEASE
@@ -647,7 +996,48 @@ script_wait_any_escape: db SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_wait_any_held_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_wait_any_held_ordinary_then_escape:
     db SCRIPT_ANY,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
-script_main_quit: db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_SPACE,SCRIPT_RELEASE
+script_main_quit:
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_SPACE,SCRIPT_RELEASE
+script_main_view_scores:
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_SPACE,SCRIPT_RELEASE
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_main_load_game:
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_SPACE,SCRIPT_RELEASE
+    db SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+script_pause_escape:
+    db SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_pause_end:
+    db SCRIPT_RELEASE,SCRIPT_UP,SCRIPT_RELEASE
+    db SCRIPT_RETURN,SCRIPT_RELEASE
+script_pause_end_then_back:
+    db SCRIPT_RELEASE,SCRIPT_UP,SCRIPT_RELEASE
+    db SCRIPT_RETURN,SCRIPT_RELEASE
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+script_confirm_yes: db 'Y'
+script_confirm_no: db 'n'
+script_confirm_escape: db 27
+script_pause_quit:
+    db SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_RETURN,SCRIPT_RELEASE
+script_pause_accept_back:
+    db SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+script_pause_new_game:
+    db SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+    db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+script_sound_toggle_return:
+    db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_local_escape:
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_main_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_new_game_medium:
     db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
@@ -673,8 +1063,16 @@ script_main_difficulty_escape:
     db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_title_escape:
+    db SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_victory_escape:
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_ack_then_escape:
     db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_attract_cycle:
+    db SCRIPT_RELEASE,SCRIPT_TICK,SCRIPT_RELEASE
+    db SCRIPT_TICK,SCRIPT_RELEASE,SCRIPT_TICK,SCRIPT_RELEASE
+    db SCRIPT_ANY,SCRIPT_RELEASE
+
+test_sysvars:
+    ds 24

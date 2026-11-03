@@ -205,6 +205,9 @@ w3d_audio_request_inner:
     ld a,(w3d_audio_quantum_active)
     or a
     jr z,@inactive
+    ld a,(w3d_audio_sfx_enabled)
+    or a
+    jr z,@silent
     ld a,(w3d_audio_new_sound)
     cp W3D_AUDIO_LOGICAL_COUNT
     jr nc,@invalid

@@ -17,6 +17,7 @@ from formats.shell import (  # noqa: E402
     BKGDCOLOR,
     BORDCOLOR,
     COMPOSED_DEACTIVE_RGB,
+    END_GAME_MESSAGE,
     EPISODE_UNAVAILABLE_MESSAGE,
     SHELL_CHUNKS,
     SHELL_CHUNK_NAMES,
@@ -37,8 +38,22 @@ EXPECTED_COMPOSITES = {
     "episode_base": (0x4301, 320, 200, 0, 0),
     "difficulty_base": (0x4302, 320, 200, 0, 0),
     "episode_unavailable_notice": (0x4303, 251, 63, 35, 69),
+    "high_scores_base": (0x4304, 320, 200, 0, 0),
+    "main_ingame_tail": (0x4305, 145, 44, 96, 143),
+    "end_game_notice": (0x4306, 215, 50, 53, 76),
+    "main_save_game_active": (0x4307, 90, 13, 100, 107),
     "main_new_game_selected": (0x4310, 82, 13, 100, 55),
     "main_quit_selected": (0x4311, 35, 13, 100, 172),
+    "main_view_scores_selected": (0x4312, 105, 13, 100, 146),
+    "main_end_game_selected": (0x4313, 80, 13, 100, 146),
+    "main_back_to_game_selected": (0x4314, 118, 13, 100, 159),
+    "main_load_game_selected": (0x4315, 90, 13, 100, 94),
+    "main_save_game_selected": (0x4316, 90, 13, 100, 107),
+    "main_sound_selected": (0x4317, 50, 13, 100, 68),
+    "main_control_selected": (0x4318, 64, 13, 100, 81),
+    "main_change_view_selected": (0x4319, 105, 13, 100, 120),
+    "main_read_this_selected": (0x431A, 87, 13, 100, 133),
+    "main_back_to_demo_selected": (0x431B, 118, 13, 100, 159),
     "episode_1_selected": (0x4320, 215, 26, 98, 23),
     "episode_2_selected": (0x4321, 190, 26, 98, 49),
     "episode_3_selected": (0x4322, 140, 26, 98, 75),
@@ -49,6 +64,11 @@ EXPECTED_COMPOSITES = {
     "difficulty_easy_selected": (0x4331, 126, 13, 74, 113),
     "difficulty_normal_selected": (0x4332, 111, 13, 74, 126),
     "difficulty_hard_selected": (0x4333, 189, 13, 74, 139),
+    "sound_on_page": (0x4340, 320, 200, 0, 0),
+    "sound_off_page": (0x4341, 320, 200, 0, 0),
+    "control_page": (0x4342, 320, 200, 0, 0),
+    "change_view_page": (0x4343, 320, 200, 0, 0),
+    "read_this_page": (0x4344, 320, 200, 0, 0),
 }
 
 
@@ -80,6 +100,7 @@ class ShellArchiveTests(unittest.TestCase):
         self.assertEqual(font.glyph_width(" "), 8)
         self.assertEqual(font.measure("New Game"), (82, 13))
         self.assertEqual(font.measure(EPISODE_UNAVAILABLE_MESSAGE), (240, 52))
+        self.assertEqual(font.measure(END_GAME_MESSAGE), (204, 39))
         width, height, glyph = font.glyph_mask("A")
         self.assertEqual((width, height, len(glyph)), (10, 13, 130))
         self.assertTrue(any(glyph))
@@ -103,6 +124,8 @@ class ShellArchiveTests(unittest.TestCase):
                 {chunk_buffer_id(chunk_id) for chunk_id in SHELL_CHUNKS},
             )
             self.assertEqual(raw["title"].bufferId, 0x4263)
+            self.assertEqual(raw["credits"].bufferId, 0x4265)
+            self.assertEqual(raw["high_scores_heading"].bufferId, 0x4266)
 
             composed = {
                 entry.name: entry for entry in entries if entry.chunkId is None
@@ -138,6 +161,7 @@ class ShellArchiveTests(unittest.TestCase):
             self.assertIn("W3D_SHELL_TITLE_BUFFER: equ $4263", constants)
             self.assertIn("W3D_SHELL_MAIN_BASE_BUFFER: equ $4300", constants)
             self.assertIn("W3D_SHELL_MAIN_BASE_WIDTH: equ 320", constants)
+            self.assertIn("W3D_SHELL_HIGH_SCORES_BASE_BUFFER: equ $4304", constants)
             self.assertIn(
                 "W3D_SHELL_EPISODE_UNAVAILABLE_NOTICE_X: equ 35", constants
             )
@@ -156,19 +180,30 @@ class ShellArchiveTests(unittest.TestCase):
                 )
 
             # The original DEACTIVE and BKGDCOLOR reds collapse onto the same
-            # Agon64 entry.  Verify a real pixel in the disabled "Sound" S
-            # uses the deliberately brighter composed color after conversion.
+            # Agon64 entry. Verify a real pixel in disabled "Save Game" uses
+            # the deliberately brighter composed color after conversion.
             font = decode_wolf_font(_archive())
             width, _, mask = font.glyph_mask("S")
             glyph_offset = next(index for index, value in enumerate(mask) if value)
             glyph_x = 100 + glyph_offset % width
-            glyph_y = 68 + glyph_offset // width
+            glyph_y = 107 + glyph_offset // width
             with Image.open(out / "processed/main_base.png") as processed_main:
                 background = processed_main.getpixel((99, 68))[:3]
                 disabled_glyph = processed_main.getpixel((glyph_x, glyph_y))[:3]
                 self.assertEqual(background, (85, 0, 0))
                 self.assertEqual(disabled_glyph, COMPOSED_DEACTIVE_RGB)
                 self.assertNotEqual(disabled_glyph, background)
+
+                width, _, mask = font.glyph_mask("V")
+                glyph_offset = next(
+                    index for index, value in enumerate(mask) if value
+                )
+                glyph_x = 100 + glyph_offset % width
+                glyph_y = 146 + glyph_offset // width
+                self.assertEqual(
+                    processed_main.getpixel((glyph_x, glyph_y))[:3],
+                    (170, 170, 170),
+                )
 
     def test_override_dimensions_are_enforced(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:

@@ -27,6 +27,10 @@
 mos_getkey:      equ 00h
 mos_load:        equ 01h
 mos_sysvars:     equ 08h
+mos_fopen:       equ 0Ah
+mos_fclose:      equ 0Bh
+mos_fread:       equ 1Ah
+mos_fwrite:      equ 1Bh
 mos_setkbvector: equ 1Dh
 mos_getkbmap:    equ 1Eh
 mos_clearvdpflags: equ 40h
@@ -36,6 +40,8 @@ sysvar_scrMode:  equ 27h
 
 vdp_pflag_mode:                 equ 00010000b
 W3D_MODE_FENCE_WAIT_PASSES:     equ 10
+fa_write:                       equ 02h
+fa_create_always:               equ 08h
 
     MACRO MOSCALL function
         ld a,function
@@ -58,6 +64,7 @@ W3D_MODE_FENCE_WAIT_PASSES:     equ 10
     include "wolf3d_audio_assets.inc"
     include "wolf3d_shell_assets.inc"
     include "wolf3d_version.inc"
+    include "wolf3d_highscores.inc"
     include "wolf3d_shell.inc"
     include "wolf3d_intermission.inc"
     include "wolf3d_audio.inc"
@@ -75,11 +82,14 @@ W3D_MODE_FENCE_WAIT_PASSES:     equ 10
     .endif
     include "wolf3d_areas.inc"
     include "wolf3d_actor_sim.inc"
+    include "wolf3d_victory.inc"
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
     include "wolf3d_death.inc"
     include "wolf3d_audio_spatial.inc"
     include "wolf3d_level_loader.inc"
+    include "wolf3d_save.inc"
+    include "wolf3d_save_slots.inc"
 
 start:
     push af
@@ -189,6 +199,7 @@ w3d_gallery_setup_end:
 ; form: bit 7 is a VDP double-buffer request, not part of the MOS mode number.
 w3d_capture_original_screen_mode:
     MOSCALL mos_sysvars
+    ld (w3d_sysvars_pointer),ix
     ld a,(ix+sysvar_scrMode)
     and 07Fh
     ld (w3d_restore_mode_command+1),a
@@ -490,14 +501,28 @@ w3d_main_body:
     ret
 @shell_loaded:
     call printNewLine
+    call w3d_highscores_initialize
+    call w3d_save_slots_initialize
     call w3d_shell_run
 
 @route_shell_result:
     cp W3D_SHELL_RESULT_NEW_GAME
+    jr z,@run_gameplay
+    cp W3D_SHELL_RESULT_LOAD_GAME
     ret nz
+@run_gameplay:
     call w3d_run_gameplay_session
+    cp W3D_GAMEPLAY_RESULT_LOAD
+    jr z,@run_gameplay
+    cp W3D_GAMEPLAY_RESULT_NEW_GAME
+    jr z,@run_gameplay
     cp W3D_GAMEPLAY_RESULT_VICTORY
+    jr z,@victory
+    cp W3D_GAMEPLAY_RESULT_GAME_OVER
     ret nz
+    call w3d_shell_resume_after_game_over
+    jr @route_shell_result
+@victory:
     call w3d_shell_resume_after_victory
     jr @route_shell_result
 
@@ -556,11 +581,18 @@ w3d_run_gameplay_session:
     jp nz,w3d_gameplay_exit_before_runtime
     ld a,(w3d_requested_difficulty)
     ld b,a
+    ld a,(w3d_save_pending_load)
+    or a
+    jr z,@fresh_level
+    ld a,(w3d_save_file_buffer+W3D_SAVE_H_LEVEL)
+    jr @level_selected
+@fresh_level:
     .if W3D_INITIAL_LEVEL
     ld a,W3D_INITIAL_LEVEL
     .else
     xor a
     .endif
+@level_selected:
     call w3d_load_level_package
     push af
     call w3d_poll_application_escape
@@ -697,8 +729,20 @@ w3d_run_gameplay_session:
     call w3d_intermission_set_award_hook
     ld hl,w3d_intermission_wait_30hz
     call w3d_intermission_set_wait_hook
+    ld a,(w3d_save_pending_load)
+    or a
+    jr z,@initialize_new_game
+; Death initialization normally captures the just-created level-entry score.
+; A saved game already owns that checkpoint, so clear/install the death
+; lifecycle first and let the transactional decode restore oldscore afterward.
+    call w3d_initialize_death_state
+    call w3d_save_slot_publish_pending
+    jp c,w3d_gameplay_fatal_shutdown
+    jr @simulation_state_ready
+@initialize_new_game:
     call w3d_initialize_motion_state
     call w3d_initialize_death_state
+@simulation_state_ready:
     ld hl,w3d_reseed_level_attempt
     call w3d_death_set_reseed_hook
     call w3d_install_render_callback
@@ -799,6 +843,13 @@ mainloop:
 ; event-1 renders issue C3; event-2 already leaves both VDP surfaces mirrored.
     call w3d_death_foreground_update
 
+; Once the final life has completed its fizzle/hold, the original routes the
+; current score and one-based floor through CheckHighScore before returning to
+; the control panel.  No render owner remains in the terminal phase.
+    ld a,(w3d_death_phase)
+    cp W3D_DEATH_PHASE_GAME_OVER
+    jp z,w3d_gameplay_game_over_shutdown
+
 ; Escape exits cleanly once no asynchronous producer remains in flight. A
 ; malformed completion is different: validation deliberately retains its
 ; owner, so waiting would spin forever. In that terminal fault case disable
@@ -819,8 +870,7 @@ mainloop:
     ld a,(w3d_callback_error)
     or a
     jr nz,@fatal_shutdown
-    call w3d_shell_request_exit
-    jp w3d_gameplay_exit_shutdown
+    jp w3d_gameplay_pause
 
 @fatal_shutdown:
     jp w3d_gameplay_fatal_shutdown
@@ -869,6 +919,54 @@ mainloop:
     call w3d_submit_dirty_world_render
     jp mainloop
 
+; Gameplay Escape opens the original in-game control-panel seam after every
+; asynchronous owner has drained. The VDPlet and callback remain installed
+; while the single-buffered shell is visible; no render command is submitted,
+; and resuming rebuilds both native framebuffers from authoritative eZ80 state.
+w3d_gameplay_pause:
+    call w3d_arm_gameplay_mode_fence
+    call w3d_shell_setup
+    call w3d_wait_for_gameplay_mode
+    jp c,w3d_gameplay_fatal_shutdown
+    call w3d_shell_pause_menu
+    cp W3D_SHELL_PAUSE_RESUME
+    jr z,@resume
+    cp W3D_SHELL_PAUSE_NEW_GAME
+    jp z,w3d_gameplay_new_game_shutdown
+    cp W3D_SHELL_PAUSE_END_GAME
+    jr z,@end_game
+    cp W3D_SHELL_PAUSE_LOAD_GAME
+    jp z,w3d_gameplay_load_shutdown
+    jp w3d_gameplay_exit_shutdown
+
+@end_game:
+; CP_EndGame sets lives to zero and routes through the ordinary Died() path.
+; Preserve that visible turn/fizzle/hold rather than jumping straight to the
+; roster: the next fixed quantum promotes this lethal latch, and finish-hold
+; decrements zero to -1 before selecting the game-over high-score handoff.
+    xor a
+    ld (w3d_player_lives),a
+    ld (w3d_player_health),a
+    ld a,1
+    ld (w3d_player_dead),a
+    ld a,W3D_SLOT_NONE
+    ld (w3d_player_killer),a
+
+@resume:
+    call w3d_arm_gameplay_mode_fence
+    ld hl,w3d_display_setup
+    ld bc,w3d_display_setup_end-w3d_display_setup
+    rst.lil 18h
+    call w3d_wait_for_gameplay_mode
+    jp c,w3d_gameplay_fatal_shutdown
+    call w3d_initialize_control_clock
+    call w3d_initialize_render_state
+    call w3d_mark_full_level_dirty
+    call w3d_death_prepare_next_render
+    call w3d_submit_level_reset
+    jp c,w3d_gameplay_fatal_shutdown
+    jp mainloop
+
 w3d_gameplay_fatal_before_runtime:
     ld a,W3D_GAMEPLAY_RESULT_FATAL
     ret
@@ -883,6 +981,18 @@ w3d_gameplay_exit_shutdown:
 
 w3d_gameplay_victory_shutdown:
     ld a,W3D_GAMEPLAY_RESULT_VICTORY
+    jr w3d_gameplay_shutdown
+
+w3d_gameplay_game_over_shutdown:
+    ld a,W3D_GAMEPLAY_RESULT_GAME_OVER
+    jr w3d_gameplay_shutdown
+
+w3d_gameplay_load_shutdown:
+    ld a,W3D_GAMEPLAY_RESULT_LOAD
+    jr w3d_gameplay_shutdown
+
+w3d_gameplay_new_game_shutdown:
+    ld a,W3D_GAMEPLAY_RESULT_NEW_GAME
     jr w3d_gameplay_shutdown
 
 w3d_gameplay_fatal_shutdown:
@@ -962,7 +1072,10 @@ w3d_intermission_wait_30hz:
 
 W3D_GAMEPLAY_RESULT_EXIT:     equ 0
 W3D_GAMEPLAY_RESULT_VICTORY:  equ 1
-W3D_GAMEPLAY_RESULT_FATAL:    equ 2
+W3D_GAMEPLAY_RESULT_GAME_OVER: equ 2
+W3D_GAMEPLAY_RESULT_FATAL:    equ 3
+W3D_GAMEPLAY_RESULT_LOAD:     equ 4
+W3D_GAMEPLAY_RESULT_NEW_GAME: equ 5
 
 w3d_gameplay_result:
     db W3D_GAMEPLAY_RESULT_EXIT

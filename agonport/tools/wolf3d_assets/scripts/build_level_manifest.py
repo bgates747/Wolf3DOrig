@@ -73,6 +73,18 @@ BOSS_NAMES = {214: "HANS", 197: "GRETEL", 215: "OTTO", 179: "FAT", 196: "SCHABBS
               160: "HTLR-FAKE", 178: "HITLER"}
 GHOST_NAMES = {224: "BLINKY", 225: "CLYDE", 226: "PINKY", 227: "INKY"}
 PLAYER_WEAPON_SHAPENUMS = range(416, 436)
+EPISODE_1_VICTORY_SHAPENUMS = range(408, 416)
+
+
+def add_level_runtime_shapes(
+    level_index: int, sprite_shapenums: set[int], max_shapenum: int
+) -> None:
+    """Close map-scoped art over scripted, dynamically spawned actors."""
+    if level_index == 8:
+        sprite_shapenums.update(
+            shape for shape in EPISODE_1_VICTORY_SHAPENUMS
+            if shape <= max_shapenum
+        )
 
 
 def _static_shape(kind: staticinfo.StatKind) -> int:
@@ -176,6 +188,7 @@ def main() -> None:
         wall_ids, door_texture_ids, sprite_shapenums = scope_level(
             level.plane0, level.plane1, max_shapenum
         )
+        add_level_runtime_shapes(index, sprite_shapenums, max_shapenum)
 
         tile_entries = [wall_entries_by_id[i] for i in sorted(wall_ids) if i in wall_entries_by_id]
         tile_entries += [

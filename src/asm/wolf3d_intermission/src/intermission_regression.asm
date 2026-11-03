@@ -113,6 +113,11 @@ REASON_AWARD_COUNT:     equ 30
 REASON_SOUND_COUNT:     equ 31
 REASON_SOUND_ID:        equ 32
 REASON_STAGE:           equ 33
+REASON_VICTORY_MINUTES: equ 34
+REASON_VICTORY_SECONDS: equ 35
+REASON_VICTORY_KILL:    equ 36
+REASON_VICTORY_SECRET:  equ 37
+REASON_VICTORY_TREASURE: equ 38
 
 start:
     push af
@@ -160,6 +165,8 @@ run_tests:
     call test_bonus_derivation_and_ratio_record
     call test_finalize_awards_once
     call test_countup_state_machine
+    call test_victory_totals
+    call test_victory_time_clamp
     call write_result
     ret
 
@@ -428,6 +435,37 @@ test_countup_state_machine:
     CHECK_MEM8 test_sound_log+5,W3D_AUDIO_SOUND_NOBONUS,REASON_SOUND_ID
     CHECK_MEM8 test_sound_log+6,W3D_AUDIO_SOUND_ENDBONUS1,REASON_SOUND_ID
     CHECK_MEM8 test_sound_log+7,W3D_AUDIO_SOUND_NOBONUS,REASON_SOUND_ID
+    ret
+
+; The original Victory() sums all eight ordinary-floor LRstruct records,
+; divides each ratio by eight, and displays the aggregate elapsed time.
+test_victory_totals:
+    ld a,27
+    ld (test_case),a
+    ld hl,test_victory_ratios
+    ld de,w3d_level_ratios
+    ld bc,W3D_LEVEL_RATIO_COUNT*W3D_LEVEL_RATIO_SIZE
+    ldir
+    call w3d_victory_calculate_totals
+    CHECK_MEM8 w3d_victory_minutes,20,REASON_VICTORY_MINUTES
+    CHECK_MEM8 w3d_victory_seconds,0,REASON_VICTORY_SECONDS
+    CHECK_MEM8 w3d_victory_kill_average,65,REASON_VICTORY_KILL
+    CHECK_MEM8 w3d_victory_secret_average,35,REASON_VICTORY_SECRET
+    CHECK_MEM8 w3d_victory_treasure_average,100,REASON_VICTORY_TREASURE
+    ret
+
+; Victory() deliberately uses 99:99, rather than 99:59, as its overflow
+; sentinel whenever the episode total reaches 100 minutes.
+test_victory_time_clamp:
+    ld a,28
+    ld (test_case),a
+    ld hl,6000
+    ld (w3d_victory_total_seconds),hl
+    xor a
+    ld (w3d_victory_total_seconds+3),a
+    call w3d_victory_split_time
+    CHECK_MEM8 w3d_victory_minutes,99,REASON_VICTORY_MINUTES
+    CHECK_MEM8 w3d_victory_seconds,99,REASON_VICTORY_SECONDS
     ret
 
 test_ordinary_draw:
@@ -791,6 +829,18 @@ w3d_shell_setup:
     inc (hl)
     ret
 
+; Victory-presentation seams are present so the complete production include
+; assembles; arithmetic tests call only its non-visual calculation routines.
+w3d_shell_clear:
+    ret
+
+w3d_shell_query_exit_request:
+    xor a
+    ret
+
+printString:
+    ret
+
 ; Injected application-global exit predicate. This models a short Escape tap
 ; retained by a keycode/render callback after the live keymap is empty.
 test_application_exit_query:
@@ -1065,6 +1115,25 @@ test_static_seeds:
     STATIC_SEED 17
     STATIC_SEED W3D_ITEM_FULLHEAL
     STATIC_SEED 19
+
+    macro VICTORY_RATIO kill,secret,treasure,time
+        dw kill
+        dw secret
+        dw treasure
+        dw time
+        dw 0
+    endmacro
+
+; Totals: 1200 seconds, 520 kills, 280 secrets, 800 treasures.
+test_victory_ratios:
+    VICTORY_RATIO 100,0,100,90
+    VICTORY_RATIO 90,10,100,120
+    VICTORY_RATIO 80,20,100,120
+    VICTORY_RATIO 70,30,100,210
+    VICTORY_RATIO 60,40,100,180
+    VICTORY_RATIO 50,50,100,180
+    VICTORY_RATIO 40,60,100,150
+    VICTORY_RATIO 30,70,100,150
 
 result_filename: db "intermission_result.bin",0
 output_handle: db 0

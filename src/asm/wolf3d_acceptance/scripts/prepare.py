@@ -61,7 +61,9 @@ SCENARIOS = (
         "hans", 8, (34, 17), 90,
         invulnerable=True,
     ),
+    Scenario("victory", 8, (34, 8), 90),
     Scenario("ghosts", 9, (5, 34), 0, ghosts=True),
+    Scenario("pause-resume", 0, (29, 57), 0),
 )
 
 
@@ -334,20 +336,29 @@ def prepare_scenario(scenario: Scenario, application: Path) -> dict[str, object]
 
 def main() -> None:
     TARGET.mkdir(parents=True, exist_ok=True)
-    applications = {
-        key: build_application(*key)
-        for key in sorted({
+    # build.py names outputs only by initial level. Snapshot each diagnostic
+    # variant immediately so a later invulnerable build cannot overwrite the
+    # mortal application path retained for another scenario.
+    with tempfile.TemporaryDirectory(prefix="applications-", dir=TARGET) as name:
+        application_dir = Path(name)
+        applications: dict[tuple[int, bool], Path] = {}
+        for level, invulnerable in sorted({
             (scenario.initial_level, scenario.invulnerable)
             for scenario in SCENARIOS
-        })
-    }
-    receipts = [
-        prepare_scenario(
-            scenario,
-            applications[(scenario.initial_level, scenario.invulnerable)],
-        )
-        for scenario in SCENARIOS
-    ]
+        }):
+            source = build_application(level, invulnerable)
+            destination = application_dir / (
+                f"level_{level:02d}-{'invulnerable' if invulnerable else 'mortal'}.bin"
+            )
+            shutil.copyfile(source, destination)
+            applications[(level, invulnerable)] = destination
+        receipts = [
+            prepare_scenario(
+                scenario,
+                applications[(scenario.initial_level, scenario.invulnerable)],
+            )
+            for scenario in SCENARIOS
+        ]
     print(json.dumps({
         "target": str(TARGET),
         "scenarios": [

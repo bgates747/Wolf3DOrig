@@ -234,6 +234,16 @@ class ActorState(IntEnum):
     CLYDE_CHASE2 = 149
     PINKY_CHASE2 = 150
     INKY_CHASE2 = 151
+    BJ_RUN1 = 152
+    BJ_RUN1S = 153
+    BJ_RUN2 = 154
+    BJ_RUN3 = 155
+    BJ_RUN3S = 156
+    BJ_RUN4 = 157
+    BJ_JUMP1 = 158
+    BJ_JUMP2 = 159
+    BJ_JUMP3 = 160
+    BJ_JUMP4 = 161
 
 
 # John Carmack's original 256-byte table from ID_US_A.ASM.  ``US_InitRndT

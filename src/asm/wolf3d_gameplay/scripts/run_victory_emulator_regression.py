@@ -22,6 +22,9 @@ STAGED_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
 FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
 MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
 VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+ASSEMBLER = os.environ.get("W3D_ASSEMBLER") or shutil.which("ez80asm") or str(
+    STAGED_ROOT / "src/asm/wolf3d/tgt/.tools/ez80asm"
+)
 RESULT_SIZE = 16
 
 
@@ -44,7 +47,7 @@ def main() -> int:
         STAGED_ROOT / "src/asm/wolf3d_gameplay/src/victory_regression.asm", entry
     )
     binary = app / "v.bin"
-    run(["ez80asm", str(entry), str(binary)], cwd=STAGED_SRC)
+    run([str(ASSEMBLER), str(entry), str(binary)], cwd=STAGED_SRC)
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\ncd v\r\nload v.bin\r\nrun\r\n"
     )

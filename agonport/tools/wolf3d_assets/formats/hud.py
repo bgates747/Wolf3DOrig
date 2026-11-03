@@ -11,7 +11,7 @@ from __future__ import annotations
 HUD_CHUNK_BUFFER_BASE = 0x4000
 HUD_COMPOSITE_BUFFER_BASE = 0x4100
 
-LEVEL_END_CHUNKS = tuple(range(55, 97))
+LEVEL_END_CHUNKS = tuple(range(55, 98))
 STATUSBAR_CHUNK = 98
 HUD_WIDGET_CHUNKS = tuple(range(103, 145))
 HUD_CHUNKS = (*LEVEL_END_CHUNKS, STATUSBAR_CHUNK, *HUD_WIDGET_CHUNKS)
@@ -28,11 +28,13 @@ LEVEL_END_CHUNK_NAMES = {
     94: "level_end_exclamation",
     95: "level_end_apostrophe",
     96: "level_end_guy_2",
+    97: "level_end_bj_win",
 }
 
 HUD_COMPOSITE_BUFFER_IDS = {
     "floor_complete_base": 0x4100,
     "secret_floor_complete_base": 0x4101,
+    "victory_base": 0x4102,
 }
 
 HUD_EXPECTED_DIMENSIONS = {
@@ -42,6 +44,7 @@ HUD_EXPECTED_DIMENSIONS = {
     94: (8, 16),
     95: (8, 16),
     96: (104, 88),
+    97: (88, 88),
     STATUSBAR_CHUNK: (320, 40),
     **{chunk_id: (48, 24) for chunk_id in range(103, 107)},
     **{chunk_id: (8, 16) for chunk_id in range(107, 121)},

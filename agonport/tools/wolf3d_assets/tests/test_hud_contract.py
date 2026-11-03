@@ -30,6 +30,7 @@ PALETTE_FILE = TOOLS_ROOT / "palettes" / "Agon64.gpl"
 EXPECTED_COMPOSITES = {
     "floor_complete_base": (0x4100, 320, 200, 0, 0),
     "secret_floor_complete_base": (0x4101, 320, 200, 0, 0),
+    "victory_base": (0x4102, 320, 200, 0, 0),
 }
 
 
@@ -78,7 +79,7 @@ class HudArchiveTests(unittest.TestCase):
                 HUD_EXPECTED_DIMENSIONS[chunk_id],
             )
 
-        self.assertEqual(LEVEL_END_CHUNKS, tuple(range(55, 97)))
+        self.assertEqual(LEVEL_END_CHUNKS, tuple(range(55, 98)))
         self.assertEqual(LEVEL_END_CHUNK_NAMES[55], "level_end_guy_1")
         self.assertEqual(LEVEL_END_CHUNK_NAMES[56], "level_end_colon")
         self.assertEqual(LEVEL_END_CHUNK_NAMES[57], "level_end_digit_0")
@@ -86,6 +87,7 @@ class HudArchiveTests(unittest.TestCase):
         self.assertEqual(LEVEL_END_CHUNK_NAMES[68], "level_end_letter_a")
         self.assertEqual(LEVEL_END_CHUNK_NAMES[93], "level_end_letter_z")
         self.assertEqual(LEVEL_END_CHUNK_NAMES[96], "level_end_guy_2")
+        self.assertEqual(LEVEL_END_CHUNK_NAMES[97], "level_end_bj_win")
 
     def test_full_build_has_exact_original_ids_and_dimensions(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -144,7 +146,7 @@ class HudArchiveTests(unittest.TestCase):
             self.assertGreaterEqual(min(composite_ids), 0x4100)
             self.assertLess(max(composite_ids), 0x4200)
             self.assertNotIn(0x40F0, records)
-            self.assertNotIn(0x4061, records)  # chunk 97/BJWIN is victory-only
+            self.assertIn(0x4061, records)  # chunk 97/BJWIN
             self.assertFalse((out_dir / "processed" / "status_panel.rgba2").exists())
             constants = (out_dir / "hud_buffers.inc").read_text()
             self.assertIn("W3D_HUD_LEVEL_END_GUY_1_BUFFER equ $4037", constants)
@@ -153,6 +155,7 @@ class HudArchiveTests(unittest.TestCase):
             self.assertIn(
                 "W3D_HUD_SECRET_FLOOR_COMPLETE_BASE_BUFFER equ $4101", constants
             )
+            self.assertIn("W3D_HUD_VICTORY_BASE_BUFFER equ $4102", constants)
             self.assertIn("W3D_HUD_FLOOR_COMPLETE_BASE_WIDTH equ 320", constants)
             self.assertIn("W3D_HUD_FLOOR_COMPLETE_BASE_X equ 0", constants)
             self.assertNotIn("W3D_HUD_STATUS_PANEL", constants)

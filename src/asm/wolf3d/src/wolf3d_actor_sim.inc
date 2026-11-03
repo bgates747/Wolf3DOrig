@@ -280,7 +280,17 @@ w3d_actor_run_current:
     cp W3D_STATE_THINK_DOG_CHASE
     jr z,@dog_chase
     cp W3D_STATE_THINK_GHOST
+    jr z,@ghost
+    cp W3D_STATE_THINK_BJ_RUN
+    jr z,@bj_run
+    cp W3D_STATE_THINK_BJ_JUMP
     jp nz,w3d_actor_fault_current
+    call w3d_victory_think_bj_jump
+    jr @thought
+@bj_run:
+    call w3d_victory_think_bj_run
+    jr @thought
+@ghost:
     call w3d_actor_think_ghost
     cp W3D_CHASE_RESULT_CORRUPT
     jp z,w3d_actor_fault_current
@@ -393,6 +403,10 @@ w3d_actor_dispatch_action:
     jp z,w3d_actor_action_bite
     cp W3D_STATE_ACTION_DEATH_SCREAM
     jp z,w3d_actor_action_death_scream
+    cp W3D_STATE_ACTION_BJ_YELL
+    jp z,w3d_victory_bj_yell
+    cp W3D_STATE_ACTION_BJ_DONE
+    jp z,w3d_victory_bj_done
     scf
     ret
 

@@ -27,15 +27,15 @@ class AcceptancePackageTests(unittest.TestCase):
     def test_catalog_covers_both_transitions_and_special_actor_scenes(self) -> None:
         self.assertEqual(
             [scenario.name for scenario in prepare.SCENARIOS],
-            ["pushwall", "ordinary-transition", "secret-transition", "hans", "ghosts"],
+            ["pushwall", "ordinary-transition", "secret-transition", "hans", "victory", "ghosts", "pause-resume"],
         )
         self.assertEqual(
             [scenario.initial_level for scenario in prepare.SCENARIOS],
-            [0, 0, 9, 8, 9],
+            [0, 0, 9, 8, 8, 9, 0],
         )
         self.assertEqual(
             [scenario.invulnerable for scenario in prepare.SCENARIOS],
-            [False, False, False, True, False],
+            [False, False, False, True, False, False, False],
         )
         self.assertFalse(prepare.SCENARIOS[3].one_hit_hans)
 
@@ -106,8 +106,20 @@ class AcceptancePackageTests(unittest.TestCase):
                     hitpoints,
                 )
 
-    def test_ghost_scene_has_four_live_original_ghost_states(self) -> None:
+    def test_victory_pose_faces_real_e1l9_exit_tiles(self) -> None:
         scenario = prepare.SCENARIOS[4]
+        package = parse_package(prepare.patch_state(self.state(8), scenario))
+        x, y, angle = struct.unpack("<iiH", package.player_pose)
+        self.assertEqual((x >> 16, y >> 16, angle), (34, 8, 90))
+        paths = package.sections["paths"]
+        self.assertEqual(
+            [(column, 7) for column in (33, 34, 35)],
+            [(index % 64, index // 64)
+             for index, value in enumerate(paths) if value == 0xFE],
+        )
+
+    def test_ghost_scene_has_four_live_original_ghost_states(self) -> None:
+        scenario = prepare.SCENARIOS[5]
         package = parse_package(prepare.patch_state(self.state(9), scenario))
         actors = package.sections["actors"]
         observed = []

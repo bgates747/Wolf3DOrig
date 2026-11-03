@@ -28,12 +28,19 @@ The generated payloads appear under `src/asm/wolf3d_acceptance/tgt/`:
   animation can be observed indefinitely. Hans has no original pain
   animation; his alternating firing frames are not hit feedback. Production
   builds remain mortal.
+- `victory`: real E1L9, one step south of the center EXITTILE and facing
+  north. Walk forward once to trigger the original in-world player spin and
+  BJ run/jump sequence, then review the total-time/average-ratio victory
+  screen and two-page Episode 1 ending text.
 - `ghosts`: real E1L10 geometry with four copied actor slots replaced by the
   four original ghost classes in one open room around the player. The
   shareware `VSWAP.WL1` does not contain the paid game's ghost shapes
   288--295, so this disposable fixture adds four brightly colored synthetic
   two-frame diagnostic ghosts to its copied `sprites.agnb`. They validate
   movement, contact damage, and state transitions, not original artwork.
+- `pause-resume`: real E1L1 at the canonical starting pose. Press Escape,
+  verify the in-game End Game / Back to Game / Quit panel, choose Back to Game,
+  and confirm that the same level state resumes with a clean complete frame.
 
 The application still shows the ordinary title/menu/difficulty flow. Selecting
 any difficulty enters the scenario's chosen floor; every difficulty package is
@@ -58,7 +65,9 @@ cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/pushwall && ./flexe
 cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/ordinary-transition && ./flexe-agon-emulator
 cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/secret-transition && ./flexe-agon-emulator
 cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/hans && ./flexe-agon-emulator
+cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/victory && ./flexe-agon-emulator
 cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/ghosts && ./flexe-agon-emulator
+cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/pause-resume && ./flexe-agon-emulator
 ```
 
 Close each emulator before launching the next. These commands are launch

@@ -30,6 +30,8 @@ SHELL_CHUNK_NAMES = {
     32: "difficulty_easy",
     33: "difficulty_normal",
     34: "difficulty_hard",
+    39: "load_game_heading",
+    40: "save_game_heading",
     42: "episode_1",
     43: "episode_2",
     44: "episode_3",
@@ -37,6 +39,8 @@ SHELL_CHUNK_NAMES = {
     46: "episode_5",
     47: "episode_6",
     99: "title",
+    101: "credits",
+    102: "high_scores_heading",
 }
 
 SHELL_EXPECTED_DIMENSIONS = {
@@ -45,8 +49,12 @@ SHELL_EXPECTED_DIMENSIONS = {
     24: (24, 16),
     30: (104, 16),
     **{chunk_id: (24, 32) for chunk_id in range(31, 35)},
+    39: (152, 48),
+    40: (216, 48),
     **{chunk_id: (48, 24) for chunk_id in range(42, 48)},
     99: (320, 200),
+    101: (320, 200),
+    102: (224, 56),
 }
 
 SHELL_CHUNKS = tuple(SHELL_CHUNK_NAMES)
@@ -58,13 +66,32 @@ SHELL_COMPOSITE_BUFFER_IDS = {
     "episode_base": 0x4301,
     "difficulty_base": 0x4302,
     "episode_unavailable_notice": 0x4303,
+    "high_scores_base": 0x4304,
+    "main_ingame_tail": 0x4305,
+    "end_game_notice": 0x4306,
+    "main_save_game_active": 0x4307,
     "main_new_game_selected": 0x4310,
     "main_quit_selected": 0x4311,
+    "main_view_scores_selected": 0x4312,
+    "main_end_game_selected": 0x4313,
+    "main_back_to_game_selected": 0x4314,
+    "main_load_game_selected": 0x4315,
+    "main_save_game_selected": 0x4316,
+    "main_sound_selected": 0x4317,
+    "main_control_selected": 0x4318,
+    "main_change_view_selected": 0x4319,
+    "main_read_this_selected": 0x431A,
+    "main_back_to_demo_selected": 0x431B,
     **{f"episode_{index}_selected": 0x431F + index for index in range(1, 7)},
     "difficulty_baby_selected": 0x4330,
     "difficulty_easy_selected": 0x4331,
     "difficulty_normal_selected": 0x4332,
     "difficulty_hard_selected": 0x4333,
+    "sound_on_page": 0x4340,
+    "sound_off_page": 0x4341,
+    "control_page": 0x4342,
+    "change_view_page": 0x4343,
+    "read_this_page": 0x4344,
 }
 
 # Original WL_MENU.H palette indices.
@@ -121,6 +148,44 @@ EPISODE_UNAVAILABLE_MESSAGE = (
     "from the Options menu to\n"
     "find out how to order this\n"
     "episode from Apogee."
+)
+
+END_GAME_MESSAGE = (
+    "Are you sure you want\n"
+    "to end the game you\n"
+    "are playing? (Y or N):"
+)
+
+CONTROL_PAGE_LINES = (
+    "Move forward/back: W / S",
+    "Strafe left/right: A / D",
+    "Turn: Left / Right arrows",
+    "Use or open: Up arrow",
+    "Fire: Space",
+    "Weapons: 1  2  3  4",
+    "Control panel: Escape",
+    "Mouse/joystick: unavailable",
+)
+
+CHANGE_VIEW_PAGE_LINES = (
+    "View size: 256 x 160",
+    "Dynamic view sizing is not",
+    "available in this port.",
+    "",
+    "The original aspect ratio is",
+    "preserved in the fixed view.",
+)
+
+READ_THIS_PAGE_LINES = (
+    "W/S move; A/D strafe.",
+    "Left/Right arrows turn.",
+    "Up arrow opens and uses.",
+    "Space fires your weapon.",
+    "Keys 1-4 select weapons.",
+    "Escape opens this panel.",
+    "",
+    "Find the exit elevators.",
+    "Search for secrets!",
 )
 
 

@@ -8,11 +8,12 @@ a JSONL audit manifest, a generated eZ80 constants include, and ``hud.agnb``.
 Stable VDP contract:
 
 * each original picture chunk uses buffer ``0x4000 + chunkId``;
-* chunks 55..96 provide the original level-end portrait and picture font;
+* chunks 55..97 provide the original level-end portrait, picture font, and
+  Episode 1 victory portrait;
 * chunk 98 is the original 320x40 ``STATUSBARPIC``;
 * chunks 103..144 provide weapons, key icons, digits, and face frames;
-* buffers 0x4100..0x4101 contain durable original-layout composites for an
-  ordinary floor and the secret floor respectively.
+* buffers 0x4100..0x4102 contain durable original-layout composites for an
+  ordinary floor, the secret floor, and Episode 1 victory respectively.
 
 The renderer draws chunk 98 directly; no synthetic status-panel extension is
 generated or packed.  The level-end composites reproduce ``WL_INTER.C`` from
@@ -167,6 +168,22 @@ def _compose_secret_floor_complete(
     return image
 
 
+def _compose_victory(pictures: dict[str, Image.Image]) -> Image.Image:
+    """Compose the invariant portion of ``WL_INTER.C::Victory``."""
+
+    image = Image.new(
+        "RGB", SCREEN_SIZE, WOLF3D_PALETTE_RGB888[LEVEL_END_BACKGROUND]
+    )
+    image.paste(pictures["level_end_bj_win"], (8, 4))
+    _draw_level_end_text(image, pictures, (18 * 8, 2 * 8), "you win!")
+    _draw_level_end_text(image, pictures, (14 * 8, 6 * 8), "total time")
+    _draw_level_end_text(image, pictures, (12 * 8, 12 * 8), "averages")
+    _draw_level_end_text(image, pictures, (14 * 8, 14 * 8), "kill")
+    _draw_level_end_text(image, pictures, (10 * 8, 16 * 8), "secret")
+    _draw_level_end_text(image, pictures, (6 * 8, 18 * 8), "treasure")
+    return image
+
+
 def _compose_images(
     pictures: dict[str, Image.Image],
 ) -> dict[str, ComposedImage]:
@@ -177,6 +194,7 @@ def _compose_images(
         "secret_floor_complete_base": ComposedImage(
             _compose_secret_floor_complete(pictures), 0, 0
         ),
+        "victory_base": ComposedImage(_compose_victory(pictures), 0, 0),
     }
     if set(images) != set(HUD_COMPOSITE_BUFFER_IDS):
         raise AssertionError("Composed HUD image set disagrees with buffer contract")
@@ -397,7 +415,7 @@ def main() -> None:
         f"{composites} composed images, {total_pixels} RGBA2222 bytes"
     )
     print(
-        f"Original chunks: 55..96, {STATUSBAR_CHUNK}, 103..144 at "
+        f"Original chunks: 55..97, {STATUSBAR_CHUNK}, 103..144 at "
         f"${HUD_CHUNK_BUFFER_BASE:04X}+chunk; composites at "
         f"${HUD_COMPOSITE_BUFFER_BASE:04X}.."
     )

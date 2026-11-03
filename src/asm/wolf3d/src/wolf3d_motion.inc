@@ -226,6 +226,7 @@ w3d_seed_level_world_state:
     ld (w3d_simulation_accumulator),hl
     call w3d_initialize_actor_state
     call w3d_initialize_actor_simulation
+    call w3d_initialize_victory_state
     call w3d_initialize_area_state
     call w3d_reset_keys
     ret
@@ -436,6 +437,11 @@ w3d_simulate_player_step:
     ld a,(w3d_player_dead)
     or a
     ret nz
+; VictoryTile replaces ordinary input/world simulation with the scripted
+; player spin and BJ actor until T_BJDone publishes ex_victorious.
+    ld a,(w3d_victory_active)
+    or a
+    jp nz,w3d_simulate_victory_step
 ; A completion can be latched partway through a catch-up batch. Freeze every
 ; later fixed quantum until the foreground drains the outstanding render and
 ; routes the level or victory; this also protects ordinary elevator exits.
@@ -484,9 +490,9 @@ w3d_simulate_player_step:
 ; EXITTILE victory takes ownership immediately after the successful movement
 ; that reached it. Do not permit a second-axis move, pickups, weapon actions,
 ; or actor simulation in the same fixed quantum.
-    ld a,(w3d_level_completion)
-    cp W3D_LEVEL_COMPLETION_VICTORY
-    ret z
+    ld a,(w3d_victory_active)
+    or a
+    ret nz
 
 @strafe_translation:
     ld a,(w3d_controls)
@@ -502,9 +508,9 @@ w3d_simulate_player_step:
     ld de,270
     call w3d_move_at_heading_offset
 @strafe_translation_done:
-    ld a,(w3d_level_completion)
-    cp W3D_LEVEL_COMPLETION_VICTORY
-    ret z
+    ld a,(w3d_victory_active)
+    or a
+    ret nz
 @pickups:
     call w3d_refresh_player_area
     call w3d_collect_pending_pickups
@@ -751,11 +757,7 @@ w3d_check_player_victory_tile:
     ld a,(hl)
     cp W3D_PATH_VICTORY
     ret nz
-    ld a,W3D_LEVEL_COMPLETION_VICTORY
-    ld (w3d_level_completion),a
-; Match the original victoryflag presentation contract: first-person weapon
-; art disappears as soon as victory begins, without changing inventory.
-    jp w3d_hide_player_weapon
+    jp w3d_begin_victory_sequence
 
 ; IX points to candidate int32 X/Y. Derive the four corner tiles of the
 ; square W3D_PLAYER_COLLISION_RADIUS AABB and require every corner to be clear. A
