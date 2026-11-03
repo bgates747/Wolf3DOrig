@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import re
 import struct
 import sys
 import tempfile
@@ -165,6 +166,33 @@ class AudioAssetTests(unittest.TestCase):
         self.assertEqual(
             self.manifest["totals"]["requiredUnavailableLogicalSounds"], 0
         )
+
+    def test_production_assembly_references_exactly_the_declared_producers(self) -> None:
+        symbol_to_id = {
+            match.group(1): int(match.group(2))
+            for match in re.finditer(
+                r"^(W3D_AUDIO_SOUND_[A-Z0-9_]+):\s+equ\s+(\d+)",
+                self.include_text,
+                re.MULTILINE,
+            )
+        }
+        references: set[str] = set()
+        source_root = PROJECT_ROOT / "src/asm/wolf3d/src"
+        for path in source_root.glob("*.inc"):
+            if path.name == "wolf3d_audio_assets.inc":
+                continue
+            for line in path.read_text().splitlines():
+                code = line.split(";", 1)[0]
+                references.update(
+                    re.findall(r"\bW3D_AUDIO_SOUND_[A-Z0-9_]+\b", code)
+                )
+
+        self.assertTrue(references)
+        self.assertEqual(references - set(symbol_to_id), set())
+        referenced_names = {
+            self.sounds[symbol_to_id[symbol]].name for symbol in references
+        }
+        self.assertEqual(referenced_names, set(CURRENT_PRODUCERS))
 
     def test_native_vswap_pcm_is_preserved_byte_for_byte_at_7000_hz(self) -> None:
         source_sounds = _independent_vswap_sounds(DEFAULT_VSWAP.read_bytes())
