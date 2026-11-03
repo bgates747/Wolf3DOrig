@@ -2,7 +2,7 @@
 
 This directory's audio path turns the original shareware sound inventory into
 one deterministic AGNB 0.2 container. It preserves original digitized bytes
-and sample rates without upsampling or normalization. Six effects omitted
+and sample rates without upsampling or normalization. Eleven effects omitted
 from the shareware digitized set are rendered offline from their original
 PC-speaker pitch streams; no runtime synthesis is required.
 
@@ -71,8 +71,8 @@ port values.
 
 ## Original PC-speaker effects
 
-Production requests ten original effects which have no VSWAP digitized
-mapping: `MOVEGUN1`, `MOVEGUN2`, `SHOOT`, `ESCPRESSED`, `DONOTHING`,
+Production requests eleven original effects which have no VSWAP digitized
+mapping: `HITWALL`, `MOVEGUN1`, `MOVEGUN2`, `SHOOT`, `ESCPRESSED`, `DONOTHING`,
 `LEVELDONE`, `ENDBONUS1`, `ENDBONUS2`, `NOBONUS`, and `PERCENT100`.
 Their authentic `PCSound` streams are stored in the first 69 AUDIOT chunks.
 Each byte is a PIT pitch (or zero for silence) held for one 140 Hz service

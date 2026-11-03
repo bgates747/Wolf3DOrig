@@ -15,10 +15,11 @@ SEED = 0x434C4950
 NO_PATCH = 0xFF
 PATCH_MAP = 0
 PATCH_STATIC = 1
-# Keep the established 40-byte ABI. Byte 36, formerly padding, now carries
-# the patched door orientation (1 vertical, 0 horizontal); bytes 37..39 remain
-# padding. All earlier field offsets are unchanged.
-RECORD = struct.Struct("<BBBBBHBii3s3siiBBIB3s")
+# Keep the established 40-byte ABI. Byte 36 carries the patched door
+# orientation; bytes 37..39 now pin HITWALLSND emission, the initial playback
+# guard, and its expected post-step value. All earlier offsets are unchanged.
+RECORD = struct.Struct("<BBBBBHBii3s3siiBBIBBBB")
+HITWALL_HOLD_TICKS = 2
 
 
 def signed24(value: int) -> bytes:
@@ -39,6 +40,7 @@ def build_vectors(random_cases: int, *, include_zero_delta: bool) -> list[bytes]
         door_action: int = go.DOOR_CLOSED,
         door_position: int = 0,
         door_vertical: bool = True,
+        hitwall_cooldown: int = 0,
     ) -> None:
         tilemap = go.empty_bordered_map()
         static_bits = go.empty_static_blocking_bits()
@@ -61,9 +63,18 @@ def build_vectors(random_cases: int, *, include_zero_delta: bool) -> list[bytes]
                     action=door_action,
                     position=door_position,
                 )
-        result, _ = go.clip_move(tilemap, doors, pose, dx, dy, static_bits)
+        result, path = go.clip_move(tilemap, doors, pose, dx, dy, static_bits)
         expected_a = int((result.x, result.y) != (pose.x, pose.y))
         expected_dirty = expected_a
+        cooldown_after_tick = max(hitwall_cooldown - 1, 0)
+        expected_hitwall = int(
+            (dx != 0 or dy != 0)
+            and path != "xy"
+            and cooldown_after_tick == 0
+        )
+        expected_cooldown = (
+            HITWALL_HOLD_TICKS if expected_hitwall else cooldown_after_tick
+        )
         records.append(
             RECORD.pack(
                 patch_kind,
@@ -84,7 +95,9 @@ def build_vectors(random_cases: int, *, include_zero_delta: bool) -> list[bytes]
                                              static_blocking_bits=static_bits)),
                 len(records),
                 int(door_vertical),
-                b"\0" * 3,
+                expected_hitwall,
+                hitwall_cooldown,
+                expected_cooldown,
             )
         )
 
@@ -92,6 +105,17 @@ def build_vectors(random_cases: int, *, include_zero_delta: bool) -> list[bytes]
     wall = (11, 10, 1)
     add(go.Pose(go.fixed(10, 0xB7FF), go.fixed(10)), 1, 0, wall)
     add(go.Pose(go.fixed(10, 0xB800), go.fixed(10)), -1, 0, wall)
+    # The generated two-tick hold prevents a held collision from restarting
+    # the 57 ms source sample every fixed quantum, then permits it again when
+    # the guard reaches zero.
+    add(
+        go.Pose(go.fixed(10, 0xB7FF), go.fixed(10)),
+        1, 0, wall, hitwall_cooldown=2,
+    )
+    add(
+        go.Pose(go.fixed(10, 0xB7FF), go.fixed(10)),
+        1, 0, wall, hitwall_cooldown=1,
+    )
     # The bit plane remains the broad phase, but a dense slot lookup resolves
     # centered blocking statics for the exact 0x4800 narrow-phase boundary.
     add(go.Pose(go.fixed(11, 0x37FF), go.fixed(10)), 1, 0, wall, PATCH_STATIC)

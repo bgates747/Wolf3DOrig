@@ -151,6 +151,12 @@ shell assets; gameplay teardown stops channels but preserves resident samples,
 while final application shutdown clears them. The completed shell proof,
 including SFX-off then SFX-on behavior, passes 526/526 checks on Oryx
 generation 168; generation 167 passes 306/306 audio/lifecycle checks.
+`WL_AGENT.C::ClipMove` now restores the missing `HITWALLSND` request whenever
+the complete X/Y probe collides, including a successful X-only or Y-only
+slide. Its authentic 57 ms PC-speaker stream uses a generated two-quantum
+self-retrigger guard while Agon's independent sound channels remain available
+to unrelated events. Oryx generation 169 passes all 10,030 production
+ClipMove/sound/cooldown records; both application backends rebuild.
 
 # Phase B — Agon identity and legal presentation
 

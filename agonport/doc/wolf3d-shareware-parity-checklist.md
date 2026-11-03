@@ -25,7 +25,7 @@ recorded in the dated development logs:
   elevators, door motion/auto-close, blocking decorations, and pickups;
 - authoritative health, ammo, keys, weapons, score, extra lives, treasure,
   HUD (including the original random three-frame face animation), attempt
-  death/respawn, game-over placeholder, and red fizzle;
+  death/respawn, source-correct game-over high-score handoff, and red fizzle;
 - guards, officers, mutants, SS, dogs, Episode 1 ghosts, Hans Grosse, their
   original state timing, awareness, chase, attacks, damage, drops, death,
   sounds, and relevant area/door interaction;
@@ -312,6 +312,17 @@ SFX-off then SFX-on edge, passes 526/526 checks on Oryx generation 168;
 generation 167 passes 306/306 audio/lifecycle checks.
 The shell receipt was upgraded from an overflowing one-byte `W3S1` counter to
 the 16-bit `W3S2` schema during that proof.
+
+Movement-audio correction, 2026-11-03: `WL_AGENT.C::ClipMove` requests
+`HITWALLSND` after the complete X/Y probe fails, before attempting X-only and
+Y-only slides. Production had the correct geometry but no sound producer.
+Logical sound 0 is now the authentic 57 ms AUDIOT PC-speaker stream at 7 kHz.
+A generated two-quantum guard reproduces its no-retrigger intent without
+letting an unrelated effect suppress it on Agon's multichannel backend. The
+455,388-byte AGNB container now holds 50 records and 453,101 resident PCM
+bytes. Oryx generation 169 passes 10,030 production ClipMove records,
+including the request edge and cooldown expiry, and both application backends
+assemble.
 
 Intentional discrepancy ledger, 2026-11-03: the hardware-accepted player
 wall/slab radius and actor/static physical clearance remain `0x4800`, versus

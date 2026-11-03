@@ -40,10 +40,12 @@ The random eZ80 vectors honor the gameplay routine's valid-start precondition:
 the player's initial AABB is clear, centers stay away from the solid perimeter,
 and an injected obstacle never overlaps that starting AABB. Destination AABBs
 are unrestricted so wall rejection and all three ClipMove attempts are still
-exercised. The validated staged result is 10,028/10,028 records. Directed
+exercised. The validated staged result is 10,030/10,030 records. Directed
 cases pin door-well entry, inclusive center-plane contact from both sides,
 vertical/horizontal orientation, the last gap and first panel fractions, and
-the action-independent `FFFF` opening. Four directed cases and randomized
+the action-independent `FFFF` opening. They also pin the original
+`HITWALLSND` edge on every rejected full X/Y probe—including successful axis
+slides—and the generated two-tick self-retrigger guard. Four directed cases and randomized
 records also exercise the separate blocking-static bit plane.
 
 Pickup effects are also executed directly against production assembly in a
@@ -81,6 +83,8 @@ Important model choices match the current port contract:
 1. Player collision uses the hardware-accepted `0x4800` square radius. This is
    an intentional Agon feel adjustment from the original `0x5800` radius.
 2. `ClipMove` tries combined X/Y, X only, Y only, then restores the base pose.
+   A rejected combined probe requests the original wall-hit effect before the
+   slide probes; only that effect's own duration suppresses a retrigger.
 3. A valid door tile is a traversable well containing the VDP's zero-thickness
    center-plane slab. Fractions `0..position` are passable and
    `position+1..FFFF` are panel; plane contact blocks, `FFFF` has no panel,

@@ -325,39 +325,51 @@ class ClipVectorGeneratorTests(unittest.TestCase):
         generator = load_clip_generator()
         records = generator.build_vectors(0, include_zero_delta=False)
         self.assertEqual(generator.RECORD.size, 40)
-        self.assertEqual(len(records), 27)
+        self.assertEqual(len(records), 29)
         for sequence, record in enumerate(records):
             self.assertEqual(len(record), 40)
             self.assertEqual(int.from_bytes(record[32:36], "little"), sequence)
-            self.assertEqual(record[37:40], b"\0\0\0")
+            expected_hitwall, initial_cooldown, expected_cooldown = record[37:40]
+            self.assertIn(expected_hitwall, (0, 1))
+            self.assertEqual(
+                expected_cooldown,
+                generator.HITWALL_HOLD_TICKS
+                if expected_hitwall
+                else max(initial_cooldown - 1, 0),
+            )
 
-        # Directed door records begin after eleven wall/static records. They
+        self.assertEqual(records[0][37:40], bytes((1, 0, 2)))
+        self.assertEqual(records[2][37:40], bytes((0, 2, 1)))
+        self.assertEqual(records[3][37:40], bytes((1, 1, 2)))
+
+        # Directed door records begin after thirteen wall/static/cooldown
+        # records. They
         # retain the patched cell and carry orientation in former pad byte 36.
-        door_records = records[11:]
+        door_records = records[13:]
         self.assertTrue(all(record[1:4] == bytes((11, 10, 0x80))
                             for record in door_records))
-        self.assertTrue(all(record[36] == 1 for record in records[11:22]))
-        self.assertTrue(all(record[36] == 0 for record in records[22:27]))
+        self.assertTrue(all(record[36] == 1 for record in records[13:24]))
+        self.assertTrue(all(record[36] == 0 for record in records[24:29]))
 
         def expected(index: int) -> tuple[int, int]:
             unpacked = generator.RECORD.unpack(records[index])
             return unpacked[6], unpacked[14]  # moved/A, starting-position clear
 
-        self.assertEqual(expected(11), (0, 1))  # vertical left contact blocks
-        self.assertEqual(expected(12), (1, 0))  # can escape existing contact
-        self.assertEqual(expected(13), (0, 1))  # vertical right contact blocks
-        self.assertEqual(expected(15), (1, 1))  # left well entry passes
-        self.assertEqual(expected(16), (1, 1))  # right well entry passes
-        self.assertEqual(expected(17), (0, 0))  # closed center is occupied
-        self.assertEqual(expected(18), (1, 1))  # q=C000 gap endpoint passes
-        self.assertEqual(expected(19), (0, 1))  # q=C001 panel start blocks
-        self.assertEqual(expected(20), (0, 1))  # p=FFFE leaves q=FFFF panel
-        self.assertEqual(expected(21), (1, 1))  # p=FFFF is entirely clear
-        self.assertEqual(expected(22), (0, 1))  # horizontal north contact
-        self.assertEqual(expected(23), (0, 1))  # horizontal south contact
-        self.assertEqual(expected(24), (1, 1))  # horizontal gap endpoint
-        self.assertEqual(expected(25), (0, 1))  # horizontal panel start
-        self.assertEqual(expected(26), (1, 1))  # horizontal well entry
+        self.assertEqual(expected(13), (0, 1))  # vertical left contact blocks
+        self.assertEqual(expected(14), (1, 0))  # can escape existing contact
+        self.assertEqual(expected(15), (0, 1))  # vertical right contact blocks
+        self.assertEqual(expected(17), (1, 1))  # left well entry passes
+        self.assertEqual(expected(18), (1, 1))  # right well entry passes
+        self.assertEqual(expected(19), (0, 0))  # closed center is occupied
+        self.assertEqual(expected(20), (1, 1))  # q=C000 gap endpoint passes
+        self.assertEqual(expected(21), (0, 1))  # q=C001 panel start blocks
+        self.assertEqual(expected(22), (0, 1))  # p=FFFE leaves q=FFFF panel
+        self.assertEqual(expected(23), (1, 1))  # p=FFFF is entirely clear
+        self.assertEqual(expected(24), (0, 1))  # horizontal north contact
+        self.assertEqual(expected(25), (0, 1))  # horizontal south contact
+        self.assertEqual(expected(26), (1, 1))  # horizontal gap endpoint
+        self.assertEqual(expected(27), (0, 1))  # horizontal panel start
+        self.assertEqual(expected(28), (1, 1))  # horizontal well entry
 
 
 class StaticCollisionTests(unittest.TestCase):

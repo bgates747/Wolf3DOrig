@@ -163,8 +163,8 @@ class AudioAssetTests(unittest.TestCase):
         self.assertEqual(missing, [])
         self.assertEqual(self.manifest["totals"]["nativeRecords"], 20)
         self.assertEqual(self.manifest["totals"]["fallbackRecords"], 19)
-        self.assertEqual(self.manifest["totals"]["pcSpeakerRecords"], 10)
-        self.assertEqual(self.manifest["totals"]["containerRecords"], 49)
+        self.assertEqual(self.manifest["totals"]["pcSpeakerRecords"], 11)
+        self.assertEqual(self.manifest["totals"]["containerRecords"], 50)
         self.assertEqual(
             self.manifest["totals"]["requiredUnavailableLogicalSounds"], 0
         )
@@ -243,6 +243,7 @@ class AudioAssetTests(unittest.TestCase):
         self.assertEqual(min(command_ids), 0x6000)
         self.assertEqual(max(command_ids), 0x60CE)
         self.assertIn("W3D_AUDIO_SOUND_ATKKNIFE: equ 23", self.include_text)
+        self.assertIn("W3D_AUDIO_HITWALL_HOLD_TICKS:     equ 2", self.include_text)
         self.assertNotIn("W3D_SOUND_ATKKNIFE", self.include_text)
 
     def test_manifest_priorities_are_exact_original_adlib_priorities(self) -> None:

@@ -458,15 +458,20 @@ def build_include(
     available = [sound for sound in sounds if sound.available]
     required = [sound for sound in sounds if sound.required]
     get_gatling = next(sound for sound in sounds if sound.name == "GETGATLINGSND")
+    hit_wall = next(sound for sound in sounds if sound.name == "HITWALLSND")
+
+    def hold_ticks(sound: ResolvedSound) -> int:
+        if not sound.available:
+            return 0
+        assert sound.pcm is not None
+        duration_ms = _duration_ms(len(sound.pcm), sound.sample_rate)
+        return (duration_ms * 30 + 999) // 1000
+
     if get_gatling.available:
-        assert get_gatling.pcm is not None
-        get_gatling_duration_ms = _duration_ms(
-            len(get_gatling.pcm), get_gatling.sample_rate
-        )
         # The game simulation advances at a fixed 30 Hz. DOS held the special
         # face while SD_SoundPlaying reported GETGATLINGSND, so round the
         # selected resident sample upward to the first complete simulation tick.
-        get_gatling_hold_ticks = (get_gatling_duration_ms * 30 + 999) // 1000
+        get_gatling_hold_ticks = hold_ticks(get_gatling)
     else:
         # Asset-audit builds deliberately disable all fallbacks. With no sound
         # to play, the source's SD_SoundPlaying gate would be false immediately.
@@ -512,6 +517,7 @@ def build_include(
         f"W3D_AUDIO_GAIN_LATERAL_BIAS:      equ {GAIN_LATERAL_BIAS}",
         f"W3D_AUDIO_MONO_GAIN_BYTES:        equ {len(mono_gain_table)}",
         f"W3D_AUDIO_GETGATLING_HOLD_TICKS:  equ {get_gatling_hold_ticks}",
+        f"W3D_AUDIO_HITWALL_HOLD_TICKS:     equ {hold_ticks(hit_wall)}",
         "",
         "W3D_AUDIO_ENTRY_SAMPLE_ID:        equ 0",
         "W3D_AUDIO_ENTRY_SAMPLE_RATE:      equ 2",

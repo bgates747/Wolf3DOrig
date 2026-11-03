@@ -45,6 +45,16 @@ def main() -> int:
     parser.add_argument("--random-cases", type=int, default=10_000)
     parser.add_argument("--timeout", type=float, default=90.0)
     parser.add_argument("--include-zero-delta", action="store_true")
+    parser.add_argument(
+        "--prebuilt",
+        type=Path,
+        help="use an already assembled target binary (for cross-host runs)",
+    )
+    parser.add_argument(
+        "--vectors",
+        type=Path,
+        help="use an already generated clip-vector file",
+    )
     args = parser.parse_args()
 
     # ez80asm retains a short DOS-era output-filename limit.
@@ -56,31 +66,43 @@ def main() -> int:
     app.mkdir(parents=True)
 
     vectors = app / "clip_vectors.bin"
-    command = [
-        str(PYTHON),
-        str(HERE / "generate_clip_vectors.py"),
-        "--random-cases",
-        str(args.random_cases),
-        "--output",
-        str(vectors),
-    ]
-    if args.include_zero_delta:
-        command.append("--include-zero-delta")
-    run(command)
+    if args.vectors:
+        shutil.copyfile(args.vectors, vectors)
+        print(f"+ vectors {args.vectors} -> {vectors}")
+    else:
+        generator = (
+            STAGED_ROOT
+            / "src/asm/wolf3d_gameplay/scripts/generate_clip_vectors.py"
+        )
+        command = [
+            str(PYTHON),
+            str(generator),
+            "--random-cases",
+            str(args.random_cases),
+            "--output",
+            str(vectors),
+        ]
+        if args.include_zero_delta:
+            command.append("--include-zero-delta")
+        run(command)
 
     # ez80asm also applies its legacy limit to the source pathname. Stage the
     # durable entry file under a short name; its includes still resolve from
     # STAGED_SRC, which remains the assembler working directory.
-    entry = work / "g.asm"
-    shutil.copyfile(
-        STAGED_ROOT / "src/asm/wolf3d_gameplay/src/gameplay_regression.asm",
-        entry,
-    )
     binary = app / "g.bin"
-    run(
-        ["ez80asm", str(entry), str(binary)],
-        cwd=STAGED_SRC,
-    )
+    if args.prebuilt:
+        shutil.copyfile(args.prebuilt, binary)
+        print(f"+ prebuilt {args.prebuilt} -> {binary}")
+    else:
+        entry = work / "g.asm"
+        shutil.copyfile(
+            STAGED_ROOT / "src/asm/wolf3d_gameplay/src/gameplay_regression.asm",
+            entry,
+        )
+        run(
+            ["ez80asm", str(entry), str(binary)],
+            cwd=STAGED_SRC,
+        )
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\n"
         b"cd g\r\n"
@@ -150,7 +172,13 @@ def main() -> int:
     actual_x = int.from_bytes(payload[20:24], "little", signed=True)
     actual_y = int.from_bytes(payload[24:28], "little", signed=True)
     if errors:
-        reasons = {1: "A result", 2: "dirty flag", 3: "pose"}
+        reasons = {
+            1: "A result",
+            2: "dirty flag",
+            3: "pose",
+            4: "HITWALL request",
+            5: "HITWALL cooldown",
+        }
         print(
             f"FAIL: {errors} errors in {records} records; first index={first_index} "
             f"sequence={sequence} reason={reasons.get(reason, reason)} "

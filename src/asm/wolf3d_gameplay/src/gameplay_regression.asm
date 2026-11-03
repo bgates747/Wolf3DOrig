@@ -52,6 +52,9 @@ rec_expected_y:         equ 26
 rec_expected_dirty:     equ 30
 rec_sequence:           equ 32
 rec_door_vertical:      equ 36      ; spare byte; patched door orientation
+rec_expected_hitwall:   equ 37
+rec_hitwall_cooldown:   equ 38
+rec_expected_cooldown:  equ 39
 
 start:
     push af
@@ -255,6 +258,13 @@ prepare_record:
     ld a,(iy+rec_door_position+1)
     ld (w3d_doors+W3D_DOOR_POSITION+1),a
 
+    xor a
+    ld (audio_request_count),a
+    ld (audio_request_sound),a
+    ld a,(iy+rec_hitwall_cooldown)
+    ld (w3d_hitwall_cooldown),a
+    call w3d_tick_hitwall_cooldown
+
     ld hl,(iy+rec_pose_x)
     ld (w3d_player_pose+0),hl
     ld a,(iy+rec_pose_x+3)
@@ -290,6 +300,22 @@ validate_record:
     inc hl
     inc ix
     djnz @compare_pose
+    ld a,(audio_request_count)
+    ld b,a
+    ld a,(iy+rec_expected_hitwall)
+    cp b
+    jr nz,@fail_sound
+    or a
+    jr z,@check_cooldown
+    ld a,(audio_request_sound)
+    cp W3D_AUDIO_SOUND_HITWALL
+    jr nz,@fail_sound
+@check_cooldown:
+    ld a,(w3d_hitwall_cooldown)
+    ld b,a
+    ld a,(iy+rec_expected_cooldown)
+    cp b
+    jr nz,@fail_cooldown
     ret
 @fail_a:
     ld a,1
@@ -299,6 +325,12 @@ validate_record:
     jr record_failure
 @fail_pose:
     ld a,3
+    jr record_failure
+@fail_sound:
+    ld a,4
+    jr record_failure
+@fail_cooldown:
+    ld a,5
 
 record_failure:
     ld (current_reason),a
@@ -549,12 +581,36 @@ w3d_death_promote_lethal_latch:
     or a
     ret
 
+; The production actor unit references the Episode 1 BJ state actions. ClipMove
+; never reaches them, so this isolated geometry target supplies inert hooks
+; rather than pulling in the victory lifecycle and its additional fixtures.
+w3d_victory_think_bj_jump:
+w3d_victory_think_bj_run:
+w3d_victory_bj_yell:
+w3d_victory_bj_done:
+w3d_simulate_victory_step:
+w3d_begin_victory_sequence:
+    or a
+    ret
+w3d_initialize_victory_state:
+    xor a
+    ld (w3d_victory_active),a
+    ret
+w3d_victory_active:
+    db 0
+
 ; Required by the included interactive module but not exercised here.
 w3d_mark_render_submitted:
     ret
 w3d_audio_begin_quantum:
     ret
 w3d_audio_request:
+    ld (audio_request_sound),a
+    ld a,(audio_request_count)
+    inc a
+    ld (audio_request_count),a
+    or a
+    ret
 w3d_audio_request_actor:
 w3d_audio_request_tile:
     or a
@@ -562,6 +618,8 @@ w3d_audio_request_tile:
 w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
+    db 0
+w3d_gameplay_panel_request:
     db 0
 
 vector_filename:            asciz "clip_vectors.bin"
@@ -579,6 +637,8 @@ previous_patch_kind:        db 0
 previous_patch_x:           db 0
 previous_patch_y:           db 0
 previous_patch_value:       db 0
+audio_request_count:        db 0
+audio_request_sound:        db 0
 record_ptr:                 dl 0
 remaining:                  dl 0
 batch_remaining:            dl 0

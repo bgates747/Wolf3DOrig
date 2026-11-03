@@ -231,6 +231,7 @@ w3d_seed_level_world_state:
     ld (w3d_palette_bonus_count+1),a
     ld (w3d_palette_tick_phase),a
     ld (w3d_palette_shift_wire),a
+    ld (w3d_hitwall_cooldown),a
     ld (w3d_player_dead),a
     ld (w3d_level_completion),a
     ld a,W3D_SLOT_NONE
@@ -451,6 +452,7 @@ w3d_run_simulation_batch:
 ; newer catch-up step discards the older step's unplayed requests, so sound
 ; never lags behind authoritative simulation time.
     call w3d_audio_begin_quantum
+    call w3d_tick_hitwall_cooldown
     call w3d_death_fixed_step
     jr c,@step_complete
     call w3d_simulate_player_step
@@ -1039,6 +1041,7 @@ w3d_clip_move_delta24:
 
 ; If blocked, retain only X and try again.
 @x_only:
+    call w3d_request_hitwall_sound
     ld hl,(w3d_move_delta_ptr)
     ld a,(hl)
     inc hl
@@ -1099,6 +1102,32 @@ w3d_clip_move_delta24:
     ret
 @blocked:
     xor a
+    ret
+
+; ClipMove in WL_AGENT.C emits HITWALLSND as soon as the complete X/Y move is
+; rejected, even if the later X-only or Y-only probe produces a wall slide.
+; The DOS sound manager suppressed retriggers while any sound was active. The
+; Agon backend intentionally permits simultaneous effects, so guard this one
+; sample for its own generated duration without suppressing unrelated events.
+w3d_tick_hitwall_cooldown:
+    ld a,(w3d_hitwall_cooldown)
+    or a
+    ret z
+    dec a
+    ld (w3d_hitwall_cooldown),a
+    ret
+
+w3d_request_hitwall_sound:
+    ld a,(w3d_hitwall_cooldown)
+    or a
+    ret nz
+    ld a,W3D_AUDIO_SOUND_HITWALL
+    ld b,127
+    ld c,0
+    call w3d_audio_request
+    ret c
+    ld a,W3D_AUDIO_HITWALL_HOLD_TICKS
+    ld (w3d_hitwall_cooldown),a
     ret
 
 w3d_copy_pose_to_candidate:
@@ -3488,6 +3517,8 @@ w3d_clip_y_high:
     db 0
 w3d_clip_y_high_fraction:
     dw 0
+w3d_hitwall_cooldown:
+    db 0
 
 w3d_simulation_accumulator:
     dl 0
