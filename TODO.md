@@ -74,9 +74,14 @@ green.
 credits, 10-second high scores, and four deterministic Episode 1 demos—with
 input entering the control panel and no persistent-state mutation. The three
 source-timed pages, authentic credits art, input handoff, and live Back to Demo
-row are implemented with direct-fixture coverage. The bundled WL1 v1.4 upload
-archive contains no external `DEMO?.WL1` files, so reconstructing and proving
-four deterministic demo input streams remains open.
+row are implemented with direct-fixture coverage. Archive audit corrected the
+stale loose-file assumption: the four canonical streams are Huffman-compressed
+VGAGRAPH chunks 151-154, for maps 0/2/4/6. Deterministic extraction, generated
+assembly assets, exact four-original-tic record cadence, button/weapon mapping,
+local input abort, shell/gameplay lifecycle, magnitude-preserving analog motion,
+and direct-target state fixtures are implemented and qualified. Remaining
+close gate: a staged visual pass through all four demos, including local input
+abort and return to the control panel.
 
 [ ] 6. Implement music playback as a separate subsystem from the accepted
 sound-effects implementation, preserving original Episode 1 title/menu,

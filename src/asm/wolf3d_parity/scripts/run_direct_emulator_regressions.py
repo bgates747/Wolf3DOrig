@@ -22,6 +22,7 @@ RUNNERS = (
     ROOT / "src/asm/wolf3d_intermission/scripts/run_intermission_emulator_regression.py",
     ROOT / "src/asm/wolf3d_gameplay/scripts/run_victory_emulator_regression.py",
     ROOT / "src/asm/wolf3d_save/scripts/run_save_emulator_regression.py",
+    ROOT / "src/asm/wolf3d_demo/scripts/run_demo_emulator_regression.py",
 )
 
 
@@ -84,4 +85,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-

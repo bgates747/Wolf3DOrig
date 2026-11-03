@@ -59,6 +59,12 @@ W3D_CONTROL_LEFT:               equ 00010000b
 W3D_CONTROL_RIGHT:              equ 00100000b
 W3D_CONTROL_USE:                equ 01000000b
 
+; Motion owns the recorded-demo hooks it calls. Keeping the generated streams
+; and state machine here also preserves every standalone direct fixture that
+; includes production motion without requiring a fixture-specific shim.
+    include "wolf3d_demo_assets.inc"
+    include "wolf3d_demo.inc"
+
 W3D_HUD_DIRTY_HEALTH:           equ 00000001b
 W3D_HUD_DIRTY_AMMO:             equ 00000010b
 W3D_HUD_DIRTY_KEYS:             equ 00000100b
@@ -313,6 +319,9 @@ w3d_poll_keys:
     inc ix
     inc iy
     djnz @loop
+    ld a,(w3d_demo_active)
+    or a
+    jp nz,w3d_demo_latch_input_abort
     ; fall through
 
 w3d_latch_exit_request:
@@ -390,6 +399,9 @@ w3d_take_simulation_step:
 
 ; Convert the latched FabGL virtual-key map into a compact control mask.
 w3d_sample_controls:
+    ld a,(w3d_demo_active)
+    or a
+    jp nz,w3d_demo_sample_controls
     ld ix,w3d_keyboard_masks
     xor a
     bit 1,(ix+4)                 ; W
@@ -452,7 +464,14 @@ w3d_simulate_player_step:
     call w3d_simulate_doors
     call w3d_simulate_pushwall
     call w3d_sample_controls
+    ld a,(w3d_demo_active)
+    or a
+    jr z,@ordinary_thrustspeed
+    call w3d_demo_prepare_motion_step
+    jr @thrustspeed_ready
+@ordinary_thrustspeed:
     call w3d_update_player_thrustspeed
+@thrustspeed_ready:
     call w3d_handle_use_edge
 ; Elevator use can latch normal or secret completion. As with EXITTILE,
 ; nothing later in this fixed quantum may mutate the completed world.
@@ -460,6 +479,14 @@ w3d_simulate_player_step:
     or a
     ret nz
 
+    ld a,(w3d_demo_active)
+    or a
+    jr z,@ordinary_rotation
+    call w3d_demo_apply_turn_step
+    call w3d_demo_apply_forward_step
+    jr @forward_translation_done
+
+@ordinary_rotation:
     ld a,(w3d_controls)
     and W3D_CONTROL_LEFT|W3D_CONTROL_RIGHT
     cp W3D_CONTROL_LEFT
@@ -495,6 +522,12 @@ w3d_simulate_player_step:
     ret nz
 
 @strafe_translation:
+    ld a,(w3d_demo_active)
+    or a
+    jr z,@ordinary_strafe
+    call w3d_demo_apply_strafe_step
+    jr @strafe_translation_done
+@ordinary_strafe:
     ld a,(w3d_controls)
     and W3D_CONTROL_A|W3D_CONTROL_D
     cp W3D_CONTROL_A               ; exactly A: 90 degrees left
@@ -515,7 +548,8 @@ w3d_simulate_player_step:
     call w3d_refresh_player_area
     call w3d_collect_pending_pickups
     call w3d_simulate_player_combat
-    jp w3d_simulate_actors
+    call w3d_simulate_actors
+    jp w3d_demo_advance_step
 
 ; Reconstruct the original per-frame `thrustspeed` gameplay signal from this
 ; port's fixed 0x1000 movement requests. Opposite keys cancel before they can
@@ -597,6 +631,69 @@ w3d_move_at_heading_offset:
     add hl,de
 @normalized:
     jp w3d_apply_heading_delta
+
+; BC is an unsigned 16.16 distance; apply it along playerAngle+DE. The
+; canonical table is normalized to 0x1000, so each signed component is
+; multiplied by BC then arithmetically shifted right twelve bits.
+w3d_move_at_heading_offset_scaled:
+    ld a,c
+    ld (w3d_move_scale+0),a
+    ld a,b
+    ld (w3d_move_scale+1),a
+    call w3d_load_player_angle
+    add hl,de
+    ld de,360
+    or a
+    sbc hl,de
+    jr nc,@scaled_normalized
+    add hl,de
+@scaled_normalized:
+    ld de,0
+    ld e,l
+    ld d,h
+    add hl,hl
+    add hl,de
+    add hl,hl
+    ld de,w3d_motion_delta_table
+    add hl,de
+    ld ix,w3d_scaled_move_delta
+    call w3d_scale_motion_component
+    ld ix,w3d_scaled_move_delta+3
+    call w3d_scale_motion_component
+    ld hl,w3d_scaled_move_delta
+    jp w3d_clip_move_delta24
+
+; HL points at one signed 24-bit canonical component. Its magnitude fits in
+; signed 16 bits (the table's high byte is sign extension). Return HL advanced
+; by three bytes and store the scaled signed 24-bit component at IX.
+w3d_scale_motion_component:
+    ld a,(hl)
+    ld e,a
+    inc hl
+    ld a,(hl)
+    ld d,a
+    inc hl
+    inc hl
+    ld (w3d_move_scale_source),hl
+    ex de,hl
+    ld de,0
+    ld a,(w3d_move_scale+0)
+    ld e,a
+    ld a,(w3d_move_scale+1)
+    ld d,a
+    call w3d_smul16x16_32
+    ld b,12
+@scale_shift:
+    sra h
+    rr l
+    rr d
+    rr e
+    djnz @scale_shift
+    ld (ix+0),e
+    ld (ix+1),d
+    ld (ix+2),l
+    ld hl,(w3d_move_scale_source)
+    ret
 
 ; HL is a normalized integer-degree heading. Each table entry contains a
 ; signed 24-bit dx followed by signed 24-bit dy. Computing angle*6 uses only
@@ -3005,6 +3102,13 @@ w3d_door_step_delta:
 
 w3d_move_delta_ptr:
     dl 0
+
+w3d_move_scale:
+    dw 0
+w3d_move_scale_source:
+    dl 0
+w3d_scaled_move_delta:
+    ds 6
 
 w3d_move_candidate:
     ds 8

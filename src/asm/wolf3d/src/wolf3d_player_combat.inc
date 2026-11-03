@@ -144,6 +144,23 @@ w3d_player_combat_check_weapon_change:
     ld a,(w3d_player_ammo)
     or a
     ret z
+    ld a,(w3d_demo_active)
+    or a
+    jr z,@physical_keys
+; Demo button bits 4..7 are the original ready-knife through
+; ready-chaingun choices. Preserve the source's lowest-numbered priority.
+    ld a,(w3d_demo_buttons)
+    bit 4,a
+    jr nz,@knife
+    bit 5,a
+    jr nz,@pistol
+    bit 6,a
+    jr nz,@machinegun
+    bit 7,a
+    ret z
+    ld b,W3D_WEAPON_CHAINGUN
+    jr @select
+@physical_keys:
     ld ix,w3d_keyboard_masks
     bit 0,(ix+6)                    ; top-row 1
     jr nz,@knife

@@ -37,6 +37,9 @@ The real, permanent eZ80 game client. Distinct from its two siblings under
   menu input, original-facing main/episode/difficulty navigation, selection
   flags, locked shareware episodes, lifecycle entry points, and exact bitmap
   placement.
+- `wolf3d_demo` -- the direct production-code eZ80 regression for the four
+  canonical WL1 attract demos, exact 70/120 record cadence, local input abort,
+  weapon buttons, signed analog controls, and magnitude-preserving movement.
 
 The payload-free W3DV renderer query, ABI validator, and their regressions are
 present, but the startup gate is temporarily commented out. Native VDP and
@@ -62,8 +65,9 @@ Project layout follows the established `src/asm/<app>/{src,tgt}` convention:
     packed by `agonport/tools/wolf3d_assets/` already land
     their buffers at the exact ids these loaders expect
     (`Wolf3dWallBufferId()`/`Wolf3dSpriteBufferId()` on the VDP side).
-  - `wolf3d.asm` -- the interactive application: it loads the original-facing
-    title/control-panel shell, accepts the shareware episode and difficulty,
+  - `wolf3d.asm` -- the interactive application: it runs the original-facing
+    title/credits/scores/four-demo attract cycle, loads the control-panel shell,
+    accepts the shareware episode and difficulty,
     then loads real level wall and sprite textures plus original HUD art,
     uploads the real tilemap, initializes every door and static, then runs a
     callback-gated 30 Hz

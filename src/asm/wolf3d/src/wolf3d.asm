@@ -507,15 +507,25 @@ w3d_main_body:
 
 @route_shell_result:
     cp W3D_SHELL_RESULT_NEW_GAME
-    jr z,@run_gameplay
+    jr z,@run_new_game
     cp W3D_SHELL_RESULT_LOAD_GAME
-    ret nz
+    jr z,@run_loaded_game
+    cp W3D_SHELL_RESULT_DEMO
+    jr z,@run_gameplay
+    ret
+@run_new_game:
+    call w3d_demo_cancel
+    jr @run_gameplay
+@run_loaded_game:
+    call w3d_demo_cancel
 @run_gameplay:
     call w3d_run_gameplay_session
     cp W3D_GAMEPLAY_RESULT_LOAD
     jr z,@run_gameplay
     cp W3D_GAMEPLAY_RESULT_NEW_GAME
     jr z,@run_gameplay
+    cp W3D_GAMEPLAY_RESULT_DEMO_DONE
+    jr z,@demo_done
     cp W3D_GAMEPLAY_RESULT_VICTORY
     jr z,@victory
     cp W3D_GAMEPLAY_RESULT_GAME_OVER
@@ -524,6 +534,10 @@ w3d_main_body:
     jr @route_shell_result
 @victory:
     call w3d_shell_resume_after_victory
+    jr @route_shell_result
+@demo_done:
+    call w3d_demo_cancel
+    call w3d_shell_resume_after_demo
     jr @route_shell_result
 
 ; One complete gameplay ownership lifetime. A selected difficulty is already
@@ -587,6 +601,12 @@ w3d_run_gameplay_session:
     ld a,(w3d_save_file_buffer+W3D_SAVE_H_LEVEL)
     jr @level_selected
 @fresh_level:
+    ld a,(w3d_demo_active)
+    or a
+    jr z,@ordinary_fresh_level
+    ld a,(w3d_demo_level)
+    jr @level_selected
+@ordinary_fresh_level:
     .if W3D_INITIAL_LEVEL
     ld a,W3D_INITIAL_LEVEL
     .else
@@ -742,6 +762,7 @@ w3d_run_gameplay_session:
 @initialize_new_game:
     call w3d_initialize_motion_state
     call w3d_initialize_death_state
+    call w3d_demo_begin_session
 @simulation_state_ready:
     ld hl,w3d_reseed_level_attempt
     call w3d_death_set_reseed_hook
@@ -762,6 +783,21 @@ w3d_run_gameplay_session:
     jp c,w3d_gameplay_fatal_shutdown
 
 mainloop:
+; A completed or user-aborted attract demo drains its one outstanding frame,
+; then returns to the source-timed shell without scoring or persistence.
+    ld a,(w3d_demo_finished)
+    or a
+    jr z,@check_completion
+    call w3d_death_foreground_update
+    ld a,(w3d_callback_error)
+    or a
+    jp nz,@fatal_shutdown
+    ld a,(w3d_async_owner)
+    or a
+    jp nz,mainloop
+    jp w3d_gameplay_demo_done_shutdown
+
+@check_completion:
 ; Any completion freezes input/simulation immediately. The final ordinary
 ; snapshot, if any, still owns its callback; consume it before either loading
 ; a floor or returning the display to the application shell.
@@ -995,6 +1031,10 @@ w3d_gameplay_new_game_shutdown:
     ld a,W3D_GAMEPLAY_RESULT_NEW_GAME
     jr w3d_gameplay_shutdown
 
+w3d_gameplay_demo_done_shutdown:
+    ld a,W3D_GAMEPLAY_RESULT_DEMO_DONE
+    jr w3d_gameplay_shutdown
+
 w3d_gameplay_fatal_shutdown:
     ld a,W3D_GAMEPLAY_RESULT_FATAL
 
@@ -1076,6 +1116,7 @@ W3D_GAMEPLAY_RESULT_GAME_OVER: equ 2
 W3D_GAMEPLAY_RESULT_FATAL:    equ 3
 W3D_GAMEPLAY_RESULT_LOAD:     equ 4
 W3D_GAMEPLAY_RESULT_NEW_GAME: equ 5
+W3D_GAMEPLAY_RESULT_DEMO_DONE: equ 6
 
 w3d_gameplay_result:
     db W3D_GAMEPLAY_RESULT_EXIT

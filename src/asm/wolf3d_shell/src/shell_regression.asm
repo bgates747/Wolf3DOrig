@@ -118,6 +118,13 @@ w3d_highscores_draw:
     inc (hl)
     ret
 
+; Recorded-demo stream selection has a dedicated direct regression.  The
+; shell fixture records the lifecycle handoff without pulling in the streams.
+w3d_demo_prepare_next:
+    ld hl,test_demo_prepare_count
+    inc (hl)
+    ret
+
     include "wolf3d_shell.inc"
 
 SCRIPT_RELEASE: equ 0
@@ -618,6 +625,7 @@ test_attract_timing:
     ld (test_case),a
     xor a
     ld (test_highscore_draw_count),a
+    ld (test_demo_prepare_count),a
     ld hl,test_sysvars
     ld (hl),a
     ld de,test_sysvars+1
@@ -627,11 +635,12 @@ test_attract_timing:
     ld hl,script_attract_cycle
     call test_set_script
     call w3d_shell_attract_until_input
+    CHECK_A W3D_SHELL_RESULT_DEMO,REASON_RESULT
     CHECK_MEM8 test_highscore_draw_count,1,REASON_HIGHSCORE_HANDOFF
-    CHECK_MEM8 test_plot_count,3,REASON_PLOT_COUNT
+    CHECK_MEM8 test_demo_prepare_count,1,REASON_RESULT
+    CHECK_MEM8 test_plot_count,2,REASON_PLOT_COUNT
     CHECK_PLOT 0,W3D_SHELL_TITLE_BUFFER,0,0
     CHECK_PLOT 6,W3D_SHELL_CREDITS_BUFFER,0,0
-    CHECK_PLOT 12,W3D_SHELL_TITLE_BUFFER,0,0
     CHECK_EXIT 0
     ret
 
@@ -966,6 +975,7 @@ test_victory_present_count: db 0
 test_highscore_handoff_count: db 0
 test_highscore_view_count: db 0
 test_highscore_draw_count: db 0
+test_demo_prepare_count: db 0
 test_save_load_count: db 0
 test_save_store_count: db 0
 test_plot_log: ds 32*6

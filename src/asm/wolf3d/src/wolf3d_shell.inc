@@ -11,6 +11,7 @@
 W3D_SHELL_RESULT_QUIT:       equ 0
 W3D_SHELL_RESULT_NEW_GAME:   equ 1
 W3D_SHELL_RESULT_LOAD_GAME:  equ 2
+W3D_SHELL_RESULT_DEMO:       equ 3
 W3D_SHELL_PAUSE_QUIT:        equ 0
 W3D_SHELL_PAUSE_RESUME:      equ 1
 W3D_SHELL_PAUSE_END_GAME:    equ 2
@@ -108,6 +109,15 @@ w3d_shell_run:
     call w3d_shell_setup
     call w3d_shell_show_agon_splash
     call w3d_shell_attract_until_input
+    cp W3D_SHELL_RESULT_DEMO
+    ret z
+    jp w3d_shell_main_menu
+
+w3d_shell_resume_after_demo:
+    call w3d_shell_setup
+    call w3d_shell_attract_until_input
+    cp W3D_SHELL_RESULT_DEMO
+    ret z
     jp w3d_shell_main_menu
 
 ; Present the original Episode 1 Victory()/ENDART1 lifecycle, run the exact
@@ -258,6 +268,8 @@ w3d_shell_main_menu:
     jp @redraw
 @back_to_demo:
     call w3d_shell_attract_until_input
+    cp W3D_SHELL_RESULT_DEMO
+    ret z
     jp @redraw
 @load_game:
     xor a                   ; load screen, shell/global context
@@ -542,9 +554,8 @@ w3d_shell_information_page:
     jr nz,@wait
     ret
 
-; Original DemoLoop timings at the MOS 120-Hz clock. The four gameplay demos
-; remain the separately visible unfinished portion of TODO 17; until their
-; source input streams are reconstructed, the three authentic pages repeat.
+; Original DemoLoop timings at the MOS 120-Hz clock. After the three pages,
+; select the next canonical recorded stream and return it to the application.
 ; Any key enters the control panel without promoting Escape to application
 ; exit, matching IN_UserInput's attract-loop role.
 w3d_shell_attract_until_input:
@@ -563,7 +574,10 @@ w3d_shell_attract_until_input:
     ld de,W3D_SHELL_SCORES_TICKS
     call w3d_shell_wait_input_timeout
     ret nz
-    jr @title
+    call w3d_demo_prepare_next
+    ld a,W3D_SHELL_RESULT_DEMO
+    or a
+    ret
 
 ; DE=duration in MOS 120-Hz ticks. Returns A=1/NZ after any key and A=0/Z on
 ; timeout. The caller's duration is copied before DE becomes elapsed scratch.
