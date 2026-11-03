@@ -18,7 +18,7 @@ FIXTURE = BUILD / "target-fixture"
 TARGET_DRIVER = HERE.parent / "qualification/target.py"
 REMOTE_HOST = "oryx-linuxlite"
 REMOTE_ROOT = "/home/smith/Agon/mystuff/Wolf3dOrig"
-REMOTE_STAGE = REMOTE_ROOT + "/agonport/vdplet/production/target-r1"
+REMOTE_STAGE = REMOTE_ROOT + "/agonport/vdplet/production/target-r2"
 REMOTE_FIRMWARE = (
     "/home/smith/Agon/mystuff/agon-vdplet/build/vdpl-012/rows-r1/firmware.bin"
 )
@@ -31,9 +31,9 @@ PINS = {
     "firmware": "8d980025f891484cf7e6cc5f2992cf517cb80e0123ff7de712ae8d7f2dc1c807",
     "firmware_elf": "1a7c44482d4ba8c5bfb49976c0bd664b9a9c2a635c7027b30954929ca567f814",
     "backend": "0866265bd6f3d73ad572f31dc1bb954f308ed9a5d857efa9414d37e1ade13374",
-    "module": "12449bab795f4fd8ecfbbb2f4c547299632bba9bda88dc7ebf4e68160aac9c63",
+    "module": "266f809ff76e56733251da202e5c4747cd9c12d247d799d486471a262c0404b7",
     "full_frame": "a20c0387435f480ff7b551896d4cc02c0539bac40a6af3753148252fb81fdaf6",
-    "retry_frame": "554dcfdb164c79058762cc0c0aa6394409c9df40412ab872341d2b8ba81f3e95",
+    "retry_frame": "43dd54619cca5051bdf85a0bbde5907a2b4a4678927177d2d331510861a84b75",
 }
 
 

@@ -125,7 +125,10 @@ class BackendContractTests(unittest.TestCase):
                         body.index("jp w3d_publish_render_completion"))
 
     def test_native_error_preserves_exact_retry_without_presentation(self) -> None:
-        body = self.backend.split("@failed:", 1)[1].split("@fatal:", 1)[0]
+        render = self.backend.split(
+            "w3d_vdplet_consume_render_completion:", 1
+        )[1]
+        body = render.split("@failed:", 1)[1].split("@fatal:", 1)[0]
         self.assertIn("W3D_VDPLET_RENDER_RETRY_LIMIT: equ 1", self.backend)
         self.assertIn("cp W3D_VDPLET_RENDER_RETRY_LIMIT", body)
         self.assertIn("jr nc,@fatal", body)
@@ -176,10 +179,24 @@ class BackendContractTests(unittest.TestCase):
         self.assertIn("jp c,@asset_failed", transition)
         self.assertIn("jr c,@asset_failed", transition)
 
-    def test_fizzle_deferral_is_explicit_and_finite(self) -> None:
+    def test_fizzle_is_app_paced_finite_and_surface_synchronized(self) -> None:
         body = self.death.split("w3d_death_begin_fizzle:", 1)[1]
-        self.assertIn("Production module release 1 deliberately reports fizzle unsupported", body)
-        self.assertIn("ld a,W3D_DEATH_PHASE_HOLD", body)
+        self.assertIn("ld a,W3P_FIZZLE_DISPLAY_FRAMES", body)
+        self.assertIn("ld a,W3D_DEATH_PHASE_WAIT_FIZZLE", body)
+        self.assertIn("jp w3d_death_pump_vdplet_fizzle", body)
+        pump = self.death.split("w3d_death_pump_vdplet_fizzle:", 1)[1]
+        pump = pump.split("w3d_death_accept_render_purpose:", 1)[0]
+        self.assertIn("ld a,(w3d_exit_requested)", pump)
+        self.assertIn("call w3d_vdplet_submit_fizzle_begin", pump)
+        self.assertIn("call w3d_vdplet_submit_fizzle_display", pump)
+        self.assertIn("call w3d_vdplet_submit_fizzle_sync", pump)
+        consume = self.backend.split(
+            "w3d_vdplet_consume_fizzle_completion:", 1
+        )[1].split("w3d_vdplet_submit_dirty_world_render:", 1)[0]
+        self.assertIn("cp W3D_VDPLET_FIZZLE_OP_DISPLAY", consume)
+        self.assertEqual(consume.count("call z,w3d_vdu_present"), 1)
+        self.assertIn("call w3d_death_accept_vdplet_fizzle_completion", consume)
+        self.assertIn("W3D_VDPLET_STAGE_FIZZLE", self.client)
 
     def test_package_rebuilds_standard_level_states(self) -> None:
         self.assertIn('ASSET_SCRIPTS / "build_level_packages.py"', self.packager)

@@ -36,6 +36,9 @@ W3D_DEATH_TURN_STEP_A:                equ 4
 W3D_DEATH_TURN_STEP_B:                equ 6
 W3D_DEATH_HOLD_STEPS:                 equ 43
 W3D_DEATH_FIZZLE_TOKEN_SEED:          equ 0D100h
+W3D_DEATH_FIZZLE_STAGE_BEGIN:         equ 0
+W3D_DEATH_FIZZLE_STAGE_DISPLAY:       equ 1
+W3D_DEATH_FIZZLE_STAGE_SYNC:          equ 2
 
 ; ---------------------------------------------------------------------------
 ; Public lifecycle and hook installation
@@ -236,7 +239,15 @@ w3d_death_foreground_update:
     .if W3D_RENDER_BACKEND
     ld a,(w3d_vdplet_reply_ready)
     or a
-    call nz,w3d_vdplet_consume_render_completion
+    jr z,@vdplet_reply_done
+    ld a,(w3d_async_owner)
+    cp W3D_ASYNC_OWNER_FIZZLE
+    jr nz,@vdplet_render_reply
+    call w3d_vdplet_consume_fizzle_completion
+    jr @vdplet_reply_done
+@vdplet_render_reply:
+    call w3d_vdplet_consume_render_completion
+@vdplet_reply_done:
     .else
     ld a,(w3d_completion_ready)
     or a
@@ -255,8 +266,95 @@ w3d_death_foreground_update:
     jr nc,@done
     call w3d_death_accept_fizzle_completion
 @done:
+    .if W3D_RENDER_BACKEND
+    call w3d_death_pump_vdplet_fizzle
+    .endif
     ld a,(w3d_death_phase)
     ret
+
+    .if W3D_RENDER_BACKEND
+; Called after a requested FIZZLE RUN has returned successfully and released
+; its owner. BEGIN enables visible slices, DISPLAY counts exactly sixty swaps,
+; and SYNC finishes the other physical surface without presenting again.
+w3d_death_accept_vdplet_fizzle_completion:
+    ld a,(w3d_death_phase)
+    cp W3D_DEATH_PHASE_WAIT_FIZZLE
+    ret nz
+    ld a,(w3d_vdplet_fizzle_operation)
+    cp W3D_VDPLET_FIZZLE_OP_BEGIN
+    jr z,@begin
+    cp W3D_VDPLET_FIZZLE_OP_DISPLAY
+    jr z,@display
+    cp W3D_VDPLET_FIZZLE_OP_SYNC
+    ret nz
+    ld a,W3D_DEATH_HOLD_STEPS
+    ld (w3d_death_hold_remaining),a
+    xor a
+    ld (w3d_death_ack_armed),a
+    ld a,W3D_DEATH_PHASE_HOLD
+    ld (w3d_death_phase),a
+    ret
+@begin:
+    ld a,W3D_DEATH_FIZZLE_STAGE_DISPLAY
+    ld (w3d_death_fizzle_stage),a
+    ret
+@display:
+    ld a,(w3d_death_fizzle_steps_remaining)
+    or a
+    jr z,@fault
+    dec a
+    ld (w3d_death_fizzle_steps_remaining),a
+    ret nz
+    ld a,W3D_DEATH_FIZZLE_STAGE_SYNC
+    ld (w3d_death_fizzle_stage),a
+    ret
+@fault:
+    ld a,1
+    ld (w3d_death_fault),a
+    ld (w3d_callback_error),a
+    ld (w3d_exit_requested),a
+    ret
+
+; Schedule at most one finite requested RUN. The main loop polls input before
+; this pump; Escape therefore suppresses the next slice while any already
+; completed display operation remains surface-parity correct.
+w3d_death_pump_vdplet_fizzle:
+    ld a,(w3d_death_phase)
+    cp W3D_DEATH_PHASE_WAIT_FIZZLE
+    ret nz
+    ld a,(w3d_async_owner)
+    or a
+    ret nz
+    ld a,(w3d_exit_requested)
+    or a
+    ret nz
+    ld a,(w3d_death_fizzle_stage)
+    cp W3D_DEATH_FIZZLE_STAGE_BEGIN
+    jr z,@begin
+    cp W3D_DEATH_FIZZLE_STAGE_DISPLAY
+    jr z,@display
+    cp W3D_DEATH_FIZZLE_STAGE_SYNC
+    jr z,@sync
+@fault:
+    ld a,1
+    ld (w3d_death_fault),a
+    ld (w3d_callback_error),a
+    ld (w3d_exit_requested),a
+    scf
+    ret
+@begin:
+    call w3d_vdplet_submit_fizzle_begin
+    jr c,@fault
+    ret
+@display:
+    call w3d_vdplet_submit_fizzle_display
+    jr c,@fault
+    ret
+@sync:
+    call w3d_vdplet_submit_fizzle_sync
+    jr c,@fault
+    ret
+    .endif
 
 ; A=latched purpose from the render that was actually presented.
 w3d_death_accept_render_purpose:
@@ -570,17 +668,16 @@ w3d_death_choose_turn_route:
 
 w3d_death_begin_fizzle:
     .if W3D_RENDER_BACKEND
-; Production module release 1 deliberately reports fizzle unsupported. Keep
-; the death lifecycle finite until the later app-paced fizzle tranche: the
-; accepted target-facing frame remains visible during the ordinary hold.
-    ld a,W3D_DEATH_HOLD_STEPS
-    ld (w3d_death_hold_remaining),a
+; The app, not the module, owns cadence and Escape. BEGIN seeds two independent
+; physical-surface cursors; sixty DISPLAY replies each get one C3, then one
+; no-swap SYNC reply leaves both surfaces byte-identical at full red.
     xor a
-    ld (w3d_death_ack_armed),a
-    ld a,W3D_DEATH_PHASE_HOLD
+    ld (w3d_death_fizzle_stage),a
+    ld a,W3P_FIZZLE_DISPLAY_FRAMES
+    ld (w3d_death_fizzle_steps_remaining),a
+    ld a,W3D_DEATH_PHASE_WAIT_FIZZLE
     ld (w3d_death_phase),a
-    or a
-    ret
+    jp w3d_death_pump_vdplet_fizzle
     .else
 ; A new token on every attempt makes a delayed event from a previous death
 ; fail validation even if its independent sequence were somehow replayed.
@@ -1053,6 +1150,10 @@ w3d_death_fault:
     db 0
 w3d_death_fizzle_token:
     ds 2
+w3d_death_fizzle_stage:
+    db W3D_DEATH_FIZZLE_STAGE_BEGIN
+w3d_death_fizzle_steps_remaining:
+    db 0
 w3d_death_respawn_lives:
     db 0
 w3d_death_saved_difficulty:

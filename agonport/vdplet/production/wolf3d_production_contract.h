@@ -7,7 +7,7 @@
 #define W3P_ARGUMENT_MAGIC                0x41503357u  // "W3PA" little-endian
 #define W3P_BATCH_MAGIC                   0x55443357u  // "W3DU" little-endian
 #define W3P_MODULE_ID                     0x31503357u  // "W3P1" production renderer identity
-#define W3P_MODULE_RELEASE                0x00010101u  // module release 1.1.1
+#define W3P_MODULE_RELEASE                0x00010200u  // module release 1.2.0
 #define W3P_SCHEMA_VERSION                2u           // wire schema, independent of module release
 #define W3P_REQUIRED_CAPABILITIES         257u         // buffers plus direct colour rows
 #define W3P_ENTRY_CONFIG                  0u           // validate resource descriptor
@@ -37,6 +37,12 @@
 #define W3P_DEFAULT_HUD_BASE              0x4000u      // resident HUD chunk buffers
 #define W3P_SCREEN_WIDTH                  320u         // RGB222 frame width
 #define W3P_SCREEN_HEIGHT                 240u         // RGB222 frame height
+#define W3P_VIEW_X                        32u          // physical viewport left
+#define W3P_VIEW_Y                        20u          // physical viewport top
+#define W3P_VIEW_WIDTH                    256u         // death-fizzle viewport width
+#define W3P_VIEW_HEIGHT                   160u         // death-fizzle viewport height
+#define W3P_FIZZLE_DISPLAY_FRAMES         60u          // one second of app-paced 60 Hz presentation
+#define W3P_FIZZLE_RED                    2u           // RGB222(2,0,0), Wolf palette index 4
 #define W3P_FRAME_BYTES                   0x00012C00u  // 320*240
 #define W3P_WALL_HEIGHT_OFFSET            0x00012C00u  // 256 signed 32-bit heights
 #define W3P_WALL_HEIGHT_BYTES             1024u        // wall-height scratch

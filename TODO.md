@@ -169,24 +169,32 @@ eZ80 production-client lifecycle also passed generation 35 with exact scene,
 teardown and MOS-return evidence. Its readable Author review passed on
 2026-10-31: the oracle scene rendered correctly, Enter requested orderly
 unload, MOS returned to a live prompt, `dir` worked, and the exact result hash
-matched. Gameplay integration, update batching, fizzle migration, default
-cutover, and physical qualification remain later gated work. See
+matched. Gameplay integration, update batching, and production fizzle
+migration are now implemented under item 8e; default cutover and physical
+qualification remain gated work. See
 `agonport/doc/wolf3d-vdplet-migration.md`.
 
 [ ] 8e. Replace the bounded static scene with the production render contract.
 Schema 2, synchronized C++/assembly constants, the 5,448-byte compact mirror,
 validated atomic full/dirty batches (including live/completed pushwalls),
-complete pure renderer, real ABI 1.3
-CONFIG/APPLY_AND_RENDER/RESET wrapper, host lifecycle/retry matrix, and linked
+complete pure renderer, real ABI 1.6
+CONFIG/APPLY_AND_RENDER/FIZZLE/RESET wrapper, host lifecycle/retry matrix, and linked
 Xtensa package admission are complete. The exact package also passes its real
 runtime-emulator gate with two oracle-exact frames, native error/retry,
-INFO17, timing, teardown, stale-handle, reload, and empty-slot evidence. Next
+INFO17, timing, teardown, stale-handle, reload, and empty-slot evidence.
 The production eZ80 descriptor/full/dirty serializer passes its direct MOS
 target regression: byte-identical frozen retry, in-flight dirty-state
 preservation, exact generation-2 delta, dirty consumption, and empty-batch
 refusal. CONFIG, update-buffer upload, requested RUN completion, C3
 presentation, exact retry, app-paced fizzle, and the production direct-row
 renderer are integrated in the app while retaining the copied-pixel oracle.
+The earlier “app-paced fizzle” claim was audited and found stale because the
+production module still returned UNSUPPORTED. Release 1.2.0 now implements the
+exact original 17-bit LFSR over 60 app-presented slices plus one unpresented
+second-surface synchronization step. Host exact-retry/lifecycle tests and the
+finite Oryx generation-161 ABI 1.6 gate compare five whole-frame transition
+checkpoints, preserve the HUD/surround, leave INFO17 at 2,136 free bytes, and
+finish with an empty module slot.
 Complete performance/physical gates and removal of rollback paths remain later
 work. The first Console8 run under stock MOS Arthur
 loaded the complete level/assets but intermittently returned to MOS before the

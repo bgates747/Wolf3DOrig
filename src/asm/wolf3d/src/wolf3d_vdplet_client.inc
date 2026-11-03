@@ -56,6 +56,7 @@ W3D_VDPLET_STAGE_DESCRIPTOR:   equ 09h
 W3D_VDPLET_STAGE_CONFIG:       equ 0ah
 W3D_VDPLET_STAGE_RESET:        equ 0bh
 W3D_VDPLET_STAGE_RENDER:       equ 0ch
+W3D_VDPLET_STAGE_FIZZLE:      equ 0dh
 
 ; Reset all application-side runtime ownership. The caller installs the shared
 ; keyboard/render callback before issuing the first request.

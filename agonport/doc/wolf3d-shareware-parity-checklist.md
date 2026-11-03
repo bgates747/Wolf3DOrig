@@ -76,6 +76,18 @@ already-published face sentinel 3. Oryx generation 160 passes 549
 player-combat/palette checks, 32 pickup cases, and byte-exact serialization;
 six renderer scenarios remain pixel-identical to the standalone oracle.
 
+Death-transition correction, 2026-11-03: the baseline's red-fizzle claim was
+true only for the standalone firmware. The production VDPlet entries remained
+an unsupported stub even though the root TODO described them as integrated.
+Release 1.2.0 now reproduces the original 17-bit LFSR order over the centered
+256x160 viewport in 60 application-paced visible slices, then synchronizes the
+other physical surface with one unpresented final step. HUD and surround pixels
+remain untouched, only one requested RUN may be active, and Escape stops new
+work after the in-flight slice completes. Host exact-retry/error coverage and
+the finite Oryx generation-161 ABI 1.6 gate pass five whole-frame oracle
+checkpoints, final surface synchronization, RESET/unload/reload, and empty-slot
+teardown with INFO17 unchanged at 2,136 free bytes.
+
 ### A1. Pushwalls and secret discovery — TODO 11
 
 Original oracle:

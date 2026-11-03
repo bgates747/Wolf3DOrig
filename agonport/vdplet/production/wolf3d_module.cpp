@@ -94,6 +94,12 @@ namespace {
 struct ModuleState {
     ResourceDescriptor resources;
     WorldMirror mirror;
+    struct FizzleCursor {
+        uint32_t state;
+        uint32_t emitted;
+    } fizzle[2];
+    uint8_t fizzle_step;
+    uint8_t fizzle_active;
     uint8_t configured;
 };
 
@@ -108,6 +114,53 @@ void clear_module() {
     uint8_t *bytes = reinterpret_cast<uint8_t *>(&g_module);
     for (size_t i = 0; i < sizeof(g_module); ++i) bytes[i] = 0;
     g_module.mirror.view_weapon_shape = -1;
+}
+
+void reset_fizzle() {
+    for (uint32_t surface = 0; surface < 2; ++surface) {
+        g_module.fizzle[surface].state = 1;
+        g_module.fizzle[surface].emitted = 0;
+    }
+    g_module.fizzle_step = 0;
+    g_module.fizzle_active = 0;
+}
+
+uint32_t advance_fizzle_state(uint32_t state) {
+    const bool low_bit = (state & 1u) != 0;
+    state >>= 1;
+    if (low_bit) state ^= 0x12000u;
+    return state;
+}
+
+uint32_t fizzle_target(uint8_t step) {
+    const uint32_t pixels = W3P_VIEW_WIDTH * W3P_VIEW_HEIGHT;
+    if (step >= W3P_FIZZLE_DISPLAY_FRAMES) return pixels;
+    return pixels * step / W3P_FIZZLE_DISPLAY_FRAMES;
+}
+
+void emit_fizzle(ModuleState::FizzleCursor &cursor, uint32_t target,
+                  uint8_t *linear, uintptr_t *rows, uint32_t x_bias,
+                  uint32_t pixel_xor, uint8_t color_mask,
+                  uint8_t preserve_mask) {
+    while (cursor.emitted < target) {
+        const uint32_t state = cursor.state;
+        const uint16_t y = static_cast<uint16_t>(
+            ((state & 0xffu) - 1u) & 0xffu);
+        const uint16_t x = static_cast<uint16_t>((state >> 8) & 0x1ffu);
+        cursor.state = advance_fizzle_state(state);
+        if (x >= W3P_VIEW_WIDTH || y >= W3P_VIEW_HEIGHT) continue;
+        uint8_t *pixel;
+        if (linear != nullptr) {
+            pixel = linear + (W3P_VIEW_Y + y) * W3P_SCREEN_WIDTH +
+                W3P_VIEW_X + x;
+        } else {
+            pixel = reinterpret_cast<uint8_t *>(rows[y]) +
+                ((x_bias + x) ^ pixel_xor);
+        }
+        *pixel = static_cast<uint8_t>(
+            (*pixel & preserve_mask) | (W3P_FIZZLE_RED & color_mask));
+        ++cursor.emitted;
+    }
 }
 
 int32_t batch_status(BatchDetail detail) {
@@ -182,6 +235,7 @@ int32_t configure(const vdplet_host_v1 *host,
     g_module.resources = descriptor;
     initialize_world_mirror(g_module.mirror, descriptor.generation_seed,
                             descriptor.tilemap_id);
+    reset_fizzle();
     g_module.configured = 1;
     return VDPL_OK;
 }
@@ -221,6 +275,7 @@ int32_t apply_and_render(const vdplet_host_v1 *host,
                          const vdplet_request_v1 *request) {
     int32_t status = require_matching_descriptor(host, request);
     if (status != VDPL_OK) return status;
+    if (g_module.fizzle_active) return VDPL_E_BUSY;
     const bool direct_rows =
         g_module.resources.flags == W3P_ARG_FLAG_DIRECT_ROWS;
     const vdplet_host_v1_6 *color = direct_rows
@@ -346,6 +401,156 @@ int32_t apply_and_render(const vdplet_host_v1 *host,
     return status;
 }
 
+int32_t require_published_frame(const vdplet_host_v1 *host,
+                                const vdplet_request_v1 *request) {
+    const int32_t status = require_matching_descriptor(host, request);
+    if (status != VDPL_OK) return status;
+    if (!g_module.mirror.ready || g_module.mirror.pending_present ||
+        g_module.mirror.presented_generation != g_module.mirror.generation)
+        return VDPL_E_INIT;
+    return VDPL_OK;
+}
+
+int32_t fizzle_begin(const vdplet_host_v1 *host,
+                     const vdplet_request_v1 *request) {
+    const int32_t status = require_published_frame(host, request);
+    if (status != VDPL_OK) return status;
+    if (g_module.fizzle_active) return VDPL_E_BUSY;
+    reset_fizzle();
+    g_module.fizzle_active = 1;
+    return VDPL_OK;
+}
+
+int32_t fizzle_copied(const vdplet_host_v1 *host, uint32_t target,
+                      ModuleState::FizzleCursor &next) {
+    const vdplet_host_v1_3 *media = vdplet_pixels_host(host);
+    if (media == nullptr) return VDPL_E_ABI;
+    vdplet_view_v1 workspace = {sizeof(workspace), 0, nullptr, 0, 0};
+    int32_t status = host->buffer_acquire(
+        host->context, g_module.resources.workspace_id, VDPL_WRITE, 0,
+        W3P_FRAME_BYTES, &workspace);
+    if (status != VDPL_OK) return status;
+    if (workspace.data == nullptr || workspace.bytes < W3P_FRAME_BYTES) {
+        status = VDPL_E_BOUNDS;
+    } else {
+        emit_fizzle(next, target, workspace.data, nullptr, 0, 0, 0x3f, 0);
+        const vdplet_pixels_v1 pixels = {
+            sizeof(pixels), VDPL_PIXELS_RGB222, 0, 0,
+            W3P_SCREEN_WIDTH, W3P_SCREEN_HEIGHT, W3P_SCREEN_WIDTH,
+            W3P_FRAME_BYTES, workspace.data};
+        status = media->pixels_write(host->context, &pixels);
+    }
+    preserve_first_error(
+        status, host->buffer_release(host->context, workspace.lease));
+    return status;
+}
+
+int32_t fizzle_direct(const vdplet_host_v1 *host, uint32_t target,
+                      ModuleState::FizzleCursor &next) {
+    const vdplet_host_v1_6 *color = vdplet_color_frame_host(host);
+    if (color == nullptr) return VDPL_E_ABI;
+    const uint32_t pointer_bytes =
+        W3P_VIEW_HEIGHT * static_cast<uint32_t>(sizeof(uintptr_t));
+    vdplet_view_v1 workspace = {sizeof(workspace), 0, nullptr, 0, 0};
+    int32_t status = host->buffer_acquire(
+        host->context, g_module.resources.workspace_id, VDPL_WRITE, 0,
+        pointer_bytes, &workspace);
+    if (status != VDPL_OK) return status;
+    if (workspace.data == nullptr || workspace.bytes < pointer_bytes) {
+        status = VDPL_E_BOUNDS;
+        preserve_first_error(
+            status, host->buffer_release(host->context, workspace.lease));
+        return status;
+    }
+    uintptr_t *const rows = reinterpret_cast<uintptr_t *>(workspace.data);
+    for (uint32_t row = 0; row < W3P_VIEW_HEIGHT; ++row) rows[row] = 0;
+    vdplet_color_frame_v1 frame = {
+        sizeof(frame), 0, W3P_VIEW_X, W3P_VIEW_Y,
+        W3P_VIEW_WIDTH, W3P_VIEW_HEIGHT,
+        0, 0, nullptr, 0, 0, 0, 0, 0};
+    status = color->color_frame(
+        host->context, VDPL_COLOR_FRAME_BEGIN, &frame);
+    const bool began = status == VDPL_OK;
+    uint32_t acquired_rows = 0;
+    uint32_t x_bias = 0;
+    uint32_t pixel_xor = 0;
+    uint8_t color_mask = 0;
+    uint8_t preserve_mask = 0;
+    if (began) {
+        for (uint32_t row = 0; row < W3P_VIEW_HEIGHT; ++row) {
+            frame.row = row;
+            status = color->color_frame(
+                host->context, VDPL_COLOR_FRAME_ROW, &frame);
+            if (status != VDPL_OK) break;
+            if (frame.data == nullptr ||
+                (reinterpret_cast<uintptr_t>(frame.data) & 3u) != 0 ||
+                frame.x != W3P_VIEW_X || frame.y != W3P_VIEW_Y ||
+                frame.width != W3P_VIEW_WIDTH ||
+                frame.height != W3P_VIEW_HEIGHT || frame.row != row ||
+                frame.native_format != VDPL_NATIVE_RGB222 ||
+                frame.row_bytes < frame.x_bias + W3P_VIEW_WIDTH ||
+                frame.pixel_xor != 2 || frame.color_mask != 0x3fu ||
+                frame.preserve_mask != 0xc0u) {
+                status = VDPL_E_FORMAT;
+                break;
+            }
+            if (row == 0) {
+                x_bias = frame.x_bias;
+                pixel_xor = frame.pixel_xor;
+                color_mask = static_cast<uint8_t>(frame.color_mask);
+                preserve_mask = static_cast<uint8_t>(frame.preserve_mask);
+            } else if (frame.x_bias != x_bias ||
+                       frame.pixel_xor != pixel_xor ||
+                       frame.color_mask != color_mask ||
+                       frame.preserve_mask != preserve_mask) {
+                status = VDPL_E_FORMAT;
+                break;
+            }
+            rows[row] = reinterpret_cast<uintptr_t>(frame.data);
+            ++acquired_rows;
+        }
+    }
+    if (status == VDPL_OK) {
+        emit_fizzle(next, target, nullptr, rows, x_bias, pixel_xor,
+                    color_mask, preserve_mask);
+    }
+    for (uint32_t row = 0; row < acquired_rows; ++row) rows[row] = 0;
+    if (began) preserve_first_error(
+        status, color->color_frame(
+            host->context, VDPL_COLOR_FRAME_END, &frame));
+    preserve_first_error(
+        status, host->buffer_release(host->context, workspace.lease));
+    return status;
+}
+
+int32_t fizzle_step(const vdplet_host_v1 *host,
+                    const vdplet_request_v1 *request) {
+    const int32_t ready = require_published_frame(host, request);
+    if (ready != VDPL_OK) return ready;
+    if (!g_module.fizzle_active ||
+        g_module.fizzle_step > W3P_FIZZLE_DISPLAY_FRAMES)
+        return VDPL_E_INIT;
+    const bool direct_rows =
+        g_module.resources.flags == W3P_ARG_FLAG_DIRECT_ROWS;
+    const uint8_t surface = direct_rows
+        ? static_cast<uint8_t>(g_module.fizzle_step & 1u) : 0;
+    ModuleState::FizzleCursor next = g_module.fizzle[surface];
+    const uint8_t target_step = g_module.fizzle_step <
+        W3P_FIZZLE_DISPLAY_FRAMES
+        ? static_cast<uint8_t>(g_module.fizzle_step + 1u)
+        : static_cast<uint8_t>(W3P_FIZZLE_DISPLAY_FRAMES);
+    const uint32_t target = fizzle_target(target_step);
+    const int32_t status = direct_rows
+        ? fizzle_direct(host, target, next)
+        : fizzle_copied(host, target, next);
+    if (status != VDPL_OK) return status;
+    g_module.fizzle[surface] = next;
+    ++g_module.fizzle_step;
+    if (g_module.fizzle_step > W3P_FIZZLE_DISPLAY_FRAMES)
+        g_module.fizzle_active = 0;
+    return VDPL_OK;
+}
+
 int32_t reset(const vdplet_host_v1 *host,
               const vdplet_request_v1 *request) {
     const int32_t status = require_matching_descriptor(host, request);
@@ -383,10 +588,12 @@ int32_t vdplet_entry(const vdplet_host_v1 *host,
         return configure(host, request);
     case W3P_ENTRY_APPLY_AND_RENDER:
         return apply_and_render(host, request);
+    case W3P_ENTRY_FIZZLE_BEGIN:
+        return fizzle_begin(host, request);
+    case W3P_ENTRY_FIZZLE_STEP:
+        return fizzle_step(host, request);
     case W3P_ENTRY_RESET:
         return reset(host, request);
-    case W3P_ENTRY_FIZZLE_BEGIN:
-    case W3P_ENTRY_FIZZLE_STEP:
     case W3P_ENTRY_SELFTEST:
     default:
         return VDPL_E_UNSUPPORTED;

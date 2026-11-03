@@ -9,6 +9,10 @@
 ; audio live behind a permanently frozen visible frame. Fail closed instead
 ; and preserve the native result in the ordinary post-MOS diagnostic.
 W3D_VDPLET_RENDER_RETRY_LIMIT: equ 1
+W3D_VDPLET_FIZZLE_OP_NONE:     equ 0
+W3D_VDPLET_FIZZLE_OP_BEGIN:    equ 1
+W3D_VDPLET_FIZZLE_OP_DISPLAY:  equ 2
+W3D_VDPLET_FIZZLE_OP_SYNC:     equ 3
 
 ; Open the shared runtime/module, construct application-owned workspace and
 ; descriptor buffers, and CONFIG the module. The keyboard packet callback is
@@ -80,6 +84,64 @@ w3d_vdplet_submit_level_reset:
     call w3d_vdplet_reset_module
     ret c
     jp w3d_vdplet_submit_dirty_world_render
+
+; Fizzle RUNs share the global one-producer owner but deliberately do not use
+; the old standalone event-2 mailbox. Requested VDPL DONE is the only
+; completion, and the app decides whether this operation needs one C3.
+w3d_vdplet_submit_fizzle_begin:
+    ld a,W3D_VDPLET_FIZZLE_OP_BEGIN
+    ld bc,W3P_ENTRY_FIZZLE_BEGIN
+    jr w3d_vdplet_submit_fizzle_run
+
+w3d_vdplet_submit_fizzle_display:
+    ld a,W3D_VDPLET_FIZZLE_OP_DISPLAY
+    ld bc,W3P_ENTRY_FIZZLE_STEP
+    jr w3d_vdplet_submit_fizzle_run
+
+w3d_vdplet_submit_fizzle_sync:
+    ld a,W3D_VDPLET_FIZZLE_OP_SYNC
+    ld bc,W3P_ENTRY_FIZZLE_STEP
+
+w3d_vdplet_submit_fizzle_run:
+    ld (w3d_vdplet_fizzle_operation),a
+    ld a,W3D_VDPLET_STAGE_FIZZLE
+    ld (w3d_vdplet_stage),a
+    push bc
+    ld hl,0
+    call w3d_mark_fizzle_submitted
+    pop bc
+    ret c
+    ld de,W3D_VDPLET_ARGUMENT_BUFFER
+    call w3d_vdplet_send_run
+    ret nc
+    push af
+    call w3d_cancel_fizzle_submission
+    xor a
+    ld (w3d_vdplet_fizzle_operation),a
+    pop af
+    scf
+    ret
+
+; Consume exactly one begin/display/sync reply. A displayed slice gets one C3;
+; the final sync writes the newly hidden surface and intentionally does not
+; swap. The death state machine owns the semantic transition after success.
+w3d_vdplet_consume_fizzle_completion:
+    call w3d_vdplet_wait_run
+    jr c,@fatal
+    call w3d_cancel_fizzle_submission
+    ld a,(w3d_vdplet_fizzle_operation)
+    cp W3D_VDPLET_FIZZLE_OP_DISPLAY
+    call z,w3d_vdu_present
+    call w3d_death_accept_vdplet_fizzle_completion
+    xor a
+    ld (w3d_vdplet_fizzle_operation),a
+    ret
+@fatal:
+    call w3d_vdplet_select_failure_message
+    ld a,1
+    ld (w3d_callback_error),a
+    ld (w3d_exit_requested),a
+    ret
 
 ; Freeze or recover the exact batch, upload it, then arm application ownership
 ; before emitting asynchronous APPLY_AND_RENDER. The first submission consumes
@@ -211,3 +273,5 @@ w3d_vdplet_failure_callback:
 
 w3d_vdplet_render_retry_count:
     db 0
+w3d_vdplet_fizzle_operation:
+    db W3D_VDPLET_FIZZLE_OP_NONE

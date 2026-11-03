@@ -22,7 +22,7 @@ SDK = Path("/Agon/mystuff/agon-vdplet/build/vdpl-014/baseline")
 SDK_PYTHON = Path("/Agon/mystuff/agon-vdplet/.venv/bin/python")
 TOOLCHAIN = Path("/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin")
 EXPECTED_PACKAGE_SHA256 = (
-    "fdd78204aabf94900415c0741fb98da7ee4035781fb3e957784522d2277ec1bc"
+    "266f809ff76e56733251da202e5c4747cd9c12d247d799d486471a262c0404b7"
 )
 FRAME_BYTES = 76800
 HUD_MANIFEST = (
@@ -170,6 +170,11 @@ def main() -> None:
             stack_for("require_matching_descriptor") +
             stack_for("copy_descriptor")
         ),
+        # fizzle_step/fizzle_direct are intentionally inlined into entry in
+        # the pinned optimized build; emit_fizzle remains the only callee.
+        "entry -> inlined direct fizzle step -> LFSR emitter": (
+            stack_for("vdplet_entry") + stack_for("emit_fizzle")
+        ),
     }
     if max(call_chains.values()) > 2048:
         raise AssertionError(f"production source call chain exceeds limit: {call_chains}")
@@ -196,7 +201,7 @@ def main() -> None:
         ),
         "module_frame_sha256": sha(published_frame),
         "module_lifecycle": (
-            "CONFIG/APPLY/RESET/FINI plus publication and asset retry"
+            "CONFIG/APPLY/FIZZLE/RESET/FINI plus publication and asset retry"
         ),
         "target_fixture_files": len(fixture_files),
         "target_fixture_bytes": sum(path.stat().st_size for path in fixture_files),

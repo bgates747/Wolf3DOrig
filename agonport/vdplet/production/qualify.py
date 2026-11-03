@@ -30,13 +30,21 @@ STATUS_BAR_ID = 0x4062
 ENTRY_CONFIG = 0
 ENTRY_APPLY_AND_RENDER = 1
 ENTRY_FIZZLE_BEGIN = 2
+ENTRY_FIZZLE_STEP = 3
 ENTRY_RESET = 4
 
 VDPL_E_ARGUMENT = 1
 VDPL_E_BUFFER = 2
+VDPL_E_BUSY = 7
 VDPL_E_HANDLE = 8
-VDPL_E_UNSUPPORTED = 9
 VDPL_E_INIT = 12
+
+VIEW_X = 32
+VIEW_Y = 20
+VIEW_WIDTH = 256
+VIEW_HEIGHT = 160
+FIZZLE_DISPLAY_FRAMES = 60
+FIZZLE_RED = 2
 
 
 def rgb222_frame(values: bytes) -> bytes:
@@ -52,6 +60,23 @@ def rgb222_frame(values: bytes) -> bytes:
 
 def ppm(path: Path, pixels: bytes) -> None:
     path.write_bytes(b"P6\n320 240\n255\n" + pixels)
+
+
+def fizzle_to(frame: bytearray, state: int, emitted: int,
+              target_count: int) -> tuple[int, int]:
+    """Apply the original 17-bit Wolf fizzle order through target_count."""
+    while emitted < target_count:
+        low = state & 1
+        y = ((state & 0xff) - 1) & 0xff
+        x = (state >> 8) & 0x1ff
+        state >>= 1
+        if low:
+            state ^= 0x12000
+        if x >= VIEW_WIDTH or y >= VIEW_HEIGHT:
+            continue
+        frame[(VIEW_Y + y) * 320 + VIEW_X + x] = FIZZLE_RED
+        emitted += 1
+    return state, emitted
 
 
 def asset_files() -> list[tuple[int, Path]]:
@@ -185,11 +210,66 @@ def qualify(engine: str, firmware: Path, backend: Path, output: Path,
             "native missing-asset error, altered refusal, exact retry and second oracle frame"
         )
 
+        # Render the same logical retry state through one fresh generation so both
+        # physical surfaces begin the transition with identical pixels.
+        sync_update = bytearray(retry_update)
+        if len(sync_update) < 14 or sync_update[12:14] != b"\x02\x00":
+            raise AssertionError("retry generation field drift")
+        sync_update[12:14] = b"\x03\x00"
+        target.send(upload(UPDATE_ID, bytes(sync_update)))
+        target.run(handle, ENTRY_APPLY_AND_RENDER, ARGUMENT_ID)
+        target.send(bytes((23, 0, 195)))
+        compare_capture(target, expected_retry, "fizzle synchronized source")
+
+        target.run(handle, ENTRY_FIZZLE_BEGIN, ARGUMENT_ID)
+        if target.capture()[2] != retry_rgb:
+            raise AssertionError("FIZZLE_BEGIN changed the visible surface")
         target.run(handle, ENTRY_FIZZLE_BEGIN, ARGUMENT_ID,
-                   expected=VDPL_E_UNSUPPORTED)
+                   expected=VDPL_E_BUSY)
         report["expected_errors"].append(
-            {"case": "deferred fizzle entry", "error": VDPL_E_UNSUPPORTED}
+            {"case": "overlapping fizzle begin", "error": VDPL_E_BUSY}
         )
+
+        expected_fizzle = bytearray(expected_retry)
+        fizzle_state = 1
+        fizzle_emitted = 0
+        fizzle_cycles_before = target.lib.flexe_vdp_cycles()
+        fizzle_started = time.monotonic()
+        checkpoints = {1, 15, 30, 45, 60}
+        for step in range(1, FIZZLE_DISPLAY_FRAMES + 1):
+            target_count = VIEW_WIDTH * VIEW_HEIGHT * step // FIZZLE_DISPLAY_FRAMES
+            fizzle_state, fizzle_emitted = fizzle_to(
+                expected_fizzle, fizzle_state, fizzle_emitted, target_count
+            )
+            target.run(handle, ENTRY_FIZZLE_STEP, ARGUMENT_ID)
+            if step == 1 and target.capture()[2] != retry_rgb:
+                raise AssertionError("first fizzle slice became visible before C3")
+            target.send(bytes((23, 0, 195)))
+            if step in checkpoints:
+                pixels = compare_capture(
+                    target, bytes(expected_fizzle), f"fizzle slice {step}"
+                )
+                ppm(output / f"production-fizzle-{step:02d}.ppm", pixels)
+
+        # The app-paced ABI uses one final, deliberately unpresented step to
+        # synchronize the other physical surface before ordinary rendering resumes.
+        target.run(handle, ENTRY_FIZZLE_STEP, ARGUMENT_ID)
+        final_rgb = compare_capture(target, bytes(expected_fizzle), "fizzle final sync")
+        if expected_fizzle[VIEW_Y * 320 + VIEW_X] != FIZZLE_RED:
+            raise AssertionError("fizzle oracle did not fill the viewport")
+        target.run(handle, ENTRY_FIZZLE_STEP, ARGUMENT_ID,
+                   expected=VDPL_E_INIT)
+        report["expected_errors"].append(
+            {"case": "fizzle step after completion", "error": VDPL_E_INIT}
+        )
+        fizzle_elapsed = time.monotonic() - fizzle_started
+        fizzle_cycles_after = target.lib.flexe_vdp_cycles()
+        ppm(output / "production-fizzle-final.ppm", final_rgb)
+        report["checks"].append(
+            "app-paced exact 17-bit fizzle: 60 visible slices, hidden-before-C3, "
+            "five whole-frame oracle checkpoints and final no-swap surface sync"
+        )
+
         target.run(handle, ENTRY_RESET, ARGUMENT_ID)
         target.run(handle, ENTRY_APPLY_AND_RENDER, ARGUMENT_ID,
                    expected=VDPL_E_INIT)
@@ -217,6 +297,8 @@ def qualify(engine: str, firmware: Path, backend: Path, output: Path,
             expected_error_count=len(report["expected_errors"]),
             render_reply_seconds=round(elapsed, 6),
             render_vdp_cycles=cycles_after - cycles_before,
+            fizzle_reply_seconds=round(fizzle_elapsed, 6),
+            fizzle_vdp_cycles=fizzle_cycles_after - fizzle_cycles_before,
             stack_free_before=stack_before,
             stack_free_after=stack_after,
             stack_minimum_free_bytes_after_exercised_path=stack_after,

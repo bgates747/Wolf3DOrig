@@ -85,7 +85,7 @@ struct RenderStats {
 };
 
 // Composes the 320x240 RGB222 frame at workspace offset zero and leaves the
-// exact DDA metadata in the schema-1 scratch regions. This tranche covers the
+// exact DDA metadata in the schema-2 scratch regions. This tranche covers the
 // play surround, walls, moving doors, actors/statics, view weapon and HUD.
 RenderDetail render_world(
     const WorldMirror &world, const RenderResources &resources,

@@ -183,9 +183,11 @@ int32_t color_frame(void *opaque, uint32_t operation,
         return VDPL_E_FORMAT;
     if (operation == VDPL_COLOR_FRAME_BEGIN) {
         ++context.color_begin_calls;
-        if (context.color_active || frame->x != 0 || frame->y != 0 ||
-            frame->width != W3P_SCREEN_WIDTH ||
-            frame->height != W3P_SCREEN_HEIGHT) return VDPL_E_ARGUMENT;
+        if (context.color_active || frame->x < 0 || frame->y < 0 ||
+            frame->width == 0 || frame->height == 0 ||
+            static_cast<uint32_t>(frame->x) + frame->width > W3P_SCREEN_WIDTH ||
+            static_cast<uint32_t>(frame->y) + frame->height > W3P_SCREEN_HEIGHT)
+            return VDPL_E_ARGUMENT;
         context.color_active = true;
         context.color_lease = context.next_lease++;
         frame->lease = context.color_lease;
@@ -195,14 +197,14 @@ int32_t color_frame(void *opaque, uint32_t operation,
         return VDPL_E_HANDLE;
     if (operation == VDPL_COLOR_FRAME_ROW) {
         ++context.color_row_calls;
-        if (frame->row >= W3P_SCREEN_HEIGHT) return VDPL_E_BOUNDS;
+        if (frame->row >= frame->height) return VDPL_E_BOUNDS;
         if (frame->row == static_cast<uint32_t>(context.color_fail_row))
             return VDPL_E_FORMAT;
         frame->native_format = VDPL_NATIVE_RGB222;
         frame->data = context.native_hidden.data() +
-            frame->row * W3P_SCREEN_WIDTH;
+            (static_cast<uint32_t>(frame->y) + frame->row) * W3P_SCREEN_WIDTH;
         frame->row_bytes = W3P_SCREEN_WIDTH;
-        frame->x_bias = 0;
+        frame->x_bias = static_cast<uint32_t>(frame->x);
         frame->pixel_xor = 2;
         frame->color_mask = 0x3f;
         frame->preserve_mask = 0xc0;
@@ -221,6 +223,35 @@ int32_t color_frame(void *opaque, uint32_t operation,
         return VDPL_OK;
     }
     return VDPL_E_ARGUMENT;
+}
+
+std::vector<std::pair<uint16_t, uint16_t>> fizzle_order() {
+    std::vector<std::pair<uint16_t, uint16_t>> order;
+    uint32_t state = 1;
+    do {
+        const uint16_t y = static_cast<uint16_t>(
+            ((state & 0xffu) - 1u) & 0xffu);
+        const uint16_t x = static_cast<uint16_t>((state >> 8) & 0x1ffu);
+        const bool low_bit = (state & 1u) != 0;
+        state >>= 1;
+        if (low_bit) state ^= 0x12000u;
+        if (x < W3P_VIEW_WIDTH && y < W3P_VIEW_HEIGHT)
+            order.emplace_back(x, y);
+    } while (state != 1u);
+    return order;
+}
+
+std::vector<uint8_t> expected_fizzle(
+    const std::vector<uint8_t> &base,
+    const std::vector<std::pair<uint16_t, uint16_t>> &order,
+    uint32_t target) {
+    std::vector<uint8_t> expected = base;
+    for (uint32_t index = 0; index < target; ++index) {
+        const auto [x, y] = order[index];
+        expected[(W3P_VIEW_Y + y) * W3P_SCREEN_WIDTH + W3P_VIEW_X + x] =
+            W3P_FIZZLE_RED;
+    }
+    return expected;
 }
 
 vdplet_request_v1 request(uint16_t operation, uint16_t entry = 0,
@@ -513,8 +544,68 @@ int main(int argc, char **argv) {
         auto fizzle = request(
             VDPL_RUN, W3P_ENTRY_FIZZLE_BEGIN,
             kArgumentId, W3P_ARGUMENT_BYTES);
-        expect("unimplemented fizzle", vdplet_entry(&host, &fizzle),
-               VDPL_E_UNSUPPORTED);
+        auto fizzle_step = request(
+            VDPL_RUN, W3P_ENTRY_FIZZLE_STEP,
+            kArgumentId, W3P_ARGUMENT_BYTES);
+        const std::vector<uint8_t> fizzle_base = context.hidden;
+        const std::vector<uint8_t> native_base = context.native_hidden;
+        std::vector<uint8_t> surface0 = native_base;
+        std::vector<uint8_t> surface1 = native_base;
+        const auto order = fizzle_order();
+        require(order.size() == W3P_VIEW_WIDTH * W3P_VIEW_HEIGHT,
+                "fizzle LFSR did not cover the viewport exactly once");
+        expect("FIZZLE_BEGIN", vdplet_entry(&host, &fizzle), VDPL_OK);
+        require(context.hidden == fizzle_base,
+                "FIZZLE_BEGIN changed the published frame");
+        expect("overlapping FIZZLE_BEGIN", vdplet_entry(&host, &fizzle),
+               VDPL_E_BUSY);
+
+        context.native_hidden = surface0;
+        context.color_fail_row = 17;
+        expect("failed first FIZZLE_STEP",
+               vdplet_entry(&host, &fizzle_step), VDPL_E_FORMAT);
+        context.color_fail_row = -1;
+        expect("retried first FIZZLE_STEP",
+               vdplet_entry(&host, &fizzle_step), VDPL_OK);
+        surface0 = context.native_hidden;
+        uint32_t target = W3P_VIEW_WIDTH * W3P_VIEW_HEIGHT /
+            W3P_FIZZLE_DISPLAY_FRAMES;
+        require(context.hidden == expected_fizzle(fizzle_base, order, target),
+                "first fizzle slice or exact retry differed from oracle");
+
+        for (uint32_t step = 1; step < W3P_FIZZLE_DISPLAY_FRAMES; ++step) {
+            context.native_hidden = (step & 1u) != 0 ? surface1 : surface0;
+            expect("FIZZLE_STEP", vdplet_entry(&host, &fizzle_step), VDPL_OK);
+            if ((step & 1u) != 0) surface1 = context.native_hidden;
+            else surface0 = context.native_hidden;
+            target = W3P_VIEW_WIDTH * W3P_VIEW_HEIGHT * (step + 1u) /
+                W3P_FIZZLE_DISPLAY_FRAMES;
+            require(context.hidden == expected_fizzle(fizzle_base, order, target),
+                    "cumulative fizzle slice differed from oracle");
+        }
+
+        // The displayed sixtieth slice leaves the other physical surface one
+        // slice behind. One final no-swap STEP mirrors full red into it.
+        context.native_hidden = surface0;
+        expect("FIZZLE_STEP mirror sync",
+               vdplet_entry(&host, &fizzle_step), VDPL_OK);
+        surface0 = context.native_hidden;
+        const auto all_red = expected_fizzle(
+            fizzle_base, order, W3P_VIEW_WIDTH * W3P_VIEW_HEIGHT);
+        require(context.hidden == all_red,
+                "fizzle mirror sync did not finish the hidden surface");
+        context.native_hidden = surface1;
+        vdplet_color_frame_v1 rebuild = {
+            sizeof(rebuild), 0, 0, 0, W3P_SCREEN_WIDTH, W3P_SCREEN_HEIGHT,
+            0, 0, nullptr, 0, 0, 0, 0, 0};
+        expect("fizzle verification BEGIN",
+               color_frame(&context, VDPL_COLOR_FRAME_BEGIN, &rebuild), VDPL_OK);
+        expect("fizzle verification END",
+               color_frame(&context, VDPL_COLOR_FRAME_END, &rebuild), VDPL_OK);
+        require(context.hidden == all_red,
+                "displayed fizzle surface was not fully red");
+        expect("FIZZLE_STEP after completion",
+               vdplet_entry(&host, &fizzle_step), VDPL_E_INIT);
         expect("RESET", vdplet_entry(&host, &reset), VDPL_OK);
         expect("apply after RESET", vdplet_entry(&host, &apply), VDPL_E_INIT);
         expect("FINI", vdplet_entry(&host, &fini), VDPL_OK);

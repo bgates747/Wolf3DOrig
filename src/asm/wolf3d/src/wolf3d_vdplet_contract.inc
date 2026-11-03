@@ -4,7 +4,7 @@
 W3P_ARGUMENT_MAGIC:                equ 0x41503357   ; "W3PA" little-endian
 W3P_BATCH_MAGIC:                   equ 0x55443357   ; "W3DU" little-endian
 W3P_MODULE_ID:                     equ 0x31503357   ; "W3P1" production renderer identity
-W3P_MODULE_RELEASE:                equ 0x10101      ; module release 1.1.1
+W3P_MODULE_RELEASE:                equ 0x10200      ; module release 1.2.0
 W3P_SCHEMA_VERSION:                equ 2            ; wire schema, independent of module release
 W3P_REQUIRED_CAPABILITIES:         equ 0x101        ; buffers plus direct colour rows
 W3P_ENTRY_CONFIG:                  equ 0            ; validate resource descriptor
@@ -34,6 +34,12 @@ W3P_DEFAULT_SPRITE_BASE:           equ 0x2000       ; resident sprite texture bu
 W3P_DEFAULT_HUD_BASE:              equ 0x4000       ; resident HUD chunk buffers
 W3P_SCREEN_WIDTH:                  equ 0x140        ; RGB222 frame width
 W3P_SCREEN_HEIGHT:                 equ 0xF0         ; RGB222 frame height
+W3P_VIEW_X:                        equ 0x20         ; physical viewport left
+W3P_VIEW_Y:                        equ 0x14         ; physical viewport top
+W3P_VIEW_WIDTH:                    equ 0x100        ; death-fizzle viewport width
+W3P_VIEW_HEIGHT:                   equ 0xA0         ; death-fizzle viewport height
+W3P_FIZZLE_DISPLAY_FRAMES:         equ 0x3C         ; one second of app-paced 60 Hz presentation
+W3P_FIZZLE_RED:                    equ 2            ; RGB222(2,0,0), Wolf palette index 4
 W3P_FRAME_BYTES:                   equ 0x12C00      ; 320*240
 W3P_WALL_HEIGHT_OFFSET:            equ 0x12C00      ; 256 signed 32-bit heights
 W3P_WALL_HEIGHT_BYTES:             equ 0x400        ; wall-height scratch
