@@ -21,35 +21,62 @@ nonblocking transition lifecycle: visible time/ratio count-up, skip-to-final,
 500-point par seconds, 10,000-point 100% awards, the secret-floor 15,000-point
 award, original tally sounds, final score/life effects, and persistent
 per-floor `LevelRatios`. Escape must retain priority while destination loading
-and presentation overlap. Implementation and the 128-check intermission plus
-32-case score regressions pass. Remaining close gate: accept staged ordinary
+and presentation overlap. Implementation and the 135-check intermission plus
+32-case score regressions pass on the direct target. Remaining close gate:
+accept staged ordinary
 count-up/skip/next-floor and secret-floor score presentation.
 
 [ ] 13. Replace the generic Episode 1 victory acknowledgment with the original
 shareware path: in-world victory/BJ sequence, total time and eight-floor ratio
 averages, Episode 1 ending/shareware text, acknowledgment, high-score handoff,
-and shell return. Paid-episode death cameras/endings are out of scope.
+and shell return. Paid-episode death cameras/endings are out of scope. The BJ
+state graph, totals arithmetic, shareware-text handoff, and target regression
+are complete. Remaining close gate: staged visual acceptance of the complete
+E1L9 sequence and return to the shell.
 
 [ ] 7. Implement the original seven-entry high-score table, qualification and
 name entry, score/floor display, control-panel view, game-over/victory handoff,
-and a versioned, corruption-safe Agon persistence file.
+and a versioned, corruption-safe Agon persistence file. The table, ordering,
+name editor, timed non-qualifying path, screen, handoffs, and transactional
+482-byte persistence image pass 62/62 direct-target checks. Remaining close
+gate: visual acceptance of qualifying and non-qualifying flows.
 
 [ ] 14. Restore the original in-game control-panel and pause flow in place of
 temporary gameplay-Escape-to-MOS behavior. Support resume, end game, and an
 explicit clean Quit to MOS while preserving the common asynchronous Escape,
-mode-restoration, and VDPlet-teardown guarantees.
+mode-restoration, and VDPlet-teardown guarantees. The in-game panel, source
+row substitutions, resume, confirmed End Game, New Game, and clean Quit paths
+pass the 131-check shell target fixture. Remaining close gate: one batched
+visual pause/resume/end-game/quit review.
 
 [ ] 15. Implement the ten-slot save/load menu and a versioned Agon save format
 which reconstructs VDP state from complete authoritative eZ80 simulation state
-and rejects truncated/incompatible files safely.
+and rejects truncated/incompatible files safely. The transactional state image,
+exact-length ten-slot MOS wrapper, 32-byte descriptions, control-panel flow,
+deferred canonical-level restore, and direct eZ80 corruption/round-trip fixture
+are implemented. The image also preserves the original level-entry score
+checkpoint used by death/restart, and rejects checksum-consistent tile maps
+whose door references could escape the staged door table. All ten transactional
+direct-target save-image cases pass. Remaining gates are staged visual
+save/load and continuation checks during combat, doors,
+pushwalls, floor transitions, and death.
 
 [ ] 16. Complete the original-facing control-panel pages: Sound, Control,
 Change View, Read This/help, View Scores/End Game state, and Back to Game.
 Translate or visibly disable DOS-only choices rather than misrepresent them.
+The exact ten-row source order, startup/in-game substitutions, local Escape,
+in-game New Game, persistent SFX toggle, real key guide, fixed-view disclosure,
+and concise help page are implemented and assemble cleanly. Remaining close
+gate: one batched visual review; the shared 131-check shell target fixture is
+green.
 
 [ ] 17. Implement the original attract loop—15-second title, 10-second
 credits, 10-second high scores, and four deterministic Episode 1 demos—with
-input entering the control panel and no persistent-state mutation.
+input entering the control panel and no persistent-state mutation. The three
+source-timed pages, authentic credits art, input handoff, and live Back to Demo
+row are implemented with direct-fixture coverage. The bundled WL1 v1.4 upload
+archive contains no external `DEMO?.WL1` files, so reconstructing and proving
+four deterministic demo input streams remains open.
 
 [ ] 6. Implement music playback as a separate subsystem from the accepted
 sound-effects implementation, preserving original Episode 1 title/menu,
