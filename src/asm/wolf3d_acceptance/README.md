@@ -49,6 +49,15 @@ patched identically. Escape retains the production clean-exit path.
 `prepare.py` writes an `expected.json` manifest compatible with the existing
 VDPlet profile stager. These are review artifacts, not release payloads.
 
+After generation, stage all seven hash-pinned, stopped Oryx profiles with:
+
+```bash
+.venv/bin/python src/asm/wolf3d_acceptance/scripts/stage_oryx.py
+```
+
+The stager replaces only these ignored acceptance profiles, verifies every
+runtime/payload hash, and never launches a GUI or reserves Oryx by itself.
+
 ## Oryx visual review
 
 The currently prepared stopped profiles live under:

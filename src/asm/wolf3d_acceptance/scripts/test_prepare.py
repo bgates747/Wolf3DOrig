@@ -13,6 +13,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(PROJECT / "agonport/tools/wolf3d_assets"))
 
 import prepare  # noqa: E402
+import stage_oryx  # noqa: E402
 from formats.level_package import ACTOR_SIZE, DOOR_SIZE, parse_package  # noqa: E402
 
 
@@ -38,6 +39,10 @@ class AcceptancePackageTests(unittest.TestCase):
             [False, False, False, True, False, False, False],
         )
         self.assertFalse(prepare.SCENARIOS[3].one_hit_hans)
+        self.assertEqual(
+            stage_oryx.SCENARIOS,
+            tuple(scenario.name for scenario in prepare.SCENARIOS),
+        )
 
     def test_pushwall_pose_faces_real_e1l1_secret_wall(self) -> None:
         scenario = prepare.SCENARIOS[0]

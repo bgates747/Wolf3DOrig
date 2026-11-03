@@ -266,7 +266,7 @@ application backends assemble. These quick keys and Pause are required
 behavior, not optional DOS hardware configuration; TODO 14 now retains only
 the batched visual/input acceptance gate.
 
-Status 2026-11-03: the latest production shell passes 581/581 checks, the
+Status 2026-11-03: the latest production shell passes 595/595 checks, the
 physical-keymap/player-combat target passes 492/492, and callback/death passes
 228/228. The open acceptance gate is one visual/input pass through Pause,
 pages, save/load, End Game, and Quit. Remembered-slot F8/F9 now reproduce the
@@ -441,18 +441,32 @@ use the same Agon text renderer as the full slot page. First-use fallback,
 slot identity, I/O, sound, and accept/cancel behavior are unchanged. Oryx
 generation 177 passes all 595 direct shell checks.
 
+Actor-visibility correction, 2026-11-03: the write-only renderer split could
+leave a previously rendered `ACTIVE_NO` actor dependent on current area
+connectivity, allowing it to sleep again after a door disconnected the area.
+Production now scans dormant actors only at actual render-submission
+boundaries. A valid connected actor with a drawable state is permanently
+promoted after its physical center passes the existing player-facing CPU
+projection and an unobstructed `CheckLine`. Noise and actor-facing
+`CheckSight` are deliberately excluded because either can detect behind the
+player and create a false permanent wake-up. Oryx generation 178 passes
+624/624 direct-eZ80 checks covering promotion, persistence, behind-player,
+wall, and disconnected-area rejection. A deliberately pessimistic 1,000-pass
+PRT1 benchmark measured 158 ms total, or 0.158 ms for one complete visible
+promotion at a render boundary. Both production backends rebuild.
+
 Exact open discrepancy ledger, 2026-11-03:
 
-1. `WL_DRAW.C::DrawScaleds` permanently sets `obj->active` when the actor's
-   tile, or an unblocked one of its eight neighboring tiles, is renderer
-   visible. The write-only VDP port currently retains `ACTIVE_NO` and schedules
-   it only while its area is connected. This is correct before first sight but
-   can incorrectly put a previously rendered actor back to sleep after area
-   disconnection. Sound acquisition or `CheckSight` is not an exact substitute:
-   either can wake an actor which the player-facing renderer never saw. Close
-   this with render-cadence authoritative visibility promotion, a conservative
-   documented approximation, or an explicit callback ABI extension; pin both
-   unseen and post-visible disconnected cases and measure the fixed-step cost.
+1. `WL_DRAW.C::DrawScaleds` also accepts an actor when one of its eight
+   neighboring tiles is both open and renderer-visible. DOS obtains that fact
+   from the per-column raycaster's `spotvis`; the write-only port has no such
+   feedback. The accepted CPU promotion instead projects and line-traces the
+   actor's actual physical center. This preserves the persistent behavior
+   without sound/behind-player false positives, but a sprite peeking around a
+   corner may wake slightly later. Checking eight tile centers would still not
+   reproduce sprite-edge `spotvis` and would multiply the render-boundary cost;
+   retain the conservative behavior unless a genuine renderer visibility ABI
+   or an equally exact low-cost CPU predicate is established.
 
 Debug cheats, paid-episode content, obsolete DOS copy protection, VGA palette
 timing exactness, and unavailable hardware configuration choices are not
