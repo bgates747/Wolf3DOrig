@@ -472,18 +472,19 @@ wall, and disconnected-area rejection. A deliberately pessimistic 1,000-pass
 PRT1 benchmark measured 158 ms total, or 0.158 ms for one complete visible
 promotion at a render boundary. Both production backends rebuild.
 
-Exact open discrepancy ledger, 2026-11-03:
+Closed actor-visibility discrepancy, 2026-11-03:
 
 1. `WL_DRAW.C::DrawScaleds` also accepts an actor when one of its eight
    neighboring tiles is both open and renderer-visible. DOS obtains that fact
    from the per-column raycaster's `spotvis`; the write-only port has no such
-   feedback. The accepted CPU promotion instead projects and line-traces the
-   actor's actual physical center. This preserves the persistent behavior
-   without sound/behind-player false positives, but a sprite peeking around a
-   corner may wake slightly later. Checking eight tile centers would still not
-   reproduce sprite-edge `spotvis` and would multiply the render-boundary cost;
-   retain the conservative behavior unless a genuine renderer visibility ABI
-   or an equally exact low-cost CPU predicate is established.
+   feedback. Production now reconstructs that predicate on the eZ80: after a
+   failed center test, it bounds the actor's cached tile, ignores occupied
+   neighbors, and requires both player-facing projection and the authoritative
+   wall/door trace for each of the eight candidate tile centers. The order is
+   adaptive so projected-but-occluded centers trace first while off-screen
+   centers project first. Oryx generation 191 passes 629/629 direct checks;
+   1,000 fully occluded scans take 533 ms and 1,000 line-clear behind-player
+   scans take 421 ms. This closes the prior corner-peek activation difference.
 
 Startup correction, 2026-11-03: the application shell skipped the original
 one-time `WL_INTER.C::PG13` presentation even though its archive art was

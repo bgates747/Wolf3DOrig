@@ -29,7 +29,9 @@ RESULT_VECTOR_OFFSET = 16
 RESULT_PHASE_OFFSET = RESULT_VECTOR_OFFSET + VECTOR_CASE_COUNT
 RESULT_TIMING_OFFSET = RESULT_PHASE_OFFSET + PHASE_COUNT
 RESULT_ACTIVATION_TIMING_OFFSET = RESULT_TIMING_OFFSET + 4
-RESULT_SIZE = RESULT_ACTIVATION_TIMING_OFFSET + 4
+RESULT_NEIGHBOR_ACTIVATION_TIMING_OFFSET = RESULT_ACTIVATION_TIMING_OFFSET + 4
+RESULT_BEHIND_ACTIVATION_TIMING_OFFSET = RESULT_NEIGHBOR_ACTIVATION_TIMING_OFFSET + 4
+RESULT_SIZE = RESULT_BEHIND_ACTIVATION_TIMING_OFFSET + 4
 
 PHASES = {
     1: "eleven-case W3PV oracle corpus",
@@ -250,6 +252,36 @@ def main() -> int:
         )
     else:
         print("PRT1 timing: 1000 render-visible promotions below 1 ms resolution")
+    neighbor_activation_milliseconds = int.from_bytes(
+        payload[
+            RESULT_NEIGHBOR_ACTIVATION_TIMING_OFFSET:
+            RESULT_NEIGHBOR_ACTIVATION_TIMING_OFFSET + 3
+        ],
+        "little",
+    )
+    if neighbor_activation_milliseconds:
+        print(
+            "PRT1 timing: 1000 fully occluded eight-neighbor scans in "
+            f"{neighbor_activation_milliseconds} ms "
+            f"({neighbor_activation_milliseconds / 1000:.3f} ms/pass)"
+        )
+    else:
+        print("PRT1 timing: 1000 eight-neighbor scans below 1 ms resolution")
+    behind_activation_milliseconds = int.from_bytes(
+        payload[
+            RESULT_BEHIND_ACTIVATION_TIMING_OFFSET:
+            RESULT_BEHIND_ACTIVATION_TIMING_OFFSET + 3
+        ],
+        "little",
+    )
+    if behind_activation_milliseconds:
+        print(
+            "PRT1 timing: 1000 line-clear behind-player neighbor scans in "
+            f"{behind_activation_milliseconds} ms "
+            f"({behind_activation_milliseconds / 1000:.3f} ms/pass)"
+        )
+    else:
+        print("PRT1 timing: 1000 behind-player scans below 1 ms resolution")
     return 0
 
 

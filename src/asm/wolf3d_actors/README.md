@@ -58,7 +58,10 @@ diagonal corner rejection, actor door obstruction, the original adjacent-cell
 `MINDIST` CloseDoor boundary at a fully open door, and invalid-state removal.
 Render-boundary checks also pin persistent DrawScaleds-style activation for an
 unobstructed player-facing actor, persistence after area disconnection, and
-rejection behind the player, behind a wall, or in a disconnected area.
+rejection behind the player, behind a wall, or in a disconnected area. They
+also reproduce the source's open-neighbor `spotvis` corner allowance using
+bounded CPU projection/line probes, and time both fully occluded and line-clear
+behind-player worst cases.
 
 Run from any directory:
 
@@ -69,12 +72,14 @@ W3D_RUNTIME_ROOT=/home/smith/Agon/mystuff/Wolf3dOrig \
   /tmp/wolf3d_work/Wolf3dOrig/src/asm/wolf3d_actors/scripts/run_patrol_emulator_regression.py
 ```
 
-The accepted Oryx generation-178 corpus reports 624/624 direct
+The accepted Oryx generation-191 corpus reports 629/629 direct
 production-assembly checks. The 92-frame real E1L1 slot-11/door-8 route
 measured 20 ms total (approximately 0.217 ms per fixed simulation frame).
 A deliberately pessimistic benchmark that resets one centered unobstructed
 actor to dormant before every pass measured 158 ms for 1,000 complete
-render-boundary promotions (0.158 ms per pass).
+render-boundary promotions (0.158 ms per pass). The adaptive neighbor path
+measured 533 ms for 1,000 fully occluded scans (0.533 ms/pass) and 421 ms for
+1,000 line-clear behind-player scans (0.421 ms/pass).
 
 The patrol mailbox is 41 bytes and includes per-case and per-phase mismatch
 counts in addition to the first compact diagnostic. A PRT1 stopwatch reports

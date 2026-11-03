@@ -217,12 +217,15 @@ passes the same CPU projection used by gameplay and an unobstructed
 disconnected areas cannot cause false promotion. Oryx generation 178 passes
 624/624 direct eZ80 checks and measures the deliberately pessimistic visible
 case at 158 ms for 1,000 complete passes (0.158 ms per render boundary). Both
-application backends rebuild. One exact source edge remains explicit: DOS
-could also promote when an open neighboring tile was in `spotvis`; the
-write-only port conservatively waits until the actor center itself is accepted,
-so an actor peeking around a corner may wake slightly later. Reproduce that
-neighbor allowance only if it can retain player-facing semantics without VDP
-read-back or duplicating the full renderer hot path.
+application backends rebuild. The follow-up closes the remaining source edge:
+if the actor center fails, production now probes the eight bounded open
+neighbors around its cached tile with the same projection and authoritative
+wall/door trace, reproducing `spotvis` corner wake-up without VDP read-back.
+Predicate order is adaptive: trace-first after a projected-but-occluded center,
+projection-first after an off-screen center. Oryx generation 191 passes 629/629
+checks and measures 0.533 ms per fully occluded scan and 0.421 ms per line-clear
+behind-player scan; the WL1 starting-area census has at most five dormant
+actors even on Death Incarnate.
 The remembered-slot F8/F9 presentation difference recorded in item 14 is
 closed.
 The startup sweep restored `WL_MAIN.C::DemoLoop`'s call to

@@ -21,7 +21,8 @@
 ; loaded through AGNB and arbitrated once per caught-up simulation quantum.
 ; Episode 1 floor routing, original-looking floor intermissions, and the E1L9
 ; victory return are live. Bosses and the intermission's original count-up/
-; bonus animation are live; projectile parity remains future work. Original
+; bonus animation are live; paid-episode projectile actors remain future work
+; and are not present in the WL1 maps. Original
 ; IMF register streams drive a nonblocking nine-voice VDP music translation.
 ; =============================================================================
 

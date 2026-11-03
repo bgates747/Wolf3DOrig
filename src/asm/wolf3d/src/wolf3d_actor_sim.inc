@@ -209,14 +209,16 @@ w3d_prepare_actor_sight_context:
     ld (w3d_actor_sight_context+W3D_SIGHT_CTX_MADENOISE),a
     ret
 
-; Conservative eZ80 replacement for WL_DRAW.C::DrawScaleds setting
+; Authoritative eZ80 replacement for WL_DRAW.C::DrawScaleds setting
 ; obj->active=true after renderer visibility. Run only at an actual render
 ; submission boundary. A dormant actor is promoted when its current drawable
 ; center is in the accepted player-facing CPU viewport and CheckLine reaches
-; it through a connected area. This deliberately excludes noise and
-; actor-facing CheckSight: either can detect behind the player and would create
-; false persistent promotions. The original's open-neighbor spotvis allowance
-; remains a documented conservative edge difference around corners.
+; it through a connected area. If the center is occluded, reproduce the
+; original spotvis allowance by probing the centers of the eight neighboring
+; tiles around the actor's cached/reserved tile; only open, in-bounds neighbors
+; may substitute. This deliberately excludes noise and actor-facing
+; CheckSight: either can detect behind the player and would create false
+; persistent promotions.
 w3d_promote_render_visible_actors:
     call w3d_prepare_actor_sight_context
     ld a,(w3d_actor_live_head)
@@ -253,16 +255,155 @@ w3d_promote_render_visible_actors:
 
     call w3d_actor_cpu_visible
     or a
-    jr z,@next
+    jr z,@neighbors_projection_first
     ld iy,w3d_actor_sight_context
     call w3d_CheckLine
     or a
+    jr nz,@promote
+    ld a,1
+    jr @neighbors
+@neighbors_projection_first:
+    xor a
+@neighbors:
+    ld (w3d_actor_visibility_trace_first),a
+    call w3d_actor_probe_open_neighbors
+    or a
     jr z,@next
+@promote:
     ld a,W3D_ACTOR_ACTIVE_YES
     ld (ix+W3D_ACTOR_ACTIVE),a
 @next:
     ld a,(w3d_actor_visibility_next)
     jr @loop
+
+; IX points at either the real actor or an eight-byte X/Y probe record.
+; Return A=1 only when the point is both inside the CPU projection and reached
+; by the authoritative wall/door trace.
+w3d_actor_probe_point_visible:
+    call w3d_actor_cpu_visible
+    or a
+    ret z
+    ld iy,w3d_actor_sight_context
+    jp w3d_CheckLine
+
+; Reproduce DrawScaleds' open-neighbor spotvis terms without VDP read-back.
+; The original actor pointer is preserved in IX. Cached tile coordinates are
+; bounded before map access, so malformed edge records fail closed rather than
+; indexing outside the 64x64 tile map.
+w3d_actor_probe_open_neighbors:
+    push ix
+    ld a,(ix+W3D_ACTOR_TILEX)
+    ld (w3d_actor_visibility_tilex),a
+    ld a,(ix+W3D_ACTOR_TILEY)
+    ld (w3d_actor_visibility_tiley),a
+    xor a
+    ld (w3d_actor_visibility_probe_index),a
+@loop:
+    ld a,(w3d_actor_visibility_probe_index)
+    cp 8
+    jp nc,@blocked
+    ld l,a
+    ld h,0
+    inc hl
+    dec.s hl
+    add.s hl,hl
+    ld de,w3d_actor_visibility_neighbor_offsets
+    add hl,de
+
+    ld b,(hl)
+    ld a,(w3d_actor_visibility_tilex)
+    add a,b
+    cp W3D_MAP_SIZE
+    jp nc,@next
+    ld (w3d_actor_visibility_probe_x),a
+    inc hl
+    ld b,(hl)
+    ld a,(w3d_actor_visibility_tiley)
+    add a,b
+    cp W3D_MAP_SIZE
+    jp nc,@next
+    ld (w3d_actor_visibility_probe_y),a
+
+; tilemap[y*64+x] must be open, exactly matching !*(tilespot+offset).
+    ld hl,0
+    ld a,(w3d_actor_visibility_probe_y)
+    ld l,a
+    add.s hl,hl
+    add.s hl,hl
+    add.s hl,hl
+    add.s hl,hl
+    add.s hl,hl
+    add.s hl,hl
+    ld de,0
+    ld a,(w3d_actor_visibility_probe_x)
+    ld e,a
+    add.s hl,de
+    ld de,(w3d_level_tilemap_ptr)
+    add hl,de
+    ld a,(hl)
+    or a
+    jr nz,@next
+
+; Build 16.16 tile-center X/Y in the minimal sight/projection record.
+    xor a
+    ld (w3d_actor_visibility_probe+W3D_ACTOR_X+0),a
+    ld (w3d_actor_visibility_probe+W3D_ACTOR_X+3),a
+    ld (w3d_actor_visibility_probe+W3D_ACTOR_Y+0),a
+    ld (w3d_actor_visibility_probe+W3D_ACTOR_Y+3),a
+    ld a,080h
+    ld (w3d_actor_visibility_probe+W3D_ACTOR_X+1),a
+    ld (w3d_actor_visibility_probe+W3D_ACTOR_Y+1),a
+    ld a,(w3d_actor_visibility_probe_x)
+    ld (w3d_actor_visibility_probe+W3D_ACTOR_X+2),a
+    ld a,(w3d_actor_visibility_probe_y)
+    ld (w3d_actor_visibility_probe+W3D_ACTOR_Y+2),a
+    ld ix,w3d_actor_visibility_probe
+    ld a,(w3d_actor_visibility_trace_first)
+    or a
+    jr z,@projection_first
+    call w3d_actor_probe_neighbor_visible
+    jr @tested
+@projection_first:
+    call w3d_actor_probe_point_visible
+@tested:
+    or a
+    jr nz,@visible
+@next:
+    ld a,(w3d_actor_visibility_probe_index)
+    inc a
+    ld (w3d_actor_visibility_probe_index),a
+    jp @loop
+@visible:
+    pop ix
+    ld a,1
+    ret
+@blocked:
+    pop ix
+    xor a
+    ret
+
+; When the actor center projected but its trace was occluded, trace neighbors
+; first so the common wall/door rejection avoids four fixed-point projection
+; multiplies. If the center itself was outside the viewport, the caller instead
+; selects projection-first probes so actors behind the player avoid needless
+; line walks. Either order requires both predicates before promotion.
+w3d_actor_probe_neighbor_visible:
+    ld iy,w3d_actor_sight_context
+    call w3d_CheckLine
+    or a
+    ret z
+    jp w3d_actor_cpu_visible
+
+; Same eight neighbors as DrawScaleds, expressed as signed (x,y) deltas.
+w3d_actor_visibility_neighbor_offsets:
+    db 0ffh,0ffh
+    db 000h,0ffh
+    db 001h,0ffh
+    db 0ffh,000h
+    db 001h,000h
+    db 0ffh,001h
+    db 000h,001h
+    db 001h,001h
 
 ; Prepare one shared source-time quantum for both the player weapon and every
 ; actor.  The player-combat step runs before the actor pass, just as the DOS
@@ -3181,6 +3322,20 @@ w3d_actor_sight_context:
     ds W3D_SIGHT_CTX_SIZE
 w3d_actor_visibility_next:
     db W3D_SLOT_NONE
+w3d_actor_visibility_probe_index:
+    db 0
+w3d_actor_visibility_tilex:
+    db 0
+w3d_actor_visibility_tiley:
+    db 0
+w3d_actor_visibility_probe_x:
+    db 0
+w3d_actor_visibility_probe_y:
+    db 0
+w3d_actor_visibility_trace_first:
+    db 0
+w3d_actor_visibility_probe:
+    ds 8
 w3d_actor_chase_dodge:
     db 0
 w3d_actor_chase_old_dir:
@@ -3243,7 +3398,8 @@ w3d_actor_kill_tiley:
 ; existing treasure count.  It is not a HUD field.
 w3d_player_kill_count:
     dw 0
-; Edge-published A_DeathScream event for a future audio consumer.
+; Edge-published A_DeathScream diagnostic; the action itself also queues the
+; class-specific positioned sound through the production audio arbiter.
 w3d_actor_death_sound_actor:
     db W3D_SLOT_NONE
 w3d_actor_death_sound_class:

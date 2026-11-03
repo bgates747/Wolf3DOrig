@@ -898,10 +898,11 @@ test_adjacent_actor_close_threshold:
 
 ; DrawScaleds permanently wakes a dormant actor once the renderer accepts it.
 ; The eZ80 port has no read-back channel from its write-only VDP, so pin the
-; conservative CPU-owned replacement: accepted player-facing projection plus
-; unobstructed CheckLine in a connected area. Promotion is persistent; noise,
-; behind-player sight, walls, and disconnected areas must not substitute for
-; renderer visibility.
+; CPU-owned reconstruction: accepted player-facing projection plus
+; unobstructed CheckLine in a connected area, including the original's
+; open-neighbor spotvis allowance. Promotion is persistent; noise,
+; behind-player sight, solid neighbors, and disconnected areas must not
+; substitute for renderer visibility.
 test_render_visibility_activation:
     ld a,phase_obstruction
     ld (test_phase),a
@@ -937,15 +938,43 @@ test_render_visibility_activation:
     ld c,reason_scalar
     call assert_equal
 
-; A wall between the player and actor rejects the otherwise valid projection.
+; A wall column between the player and every actor-neighbor probe rejects the
+; otherwise valid projection.
     ld a,6
     ld (test_detail),a
     call prepare_render_visibility_case
     ld a,1
-    ld (test_tilemap+649),a          ; (9,10), between x=8.5 and x=10.5
+    ld (test_tilemap+585),a          ; (9,9)
+    ld (test_tilemap+649),a          ; (9,10)
+    ld (test_tilemap+713),a          ; (9,11)
     call w3d_promote_render_visible_actors
     ld a,(ix+W3D_ACTOR_ACTIVE)
     ld b,W3D_ACTOR_ACTIVE_NO
+    ld c,reason_scalar
+    call assert_equal
+
+; The actor center is occluded by (9,10), but open neighbor (9,9) is in the
+; player-facing viewport and line-clear. This is the exact DrawScaleds edge
+; that the earlier center-only reconstruction omitted.
+    ld a,9
+    ld (test_detail),a
+    call prepare_render_visibility_case
+    ld hl,00a4000h                   ; y=10.25 avoids a corner-boundary trace
+    ld (w3d_player_pose+4),hl
+    ld a,1
+    ld (test_tilemap+649),a
+    call w3d_actor_cpu_visible
+    ld b,1
+    ld c,reason_scalar
+    call assert_equal
+    ld iy,w3d_actor_sight_context
+    call w3d_CheckLine
+    ld b,0
+    ld c,reason_scalar
+    call assert_equal
+    call w3d_promote_render_visible_actors
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    ld b,W3D_ACTOR_ACTIVE_YES
     ld c,reason_scalar
     call assert_equal
 
@@ -982,6 +1011,60 @@ test_render_visibility_activation:
     call prt_stop_activation
     ld a,(ix+W3D_ACTOR_ACTIVE)
     ld b,W3D_ACTOR_ACTIVE_YES
+    ld c,reason_scalar
+    call assert_equal
+
+; Time the true worst case added by the neighbor allowance: the center and all
+; eight candidate rays are rejected by one complete wall column.
+    ld a,10
+    ld (test_detail),a
+    call prepare_render_visibility_case
+    ld a,1
+    ld (test_tilemap+585),a
+    ld (test_tilemap+649),a
+    ld (test_tilemap+713),a
+    ld hl,1000
+    ld (activation_loops),hl
+    call prt_start
+@neighbor_timing_loop:
+    xor a
+    ld (ix+W3D_ACTOR_ACTIVE),a
+    call w3d_promote_render_visible_actors
+    ld hl,(activation_loops)
+    dec hl
+    ld (activation_loops),hl
+    ld a,h
+    or l
+    jr nz,@neighbor_timing_loop
+    call prt_stop_neighbor_activation
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    ld b,W3D_ACTOR_ACTIVE_NO
+    ld c,reason_scalar
+    call assert_equal
+
+; The opposite worst case is line-clear but entirely behind the player, so
+; every neighbor reaches the projection rejection after its trace.
+    ld a,11
+    ld (test_detail),a
+    call prepare_render_visibility_case
+    ld hl,00c8000h
+    ld (w3d_player_pose+0),hl
+    ld hl,1000
+    ld (activation_loops),hl
+    call prt_start
+@behind_timing_loop:
+    xor a
+    ld (ix+W3D_ACTOR_ACTIVE),a
+    call w3d_promote_render_visible_actors
+    ld hl,(activation_loops)
+    dec hl
+    ld (activation_loops),hl
+    ld a,h
+    or l
+    jr nz,@behind_timing_loop
+    call prt_stop_behind_activation
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    ld b,W3D_ACTOR_ACTIVE_NO
     ld c,reason_scalar
     call assert_equal
     ret
@@ -1367,6 +1450,24 @@ prt_stop_activation:
     ei
     ret
 
+prt_stop_neighbor_activation:
+    di
+    ld a,PRT_OFF
+    out0 (TMR1_CTL+TMR_REG_CTL),a
+    ld hl,(prt_irq_counter)
+    ld (result_neighbor_activation_milliseconds),hl
+    ei
+    ret
+
+prt_stop_behind_activation:
+    di
+    ld a,PRT_OFF
+    out0 (TMR1_CTL+TMR_REG_CTL),a
+    ld hl,(prt_irq_counter)
+    ld (result_behind_activation_milliseconds),hl
+    ei
+    ret
+
 prt_irq_install:
     di
     ld hl,0
@@ -1641,6 +1742,10 @@ result_phase_errors:        ds 6
 result_e1l1_milliseconds:   dl 0
                             db 0
 result_activation_milliseconds: dl 0
+                            db 0
+result_neighbor_activation_milliseconds: dl 0
+                            db 0
+result_behind_activation_milliseconds: dl 0
                             db 0
 result_end:
 
