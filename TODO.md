@@ -83,9 +83,16 @@ Change View, Read This/help, View Scores/End Game state, and Back to Game.
 Translate or visibly disable DOS-only choices rather than misrepresent them.
 The exact ten-row source order, startup/in-game substitutions, local Escape,
 in-game New Game, persistent SFX toggle, real key guide, fixed-view disclosure,
-and concise help page are implemented and assemble cleanly. Remaining close
-gate: one batched visual review; the shared 559-check shell target fixture is
-green.
+and ordinary control pages are implemented. A residual archive/source audit
+corrected the stale claim that the concise resident Read This page was enough:
+production now renders all 41 canonical `HELPART` pages from VGAGRAPH chunk
+150 with the original font, frame art, embedded graphics, wrapping, colors,
+and page numbers. `ShowArticle` navigation, CORNER music, local Escape, damaged
+container fallback, and complete on-exit VDP-buffer reclamation are integrated;
+the 2.6 MiB page container loads only while the article is open. Host contracts
+pass and both application backends assemble. Remaining close gate: run the
+expanded direct shell fixture and visually review the complete article plus
+the other control-panel pages in the next batched Oryx lease.
 
 [ ] 17. Implement the original attract loop—15-second title, 10-second
 credits, 10-second high scores, and four deterministic Episode 1 demos—with

@@ -72,9 +72,52 @@ fa_create_always: equ 08h
     endmacro
 
     include "wolf3d_shell_assets.inc"
+TEST_HELP_LAST: equ W3D_HELP_PAGE_BUFFER_BASE+W3D_HELP_PAGE_COUNT-1
 w3d_app_version_text: db "Wolf3DOrig App 0.1.0 Alpha 1",0
 w3d_requested_difficulty: db 2
 w3d_sysvars_pointer: dl test_sysvars
+help_filename: db "help.agnb",0
+
+; The production AGNB parser has its own direct regression. This seam makes
+; the shell's on-demand help lifecycle deterministic: normal success, parser
+; failure/fallback, and callback-time local Escape are independently visible.
+agnb_load_images_with_abortable_callback:
+    ld (test_help_callback),hl
+    ld hl,test_help_load_count
+    inc (hl)
+    ld a,(test_help_invoke_callback)
+    or a
+    jr z,@result
+    call @call_callback
+    or a
+    jr z,@result
+    ld a,1
+    or a
+    ret
+@result:
+    ld a,(test_help_load_result)
+    or a
+    ret
+@call_callback:
+    ld hl,(test_help_callback)
+    jp (hl)
+
+vdu_clear_buffer:
+    ld a,(test_help_clear_count)
+    or a
+    jr nz,@not_first
+    ld a,l
+    ld (test_help_clear_first+0),a
+    ld a,h
+    ld (test_help_clear_first+1),a
+@not_first:
+    ld a,l
+    ld (test_help_clear_last+0),a
+    ld a,h
+    ld (test_help_clear_last+1),a
+    ld hl,test_help_clear_count
+    inc (hl)
+    ret
 
 ; Save/load persistence itself has a separate direct regression. This shell
 ; fixture exposes one validated slot and records load dispatch.
@@ -250,6 +293,10 @@ SCRIPT_ESCAPE: equ 6
 SCRIPT_ANY: equ 7
 SCRIPT_ESCAPE_ACCEPT: equ 8
 SCRIPT_TICK: equ 9
+SCRIPT_LEFT: equ 10
+SCRIPT_RIGHT: equ 11
+SCRIPT_PAGE_UP: equ 12
+SCRIPT_PAGE_DOWN: equ 13
 
 REASON_ACTION: equ 1
 REASON_RESULT: equ 2
@@ -272,6 +319,8 @@ REASON_MUSIC_ASSIGNMENT: equ 18
 REASON_QUICK_SLOT: equ 19
 REASON_SOUND_COUNT: equ 20
 REASON_SOUND_ID: equ 21
+REASON_HELP_LOAD_COUNT: equ 22
+REASON_HELP_CLEAR_COUNT: equ 23
 
 start:
     push af
@@ -326,14 +375,17 @@ run_tests:
     call test_control_pages
     ld a,8
     call mark_stage
-    call test_attract_timing
+    call test_help_article
     ld a,9
     call mark_stage
-    call test_draw_contract
+    call test_attract_timing
     ld a,10
     call mark_stage
-    call test_quick_keys
+    call test_draw_contract
     ld a,11
+    call mark_stage
+    call test_quick_keys
+    ld a,12
     call mark_stage
     call test_shell_sounds
     ld a,1
@@ -858,6 +910,87 @@ test_control_pages:
     CHECK_PLOT 0,W3D_SHELL_CONTROL_PAGE_BUFFER,0,0
     ret
 
+test_help_article:
+; Exercise every original direction family, both page bounds, local Escape,
+; music restoration, and complete reclamation of the 41 temporary buffers.
+    ld a,86
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    call test_reset_music
+    call test_reset_plots
+    call test_reset_help
+    ld hl,script_help_navigation
+    call test_set_script
+    call w3d_shell_help_article
+    CHECK_EXIT 0
+    CHECK_MEM8 test_help_load_count,1,REASON_HELP_LOAD_COUNT
+    CHECK_MEM8 test_help_clear_count,W3D_HELP_PAGE_COUNT,REASON_HELP_CLEAR_COUNT
+    CHECK_MEM8 test_help_clear_first+0,W3D_HELP_PAGE_BUFFER_BASE&0ffh,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_help_clear_first+1,W3D_HELP_PAGE_BUFFER_BASE>>8,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_help_clear_last+0,TEST_HELP_LAST&0ffh,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_help_clear_last+1,TEST_HELP_LAST>>8,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_music_start_count,2,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+0,W3D_MUSIC_CORNER,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+1,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_plot_count,7,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_HELP_PAGE_BUFFER_BASE,0,0
+    CHECK_PLOT 6,W3D_HELP_PAGE_BUFFER_BASE+1,0,0
+    CHECK_PLOT 12,W3D_HELP_PAGE_BUFFER_BASE+2,0,0
+    CHECK_PLOT 18,W3D_HELP_PAGE_BUFFER_BASE+1,0,0
+    CHECK_PLOT 24,W3D_HELP_PAGE_BUFFER_BASE,0,0
+    CHECK_PLOT 30,W3D_HELP_PAGE_BUFFER_BASE+1,0,0
+    CHECK_PLOT 36,W3D_HELP_PAGE_BUFFER_BASE+2,0,0
+
+; A container error clears any partial pages and falls back to the compact
+; resident notice without asserting the application-global exit latch.
+    ld a,87
+    ld (test_case),a
+    call test_reset_music
+    call test_reset_plots
+    call test_reset_help
+    ld a,5
+    ld (test_help_load_result),a
+    ld hl,script_local_escape
+    call test_set_script
+    call w3d_shell_help_article
+    CHECK_EXIT 0
+    CHECK_MEM8 test_help_clear_count,W3D_HELP_PAGE_COUNT,REASON_HELP_CLEAR_COUNT
+    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_READ_THIS_PAGE_BUFFER,0,0
+
+; Escape at an image boundary aborts the load locally, releases the held key,
+; clears partial buffers, and never flashes the fallback page.
+    ld a,88
+    ld (test_case),a
+    call test_reset_music
+    call test_reset_plots
+    call test_reset_help
+    ld a,1
+    ld (test_help_invoke_callback),a
+    ld hl,script_help_load_escape
+    call test_set_script
+    call w3d_shell_help_article
+    CHECK_EXIT 0
+    CHECK_MEM8 w3d_shell_help_load_aborted,1,REASON_RESULT
+    CHECK_MEM8 test_help_clear_count,W3D_HELP_PAGE_COUNT,REASON_HELP_CLEAR_COUNT
+    CHECK_MEM8 test_plot_count,0,REASON_PLOT_COUNT
+
+; Repeated next-page input stops at page 41 rather than wrapping or selecting
+; a buffer beyond the article allocation.
+    ld a,89
+    ld (test_case),a
+    call test_reset_music
+    call test_reset_plots
+    call test_reset_help
+    ld hl,script_help_last_page
+    call test_set_script
+    call w3d_shell_help_article
+    CHECK_EXIT 0
+    CHECK_MEM8 w3d_shell_help_page,W3D_HELP_PAGE_COUNT-1,REASON_SELECTION
+    CHECK_MEM8 test_plot_count,32,REASON_PLOT_COUNT
+    CHECK_MEM8 test_help_clear_count,W3D_HELP_PAGE_COUNT,REASON_HELP_CLEAR_COUNT
+    ret
+
 test_attract_timing:
     ld a,51
     ld (test_case),a
@@ -1273,6 +1406,14 @@ test_keyboard_hook:
     jr z,@escape_accept
     cp SCRIPT_TICK
     jr z,@tick
+    cp SCRIPT_LEFT
+    jr z,@left
+    cp SCRIPT_RIGHT
+    jr z,@right
+    cp SCRIPT_PAGE_UP
+    jr z,@page_up
+    cp SCRIPT_PAGE_DOWN
+    jr z,@page_down
     jr @done
 @up:
     ld a,00000010b
@@ -1313,6 +1454,22 @@ test_keyboard_hook:
     ld de,2000
     add hl,de
     ld (test_sysvars+sysvar_time),hl
+    jr @done
+@left:
+    ld a,00000010b
+    ld (test_keymap+3),a
+    jr @done
+@right:
+    ld a,00000010b
+    ld (test_keymap+15),a
+    jr @done
+@page_up:
+    ld a,10000000b
+    ld (test_keymap+7),a
+    jr @done
+@page_down:
+    ld a,01000000b
+    ld (test_keymap+9),a
 @done:
     ld ix,test_keymap
     ret
@@ -1447,6 +1604,18 @@ test_reset_music:
     ldir
     ret
 
+test_reset_help:
+    xor a
+    ld (test_help_load_count),a
+    ld (test_help_load_result),a
+    ld (test_help_invoke_callback),a
+    ld (test_help_clear_count),a
+    ld (test_help_clear_first+0),a
+    ld (test_help_clear_first+1),a
+    ld (test_help_clear_last+0),a
+    ld (test_help_clear_last+1),a
+    ret
+
 ; A=actual, B=expected, C=reason.
 assert_a:
     ld d,a
@@ -1535,6 +1704,13 @@ test_music_history: ds 16
 test_sound_count: db 0
 test_sound_history: ds 64
 w3d_audio_fixture_sound: db 0
+test_help_load_count: db 0
+test_help_load_result: db 0
+test_help_invoke_callback: db 0
+test_help_callback: dl 0
+test_help_clear_count: db 0
+test_help_clear_first: dw 0
+test_help_clear_last: dw 0
 test_plot_log: ds 32*6
 test_plot_log_end:
 
@@ -1558,6 +1734,42 @@ script_action_keypad: db SCRIPT_KEYPAD,SCRIPT_RELEASE
 script_action_space: db SCRIPT_SPACE,SCRIPT_RELEASE
 script_action_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_action_escape_accept: db SCRIPT_ESCAPE_ACCEPT,SCRIPT_RELEASE
+script_help_navigation:
+    db SCRIPT_RELEASE
+    db SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_RIGHT,SCRIPT_RELEASE
+    db SCRIPT_PAGE_UP,SCRIPT_RELEASE
+    db SCRIPT_LEFT,SCRIPT_RELEASE
+    db SCRIPT_UP,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_RETURN,SCRIPT_RELEASE
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_help_load_escape:
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_help_last_page:
+    db SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE,SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_PAGE_DOWN,SCRIPT_RELEASE
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_wait_any_ordinary: db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE
 script_wait_any_escape: db SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_wait_any_held_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE

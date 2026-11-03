@@ -63,8 +63,9 @@ title/credits/high-score/four-demo attract loop.
 - **Credits:** `CREDITSPIC`, a complete 320x200 screen.
 - **High-score heading:** `HIGHSCORESPIC`, combined with small heading art and
   a font by `DrawHighScores`.
-- The shareware order/purchase screens and help/read-this art are outside the
-  first shell.
+- The shareware order/purchase screens and help/read-this art were outside the
+  first slice. Production now reconstructs the complete 41-page HELP article
+  from archive chunk 150 and its referenced picture chunks.
 
 In the bundled v1.4 archive, the tested picture sequence around the shell is:
 
@@ -180,13 +181,17 @@ Implemented boundaries:
 - `wolf3d_shell.inc`: top-level state machine and transitions;
 - `wolf3d_shell.inc`: original-facing control-panel rendering, input
   normalization/repeat, and selection;
-- generated `shell.agnb` plus `wolf3d_shell_assets.inc`: shell graphics only;
+- generated `shell.agnb`, on-demand `help.agnb`, and
+  `wolf3d_shell_assets.inc`: resident shell graphics plus the separately
+  reclaimable 41-page original HELP article;
 - durable `build_shell_assets.py`: v1.4 extraction, conversion, override
   selection, manifest generation, and AGNB packing;
 - `src/asm/wolf3d_shell/`: isolated direct-eZ80 semantic and drawing
   regression for the production shell include.
 
-Shell assets load once at startup and remain resident across gameplay sessions.
+Resident shell assets load once at startup and remain available across gameplay
+sessions. The 2.6 MiB HELP article loads only when Read This/F1 is selected and
+all 41 page buffers are cleared before returning to the parent panel.
 Level-specific wall and sprite containers remain separate and are replaced on
 ordinary floor transitions. HUD and SFX containers are reloaded at session
 entry; gameplay shutdown clears the CPU-side audio admission state before a

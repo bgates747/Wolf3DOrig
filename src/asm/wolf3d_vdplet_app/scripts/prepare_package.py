@@ -59,6 +59,7 @@ def main() -> None:
         (require(GENERATED / "hud/hud.agnb"), Path("hud.agnb")),
         (require(GENERATED / "audio/sfx.agnb"), Path("sfx.agnb")),
         (require(GENERATED / "shell/shell.agnb"), Path("shell.agnb")),
+        (require(GENERATED / "shell/help.agnb"), Path("help.agnb")),
     ]
     level_names = (
         "tiles.agnb", "sprites.agnb", "state_baby.w3l", "state_easy.w3l",

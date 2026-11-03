@@ -17,6 +17,13 @@ acknowledgment while Escape is already held latches exit and returns as soon as
 that key is released. Other held keys are still discarded and cannot serve as
 the new screen's acknowledgment.
 
+The fixture also owns a deterministic AGNB seam for the canonical 41-page
+Read This article. It checks all original navigation families, first-page
+underflow, local Escape, CORNER/WONDERIN music restoration, parser-failure
+fallback, callback-time load abort, and exact clearing of buffers
+`$4600..$4628`. The AGNB parser and offline article renderer retain their own
+format/asset regressions; this target proves their shell lifecycle contract.
+
 The production shell owns the latch and exposes three helpers:
 
 - `w3d_shell_reset_exit_request` starts a fresh application lifecycle.

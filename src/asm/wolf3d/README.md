@@ -305,10 +305,12 @@ screens, manifest, and synchronized assembly constants with:
 .venv/bin/python agonport/tools/wolf3d_assets/scripts/build_shell_assets.py
 ```
 
-This writes the ignored reproducible
-`agonport/assets/generated/wolf3d/shell/shell.agnb` and the tracked
-`wolf3d_shell_assets.inc`. The direct production-shell regression is documented
-in `../wolf3d_shell/README.md`.
+This writes the ignored reproducible resident `shell.agnb`, the separate
+on-demand 41-page `help.agnb`, and the tracked `wolf3d_shell_assets.inc` under
+`agonport/assets/generated/wolf3d/shell/`. Production clears every HELP page
+buffer when the article closes, so the 2.6 MiB payload is not permanently
+resident. The direct production-shell regression is documented in
+`../wolf3d_shell/README.md`.
 
 Run the gameplay host and real-eZ80 regressions from the repository root:
 

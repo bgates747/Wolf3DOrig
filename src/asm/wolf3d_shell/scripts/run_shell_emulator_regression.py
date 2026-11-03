@@ -56,6 +56,8 @@ REASONS = {
     19: "remembered quick slot",
     20: "shell sound count",
     21: "shell logical sound id",
+    22: "help container load count",
+    23: "help buffer clear count",
 }
 
 STAGES = {
@@ -66,10 +68,11 @@ STAGES = {
     5: "lifecycle entries",
     6: "pause menu",
     7: "control pages",
-    8: "attract timing",
-    9: "draw contracts",
-    10: "F1-F10 gameplay quick keys",
-    11: "original control-panel sounds",
+    8: "canonical help article",
+    9: "attract timing",
+    10: "draw contracts",
+    11: "F1-F10 gameplay quick keys",
+    12: "original control-panel sounds",
     109: "main-menu Quit",
     110: "main-menu Escape",
     111: "main-menu New Game",

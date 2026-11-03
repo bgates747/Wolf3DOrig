@@ -297,7 +297,8 @@ during combat, doors, pushwalls, floor transitions, and death.
 ### A7. Remaining control-panel pages — TODO 16
 
 Original oracle: the main-menu tables and `CP_Sound`, `CP_ChangeView`,
-`CP_Control`, and `HelpScreens` in `WL_MENU.C`.
+`CP_Control`, and `HelpScreens` in `WL_MENU.C`, plus `ShowArticle` and the
+page-layout command language in `WL_TEXT.C` and VGAGRAPH chunk 150.
 
 Complete the original-facing menu surface: Sound, Control, Change View, Read
 This/help, View Scores/End Game state, and Back to Game.  Unsupported DOS-era
@@ -308,10 +309,18 @@ use the existing viewport hooks and must preserve renderer geometry.
 Acceptance: navigation regression for every row/cancel route and visual review
 of each reachable page.
 
-Status 2026-11-03: implementation is complete. The exact ten-row order,
-startup/in-game substitutions, local cancellation, Sound, Control, fixed-view
-disclosure, Read This, View Scores/End Game, and Back to Game participate in
-the 581-check shell target. The remaining gate is visual review of every page.
+Status 2026-11-03: the exact ten-row order, startup/in-game substitutions,
+local cancellation, Sound, Control, fixed-view disclosure, View Scores/End
+Game, and Back to Game are implemented. The audit rejected the former concise
+Read This substitute: a literal offline translation of `WL_TEXT.C` now renders
+all 41 original HELP pages from archive chunk 150, including its frame,
+embedded pictures, proportional layout, colors, and page numbers. Production
+loads the reproducible 2.6 MiB `help.agnb` only on selection, preserves the
+original arrow/Page Up/Page Down/Enter/Escape behavior and CORNER music, and
+clears all 41 page buffers on success, abort, or failure. Host asset contracts
+pass and both application backends assemble; the expanded direct shell target
+assembles and awaits its next Oryx batch. Remaining gate: direct-target plus
+visual review of article navigation and every reachable panel page.
 
 ### A8. Attract loop and recorded demos — TODO 17
 

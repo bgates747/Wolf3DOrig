@@ -303,7 +303,12 @@ def prepare_scenario(scenario: Scenario, application: Path) -> dict[str, object]
         temporary = Path(name)
         shutil.copyfile(application, temporary / "wolf3d.bin")
         shutil.copyfile(require(MODULE), temporary / "wolf3d.vdpl")
-        for relative in ("hud/hud.agnb", "audio/sfx.agnb", "shell/shell.agnb"):
+        for relative in (
+            "hud/hud.agnb",
+            "audio/sfx.agnb",
+            "shell/shell.agnb",
+            "shell/help.agnb",
+        ):
             source = require(GENERATED / relative)
             shutil.copyfile(source, temporary / source.name)
         for level in range(10):

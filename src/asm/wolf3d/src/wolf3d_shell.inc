@@ -307,12 +307,7 @@ w3d_shell_main_menu:
     call w3d_shell_information_page
     jp @redraw
 @read_this:
-    ld a,W3D_MUSIC_CORNER
-    call w3d_music_start
-    ld hl,W3D_SHELL_READ_THIS_PAGE_BUFFER
-    call w3d_shell_information_page
-    ld a,W3D_MUSIC_WONDERIN
-    call w3d_music_start
+    call w3d_shell_help_article
     jp @redraw
 @back_to_demo:
     call w3d_shell_attract_until_input
@@ -427,8 +422,7 @@ w3d_shell_pause_menu:
     call w3d_shell_information_page
     jp @redraw
 @read_this:
-    ld hl,W3D_SHELL_READ_THIS_PAGE_BUFFER
-    call w3d_shell_information_page
+    call w3d_shell_help_article
     jp @redraw
 @up:
     ld a,(w3d_shell_pause_choice)
@@ -514,8 +508,7 @@ w3d_shell_pause_quick:
     or a
     ret
 @help:
-    ld hl,W3D_SHELL_READ_THIS_PAGE_BUFFER
-    call w3d_shell_information_page
+    call w3d_shell_help_article
     jp @resume
 @sound:
     call w3d_shell_sound_page
@@ -964,6 +957,121 @@ w3d_shell_information_page:
     ret z
     cp W3D_SHELL_ACTION_ACCEPT
     jr nz,@wait
+    ret
+
+; Original WL_TEXT.C HelpScreens/ShowArticle contract. The canonical 41 pages
+; are translated offline from VGAGRAPH.WL1 chunk 150 and kept in their own
+; container: loading them only when Read This is selected avoids permanently
+; occupying 2.6 MiB of VDP SRAM. Every buffer is cleared on every exit path.
+;
+; Navigation matches ShowArticle: Up/Page Up/Left goes back; Enter/Down/
+; Page Down/Right advances; Escape returns locally to the control panel.
+w3d_shell_help_article:
+    ld a,W3D_MUSIC_CORNER
+    call w3d_music_start
+    xor a
+    ld (w3d_shell_help_load_aborted),a
+    ld de,help_filename
+    ld hl,w3d_shell_help_load_callback
+    call agnb_load_images_with_abortable_callback
+    jr z,@loaded
+    call w3d_shell_help_clear_buffers
+    ld a,(w3d_shell_help_load_aborted)
+    or a
+    jr z,@fallback
+    call w3d_shell_pause_wait_all_released
+    jp @finish
+; A malformed/missing optional article must not strand the shell. Preserve the
+; concise resident page as a visible fallback while returning success locally.
+@fallback:
+    ld hl,W3D_SHELL_READ_THIS_PAGE_BUFFER
+    call w3d_shell_information_page
+    jp @finish
+@loaded:
+    xor a
+    ld (w3d_shell_help_page),a
+    call w3d_shell_pause_wait_all_released
+@draw:
+    call w3d_shell_clear
+    ld hl,W3D_HELP_PAGE_BUFFER_BASE
+    ld a,(w3d_shell_help_page)
+    ld e,a
+    ld d,0
+    add hl,de
+    call w3d_shell_plot_full_screen
+@wait:
+    call w3d_music_service
+    call w3d_shell_read_keyboard
+    bit 0,(ix+14)                   ; Escape
+    jr nz,@leave
+    bit 1,(ix+7)                    ; Up
+    jr nz,@previous
+    bit 1,(ix+3)                    ; Left
+    jr nz,@previous
+    bit 7,(ix+7)                    ; Page Up
+    jr nz,@previous
+    bit 1,(ix+5)                    ; Down
+    jr nz,@next
+    bit 1,(ix+15)                   ; Right
+    jr nz,@next
+    bit 6,(ix+9)                    ; Page Down
+    jr nz,@next
+    bit 1,(ix+9)                    ; Return
+    jr nz,@next
+    bit 4,(ix+7)                    ; keypad Enter
+    jr nz,@next
+    jr @wait
+@previous:
+    ld a,(w3d_shell_help_page)
+    or a
+    jr z,@wait_release
+    dec a
+    ld (w3d_shell_help_page),a
+    jr @changed
+@next:
+    ld a,(w3d_shell_help_page)
+    cp W3D_HELP_PAGE_COUNT-1
+    jr nc,@wait_release
+    inc a
+    ld (w3d_shell_help_page),a
+@changed:
+    call w3d_shell_pause_wait_all_released
+    jr @draw
+@wait_release:
+    call w3d_shell_pause_wait_all_released
+    jr @wait
+@leave:
+    call w3d_shell_pause_wait_all_released
+    call w3d_shell_help_clear_buffers
+@finish:
+    ld a,W3D_MUSIC_WONDERIN
+    jp w3d_music_start
+
+; Keep music responsive while streaming. Escape aborts only this local article
+; load, just as ShowArticle returns to its parent menu instead of quitting DOS.
+w3d_shell_help_load_callback:
+    call w3d_music_service
+    call w3d_shell_read_keyboard
+    bit 0,(ix+14)
+    jr z,@continue
+    ld a,1
+    ld (w3d_shell_help_load_aborted),a
+    ret
+@continue:
+    xor a
+    ret
+
+w3d_shell_help_clear_buffers:
+    ld hl,W3D_HELP_PAGE_BUFFER_BASE
+    ld b,W3D_HELP_PAGE_COUNT
+@clear:
+    push bc
+    push hl
+    call vdu_clear_buffer
+    pop hl
+    pop bc
+    inc hl
+    djnz @clear
     ret
 
 ; Original DemoLoop timings at the MOS 120-Hz clock. After the three pages,
@@ -1908,3 +2016,7 @@ w3d_shell_timeout_started:
     dl 0
 w3d_shell_cursor_half_deadline:
     dl 0
+w3d_shell_help_page:
+    db 0
+w3d_shell_help_load_aborted:
+    db 0
