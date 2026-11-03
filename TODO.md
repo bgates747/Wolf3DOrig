@@ -168,6 +168,15 @@ missing, truncated, trailing, corrupt, or future-version files. Unavailable
 DOS devices, fixed Agon controls, and the accepted fixed viewport are not
 serialized as fictitious choices. Oryx generation 170 passes all 30/30 direct
 eZ80 format and real-MOS-file checks; both application backends rebuild.
+The actor audit found and corrected a subtler deterministic-port artifact in
+`WL_GAME.C::SetupGameLevel`: package generation had baked the seed-zero demo
+actor phases and production reused them for every ordinary level entry and
+death restart. Production now preserves that exact path for the four original
+demos, but seeds ordinary play from MOS time and rebuilds every timed actor's
+initial ticcount in the original row-major spawn order. Oryx generation 171
+passes 618/618 direct eZ80 checks, pinning deterministic demos, ordinary seeded
+starts, zero-duration states, and the resulting shared RNG position; both
+application backends rebuild.
 
 # Phase B — Agon identity and legal presentation
 

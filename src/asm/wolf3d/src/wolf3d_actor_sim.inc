@@ -45,8 +45,22 @@ w3d_initialize_actor_simulation:
     ld (w3d_actor_death_sound_actor),a
     xor a
     ld (w3d_actor_death_sound_class),a
+; SetupGameLevel deliberately randomizes the initial phase of timed actor
+; states during ordinary play, but retains the fixed table position for demo
+; playback/recording. Generated level packages carry the deterministic demo
+; result; ordinary play rebuilds those delays from a runtime seed after the
+; actor records have been copied into the live pool.
+    ld a,(w3d_actor_spawn_randomize)
+    or a
+    jr z,@deterministic_spawn
+    ld a,(w3d_actor_spawn_seed)
+    ld (w3d_random_index),a
+    call w3d_actor_randomize_spawn_ticcounts
+    jr @spawn_random_ready
+@deterministic_spawn:
     ld a,(w3d_level_random_index)
     ld (w3d_random_index),a
+@spawn_random_ready:
     ld a,1
     ld (w3d_awareness_enabled),a
     ld hl,(w3d_level_tilemap_ptr)
@@ -58,6 +72,52 @@ w3d_initialize_actor_simulation:
     xor a
     ld (w3d_actor_sight_context+W3D_SIGHT_CTX_MADENOISE),a
     ret
+
+; Reproduce SpawnNewObj's per-actor `US_RndT() % state->tictime` in live-list
+; (therefore original row-major spawn) order. Zero-duration states consume no
+; random byte and remain latched at zero. Initial source state durations fit
+; in one byte; the high-byte fallback is still safe because every random-table
+; value is below any such duration.
+w3d_actor_randomize_spawn_ticcounts:
+    ld a,(w3d_actor_live_head)
+@actor:
+    cp W3D_SLOT_NONE
+    ret z
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_NEXT)
+    ld (w3d_actor_spawn_next),a
+    ld hl,0
+    ld l,(ix+W3D_ACTOR_STATE+0)
+    ld h,(ix+W3D_ACTOR_STATE+1)
+    call w3d_actor_state_pointer_from_id16
+    ld b,(iy+W3D_STATE_TICTIME+0)
+    ld a,(iy+W3D_STATE_TICTIME+1)
+    or b
+    jr nz,@timed
+    xor a
+    jr @store
+@timed:
+    call w3d_random_byte
+    ld c,a
+    ld a,(iy+W3D_STATE_TICTIME+1)
+    or a
+    ld a,c
+    jr nz,@store
+    ld a,b
+    or a
+    ld a,c
+    jr z,@store
+@modulo:
+    cp b
+    jr c,@store
+    sub b
+    jr @modulo
+@store:
+    ld (ix+W3D_ACTOR_TICCOUNT+0),a
+    xor a
+    ld (ix+W3D_ACTOR_TICCOUNT+1),a
+    ld a,(w3d_actor_spawn_next)
+    jr @actor
 
 ; Publish one fixed-step noise event for weapon fire or successful player
 ; damage to an actor.
@@ -3056,6 +3116,12 @@ w3d_awareness_enabled:
     db 0
 w3d_random_index:
     db 0
+w3d_actor_spawn_randomize:
+    db 0
+w3d_actor_spawn_seed:
+    db 0
+w3d_actor_spawn_next:
+    db W3D_SLOT_NONE
 w3d_actor_sight_context:
     ds W3D_SIGHT_CTX_SIZE
 w3d_actor_chase_dodge:

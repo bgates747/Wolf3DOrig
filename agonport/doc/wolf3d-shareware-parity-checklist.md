@@ -88,6 +88,18 @@ the finite Oryx generation-161 ABI 1.6 gate pass five whole-frame oracle
 checkpoints, final surface synchronization, RESET/unload/reload, and empty-slot
 teardown with INFO17 unchanged at 2,136 free bytes.
 
+Actor-phase correction, 2026-11-03: `WL_GAME.C::SetupGameLevel` calls
+`US_InitRndT(false)` only for demo playback/recording and seeds from system
+time for ordinary play. The port's packages correctly baked the deterministic
+seed-zero spawn phases, but production reused those phases for every normal
+level entry and death restart. Production now seeds ordinary play from the MOS
+clock and reproduces `SpawnNewObj`'s timed-state draws in row-major live-list
+order; zero-duration states consume no draw. The four original demos retain
+the package path exactly, and the shared post-spawn RNG position remains part
+of the authoritative saved simulation state. Oryx generation 171 passes all
+618 direct eZ80 checks. The measured real-E1L1 patrol route remains 0.217 ms
+per fixed frame because this correction runs only during attempt seeding.
+
 ### A1. Pushwalls and secret discovery — TODO 11
 
 Original oracle:

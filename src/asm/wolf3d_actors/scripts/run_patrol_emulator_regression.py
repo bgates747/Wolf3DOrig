@@ -67,9 +67,23 @@ def run(command: list[str], *, cwd: Path | None = None) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--timeout", type=float, default=45.0)
+    parser.add_argument(
+        "--prebuilt",
+        type=Path,
+        help="use an already assembled patrol fixture (for cross-host runs)",
+    )
+    parser.add_argument(
+        "--assembler",
+        type=Path,
+        default=Path(os.environ.get("EZ80ASM", "ez80asm")),
+    )
     args = parser.parse_args()
 
-    dependencies = (STAGED_SRC, FAB, MOS, VDP)
+    dependencies = (FAB, MOS, VDP)
+    if args.prebuilt is None:
+        dependencies = (STAGED_SRC, *dependencies)
+    else:
+        dependencies = (args.prebuilt, *dependencies)
     missing = [path for path in dependencies if not path.exists()]
     if missing:
         raise FileNotFoundError(
@@ -81,28 +95,31 @@ def main() -> int:
     # disposable short directory and assemble there.
     work = Path(tempfile.mkdtemp(prefix="p"))
     atexit.register(shutil.rmtree, work, ignore_errors=True)
-    for include in STAGED_SRC.glob("*.inc"):
-        (work / include.name).symlink_to(include.resolve())
-
-    vectors = work / "patrol_vectors.inc"
-    run(
-        [
-            sys.executable,
-            str(HERE / "generate_patrol_vectors.py"),
-            "--fixture",
-            str(STAGED_SRC / "wolf3d_fixture.inc"),
-            "--out",
-            str(vectors),
-        ]
-    )
-
-    entry = work / "p.asm"
-    shutil.copyfile(HERE.parent / "src/patrol_regression.asm", entry)
     sdcard = work / "sdcard"
     app = sdcard / "p"
     app.mkdir(parents=True)
     binary = app / "p.bin"
-    run(["ez80asm", str(entry), str(binary)], cwd=work)
+    if args.prebuilt is not None:
+        shutil.copyfile(args.prebuilt, binary)
+    else:
+        for include in STAGED_SRC.glob("*.inc"):
+            (work / include.name).symlink_to(include.resolve())
+
+        vectors = work / "patrol_vectors.inc"
+        run(
+            [
+                sys.executable,
+                str(HERE / "generate_patrol_vectors.py"),
+                "--fixture",
+                str(STAGED_SRC / "wolf3d_fixture.inc"),
+                "--out",
+                str(vectors),
+            ]
+        )
+
+        entry = work / "p.asm"
+        shutil.copyfile(HERE.parent / "src/patrol_regression.asm", entry)
+        run([str(args.assembler), str(entry), str(binary)], cwd=work)
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\n"
         b"cd p\r\n"

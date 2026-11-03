@@ -17,6 +17,7 @@ mos_fclose:         equ 0x0b
 mos_fwrite:         equ 0x1b
 fa_write:           equ 0x02
 fa_create_always:   equ 0x08
+sysvar_time:        equ 0x00
 
 ; PRT1 runs at 18.432 MHz / 256, so a reload of 72 gives a hardware-compatible
 ; 1 ms stopwatch tick. Interrupt ownership follows the established DDA harness.
@@ -121,6 +122,7 @@ run_tests:
     call prt_irq_install
     call test_vector_corpus
     call test_direct_cadence
+    call test_spawn_randomization
     call test_trywalk_edges
     call test_player_rollback
     call test_actor_door_obstruction
@@ -489,6 +491,98 @@ test_direct_cadence:
     ld a,d
     or e
     jr nz,@loop
+    ret
+
+; SetupGameLevel uses a changing seed for ordinary play but must retain the
+; generated seed-zero path for original demo playback. Zero-duration actors
+; neither consume the table nor acquire a delay.
+test_spawn_randomization:
+    ld a,phase_cadence
+    ld (test_phase),a
+    ld a,7
+    ld (test_detail),a
+    call prepare_spawn_random_actors
+    ld a,1
+    ld (w3d_actor_spawn_randomize),a
+    ld a,40
+    ld (w3d_actor_spawn_seed),a
+    call w3d_initialize_actor_simulation
+
+    ld a,1
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_TICCOUNT+0)
+    ld b,0
+    ld c,reason_scalar
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_TICCOUNT+1)
+    ld b,0
+    ld c,reason_scalar
+    call assert_equal
+
+    ld a,2
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_TICCOUNT+0)
+    ld b,8                           ; table[41]=188; 188 % 20
+    ld c,reason_scalar
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_TICCOUNT+1)
+    ld b,0
+    ld c,reason_scalar
+    call assert_equal
+
+    ld a,3
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_TICCOUNT+0)
+    ld b,2                           ; table[42]=52; 52 % 10
+    ld c,reason_scalar
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_TICCOUNT+1)
+    ld b,0
+    ld c,reason_scalar
+    call assert_equal
+    ld a,(w3d_random_index)
+    ld b,42
+    ld c,reason_scalar
+    call assert_equal
+
+; Deterministic/demo initialization consumes no additional random values and
+; leaves the package-provided ticcounts intact.
+    xor a
+    ld (w3d_actor_spawn_randomize),a
+    ld a,73
+    ld (w3d_level_random_index),a
+    ld a,1
+    call w3d_actor_pointer_from_id
+    ld (ix+W3D_ACTOR_TICCOUNT+0),17
+    ld a,2
+    call w3d_actor_pointer_from_id
+    ld (ix+W3D_ACTOR_TICCOUNT+0),3
+    ld a,3
+    call w3d_actor_pointer_from_id
+    ld (ix+W3D_ACTOR_TICCOUNT+0),9
+    call w3d_initialize_actor_simulation
+    ld a,(w3d_random_index)
+    ld b,73
+    ld c,reason_scalar
+    call assert_equal
+    ld a,1
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_TICCOUNT+0)
+    ld b,17
+    ld c,reason_scalar
+    call assert_equal
+    ld a,2
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_TICCOUNT+0)
+    ld b,3
+    ld c,reason_scalar
+    call assert_equal
+    ld a,3
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_TICCOUNT+0)
+    ld b,9
+    ld c,reason_scalar
+    call assert_equal
     ret
 
 test_trywalk_edges:
@@ -878,6 +972,39 @@ prepare_direct_actor:
     ld (ix+W3D_ACTOR_PREV),a
     ld a,1
     ld (w3d_current_actor_index),a
+    ret
+
+prepare_spawn_random_actors:
+    call reset_empty_world
+    ld a,1
+    ld (w3d_actor_live_head),a
+    ld a,3
+    ld (w3d_actor_live_tail),a
+    ld (w3d_actor_count),a
+
+    ld a,1
+    call w3d_actor_pointer_from_id
+    ld (ix+W3D_ACTOR_STATE+0),W3D_STATE_GRD_STAND
+    xor a
+    ld (ix+W3D_ACTOR_STATE+1),a
+    ld (ix+W3D_ACTOR_TICCOUNT+1),a
+    ld (ix+W3D_ACTOR_NEXT),2
+
+    ld a,2
+    call w3d_actor_pointer_from_id
+    ld (ix+W3D_ACTOR_STATE+0),W3D_STATE_GRD_PATH1
+    xor a
+    ld (ix+W3D_ACTOR_STATE+1),a
+    ld (ix+W3D_ACTOR_TICCOUNT+1),a
+    ld (ix+W3D_ACTOR_NEXT),3
+
+    ld a,3
+    call w3d_actor_pointer_from_id
+    ld (ix+W3D_ACTOR_STATE+0),W3D_STATE_BLINKY_CHASE1
+    xor a
+    ld (ix+W3D_ACTOR_STATE+1),a
+    ld (ix+W3D_ACTOR_TICCOUNT+1),a
+    ld (ix+W3D_ACTOR_NEXT),W3D_SLOT_NONE
     ret
 
 ; Install door zero at the direct actor's east target and leave it fully open.
@@ -1309,6 +1436,23 @@ w3d_death_fixed_step:
 w3d_death_promote_lethal_latch:
     or a
     ret
+w3d_victory_think_bj_jump:
+    ret
+w3d_victory_think_bj_run:
+    ret
+w3d_victory_bj_yell:
+    ret
+w3d_victory_bj_done:
+w3d_simulate_victory_step:
+w3d_begin_victory_sequence:
+    or a
+    ret
+w3d_initialize_victory_state:
+    xor a
+    ld (w3d_victory_active),a
+    ret
+w3d_victory_active:
+    db 0
 
 ; Required by the interactive motion include, not exercised by this fixture.
 w3d_mark_render_submitted:
@@ -1324,6 +1468,12 @@ w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
     db 0
+w3d_gameplay_panel_request:
+    db 0
+w3d_sysvars_pointer:
+    dl test_sysvars
+test_sysvars:
+    dl 0
 
 expected_vector_header:
     db "W3PV"

@@ -266,6 +266,27 @@ w3d_seed_level_world_state:
     ld hl,0
     ld (w3d_simulation_accumulator),hl
     call w3d_initialize_actor_state
+; Original demos always seed US_RndT at table index zero and therefore use
+; the deterministic ticcounts baked into the level package. Ordinary play
+; uses the low byte of MOS's changing 120-Hz clock, reduced to the DOS
+; hundredths-byte range, to vary the initial actor animation phase.
+    xor a
+    ld (w3d_actor_spawn_randomize),a
+    ld a,(w3d_demo_active)
+    or a
+    jr nz,@actor_spawn_seed_ready
+    ld a,1
+    ld (w3d_actor_spawn_randomize),a
+    ld ix,(w3d_sysvars_pointer)
+    ld a,(ix+sysvar_time)
+@actor_spawn_seed_mod100:
+    cp 100
+    jr c,@actor_spawn_seed_store
+    sub 100
+    jr @actor_spawn_seed_mod100
+@actor_spawn_seed_store:
+    ld (w3d_actor_spawn_seed),a
+@actor_spawn_seed_ready:
     call w3d_initialize_actor_simulation
     call w3d_initialize_victory_state
     call w3d_initialize_area_state
