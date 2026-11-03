@@ -17,8 +17,11 @@ source tree while `W3D_RUNTIME_ROOT` independently names the normal checkout
 containing the emulator executable, MOS image, and stock VDP module. The
 runner assembles under a short `/tmp/u*` pathname, boots a disposable headless
 SD-card profile, reads `use_result.bin`, and removes the profile on exit.
+For a differently architected emulator host, assemble on the source machine
+and pass `--prebuilt path/to/u.bin`.
 
-The thirteen assembly-resident cases cover:
+The twenty-nine assembly-resident cases cover the original door, elevator,
+pushwall, sound, and edge-latch behavior. The core door-resolution cases are:
 
 1. The player at the E1L1-reproducible near-well step (`tile+0x2000`) operates
    the current tile while facing toward its center plane.
@@ -40,6 +43,11 @@ The thirteen assembly-resident cases cover:
     the first operation the harness deliberately resets the door and dirty
     state behind the still-set latch, proves a second held sample does
     nothing, releases Up Arrow, and proves the next press operates it again.
+
+The remaining cases cover first motion sounds, area reachability, both
+elevator routes, all four pushwall directions and crossing outcomes, and the
+source `DONOTHINGSND` response for an ordinary wall, a non-operable elevator
+face, an invalid door index, and a wall without a pushwall marker.
 
 Every case checks the selected door index, exact action, targeted dirty byte,
 sum of the complete 22-byte dirty array, world-dirty state, and both door

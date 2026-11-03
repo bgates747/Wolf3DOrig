@@ -137,6 +137,11 @@ nine-life cap. Full heal routes through that one owner so the Agon multi-stream
 backend does not double the effect. Direct eZ80 coverage pins four thresholds
 crossed in one score addition and the capped-life case; Oryx generation 163
 passes all 33/33 pickup/state/sound records. Both application backends rebuild.
+`WL_AGENT.C::Cmd_Use` no longer falls silent when no operable object is found:
+ordinary walls, wrong-face elevators, malformed door references, and unmarked
+walls request the source's `DONOTHINGSND` once per press. Its authentic 140 Hz
+PC-speaker stream is rendered offline at 7 kHz. Oryx generations 164-165 pass
+29/29 direct use/pushwall cases and all 287 production-audio checks.
 
 # Phase B — Agon identity and legal presentation
 

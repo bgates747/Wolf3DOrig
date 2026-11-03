@@ -57,6 +57,11 @@ def run(command: list[str], *, cwd: Path | None = None) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--timeout", type=float, default=60.0)
+    parser.add_argument(
+        "--prebuilt",
+        type=Path,
+        help="use an already assembled fixture (for a cross-architecture emulator host)",
+    )
     args = parser.parse_args()
 
     dependencies = (STAGED_SRC, STAGED_FIXTURE, FAB, MOS, VDP)
@@ -79,7 +84,11 @@ def main() -> int:
     app = sdcard / "w"
     app.mkdir(parents=True)
     binary = app / "w.bin"
-    run(["ez80asm", str(entry), str(binary)], cwd=work)
+    if args.prebuilt:
+        shutil.copyfile(args.prebuilt, binary)
+        print("+ prebuilt", args.prebuilt, "->", binary)
+    else:
+        run(["ez80asm", str(entry), str(binary)], cwd=work)
     digest = hashlib.sha256(binary.read_bytes()).hexdigest()
     print(f"binary: {binary.stat().st_size} bytes, sha256={digest}")
     (sdcard / "autoexec.txt").write_bytes(

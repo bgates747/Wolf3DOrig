@@ -289,6 +289,14 @@ the latter has one sound owner so Agon's accepted simultaneous-stream behavior
 does not turn the source's effectively monophonic duplicate calls into two
 audible samples. Oryx generation 163 passes all 33 direct target records.
 
+Use correction, 2026-11-03: original `Cmd_Use` requests `DONOTHINGSND` when
+the facing tile is not an operable pushwall, elevator face, or door. Production
+now emits one request per rising edge for those no-action paths, while retaining
+the distinct `NOWAYSND` for locks and blocked pushwalls. Logical sound 20 is
+the authentic AUDIOT PC-speaker stream rendered offline to 7 kHz PCM. Oryx
+generation 164 passes 29/29 direct use/pushwall cases and generation 165 passes
+all 287 production-audio checks.
+
 Intentional discrepancy ledger, 2026-11-03: the hardware-accepted player
 wall/slab radius and actor/static physical clearance remain `0x4800`, versus
 the source's `PLAYERSIZE`/`MINDIST` value `0x5800`. The independent original

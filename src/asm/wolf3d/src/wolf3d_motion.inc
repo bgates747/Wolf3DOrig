@@ -2459,10 +2459,10 @@ w3d_use_adjacent_door:
 @tile_ready:
     ld a,b
     cp W3D_MAP_SIZE
-    ret nc
+    jp nc,w3d_use_no_action
     ld a,c
     cp W3D_MAP_SIZE
-    ret nc
+    jp nc,w3d_use_no_action
 ; Original Cmd_Use gives a facing-adjacent plane-1 PUSHABLETILE priority over
 ; elevators and doors. The marker owns this use even after its wall moved.
     call w3d_path_read
@@ -2476,7 +2476,7 @@ w3d_use_adjacent_door:
     jr nz,@check_door_tile
     ld a,(w3d_use_elevator_ok)
     or a
-    ret z
+    jp z,w3d_use_no_action
     ld a,(w3d_player_area)
     or a
     ld a,W3D_LEVEL_COMPLETION_NORMAL
@@ -2490,13 +2490,13 @@ w3d_use_adjacent_door:
     jp w3d_audio_request
 @check_door_tile:
     cp W3D_TILE_DOOR_MIN
-    ret c
+    jp c,w3d_use_no_action
     cp W3D_TILE_DOOR_MAX+1
-    ret nc
+    jp nc,w3d_use_no_action
 @resolve_door_tile:
     and W3D_TILE_DOOR_MASK
     call w3d_compare_door_index
-    ret nc
+    jp nc,w3d_use_no_action
     ld (w3d_current_door_index),a
     call w3d_door_pointer_from_index
 
@@ -2508,7 +2508,7 @@ w3d_use_adjacent_door:
     cp 5
     jr z,@unlocked
     cp 5
-    ret nc
+    jp nc,w3d_use_no_action
     dec a
     ld e,a
     ld d,0
@@ -2539,6 +2539,16 @@ w3d_use_adjacent_door:
     ld c,0                          ; unpositioned
     call w3d_audio_request
     ret
+
+; Cmd_Use requests DONOTHINGSND when its facing tile is neither an operable
+; pushwall, elevator face, nor door. The rising-edge owner guarantees one
+; request per physical press rather than relying on DOS sound arbitration to
+; suppress a held-key stream.
+w3d_use_no_action:
+    ld a,W3D_AUDIO_SOUND_DONOTHING
+    ld b,127
+    ld c,0                          ; unpositioned
+    jp w3d_audio_request
 
 ; Actor-side OpenDoor. A=door index, return A=current action. Unlike the
 ; player's use command this deliberately ignores locks. OPEN resets its hold

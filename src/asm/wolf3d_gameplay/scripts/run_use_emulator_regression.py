@@ -65,6 +65,11 @@ def run(command: list[str], *, cwd: Path | None = None) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--timeout", type=float, default=30.0)
+    parser.add_argument(
+        "--prebuilt",
+        type=Path,
+        help="use an already assembled fixture (for a cross-architecture emulator host)",
+    )
     args = parser.parse_args()
 
     # ez80asm retains a short DOS-era output-filename limit.
@@ -80,7 +85,11 @@ def main() -> int:
         entry,
     )
     binary = app / "u.bin"
-    run([ASSEMBLER, str(entry), str(binary)], cwd=STAGED_SRC)
+    if args.prebuilt:
+        shutil.copyfile(args.prebuilt, binary)
+        print("+ prebuilt", args.prebuilt, "->", binary)
+    else:
+        run([ASSEMBLER, str(entry), str(binary)], cwd=STAGED_SRC)
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\n"
         b"cd u\r\n"

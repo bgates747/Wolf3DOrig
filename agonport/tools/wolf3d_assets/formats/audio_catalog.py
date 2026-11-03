@@ -15,6 +15,7 @@ CHANNEL_COUNT = 3
 # Render their authentic PC-speaker source streams offline into ordinary PCM;
 # this keeps runtime playback on the same proven buffered-audio path.
 PC_SPEAKER_FALLBACKS = {
+    "DONOTHINGSND",
     "LEVELDONESND",
     "ENDBONUS1SND",
     "ENDBONUS2SND",
@@ -64,6 +65,7 @@ UPLOAD_DIGI_MAP = {
 # slice.  Tags describe semantic producers rather than assembly label names so
 # the manifest remains stable if code is reorganized.
 CURRENT_PRODUCERS = {
+    "DONOTHINGSND": ("environment.use_no_action",),
     "NOWAYSND": ("environment.no_way",),
     "PLAYERDEATHSND": ("player.death",),
     "DOGDEATHSND": ("actor.dog.death",),

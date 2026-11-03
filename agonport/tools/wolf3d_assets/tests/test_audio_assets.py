@@ -163,8 +163,8 @@ class AudioAssetTests(unittest.TestCase):
         self.assertEqual(missing, [])
         self.assertEqual(self.manifest["totals"]["nativeRecords"], 20)
         self.assertEqual(self.manifest["totals"]["fallbackRecords"], 19)
-        self.assertEqual(self.manifest["totals"]["pcSpeakerRecords"], 5)
-        self.assertEqual(self.manifest["totals"]["containerRecords"], 44)
+        self.assertEqual(self.manifest["totals"]["pcSpeakerRecords"], 6)
+        self.assertEqual(self.manifest["totals"]["containerRecords"], 45)
         self.assertEqual(
             self.manifest["totals"]["requiredUnavailableLogicalSounds"], 0
         )

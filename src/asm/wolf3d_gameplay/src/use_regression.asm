@@ -29,11 +29,27 @@ fa_create_always:   equ 0x08
     include "wolf3d_fixture.inc"
     include "wolf3d_actors.inc"
     include "wolf3d_areas.inc"
+; This focused fixture does not include the victory presentation module, but
+; production actor simulation exposes its BJ callbacks.
+w3d_victory_think_bj_jump:
+w3d_victory_think_bj_run:
+w3d_victory_bj_yell:
+w3d_victory_bj_done:
+    ret
     include "wolf3d_actor_sim.inc"
+w3d_initialize_victory_state:
+    xor a
+    ld (w3d_victory_active),a
+    ret
+w3d_begin_victory_sequence:
+w3d_simulate_victory_step:
+    ret
+w3d_victory_active:
+    db 0
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
 
-use_case_count:     equ 28
+use_case_count:     equ 29
 
 reason_index:       equ 1
 reason_action:      equ 2
@@ -96,6 +112,7 @@ run_tests:
     call case_elevator_east_normal
     call case_elevator_west_secret
     call case_elevator_north_ignored
+    call case_empty_wall_do_nothing
     call case_push_east
     call case_push_west
     call case_push_north
@@ -390,6 +407,10 @@ case_invalid_current_fails_closed:
     ld (w3d_doors+W3D_DOOR_TILEX),a
     call w3d_use_adjacent_door
     call expect_unchanged_unselected
+    ld a,(test_audio_last_id)
+    ld b,W3D_AUDIO_SOUND_DONOTHING
+    ld c,reason_audio
+    call assert_equal
     jp finish_case
 
 case_locked_refused:
@@ -694,6 +715,31 @@ case_elevator_north_ignored:
     ld b,W3D_LEVEL_COMPLETION_NONE
     ld c,reason_completion
     call assert_equal
+    ld a,(test_audio_count)
+    ld b,1
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,W3D_AUDIO_SOUND_DONOTHING
+    ld c,reason_audio
+    call assert_equal
+    jp finish_case
+
+case_empty_wall_do_nothing:
+    call begin_case
+    call pose_center
+    ld a,4
+    ld (w3d_runtime_tilemap+651),a       ; ordinary wall east of player
+    call w3d_use_adjacent_door
+    call expect_unchanged_unselected
+    ld a,(test_audio_count)
+    ld b,1
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,W3D_AUDIO_SOUND_DONOTHING
+    ld c,reason_audio
+    call assert_equal
     jp finish_case
 
 ; ---------------------------------------------------------------------------
@@ -830,7 +876,7 @@ case_push_no_marker:
     ld c,reason_push_total
     call assert_equal
     ld a,(test_audio_last_id)
-    ld b,0
+    ld b,W3D_AUDIO_SOUND_DONOTHING
     ld c,reason_audio
     call assert_equal
     jp finish_case
@@ -1148,6 +1194,8 @@ test_audio_reset:
 w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
+    db 0
+w3d_gameplay_panel_request:
     db 0
 
 result_filename:        asciz "use_result.bin"
