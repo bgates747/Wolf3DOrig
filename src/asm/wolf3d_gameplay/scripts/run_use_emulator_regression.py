@@ -20,10 +20,22 @@ _installed_root = Path(__file__).resolve().parents[4]
 STAGED_ROOT = Path(_root_override) if _root_override else _installed_root
 RUNTIME_ROOT = Path(os.environ.get("W3D_RUNTIME_ROOT", _installed_root))
 STAGED_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
-FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
-MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
-VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+FAB = Path(os.environ.get(
+    "W3D_EMULATOR",
+    RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator",
+))
+MOS = Path(os.environ.get(
+    "W3D_MOS",
+    RUNTIME_ROOT / "agonport/emulator/mos_console8.bin",
+))
+VDP = Path(os.environ.get(
+    "W3D_VDP",
+    RUNTIME_ROOT / "agonport/emulator/vdp_stock.so",
+))
 RESULT_SIZE = 16
+ASSEMBLER = os.environ.get("W3D_ASSEMBLER") or shutil.which("ez80asm") or str(
+    RUNTIME_ROOT / "src/asm/wolf3d/tgt/.tools/ez80asm"
+)
 
 REASONS = {
     1: "selected door index",
@@ -36,6 +48,12 @@ REASONS = {
     8: "use-key latch",
     9: "audio request",
     10: "level completion",
+    11: "pushwall status",
+    12: "pushwall tilemap",
+    13: "pushwall secret count",
+    14: "pushwall secret total",
+    15: "pushwall current cell",
+    16: "pushwall area ownership",
 }
 
 
@@ -62,7 +80,7 @@ def main() -> int:
         entry,
     )
     binary = app / "u.bin"
-    run(["ez80asm", str(entry), str(binary)], cwd=STAGED_SRC)
+    run([ASSEMBLER, str(entry), str(binary)], cwd=STAGED_SRC)
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\n"
         b"cd u\r\n"
@@ -84,54 +102,69 @@ def main() -> int:
         str(FAB.resolve()),
         "--renderer",
         "sw",
-        "--firmware",
-        "console8",
-        "--mos",
-        str(MOS.resolve()),
-        "--vdp",
-        str(VDP.resolve()),
         "--sdcard",
         str(sdcard),
         "--zero",
     ]
+    if not os.environ.get("W3D_PINNED_RUNTIME"):
+        emulator[3:3] = [
+            "--firmware",
+            "console8",
+            "--mos",
+            str(MOS.resolve()),
+            "--vdp",
+            str(VDP.resolve()),
+        ]
     print("+", " ".join(emulator))
-    process = subprocess.Popen(
-        emulator,
-        cwd=work,
-        env=environment,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    try:
-        deadline = time.monotonic() + args.timeout
-        payload = b""
-        while time.monotonic() < deadline:
-            if process.poll() is not None:
-                raise RuntimeError(f"emulator exited with {process.returncode}")
-            if result.exists():
-                payload = result.read_bytes()
-                if len(payload) == RESULT_SIZE and payload[:4] == b"W3U1":
-                    break
-            time.sleep(0.05)
-        else:
-            raise RuntimeError("timed out waiting for door-use emulator result")
-    finally:
-        process.terminate()
+    emulator_log = work / "emulator.log"
+    with emulator_log.open("wb") as log:
+        process = subprocess.Popen(
+            emulator,
+            cwd=work,
+            env=environment,
+            stdout=log,
+            stderr=subprocess.STDOUT,
+        )
         try:
-            process.wait(timeout=2)
-        except subprocess.TimeoutExpired:
-            process.kill()
-            process.wait()
+            deadline = time.monotonic() + args.timeout
+            payload = b""
+            while time.monotonic() < deadline:
+                if process.poll() is not None:
+                    log.flush()
+                    detail = emulator_log.read_text(errors="replace").strip()
+                    raise RuntimeError(
+                        f"emulator exited with {process.returncode}"
+                        + (f"\n{detail}" if detail else "")
+                    )
+                if result.exists():
+                    payload = result.read_bytes()
+                    if len(payload) == RESULT_SIZE and payload[:4] == b"W3U1":
+                        break
+                time.sleep(0.05)
+            else:
+                log.flush()
+                detail = emulator_log.read_text(errors="replace").strip()
+                raise RuntimeError(
+                    "timed out waiting for use/pushwall emulator result"
+                    + (f"\n{detail}" if detail else "")
+                )
+        finally:
+            process.terminate()
+            try:
+                process.wait(timeout=2)
+            except subprocess.TimeoutExpired:
+                process.kill()
+                process.wait()
 
     records, errors, first_case, reason, expected, actual = payload[4:10]
     if errors:
         print(
-            f"FAIL: {errors} failed door-use cases in {records}; "
+            f"FAIL: {errors} failed use/pushwall cases in {records}; "
             f"first case={first_case} reason={REASONS.get(reason, reason)} "
             f"expected={expected:#04x} actual={actual:#04x}"
         )
         return 1
-    print(f"PASS: {records}/{records} directed production door-use eZ80 cases")
+    print(f"PASS: {records}/{records} directed production use/pushwall eZ80 cases")
     return 0
 
 

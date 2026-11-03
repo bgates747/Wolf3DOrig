@@ -27,26 +27,34 @@ class AcceptancePackageTests(unittest.TestCase):
     def test_catalog_covers_both_transitions_and_special_actor_scenes(self) -> None:
         self.assertEqual(
             [scenario.name for scenario in prepare.SCENARIOS],
-            ["ordinary-transition", "secret-transition", "hans", "ghosts"],
+            ["pushwall", "ordinary-transition", "secret-transition", "hans", "ghosts"],
         )
         self.assertEqual(
             [scenario.initial_level for scenario in prepare.SCENARIOS],
-            [0, 9, 8, 9],
+            [0, 0, 9, 8, 9],
         )
         self.assertEqual(
             [scenario.invulnerable for scenario in prepare.SCENARIOS],
-            [False, False, True, False],
+            [False, False, False, True, False],
         )
-        self.assertFalse(prepare.SCENARIOS[2].one_hit_hans)
+        self.assertFalse(prepare.SCENARIOS[3].one_hit_hans)
+
+    def test_pushwall_pose_faces_real_e1l1_secret_wall(self) -> None:
+        scenario = prepare.SCENARIOS[0]
+        package = parse_package(prepare.patch_state(self.state(0), scenario))
+        x, y, angle = struct.unpack("<iiH", package.player_pose)
+        self.assertEqual((x >> 16, y >> 16, angle), (10, 14, 90))
+        self.assertEqual(package.sections["paths"][13 * 64 + 10], 0xFD)
+        self.assertEqual(package.sections["tilemap"][13 * 64 + 10], 4)
 
     def test_normal_transition_pose_is_inside_real_e1l1_elevator(self) -> None:
-        scenario = prepare.SCENARIOS[0]
+        scenario = prepare.SCENARIOS[1]
         package = parse_package(prepare.patch_state(self.state(0), scenario))
         x, y, angle = struct.unpack("<iiH", package.player_pose)
         self.assertEqual((x >> 16, y >> 16, angle), (25, 47, 0))
 
     def test_hans_pose_preserves_real_boss(self) -> None:
-        scenario = prepare.SCENARIOS[2]
+        scenario = prepare.SCENARIOS[3]
         package = parse_package(prepare.patch_state(self.state(8), scenario))
         x, y, angle = struct.unpack("<iiH", package.player_pose)
         self.assertEqual((x >> 16, y >> 16, angle), (34, 17, 90))
@@ -73,7 +81,7 @@ class AcceptancePackageTests(unittest.TestCase):
         self.assertEqual(entrance, [(34, 15, 0, 0, 0, 0, 121, 3, 2)])
 
     def test_hans_keeps_canonical_hit_pool_for_each_difficulty(self) -> None:
-        scenario = prepare.SCENARIOS[2]
+        scenario = prepare.SCENARIOS[3]
         expected = {
             "baby": 850,
             "easy": 950,
@@ -99,7 +107,7 @@ class AcceptancePackageTests(unittest.TestCase):
                 )
 
     def test_ghost_scene_has_four_live_original_ghost_states(self) -> None:
-        scenario = prepare.SCENARIOS[3]
+        scenario = prepare.SCENARIOS[4]
         package = parse_package(prepare.patch_state(self.state(9), scenario))
         actors = package.sections["actors"]
         observed = []

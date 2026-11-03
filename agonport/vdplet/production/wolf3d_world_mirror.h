@@ -50,6 +50,32 @@ struct Hud {
     uint8_t lives;
 };
 
+struct PushwallCompletion {
+    uint8_t origin_x;
+    uint8_t origin_y;
+    uint8_t current_x;
+    uint8_t current_y;
+    uint8_t texture;
+};
+
+struct PushwallState {
+    uint8_t status;
+    uint8_t origin_x;
+    uint8_t origin_y;
+    uint8_t current_x;
+    uint8_t current_y;
+    uint8_t direction;
+    uint8_t position;
+    uint8_t texture;
+    uint8_t completed_count;
+    PushwallCompletion completed[W3P_MAX_PUSHWALLS];
+};
+
+static_assert(sizeof(PushwallCompletion) == W3P_PUSHWALL_COMPLETED_BYTES,
+              "pushwall completion wire layout drifted");
+static_assert(sizeof(PushwallState) == W3P_PUSHWALL_BYTES,
+              "pushwall state wire layout drifted");
+
 struct ResourceDescriptor {
     uint16_t flags;
     uint16_t workspace_id;
@@ -77,6 +103,7 @@ struct WorldMirror {
     StaticObject statics[W3P_MAX_STATICS];
     Hud hud;
     int16_t view_weapon_shape;
+    PushwallState pushwall;
 };
 
 static_assert(sizeof(WorldMirror) <= W3P_MIRROR_MAX_BYTES,
@@ -101,7 +128,7 @@ void initialize_world_mirror(
     uint16_t configured_tilemap_id);
 
 // Validates the exact 24-byte CONFIG descriptor without mutating output on
-// failure. Schema 1 deliberately pins the established application asset bases
+// failure. Schema 2 deliberately pins the established application asset bases
 // and copied-pixel workspace while the standalone backend remains the oracle.
 BatchDetail validate_resource_descriptor(
     ResourceDescriptor &output, const uint8_t *bytes, size_t byte_count);

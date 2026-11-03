@@ -123,6 +123,7 @@ w3d_vdplet_batch_prepare:
     ld (w3d_vdplet_batch_buffer+W3P_BATCH_FLAGS_OFFSET+0),a
     call w3d_vdplet_batch_append_level
     call w3d_vdplet_batch_append_player
+    call w3d_vdplet_batch_append_pushwall
     call w3d_vdplet_batch_append_all_doors
     call w3d_vdplet_batch_append_all_actors
     call w3d_vdplet_batch_append_all_statics
@@ -132,6 +133,7 @@ w3d_vdplet_batch_prepare:
 
 @dirty:
     call w3d_vdplet_batch_append_dirty_player
+    call w3d_vdplet_batch_append_dirty_pushwall
     call w3d_vdplet_batch_append_dirty_doors
     call w3d_vdplet_batch_append_dirty_actors
     call w3d_vdplet_batch_append_dirty_statics
@@ -307,6 +309,20 @@ w3d_vdplet_batch_append_dirty_player:
     or a
     ret z
     jp w3d_vdplet_batch_append_player
+
+w3d_vdplet_batch_append_pushwall:
+    ld a,W3P_RECORD_PUSHWALL
+    ld b,W3P_PUSHWALL_BYTES
+    call w3d_vdplet_batch_begin_record
+    ld hl,w3d_pushwall_payload
+    ld bc,W3P_PUSHWALL_BYTES
+    jp w3d_vdplet_batch_append_bytes
+
+w3d_vdplet_batch_append_dirty_pushwall:
+    ld a,(w3d_vdplet_pushwall_dirty_snapshot)
+    or a
+    ret z
+    jp w3d_vdplet_batch_append_pushwall
 
 w3d_vdplet_batch_append_all_doors:
     xor a
@@ -560,6 +576,8 @@ w3d_vdplet_batch_snapshot_dirty:
     ldir
     ld a,(w3d_player_dirty)
     ld (w3d_vdplet_player_dirty_snapshot),a
+    ld a,(w3d_pushwall_dirty)
+    ld (w3d_vdplet_pushwall_dirty_snapshot),a
     ld a,(w3d_hud_dirty)
     ld (w3d_vdplet_hud_dirty_snapshot),a
     ld a,(w3d_player_weapon_shape_dirty)
@@ -583,12 +601,22 @@ w3d_vdplet_batch_clear_snapshot:
     ld a,(w3d_vdplet_player_dirty_snapshot)
     ld b,a
     or a
-    jr z,@hud
+    jr z,@pushwall
     ld a,(w3d_player_dirty)
+    cp b
+    jr nz,@pushwall
+    xor a
+    ld (w3d_player_dirty),a
+@pushwall:
+    ld a,(w3d_vdplet_pushwall_dirty_snapshot)
+    ld b,a
+    or a
+    jr z,@hud
+    ld a,(w3d_pushwall_dirty)
     cp b
     jr nz,@hud
     xor a
-    ld (w3d_player_dirty),a
+    ld (w3d_pushwall_dirty),a
 @hud:
     ld a,(w3d_vdplet_hud_dirty_snapshot)
     ld b,a
@@ -650,6 +678,9 @@ w3d_vdplet_batch_refresh_world_dirty:
     call w3d_vdplet_batch_any_nonzero
     jr nz,@dirty
     ld a,(w3d_player_dirty)
+    ld b,a
+    ld a,(w3d_pushwall_dirty)
+    or b
     ld b,a
     ld a,(w3d_hud_dirty)
     or b
@@ -754,6 +785,8 @@ w3d_vdplet_actor_dirty_snapshot:
 w3d_vdplet_static_dirty_snapshot:
     ds W3D_MAX_STATICS
 w3d_vdplet_player_dirty_snapshot:
+    db 0
+w3d_vdplet_pushwall_dirty_snapshot:
     db 0
 w3d_vdplet_hud_dirty_snapshot:
     db 0

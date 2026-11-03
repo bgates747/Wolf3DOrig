@@ -7,8 +7,8 @@
 #define W3P_ARGUMENT_MAGIC                0x41503357u  // "W3PA" little-endian
 #define W3P_BATCH_MAGIC                   0x55443357u  // "W3DU" little-endian
 #define W3P_MODULE_ID                     0x31503357u  // "W3P1" production renderer identity
-#define W3P_MODULE_RELEASE                0x00010000u  // module release 1.0.0
-#define W3P_SCHEMA_VERSION                1u           // wire schema, independent of module release
+#define W3P_MODULE_RELEASE                0x00010100u  // module release 1.1.0
+#define W3P_SCHEMA_VERSION                2u           // wire schema, independent of module release
 #define W3P_REQUIRED_CAPABILITIES         257u         // buffers plus direct colour rows
 #define W3P_ENTRY_CONFIG                  0u           // validate resource descriptor
 #define W3P_ENTRY_APPLY_AND_RENDER        1u           // atomically update and render
@@ -31,7 +31,7 @@
 #define W3P_ARG_RESERVED                  22u          // u16 zero
 #define W3P_ARG_FLAG_COPIED_PIXELS        1u           // RGB222 workspace publication
 #define W3P_ARG_FLAG_DIRECT_ROWS          2u           // native hidden-framebuffer rows
-#define W3P_ARG_KNOWN_FLAGS               3u           // all schema-1 descriptor flags
+#define W3P_ARG_KNOWN_FLAGS               3u           // all schema-2 descriptor flags
 #define W3P_DEFAULT_WALL_BASE             0x1000u      // resident wall texture buffers
 #define W3P_DEFAULT_SPRITE_BASE           0x2000u      // resident sprite texture buffers
 #define W3P_DEFAULT_HUD_BASE              0x4000u      // resident HUD chunk buffers
@@ -57,9 +57,9 @@
 #define W3P_BATCH_GENERATION_OFFSET       12u          // u16 nonzero monotonic
 #define W3P_BATCH_RESERVED_OFFSET         14u          // u16 zero
 #define W3P_BATCH_FLAG_FULL               1u           // complete level snapshot
-#define W3P_BATCH_KNOWN_FLAGS             1u           // all schema-1 batch flags
-#define W3P_BATCH_MAX_BYTES               0x1B00u      // worst full snapshot plus headroom
-#define W3P_BATCH_MAX_RECORDS             617u         // 1 level + player + maxima + HUD/weapon
+#define W3P_BATCH_KNOWN_FLAGS             1u           // all schema-2 batch flags
+#define W3P_BATCH_MAX_BYTES               0x1C00u      // worst full snapshot plus headroom
+#define W3P_BATCH_MAX_RECORDS             618u         // 1 level + player + pushwall + maxima + HUD/weapon
 #define W3P_RECORD_HEADER_BYTES           2u           // type:u8,payload_bytes:u8
 #define W3P_RECORD_LEVEL                  1u           // full snapshot level binding
 #define W3P_RECORD_PLAYER                 2u           // player pose
@@ -69,6 +69,7 @@
 #define W3P_RECORD_STATIC                 6u           // static slot value/removal
 #define W3P_RECORD_HUD                    7u           // complete persistent HUD state
 #define W3P_RECORD_VIEW_WEAPON            8u           // first-person overlay shape
+#define W3P_RECORD_PUSHWALL               9u           // complete live/completed pushwall state
 #define W3P_LEVEL_BYTES                   6u           // tilemap:u16,doors:u8,statics:u16,reserved:u8
 #define W3P_PLAYER_BYTES                  10u          // x:i32,y:i32,angle:u16
 #define W3P_DOOR_BYTES                    9u           // id:u8 plus existing 8-byte door wire
@@ -77,6 +78,19 @@
 #define W3P_STATIC_BYTES                  7u           // id:u16 plus existing 5-byte static wire
 #define W3P_HUD_BYTES                     12u          // complete HUD value record
 #define W3P_VIEW_WEAPON_BYTES             2u           // shape:i16
+#define W3P_PUSHWALL_BYTES                89u          // live:8,count:u8,16 completed entries
+#define W3P_PUSHWALL_STATUS               0u           // live status byte
+#define W3P_PUSHWALL_ORIGIN_X             1u           // live origin x
+#define W3P_PUSHWALL_ORIGIN_Y             2u           // live origin y
+#define W3P_PUSHWALL_CURRENT_X            3u           // live current x
+#define W3P_PUSHWALL_CURRENT_Y            4u           // live current y
+#define W3P_PUSHWALL_DIRECTION            5u           // live cardinal direction
+#define W3P_PUSHWALL_POSITION             6u           // live fractional position 0..63
+#define W3P_PUSHWALL_TEXTURE              7u           // live wall texture 1..63
+#define W3P_PUSHWALL_COMPLETED_COUNT      8u           // completed overlay count
+#define W3P_PUSHWALL_COMPLETED_OFFSET     9u           // first completed overlay
+#define W3P_PUSHWALL_COMPLETED_BYTES      5u           // origin x/y,current x/y,texture
+#define W3P_MAX_PUSHWALLS                 16u          // shareware per-level completion ceiling
 #define W3P_MAX_DOORS                     64u          // render mirror slots
 #define W3P_MAX_ACTORS                    150u         // slot zero remains player-owned
 #define W3P_MAX_STATICS                   400u         // render mirror slots

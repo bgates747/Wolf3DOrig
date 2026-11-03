@@ -40,9 +40,11 @@ W3D_DIR_SOUTHEAST:          equ 7
 W3D_DIR_NODIR:              equ 8
 
 ; The W3L paths section preserves original plane-1 metadata without growing
-; the package: 0..7 remain actor path arrows, 0xff means no arrow, and 0xfe
-; marks EXITTILE (plane-1 value 99). Actor path selection already treats every
-; value >= 8 as no arrow, leaving the victory sentinel player-owned.
+; the package: 0..7 remain actor path arrows, 0xff means no arrow, 0xfd marks
+; PUSHABLETILE (plane-1 value 98), and 0xfe marks EXITTILE (value 99). Actor
+; path selection already treats every value >= 8 as no direction, leaving the
+; two sentinels player-owned.
+W3D_PATH_PUSHWALL:          equ 0fdh
 W3D_PATH_VICTORY:           equ 0feh
 W3D_PATH_NONE:              equ 0ffh
 

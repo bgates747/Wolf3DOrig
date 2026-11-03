@@ -269,6 +269,8 @@ std::vector<uint8_t> full_batch() {
     append_u32(player, static_cast<uint32_t>(spec.player_y));
     append_u16(player, spec.player_angle);
     batch.record(W3P_RECORD_PLAYER, player);
+    batch.record(W3P_RECORD_PUSHWALL,
+                 std::vector<uint8_t>(W3P_PUSHWALL_BYTES, 0));
     for (uint8_t index = 0; index < 2; ++index) {
         const fixture::DoorSpec &door = spec.doors[index];
         std::vector<uint8_t> payload = {

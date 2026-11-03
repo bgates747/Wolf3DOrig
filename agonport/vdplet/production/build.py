@@ -22,7 +22,7 @@ SDK = Path("/Agon/mystuff/agon-vdplet/build/vdpl-014/baseline")
 SDK_PYTHON = Path("/Agon/mystuff/agon-vdplet/.venv/bin/python")
 TOOLCHAIN = Path("/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin")
 EXPECTED_PACKAGE_SHA256 = (
-    "e1adfa24b8f015a7cc0c25e399417767febfa90ab35d3cbe84346f06b1e417b5"
+    "a3506e245563dec7e72c7f90b9ebfb56caaf141766b2b6267a2b9e498b7e0c97"
 )
 FRAME_BYTES = 76800
 HUD_MANIFEST = (
@@ -178,11 +178,11 @@ def main() -> None:
     fixture_files = sorted(
         path for path in target_fixture.iterdir() if path.is_file())
     receipt = {
-        "schema": 1,
+        "schema": 2,
         "argument_bytes": 24,
-        "batch_max_bytes": 6912,
-        "batch_max_records": 617,
-        "maximum_full_snapshot_bytes": 6891,
+        "batch_max_bytes": 7168,
+        "batch_max_records": 618,
+        "maximum_full_snapshot_bytes": 6982,
         "atomic_validation": True,
         "renderer_scenarios": 3,
         "renderer_frame_bytes_compared": len(renderer_frame.read_bytes()),
@@ -191,7 +191,8 @@ def main() -> None:
         "renderer_geometry_sha256": sha(renderer_geometry),
         "hud_assets_verified": hud_assets_verified,
         "renderer_scope": (
-            "background, DDA, walls, doors, actors, statics, view weapon, HUD"
+            "background, DDA, walls, moving/completed pushwalls, doors, "
+            "actors, statics, view weapon, HUD"
         ),
         "module_frame_sha256": sha(published_frame),
         "module_lifecycle": (

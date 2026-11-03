@@ -14,6 +14,9 @@ Run:
 
 The generated payloads appear under `src/asm/wolf3d_acceptance/tgt/`:
 
+- `pushwall`: real E1L1, one tile south of the original secret wall at
+  `(10,13)` and facing north. Press Up once to start the wall, then watch it
+  move two tiles and verify that the newly revealed passage is traversable.
 - `ordinary-transition`: real E1L1, inside the ordinary elevator facing its
   switch. Press Up once to display the completed-floor screen and enter E1L2.
 - `secret-transition`: real E1L10, inside its return elevator facing the
@@ -51,6 +54,7 @@ After Oryx is available again and the Wolf3D agent holds the shared FIFO
 checkout, the Author can launch one scenario at a time on Oryx with:
 
 ```bash
+cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/pushwall && ./flexe-agon-emulator
 cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/ordinary-transition && ./flexe-agon-emulator
 cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/secret-transition && ./flexe-agon-emulator
 cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/hans && ./flexe-agon-emulator

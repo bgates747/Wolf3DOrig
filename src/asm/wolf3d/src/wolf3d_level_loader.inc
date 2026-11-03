@@ -257,9 +257,9 @@ w3d_load_level_package:
     PUBLISH_W3L_POINTER W3L_STATICS_OFFSET,w3d_level_static_seed_ptr
     PUBLISH_W3L_POINTER W3L_ACTORS_OFFSET,w3d_level_actor_seed_ptr
     PUBLISH_W3L_POINTER W3L_BLOCKING_OFFSET,w3d_level_blocking_ptr
-    PUBLISH_W3L_POINTER W3L_AREAS_OFFSET,w3d_level_area_ptr
+    PUBLISH_W3L_POINTER W3L_AREAS_OFFSET,w3d_level_area_seed_ptr
     PUBLISH_W3L_POINTER W3L_PATHS_OFFSET,w3d_level_path_ptr
-    PUBLISH_W3L_POINTER W3L_TILEMAP_OFFSET,w3d_level_tilemap_ptr
+    PUBLISH_W3L_POINTER W3L_TILEMAP_OFFSET,w3d_level_tilemap_seed_ptr
     xor a
     ret
 

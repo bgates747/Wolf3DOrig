@@ -67,10 +67,11 @@ Sections are packed consecutively after the header in this exact order:
 7. one 4096-byte VDP tilemap.
 
 The path/trigger byte remains compact and actor-compatible: `0..7` are the
-eight original path arrows, `ffh` means no arrow, and `feh` preserves the
-original plane-1 `EXITTILE` value 99. Actor path selection already treats all
-values at or above eight as no direction, so the `feh` victory marker adds no
-actor hot-loop branch and requires no package-layout or version change.
+eight original path arrows, `ffh` means no arrow, `fdh` preserves the original
+plane-1 `PUSHABLETILE` value 98, and `feh` preserves `EXITTILE` value 99.
+Actor path selection already treats all values at or above eight as no
+direction, so both player-owned markers add no actor hot-loop branch and
+require no package-layout or version change.
 
 The final section is followed by the four-byte `E3L1` end marker. MOS LOAD
 silently caps its read to the caller's receive-arena size and does not return

@@ -178,11 +178,134 @@ ViewState setup_view(const WorldMirror &world) {
     return view;
 }
 
-uint8_t tile_at(const uint8_t *map, int x, int y) {
+uint8_t base_tile_at(const uint8_t *map, int x, int y) {
     if (x < 0 || x >= static_cast<int>(W3P_MAP_SIZE) ||
         y < 0 || y >= static_cast<int>(W3P_MAP_SIZE)) return 1;
     return map[static_cast<uint32_t>(y) * W3P_MAP_SIZE +
                static_cast<uint32_t>(x)];
+}
+
+bool completion_tile(const PushwallCompletion &wall, int x, int y,
+                     uint8_t &value) {
+    if (x == wall.current_x && y == wall.current_y) {
+        value = wall.texture;
+        return true;
+    }
+    if (wall.origin_y == wall.current_y && y == wall.origin_y) {
+        if ((wall.current_x > wall.origin_x &&
+             x >= wall.origin_x && x < wall.current_x) ||
+            (wall.current_x < wall.origin_x &&
+             x <= wall.origin_x && x > wall.current_x)) {
+            value = 0;
+            return true;
+        }
+    } else if (wall.origin_x == wall.current_x && x == wall.origin_x) {
+        if ((wall.current_y > wall.origin_y &&
+             y >= wall.origin_y && y < wall.current_y) ||
+            (wall.current_y < wall.origin_y &&
+             y <= wall.origin_y && y > wall.current_y)) {
+            value = 0;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool active_pushwall_cell(const PushwallState &wall, int x, int y) {
+    if (wall.origin_y == wall.current_y && y == wall.origin_y) {
+        return wall.current_x >= wall.origin_x
+            ? x >= wall.origin_x && x <= wall.current_x
+            : x <= wall.origin_x && x >= wall.current_x;
+    }
+    if (wall.origin_x == wall.current_x && x == wall.origin_x) {
+        return wall.current_y >= wall.origin_y
+            ? y >= wall.origin_y && y <= wall.current_y
+            : y <= wall.origin_y && y >= wall.current_y;
+    }
+    return false;
+}
+
+uint8_t tile_at(const WorldMirror &world, const uint8_t *map, int x, int y) {
+    uint8_t value = base_tile_at(map, x, y);
+    for (uint8_t i = 0; i < world.pushwall.completed_count; ++i)
+        completion_tile(world.pushwall.completed[i], x, y, value);
+    if (world.pushwall.status != 1) return value;
+    if (active_pushwall_cell(world.pushwall, x, y)) return 0;
+    return value;
+}
+
+struct PushwallHit {
+    bool hit;
+    int32_t traveled;
+    int32_t x;
+    int32_t y;
+    uint8_t side;
+    uint8_t texture;
+    uint8_t tex_u;
+};
+
+PushwallHit cast_pushwall(const WorldMirror &world, int32_t px, int32_t py,
+                          int32_t ray_x, int32_t ray_y) {
+    PushwallHit result{};
+    if (world.pushwall.status != 1) return result;
+    int dx = 0;
+    int dy = 0;
+    if (world.pushwall.direction == 0) dx = 1;
+    else if (world.pushwall.direction == 2) dy = -1;
+    else if (world.pushwall.direction == 4) dx = -1;
+    else if (world.pushwall.direction == 6) dy = 1;
+    else return result;
+    const int32_t offset = static_cast<int32_t>(world.pushwall.position) << 10;
+    const int32_t min_x =
+        (static_cast<int32_t>(world.pushwall.current_x) << 16) + dx * offset;
+    const int32_t min_y =
+        (static_cast<int32_t>(world.pushwall.current_y) << 16) + dy * offset;
+    const int32_t max_x = min_x + kTileGlobal;
+    const int32_t max_y = min_y + kTileGlobal;
+
+    int32_t enter_x = -kInt32Max;
+    int32_t exit_x = kInt32Max;
+    int32_t enter_y = -kInt32Max;
+    int32_t exit_y = kInt32Max;
+    if (ray_x == 0) {
+        if (px < min_x || px > max_x) return result;
+    } else if (ray_x > 0) {
+        enter_x = fixed_div(min_x - px, ray_x);
+        exit_x = fixed_div(max_x - px, ray_x);
+    } else {
+        enter_x = fixed_div(max_x - px, ray_x);
+        exit_x = fixed_div(min_x - px, ray_x);
+    }
+    if (ray_y == 0) {
+        if (py < min_y || py > max_y) return result;
+    } else if (ray_y > 0) {
+        enter_y = fixed_div(min_y - py, ray_y);
+        exit_y = fixed_div(max_y - py, ray_y);
+    } else {
+        enter_y = fixed_div(max_y - py, ray_y);
+        exit_y = fixed_div(min_y - py, ray_y);
+    }
+    int32_t enter = enter_x > enter_y ? enter_x : enter_y;
+    const int32_t exit = exit_x < exit_y ? exit_x : exit_y;
+    if (exit < enter || exit < 0) return result;
+    uint8_t side = enter_x >= enter_y ? 0 : 1;
+    if (enter < 0) {
+        enter = exit;
+        side = exit_x <= exit_y ? 0 : 1;
+    }
+    const int32_t hit_x = px + fixed_mul(ray_x, enter);
+    const int32_t hit_y = py + fixed_mul(ray_y, enter);
+    const uint16_t fraction = side == 0
+        ? static_cast<uint16_t>(hit_y - min_y)
+        : static_cast<uint16_t>(hit_x - min_x);
+    result.hit = true;
+    result.traveled = enter;
+    result.x = hit_x;
+    result.y = hit_y;
+    result.side = side;
+    result.texture = world.pushwall.texture;
+    result.tex_u = static_cast<uint8_t>(fraction >> 10);
+    return result;
 }
 
 int32_t projected_height(int32_t intercept_x, int32_t intercept_y,
@@ -239,6 +362,7 @@ RenderDetail cast_walls(const WorldMirror &world, const uint8_t *map,
         }
 
         bool hit = false;
+        int32_t hit_traveled = kInt32Max;
         int side = 0;
         uint8_t tile_value = 0;
         int32_t intercept_x = px;
@@ -259,12 +383,13 @@ RenderDetail cast_walls(const WorldMirror &world, const uint8_t *map,
             if (map_x < 0 || map_x >= static_cast<int>(W3P_MAP_SIZE) ||
                 map_y < 0 || map_y >= static_cast<int>(W3P_MAP_SIZE)) {
                 tile_value = 1;
+                hit_traveled = traveled;
                 hit = true;
                 break;
             }
             intercept_x = px + fixed_mul(ray_x, traveled);
             intercept_y = py + fixed_mul(ray_y, traveled);
-            const uint8_t tile = tile_at(map, map_x, map_y);
+            const uint8_t tile = tile_at(world, map, map_x, map_y);
             if (tile == 0) continue;
 
             if (tile >= kDoorFlag && tile <= kDoorMax) {
@@ -283,6 +408,7 @@ RenderDetail cast_walls(const WorldMirror &world, const uint8_t *map,
                             fraction = static_cast<uint16_t>(plane_y);
                             intercept_x = plane_x;
                             intercept_y = plane_y;
+                            hit_traveled = t;
                             resolved = true;
                         }
                     }
@@ -295,6 +421,7 @@ RenderDetail cast_walls(const WorldMirror &world, const uint8_t *map,
                         fraction = static_cast<uint16_t>(plane_x);
                         intercept_x = plane_x;
                         intercept_y = plane_y;
+                        hit_traveled = t;
                         resolved = true;
                     }
                 }
@@ -304,10 +431,12 @@ RenderDetail cast_walls(const WorldMirror &world, const uint8_t *map,
                 hit = true;
             } else {
                 tile_value = tile;
+                hit_traveled = traveled;
                 if (tile <= 0x7f) {
                     const int previous_x = map_x - (side == 0 ? step_x : 0);
                     const int previous_y = map_y - (side == 1 ? step_y : 0);
-                    const uint8_t previous = tile_at(map, previous_x, previous_y);
+                    const uint8_t previous =
+                        tile_at(world, map, previous_x, previous_y);
                     if (previous >= kDoorFlag && previous <= kDoorMax) {
                         const uint8_t door_index = previous & kDoorMask;
                         if (door_index >= world.door_count)
@@ -324,6 +453,19 @@ RenderDetail cast_walls(const WorldMirror &world, const uint8_t *map,
             break;
         }
 
+        const PushwallHit pushwall =
+            cast_pushwall(world, px, py, ray_x, ray_y);
+        bool pushwall_selected = false;
+        if (pushwall.hit && (!hit || pushwall.traveled < hit_traveled)) {
+            hit = true;
+            pushwall_selected = true;
+            hit_traveled = pushwall.traveled;
+            intercept_x = pushwall.x;
+            intercept_y = pushwall.y;
+            side = pushwall.side;
+            tile_value = pushwall.texture;
+        }
+
         if (!hit) {
             heights[col] = 0;
             tiles[col] = tex_u[col] = sides[col] = 0;
@@ -334,6 +476,10 @@ RenderDetail cast_walls(const WorldMirror &world, const uint8_t *map,
         sides[col] = static_cast<uint8_t>(side);
         uint16_t fraction = side == 0 ? static_cast<uint16_t>(intercept_y)
                                       : static_cast<uint16_t>(intercept_x);
+        if (pushwall_selected) {
+            tex_u[col] = pushwall.tex_u;
+            continue;
+        }
         if (tile_value >= kDoorFlag && tile_value <= kDoorMax) {
             fraction = static_cast<uint16_t>(
                 fraction - world.doors[tile_value & kDoorMask].position);

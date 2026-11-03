@@ -132,6 +132,22 @@ std::vector<uint8_t> weapon_payload(int16_t shape = 10) {
     return p;
 }
 
+std::vector<uint8_t> pushwall_payload(
+    uint8_t status = 0, uint8_t origin_x = 0, uint8_t origin_y = 0,
+    uint8_t current_x = 0, uint8_t current_y = 0, uint8_t direction = 0,
+    uint8_t position = 0, uint8_t texture = 0) {
+    std::vector<uint8_t> p(W3P_PUSHWALL_BYTES, 0);
+    p[W3P_PUSHWALL_STATUS] = status;
+    p[W3P_PUSHWALL_ORIGIN_X] = origin_x;
+    p[W3P_PUSHWALL_ORIGIN_Y] = origin_y;
+    p[W3P_PUSHWALL_CURRENT_X] = current_x;
+    p[W3P_PUSHWALL_CURRENT_Y] = current_y;
+    p[W3P_PUSHWALL_DIRECTION] = direction;
+    p[W3P_PUSHWALL_POSITION] = position;
+    p[W3P_PUSHWALL_TEXTURE] = texture;
+    return p;
+}
+
 std::vector<uint8_t> full_batch(
     uint16_t generation, uint8_t doors, uint16_t statics,
     uint16_t actors = 1, uint16_t tilemap = 2) {
@@ -139,6 +155,7 @@ std::vector<uint8_t> full_batch(
     batch.record(W3P_RECORD_LEVEL, level_payload(tilemap, doors, statics));
     batch.record(W3P_RECORD_PLAYER,
                  player_payload(0x001D8000, 0x00398000, 0));
+    batch.record(W3P_RECORD_PUSHWALL, pushwall_payload());
     for (uint8_t i = 0; i < doors; ++i) {
         batch.record(W3P_RECORD_DOOR, door_payload(i));
     }
@@ -226,6 +243,8 @@ void test_valid_full_and_partial() {
     partial.record(W3P_RECORD_STATIC, static_payload(2, -1));
     partial.record(W3P_RECORD_HUD, hud_payload(75, 999));
     partial.record(W3P_RECORD_VIEW_WEAPON, weapon_payload(-1));
+    partial.record(W3P_RECORD_PUSHWALL,
+                   pushwall_payload(1, 10, 10, 10, 10, 0, 32, 4));
     const auto update = partial.finish(2, 0);
     require(apply_update_batch(mirror, update.data(), update.size()) ==
                 BatchDetail::ok,
@@ -234,7 +253,9 @@ void test_valid_full_and_partial() {
                 mirror.doors[1].position == 0x8000 &&
                 mirror.actors[2].shape == -1 && mirror.statics[2].shape == -1 &&
                 mirror.hud.health == 75 && mirror.hud.score == 999 &&
-                mirror.view_weapon_shape == -1,
+                mirror.view_weapon_shape == -1 &&
+                mirror.pushwall.status == 1 &&
+                mirror.pushwall.position == 32,
             "partial update values mismatch");
     mark_mirror_presented(mirror);
 
@@ -335,6 +356,12 @@ void test_atomic_rejections() {
     expect_preserved(mirror, rotation_overflow.finish(2, 0),
                      BatchDetail::argument, "actor rotation shape overflow");
 
+    Batch bad_pushwall;
+    bad_pushwall.record(W3P_RECORD_PUSHWALL,
+                        pushwall_payload(1, 10, 10, 11, 10, 2, 32, 4));
+    expect_preserved(mirror, bad_pushwall.finish(2, 0),
+                     BatchDetail::argument, "pushwall direction mismatch");
+
     Batch short_record;
     short_record.record(W3P_RECORD_PLAYER, std::vector<uint8_t>(9, 0));
     expect_preserved(mirror, short_record.finish(2, 0), BatchDetail::bounds,
@@ -346,7 +373,7 @@ void test_maximum_snapshot_and_wrap_refusal() {
     initialize_world_mirror(mirror, 0, 2);
     const auto maximum = full_batch(
         1, W3P_MAX_DOORS, W3P_MAX_STATICS, W3P_MAX_ACTORS - 1);
-    require(maximum.size() == 6891, "maximum snapshot size drifted");
+    require(maximum.size() == 6982, "maximum snapshot size drifted");
     require(maximum.size() <= W3P_BATCH_MAX_BYTES,
             "maximum snapshot exceeds contract bound");
     require(apply_update_batch(mirror, maximum.data(), maximum.size()) ==
@@ -399,8 +426,8 @@ void test_resource_descriptor() {
 
 int main() {
     try {
-        require(sizeof(WorldMirror) == 5360,
-                "host world-mirror layout drifted from 5,360 bytes");
+        require(sizeof(WorldMirror) == 5448,
+                "host world-mirror layout drifted from 5,448 bytes");
         test_valid_full_and_partial();
         test_atomic_rejections();
         test_maximum_snapshot_and_wrap_refusal();

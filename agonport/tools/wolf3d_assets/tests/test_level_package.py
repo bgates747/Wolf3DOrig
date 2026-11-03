@@ -18,7 +18,11 @@ from formats.level_package import (  # noqa: E402
     parse_package,
 )
 from scripts.build_level_packages import build_one  # noqa: E402
-from scripts.gen_render_fixture import W3D_PATH_NONE, W3D_PATH_VICTORY  # noqa: E402
+from scripts.gen_render_fixture import (  # noqa: E402
+    W3D_PATH_NONE,
+    W3D_PATH_PUSHWALL,
+    W3D_PATH_VICTORY,
+)
 
 DATA_DIR = PROJECT_ROOT / "orig/data"
 
@@ -124,10 +128,32 @@ class RuntimeLevelPackageTests(unittest.TestCase):
                 self.assertTrue(
                     all(
                         value in range(8)
-                        or value in (W3D_PATH_VICTORY, W3D_PATH_NONE)
+                        or value in (W3D_PATH_PUSHWALL, W3D_PATH_VICTORY, W3D_PATH_NONE)
                         for value in paths
                     )
                 )
+
+    def test_all_shareware_pushwall_markers_are_preserved(self) -> None:
+        expected_counts = (5, 4, 10, 7, 5, 4, 2, 13, 2, 15)
+        for level_index, expected_count in enumerate(expected_counts):
+            with self.subTest(level=level_index):
+                level = self.level(level_index)
+                package = parse_package(
+                    build_one(level, level_index, actorinfo.Difficulty.MEDIUM)
+                )
+                expected = {
+                    (x, y)
+                    for y, row in enumerate(level.plane1)
+                    for x, value in enumerate(row)
+                    if value == 98
+                }
+                actual = {
+                    (offset % mapfile.MAP_WIDTH, offset // mapfile.MAP_WIDTH)
+                    for offset, value in enumerate(package.sections["paths"])
+                    if value == W3D_PATH_PUSHWALL
+                }
+                self.assertEqual(len(actual), expected_count)
+                self.assertEqual(actual, expected)
 
     def test_reserved_header_bytes_are_rejected(self) -> None:
         encoded = bytearray(build_one(self.level(0), 0, actorinfo.Difficulty.MEDIUM))

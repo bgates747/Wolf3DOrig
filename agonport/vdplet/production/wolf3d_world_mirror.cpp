@@ -17,6 +17,7 @@ struct Validation {
     bool player_seen;
     bool hud_seen;
     bool view_weapon_seen;
+    bool pushwall_seen;
     uint8_t door_count;
     uint16_t static_count;
     bool doors[W3P_MAX_DOORS];
@@ -85,6 +86,87 @@ bool valid_position(int32_t value) {
 bool valid_shape(int16_t value, bool removal_allowed) {
     return (removal_allowed && value == -1) ||
         (value >= 0 && value <= static_cast<int16_t>(W3P_MAX_SHAPE));
+}
+
+bool cardinal_direction(uint8_t direction) {
+    return direction == 0 || direction == 2 ||
+           direction == 4 || direction == 6;
+}
+
+bool pushwall_displacement(
+    uint8_t origin_x, uint8_t origin_y, uint8_t current_x, uint8_t current_y,
+    uint8_t direction, uint8_t maximum_steps, uint8_t &steps) {
+    if (origin_x >= W3P_MAP_SIZE || origin_y >= W3P_MAP_SIZE ||
+        current_x >= W3P_MAP_SIZE || current_y >= W3P_MAP_SIZE ||
+        !cardinal_direction(direction)) return false;
+    int dx = 0;
+    int dy = 0;
+    if (direction == 0) dx = 1;
+    else if (direction == 2) dy = -1;
+    else if (direction == 4) dx = -1;
+    else dy = 1;
+    for (uint8_t candidate = 0; candidate <= maximum_steps; ++candidate) {
+        if (static_cast<int>(origin_x) + dx * candidate == current_x &&
+            static_cast<int>(origin_y) + dy * candidate == current_y) {
+            steps = candidate;
+            return true;
+        }
+    }
+    return false;
+}
+
+bool valid_pushwall_payload(const uint8_t *p) {
+    const uint8_t status = p[W3P_PUSHWALL_STATUS];
+    const uint8_t count = p[W3P_PUSHWALL_COMPLETED_COUNT];
+    if (count > W3P_MAX_PUSHWALLS || status > 2) return false;
+    for (uint8_t i = 0; i < W3P_MAX_PUSHWALLS; ++i) {
+        const uint8_t *entry = p + W3P_PUSHWALL_COMPLETED_OFFSET +
+            static_cast<uint16_t>(i) * W3P_PUSHWALL_COMPLETED_BYTES;
+        if (i >= count) {
+            for (uint8_t byte = 0; byte < W3P_PUSHWALL_COMPLETED_BYTES; ++byte)
+                if (entry[byte] != 0) return false;
+            continue;
+        }
+        const int dx = static_cast<int>(entry[2]) - entry[0];
+        const int dy = static_cast<int>(entry[3]) - entry[1];
+        const int distance = dx < 0 ? -dx : dx;
+        const int y_distance = dy < 0 ? -dy : dy;
+        if (entry[0] >= W3P_MAP_SIZE || entry[1] >= W3P_MAP_SIZE ||
+            entry[2] >= W3P_MAP_SIZE || entry[3] >= W3P_MAP_SIZE ||
+            entry[4] == 0 || entry[4] > 63 ||
+            !((distance >= 1 && distance <= 2 && dy == 0) ||
+              (y_distance >= 1 && y_distance <= 2 && dx == 0))) return false;
+        for (uint8_t prior = 0; prior < i; ++prior) {
+            const uint8_t *other = p + W3P_PUSHWALL_COMPLETED_OFFSET +
+                static_cast<uint16_t>(prior) * W3P_PUSHWALL_COMPLETED_BYTES;
+            if (entry[0] == other[0] && entry[1] == other[1]) return false;
+        }
+    }
+    if (status == 0) {
+        if (count != 0) return false;
+        for (uint8_t i = 1; i < W3P_PUSHWALL_BYTES; ++i)
+            if (p[i] != 0) return false;
+        return true;
+    }
+    if (p[W3P_PUSHWALL_TEXTURE] == 0 ||
+        p[W3P_PUSHWALL_TEXTURE] > 63 ||
+        p[W3P_PUSHWALL_POSITION] > 63) return false;
+    uint8_t steps = 0;
+    const uint8_t maximum_steps = status == 1 ? 1 : 2;
+    if (!pushwall_displacement(
+            p[W3P_PUSHWALL_ORIGIN_X], p[W3P_PUSHWALL_ORIGIN_Y],
+            p[W3P_PUSHWALL_CURRENT_X], p[W3P_PUSHWALL_CURRENT_Y],
+            p[W3P_PUSHWALL_DIRECTION], maximum_steps, steps)) return false;
+    if (status == 1) return true;
+    if (steps == 0 || p[W3P_PUSHWALL_POSITION] != 0 || count == 0)
+        return false;
+    const uint8_t *last = p + W3P_PUSHWALL_COMPLETED_OFFSET +
+        static_cast<uint16_t>(count - 1) * W3P_PUSHWALL_COMPLETED_BYTES;
+    return last[0] == p[W3P_PUSHWALL_ORIGIN_X] &&
+        last[1] == p[W3P_PUSHWALL_ORIGIN_Y] &&
+        last[2] == p[W3P_PUSHWALL_CURRENT_X] &&
+        last[3] == p[W3P_PUSHWALL_CURRENT_Y] &&
+        last[4] == p[W3P_PUSHWALL_TEXTURE];
 }
 
 BatchDetail parse_header(
@@ -252,6 +334,13 @@ BatchDetail validate_record(
         return valid_shape(load_i16(p), true)
             ? BatchDetail::ok : BatchDetail::argument;
 
+    case W3P_RECORD_PUSHWALL:
+        if (payload_bytes != W3P_PUSHWALL_BYTES) return BatchDetail::bounds;
+        detail = mark_once(validation.pushwall_seen);
+        if (detail != BatchDetail::ok) return detail;
+        return valid_pushwall_payload(p)
+            ? BatchDetail::ok : BatchDetail::argument;
+
     default:
         return BatchDetail::record;
     }
@@ -283,7 +372,8 @@ BatchDetail validate_batch(
 
     if ((header.flags & W3P_BATCH_FLAG_FULL) != 0) {
         if (!validation.level_seen || !validation.player_seen ||
-            !validation.hud_seen || !validation.view_weapon_seen) {
+            !validation.hud_seen || !validation.view_weapon_seen ||
+            !validation.pushwall_seen) {
             return BatchDetail::incomplete;
         }
         for (uint8_t i = 0; i < validation.door_count; ++i) {
@@ -354,6 +444,12 @@ void apply_record(WorldMirror &mirror, uint8_t type, const uint8_t *p) {
     case W3P_RECORD_VIEW_WEAPON:
         mirror.view_weapon_shape = load_i16(p);
         break;
+    case W3P_RECORD_PUSHWALL: {
+        uint8_t *destination = reinterpret_cast<uint8_t *>(&mirror.pushwall);
+        for (uint8_t i = 0; i < W3P_PUSHWALL_BYTES; ++i)
+            destination[i] = p[i];
+        break;
+    }
     default:
         break;
     }

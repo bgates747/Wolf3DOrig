@@ -1,6 +1,7 @@
 #include "wolf3d_renderer.h"
 #include "renderer_fixture.h"
 
+#include <cstring>
 #include <fstream>
 #include <iostream>
 #include <stdexcept>
@@ -11,6 +12,8 @@ using namespace wolf3d_production;
 namespace fixture = wolf3d_renderer_fixture;
 
 namespace {
+
+constexpr size_t kCenterColumn = 128;
 
 struct ProviderState {
     uint8_t texture[fixture::kMaximumAssetBytes];
@@ -193,6 +196,115 @@ void exercise_capacity(uint8_t *map) {
     }
 }
 
+int32_t center_wall_height(const uint8_t *workspace) {
+    int32_t value = 0;
+    std::memcpy(&value,
+                workspace + W3P_WALL_HEIGHT_OFFSET +
+                    kCenterColumn * sizeof(value),
+                sizeof(value));
+    return value;
+}
+
+void exercise_pushwalls() {
+    struct DirectionCase {
+        uint8_t direction;
+        uint8_t wall_x;
+        uint8_t wall_y;
+        int player_x;
+        int player_y;
+        uint16_t angle;
+    };
+    const DirectionCase cases[] = {
+        {0, 6, 32, 3, 32, 0},
+        {2, 32, 6, 32, 9, 90},
+        {4, 6, 32, 9, 32, 180},
+        {6, 32, 6, 32, 3, 270},
+    };
+    for (const DirectionCase &test : cases) {
+        std::vector<uint8_t> map(fixture::kMapBytes, 0);
+        for (int coordinate = 0; coordinate < 64; ++coordinate) {
+            map[coordinate] = 1;
+            map[63 * 64 + coordinate] = 1;
+            map[coordinate * 64] = 1;
+            map[coordinate * 64 + 63] = 1;
+        }
+        map[test.wall_y * 64 + test.wall_x] = 4;
+
+        WorldMirror world = make_world(0);
+        world.door_count = 0;
+        world.static_count = 0;
+        world.view_weapon_shape = -1;
+        for (uint16_t i = 0; i < W3P_MAX_ACTORS; ++i)
+            world.actors[i].shape = -1;
+        world.player = {fixture::tile_center(test.player_x),
+                        fixture::tile_center(test.player_y), test.angle};
+        world.pushwall.status = 1;
+        world.pushwall.origin_x = test.wall_x;
+        world.pushwall.origin_y = test.wall_y;
+        world.pushwall.current_x = test.wall_x;
+        world.pushwall.current_y = test.wall_y;
+        world.pushwall.direction = test.direction;
+        world.pushwall.texture = 4;
+
+        auto render_height = [&](uint8_t position) {
+            world.pushwall.position = position;
+            std::vector<uint8_t> workspace(W3P_WORKSPACE_BYTES, 0);
+            ProviderState provider{};
+            RenderResources supplied =
+                resources(map.data(), workspace.data(), provider);
+            require(render_world(world, supplied) == RenderDetail::ok,
+                    "active pushwall render failed");
+            require(provider.active == 0 &&
+                        provider.acquired == provider.released,
+                    "active pushwall render leaked an asset lease");
+            require(workspace[W3P_WALL_TILE_OFFSET + kCenterColumn] == 4,
+                    "active pushwall missing from center ray");
+            return center_wall_height(workspace.data());
+        };
+        const int32_t at_origin = render_height(0);
+        const int32_t at_half_tile = render_height(32);
+        require(at_origin > 0 && at_half_tile > 0 &&
+                    at_half_tile < at_origin,
+                "active pushwall did not move continuously away from player");
+    }
+
+    // A completed wall is an overlay on the immutable level map: its origin
+    // becomes empty and its final tile becomes solid without copying 4 KiB of
+    // mutable tile state into every render batch.
+    std::vector<uint8_t> map(fixture::kMapBytes, 0);
+    for (int coordinate = 0; coordinate < 64; ++coordinate) {
+        map[coordinate] = 1;
+        map[63 * 64 + coordinate] = 1;
+        map[coordinate * 64] = 1;
+        map[coordinate * 64 + 63] = 1;
+    }
+    map[32 * 64 + 6] = 4;
+    WorldMirror completed = make_world(0);
+    completed.door_count = 0;
+    completed.static_count = 0;
+    completed.view_weapon_shape = -1;
+    for (uint16_t i = 0; i < W3P_MAX_ACTORS; ++i)
+        completed.actors[i].shape = -1;
+    completed.player = {fixture::tile_center(3), fixture::tile_center(32), 0};
+    completed.pushwall.status = 2;
+    completed.pushwall.origin_x = 6;
+    completed.pushwall.origin_y = 32;
+    completed.pushwall.current_x = 8;
+    completed.pushwall.current_y = 32;
+    completed.pushwall.direction = 0;
+    completed.pushwall.texture = 4;
+    completed.pushwall.completed_count = 1;
+    completed.pushwall.completed[0] = {6, 32, 8, 32, 4};
+    std::vector<uint8_t> workspace(W3P_WORKSPACE_BYTES, 0);
+    ProviderState provider{};
+    RenderResources supplied = resources(map.data(), workspace.data(), provider);
+    require(render_world(completed, supplied) == RenderDetail::ok,
+            "completed pushwall render failed");
+    require(workspace[W3P_WALL_TILE_OFFSET + kCenterColumn] == 4 &&
+                center_wall_height(workspace.data()) > 0,
+            "completed pushwall overlay did not relocate the wall");
+}
+
 }  // namespace
 
 int main(int argc, char **argv) {
@@ -205,6 +317,7 @@ int main(int argc, char **argv) {
         fixture::fill_map(map.data());
         exercise_errors(map.data());
         exercise_capacity(map.data());
+        exercise_pushwalls();
         std::ofstream frame_output(argv[1], std::ios::binary);
         std::ofstream geometry_output(argv[2], std::ios::binary);
         require(frame_output && geometry_output, "cannot open renderer output");

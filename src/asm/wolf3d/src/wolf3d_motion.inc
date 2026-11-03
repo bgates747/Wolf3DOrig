@@ -66,6 +66,8 @@ W3D_HUD_DIRTY_WEAPON:           equ 00001000b
 W3D_HUD_DIRTY_SCORE:            equ 00010000b
 W3D_HUD_DIRTY_LIVES:            equ 00100000b
 
+    include "wolf3d_pushwall.inc"
+
 ; Initialize persistent new-game state, then build the first authoritative
 ; attempt.  Respawns call w3d_reseed_level_attempt instead: lives, score,
 ; difficulty, and the extra-life threshold survive that world rebuild and are
@@ -103,6 +105,22 @@ w3d_initialize_motion_state:
 ; a fresh game, death reseed, and successful level transition.
 w3d_seed_level_world_state:
     call w3d_intermission_reset_level_time
+
+; Pushwalls mutate collision/render and floor-area ownership. Rebuild both
+; runtime maps from immutable package seeds on every level/attempt entry.
+    ld hl,(w3d_level_tilemap_seed_ptr)
+    ld de,w3d_runtime_tilemap
+    ld bc,W3D_MAP_BYTES
+    ldir
+    ld hl,w3d_runtime_tilemap
+    ld (w3d_level_tilemap_ptr),hl
+    ld hl,(w3d_level_area_seed_ptr)
+    ld de,w3d_runtime_area_map
+    ld bc,W3D_MAP_BYTES
+    ldir
+    ld hl,w3d_runtime_area_map
+    ld (w3d_level_area_ptr),hl
+
     ld hl,(w3d_level_player_seed_ptr)
     ld de,w3d_player_pose
     ld bc,W3D_PLAYER_POSE_SIZE
@@ -202,6 +220,7 @@ w3d_seed_level_world_state:
     ld (w3d_static_blocking_ptr),hl
     ld hl,w3d_doors
     ld (w3d_doors_ptr),hl
+    call w3d_initialize_pushwall_state
     call w3d_build_static_collision_lookup
     ld hl,0
     ld (w3d_simulation_accumulator),hl
@@ -270,6 +289,7 @@ w3d_mark_full_level_dirty:
     ld a,W3D_HUD_DIRTY_HEALTH|W3D_HUD_DIRTY_AMMO|W3D_HUD_DIRTY_KEYS|W3D_HUD_DIRTY_WEAPON|W3D_HUD_DIRTY_SCORE|W3D_HUD_DIRTY_LIVES
     ld (w3d_hud_dirty),a
     ld a,1
+    ld (w3d_pushwall_dirty),a
     ld (w3d_player_dirty),a
     ld (w3d_player_weapon_shape_dirty),a
     ld (w3d_world_dirty),a
@@ -424,6 +444,7 @@ w3d_simulate_player_step:
     ret nz
     call w3d_intermission_tick_level_time
     call w3d_simulate_doors
+    call w3d_simulate_pushwall
     call w3d_sample_controls
     call w3d_update_player_thrustspeed
     call w3d_handle_use_edge
@@ -1948,6 +1969,8 @@ w3d_use_adjacent_door:
     sbc.s hl,de
     jr nc,@east
 @south:
+    ld a,W3D_DIR_SOUTH
+    ld (w3d_use_direction),a
     ld a,(w3d_player_pose+2)
     ld b,a
     ld a,(w3d_player_pose+6)
@@ -1957,6 +1980,8 @@ w3d_use_adjacent_door:
 @east:
     ld a,1
     ld (w3d_use_elevator_ok),a
+    ld a,W3D_DIR_EAST
+    ld (w3d_use_direction),a
     ld a,(w3d_player_pose+2)
     inc a
     ld b,a
@@ -1964,6 +1989,8 @@ w3d_use_adjacent_door:
     ld c,a
     jr @tile_ready
 @north:
+    ld a,W3D_DIR_NORTH
+    ld (w3d_use_direction),a
     ld a,(w3d_player_pose+2)
     ld b,a
     ld a,(w3d_player_pose+6)
@@ -1973,6 +2000,8 @@ w3d_use_adjacent_door:
 @west:
     ld a,1
     ld (w3d_use_elevator_ok),a
+    ld a,W3D_DIR_WEST
+    ld (w3d_use_direction),a
     ld a,(w3d_player_pose+2)
     dec a
     ld b,a
@@ -1985,6 +2014,14 @@ w3d_use_adjacent_door:
     ld a,c
     cp W3D_MAP_SIZE
     ret nc
+; Original Cmd_Use gives a facing-adjacent plane-1 PUSHABLETILE priority over
+; elevators and doors. The marker owns this use even after its wall moved.
+    call w3d_path_read
+    cp W3D_PATH_PUSHWALL
+    jr nz,@not_pushwall
+    ld a,(w3d_use_direction)
+    jp w3d_try_pushwall
+@not_pushwall:
     call w3d_map_read
     cp W3D_ELEVATOR_SWITCH_TILE
     jr nz,@check_door_tile
@@ -2926,6 +2963,8 @@ w3d_current_door_index:
 
 w3d_use_elevator_ok:
     db 0
+w3d_use_direction:
+    db W3D_DIR_EAST
 
 w3d_level_completion:
     db W3D_LEVEL_COMPLETION_NONE

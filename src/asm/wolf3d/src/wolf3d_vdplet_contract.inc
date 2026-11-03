@@ -4,8 +4,8 @@
 W3P_ARGUMENT_MAGIC:                equ 0x41503357   ; "W3PA" little-endian
 W3P_BATCH_MAGIC:                   equ 0x55443357   ; "W3DU" little-endian
 W3P_MODULE_ID:                     equ 0x31503357   ; "W3P1" production renderer identity
-W3P_MODULE_RELEASE:                equ 0x10000      ; module release 1.0.0
-W3P_SCHEMA_VERSION:                equ 1            ; wire schema, independent of module release
+W3P_MODULE_RELEASE:                equ 0x10100      ; module release 1.1.0
+W3P_SCHEMA_VERSION:                equ 2            ; wire schema, independent of module release
 W3P_REQUIRED_CAPABILITIES:         equ 0x101        ; buffers plus direct colour rows
 W3P_ENTRY_CONFIG:                  equ 0            ; validate resource descriptor
 W3P_ENTRY_APPLY_AND_RENDER:        equ 1            ; atomically update and render
@@ -28,7 +28,7 @@ W3P_ARG_GENERATION_SEED:           equ 0x14         ; u16; first batch is seed+1
 W3P_ARG_RESERVED:                  equ 0x16         ; u16 zero
 W3P_ARG_FLAG_COPIED_PIXELS:        equ 1            ; RGB222 workspace publication
 W3P_ARG_FLAG_DIRECT_ROWS:          equ 2            ; native hidden-framebuffer rows
-W3P_ARG_KNOWN_FLAGS:               equ 3            ; all schema-1 descriptor flags
+W3P_ARG_KNOWN_FLAGS:               equ 3            ; all schema-2 descriptor flags
 W3P_DEFAULT_WALL_BASE:             equ 0x1000       ; resident wall texture buffers
 W3P_DEFAULT_SPRITE_BASE:           equ 0x2000       ; resident sprite texture buffers
 W3P_DEFAULT_HUD_BASE:              equ 0x4000       ; resident HUD chunk buffers
@@ -54,9 +54,9 @@ W3P_BATCH_RECORDS_OFFSET:          equ 0xA          ; u16
 W3P_BATCH_GENERATION_OFFSET:       equ 0xC          ; u16 nonzero monotonic
 W3P_BATCH_RESERVED_OFFSET:         equ 0xE          ; u16 zero
 W3P_BATCH_FLAG_FULL:               equ 1            ; complete level snapshot
-W3P_BATCH_KNOWN_FLAGS:             equ 1            ; all schema-1 batch flags
-W3P_BATCH_MAX_BYTES:               equ 0x1B00       ; worst full snapshot plus headroom
-W3P_BATCH_MAX_RECORDS:             equ 0x269        ; 1 level + player + maxima + HUD/weapon
+W3P_BATCH_KNOWN_FLAGS:             equ 1            ; all schema-2 batch flags
+W3P_BATCH_MAX_BYTES:               equ 0x1C00       ; worst full snapshot plus headroom
+W3P_BATCH_MAX_RECORDS:             equ 0x26A        ; 1 level + player + pushwall + maxima + HUD/weapon
 W3P_RECORD_HEADER_BYTES:           equ 2            ; type:u8,payload_bytes:u8
 W3P_RECORD_LEVEL:                  equ 1            ; full snapshot level binding
 W3P_RECORD_PLAYER:                 equ 2            ; player pose
@@ -66,6 +66,7 @@ W3P_RECORD_ACTOR_REMOVE:           equ 5            ; actor slot removal
 W3P_RECORD_STATIC:                 equ 6            ; static slot value/removal
 W3P_RECORD_HUD:                    equ 7            ; complete persistent HUD state
 W3P_RECORD_VIEW_WEAPON:            equ 8            ; first-person overlay shape
+W3P_RECORD_PUSHWALL:               equ 9            ; complete live/completed pushwall state
 W3P_LEVEL_BYTES:                   equ 6            ; tilemap:u16,doors:u8,statics:u16,reserved:u8
 W3P_PLAYER_BYTES:                  equ 0xA          ; x:i32,y:i32,angle:u16
 W3P_DOOR_BYTES:                    equ 9            ; id:u8 plus existing 8-byte door wire
@@ -74,6 +75,19 @@ W3P_ACTOR_REMOVE_BYTES:            equ 2            ; actor id:u16
 W3P_STATIC_BYTES:                  equ 7            ; id:u16 plus existing 5-byte static wire
 W3P_HUD_BYTES:                     equ 0xC          ; complete HUD value record
 W3P_VIEW_WEAPON_BYTES:             equ 2            ; shape:i16
+W3P_PUSHWALL_BYTES:                equ 0x59         ; live:8,count:u8,16 completed entries
+W3P_PUSHWALL_STATUS:               equ 0            ; live status byte
+W3P_PUSHWALL_ORIGIN_X:             equ 1            ; live origin x
+W3P_PUSHWALL_ORIGIN_Y:             equ 2            ; live origin y
+W3P_PUSHWALL_CURRENT_X:            equ 3            ; live current x
+W3P_PUSHWALL_CURRENT_Y:            equ 4            ; live current y
+W3P_PUSHWALL_DIRECTION:            equ 5            ; live cardinal direction
+W3P_PUSHWALL_POSITION:             equ 6            ; live fractional position 0..63
+W3P_PUSHWALL_TEXTURE:              equ 7            ; live wall texture 1..63
+W3P_PUSHWALL_COMPLETED_COUNT:      equ 8            ; completed overlay count
+W3P_PUSHWALL_COMPLETED_OFFSET:     equ 9            ; first completed overlay
+W3P_PUSHWALL_COMPLETED_BYTES:      equ 5            ; origin x/y,current x/y,texture
+W3P_MAX_PUSHWALLS:                 equ 0x10         ; shareware per-level completion ceiling
 W3P_MAX_DOORS:                     equ 0x40         ; render mirror slots
 W3P_MAX_ACTORS:                    equ 0x96         ; slot zero remains player-owned
 W3P_MAX_STATICS:                   equ 0x190        ; render mirror slots

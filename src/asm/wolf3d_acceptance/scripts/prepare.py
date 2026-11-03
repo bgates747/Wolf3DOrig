@@ -54,6 +54,7 @@ class Scenario:
 
 
 SCENARIOS = (
+    Scenario("pushwall", 0, (10, 14), 90),
     Scenario("ordinary-transition", 0, (25, 47), 0),
     Scenario("secret-transition", 9, (45, 11), 180),
     Scenario(

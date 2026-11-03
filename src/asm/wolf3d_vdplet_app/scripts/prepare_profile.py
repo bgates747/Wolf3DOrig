@@ -37,7 +37,7 @@ PINS = {
     "firmware.bin": "8d980025f891484cf7e6cc5f2992cf517cb80e0123ff7de712ae8d7f2dc1c807",
     "firmware.elf": "1a7c44482d4ba8c5bfb49976c0bd664b9a9c2a635c7027b30954929ca567f814",
     "flexe-vdp.so": "0866265bd6f3d73ad572f31dc1bb954f308ed9a5d857efa9414d37e1ade13374",
-    "wolf3d.vdpl": "e1adfa24b8f015a7cc0c25e399417767febfa90ab35d3cbe84346f06b1e417b5",
+    "wolf3d.vdpl": "a3506e245563dec7e72c7f90b9ebfb56caaf141766b2b6267a2b9e498b7e0c97",
 }
 
 

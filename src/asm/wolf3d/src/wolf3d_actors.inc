@@ -1457,10 +1457,14 @@ w3d_level_actor_seed_ptr:
     dl w3d_fixture_initial_actors
 w3d_level_blocking_ptr:
     dl w3d_fixture_static_blocking_bits
+w3d_level_area_seed_ptr:
+    dl w3d_fixture_area_map
 w3d_level_area_ptr:
     dl w3d_fixture_area_map
 w3d_level_path_ptr:
     dl w3d_fixture_path_directions
+w3d_level_tilemap_seed_ptr:
+    dl w3d_fixture_tilemap
 w3d_level_tilemap_ptr:
     dl w3d_fixture_tilemap
 w3d_level_door_count:
@@ -1476,6 +1480,14 @@ w3d_actors:
     ds W3D_MAX_ACTORS*W3D_ACTOR_SIZE
 
 w3d_actorat:
+    ds W3D_MAP_BYTES
+
+; Runtime map/area copies are deliberately separate from the retained W3L
+; seed. Pushwalls mutate both views; a death reseed must restore the pristine
+; source without re-reading the package from MOS.
+w3d_runtime_tilemap:
+    ds W3D_MAP_BYTES
+w3d_runtime_area_map:
     ds W3D_MAP_BYTES
 
 w3d_actor_dirty:

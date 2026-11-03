@@ -65,6 +65,7 @@ W3D_TILE_DOOR_FLAG = 0x80
 TILE_GLOBAL = 1 << 16
 W3D_ACTOR_SIZE = 39
 W3D_SLOT_NONE = 0xFF
+W3D_PATH_PUSHWALL = 0xFD
 W3D_PATH_VICTORY = 0xFE
 W3D_PATH_NONE = 0xFF
 W3D_AREA_NONE = 0xFF
@@ -153,13 +154,13 @@ def build_area_map(plane0: list[list[int]]) -> bytes:
 
 
 def build_path_directions(plane1: list[list[int]]) -> bytes:
-    """Preserve path arrows and the original EXITTILE victory marker.
+    """Preserve path arrows, pushwalls, and the EXITTILE victory marker.
 
     Directions remain ``0..7`` and ordinary cells remain ``0xff``. Plane-1
-    value 99 is the original game's EXITTILE; ``0xfe`` is deliberately above
-    every direction so existing actor path following continues to treat it as
-    no arrow while the player simulation can recognize it without another
-    4096-byte package section.
+    values 98 and 99 are the original PUSHABLETILE and EXITTILE; ``0xfd`` and
+    ``0xfe`` are deliberately above every direction so existing actor path
+    following continues to treat both as no arrow while player simulation can
+    recognize them without growing the runtime package.
     """
 
     if len(plane1) != mapfile.MAP_HEIGHT or any(
@@ -171,6 +172,8 @@ def build_path_directions(plane1: list[list[int]]) -> bytes:
         for x, value in enumerate(row):
             if 90 <= value <= 97:
                 out[y * mapfile.MAP_WIDTH + x] = value - 90
+            elif value == 98:
+                out[y * mapfile.MAP_WIDTH + x] = W3D_PATH_PUSHWALL
             elif value == 99:
                 out[y * mapfile.MAP_WIDTH + x] = W3D_PATH_VICTORY
     return bytes(out)

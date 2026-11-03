@@ -89,6 +89,18 @@ fixture_run:
 ; These changes occur while generation 1 owns the immutable batch. They must
 ; survive both the failed first attempt and the exact retry submission.
     ld a,1
+    ld (w3d_pushwall_dirty),a
+    ld (w3d_pushwall_payload+W3P_PUSHWALL_STATUS),a
+    ld a,10
+    ld (w3d_pushwall_payload+W3P_PUSHWALL_ORIGIN_X),a
+    ld (w3d_pushwall_payload+W3P_PUSHWALL_ORIGIN_Y),a
+    ld (w3d_pushwall_payload+W3P_PUSHWALL_CURRENT_X),a
+    ld (w3d_pushwall_payload+W3P_PUSHWALL_CURRENT_Y),a
+    ld a,32
+    ld (w3d_pushwall_payload+W3P_PUSHWALL_POSITION),a
+    ld a,4
+    ld (w3d_pushwall_payload+W3P_PUSHWALL_TEXTURE),a
+    ld a,1
     ld (w3d_door_dirty+0),a
     ld (w3d_static_dirty+1),a
     ld (w3d_player_dirty),a
@@ -157,7 +169,8 @@ fixture_file_failed:
     ld (fixture_result_code),a
     ret
 
-; Bit 0 door, 1 actor, 2 static, 3 player, 4 HUD, 5 view, 6 world.
+; Bit 0 door, 1 actor, 2 static, 3 player, 4 HUD, 5 view, 6 world,
+; bit 7 pushwall.
 fixture_capture_dirty_mask:
     ld c,0
     ld a,(w3d_door_dirty+0)
@@ -192,8 +205,13 @@ fixture_capture_dirty_mask:
 @world:
     ld a,(w3d_world_dirty)
     or a
-    jr z,@done
+    jr z,@pushwall
     set 6,c
+@pushwall:
+    ld a,(w3d_pushwall_dirty)
+    or a
+    jr z,@done
+    set 7,c
 @done:
     ld a,c
     ret
@@ -265,6 +283,13 @@ fixture_write_result:
     ret
 
 fixture_seed_world:
+    ld hl,w3d_pushwall_payload
+    ld de,w3d_pushwall_payload+1
+    ld bc,W3P_PUSHWALL_BYTES-1
+    xor a
+    ld (hl),a
+    ldir
+    ld (w3d_pushwall_dirty),a
     ld hl,w3d_fixture_initial_player_pose
     ld de,w3d_player_pose
     ld bc,10
@@ -333,7 +358,7 @@ fixture_dirty_bytes:      dl 0
 fixture_result:
     db "W3B1"
     ds 10
-    dw 1
+    dw W3P_SCHEMA_VERSION
 fixture_result_end:
 
 ; Minimal motion/player storage consumed by the production serializer.
@@ -350,6 +375,8 @@ w3d_hud_dirty:                  db 0
 w3d_player_weapon_shape:         dw -1
 w3d_player_weapon_shape_dirty:   db 0
 w3d_level_requested_index:       db 0
+w3d_pushwall_payload:             ds W3P_PUSHWALL_BYTES
+w3d_pushwall_dirty:               db 0
 
 w3d_doors:                       ds W3D_MAX_DOORS*W3D_DOOR_SIZE
 w3d_door_dirty:                  ds W3D_MAX_DOORS

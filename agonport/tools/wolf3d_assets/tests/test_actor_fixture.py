@@ -118,7 +118,8 @@ class RealLevelActorFixtureTests(unittest.TestCase):
         paths = build_path_directions(self.level.plane1)
         self.assertEqual(len(areas), 4096)
         self.assertEqual(len(paths), 4096)
-        self.assertEqual(sum(value != 0xFF for value in paths), 18)
+        self.assertEqual(sum(value != 0xFF for value in paths), 23)
+        self.assertEqual(paths[13 * 64 + 10], 0xFD)  # original pushwall marker 98
         self.assertEqual(paths[33 * 64 + 6], 0xFF)  # destination need not itself be an arrow
         self.assertEqual(areas[22 * 64 + 31], 3)  # ambush tile inherits adjacent area
 

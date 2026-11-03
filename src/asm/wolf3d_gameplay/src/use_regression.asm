@@ -33,7 +33,7 @@ fa_create_always:   equ 0x08
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
 
-use_case_count:     equ 19
+use_case_count:     equ 28
 
 reason_index:       equ 1
 reason_action:      equ 2
@@ -45,6 +45,12 @@ reason_timer_high:  equ 7
 reason_latch:       equ 8
 reason_audio:       equ 9
 reason_completion:  equ 10
+reason_push_status: equ 11
+reason_push_map:    equ 12
+reason_push_count:  equ 13
+reason_push_total:  equ 14
+reason_push_current: equ 15
+reason_push_area:   equ 16
 
 start:
     push af
@@ -90,6 +96,15 @@ run_tests:
     call case_elevator_east_normal
     call case_elevator_west_secret
     call case_elevator_north_ignored
+    call case_push_east
+    call case_push_west
+    call case_push_north
+    call case_push_south
+    call case_push_no_marker
+    call case_push_blocked
+    call case_push_busy
+    call case_push_two_cells
+    call case_push_blocked_second_cell
 
     call write_result
     call print_report
@@ -102,13 +117,31 @@ begin_case:
     call test_audio_reset
     xor a
     ld (case_failed),a
-    ld hl,test_tilemap
+    ld hl,w3d_runtime_tilemap
     ld (hl),a
-    ld de,test_tilemap+1
+    ld de,w3d_runtime_tilemap+1
     ld bc,W3D_MAP_BYTES-1
     ldir
-    ld hl,test_tilemap
+    ld hl,w3d_runtime_tilemap
     ld (w3d_map_ptr),hl
+
+    dec a
+    ld hl,test_path_map
+    ld (hl),a
+    ld de,test_path_map+1
+    ld bc,W3D_MAP_BYTES-1
+    ldir
+    ld hl,test_path_map
+    ld (w3d_level_path_ptr),hl
+
+    xor a
+    ld hl,w3d_runtime_area_map
+    ld (hl),a
+    ld de,w3d_runtime_area_map+1
+    ld bc,W3D_MAP_BYTES-1
+    ldir
+    ld hl,w3d_runtime_area_map
+    ld (w3d_level_area_ptr),hl
 
     ld hl,test_static_bits
     ld (hl),a
@@ -154,6 +187,8 @@ begin_case:
     ld (w3d_controls),a
     ld (w3d_player_key_flags),a
     ld (w3d_level_completion),a
+    ld (w3d_actor_tic_phase),a
+    ld (w3d_actor_tics_prepared),a
     dec a
     ld (w3d_current_door_index),a
 
@@ -209,7 +244,7 @@ pose_center:
 ; Install door zero in its authoritative cell.
 map_door_at_10_10:
     ld a,080h
-    ld (test_tilemap+650),a       ; 10*64 + 10
+    ld (w3d_runtime_tilemap+650),a       ; 10*64 + 10
     ret
 
 ; Common expectation for opening closed door zero.
@@ -348,9 +383,9 @@ case_invalid_current_fails_closed:
     call pose_center
     ; Current value is in the door range but index 22 is outside this fixture.
     ld a,096h
-    ld (test_tilemap+650),a
+    ld (w3d_runtime_tilemap+650),a
     ld a,080h                    ; a tempting valid adjacent door at (11,10)
-    ld (test_tilemap+651),a
+    ld (w3d_runtime_tilemap+651),a
     ld a,11
     ld (w3d_doors+W3D_DOOR_TILEX),a
     call w3d_use_adjacent_door
@@ -613,7 +648,7 @@ case_elevator_east_normal:
     call begin_case
     call pose_center
     ld a,W3D_ELEVATOR_SWITCH_TILE
-    ld (test_tilemap+651),a       ; east of player
+    ld (w3d_runtime_tilemap+651),a       ; east of player
     ld a,3
     ld (w3d_player_area),a
     call w3d_use_adjacent_door
@@ -631,7 +666,7 @@ case_elevator_west_secret:
     call begin_case
     call pose_center
     ld a,W3D_ELEVATOR_SWITCH_TILE
-    ld (test_tilemap+649),a       ; west of player
+    ld (w3d_runtime_tilemap+649),a       ; west of player
     ld a,180
     ld (w3d_player_pose+8),a
     xor a
@@ -649,7 +684,7 @@ case_elevator_north_ignored:
     call begin_case
     call pose_center
     ld a,W3D_ELEVATOR_SWITCH_TILE
-    ld (test_tilemap+586),a       ; north of player
+    ld (w3d_runtime_tilemap+586),a       ; north of player
     ld a,90
     ld (w3d_player_pose+8),a
     xor a
@@ -658,6 +693,280 @@ case_elevator_north_ignored:
     ld a,(w3d_level_completion)
     ld b,W3D_LEVEL_COMPLETION_NONE
     ld c,reason_completion
+    call assert_equal
+    jp finish_case
+
+; ---------------------------------------------------------------------------
+; Original plane-1 pushwall / secret-use cases.
+; ---------------------------------------------------------------------------
+
+pushwall_begin_east:
+    call begin_case
+    call pose_center
+    ld a,7
+    ld (w3d_player_area),a
+    ld a,W3D_PATH_PUSHWALL
+    ld (test_path_map+651),a       ; (11,10), east of player
+    ld a,4
+    ld (w3d_runtime_tilemap+651),a
+    call w3d_initialize_pushwall_state
+    ret
+
+case_push_east:
+    call pushwall_begin_east
+    call w3d_use_adjacent_door
+    ld a,(w3d_pushwall_render+W3D_PUSHWALL_RENDER_STATUS)
+    ld b,W3D_PUSHWALL_STATUS_ACTIVE
+    ld c,reason_push_status
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+651)
+    ld b,0c4h
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+652)
+    ld b,4
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_player_secret_count)
+    ld b,1
+    ld c,reason_push_count
+    call assert_equal
+    ld a,(w3d_player_secret_total)
+    ld b,1
+    ld c,reason_push_total
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,W3D_AUDIO_SOUND_PUSHWALL
+    ld c,reason_audio
+    call assert_equal
+    jp finish_case
+
+case_push_west:
+    call begin_case
+    call pose_center
+    ld a,180
+    ld (w3d_player_pose+8),a
+    ld a,W3D_PATH_PUSHWALL
+    ld (test_path_map+649),a       ; (9,10)
+    ld a,5
+    ld (w3d_runtime_tilemap+649),a
+    call w3d_initialize_pushwall_state
+    call w3d_use_adjacent_door
+    ld a,(w3d_runtime_tilemap+649)
+    ld b,0c5h
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+648)
+    ld b,5
+    ld c,reason_push_map
+    call assert_equal
+    jp finish_case
+
+case_push_north:
+    call begin_case
+    call pose_center
+    ld a,90
+    ld (w3d_player_pose+8),a
+    ld a,W3D_PATH_PUSHWALL
+    ld (test_path_map+586),a       ; (10,9)
+    ld a,6
+    ld (w3d_runtime_tilemap+586),a
+    call w3d_initialize_pushwall_state
+    call w3d_use_adjacent_door
+    ld a,(w3d_runtime_tilemap+586)
+    ld b,0c6h
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+522)
+    ld b,6
+    ld c,reason_push_map
+    call assert_equal
+    jp finish_case
+
+case_push_south:
+    call begin_case
+    call pose_center
+    ld a,14h                         ; 270 degrees little-endian
+    ld (w3d_player_pose+8),a
+    ld a,1
+    ld (w3d_player_pose+9),a
+    ld a,W3D_PATH_PUSHWALL
+    ld (test_path_map+714),a       ; (10,11)
+    ld a,7
+    ld (w3d_runtime_tilemap+714),a
+    call w3d_initialize_pushwall_state
+    call w3d_use_adjacent_door
+    ld a,(w3d_runtime_tilemap+714)
+    ld b,0c7h
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+778)
+    ld b,7
+    ld c,reason_push_map
+    call assert_equal
+    jp finish_case
+
+case_push_no_marker:
+    call begin_case
+    call pose_center
+    ld a,4
+    ld (w3d_runtime_tilemap+651),a
+    call w3d_initialize_pushwall_state
+    call w3d_use_adjacent_door
+    ld a,(w3d_pushwall_render+W3D_PUSHWALL_RENDER_STATUS)
+    ld b,W3D_PUSHWALL_STATUS_RESET
+    ld c,reason_push_status
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+651)
+    ld b,4
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_player_secret_count)
+    ld b,0
+    ld c,reason_push_count
+    call assert_equal
+    ld a,(w3d_player_secret_total)
+    ld b,0
+    ld c,reason_push_total
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,0
+    ld c,reason_audio
+    call assert_equal
+    jp finish_case
+
+case_push_blocked:
+    call pushwall_begin_east
+    ld a,9
+    ld (w3d_runtime_tilemap+652),a
+    call w3d_use_adjacent_door
+    ld a,(w3d_pushwall_render+W3D_PUSHWALL_RENDER_STATUS)
+    ld b,W3D_PUSHWALL_STATUS_RESET
+    ld c,reason_push_status
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+651)
+    ld b,4
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_player_secret_count)
+    ld b,0
+    ld c,reason_push_count
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,W3D_AUDIO_SOUND_NOWAY
+    ld c,reason_audio
+    call assert_equal
+    jp finish_case
+
+case_push_busy:
+    call pushwall_begin_east
+    call w3d_use_adjacent_door
+    ld a,W3D_PATH_PUSHWALL
+    ld (test_path_map+649),a
+    ld a,8
+    ld (w3d_runtime_tilemap+649),a
+    ld a,180
+    ld (w3d_player_pose+8),a
+    call w3d_use_adjacent_door
+    ld a,(w3d_runtime_tilemap+649)
+    ld b,8
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_player_secret_count)
+    ld b,1
+    ld c,reason_push_count
+    call assert_equal
+    jp finish_case
+
+; Run N fixed quanta without actor traversal. Production actor traversal
+; clears the prepared-tic latch after every quantum; reproduce that owner
+; boundary here so the pushwall shares the exact 2,2,3 cadence.
+simulate_pushwall_b_frames:
+@loop:
+    xor a
+    ld (w3d_actor_tics_prepared),a
+    push bc
+    call w3d_simulate_pushwall
+    pop bc
+    djnz @loop
+    ret
+
+case_push_two_cells:
+    call pushwall_begin_east
+    call w3d_use_adjacent_door
+    ld b,55
+    call simulate_pushwall_b_frames
+    ld a,(w3d_pushwall_render+W3D_PUSHWALL_RENDER_STATUS)
+    ld b,W3D_PUSHWALL_STATUS_ACTIVE
+    ld c,reason_push_status
+    call assert_equal
+    ld a,(w3d_pushwall_render+W3D_PUSHWALL_RENDER_CURRENT_X)
+    ld b,12
+    ld c,reason_push_current
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+651)
+    ld b,0
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+652)
+    ld b,0c4h
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+653)
+    ld b,4
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_runtime_area_map+651)
+    ld b,7
+    ld c,reason_push_area
+    call assert_equal
+
+    ld b,55
+    call simulate_pushwall_b_frames
+    ld a,(w3d_pushwall_render+W3D_PUSHWALL_RENDER_STATUS)
+    ld b,W3D_PUSHWALL_STATUS_COMPLETE
+    ld c,reason_push_status
+    call assert_equal
+    ld a,(w3d_pushwall_render+W3D_PUSHWALL_RENDER_CURRENT_X)
+    ld b,13
+    ld c,reason_push_current
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+652)
+    ld b,0
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+653)
+    ld b,4
+    ld c,reason_push_map
+    call assert_equal
+    jp finish_case
+
+case_push_blocked_second_cell:
+    call pushwall_begin_east
+    call w3d_use_adjacent_door
+    ld a,9
+    ld (w3d_runtime_tilemap+653),a
+    ld b,55
+    call simulate_pushwall_b_frames
+    ld a,(w3d_pushwall_render+W3D_PUSHWALL_RENDER_STATUS)
+    ld b,W3D_PUSHWALL_STATUS_COMPLETE
+    ld c,reason_push_status
+    call assert_equal
+    ld a,(w3d_pushwall_render+W3D_PUSHWALL_RENDER_CURRENT_X)
+    ld b,12
+    ld c,reason_push_current
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+651)
+    ld b,0
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+652)
+    ld b,4
+    ld c,reason_push_map
+    call assert_equal
+    ld a,(w3d_runtime_tilemap+653)
+    ld b,9
+    ld c,reason_push_map
     call assert_equal
     jp finish_case
 
@@ -875,7 +1184,7 @@ result_first_actual:    db 0
                         db 0,0,0,0,0,0
 result_end:
 
-test_tilemap:
-    ds W3D_MAP_BYTES
 test_static_bits:
     ds 512
+test_path_map:
+    ds W3D_MAP_BYTES
