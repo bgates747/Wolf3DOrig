@@ -15,11 +15,11 @@ W3D_AUDIO_FLAG_REQUIRED:          equ 0x01
 W3D_AUDIO_FLAG_AVAILABLE:         equ 0x02
 W3D_AUDIO_FLAG_NATIVE:            equ 0x04
 W3D_AUDIO_FLAG_FALLBACK:          equ 0x08
-W3D_AUDIO_AVAILABLE_COUNT:        equ 39
-W3D_AUDIO_REQUIRED_COUNT:         equ 35
-W3D_AUDIO_REQUIRED_AVAILABLE:     equ 35
-W3D_AUDIO_RESIDENT_PCM_BYTES:     equ 426951
-W3D_AUDIO_CONTAINER_BYTES:        equ 428744
+W3D_AUDIO_AVAILABLE_COUNT:        equ 44
+W3D_AUDIO_REQUIRED_COUNT:         equ 40
+W3D_AUDIO_REQUIRED_AVAILABLE:     equ 40
+W3D_AUDIO_RESIDENT_PCM_BYTES:     equ 448601
+W3D_AUDIO_CONTAINER_BYTES:        equ 450616
 W3D_AUDIO_GAIN_FORWARD_ROWS:      equ 15
 W3D_AUDIO_GAIN_LATERAL_COLUMNS:   equ 30
 W3D_AUDIO_GAIN_LATERAL_BIAS:      equ 15
@@ -266,22 +266,22 @@ w3d_audio_asset_table:
     dw 0x0000,0,0,0
     db 50,0x00
     dw 0x0000,0x0000,0x0000
-    ; 40 LEVELDONESND (unavailable)
-    dw 0x0000,0,0,0
-    db 50,0x00
-    dw 0x0000,0x0000,0x0000
+    ; 40 LEVELDONESND (available)
+    dw 0x5028,7000,2050,293
+    db 50,0x0B
+    dw 0x6078,0x6079,0x607A
     ; 41 DOGBARKSND (available)
     dw 0x5029,7000,3793,542
     db 49,0x07
     dw 0x607B,0x607C,0x607D
-    ; 42 ENDBONUS1SND (unavailable)
-    dw 0x0000,0,0,0
-    db 50,0x00
-    dw 0x0000,0x0000,0x0000
-    ; 43 ENDBONUS2SND (unavailable)
-    dw 0x0000,0,0,0
-    db 50,0x00
-    dw 0x0000,0x0000,0x0000
+    ; 42 ENDBONUS1SND (available)
+    dw 0x502A,7000,100,14
+    db 50,0x0B
+    dw 0x607E,0x607F,0x6080
+    ; 43 ENDBONUS2SND (available)
+    dw 0x502B,7000,3900,557
+    db 50,0x0B
+    dw 0x6081,0x6082,0x6083
     ; 44 BONUS1UPSND (available)
     dw 0x502C,16384,24327,1485
     db 50,0x0B
@@ -294,14 +294,14 @@ w3d_audio_asset_table:
     dw 0x502E,7000,24763,3538
     db 30,0x07
     dw 0x608A,0x608B,0x608C
-    ; 47 NOBONUSSND (unavailable)
-    dw 0x0000,0,0,0
-    db 50,0x00
-    dw 0x0000,0x0000,0x0000
-    ; 48 PERCENT100SND (unavailable)
-    dw 0x0000,0,0,0
-    db 80,0x00
-    dw 0x0000,0x0000,0x0000
+    ; 47 NOBONUSSND (available)
+    dw 0x502F,7000,7600,1086
+    db 50,0x0B
+    dw 0x608D,0x608E,0x608F
+    ; 48 PERCENT100SND (available)
+    dw 0x5030,7000,8000,1143
+    db 80,0x0B
+    dw 0x6090,0x6091,0x6092
     ; 49 BOSSACTIVESND (unavailable)
     dw 0x0000,0,0,0
     db 80,0x00

@@ -77,6 +77,11 @@ w3d_player_lives:           db 3
 w3d_player_score:           dl 0
                             db 0
 
+; Production services the independent music sequencer while pacing a visible
+; count-up. This focused fixture has no music transport or timing side effects.
+w3d_music_service:
+    ret
+
     include "wolf3d_level_time.inc"
     include "wolf3d_intermission.inc"
 

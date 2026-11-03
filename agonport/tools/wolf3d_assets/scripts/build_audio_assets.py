@@ -27,9 +27,13 @@ sys.path.insert(0, str(TOOLS_ROOT))
 from agnb.audio import AudioBufferRecord, build_audio_container
 from formats.audio import (
     DigitizedSound,
+    PcSpeakerSound,
+    PC_SPEAKER_PCM_RATE,
     read_adlib_priorities,
+    read_pc_speaker_sounds,
     read_unsigned_pcm_wav,
     read_vswap_digitized_sounds,
+    render_pc_speaker_pcm,
 )
 from formats.audio_catalog import (
     CHANNEL_COUNT,
@@ -37,6 +41,7 @@ from formats.audio_catalog import (
     CURRENT_PRODUCERS,
     FALLBACKS,
     NATIVE_SAMPLE_RATE,
+    PC_SPEAKER_FALLBACKS,
     SAMPLE_BUFFER_BASE,
     UPLOAD_DIGI_MAP,
     command_buffer_ids,
@@ -207,6 +212,7 @@ def resolve_sounds(
     names: tuple[str, ...],
     priorities: tuple[int, ...],
     digitized: tuple[DigitizedSound, ...],
+    pc_speaker: tuple[PcSpeakerSound, ...],
     fallback_dir: Path | None,
 ) -> tuple[ResolvedSound, ...]:
     if len(priorities) != len(names):
@@ -214,13 +220,17 @@ def resolve_sounds(
     name_set = set(names)
     unknown_native = sorted(set(UPLOAD_DIGI_MAP) - name_set)
     unknown_fallback = sorted(set(FALLBACKS) - name_set)
+    unknown_pc = sorted(set(PC_SPEAKER_FALLBACKS) - name_set)
     unknown_producers = sorted(set(CURRENT_PRODUCERS) - name_set)
-    if unknown_native or unknown_fallback or unknown_producers:
+    if unknown_native or unknown_fallback or unknown_pc or unknown_producers:
         raise ValueError(
             "audio catalog references unknown logical names: "
             f"native={unknown_native}, fallback={unknown_fallback}, "
+            f"pc={unknown_pc}, "
             f"producers={unknown_producers}"
         )
+    if len(pc_speaker) != len(names):
+        raise ValueError("logical sound names and PC-speaker streams differ")
 
     resolved: list[ResolvedSound] = []
     for logical_id, (name, priority) in enumerate(zip(names, priorities)):
@@ -249,6 +259,27 @@ def resolve_sounds(
                     digi_index,
                     NATIVE_SAMPLE_RATE,
                     sound.pcm,
+                    None,
+                )
+            )
+            continue
+
+        if name in PC_SPEAKER_FALLBACKS:
+            source_sound = pc_speaker[logical_id]
+            if source_sound.logical_id != logical_id:
+                raise ValueError("PC-speaker stream order disagrees with logical ids")
+            resolved.append(
+                ResolvedSound(
+                    logical_id,
+                    name,
+                    priority,
+                    producers,
+                    "pc_speaker_original",
+                    f"orig/data/AUDIOT.WL1:pc/{logical_id}",
+                    "original 140 Hz PC-speaker pitch stream rendered to unsigned PCM",
+                    None,
+                    PC_SPEAKER_PCM_RATE,
+                    render_pc_speaker_pcm(source_sound),
                     None,
                 )
             )
@@ -406,6 +437,9 @@ def build_manifest(
             "fallbackRecords": sum(
                 sound.source_kind == "test_pack_fallback" for sound in available
             ),
+            "pcSpeakerRecords": sum(
+                sound.source_kind == "pc_speaker_original" for sound in available
+            ),
             "residentPcmBytes": sum(len(sound.pcm or b"") for sound in available),
             "uniquePcmPayloadBytes": sum(unique_pcm.values()),
             "containerBytes": len(container),
@@ -547,8 +581,11 @@ def build_assets(
     )
     mono_gain_table = build_mono_gain_table(left_table, right_table)
     priorities = read_adlib_priorities(audiohed, audiot, len(names))
+    pc_speaker = read_pc_speaker_sounds(audiohed, audiot, len(names))
     digitized = read_vswap_digitized_sounds(vswap)
-    sounds = resolve_sounds(names, priorities, digitized, fallback_dir)
+    sounds = resolve_sounds(
+        names, priorities, digitized, pc_speaker, fallback_dir
+    )
 
     records = [
         AudioBufferRecord(

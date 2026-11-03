@@ -11,6 +11,18 @@ COMMAND_BUFFER_BASE = 0x6000
 CHANNEL_COUNT = 3
 
 
+# Effects which production already requests but the shareware VSWAP omits.
+# Render their authentic PC-speaker source streams offline into ordinary PCM;
+# this keeps runtime playback on the same proven buffered-audio path.
+PC_SPEAKER_FALLBACKS = {
+    "LEVELDONESND",
+    "ENDBONUS1SND",
+    "ENDBONUS2SND",
+    "NOBONUSSND",
+    "PERCENT100SND",
+}
+
+
 def sample_buffer_id(logical_id: int) -> int:
     return SAMPLE_BUFFER_BASE + logical_id
 
@@ -78,6 +90,11 @@ CURRENT_PRODUCERS = {
     "BONUS1UPSND": ("pickup.extra_life",),
     "BONUS4SND": ("pickup.crown",),
     "PUSHWALLSND": ("environment.pushwall",),
+    "LEVELDONESND": ("environment.level_done",),
+    "ENDBONUS1SND": ("intermission.count_tick",),
+    "ENDBONUS2SND": ("intermission.stage_done",),
+    "NOBONUSSND": ("intermission.zero_ratio",),
+    "PERCENT100SND": ("intermission.perfect_ratio",),
     "SCHUTZADSND": ("actor.ss.alert",),
     "AHHHGSND": ("actor.mutant.death",),
     "LEBENSND": ("actor.ss.death",),

@@ -57,6 +57,11 @@ timing_iterations:  equ 10000
     include "wolf3d_audio_assets.inc"
     include "wolf3d_audio.inc"
 
+; Production owns this persistent preference in wolf3d_shell.inc. The focused
+; audio fixture defaults it on without importing the complete application UI.
+w3d_audio_sfx_enabled:
+    db 1
+
 phase_ids:          equ 1
 phase_batch:        equ 2
 phase_catchup:      equ 3

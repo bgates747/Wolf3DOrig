@@ -2,7 +2,9 @@
 
 This directory's audio path turns the original shareware sound inventory into
 one deterministic AGNB 0.2 container. It preserves original digitized bytes
-and sample rates; it does not upsample, normalize, mix, or synthesize effects.
+and sample rates without upsampling or normalization. Five effects omitted
+from the shareware digitized set are rendered offline from their original
+PC-speaker pitch streams; no runtime synthesis is required.
 
 ## Generated outputs
 
@@ -67,6 +69,21 @@ Original effect priorities come from each logical sound's AdLib
 `SoundCommon.priority` field in `AUDIOHED.WL1`/`AUDIOT.WL1`, not from guessed
 port values.
 
+## Original PC-speaker effects
+
+Production requests five original effects which have no VSWAP digitized
+mapping: `LEVELDONE`, `ENDBONUS1`, `ENDBONUS2`, `NOBONUS`, and `PERCENT100`.
+Their authentic `PCSound` streams are stored in the first 69 AUDIOT chunks.
+Each byte is a PIT pitch (or zero for silence) held for one 140 Hz service
+tick; `ID_SD.C` uses divisor `pitch*60`.
+
+The generator deterministically renders those streams as unsigned 8-bit mono
+PCM at 7000 Hz. Every original tick is exactly 50 output samples, pitch changes
+restart the integer phase accumulator, and silence remains sample 128. The
+manifest labels these records `pc_speaker_original`, retains their source
+chunk and original AdLib arbitration priority, and keeps runtime playback on
+the same buffered-sample path as every other effect.
+
 ## Approved fallback inventory
 
 The current environment/combat/pickup producers require 19 logical sounds
@@ -90,10 +107,10 @@ These fallback WAVs remain at their native 16384 Hz. They are not claims of
 original-game fidelity. `wilhelm.wav` is deliberately excluded and reserved
 for a future easter egg.
 
-With the approved fallback directory present, every presently planned
-environment, combat, actor, player-damage/death, and pickup producer has an
-available asset. Logical sounds outside that scope remain durable unavailable
-manifest entries rather than being silently discarded.
+With the approved fallback directory present, every current environment,
+combat, actor, player-damage/death, pickup, elevator, and intermission producer
+has an available asset. Logical sounds outside that scope remain durable
+unavailable manifest entries rather than being silently discarded.
 
 ## Monaural distance gain
 

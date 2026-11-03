@@ -18,8 +18,9 @@
 ; W3L seeds before the destination package replaces them. Pushwall secret
 ; count/total state is authoritative in the simulation.  Bonus arithmetic,
 ; score/life thresholds, and the eight ordinary-floor ratio records match the
-; shareware LevelCompleted contract; unavailable intermission samples remain
-; logical sound requests and become audible if those assets are later added.
+; shareware LevelCompleted contract. Its five non-digitized effects are
+; rendered offline from the original PC-speaker streams and use the ordinary
+; resident buffered-audio path.
 ; =============================================================================
 
 W3D_INTERMISSION_RESULT_CONTINUE:  equ 0

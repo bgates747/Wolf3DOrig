@@ -16,6 +16,7 @@ sys.path.insert(0, str(TOOLS_ROOT))
 from formats.audio_catalog import (
     CURRENT_PRODUCERS,
     FALLBACKS,
+    PC_SPEAKER_FALLBACKS,
     UPLOAD_DIGI_MAP,
     command_buffer_ids,
     sample_buffer_id,
@@ -145,7 +146,8 @@ class AudioAssetTests(unittest.TestCase):
         self.assertEqual(len(UPLOAD_DIGI_MAP), 20)
         self.assertEqual(len(FALLBACKS), 19)
         self.assertTrue(
-            set(CURRENT_PRODUCERS) <= set(UPLOAD_DIGI_MAP) | set(FALLBACKS)
+            set(CURRENT_PRODUCERS)
+            <= set(UPLOAD_DIGI_MAP) | set(FALLBACKS) | set(PC_SPEAKER_FALLBACKS)
         )
         self.assertEqual(
             set(UPLOAD_DIGI_MAP) - set(CURRENT_PRODUCERS),
@@ -161,7 +163,8 @@ class AudioAssetTests(unittest.TestCase):
         self.assertEqual(missing, [])
         self.assertEqual(self.manifest["totals"]["nativeRecords"], 20)
         self.assertEqual(self.manifest["totals"]["fallbackRecords"], 19)
-        self.assertEqual(self.manifest["totals"]["containerRecords"], 39)
+        self.assertEqual(self.manifest["totals"]["pcSpeakerRecords"], 5)
+        self.assertEqual(self.manifest["totals"]["containerRecords"], 44)
         self.assertEqual(
             self.manifest["totals"]["requiredUnavailableLogicalSounds"], 0
         )
@@ -194,6 +197,30 @@ class AudioAssetTests(unittest.TestCase):
             self.assertEqual(rate, expected_rate)
             self.assertEqual(pcm, expected_pcm)
             self.assertEqual(sound.source_kind, "test_pack_fallback")
+
+    def test_original_pc_speaker_fallbacks_are_deterministic_7khz_pcm(self) -> None:
+        audiohed = DEFAULT_AUDIOHED.read_bytes()
+        audiot = DEFAULT_AUDIOT.read_bytes()
+        offsets = struct.unpack(f"<{len(audiohed) // 4}I", audiohed)
+        records = {
+            buffer_id: (rate, pcm)
+            for buffer_id, _format, rate, pcm in _audio_records(self.container)
+        }
+        by_name = {sound.name: sound for sound in self.sounds}
+        names = [sound.name for sound in self.sounds]
+        for name in PC_SPEAKER_FALLBACKS:
+            sound = by_name[name]
+            logical_id = names.index(name)
+            declared_length = struct.unpack_from(
+                "<I", audiot, offsets[logical_id]
+            )[0]
+            rate, pcm = records[sample_buffer_id(logical_id)]
+            self.assertEqual(rate, 7000)
+            self.assertEqual(len(pcm), declared_length * 50)
+            self.assertEqual(pcm, sound.pcm)
+            self.assertEqual(sound.source_kind, "pc_speaker_original")
+            self.assertTrue(set(pcm) <= {80, 128, 176})
+            self.assertTrue(set(pcm) - {128})
 
     def test_container_is_exact_agnb_02_and_uses_stable_noncolliding_ids(self) -> None:
         records = _audio_records(self.container)

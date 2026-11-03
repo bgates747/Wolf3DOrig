@@ -7,9 +7,9 @@ they preserve the full retail digitized-sound numbering while omitting
 effects that the upload build never references.
 
 ``AUDIOHED.WL1`` and ``AUDIOT.WL1`` remain the authority for each logical
-sound's original priority.  The initial port does not decode their PC-speaker
-or AdLib payloads; only the common six-byte ``length, priority`` header is
-needed here.
+sound's original priority. Their compact PC-speaker pitch streams are also a
+durable original-data fallback for effects omitted from the shareware VSWAP
+digitized set.
 """
 
 from __future__ import annotations
@@ -22,7 +22,14 @@ import wave
 
 PM_PAGE_SIZE = 4096
 START_ADLIB_SOUNDS_WL1 = 69
+START_PC_SOUNDS_WL1 = 0
 MAX_U16 = 0xFFFF
+PC_SPEAKER_TICK_RATE = 140
+PC_SPEAKER_PCM_RATE = 7000
+PC_SPEAKER_PIT_CLOCK = 1192030
+PC_SPEAKER_LOW = 80
+PC_SPEAKER_HIGH = 176
+PC_SPEAKER_SILENCE = 128
 
 
 @dataclass(frozen=True)
@@ -38,6 +45,93 @@ class DigitizedSound:
     @property
     def available(self) -> bool:
         return self.pcm is not None
+
+
+@dataclass(frozen=True)
+class PcSpeakerSound:
+    """One original ``PCSound`` pitch stream from AUDIOT.WL1."""
+
+    logical_id: int
+    priority: int
+    tones: bytes
+
+
+def read_pc_speaker_sounds(
+    audio_header: bytes,
+    audio_data: bytes,
+    logical_sound_count: int,
+    *,
+    start_chunk: int = START_PC_SOUNDS_WL1,
+) -> tuple[PcSpeakerSound, ...]:
+    """Decode original 140 Hz PC-speaker tone-byte streams."""
+
+    if len(audio_header) % 4:
+        raise ValueError("AUDIOHED length is not a multiple of four")
+    offsets = struct.unpack(f"<{len(audio_header) // 4}I", audio_header)
+    required_offsets = start_chunk + logical_sound_count + 1
+    if len(offsets) < required_offsets:
+        raise ValueError(
+            f"AUDIOHED has {len(offsets)} offsets, needs {required_offsets}"
+        )
+
+    sounds: list[PcSpeakerSound] = []
+    for logical_id in range(logical_sound_count):
+        chunk_index = start_chunk + logical_id
+        start = offsets[chunk_index]
+        end = offsets[chunk_index + 1]
+        if start > end or end > len(audio_data) or end - start < 6:
+            raise ValueError(
+                f"AUDIOT PC chunk {chunk_index} has invalid bounds {start}..{end}"
+            )
+        declared_length, priority = struct.unpack_from("<IH", audio_data, start)
+        payload_start = start + 6
+        payload_end = payload_start + declared_length
+        if payload_end > end:
+            raise ValueError(
+                f"AUDIOT PC chunk {chunk_index} declares {declared_length} "
+                f"tone bytes in a {end - start}-byte chunk"
+            )
+        if declared_length == 0:
+            raise ValueError(f"AUDIOT PC chunk {chunk_index} is empty")
+        sounds.append(
+            PcSpeakerSound(logical_id, priority, audio_data[payload_start:payload_end])
+        )
+    return tuple(sounds)
+
+
+def render_pc_speaker_pcm(sound: PcSpeakerSound) -> bytes:
+    """Render Wolf3D's original PC-speaker mode as unsigned 7 kHz PCM.
+
+    ``SDL_PCService`` consumes one tone byte at 140 Hz and programs PIT channel
+    2 with divisor ``tone*60``. At 7000 Hz every source tick is exactly fifty
+    samples, so no resampling drift or fractional timing state is required.
+    """
+
+    samples_per_tick = PC_SPEAKER_PCM_RATE // PC_SPEAKER_TICK_RATE
+    if samples_per_tick * PC_SPEAKER_TICK_RATE != PC_SPEAKER_PCM_RATE:
+        raise AssertionError("PC-speaker PCM rate must divide evenly by 140 Hz")
+    output = bytearray()
+    phase = 0
+    last_tone = -1
+    phase_mask = (1 << 32) - 1
+    phase_half = 1 << 31
+    for tone in sound.tones:
+        if tone != last_tone:
+            phase = 0
+            last_tone = tone
+        if tone == 0:
+            output.extend(bytes((PC_SPEAKER_SILENCE,)) * samples_per_tick)
+            continue
+        divisor = tone * 60
+        phase_step = (
+            PC_SPEAKER_PIT_CLOCK * (1 << 32) + divisor * PC_SPEAKER_PCM_RATE // 2
+        ) // (divisor * PC_SPEAKER_PCM_RATE)
+        for _ in range(samples_per_tick):
+            phase = (phase + phase_step) & phase_mask
+            output.append(
+                PC_SPEAKER_HIGH if phase < phase_half else PC_SPEAKER_LOW
+            )
+    return bytes(output)
 
 
 def _read_vswap_chunks(data: bytes) -> tuple[int, int, int, tuple[bytes, ...]]:

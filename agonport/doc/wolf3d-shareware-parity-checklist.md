@@ -94,10 +94,19 @@ Acceptance: direct-eZ80 boundary cases for zero totals, 0/partial/100 ratios,
 par under/over, secret floor, skipped and unskipped animation, exact bonus and
 score/life thresholds, plus staged ordinary and secret transitions.
 
-Status 2026-11-03: implementation passes 128 direct intermission checks and
+Status 2026-11-03: implementation passes 135 direct intermission checks and
 the expanded 32-case pickup/score regression. The stopped ordinary-transition
 profile awaits human count-up/skip/next-floor review; the secret presentation
 will be batched with it.
+
+Audio correction, 2026-11-03: the state machine emitted all five original
+intermission sound IDs, but their non-digitized source effects were still
+marked unavailable. The durable audio builder now decodes the authentic
+140 Hz PC-speaker pitch streams for `LEVELDONE`, `ENDBONUS1`, `ENDBONUS2`,
+`NOBONUS`, and `PERCENT100`, renders them drift-free to 7 kHz resident PCM,
+and plays them through the unchanged buffered runtime path. Oryx generation
+154 passes 287/287 audio and 135/135 intermission target checks. Audible
+acceptance remains part of the staged presentation gate.
 
 ### A3. Episode 1 victory path and ending — TODO 13
 

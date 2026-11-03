@@ -22,7 +22,10 @@ nonblocking transition lifecycle: visible time/ratio count-up, skip-to-final,
 award, original tally sounds, final score/life effects, and persistent
 per-floor `LevelRatios`. Escape must retain priority while destination loading
 and presentation overlap. Implementation and the 135-check intermission plus
-32-case score regressions pass on the direct target. Remaining close gate:
+32-case score regressions pass on the direct target. The original non-digitized
+`LEVELDONE`, count tick, stage-complete, zero-ratio, and perfect-ratio sounds
+are rendered offline from their authentic PC-speaker streams; the production
+audio target passes 287 checks. Remaining close gate:
 accept staged ordinary
 count-up/skip/next-floor and secret-floor score presentation.
 
