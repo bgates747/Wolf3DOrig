@@ -21,6 +21,7 @@ from formats.shell import (  # noqa: E402
     END_GAME_MESSAGE,
     EPISODE_UNAVAILABLE_MESSAGE,
     QUIT_MESSAGES,
+    SAVING_MESSAGE,
     SHELL_CHUNKS,
     SHELL_CHUNK_NAMES,
     SHELL_COMPOSITE_BUFFER_IDS,
@@ -83,6 +84,8 @@ EXPECTED_COMPOSITES = {
     "quit_notice_7": (0x4357, 276, 50, 23, 76),
     "quit_notice_8": (0x4358, 284, 37, 19, 82),
     "current_game_notice": (0x4359, 206, 50, 58, 76),
+    "saving_notice": (0x435A, 88, 24, 117, 89),
+    "quick_load_notice": (0x435B, 284, 37, 19, 82),
 }
 
 
@@ -116,6 +119,7 @@ class ShellArchiveTests(unittest.TestCase):
         self.assertEqual(font.measure(EPISODE_UNAVAILABLE_MESSAGE), (240, 52))
         self.assertEqual(font.measure(END_GAME_MESSAGE), (204, 39))
         self.assertEqual(font.measure(CURRENT_GAME_MESSAGE), (195, 39))
+        self.assertEqual(font.measure(SAVING_MESSAGE), (67, 13))
         self.assertEqual(len(QUIT_MESSAGES), 9)
         self.assertEqual(font.measure(QUIT_MESSAGES[0]), (195, 39))
         self.assertEqual(font.measure(QUIT_MESSAGES[8]), (263, 26))

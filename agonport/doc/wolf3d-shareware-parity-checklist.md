@@ -269,9 +269,9 @@ the batched visual/input acceptance gate.
 Status 2026-11-03: the latest production shell passes 581/581 checks, the
 physical-keymap/player-combat target passes 492/492, and callback/death passes
 228/228. The open acceptance gate is one visual/input pass through Pause,
-pages, save/load, End Game, and Quit. One presentation discrepancy remains
-promoted under A10: remembered-slot F8/F9 use the correct state and I/O paths,
-but do not yet reproduce the original transient quick-save/quick-load windows.
+pages, save/load, End Game, and Quit. Remembered-slot F8/F9 now reproduce the
+original transient `Saving...` and named-load surfaces; Oryx generation 177
+passes 595/595 shell checks.
 
 ### A6. Save/load game — TODO 15
 
@@ -432,6 +432,15 @@ versus the source's 25 pixels at the fixed 256-pixel viewport. These are
 deliberate feel corrections with directed boundary regressions, not unfinished
 shareware-parity work.
 
+Quick-key presentation correction, 2026-11-03: remembered-slot F8 now plots
+the exact original-font `Message("Saving...")` before writing. F9 no longer
+redraws the ten-slot page with a generic prompt: it presents the source
+`Load Game called` wording and the actual mutable slot name in a source-styled
+outlined window over the drained gameplay frame. Mutable names deliberately
+use the same Agon text renderer as the full slot page. First-use fallback,
+slot identity, I/O, sound, and accept/cancel behavior are unchanged. Oryx
+generation 177 passes all 595 direct shell checks.
+
 Exact open discrepancy ledger, 2026-11-03:
 
 1. `WL_DRAW.C::DrawScaleds` permanently sets `obj->active` when the actor's
@@ -444,13 +453,6 @@ Exact open discrepancy ledger, 2026-11-03:
    this with render-cadence authoritative visibility promotion, a conservative
    documented approximation, or an explicit callback ABI extension; pin both
    unseen and post-visible disconnected cases and measure the fixed-step cost.
-2. Remembered-slot F8 writes the correct slot but omits the original
-   `Message("Saving...")`. Remembered-slot F9 confirms the correct slot but
-   redraws the full ten-slot page with `Load this game? (Y or N)` instead of
-   `Confirm("Load Game called\n\"<slot name>\"?")`. Preserve the already-green
-   fallback/full-menu and I/O semantics while restoring these transient
-   surfaces. Dynamic save names may use the same honest Agon text renderer as
-   the full slot page; no fictitious fixed bitmap name is acceptable.
 
 Debug cheats, paid-episode content, obsolete DOS copy protection, VGA palette
 timing exactness, and unavailable hardware configuration choices are not

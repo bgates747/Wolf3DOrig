@@ -38,6 +38,7 @@ from formats.shell import (  # noqa: E402
     QUIT_MESSAGES,
     READHCOLOR,
     READ_THIS_PAGE_LINES,
+    SAVING_MESSAGE,
     SHELL_CHUNKS,
     SHELL_CHUNK_BUFFER_BASE,
     SHELL_CHUNK_NAMES,
@@ -363,6 +364,18 @@ def _compose_message_notice(font: WolfFont, text: str) -> ComposedImage:
     )
 
 
+def _compose_quick_load_notice() -> ComposedImage:
+    """Blank source-style window for the runtime save-name confirmation."""
+
+    # Save names are mutable, so the eZ80 prints the two source text lines
+    # with the same honest text renderer used by the ten-slot panel. Keep the
+    # surrounding Message()/DrawOutline treatment as a reusable bitmap.
+    image = Image.new("RGB", (284, 37), _color(TEXTCOLOR))
+    _draw_window(image, 0, 0, 283, 36, TEXTCOLOR)
+    _draw_outline(image, 0, 0, 283, 36, 0, HIGHLIGHT)
+    return ComposedImage(image, 19, 82)
+
+
 def _compose_images(
     raw: dict[str, Image.Image], font: WolfFont
 ) -> dict[str, ComposedImage]:
@@ -451,6 +464,8 @@ def _compose_images(
         "current_game_notice": _compose_message_notice(
             font, CURRENT_GAME_MESSAGE
         ),
+        "saving_notice": _compose_message_notice(font, SAVING_MESSAGE),
+        "quick_load_notice": _compose_quick_load_notice(),
     }
     for index, label in enumerate(EPISODE_LABELS, start=1):
         images[f"episode_{index}_selected"] = ComposedImage(

@@ -98,6 +98,8 @@ SHELL_COMPOSITE_BUFFER_IDS = {
     "sound_off_music_off_page": 0x4346,
     **{f"quit_notice_{index}": 0x4350 + index for index in range(9)},
     "current_game_notice": 0x4359,
+    "saving_notice": 0x435A,
+    "quick_load_notice": 0x435B,
 }
 
 # Original WL_MENU.H palette indices.
@@ -167,6 +169,8 @@ CURRENT_GAME_MESSAGE = (
     "a game. Continuing will\n"
     "erase old game. Ok?"
 )
+
+SAVING_MESSAGE = "Saving..."
 
 QUIT_MESSAGES = (
     "Dost thou wish to\nleave with such hasty\nabandon?",

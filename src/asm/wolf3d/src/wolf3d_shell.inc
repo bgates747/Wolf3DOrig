@@ -525,6 +525,12 @@ w3d_shell_pause_quick:
 @quick_save:
     call w3d_shell_quick_slot_available
     jp z,@save
+; CP_CheckQuick shows Message(STR_SAVING"...") before writing the remembered
+; slot. The notice remains over the drained gameplay frame until resume.
+    ld hl,W3D_SHELL_SAVING_NOTICE_BUFFER
+    ld bc,W3D_SHELL_SAVING_NOTICE_X
+    ld de,W3D_SHELL_SAVING_NOTICE_Y
+    call w3d_shell_plot_at
     ld a,(w3d_shell_quick_slot)
     push af
     call w3d_shell_slot_name_pointer
@@ -536,13 +542,6 @@ w3d_shell_pause_quick:
 @quick_load:
     call w3d_shell_quick_slot_available
     jp z,@load
-    xor a
-    ld (w3d_shell_slot_mode),a
-    ld a,1
-    ld (w3d_shell_slot_context),a
-    ld a,(w3d_shell_quick_slot)
-    ld (w3d_shell_slot_choice),a
-    call w3d_shell_draw_save_load_menu
     call w3d_shell_confirm_quick_load
     or a
     jp z,@resume
@@ -563,10 +562,30 @@ w3d_shell_quick_slot_available:
     jp w3d_shell_slot_is_available
 
 w3d_shell_confirm_quick_load:
+; Original CP_CheckQuick confirms `Load Game called\n"<name>"?` over the
+; drained play border. The mutable name uses the same Agon text path as the
+; full slot panel inside a source-styled Message()/DrawOutline window.
+    ld hl,W3D_SHELL_QUICK_LOAD_NOTICE_BUFFER
+    ld bc,W3D_SHELL_QUICK_LOAD_NOTICE_X
+    ld de,W3D_SHELL_QUICK_LOAD_NOTICE_Y
+    call w3d_shell_plot_at
+    ld hl,w3d_shell_slot_text_colours
+    ld bc,w3d_shell_slot_text_colours_end-w3d_shell_slot_text_colours
+    rst.lil 18h
     ld a,4
-    ld c,28
+    ld c,11
     call w3d_shell_slot_set_cursor
-    ld hl,w3d_shell_quick_load_text
+    ld hl,w3d_shell_quick_load_prefix
+    call printString
+    ld a,4
+    ld c,13
+    call w3d_shell_slot_set_cursor
+    ld hl,w3d_shell_quick_load_open_quote
+    call printString
+    ld a,(w3d_shell_quick_slot)
+    call w3d_shell_slot_name_pointer
+    call printString
+    ld hl,w3d_shell_quick_load_suffix
     call printString
 @wait:
     call w3d_shell_read_key
@@ -1321,8 +1340,12 @@ w3d_shell_empty_slot_text:
     db "      - empty -",0
 w3d_shell_overwrite_text:
     db "Overwrite this game? (Y or N)",0
-w3d_shell_quick_load_text:
-    db "Load this game? (Y or N)",0
+w3d_shell_quick_load_prefix:
+    db "Load Game called",0
+w3d_shell_quick_load_open_quote:
+    db '"',0
+w3d_shell_quick_load_suffix:
+    db '"','?',0
 w3d_shell_slot_io_error_text:
     db "Save/load failed. Press any key.",0
 w3d_shell_slot_clear_name:

@@ -1026,15 +1026,19 @@ test_quick_keys:
 
     ld a,60
     ld (test_case),a
+    call test_reset_plots
     ld hl,script_quick_release
     call test_set_script
     ld a,w3d_panel_request_quick_save
     call w3d_shell_pause_quick
     CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
     CHECK_MEM8 test_save_store_count,2,REASON_SELECTION
+    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_SAVING_NOTICE_BUFFER,W3D_SHELL_SAVING_NOTICE_X,W3D_SHELL_SAVING_NOTICE_Y
 
     ld a,61
     ld (test_case),a
+    call test_reset_plots
     ld hl,script_quick_release
     call test_set_script
     ld hl,script_confirm_yes
@@ -1043,6 +1047,8 @@ test_quick_keys:
     call w3d_shell_pause_quick
     CHECK_A W3D_SHELL_PAUSE_LOAD_GAME,REASON_RESULT
     CHECK_MEM8 test_save_load_count,2,REASON_SELECTION
+    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_QUICK_LOAD_NOTICE_BUFFER,W3D_SHELL_QUICK_LOAD_NOTICE_X,W3D_SHELL_QUICK_LOAD_NOTICE_Y
 
     ld a,62
     ld (test_case),a
