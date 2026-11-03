@@ -3060,6 +3060,7 @@ w3d_mark_current_door_dirty:
 ; that no asynchronous owner is active. Ownership is nevertheless acquired
 ; here before destructive init_level bytes are allowed onto the wire.
 w3d_submit_level_reset:
+    call w3d_promote_render_visible_actors
     .if W3D_RENDER_BACKEND
     jp w3d_vdplet_submit_level_reset
     .else
@@ -3083,6 +3084,7 @@ w3d_submit_level_reset:
 ; boundary. Mark ownership first: a rejected overlapping submission must emit
 ; no state bytes and must leave every dirty flag intact for diagnosis/retry.
 w3d_submit_dirty_world_render:
+    call w3d_promote_render_visible_actors
     .if W3D_RENDER_BACKEND
     jp w3d_vdplet_submit_dirty_world_render
     .else

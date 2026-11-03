@@ -209,6 +209,61 @@ w3d_prepare_actor_sight_context:
     ld (w3d_actor_sight_context+W3D_SIGHT_CTX_MADENOISE),a
     ret
 
+; Conservative eZ80 replacement for WL_DRAW.C::DrawScaleds setting
+; obj->active=true after renderer visibility. Run only at an actual render
+; submission boundary. A dormant actor is promoted when its current drawable
+; center is in the accepted player-facing CPU viewport and CheckLine reaches
+; it through a connected area. This deliberately excludes noise and
+; actor-facing CheckSight: either can detect behind the player and would create
+; false persistent promotions. The original's open-neighbor spotvis allowance
+; remains a documented conservative edge difference around corners.
+w3d_promote_render_visible_actors:
+    call w3d_prepare_actor_sight_context
+    ld a,(w3d_actor_live_head)
+@loop:
+    cp W3D_SLOT_NONE
+    ret z
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_NEXT)
+    ld (w3d_actor_visibility_next),a
+
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    or a
+    jr nz,@next
+    ld a,(ix+W3D_ACTOR_AREA)
+    cp W3D_NUM_AREAS
+    jr nc,@next
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    ld hl,w3d_area_by_player
+    add hl,de
+    ld a,(hl)
+    or a
+    jr z,@next
+
+    call w3d_actor_resolve_current_state
+    jr c,@next
+    ld a,(iy+W3D_STATE_SHAPENUM+0)
+    ld b,a
+    ld a,(iy+W3D_STATE_SHAPENUM+1)
+    or b
+    jr z,@next
+
+    call w3d_actor_cpu_visible
+    or a
+    jr z,@next
+    ld iy,w3d_actor_sight_context
+    call w3d_CheckLine
+    or a
+    jr z,@next
+    ld a,W3D_ACTOR_ACTIVE_YES
+    ld (ix+W3D_ACTOR_ACTIVE),a
+@next:
+    ld a,(w3d_actor_visibility_next)
+    jr @loop
+
 ; Prepare one shared source-time quantum for both the player weapon and every
 ; actor.  The player-combat step runs before the actor pass, just as the DOS
 ; player object headed the live list; the latch prevents that ordering from
@@ -3124,6 +3179,8 @@ w3d_actor_spawn_next:
     db W3D_SLOT_NONE
 w3d_actor_sight_context:
     ds W3D_SIGHT_CTX_SIZE
+w3d_actor_visibility_next:
+    db W3D_SLOT_NONE
 w3d_actor_chase_dodge:
     db 0
 w3d_actor_chase_old_dir:

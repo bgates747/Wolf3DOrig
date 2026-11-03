@@ -28,7 +28,8 @@ PHASE_COUNT = 6
 RESULT_VECTOR_OFFSET = 16
 RESULT_PHASE_OFFSET = RESULT_VECTOR_OFFSET + VECTOR_CASE_COUNT
 RESULT_TIMING_OFFSET = RESULT_PHASE_OFFSET + PHASE_COUNT
-RESULT_SIZE = RESULT_TIMING_OFFSET + 4
+RESULT_ACTIVATION_TIMING_OFFSET = RESULT_TIMING_OFFSET + 4
+RESULT_SIZE = RESULT_ACTIVATION_TIMING_OFFSET + 4
 
 PHASES = {
     1: "eleven-case W3PV oracle corpus",
@@ -77,9 +78,29 @@ def main() -> int:
         type=Path,
         default=Path(os.environ.get("EZ80ASM", "ez80asm")),
     )
+    parser.add_argument("--emulator", type=Path, default=FAB)
+    parser.add_argument("--mos", type=Path, default=MOS)
+    parser.add_argument(
+        "--vdp",
+        type=Path,
+        default=VDP,
+        help="stock VDP shared object (ignored with --builtin-vdp)",
+    )
+    parser.add_argument(
+        "--builtin-vdp",
+        action="store_true",
+        help="use the emulator's built-in stock VDP instead of a shared object",
+    )
+    parser.add_argument(
+        "--show-emulator-output",
+        action="store_true",
+        help="leave emulator stdout/stderr visible for runtime diagnosis",
+    )
     args = parser.parse_args()
 
-    dependencies = (FAB, MOS, VDP)
+    dependencies = (args.emulator, args.mos)
+    if not args.builtin_vdp:
+        dependencies = (*dependencies, args.vdp)
     if args.prebuilt is None:
         dependencies = (STAGED_SRC, *dependencies)
     else:
@@ -138,21 +159,21 @@ def main() -> int:
         else ""
     )
     emulator = [
-        str(FAB.resolve()),
+        str(args.emulator.resolve()),
         "--renderer", "sw",
         "--firmware", "console8",
-        "--mos", str(MOS.resolve()),
-        "--vdp", str(VDP.resolve()),
-        "--sdcard", str(sdcard),
-        "--zero",
+        "--mos", str(args.mos.resolve()),
     ]
+    if not args.builtin_vdp:
+        emulator.extend(["--vdp", str(args.vdp.resolve())])
+    emulator.extend(["--sdcard", str(sdcard), "--zero"])
     print("+", " ".join(emulator))
     process = subprocess.Popen(
         emulator,
         cwd=work,
         env=environment,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
+        stdout=None if args.show_emulator_output else subprocess.DEVNULL,
+        stderr=None if args.show_emulator_output else subprocess.DEVNULL,
     )
     try:
         deadline = time.monotonic() + args.timeout
@@ -215,6 +236,20 @@ def main() -> int:
         )
     else:
         print("PRT1 timing: 92-frame E1L1 route below 1 ms resolution")
+    activation_milliseconds = int.from_bytes(
+        payload[
+            RESULT_ACTIVATION_TIMING_OFFSET:RESULT_ACTIVATION_TIMING_OFFSET + 3
+        ],
+        "little",
+    )
+    if activation_milliseconds:
+        print(
+            "PRT1 timing: 1000 worst-case render-visible actor promotions in "
+            f"{activation_milliseconds} ms "
+            f"({activation_milliseconds / 1000:.3f} ms/pass)"
+        )
+    else:
+        print("PRT1 timing: 1000 render-visible promotions below 1 ms resolution")
     return 0
 
 

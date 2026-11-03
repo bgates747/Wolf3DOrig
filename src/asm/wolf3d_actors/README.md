@@ -56,6 +56,9 @@ assembly-only checks add
 walls, blocking statics, shootable/nonshootable reservations, map underflow,
 diagonal corner rejection, actor door obstruction, the original adjacent-cell
 `MINDIST` CloseDoor boundary at a fully open door, and invalid-state removal.
+Render-boundary checks also pin persistent DrawScaleds-style activation for an
+unobstructed player-facing actor, persistence after area disconnection, and
+rejection behind the player, behind a wall, or in a disconnected area.
 
 Run from any directory:
 
@@ -66,11 +69,17 @@ W3D_RUNTIME_ROOT=/home/smith/Agon/mystuff/Wolf3dOrig \
   /tmp/wolf3d_work/Wolf3dOrig/src/asm/wolf3d_actors/scripts/run_patrol_emulator_regression.py
 ```
 
-The accepted corpus reports 607/607 direct production-assembly checks. The
-92-frame real E1L1 slot-11/door-8 route currently measures 16 ms total
-(approximately 0.174 ms per fixed simulation frame) with PRT1 in Fab.
+The accepted Oryx generation-178 corpus reports 624/624 direct
+production-assembly checks. The 92-frame real E1L1 slot-11/door-8 route
+measured 20 ms total (approximately 0.217 ms per fixed simulation frame).
+A deliberately pessimistic benchmark that resets one centered unobstructed
+actor to dormant before every pass measured 158 ms for 1,000 complete
+render-boundary promotions (0.158 ms per pass).
 
-The patrol mailbox is 37 bytes and includes per-case and per-phase mismatch
+The patrol mailbox is 41 bytes and includes per-case and per-phase mismatch
 counts in addition to the first compact diagnostic. A PRT1 stopwatch reports
-the elapsed whole milliseconds for the real 92-frame E1L1 acceptance route;
-the same timing path can run unchanged on hardware.
+the elapsed whole milliseconds for both the real 92-frame E1L1 acceptance
+route and the 1,000-pass visibility benchmark; the same timing paths can run
+unchanged on hardware. Cross-host runs may supply `--emulator`, `--mos`, and
+`--vdp` explicitly; `--builtin-vdp` selects an emulator-provided stock VDP,
+and `--show-emulator-output` exposes runtime diagnostics.

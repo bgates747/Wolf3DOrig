@@ -198,15 +198,22 @@ Difficulty, and cancelling Difficulty returns through Episode selection and
 the warning again. F7's source `WindowH=160` prompt placement is now covered
 separately. Oryx generation 175 passes all 581/581 production-shell checks;
 both application backends rebuild.
-One source-linked behavior gap remains explicitly promoted:
-`WL_DRAW.C::DrawScaleds` permanently promotes an actor after its tile (or an
-open neighboring tile) is renderer-visible; the write-only port currently
-uses connected-area scheduling without that post-visibility persistence.
-The remembered-slot F8/F9 presentation difference recorded in item 14 is now
-closed. Any actor fix must
-distinguish player-facing renderer visibility from sound or actor-facing
-`CheckSight`, and must include timing evidence before entering the fixed-step
-or render-submission path.
+The actor-visibility pass now restores the important persistent half of
+`WL_DRAW.C::DrawScaleds`: at actual render-submission boundaries, a dormant
+actor in a connected area is permanently promoted after its drawable center
+passes the same CPU projection used by gameplay and an unobstructed
+`CheckLine`. Sound, actor-facing sight, walls, behind-player actors, and
+disconnected areas cannot cause false promotion. Oryx generation 178 passes
+624/624 direct eZ80 checks and measures the deliberately pessimistic visible
+case at 158 ms for 1,000 complete passes (0.158 ms per render boundary). Both
+application backends rebuild. One exact source edge remains explicit: DOS
+could also promote when an open neighboring tile was in `spotvis`; the
+write-only port conservatively waits until the actor center itself is accepted,
+so an actor peeking around a corner may wake slightly later. Reproduce that
+neighbor allowance only if it can retain player-facing semantics without VDP
+read-back or duplicating the full renderer hot path.
+The remembered-slot F8/F9 presentation difference recorded in item 14 is
+closed.
 
 # Phase B — Agon identity and legal presentation
 

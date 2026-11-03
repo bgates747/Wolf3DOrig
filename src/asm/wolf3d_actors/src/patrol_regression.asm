@@ -127,6 +127,7 @@ run_tests:
     call test_player_rollback
     call test_actor_door_obstruction
     call test_adjacent_actor_close_threshold
+    call test_render_visibility_activation
     call test_invalid_state_safety
     call prt_irq_restore
     call write_result
@@ -895,6 +896,114 @@ test_adjacent_actor_close_threshold:
     call assert_equal
     ret
 
+; DrawScaleds permanently wakes a dormant actor once the renderer accepts it.
+; The eZ80 port has no read-back channel from its write-only VDP, so pin the
+; conservative CPU-owned replacement: accepted player-facing projection plus
+; unobstructed CheckLine in a connected area. Promotion is persistent; noise,
+; behind-player sight, walls, and disconnected areas must not substitute for
+; renderer visibility.
+test_render_visibility_activation:
+    ld a,phase_obstruction
+    ld (test_phase),a
+
+; A centered, drawable guard two tiles ahead is promoted.
+    ld a,4
+    ld (test_detail),a
+    call prepare_render_visibility_case
+    call w3d_promote_render_visible_actors
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    ld b,W3D_ACTOR_ACTIVE_YES
+    ld c,reason_scalar
+    call assert_equal
+
+; Promotion is persistent even after its area disconnects.
+    xor a
+    ld (w3d_area_by_player+0),a
+    call w3d_promote_render_visible_actors
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    ld b,W3D_ACTOR_ACTIVE_YES
+    ld c,reason_scalar
+    call assert_equal
+
+; The same actor behind an east-facing player is not renderer-visible.
+    ld a,5
+    ld (test_detail),a
+    call prepare_render_visibility_case
+    ld hl,00c8000h
+    ld (w3d_player_pose+0),hl
+    call w3d_promote_render_visible_actors
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    ld b,W3D_ACTOR_ACTIVE_NO
+    ld c,reason_scalar
+    call assert_equal
+
+; A wall between the player and actor rejects the otherwise valid projection.
+    ld a,6
+    ld (test_detail),a
+    call prepare_render_visibility_case
+    ld a,1
+    ld (test_tilemap+649),a          ; (9,10), between x=8.5 and x=10.5
+    call w3d_promote_render_visible_actors
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    ld b,W3D_ACTOR_ACTIVE_NO
+    ld c,reason_scalar
+    call assert_equal
+
+; Visibility in a disconnected area cannot wake the actor.
+    ld a,7
+    ld (test_detail),a
+    call prepare_render_visibility_case
+    xor a
+    ld (w3d_area_by_player+0),a
+    call w3d_promote_render_visible_actors
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    ld b,W3D_ACTOR_ACTIVE_NO
+    ld c,reason_scalar
+    call assert_equal
+
+; Time a deliberately pessimistic case: one dormant, centered, unobstructed
+; actor is reset and fully re-evaluated on every render-boundary pass.
+    ld a,8
+    ld (test_detail),a
+    call prepare_render_visibility_case
+    ld hl,1000
+    ld (activation_loops),hl
+    call prt_start
+@timing_loop:
+    xor a
+    ld (ix+W3D_ACTOR_ACTIVE),a
+    call w3d_promote_render_visible_actors
+    ld hl,(activation_loops)
+    dec hl
+    ld (activation_loops),hl
+    ld a,h
+    or l
+    jr nz,@timing_loop
+    call prt_stop_activation
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    ld b,W3D_ACTOR_ACTIVE_YES
+    ld c,reason_scalar
+    call assert_equal
+    ret
+
+prepare_render_visibility_case:
+    call prepare_direct_actor
+    ld hl,test_tilemap
+    ld (w3d_level_tilemap_ptr),hl
+    ld (w3d_actor_sight_context+W3D_SIGHT_CTX_TILEMAP),hl
+    ld hl,0088000h
+    ld (w3d_player_pose+0),hl
+    xor a
+    ld (w3d_player_pose+3),a
+    ld hl,00a8000h
+    ld (w3d_player_pose+4),hl
+    xor a
+    ld (w3d_player_pose+7),a
+    ld (w3d_player_pose+8),a         ; angle zero faces east
+    ld (w3d_player_pose+9),a
+    ld (ix+W3D_ACTOR_ACTIVE),a
+    ret
+
 test_invalid_state_safety:
     ld a,phase_invalid
     ld (test_phase),a
@@ -1101,6 +1210,7 @@ reset_empty_world:
 
     ld hl,test_tilemap
     ld (w3d_map_ptr),hl
+    ld (w3d_level_tilemap_ptr),hl
     ld hl,test_static_bits
     ld (w3d_static_blocking_ptr),hl
     ld hl,test_area_map
@@ -1245,6 +1355,15 @@ prt_stop:
     out0 (TMR1_CTL+TMR_REG_CTL),a
     ld hl,(prt_irq_counter)
     ld (result_e1l1_milliseconds),hl
+    ei
+    ret
+
+prt_stop_activation:
+    di
+    ld a,PRT_OFF
+    out0 (TMR1_CTL+TMR_REG_CTL),a
+    ld hl,(prt_irq_counter)
+    ld (result_activation_milliseconds),hl
     ei
     ret
 
@@ -1505,6 +1624,7 @@ assert_actual:              db 0
 prt_vector:                 dl 0
 prt_saved_vector:           db 0,0,0,0
 prt_irq_counter:            dl 0
+activation_loops:           dl 0
 
 result_data:
     db "W3P1"
@@ -1519,6 +1639,8 @@ result_first_detail:        db 0
 result_vector_errors:       ds W3D_PATROL_VECTOR_COUNT
 result_phase_errors:        ds 6
 result_e1l1_milliseconds:   dl 0
+                            db 0
+result_activation_milliseconds: dl 0
                             db 0
 result_end:
 
