@@ -34,6 +34,7 @@ constexpr uint16_t kHudBlank = 110;
 constexpr uint16_t kHudDigit0 = 111;
 constexpr uint16_t kHudFace1A = 121;
 constexpr uint16_t kHudFaceDead = 142;
+constexpr uint16_t kHudFaceGotGatling = 143;
 
 constexpr uint8_t kBlack = 0;
 constexpr uint8_t kDarkCyan = 20;
@@ -771,7 +772,7 @@ bool hud_dimensions(uint16_t chunk, uint16_t &width, uint16_t &height) {
         height = 16;
         return true;
     }
-    if (chunk >= kHudFace1A && chunk <= kHudFaceDead) {
+    if (chunk >= kHudFace1A && chunk <= kHudFaceGotGatling) {
         width = 24;
         height = 32;
         return true;
@@ -837,8 +838,10 @@ RenderDetail draw_hud(const WorldMirror &world,
         return RenderDetail::world;
     const uint16_t face = world.hud.health == 0
         ? kHudFaceDead
-        : static_cast<uint16_t>(kHudFace1A +
-            ((100u - world.hud.health) / 16u) * 3u + world.hud.face);
+        : world.hud.face == 3
+            ? kHudFaceGotGatling
+            : static_cast<uint16_t>(kHudFace1A +
+                ((100u - world.hud.health) / 16u) * 3u + world.hud.face);
     if (!append_hud_draw(draws, count, face, 136, 204) ||
         !append_hud_number(draws, count, 168, 216, 3, world.hud.health) ||
         !append_hud_number(draws, count, 216, 216, 2, world.hud.ammo) ||

@@ -660,6 +660,60 @@ test_face_timeline:
     call w3d_update_player_face
     CHECK_MEM8 w3d_player_face_frame,2,reason_state
     CHECK_MEM8 w3d_random_index,23,reason_rng
+
+; GOTGATLINGPIC is a transient wire presentation, not a replacement for the
+; persistent ordinary faceframe.  Its generated hold consumes no gameplay
+; random numbers and no ordinary face time.
+    xor a
+    ld (w3d_random_index),a
+    ld (w3d_hud_dirty),a
+    ld a,77
+    ld (w3d_player_face_count+0),a
+    call w3d_begin_chaingun_face
+    CHECK_MEM8 w3d_player_face_special,1,reason_state
+    CHECK_MEM8 w3d_player_face_special_ticks,W3D_AUDIO_GETGATLING_HOLD_TICKS,reason_state
+    CHECK_MEM8 w3d_player_face_count+0,0,reason_state
+    CHECK_MEM8 w3d_hud_dirty,W3D_HUD_DIRTY_FACE,reason_inventory
+    ld b,W3D_AUDIO_GETGATLING_HOLD_TICKS
+@special_hold:
+    push bc
+    call w3d_update_player_face
+    pop bc
+    djnz @special_hold
+    CHECK_MEM8 w3d_player_face_special,1,reason_state
+    CHECK_MEM8 w3d_player_face_special_ticks,0,reason_state
+    CHECK_MEM8 w3d_player_face_count+0,0,reason_state
+    CHECK_MEM8 w3d_random_index,0,reason_rng
+
+; Sound expiry alone does not redraw the face: the next ordinary random
+; transition does, exactly as UpdateFace/DrawFace did in the source.
+    ld a,7
+    ld (w3d_player_face_count+0),a
+    call w3d_update_player_face
+    CHECK_MEM8 w3d_player_face_special,0,reason_state
+    CHECK_MEM8 w3d_player_face_frame,1,reason_state
+    CHECK_MEM8 w3d_random_index,2,reason_rng
+
+; Damage and successful healing both call DrawFace immediately and cancel the
+; special presentation even while its modeled sound hold remains active.
+    call w3d_begin_chaingun_face
+    ld a,1
+    ld (w3d_current_actor_index),a
+    call w3d_take_player_damage
+    CHECK_MEM8 w3d_player_face_special,0,reason_state
+    call w3d_begin_chaingun_face
+    ld a,99
+    ld (w3d_player_health),a
+    ld a,1
+    call w3d_add_player_health
+    CHECK_MEM8 w3d_player_face_special,0,reason_state
+    call w3d_begin_chaingun_face
+    xor a
+    ld (w3d_game_difficulty),a       ; baby: raw 1 scales to zero
+    ld a,1
+    call w3d_take_player_damage
+    CHECK_MEM8 w3d_player_health,100,reason_inventory
+    CHECK_MEM8 w3d_player_face_special,0,reason_state
     ret
 
 ; ---------------------------------------------------------------------------

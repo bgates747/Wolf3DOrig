@@ -22,7 +22,7 @@ SDK = Path("/Agon/mystuff/agon-vdplet/build/vdpl-014/baseline")
 SDK_PYTHON = Path("/Agon/mystuff/agon-vdplet/.venv/bin/python")
 TOOLCHAIN = Path("/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin")
 EXPECTED_PACKAGE_SHA256 = (
-    "a3506e245563dec7e72c7f90b9ebfb56caaf141766b2b6267a2b9e498b7e0c97"
+    "2907f0898115c5f155f2aff733958d41f0a2f94c2080f744fde3fd2b0f7dfbde"
 )
 FRAME_BYTES = 76800
 HUD_MANIFEST = (
@@ -48,7 +48,7 @@ def verify_hud_manifest() -> int:
     expected = {98: (320, 40)}
     expected.update({chunk: (48, 24) for chunk in range(103, 107)})
     expected.update({chunk: (8, 16) for chunk in range(107, 121)})
-    expected.update({chunk: (24, 32) for chunk in range(121, 143)})
+    expected.update({chunk: (24, 32) for chunk in range(121, 144)})
     for chunk, dimensions in expected.items():
         entry = entries.get(chunk)
         if entry is None or (entry["width"], entry["height"]) != dimensions:
@@ -184,7 +184,7 @@ def main() -> None:
         "batch_max_records": 618,
         "maximum_full_snapshot_bytes": 6982,
         "atomic_validation": True,
-        "renderer_scenarios": 3,
+        "renderer_scenarios": 4,
         "renderer_frame_bytes_compared": len(renderer_frame.read_bytes()),
         "renderer_geometry_bytes_compared": len(renderer_geometry.read_bytes()),
         "renderer_frame_sha256": sha(renderer_frame),

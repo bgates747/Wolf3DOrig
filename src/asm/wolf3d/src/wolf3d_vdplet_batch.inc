@@ -524,7 +524,14 @@ w3d_vdplet_batch_append_hud:
     ld a,(w3d_level_requested_index)
     inc a
     ld (w3d_vdplet_hud_payload+8),a
+    ld a,(w3d_player_face_special)
+    or a
+    jr z,@ordinary_face
+    ld a,3                           ; wire sentinel: GOTGATLINGPIC
+    jr @face_ready
+@ordinary_face:
     ld a,(w3d_player_face_frame)
+@face_ready:
     ld (w3d_vdplet_hud_payload+9),a
     ld a,(w3d_player_lives)
     ld (w3d_vdplet_hud_payload+10),a

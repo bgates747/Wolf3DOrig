@@ -30,7 +30,23 @@ fa_create_always:   equ 0x08
     include "wolf3d_fixture.inc"
     include "wolf3d_actors.inc"
     include "wolf3d_areas.inc"
+; This focused fixture does not include the victory presentation module, but
+; production actor simulation exposes its BJ callbacks.
+w3d_victory_think_bj_jump:
+w3d_victory_think_bj_run:
+w3d_victory_bj_yell:
+w3d_victory_bj_done:
+    ret
     include "wolf3d_actor_sim.inc"
+w3d_initialize_victory_state:
+    xor a
+    ld (w3d_victory_active),a
+    ret
+w3d_begin_victory_sequence:
+w3d_simulate_victory_step:
+    ret
+w3d_victory_active:
+    db 0
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
 
@@ -118,6 +134,7 @@ run_tests:
     djnz @loop
 
     call test_pickup_audio
+    call test_chaingun_face
     call test_score32_bonus
     call write_result
     call print_report
@@ -178,6 +195,57 @@ test_pickup_audio:
     lea iy,iy+audio_case_size
     pop bc
     djnz @loop
+    ret
+
+; The source draws GOTGATLINGPIC for every chaingun pickup, including when the
+; player already owns the weapon.  Pin the transient presentation and its
+; generated duration independently of the table-driven inventory cases.
+test_chaingun_face:
+    ld iy,pickup_audio_chaingun
+    call prepare_audio_pickup
+    ld a,W3D_WEAPON_CHAINGUN
+    ld (w3d_player_weapon),a
+    ld (w3d_player_best_weapon),a
+    ld (w3d_player_chosen_weapon),a
+    ld a,55
+    ld (w3d_player_face_count+0),a
+    xor a
+    ld (w3d_player_face_count+1),a
+    ld (w3d_hud_dirty),a
+    call w3d_apply_current_pickup
+    ld b,1
+    ld c,reason_return
+    call assert_equal
+    ld a,(w3d_player_face_special)
+    ld b,1
+    ld c,reason_health
+    call assert_equal
+    ld a,(w3d_player_face_special_ticks)
+    ld b,W3D_AUDIO_GETGATLING_HOLD_TICKS
+    ld c,reason_health
+    call assert_equal
+    ld a,(w3d_player_face_count+0)
+    ld b,0
+    ld c,reason_health
+    call assert_equal
+    ld a,(w3d_hud_dirty)
+    and W3D_HUD_DIRTY_FACE
+    ld b,W3D_HUD_DIRTY_FACE
+    ld c,reason_hud_dirty
+    call assert_equal
+
+; Full heal always calls HealSelf in the source. It therefore cancels the
+; special face even when health was already 100 and no health digit changes.
+    ld iy,pickup_audio_fullheal
+    call prepare_audio_pickup
+    ld a,100
+    ld (w3d_player_health),a
+    call w3d_begin_chaingun_face
+    call w3d_apply_current_pickup
+    ld a,(w3d_player_face_special)
+    ld b,0
+    ld c,reason_health
+    call assert_equal
     ret
 
 ; Floor completion may award 135,000 points in one call. Exercise the shipping
@@ -578,6 +646,8 @@ w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
     db 0
+w3d_gameplay_panel_request:
+    db 0
 
 result_filename:            asciz "pickup_result.bin"
 report_banner:              asciz "\r\nWolf3D eZ80 pickup regression: "
@@ -631,6 +701,11 @@ pickup_audio_cases:
     db W3D_ITEM_FIRSTAID,100,50,0,0ffh
     db W3D_ITEM_CLIP,50,99,0,0ffh
     db W3D_ITEM_DRESSING,50,50,0,0ffh
+
+pickup_audio_chaingun:
+    db W3D_ITEM_CHAINGUN,50,50,1,38
+pickup_audio_fullheal:
+    db W3D_ITEM_FULLHEAL,100,50,1,44
 
 ; Record 0: full-health first aid is refused, active, and completely clean.
 pickup_cases:

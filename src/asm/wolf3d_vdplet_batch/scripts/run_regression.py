@@ -133,7 +133,7 @@ def validate_outputs(app: Path) -> None:
         raise AssertionError("actor removal not serialized")
     if records[4][1][:2] != b"\x01\x00" or records[4][1][4:6] != b"\xff\xff":
         raise AssertionError("static removal not serialized")
-    if records[5][1][0] != 73 or records[5][1][9] != 2:
+    if records[5][1][0] != 73 or records[5][1][9] != 3:
         raise AssertionError("complete HUD value not serialized")
     if records[6][1] != b"\xff\xff":
         raise AssertionError("view-weapon removal not serialized")

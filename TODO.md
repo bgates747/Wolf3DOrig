@@ -116,9 +116,11 @@ Agon difference and require emulator plus hardware acceptance. The sweep has
 already corrected a silently static HUD face: production now reproduces
 `WL_AGENT.C::UpdateFace`, including its shared `US_RndT` consumption, strict
 threshold, three-frame selection, save persistence, and VDPlet wire byte. The
-only known face-specific difference is the original's brief animation hold
-while `GETGATLINGSND` is playing, because fire-and-forget VDP audio exposes no
-completion state.
+follow-up sweep also restored `GOTGATLINGPIC`: every chaingun pickup now sends
+a dedicated wire sentinel, holds it for the generated duration of the selected
+resident `GETGATLINGSND` sample, resumes the ordinary random face transition,
+and cancels it immediately on damage or successful healing. The special state
+is attempt-local, while the ordinary `faceframe` remains the saved value.
 
 # Phase B — Agon identity and legal presentation
 

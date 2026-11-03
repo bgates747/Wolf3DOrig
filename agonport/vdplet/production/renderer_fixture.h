@@ -12,7 +12,7 @@ constexpr uint16_t kHudBase = 0x4000;
 constexpr uint32_t kMapBytes = 4096;
 constexpr uint32_t kTextureBytes = 4096;
 constexpr uint32_t kMaximumAssetBytes = 12800;
-constexpr int kScenarioCount = 3;
+constexpr int kScenarioCount = 4;
 
 struct DoorSpec {
     uint16_t position;
@@ -126,7 +126,7 @@ inline SceneSpec scene(int index) {
         result.level = 9;
         result.face = 2;
         result.lives = 7;
-    } else {
+    } else if (index == 2) {
         result.player_x = tile_center(8);
         result.player_y = tile_center(8);
         result.player_angle = 135;
@@ -141,6 +141,19 @@ inline SceneSpec scene(int index) {
         result.lives = 0;
         result.doors[0].position = 0xd000;
         result.doors[1].position = 0xe000;
+    } else {
+        result.player_x = tile_center(4);
+        result.player_y = tile_center(3);
+        result.player_angle = 270;
+        result.view_weapon_shape = 35;
+        result.health = 83;
+        result.ammo = 71;
+        result.keys = 0;
+        result.weapon = 3;
+        result.score = 424242;
+        result.level = 3;
+        result.face = 3;
+        result.lives = 5;
     }
     return result;
 }
@@ -157,7 +170,7 @@ inline bool valid_buffer(uint16_t buffer_id) {
     if (buffer_id >= kSpriteBase && buffer_id < kSpriteBase + 64) return true;
     const uint16_t chunk = static_cast<uint16_t>(buffer_id - kHudBase);
     return buffer_id >= kHudBase &&
-        (chunk == 98 || (chunk >= 103 && chunk <= 142));
+        (chunk == 98 || (chunk >= 103 && chunk <= 143));
 }
 
 inline uint32_t asset_bytes(uint16_t buffer_id) {
@@ -166,7 +179,7 @@ inline uint32_t asset_bytes(uint16_t buffer_id) {
     if (chunk == 98) return 320 * 40;
     if (chunk >= 103 && chunk <= 106) return 48 * 24;
     if (chunk >= 107 && chunk <= 120) return 8 * 16;
-    if (chunk >= 121 && chunk <= 142) return 24 * 32;
+    if (chunk >= 121 && chunk <= 143) return 24 * 32;
     return 0;
 }
 

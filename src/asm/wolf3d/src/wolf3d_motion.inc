@@ -219,6 +219,8 @@ w3d_seed_level_world_state:
     ld (w3d_player_face_count+0),a
     ld (w3d_player_face_count+1),a
     ld (w3d_player_face_tick_phase),a
+    ld (w3d_player_face_special),a
+    ld (w3d_player_face_special_ticks),a
     ld (w3d_player_dead),a
     ld (w3d_level_completion),a
     ld a,W3D_SLOT_NONE
@@ -658,10 +660,21 @@ w3d_update_player_thrustspeed:
 ; a second draw. A 2,2,3 cadence is exactly seven original tics per three
 ; updates; both draws remain in the authoritative gameplay random stream.
 ;
-; DOS temporarily freezes the face while GETGATLINGSND is playing. Buffered
-; VDP audio is deliberately fire-and-forget and exposes no completion state,
-; so that short cosmetic hold is the one part we cannot observe here.
+; A chaingun pickup publishes the source GOTGATLINGPIC sentinel and freezes
+; this ordinary animation for the generated duration of the actual resident
+; GETGATLINGSND sample.  That models the original SD_SoundPlaying gate without
+; coupling simulation progress to asynchronous VDP audio completion.
 w3d_update_player_face:
+    ld a,(w3d_player_face_special)
+    or a
+    jr z,@ordinary
+    ld a,(w3d_player_face_special_ticks)
+    or a
+    jr z,@ordinary
+    dec a
+    ld (w3d_player_face_special_ticks),a
+    ret
+@ordinary:
     ld a,(w3d_player_face_tick_phase)
     cp 2
     jr z,@three_tics
@@ -705,6 +718,8 @@ w3d_update_player_face:
 @store_face:
     ld (w3d_player_face_frame),a
     xor a
+    ld (w3d_player_face_special),a
+    ld (w3d_player_face_special_ticks),a
     ld (w3d_player_face_count+0),a
     ld (w3d_player_face_count+1),a
     ld a,(w3d_hud_dirty)
@@ -1723,12 +1738,15 @@ w3d_apply_current_pickup:
     call w3d_add_player_ammo
     ld a,(w3d_player_best_weapon)
     cp 3
-    jp nc,@consume
+    jr nc,@chaingun_face
     ld a,3
     call w3d_set_player_weapon
+@chaingun_face:
+    call w3d_begin_chaingun_face
     jp @consume
 
 @fullheal:
+    call w3d_end_chaingun_face
     ld a,(w3d_player_health)
     cp 100
     jr z,@fullheal_ammo
@@ -1842,7 +1860,34 @@ w3d_add_player_health:
     cp c
     ret z
     ld (w3d_player_health),a
+    call w3d_end_chaingun_face
     ld a,W3D_HUD_DIRTY_HEALTH
+    jp w3d_mark_hud_dirty
+
+; Reproduce WL_AGENT.C's transient gotgatgun presentation.  The ordinary
+; faceframe remains the persistent save value; the special art is a wire-only
+; sentinel and these two bytes are attempt-local state.
+w3d_begin_chaingun_face:
+    ld a,1
+    ld (w3d_player_face_special),a
+    ld a,W3D_AUDIO_GETGATLING_HOLD_TICKS
+    ld (w3d_player_face_special_ticks),a
+    xor a
+    ld (w3d_player_face_count+0),a
+    ld (w3d_player_face_count+1),a
+    ld a,W3D_HUD_DIRTY_FACE
+    jp w3d_mark_hud_dirty
+
+; Damage and successful healing call DrawFace immediately in the original,
+; which cancels GOTGATLINGPIC even if its sound is still active.
+w3d_end_chaingun_face:
+    ld a,(w3d_player_face_special)
+    or a
+    ret z
+    xor a
+    ld (w3d_player_face_special),a
+    ld (w3d_player_face_special_ticks),a
+    ld a,W3D_HUD_DIRTY_FACE
     jp w3d_mark_hud_dirty
 
 ; A=ammo increment. Saturates at 99 and marks only an actual HUD change.
@@ -3145,6 +3190,10 @@ w3d_player_face_frame:
 w3d_player_face_count:
     dw 0
 w3d_player_face_tick_phase:
+    db 0
+w3d_player_face_special:
+    db 0
+w3d_player_face_special_ticks:
     db 0
 
 w3d_player_ammo:

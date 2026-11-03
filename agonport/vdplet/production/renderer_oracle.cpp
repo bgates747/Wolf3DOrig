@@ -80,7 +80,7 @@ void install_assets(const std::vector<uint8_t> &map) {
     }
     buffers[fixture::kHudBase + 98].push_back(
         texture(fixture::kHudBase + 98));
-    for (uint16_t chunk = 103; chunk <= 142; ++chunk) {
+    for (uint16_t chunk = 103; chunk <= 143; ++chunk) {
         buffers[fixture::kHudBase + chunk].push_back(
             texture(static_cast<uint16_t>(fixture::kHudBase + chunk)));
     }
@@ -254,7 +254,9 @@ void render_hud(std::vector<uint8_t> &frame,
     draw_hud_number(frame, 112, 16, 1, spec.lives);
     const uint16_t face = spec.health == 0
         ? 142
-        : static_cast<uint16_t>(121 + ((100 - spec.health) / 16) * 3 + spec.face);
+        : spec.face == 3
+            ? 143
+            : static_cast<uint16_t>(121 + ((100 - spec.health) / 16) * 3 + spec.face);
     draw_hud_pic(frame, face, 136, 204);
     draw_hud_number(frame, 168, 16, 3, spec.health);
     draw_hud_number(frame, 216, 16, 2, spec.ammo);

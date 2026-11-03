@@ -53,10 +53,15 @@ of the original 70 Hz `tics`, the strict `facecount > US_RndT()` comparison,
 the source's second-draw frame selection and 3-to-1 fold, and the same shared
 random stream used by gameplay. `gamestate.faceframe` is persisted in the
 reserved save scalar tail; PlayLoop-local count/phase state resets per attempt.
-The one intentional difference is the short original freeze while
-`GETGATLINGSND` remains active: buffered VDP audio is fire-and-forget and has
-no completion query. Oryx generation 156 passes 513 player-combat/face checks,
-10 transactional save cases, and the byte-exact full/dirty serializer.
+Follow-up correction, 2026-11-03: the packaged `GOTGATLINGPIC` art was never
+selected. Every chaingun pickup now publishes a dedicated face sentinel and
+freezes ordinary face evolution for the generated 14 fixed ticks covering the
+actual 454 ms resident `GETGATLINGSND` sample. The special presentation is
+cancelled immediately by damage or successful healing and is deliberately not
+save-persistent, matching the source's PlayLoop-local `gotgatgun`. Oryx
+generation 159 passes 528 player-combat/face checks, 32 pickup cases, and the
+byte-exact full/dirty serializer; the four-scenario production renderer is
+pixel-identical to its standalone oracle.
 
 ### A1. Pushwalls and secret discovery — TODO 11
 
