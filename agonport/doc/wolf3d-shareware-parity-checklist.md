@@ -206,6 +206,11 @@ and return to the shell.  Preserve clean Escape at every wait boundary.
 Acceptance: direct state/lifecycle tests plus staged boss-exit-to-shell visual
 review.  Paid-episode death cameras/endings are explicitly out of scope.
 
+Status 2026-11-03: implementation is complete. The BJ run/jump state graph,
+E1L9 exit, total-time/eight-floor averages, shareware ending, high-score
+handoff, and shell return pass the 5/5 direct victory target. The only open
+gate is staged visual acceptance of the complete E1L9 sequence.
+
 ### A4. High-score table and entry — TODO 7
 
 Original oracle: `WL_INTER.C::DrawHighScores` and `CheckHighScore`, and
@@ -220,6 +225,11 @@ must fail to the original defaults without threatening MOS/file-system state.
 Acceptance: ordering/tie/no-qualification boundaries, name editing, file
 round-trip/corruption recovery, game-over and victory integration, and visual
 review.
+
+Status 2026-11-03: implementation is complete. The seven-row table, ordering,
+name editor, timed non-qualifying path, game-over/victory handoffs, and
+transactional 482-byte persistence image pass 62/62 direct checks. The only
+open gate is visual acceptance of qualifying and non-qualifying flows.
 
 ### A5. In-game control panel, pause, and original key flow — TODO 14
 
@@ -256,6 +266,13 @@ application backends assemble. These quick keys and Pause are required
 behavior, not optional DOS hardware configuration; TODO 14 now retains only
 the batched visual/input acceptance gate.
 
+Status 2026-11-03: the latest production shell passes 581/581 checks, the
+physical-keymap/player-combat target passes 492/492, and callback/death passes
+228/228. The open acceptance gate is one visual/input pass through Pause,
+pages, save/load, End Game, and Quit. One presentation discrepancy remains
+promoted under A10: remembered-slot F8/F9 use the correct state and I/O paths,
+but do not yet reproduce the original transient quick-save/quick-load windows.
+
 ### A6. Save/load game — TODO 15
 
 Original oracle: `WL_MAIN.C::SaveTheGame` / `LoadTheGame` and
@@ -273,6 +290,10 @@ Acceptance: round trips during movement/combat/door/pushwall states, all ten
 slots, overwrite/cancel, corrupt/version mismatch, and continuation through a
 floor transition and death.
 
+Status 2026-11-03: implementation is complete and all ten transactional
+direct-target cases pass. The remaining gate is staged continuation review
+during combat, doors, pushwalls, floor transitions, and death.
+
 ### A7. Remaining control-panel pages — TODO 16
 
 Original oracle: the main-menu tables and `CP_Sound`, `CP_ChangeView`,
@@ -287,6 +308,11 @@ use the existing viewport hooks and must preserve renderer geometry.
 Acceptance: navigation regression for every row/cancel route and visual review
 of each reachable page.
 
+Status 2026-11-03: implementation is complete. The exact ten-row order,
+startup/in-game substitutions, local cancellation, Sound, Control, fixed-view
+disclosure, Read This, View Scores/End Game, and Back to Game participate in
+the 581-check shell target. The remaining gate is visual review of every page.
+
 ### A8. Attract loop and recorded demos — TODO 17
 
 Original oracle: `WL_MAIN.C::DemoLoop` and `PlayDemo`.
@@ -299,6 +325,11 @@ game state.
 Acceptance: timer/input tests, deterministic demo completion/abort, and a full
 visual cycle.
 
+Status 2026-11-03: implementation is complete. Archive extraction and stream
+identity are deterministic; the direct demo state target passes 21/21 and the
+analog/cadence target passes 48/48. The remaining gate is a visual cycle
+through all four demos plus local input abort and control-panel return.
+
 ### A9. Music — TODO 6
 
 Original oracle: `WL_PLAY.C::StartMusic`, `WL_MENU.C::StartCPMusic`, the
@@ -310,6 +341,13 @@ on music, and lifecycle transitions must not leak a previous song.
 
 Acceptance: format/conversion tests, assignment table tests, lifecycle stress,
 simultaneous SFX/music hardware review, and clean teardown/relaunch.
+
+Status 2026-11-03: implementation is complete. The nonblocking nine-voice
+sequencer and every Episode 1 assignment pass 48/48 direct checks; integrated
+shell lifecycle and independent preference coverage are green. The remaining
+gate is audible emulator/hardware review of timbre, mix, transitions, and both
+toggles. OPL2 timbre is intentionally approximated by native oscillators and
+is not an unfinished exact-emulation requirement.
 
 ### A10. Residual parity sweep — TODO 18
 
@@ -393,6 +431,26 @@ strict gun targeting cone remains the hardware-accepted 16 projected pixels,
 versus the source's 25 pixels at the fixed 256-pixel viewport. These are
 deliberate feel corrections with directed boundary regressions, not unfinished
 shareware-parity work.
+
+Exact open discrepancy ledger, 2026-11-03:
+
+1. `WL_DRAW.C::DrawScaleds` permanently sets `obj->active` when the actor's
+   tile, or an unblocked one of its eight neighboring tiles, is renderer
+   visible. The write-only VDP port currently retains `ACTIVE_NO` and schedules
+   it only while its area is connected. This is correct before first sight but
+   can incorrectly put a previously rendered actor back to sleep after area
+   disconnection. Sound acquisition or `CheckSight` is not an exact substitute:
+   either can wake an actor which the player-facing renderer never saw. Close
+   this with render-cadence authoritative visibility promotion, a conservative
+   documented approximation, or an explicit callback ABI extension; pin both
+   unseen and post-visible disconnected cases and measure the fixed-step cost.
+2. Remembered-slot F8 writes the correct slot but omits the original
+   `Message("Saving...")`. Remembered-slot F9 confirms the correct slot but
+   redraws the full ten-slot page with `Load this game? (Y or N)` instead of
+   `Confirm("Load Game called\n\"<slot name>\"?")`. Preserve the already-green
+   fallback/full-menu and I/O semantics while restoring these transient
+   surfaces. Dynamic save names may use the same honest Agon text renderer as
+   the full slot page; no fictitious fixed bitmap name is acceptable.
 
 Debug cheats, paid-episode content, obsolete DOS copy protection, VGA palette
 timing exactness, and unavailable hardware configuration choices are not

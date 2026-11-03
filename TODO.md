@@ -59,7 +59,10 @@ rebuild. Direct production evidence passes 559/559 shell, 492/492
 physical-keymap/player-combat, and 228/228 callback/death checks.
 Remaining close gate: one batched visual pause/resume/page/save/load/end-game/
 quit review, including callback-time F keys and F8/F9 reuse of the selected
-slot.
+slot. Automated presentation residual: remembered-slot F8 must show the
+original `Saving...` message, and F9 must identify the selected save by name in
+the original `Load Game called` confirmation instead of redrawing the complete
+slot page with a generic question.
 
 [ ] 15. Implement the ten-slot save/load menu and a versioned Agon save format
 which reconstructs VDP state from complete authoritative eZ80 simulation state
@@ -196,6 +199,15 @@ Difficulty, and cancelling Difficulty returns through Episode selection and
 the warning again. F7's source `WindowH=160` prompt placement is now covered
 separately. Oryx generation 175 passes all 581/581 production-shell checks;
 both application backends rebuild.
+Two source-linked behavior gaps remain explicitly promoted. First,
+`WL_DRAW.C::DrawScaleds` permanently promotes an actor after its tile (or an
+open neighboring tile) is renderer-visible; the write-only port currently
+uses connected-area scheduling without that post-visibility persistence.
+Second, remembered-slot F8/F9 have correct state and I/O semantics but retain
+the transient presentation difference recorded in item 14. Any actor fix must
+distinguish player-facing renderer visibility from sound or actor-facing
+`CheckSight`, and must include timing evidence before entering the fixed-step
+or render-submission path.
 
 # Phase B — Agon identity and legal presentation
 
