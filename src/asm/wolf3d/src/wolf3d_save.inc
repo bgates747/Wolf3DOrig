@@ -82,10 +82,11 @@ W3D_SAVE_S_WEAPON_FRAME:      equ 48
 W3D_SAVE_S_WEAPON_SHAPE:      equ 49      ; 2
 W3D_SAVE_S_DOOR_PHASE:        equ 51
 W3D_SAVE_S_OLD_SCORE:         equ 53      ; 4, level-entry death checkpoint
+W3D_SAVE_S_FACE_FRAME:        equ 57      ; original gamestate.faceframe
 
 W3D_SAVE_COPY_RECORD_SIZE:    equ 9
-W3D_SAVE_ENCODE_COPY_COUNT:   equ 44
-W3D_SAVE_DECODE_COPY_COUNT:   equ 44
+W3D_SAVE_ENCODE_COPY_COUNT:   equ 45
+W3D_SAVE_DECODE_COPY_COUNT:   equ 45
 
 ; Return HL -> complete encoded image and BC=file size.  The staging buffer is
 ; stable until the next encode/decode operation.
@@ -333,6 +334,9 @@ w3d_save_validate_semantics:
     cp W3D_PLAYER_ATTACK_FRAME_COUNT+1
     jp nc,@scalar
     ld a,(w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_S_DOOR_PHASE)
+    cp 3
+    jp nc,@scalar
+    ld a,(w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_S_FACE_FRAME)
     cp 3
     jp nc,@scalar
     ld hl,0
@@ -854,6 +858,7 @@ w3d_save_encode_copies:
     dl w3d_player_weapon_shape,w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_S_WEAPON_SHAPE,2
     dl w3d_door_motion_phase,w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_S_DOOR_PHASE,1
     dl w3d_death_oldscore,w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_S_OLD_SCORE,4
+    dl w3d_player_face_frame,w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_S_FACE_FRAME,1
     dl w3d_level_ratios,w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_PAYLOAD_RATIOS,W3D_SAVE_RATIO_SIZE
     dl w3d_runtime_tilemap,w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_PAYLOAD_TILEMAP,W3D_SAVE_TILEMAP_SIZE
     dl w3d_runtime_area_map,w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_PAYLOAD_AREA,W3D_SAVE_AREA_SIZE
@@ -903,6 +908,7 @@ w3d_save_decode_copies:
     dl w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_S_WEAPON_SHAPE,w3d_player_weapon_shape,2
     dl w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_S_DOOR_PHASE,w3d_door_motion_phase,1
     dl w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_S_OLD_SCORE,w3d_death_oldscore,4
+    dl w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_S_FACE_FRAME,w3d_player_face_frame,1
     dl w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_PAYLOAD_RATIOS,w3d_level_ratios,W3D_SAVE_RATIO_SIZE
     dl w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_PAYLOAD_TILEMAP,w3d_runtime_tilemap,W3D_SAVE_TILEMAP_SIZE
     dl w3d_save_file_buffer+W3D_SAVE_HEADER_SIZE+W3D_SAVE_PAYLOAD_AREA,w3d_runtime_area_map,W3D_SAVE_AREA_SIZE

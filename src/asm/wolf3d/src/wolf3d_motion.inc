@@ -87,6 +87,7 @@ W3D_HUD_DIRTY_KEYS:             equ 00000100b
 W3D_HUD_DIRTY_WEAPON:           equ 00001000b
 W3D_HUD_DIRTY_SCORE:            equ 00010000b
 W3D_HUD_DIRTY_LIVES:            equ 00100000b
+W3D_HUD_DIRTY_FACE:             equ 01000000b
 
     include "wolf3d_pushwall.inc"
 
@@ -113,6 +114,8 @@ w3d_initialize_motion_state:
     ld (w3d_player_next_extra+3),a
     ld a,100
     ld (w3d_player_health),a
+    xor a
+    ld (w3d_player_face_frame),a
     ld a,8
     ld (w3d_player_ammo),a
     ld a,1
@@ -213,6 +216,9 @@ w3d_seed_level_world_state:
     ld (w3d_player_key_flags),a
     ld (w3d_player_thrustspeed+0),a
     ld (w3d_player_thrustspeed+1),a
+    ld (w3d_player_face_count+0),a
+    ld (w3d_player_face_count+1),a
+    ld (w3d_player_face_tick_phase),a
     ld (w3d_player_dead),a
     ld (w3d_level_completion),a
     ld a,W3D_SLOT_NONE
@@ -309,7 +315,7 @@ w3d_mark_full_level_dirty:
     djnz @actor_loop
 
 @player:
-    ld a,W3D_HUD_DIRTY_HEALTH|W3D_HUD_DIRTY_AMMO|W3D_HUD_DIRTY_KEYS|W3D_HUD_DIRTY_WEAPON|W3D_HUD_DIRTY_SCORE|W3D_HUD_DIRTY_LIVES
+    ld a,W3D_HUD_DIRTY_HEALTH|W3D_HUD_DIRTY_AMMO|W3D_HUD_DIRTY_KEYS|W3D_HUD_DIRTY_WEAPON|W3D_HUD_DIRTY_SCORE|W3D_HUD_DIRTY_LIVES|W3D_HUD_DIRTY_FACE
     ld (w3d_hud_dirty),a
     ld a,1
     ld (w3d_pushwall_dirty),a
@@ -522,6 +528,7 @@ w3d_simulate_player_step:
     call w3d_intermission_tick_level_time
     call w3d_simulate_doors
     call w3d_simulate_pushwall
+    call w3d_update_player_face
     call w3d_sample_controls
     ld a,(w3d_demo_active)
     or a
@@ -643,6 +650,66 @@ w3d_update_player_thrustspeed:
     ld (w3d_player_thrustspeed+0),a
     ld a,h
     ld (w3d_player_thrustspeed+1),a
+    ret
+
+; Reproduce WL_AGENT.C UpdateFace in the fixed 30 Hz simulation. Original
+; gameplay adds the current 70 Hz tic count, compares it strictly with one
+; US_RndT draw, then derives the next of the three ordinary face frames from
+; a second draw. A 2,2,3 cadence is exactly seven original tics per three
+; updates; both draws remain in the authoritative gameplay random stream.
+;
+; DOS temporarily freezes the face while GETGATLINGSND is playing. Buffered
+; VDP audio is deliberately fire-and-forget and exposes no completion state,
+; so that short cosmetic hold is the one part we cannot observe here.
+w3d_update_player_face:
+    ld a,(w3d_player_face_tick_phase)
+    cp 2
+    jr z,@three_tics
+    inc a
+    ld (w3d_player_face_tick_phase),a
+    ld de,2
+    jr @add_tics
+@three_tics:
+    xor a
+    ld (w3d_player_face_tick_phase),a
+    ld de,3
+@add_tics:
+    ld hl,0
+    ld a,(w3d_player_face_count+0)
+    ld l,a
+    ld a,(w3d_player_face_count+1)
+    ld h,a
+    add.s hl,de
+    ld a,l
+    ld (w3d_player_face_count+0),a
+    ld a,h
+    ld (w3d_player_face_count+1),a
+    call w3d_random_byte
+; Strict uint16 facecount > uint8 random threshold.
+    ld b,a
+    ld a,(w3d_player_face_count+1)
+    or a
+    jr nz,@change
+    ld a,(w3d_player_face_count+0)
+    cp b
+    ret c
+    ret z
+@change:
+    call w3d_random_byte
+    and 0c0h
+    rlca
+    rlca
+    cp 3
+    jr nz,@store_face
+    ld a,1
+@store_face:
+    ld (w3d_player_face_frame),a
+    xor a
+    ld (w3d_player_face_count+0),a
+    ld (w3d_player_face_count+1),a
+    ld a,(w3d_hud_dirty)
+    or W3D_HUD_DIRTY_FACE
+    ld (w3d_hud_dirty),a
     ret
 
 ; DE is a signed turn delta; the persistent wire angle remains 0..359.
@@ -3070,6 +3137,15 @@ w3d_requested_difficulty:
 
 w3d_player_health:
     db 100
+
+; Original gamestate.faceframe persists in save games. facecount and the
+; 70-to-30 Hz conversion phase are PlayLoop transients reset per attempt.
+w3d_player_face_frame:
+    db 0
+w3d_player_face_count:
+    dw 0
+w3d_player_face_tick_phase:
+    db 0
 
 w3d_player_ammo:
     db 8

@@ -524,7 +524,7 @@ w3d_vdplet_batch_append_hud:
     ld a,(w3d_level_requested_index)
     inc a
     ld (w3d_vdplet_hud_payload+8),a
-    xor a
+    ld a,(w3d_player_face_frame)
     ld (w3d_vdplet_hud_payload+9),a
     ld a,(w3d_player_lives)
     ld (w3d_vdplet_hud_payload+10),a

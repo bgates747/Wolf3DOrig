@@ -81,7 +81,8 @@ phase_timeline:     equ 2
 phase_target:       equ 3
 phase_damage:       equ 4
 phase_inventory:    equ 5
-phase_count:        equ 5
+phase_face:         equ 6
+phase_count:        equ 6
 
 reason_scalar:      equ 1
 reason_state:       equ 2
@@ -122,6 +123,7 @@ run_tests:
     call test_damage_death_drops
     call test_weapon_selection
     call test_player_audio_requests
+    call test_face_timeline
     call write_result
     call print_report
     ret
@@ -577,6 +579,87 @@ test_player_audio_requests:
     xor a
     call w3d_player_publish_attack_sound
     CHECK_MEM8 test_audio_count+0,4,reason_audio
+    ret
+
+; ---------------------------------------------------------------------------
+; 6. Original UpdateFace random/cadence contract and strict threshold.
+; ---------------------------------------------------------------------------
+
+test_face_timeline:
+    ld a,phase_face
+    ld (test_phase),a
+    call prepare_test_world
+
+; Starting at table index 1 gives thresholds 109,220,222: no transition,
+; while the exact 2,2,3 tic cadence accumulates 2,4,7.
+    ld a,1
+    ld (w3d_random_index),a
+    call w3d_update_player_face
+    CHECK_MEM8 w3d_player_face_count+0,2,reason_state
+    CHECK_MEM8 w3d_player_face_tick_phase,1,reason_state
+    CHECK_MEM8 w3d_random_index,2,reason_rng
+    call w3d_update_player_face
+    CHECK_MEM8 w3d_player_face_count+0,4,reason_state
+    CHECK_MEM8 w3d_player_face_tick_phase,2,reason_state
+    CHECK_MEM8 w3d_random_index,3,reason_rng
+    call w3d_update_player_face
+    CHECK_MEM8 w3d_player_face_count+0,7,reason_state
+    CHECK_MEM8 w3d_player_face_tick_phase,0,reason_state
+    CHECK_MEM8 w3d_random_index,4,reason_rng
+
+; The source comparison is strict: 6+2 == table[1] (8) does not change.
+    xor a
+    ld (w3d_random_index),a
+    ld (w3d_player_face_tick_phase),a
+    ld (w3d_hud_dirty),a
+    ld a,6
+    ld (w3d_player_face_count+0),a
+    xor a
+    ld (w3d_player_face_count+1),a
+    ld a,2
+    ld (w3d_player_face_frame),a
+    call w3d_update_player_face
+    CHECK_MEM8 w3d_player_face_count+0,8,reason_state
+    CHECK_MEM8 w3d_player_face_frame,2,reason_state
+    CHECK_MEM8 w3d_random_index,1,reason_rng
+    CHECK_MEM8 w3d_hud_dirty,0,reason_inventory
+
+; 7+2 > table[1] consumes table[2] (109), selects frame 1, resets the
+; counter, and makes the complete HUD record dirty.
+    xor a
+    ld (w3d_random_index),a
+    ld (w3d_player_face_tick_phase),a
+    ld (w3d_hud_dirty),a
+    ld a,7
+    ld (w3d_player_face_count+0),a
+    call w3d_update_player_face
+    CHECK_MEM8 w3d_player_face_count+0,0,reason_state
+    CHECK_MEM8 w3d_player_face_frame,1,reason_state
+    CHECK_MEM8 w3d_random_index,2,reason_rng
+    CHECK_MEM8 w3d_hud_dirty,W3D_HUD_DIRTY_FACE,reason_inventory
+
+; A raw 3 from the high two bits is folded to frame 1 exactly as DOS did.
+    ld a,2
+    ld (w3d_random_index),a
+    xor a
+    ld (w3d_player_face_tick_phase),a
+    ld (w3d_hud_dirty),a
+    ld a,0ffh
+    ld (w3d_player_face_count+0),a
+    call w3d_update_player_face
+    CHECK_MEM8 w3d_player_face_frame,1,reason_state
+    CHECK_MEM8 w3d_random_index,4,reason_rng
+
+; And a high-bit pattern of 2 remains frame 2.
+    ld a,21
+    ld (w3d_random_index),a
+    xor a
+    ld (w3d_player_face_tick_phase),a
+    ld a,0ffh
+    ld (w3d_player_face_count+0),a
+    call w3d_update_player_face
+    CHECK_MEM8 w3d_player_face_frame,2,reason_state
+    CHECK_MEM8 w3d_random_index,23,reason_rng
     ret
 
 ; ---------------------------------------------------------------------------

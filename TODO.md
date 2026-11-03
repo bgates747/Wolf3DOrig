@@ -112,7 +112,13 @@ intermission, and victory transitions, including timbre/mix and both toggles.
 [ ] 18. Perform a source-linked, end-to-end Episode 1 residual parity sweep
 after items 11-17 and 6: scoring, inventory, difficulty, actors, secrets,
 transitions, death/game-over, menus, audio, and ending. Record every intentional
-Agon difference and require emulator plus hardware acceptance.
+Agon difference and require emulator plus hardware acceptance. The sweep has
+already corrected a silently static HUD face: production now reproduces
+`WL_AGENT.C::UpdateFace`, including its shared `US_RndT` consumption, strict
+threshold, three-frame selection, save persistence, and VDPlet wire byte. The
+only known face-specific difference is the original's brief animation hold
+while `GETGATLINGSND` is playing, because fire-and-forget VDP audio exposes no
+completion state.
 
 # Phase B — Agon identity and legal presentation
 

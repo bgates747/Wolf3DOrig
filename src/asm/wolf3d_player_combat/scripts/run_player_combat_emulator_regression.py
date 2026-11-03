@@ -32,6 +32,7 @@ PHASES = {
     3: "target boundaries",
     4: "damage/death/drops",
     5: "weapon selection/input",
+    6: "HUD face random/cadence",
 }
 
 REASONS = {

@@ -49,6 +49,7 @@ REASON_TRANSACTION: equ 8
 REASON_SLOT_IO:     equ 9
 REASON_SLOT_META:   equ 10
 REASON_OLD_SCORE:   equ 11
+REASON_FACE:        equ 12
 
 start:
     push af
@@ -111,6 +112,8 @@ prepare_image:
 prepare_state:
     ld a,73
     ld (w3d_player_health),a
+    ld a,2
+    ld (w3d_player_face_frame),a
     ld a,078h
     ld (w3d_player_score+0),a
     ld a,056h
@@ -137,6 +140,7 @@ clear_round_trip_state:
     ld a,1
     ld (w3d_player_health),a
     xor a
+    ld (w3d_player_face_frame),a
     ld (w3d_player_score+0),a
     ld (w3d_player_score+1),a
     ld (w3d_player_score+2),a
@@ -204,6 +208,10 @@ case_round_trip:
     ld a,(w3d_death_oldscore+3)
     ld b,044h
     ld c,REASON_OLD_SCORE
+    call assert_a
+    ld a,(w3d_player_face_frame)
+    ld b,2
+    ld c,REASON_FACE
     call assert_a
     ld a,(w3d_runtime_tilemap+97)
     ld b,02ah
@@ -477,6 +485,7 @@ w3d_audio_request_tile: xor a
     ret
 w3d_elapsed_ticks: dl 0
 w3d_exit_requested: db 0
+w3d_gameplay_panel_request: db 0
 w3d_level_requested_index: db 0
 w3d_death_oldscore: ds 4
 

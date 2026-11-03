@@ -24,7 +24,8 @@ recorded in the dated development logs:
 - fixed-step player movement, collision/sliding, door wells, keyed doors,
   elevators, door motion/auto-close, blocking decorations, and pickups;
 - authoritative health, ammo, keys, weapons, score, extra lives, treasure,
-  HUD, attempt death/respawn, game-over placeholder, and red fizzle;
+  HUD (including the original random three-frame face animation), attempt
+  death/respawn, game-over placeholder, and red fizzle;
 - guards, officers, mutants, SS, dogs, Episode 1 ghosts, Hans Grosse, their
   original state timing, awareness, chase, attacks, damage, drops, death,
   sounds, and relevant area/door interaction;
@@ -44,6 +45,18 @@ and scoring* is narrower and is promoted separately below.
 ## Phase A: exact remaining original shareware behavior
 
 Items are ordered by implementation priority, not by cosmetic visibility.
+
+Residual correction, 2026-11-03: the audit found that the renderer accepted a
+HUD face-frame byte but the eZ80 serializer always sent zero. The fixed 30 Hz
+simulation now implements `WL_AGENT.C::UpdateFace` with an exact 2/2/3 mapping
+of the original 70 Hz `tics`, the strict `facecount > US_RndT()` comparison,
+the source's second-draw frame selection and 3-to-1 fold, and the same shared
+random stream used by gameplay. `gamestate.faceframe` is persisted in the
+reserved save scalar tail; PlayLoop-local count/phase state resets per attempt.
+The one intentional difference is the short original freeze while
+`GETGATLINGSND` remains active: buffered VDP audio is fire-and-forget and has
+no completion query. Oryx generation 156 passes 513 player-combat/face checks,
+10 transactional save cases, and the byte-exact full/dirty serializer.
 
 ### A1. Pushwalls and secret discovery — TODO 11
 

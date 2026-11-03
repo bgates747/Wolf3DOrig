@@ -121,6 +121,8 @@ fixture_run:
     ld (w3d_player_weapon_shape+1),a
     ld a,73
     ld (w3d_player_health),a
+    ld a,2
+    ld (w3d_player_face_frame),a
 
     call w3d_vdplet_batch_accept_failure
     jp c,fixture_lifecycle_failed
@@ -309,6 +311,8 @@ fixture_seed_world:
     call w3d_initialize_actor_state
     ld a,100
     ld (w3d_player_health),a
+    xor a
+    ld (w3d_player_face_frame),a
     ld a,8
     ld (w3d_player_ammo),a
     ld a,1
@@ -367,6 +371,7 @@ w3d_player_dirty:                db 0
 w3d_world_dirty:                 db 0
 w3d_player_key_flags:            db 0
 w3d_player_health:               db 100
+w3d_player_face_frame:           db 0
 w3d_player_ammo:                 db 8
 w3d_player_weapon:               db 1
 w3d_player_lives:                db 3

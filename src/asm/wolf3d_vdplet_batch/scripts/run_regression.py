@@ -17,12 +17,19 @@ import time
 
 HERE = Path(__file__).resolve().parent
 PROJECT = HERE.parent
-REPO = HERE.parents[3]
-SOURCE = REPO / "src/asm/wolf3d/src"
-ASSEMBLER = REPO / "src/asm/wolf3d/tgt/.tools/ez80asm"
-FAB = REPO / "agonport/emulator/fab-agon-emulator"
-MOS = REPO / "agonport/emulator/mos_console8.bin"
-VDP = REPO / "agonport/emulator/vdp_stock.so"
+_installed_root = HERE.parents[3]
+STAGED_ROOT = Path(os.environ.get("W3D_STAGED_ROOT", _installed_root))
+RUNTIME_ROOT = Path(os.environ.get("W3D_RUNTIME_ROOT", _installed_root))
+SOURCE = STAGED_ROOT / "src/asm/wolf3d/src"
+ASSEMBLER = Path(
+    os.environ.get(
+        "W3D_EZ80ASM",
+        STAGED_ROOT / "src/asm/wolf3d/tgt/.tools/ez80asm",
+    )
+)
+FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
+MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
+VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
 
 
 def run(command: list[str], *, cwd: Path | None = None) -> None:
@@ -126,7 +133,7 @@ def validate_outputs(app: Path) -> None:
         raise AssertionError("actor removal not serialized")
     if records[4][1][:2] != b"\x01\x00" or records[4][1][4:6] != b"\xff\xff":
         raise AssertionError("static removal not serialized")
-    if records[5][1][0] != 73:
+    if records[5][1][0] != 73 or records[5][1][9] != 2:
         raise AssertionError("complete HUD value not serialized")
     if records[6][1] != b"\xff\xff":
         raise AssertionError("view-weapon removal not serialized")
