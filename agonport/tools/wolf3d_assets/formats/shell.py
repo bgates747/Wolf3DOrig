@@ -110,6 +110,8 @@ SHELL_COMPOSITE_BUFFER_IDS = {
     "current_game_notice": 0x4359,
     "saving_notice": 0x435A,
     "quick_load_notice": 0x435B,
+    "cheater_notice": 0x435C,
+    "keen_notice": 0x435D,
 }
 
 # Original WL_MENU.H palette indices.
@@ -181,6 +183,21 @@ CURRENT_GAME_MESSAGE = (
 )
 
 SAVING_MESSAGE = "Saving..."
+
+CHEATER_MESSAGE = (
+    "You now have 100% Health,\n"
+    "99 Ammo and both Keys!\n\n"
+    "Note that you have basically\n"
+    "eliminated your chances of\n"
+    "getting a high score!"
+)
+
+KEEN_MESSAGE = (
+    "Commander Keen is also\n"
+    "available from Apogee, but\n"
+    "then, you already know\n"
+    "that - right, Cheatmeister?!"
+)
 
 QUIT_MESSAGES = (
     "Dost thou wish to\nleave with such hasty\nabandon?",

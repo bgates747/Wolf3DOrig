@@ -19,7 +19,10 @@ registered-build `NonShareware` warning, copy protection, episode-qualified
 high-score labels, total-time verification code, and paid-episode digitized
 sound table are not missing shareware behavior. Developer-only `goobers`
 debugging, demo recording, profiling, and held-M jukebox entry are likewise
-outside the ordinary shipped-game contract.
+outside the ordinary shipped-game contract. This exclusion does **not** cover
+the unconditional M+L+I inventory/score/time chord or B+A+T Commander Keen
+message in `WL_PLAY.C::CheckKeys`; those are reachable in an ordinary WL1
+process and remain parity requirements.
 
 ## Audit baseline: behavior already present
 
@@ -431,6 +434,19 @@ unavailable/fixed rather than being encoded as fictitious choices. Oryx
 generation 170 passes 30/30 direct eZ80 checks, including all flag combinations
 and real MOS save/load plus corruption, truncation, and trailing-data rejection.
 
+Shipped-key-chord correction, 2026-11-03: the residual audit separated two
+ordinary `WL_PLAY.C::CheckKeys` chords from the command-line-gated `goobers`
+debug block. M+L+I now grants health 100, ammo 99, both keys, chaingun, zero
+score, and the source's exact ten-minute level-time penalty before presenting
+the original cheater message. B+A+T presents the original Commander Keen
+message without changing player state. Both use their physical MOS key-map
+locations, require a fresh modal acknowledgment, and remain disabled during
+recorded-demo playback just as the source's early return requires. Oryx
+generation 198 passes 578/578 direct player/input checks and 699/699 direct
+shell checks. The fixture mailbox now records the first failing assertion and
+logical subcase, after that instrumentation identified and eliminated a
+demo-mode leak between otherwise independent test cases.
+
 Quit-confirmation correction, 2026-11-03: the otherwise functional control
 panel bypassed original `CP_Quit` and returned directly to MOS. The complete
 nine-message source table is now generated as reusable shell assets, selection
@@ -573,9 +589,11 @@ UPLOAD guard `DEATHSCREAM3SND` remains native but intentionally unrequested.
 This changes requirement metadata, not PCM, buffer IDs, rates, priorities, or
 playback behavior.
 
-Debug cheats, paid-episode content, obsolete DOS copy protection, VGA palette
-timing exactness, and unavailable hardware configuration choices are not
-required unless separately promoted.
+Command-line-gated `goobers` debug keys, paid-episode content, obsolete DOS
+copy protection, VGA palette timing exactness, and unavailable hardware
+configuration choices are not required unless separately promoted. The
+ordinary shipped M+L+I and B+A+T chords are explicitly not part of that debug
+exclusion.
 
 ## Phase B: Agon identity and legal presentation
 

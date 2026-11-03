@@ -505,6 +505,10 @@ w3d_shell_pause_quick:
     jp z,@quick_save
     cp w3d_panel_request_quick_load
     jp z,@quick_load
+    cp w3d_panel_request_cheater
+    jp z,@cheater
+    cp w3d_panel_request_keen
+    jp z,@keen
 ; F10's source quick path temporarily sets WindowH=160, so center the same
 ; prompt twenty pixels higher than the ordinary control-panel version.
     ld a,1
@@ -528,6 +532,20 @@ w3d_shell_pause_quick:
 @control:
     ld hl,W3D_SHELL_CONTROL_PAGE_BUFFER
     call w3d_shell_information_page
+    jp @resume
+@cheater:
+    ld hl,W3D_SHELL_CHEATER_NOTICE_BUFFER
+    ld bc,W3D_SHELL_CHEATER_NOTICE_X
+    ld de,W3D_SHELL_CHEATER_NOTICE_Y
+    call w3d_shell_plot_at
+    call w3d_shell_wait_any_local_press
+    jp @resume
+@keen:
+    ld hl,W3D_SHELL_KEEN_NOTICE_BUFFER
+    ld bc,W3D_SHELL_KEEN_NOTICE_X
+    ld de,W3D_SHELL_KEEN_NOTICE_Y
+    call w3d_shell_plot_at
+    call w3d_shell_wait_any_local_press
     jp @resume
 @save:
     ld a,1

@@ -260,6 +260,15 @@ before PG13 and continues into the title. DOS-only memory/device overlays remain
 at their linked defaults as an explicit platform substitution. Host contracts,
 both backends, and the corrected 683/683 direct shell rerun pass; the same
 batched visual startup review remains the close gate.
+The current residual pass corrected one stale scope decision in this ledger:
+`WL_PLAY.C::CheckKeys` tests M+L+I and B+A+T unconditionally in ordinary WL1,
+outside the separately command-line-gated `goobers` block. The implementation
+and deterministic direct-target proof for those two shipped chords are
+complete: M+L+I reproduces the source inventory, score, ten-minute penalty,
+and message; B+A+T reproduces its separate Commander Keen message; both use a
+fresh modal acknowledgment and are suppressed during demo playback. Oryx
+generation 198 passes 578/578 player/input and 699/699 shell checks. The
+command-line-gated `goobers` block itself remains outside the player contract.
 
 # Phase B — Agon identity and legal presentation
 

@@ -23,10 +23,12 @@ from formats.article import (  # noqa: E402
 from formats.shell import (  # noqa: E402
     BKGDCOLOR,
     BORDCOLOR,
+    CHEATER_MESSAGE,
     COMPOSED_DEACTIVE_RGB,
     CURRENT_GAME_MESSAGE,
     END_GAME_MESSAGE,
     EPISODE_UNAVAILABLE_MESSAGE,
+    KEEN_MESSAGE,
     QUIT_MESSAGES,
     SAVING_MESSAGE,
     SHELL_CHUNKS,
@@ -97,6 +99,8 @@ EXPECTED_COMPOSITES = {
     "current_game_notice": (0x4359, 206, 50, 58, 76),
     "saving_notice": (0x435A, 88, 24, 117, 89),
     "quick_load_notice": (0x435B, 284, 37, 19, 82),
+    "cheater_notice": (0x435C, 266, 89, 28, 56),
+    "keen_notice": (0x435D, 274, 63, 24, 69),
 }
 
 

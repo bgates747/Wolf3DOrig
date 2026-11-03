@@ -74,6 +74,8 @@ w3d_panel_request_quick_save: equ 8
 w3d_panel_request_quick_load: equ 9
 w3d_panel_request_quit:       equ 10
 w3d_panel_request_pause:      equ 11
+w3d_panel_request_cheater:    equ 12
+w3d_panel_request_keen:       equ 13
 
 ; Motion owns the recorded-demo hooks it calls. Keeping the generated streams
 ; and state machine here also preserves every standalone direct fixture that
@@ -458,6 +460,87 @@ w3d_reset_keys:
     djnz @loop
     ret
 
+; WL_PLAY.C CheckKeys exposes two ordinary shareware chords independently of
+; the command-line-gated `goobers` debug keys. M+L+I grants the original
+; inventory while zeroing score and adding exactly ten minutes; B+A+T shows
+; the Commander Keen easter egg without changing game state. Demo playback
+; bypasses both, matching CheckKeys' early demoplayback return. A=1/NZ means a
+; modal request was latched; A=0/Z means ordinary simulation may continue.
+w3d_check_shipped_key_chords:
+    ld a,(w3d_demo_active)
+    or a
+    jp nz,@none
+    ld ix,w3d_keyboard_masks
+    bit 5,(ix+12)                   ; M
+    jp z,@keen
+    bit 6,(ix+10)                   ; L
+    jp z,@keen
+    bit 5,(ix+4)                    ; I
+    jp z,@keen
+
+; Preserve the source ordering: health/ammo/keys/score/time first, then
+; GiveWeapon(wp_chaingun). Ammo is already 99, so GiveAmmo(6) is a no-op; only
+; a newly acquired chaingun changes the three weapon fields.
+    ld a,100
+    ld (w3d_player_health),a
+    ld a,99
+    ld (w3d_player_ammo),a
+    ld a,3
+    ld (w3d_player_key_flags),a
+    xor a
+    ld (w3d_player_score+0),a
+    ld (w3d_player_score+1),a
+    ld (w3d_player_score+2),a
+    ld (w3d_player_score+3),a
+
+; TimeCount += 42000 at 70 Hz is exactly 600 seconds. The translated clock is
+; minutes/seconds/30-Hz subticks; LevelCompleted clamps totals above 99:00, so
+; reaching or crossing minute 99 must clear the lower fields as well.
+    ld a,(w3d_intermission_level_minutes)
+    add a,10
+    cp 99
+    jr c,@store_minutes
+    ld a,99
+    ld (w3d_intermission_level_minutes),a
+    xor a
+    ld (w3d_intermission_level_seconds),a
+    ld (w3d_intermission_level_subticks),a
+    jr @weapon
+@store_minutes:
+    ld (w3d_intermission_level_minutes),a
+
+@weapon:
+    ld a,(w3d_player_best_weapon)
+    cp 3                              ; wp_chaingun
+    jr nc,@mark_cheater_hud
+    ld a,3                            ; wp_chaingun
+    call w3d_set_player_weapon
+@mark_cheater_hud:
+    ld a,W3D_HUD_DIRTY_HEALTH|W3D_HUD_DIRTY_AMMO|W3D_HUD_DIRTY_KEYS|W3D_HUD_DIRTY_WEAPON|W3D_HUD_DIRTY_SCORE
+    call w3d_mark_hud_dirty
+    ld b,w3d_panel_request_cheater
+    jr @request
+
+@keen:
+    bit 4,(ix+12)                   ; B
+    jr z,@none
+    bit 1,(ix+8)                    ; A
+    jr z,@none
+    bit 3,(ix+4)                    ; T
+    jr z,@none
+    ld b,w3d_panel_request_keen
+
+@request:
+    ld a,b
+    ld (w3d_gameplay_panel_request),a
+    ld a,1
+    ld (w3d_exit_requested),a
+    or a
+    ret
+@none:
+    xor a
+    ret
+
 ; Add the latest full 24-bit MOS-clock delta and clamp exceptional stalls.
 w3d_accumulate_simulation_time:
     ld hl,(w3d_elapsed_ticks)
@@ -575,6 +658,9 @@ w3d_simulate_player_step:
 ; later fixed quantum until the foreground drains the outstanding render and
 ; routes the level or victory; this also protects ordinary elevator exits.
     ld a,(w3d_level_completion)
+    or a
+    ret nz
+    call w3d_check_shipped_key_chords
     or a
     ret nz
     call w3d_intermission_tick_level_time

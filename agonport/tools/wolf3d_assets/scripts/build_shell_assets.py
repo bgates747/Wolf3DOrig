@@ -28,6 +28,7 @@ from formats.shell import (  # noqa: E402
     BKGDCOLOR,
     BORD2COLOR,
     BORDCOLOR,
+    CHEATER_MESSAGE,
     COMPOSED_DEACTIVE_RGB,
     CONTROL_PAGE_LINES,
     CURRENT_GAME_MESSAGE,
@@ -39,6 +40,7 @@ from formats.shell import (  # noqa: E402
     EPISODE_LABELS,
     EPISODE_UNAVAILABLE_MESSAGE,
     HIGHLIGHT,
+    KEEN_MESSAGE,
     MAIN_LABELS,
     ORDER_HIGHLIGHT,
     ORDER_NORMAL,
@@ -477,6 +479,8 @@ def _compose_images(
         ),
         "saving_notice": _compose_message_notice(font, SAVING_MESSAGE),
         "quick_load_notice": _compose_quick_load_notice(),
+        "cheater_notice": _compose_message_notice(font, CHEATER_MESSAGE),
+        "keen_notice": _compose_message_notice(font, KEEN_MESSAGE),
     }
     for index, label in enumerate(EPISODE_LABELS, start=1):
         images[f"episode_{index}_selected"] = ComposedImage(

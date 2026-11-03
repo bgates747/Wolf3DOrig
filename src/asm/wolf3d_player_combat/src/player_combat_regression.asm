@@ -10,6 +10,7 @@ mos_fopen:          equ 0x0a
 mos_fclose:         equ 0x0b
 mos_fwrite:         equ 0x1b
 mos_getkbmap:       equ 0x1e
+sysvar_time:         equ 0
 fa_write:           equ 0x02
 fa_create_always:   equ 0x08
 
@@ -75,6 +76,11 @@ w3d_victory_active:
     db 0
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
+
+; Standalone production-motion clock seam. Ordinary tests overwrite the RNG
+; index explicitly after initialization; the backing sysvar only keeps the
+; production SetupGameLevel seed path linked and deterministic here.
+w3d_sysvars_pointer: dl test_sysvars
 
 phase_states:       equ 1
 phase_timeline:     equ 2
@@ -482,6 +488,8 @@ test_damage_death_drops:
 test_weapon_selection:
     ld a,phase_inventory
     ld (test_phase),a
+    ld a,1
+    ld (test_case),a
 
 ; Physical key contract: Up Arrow is Use, Space is Attack, and the old generic
 ; Ctrl binding is deliberately unassigned.
@@ -505,6 +513,8 @@ test_weapon_selection:
 
 ; Escape is authoritative in the held-key hot loop, independent of whether
 ; the asynchronous keyboard callback receives an ASCII key-down record.
+    ld a,2
+    ld (test_case),a
     call prepare_test_world
     xor a
     ld (w3d_exit_requested),a
@@ -516,6 +526,8 @@ test_weapon_selection:
 
 ; MOS's BBC-compatible keymap scatters F1-F10 across three bytes. Pin every
 ; source CheckKeys/CP_CheckQuick route rather than assuming enum adjacency.
+    ld a,3
+    ld (test_case),a
     CHECK_PANEL_KEY 14,00000010b,w3d_panel_request_help
     CHECK_PANEL_KEY 14,00000100b,w3d_panel_request_save
     CHECK_PANEL_KEY 14,00001000b,w3d_panel_request_load
@@ -527,8 +539,125 @@ test_weapon_selection:
     CHECK_PANEL_KEY 14,10000000b,w3d_panel_request_quick_load
     CHECK_PANEL_KEY 3,01000000b,w3d_panel_request_quit
 
+; The shipped M+L+I chord is ordinary CheckKeys behavior, not part of the
+; command-line-gated `goobers` debug arm. Pin the physical MOS key locations,
+; full state mutation, exact ten-minute penalty, and modal handoff.
+    ld a,4
+    ld (test_case),a
+    call prepare_test_world
+    xor a
+    ld (w3d_exit_requested),a
+    ld (w3d_gameplay_panel_request),a
+    ld a,17
+    ld (w3d_player_health),a
+    ld a,2
+    ld (w3d_player_ammo),a
+    xor a
+    ld (w3d_player_key_flags),a
+    ld a,078h
+    ld (w3d_player_score+0),a
+    ld a,056h
+    ld (w3d_player_score+1),a
+    ld a,034h
+    ld (w3d_player_score+2),a
+    ld a,012h
+    ld (w3d_player_score+3),a
+    ld a,12
+    ld (w3d_intermission_level_minutes),a
+    ld a,34
+    ld (w3d_intermission_level_seconds),a
+    ld a,5
+    ld (w3d_intermission_level_subticks),a
+    xor a
+    ld (w3d_hud_dirty),a
+    ld (w3d_world_dirty),a
+    ld a,00100000b                  ; I: byte 4 bit 5
+    ld (w3d_keyboard_masks+4),a
+    ld a,01000000b                  ; L: byte 10 bit 6
+    ld (w3d_keyboard_masks+10),a
+    ld a,00100000b                  ; M: byte 12 bit 5
+    ld (w3d_keyboard_masks+12),a
+    call w3d_check_shipped_key_chords
+    CHECK_A 1,reason_inventory
+    CHECK_MEM8 w3d_exit_requested,1,reason_inventory
+    CHECK_MEM8 w3d_gameplay_panel_request,w3d_panel_request_cheater,reason_inventory
+    CHECK_MEM8 w3d_player_health,100,reason_inventory
+    CHECK_MEM8 w3d_player_ammo,99,reason_inventory
+    CHECK_MEM8 w3d_player_key_flags,3,reason_table
+    CHECK_MEM8 w3d_player_score+0,0,reason_inventory
+    CHECK_MEM8 w3d_player_score+1,0,reason_inventory
+    CHECK_MEM8 w3d_player_score+2,0,reason_inventory
+    CHECK_MEM8 w3d_player_score+3,0,reason_inventory
+    CHECK_MEM8 w3d_player_weapon,3,reason_table
+    CHECK_MEM8 w3d_player_best_weapon,3,reason_table
+    CHECK_MEM8 w3d_player_chosen_weapon,3,reason_table
+    CHECK_MEM8 w3d_intermission_level_minutes,22,reason_inventory
+    CHECK_MEM8 w3d_intermission_level_seconds,34,reason_inventory
+    CHECK_MEM8 w3d_intermission_level_subticks,5,reason_inventory
+    CHECK_MEM8 w3d_hud_dirty,01fh,reason_inventory ; health/ammo/keys/weapon/score
+    CHECK_MEM8 w3d_world_dirty,1,reason_inventory
+
+; Crossing the original 99:00 intermission cap clears seconds/subticks rather
+; than manufacturing an impossible 99:34 display.
+    ld a,95
+    ld (w3d_intermission_level_minutes),a
+    ld a,34
+    ld (w3d_intermission_level_seconds),a
+    ld a,5
+    ld (w3d_intermission_level_subticks),a
+    call w3d_check_shipped_key_chords
+    CHECK_MEM8 w3d_intermission_level_minutes,99,reason_inventory
+    CHECK_MEM8 w3d_intermission_level_seconds,0,reason_inventory
+    CHECK_MEM8 w3d_intermission_level_subticks,0,reason_inventory
+
+; B+A+T is the separate Commander Keen message and changes no player state.
+    call prepare_test_world
+    xor a
+    ld (w3d_exit_requested),a
+    ld (w3d_gameplay_panel_request),a
+    ld a,42
+    ld (w3d_player_health),a
+    ld a,00100000b                  ; I only: partial MLI must not trigger
+    ld (w3d_keyboard_masks+4),a
+    call w3d_check_shipped_key_chords
+    CHECK_A 0,reason_inventory
+    CHECK_MEM8 w3d_exit_requested,0,reason_inventory
+    ld a,00001000b                  ; T: byte 4 bit 3
+    ld (w3d_keyboard_masks+4),a
+    ld a,00000010b                  ; A: byte 8 bit 1
+    ld (w3d_keyboard_masks+8),a
+    ld a,00010000b                  ; B: byte 12 bit 4
+    ld (w3d_keyboard_masks+12),a
+    call w3d_check_shipped_key_chords
+    CHECK_A 1,reason_inventory
+    CHECK_MEM8 w3d_gameplay_panel_request,w3d_panel_request_keen,reason_inventory
+    CHECK_MEM8 w3d_player_health,42,reason_inventory
+
+; CheckKeys returns immediately during demo playback, even with a complete
+; physical chord held.
+    call prepare_test_world
+    xor a
+    ld (w3d_exit_requested),a
+    ld (w3d_gameplay_panel_request),a
+    ld a,42
+    ld (w3d_player_health),a
+    ld a,1
+    ld (w3d_demo_active),a
+    ld a,00100000b
+    ld (w3d_keyboard_masks+4),a
+    ld a,01000000b
+    ld (w3d_keyboard_masks+10),a
+    ld a,00100000b
+    ld (w3d_keyboard_masks+12),a
+    call w3d_check_shipped_key_chords
+    CHECK_A 0,reason_inventory
+    CHECK_MEM8 w3d_exit_requested,0,reason_inventory
+    CHECK_MEM8 w3d_player_health,42,reason_inventory
+
 ; Number keys continue to select carried weapons; pin the fourth physical key
 ; here while the host oracle covers all four selection policies.
+    ld a,5
+    ld (test_case),a
     call prepare_test_world
     ld a,W3D_WEAPON_CHAINGUN
     ld (w3d_player_best_weapon),a
@@ -889,6 +1018,7 @@ prepare_test_world:
 
     xor a
     ld (w3d_random_index),a
+    ld (w3d_demo_active),a
     ld (w3d_controls),a
     ld (w3d_player_dead),a
     ld (w3d_player_score+0),a
@@ -968,6 +1098,12 @@ assert_equal:
     ld (result_first_expected),a
     ld a,(assert_actual)
     ld (result_first_actual),a
+    ld a,(result_checks+0)
+    ld (result_first_check+0),a
+    ld a,(result_checks+1)
+    ld (result_first_check+1),a
+    ld a,(test_case)
+    ld (result_first_case),a
 @return:
     pop hl
     ret
@@ -1281,6 +1417,7 @@ test_audio_last_id: db 0
 test_audio_gain:    db 0
 test_audio_flags:   db 0
 test_audio_end:
+test_case:          db 0
 
 result_data:
     db "W3PC"
@@ -1291,8 +1428,11 @@ result_first_reason:        db 0
 result_first_expected:      db 0
 result_first_actual:        db 0
 result_schema:              db 1
-    ds 19
+result_first_check:         dw 0
+result_first_case:          db 0
+    ds 16
 result_end:
 
 test_tilemap:       ds W3D_MAP_BYTES
 test_areas:         ds W3D_NUM_AREAS
+test_sysvars:       ds 24

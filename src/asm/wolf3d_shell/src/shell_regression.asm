@@ -229,6 +229,9 @@ w3d_panel_request_end_game: equ 7
 w3d_panel_request_quick_save: equ 8
 w3d_panel_request_quick_load: equ 9
 w3d_panel_request_quit: equ 10
+w3d_panel_request_pause: equ 11
+w3d_panel_request_cheater: equ 12
+w3d_panel_request_keen: equ 13
 
 w3d_music_enabled: db 1
 
@@ -1231,6 +1234,30 @@ test_quick_keys:
     CHECK_A W3D_SHELL_PAUSE_QUIT,REASON_RESULT
     CHECK_EXIT 1
     call w3d_shell_reset_exit_request
+
+; The two unconditional shipped CheckKeys chords use the same drained-frame,
+; fresh-acknowledgment shell lifecycle as the original Message()/IN_Ack path.
+    ld a,90
+    ld (test_case),a
+    call test_reset_plots
+    ld hl,script_modal_ack
+    call test_set_script
+    ld a,w3d_panel_request_cheater
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_CHEATER_NOTICE_BUFFER,W3D_SHELL_CHEATER_NOTICE_X,W3D_SHELL_CHEATER_NOTICE_Y
+
+    ld a,91
+    ld (test_case),a
+    call test_reset_plots
+    ld hl,script_modal_ack
+    call test_set_script
+    ld a,w3d_panel_request_keen
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_KEEN_NOTICE_BUFFER,W3D_SHELL_KEEN_NOTICE_X,W3D_SHELL_KEEN_NOTICE_Y
     ret
 
 ; Every normalized source menu action owns its audible feedback. Cursor moves
@@ -1884,6 +1911,8 @@ script_quick_full_panel:
     db SCRIPT_RELEASE,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
 script_quick_release:
     db SCRIPT_RELEASE
+script_modal_ack:
+    db SCRIPT_RELEASE,SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE
 script_quick_save_keys:
     db 'Y',13
 

@@ -21,9 +21,21 @@ _installed_root = Path(__file__).resolve().parents[4]
 STAGED_ROOT = Path(_root_override) if _root_override else _installed_root
 RUNTIME_ROOT = Path(os.environ.get("W3D_RUNTIME_ROOT", _installed_root))
 STAGED_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
-FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
-MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
-VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+FAB = Path(os.environ.get(
+    "W3D_EMULATOR", RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
+))
+MOS = Path(os.environ.get(
+    "W3D_MOS", RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
+))
+VDP = Path(os.environ.get(
+    "W3D_VDP", RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+))
+FIRMWARE = os.environ.get("W3D_FIRMWARE", "platform")
+ASSEMBLER = Path(
+    os.environ.get("W3D_ASSEMBLER")
+    or shutil.which("ez80asm")
+    or STAGED_ROOT / "src/asm/wolf3d/tgt/.tools/ez80asm"
+)
 RESULT_SIZE = 32
 
 PHASES = {
@@ -57,7 +69,7 @@ def main() -> int:
     parser.add_argument("--timeout", type=float, default=60.0)
     args = parser.parse_args()
 
-    dependencies = (STAGED_SRC, FAB, MOS, VDP)
+    dependencies = (STAGED_SRC, ASSEMBLER, FAB, MOS, VDP)
     missing = [path for path in dependencies if not path.exists()]
     if missing:
         raise FileNotFoundError(
@@ -78,7 +90,7 @@ def main() -> int:
     app = sdcard / "w"
     app.mkdir(parents=True)
     binary = app / "w.bin"
-    run(["ez80asm", str(entry), str(binary)], cwd=work)
+    run([str(ASSEMBLER), str(entry), str(binary)], cwd=work)
     digest = hashlib.sha256(binary.read_bytes()).hexdigest()
     print(f"binary: {binary.stat().st_size} bytes, sha256={digest}")
     (sdcard / "autoexec.txt").write_bytes(
@@ -90,6 +102,10 @@ def main() -> int:
 
     result = app / "player_combat_result.bin"
     environment = os.environ.copy()
+    artifacts = Path(
+        environment.setdefault("AGON_FLEXE_ARTIFACTS", str(work / "flexe-artifacts"))
+    )
+    artifacts.mkdir(parents=True, exist_ok=True)
     environment["SDL_VIDEODRIVER"] = "dummy"
     environment["SDL_AUDIODRIVER"] = "dummy"
     local_lib = str(Path.home() / ".local/lib")
@@ -101,7 +117,7 @@ def main() -> int:
     emulator = [
         str(FAB.resolve()),
         "--renderer", "sw",
-        "--firmware", "console8",
+        "--firmware", FIRMWARE,
         "--mos", str(MOS.resolve()),
         "--vdp", str(VDP.resolve()),
         "--sdcard", str(sdcard),
@@ -144,6 +160,8 @@ def main() -> int:
     checks = int.from_bytes(payload[4:6], "little")
     errors = int.from_bytes(payload[6:8], "little")
     phase, reason, expected, actual, schema = payload[8:13]
+    first_check = int.from_bytes(payload[13:15], "little")
+    first_case = payload[15]
     if schema != 1:
         raise RuntimeError(f"unsupported player-combat mailbox schema {schema}")
     if errors:
@@ -151,6 +169,7 @@ def main() -> int:
             f"FAIL: {errors} mismatches in {checks} direct-eZ80 checks; "
             f"phase={PHASES.get(phase, phase)} "
             f"reason={REASONS.get(reason, reason)} "
+            f"case={first_case} check={first_check} "
             f"expected={expected:#04x} actual={actual:#04x}"
         )
         return 1
