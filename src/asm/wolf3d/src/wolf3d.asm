@@ -976,6 +976,9 @@ mainloop:
 ; while the single-buffered shell is visible; no render command is submitted,
 ; and resuming rebuilds both native framebuffers from authoritative eZ80 state.
 w3d_gameplay_pause:
+    ld a,(w3d_gameplay_panel_request)
+    cp w3d_panel_request_pause
+    jr z,@pause_overlay
     ld a,W3D_MUSIC_WONDERIN
     call w3d_music_start
     call w3d_arm_gameplay_mode_fence
@@ -985,7 +988,7 @@ w3d_gameplay_pause:
     ld a,(w3d_gameplay_panel_request)
     call w3d_shell_pause_quick
     cp W3D_SHELL_PAUSE_RESUME
-    jr z,@resume
+    jp z,w3d_gameplay_resume
     cp W3D_SHELL_PAUSE_NEW_GAME
     jp z,w3d_gameplay_new_game_shutdown
     cp W3D_SHELL_PAUSE_END_GAME
@@ -1006,8 +1009,57 @@ w3d_gameplay_pause:
     ld (w3d_player_dead),a
     ld a,W3D_SLOT_NONE
     ld (w3d_player_killer),a
+    jp w3d_gameplay_resume
 
-@resume:
+@pause_overlay:
+; WL_PLAY.C draws PAUSEDPIC at (16 chars, 64 pixels), turns music off, waits
+; for a fresh acknowledgment, then resumes the current floor track. Rendering
+; has already drained, so the bitmap and C3 operate without competing with a
+; VDPlet render owner. The normal resume path reconstructs both framebuffers.
+    call w3d_music_stop
+    ld hl,W3D_SHELL_PAUSED_BUFFER
+    call selectBitmap
+    ld bc,128
+    ld de,64
+    call plotBitmap
+    call w3d_vdu_present
+    call w3d_gameplay_pause_wait_all_released
+    ld a,1
+    ld (w3d_pause_ack_armed),a
+@pause_wait:
+    ld a,(w3d_pause_ack_requested)
+    or a
+    jr nz,@pause_accepted
+    MOSCALL mos_getkbmap
+    ld b,16
+@pause_scan:
+    ld a,(ix)
+    or a
+    jr nz,@pause_accepted
+    inc ix
+    djnz @pause_scan
+    jr @pause_wait
+@pause_accepted:
+    call w3d_gameplay_pause_wait_all_released
+    xor a
+    ld (w3d_pause_ack_armed),a
+    ld (w3d_pause_ack_requested),a
+    jp w3d_gameplay_resume
+
+; Ignore held gameplay controls. The callback-only Pause key is intentionally
+; absent from this scan and is handled by w3d_pause_ack_requested above.
+w3d_gameplay_pause_wait_all_released:
+    MOSCALL mos_getkbmap
+    ld b,16
+@pause_release_scan:
+    ld a,(ix)
+    or a
+    jr nz,w3d_gameplay_pause_wait_all_released
+    inc ix
+    djnz @pause_release_scan
+    ret
+
+w3d_gameplay_resume:
     call w3d_music_start_current_floor
     call w3d_arm_gameplay_mode_fence
     ld hl,w3d_display_setup

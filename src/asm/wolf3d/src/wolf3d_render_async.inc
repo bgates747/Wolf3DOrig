@@ -38,6 +38,8 @@ w3d_initialize_render_state:
     ld (w3d_sequence_initialized),a
     ld (w3d_exit_requested),a
     ld (w3d_gameplay_panel_request),a
+    ld (w3d_pause_ack_armed),a
+    ld (w3d_pause_ack_requested),a
     ld (w3d_callback_error),a
     ld (w3d_frame_presented),a
     ld (w3d_async_owner),a
@@ -568,7 +570,7 @@ w3d_render_packet_callback:
     jp @done
 
 @keyboard:
-; Escape and the original F1-F10 quick keys are latched on key-down. The
+; Pause, Escape, and the original F1-F10 quick keys are latched on key-down. The
 ; foreground drains any outstanding render before changing video/control
 ; ownership. Demo polling clears the same request before returning to shell.
     ld a,(ix+3)
@@ -576,7 +578,30 @@ w3d_render_packet_callback:
     jp nz,@done
     ld a,(w3d_exit_requested)
     or a
+    jr z,@new_request
+; Once the foreground has displayed PAUSED and armed acknowledgment, any new
+; callback key-down releases it. This includes a second Pause press, whose
+; FabGL virtual key has no representable MOS keymap bit.
+    ld a,(w3d_gameplay_panel_request)
+    cp w3d_panel_request_pause
     jp nz,@done
+    ld a,(w3d_pause_ack_armed)
+    or a
+    jp z,@done
+    ld a,1
+    ld (w3d_pause_ack_requested),a
+    jp @done
+@new_request:
+    ld a,(ix+2)
+    cp 144                         ; FabGL VK_PAUSE
+    jr nz,@function_key
+    ld a,w3d_panel_request_pause
+    ld (w3d_gameplay_panel_request),a
+    xor a
+    ld (w3d_pause_ack_armed),a
+    ld (w3d_pause_ack_requested),a
+    jr @request
+@function_key:
     ld a,(ix+2)
     cp 159                         ; FabGL VK_F1
     jr c,@escape
@@ -628,6 +653,14 @@ w3d_exit_requested:
 ; Source CheckKeys/CP_CheckQuick request selected by Escape or F1-F10.  The
 ; foreground drains the current renderer before showing any control page.
 w3d_gameplay_panel_request:
+    db 0
+
+; The Pause key is callback-only in MOS/FabGL. Foreground arms this byte only
+; after all ordinary keys have been released; the next key-down sets ack.
+w3d_pause_ack_armed:
+    db 0
+
+w3d_pause_ack_requested:
     db 0
 
 w3d_callback_error:

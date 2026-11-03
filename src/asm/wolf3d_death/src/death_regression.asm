@@ -200,6 +200,32 @@ test_callback_routing:
     CHECK_CALLBACK_PANEL_KEY 167,w3d_panel_request_quick_load,17
     CHECK_CALLBACK_PANEL_KEY 168,w3d_panel_request_quit,18
 
+; Pause is FabGL VK_PAUSE rather than a MOS keymap bit. It requests the exact
+; gameplay overlay path; only a later key-down may acknowledge it once armed.
+    CHECK_CALLBACK_PANEL_KEY 144,w3d_panel_request_pause,40
+    xor a
+    ld (callback_keyboard_packet+0),a
+    ld a,144
+    ld (callback_keyboard_packet+2),a
+    ld a,1
+    ld (callback_keyboard_packet+3),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld c,1
+    ld d,62
+    ld a,(w3d_pause_ack_requested)
+    ld b,0
+    call expect_a
+    ld a,1
+    ld (w3d_pause_ack_armed),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld c,1
+    ld d,63
+    ld a,(w3d_pause_ack_requested)
+    ld b,1
+    call expect_a
+
 ; Escape remains the ordinary control-panel request rather than F10 Quit.
     call w3d_initialize_render_state
     ld a,27

@@ -128,6 +128,10 @@ class ShellArchiveTests(unittest.TestCase):
             self.assertEqual(raw["title"].bufferId, 0x4263)
             self.assertEqual(raw["credits"].bufferId, 0x4265)
             self.assertEqual(raw["high_scores_heading"].bufferId, 0x4266)
+            self.assertEqual(raw["paused"].bufferId, 0x4289)
+            self.assertEqual(
+                (raw["paused"].width, raw["paused"].height), (24, 32)
+            )
 
             composed = {
                 entry.name: entry for entry in entries if entry.chunkId is None
@@ -161,6 +165,7 @@ class ShellArchiveTests(unittest.TestCase):
             self.assertTrue((out / "shell.agnb").read_bytes().startswith(b"RIFF"))
             constants = (out / "wolf3d_shell_assets.inc").read_text()
             self.assertIn("W3D_SHELL_TITLE_BUFFER: equ $4263", constants)
+            self.assertIn("W3D_SHELL_PAUSED_BUFFER: equ $4289", constants)
             self.assertIn("W3D_SHELL_MAIN_BASE_BUFFER: equ $4300", constants)
             self.assertIn("W3D_SHELL_MAIN_BASE_WIDTH: equ 320", constants)
             self.assertIn("W3D_SHELL_HIGH_SCORES_BASE_BUFFER: equ $4304", constants)

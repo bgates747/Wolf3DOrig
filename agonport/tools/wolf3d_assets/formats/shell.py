@@ -41,6 +41,7 @@ SHELL_CHUNK_NAMES = {
     99: "title",
     101: "credits",
     102: "high_scores_heading",
+    137: "paused",
 }
 
 SHELL_EXPECTED_DIMENSIONS = {
@@ -55,6 +56,7 @@ SHELL_EXPECTED_DIMENSIONS = {
     99: (320, 200),
     101: (320, 200),
     102: (224, 56),
+    137: (24, 32),
 }
 
 SHELL_CHUNKS = tuple(SHELL_CHUNK_NAMES)

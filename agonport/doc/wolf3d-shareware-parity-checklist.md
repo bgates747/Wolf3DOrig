@@ -154,9 +154,18 @@ into their pages; `CP_CheckQuick` owns F7 end game, remembered-slot F8/F9 quick
 save/load, and F10 quit. The production polling path, interrupt-time FabGL
 callback path, dispatcher, and remembered-slot lifecycle now implement those
 routes. Oryx generation 152 passes 255/255 shell, 492/492 keymap/player-combat,
-and 224/224 callback/death checks. These are required behavior, not optional
-DOS hardware configuration; TODO 14 now retains only the batched visual/input
-acceptance gate.
+and 224/224 callback/death checks.
+
+Pause correction, 2026-11-03: FabGL `VK_PAUSE` has no MOS keymap bit, so the
+interrupt callback now owns an explicit Pause request and a separately armed
+fresh-key acknowledgment. The foreground drains the renderer, stops music,
+plots authentic WL1 `PAUSEDPIC` chunk 137 at source coordinates (128,64),
+presents it, waits for a new key (including a second callback-only Pause), and
+then resumes floor music while rebuilding both gameplay buffers. Oryx
+generation 153 passes the expanded 228/228 callback/death checks and both
+application backends assemble. These quick keys and Pause are required
+behavior, not optional DOS hardware configuration; TODO 14 now retains only
+the batched visual/input acceptance gate.
 
 ### A6. Save/load game — TODO 15
 

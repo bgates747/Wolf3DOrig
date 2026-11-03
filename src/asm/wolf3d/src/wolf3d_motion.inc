@@ -73,6 +73,7 @@ w3d_panel_request_end_game:   equ 7
 w3d_panel_request_quick_save: equ 8
 w3d_panel_request_quick_load: equ 9
 w3d_panel_request_quit:       equ 10
+w3d_panel_request_pause:      equ 11
 
 ; Motion owns the recorded-demo hooks it calls. Keeping the generated streams
 ; and state machine here also preserves every standalone direct fixture that

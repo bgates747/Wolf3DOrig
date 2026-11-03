@@ -49,8 +49,11 @@ row substitutions, resume, confirmed End Game, New Game, and clean Quit paths
 pass their direct shell fixture. The residual `WL_PLAY.C::CheckKeys` /
 `WL_MENU.C::CP_CheckQuick` routes are now implemented for F1 help, F2/F3
 save/load, F4 sound, F5 view, F6 controls, F7 end game, F8/F9 remembered-slot
-quick save/load, and F10 quit. Direct production evidence passes 255/255 shell,
-492/492 physical-keymap/player-combat, and 224/224 callback/death checks.
+quick save/load, and F10 quit. The callback-only FabGL Pause key now reproduces
+`CheckPause`: authentic PAUSED art over the drained gameplay frame, music
+off, fresh-key acknowledgment, floor-music resume, and authoritative buffer
+rebuild. Direct production evidence passes 255/255 shell, 492/492
+physical-keymap/player-combat, and 228/228 callback/death checks.
 Remaining close gate: one batched visual pause/resume/page/save/load/end-game/
 quit review, including callback-time F keys and F8/F9 reuse of the selected
 slot.
