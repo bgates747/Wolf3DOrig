@@ -187,7 +187,11 @@ def build(
     }
     if module is not None:
         packaged_module = TARGET / "wolf3d.vdpl"
-        shutil.copyfile(module, packaged_module)
+        # A previously packaged module is a valid explicit input for a fresh
+        # application build. Avoid SameFileError when source and destination
+        # are already the canonical target artifact.
+        if module != packaged_module.resolve():
+            shutil.copyfile(module, packaged_module)
         receipt["module"] = {
             "source": str(module),
             "output": str(packaged_module.relative_to(PROJECT.parents[2])),
