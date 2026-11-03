@@ -20,9 +20,17 @@ STAGED_ROOT = Path(_root_override) if _root_override else _installed_root
 RUNTIME_ROOT = Path(os.environ.get("W3D_RUNTIME_ROOT", _installed_root))
 PRODUCTION_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
 FIXTURE = STAGED_ROOT / "src/asm/wolf3d_demo/src/demo_regression.asm"
-FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
-MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
-VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+FAB = Path(os.environ.get(
+    "W3D_EMULATOR", RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
+))
+MOS = Path(os.environ.get(
+    "W3D_MOS", RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
+))
+VDP = Path(os.environ.get(
+    "W3D_VDP", RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+))
+FIRMWARE = os.environ.get("W3D_FIRMWARE", "platform")
+ASSEMBLER = os.environ.get("W3D_ASSEMBLER", "ez80asm")
 RESULT_SIZE = 16
 
 REASONS = {
@@ -68,13 +76,17 @@ def main() -> int:
     shutil.copytree(PRODUCTION_SRC, build_src)
     entry = build_src / "d.asm"
     shutil.copyfile(FIXTURE, entry)
-    run(["ez80asm", entry.name, str(binary)], cwd=build_src)
+    run([ASSEMBLER, entry.name, str(binary)], cwd=build_src)
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\ncd d\r\nload d.bin\r\nrun\r\n"
     )
 
     result = app / "demo_result.bin"
     environment = os.environ.copy()
+    artifacts = Path(
+        environment.setdefault("AGON_FLEXE_ARTIFACTS", str(work / "flexe-artifacts"))
+    )
+    artifacts.mkdir(parents=True, exist_ok=True)
     environment["SDL_VIDEODRIVER"] = "dummy"
     environment["SDL_AUDIODRIVER"] = "dummy"
     local_lib = str(Path.home() / ".local/lib")
@@ -83,7 +95,7 @@ def main() -> int:
         if environment.get("LD_LIBRARY_PATH") else ""
     )
     emulator = [
-        str(FAB.resolve()), "--renderer", "sw", "--firmware", "console8",
+        str(FAB.resolve()), "--renderer", "sw", "--firmware", FIRMWARE,
         "--mos", str(MOS.resolve()), "--vdp", str(VDP.resolve()),
         "--sdcard", str(sdcard), "--zero",
     ]

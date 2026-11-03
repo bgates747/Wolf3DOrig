@@ -12,6 +12,7 @@ mos_fclose:         equ 0x0b
 mos_fwrite:         equ 0x1b
 fa_write:           equ 0x02
 fa_create_always:   equ 0x08
+sysvar_time:        equ 0x00
 
     macro MOSCALL function
         ld a,function
@@ -64,6 +65,7 @@ run_tests:
 
 initialize_world:
     xor a
+    ld (test_sysvars+sysvar_time),a
     ld hl,test_tilemap
     ld (hl),a
     ld de,test_tilemap+1
@@ -379,6 +381,9 @@ w3d_audio_request_tile: xor a
     ret
 w3d_elapsed_ticks: dl 0
 w3d_exit_requested: db 0
+w3d_gameplay_panel_request: db 0
+w3d_sysvars_pointer: dl test_sysvars
+test_sysvars: ds 4
 
 test_delta_east: db 0,16,0, 0,0,0
 result_filename: asciz "victory_result.bin"

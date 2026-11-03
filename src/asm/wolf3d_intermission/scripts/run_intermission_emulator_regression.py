@@ -23,9 +23,16 @@ FIXTURE = (
     STAGED_ROOT
     / "src/asm/wolf3d_intermission/src/intermission_regression.asm"
 )
-FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
-MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
-VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+FAB = Path(os.environ.get(
+    "W3D_EMULATOR", RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
+))
+MOS = Path(os.environ.get(
+    "W3D_MOS", RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
+))
+VDP = Path(os.environ.get(
+    "W3D_VDP", RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+))
+FIRMWARE = os.environ.get("W3D_FIRMWARE", "platform")
 ASSEMBLER = os.environ.get("W3D_ASSEMBLER") or shutil.which("ez80asm") or str(
     STAGED_ROOT / "src/asm/wolf3d/tgt/.tools/ez80asm"
 )
@@ -109,6 +116,10 @@ def main() -> int:
 
     result = app / "intermission_result.bin"
     environment = os.environ.copy()
+    artifacts = Path(
+        environment.setdefault("AGON_FLEXE_ARTIFACTS", str(work / "flexe-artifacts"))
+    )
+    artifacts.mkdir(parents=True, exist_ok=True)
     environment["SDL_VIDEODRIVER"] = "dummy"
     environment["SDL_AUDIODRIVER"] = "dummy"
     local_lib = str(Path.home() / ".local/lib")
@@ -122,7 +133,7 @@ def main() -> int:
         "--renderer",
         "sw",
         "--firmware",
-        "console8",
+        FIRMWARE,
         "--mos",
         str(MOS.resolve()),
         "--vdp",

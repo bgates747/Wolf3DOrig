@@ -14,6 +14,7 @@ mos_fwrite:         equ 01bh
 fa_read:            equ 01h
 fa_write:           equ 02h
 fa_create_always:   equ 08h
+sysvar_time:         equ 00h
 
     macro MOSCALL function
         ld a,function
@@ -92,6 +93,8 @@ run_tests:
     ret
 
 initialize_world:
+    xor a
+    ld (test_sysvars+sysvar_time),a
     ld a,2
     ld (w3d_requested_difficulty),a
     xor a
@@ -486,6 +489,8 @@ w3d_audio_request_tile: xor a
 w3d_elapsed_ticks: dl 0
 w3d_exit_requested: db 0
 w3d_gameplay_panel_request: db 0
+w3d_sysvars_pointer: dl test_sysvars
+test_sysvars: ds 4
 w3d_level_requested_index: db 0
 w3d_death_oldscore: ds 4
 
