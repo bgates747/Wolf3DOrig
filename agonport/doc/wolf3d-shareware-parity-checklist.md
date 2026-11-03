@@ -282,6 +282,22 @@ difficulty, actor counts, secrets, transitions, death/game-over, menus,
 audio, and ending.  Record any intentional Agon differences.  Close this only
 with a source-linked discrepancy ledger and emulator plus hardware acceptance.
 
+Residual correction, 2026-11-03: `WL_AGENT.C::GiveExtraMan` plays
+`BONUS1UPSND` for every award, even when the nine-life cap suppresses the life
+increment. Production now does the same for score thresholds and full heal;
+the latter has one sound owner so Agon's accepted simultaneous-stream behavior
+does not turn the source's effectively monophonic duplicate calls into two
+audible samples. Oryx generation 163 passes all 33 direct target records.
+
+Intentional discrepancy ledger, 2026-11-03: the hardware-accepted player
+wall/slab radius and actor/static physical clearance remain `0x4800`, versus
+the source's `PLAYERSIZE`/`MINDIST` value `0x5800`. The independent original
+`0x5800` actor guard for starting a fully-open door close remains intact. The
+strict gun targeting cone remains the hardware-accepted 16 projected pixels,
+versus the source's 25 pixels at the fixed 256-pixel viewport. These are
+deliberate feel corrections with directed boundary regressions, not unfinished
+shareware-parity work.
+
 Debug cheats, paid-episode content, obsolete DOS copy protection, VGA palette
 timing exactness, and unavailable hardware configuration choices are not
 required unless separately promoted.

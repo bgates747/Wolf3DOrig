@@ -16,6 +16,9 @@ while `W3D_RUNTIME_ROOT` independently names the normal checkout containing
 the emulator executable, MOS image, and stock VDP module. The runner assembles
 under a short `/tmp/p*` pathname, boots a disposable headless SD-card profile,
 reads `pickup_result.bin`, and removes the profile on exit.
+On a differently architected emulator host, assemble on the source machine and
+pass `--prebuilt path/to/p.bin`; the same disposable runtime and mailbox checks
+still apply.
 
 The thirteen assembly-resident cases cover:
 
@@ -48,3 +51,11 @@ player-pose dirty clear, and the exact persistent `uint16` treasure count.
 Refused cases require the inverse. The harness also sums the complete 121-byte
 dirty array so a stray neighboring mutation is not hidden by a correct target
 byte.
+
+The fixture also pins two source-level `GivePoints`/`GiveExtraMan` details
+outside the packed pickup table: a single 135,000-point addition crosses four
+thresholds and requests four `BONUS1UPSND` effects, while an award at the
+nine-life cap still advances the threshold and requests the sound without
+dirtying the lives HUD field. Full heal produces one audible one-up request
+through the same routine rather than duplicating it in pickup dispatch.
+The complete target report is 33/33 records.

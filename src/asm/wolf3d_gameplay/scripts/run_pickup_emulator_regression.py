@@ -43,6 +43,7 @@ REASONS = {
     15: "complete static dirty array",
     16: "player dirty",
     17: "treasure count",
+    18: "audio request",
 }
 
 
@@ -54,6 +55,11 @@ def run(command: list[str], *, cwd: Path | None = None) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--timeout", type=float, default=30.0)
+    parser.add_argument(
+        "--prebuilt",
+        type=Path,
+        help="use an already assembled fixture (for a cross-architecture emulator host)",
+    )
     args = parser.parse_args()
 
     # ez80asm retains a short DOS-era output-filename limit.
@@ -69,7 +75,11 @@ def main() -> int:
         entry,
     )
     binary = app / "p.bin"
-    run(["ez80asm", str(entry), str(binary)], cwd=STAGED_SRC)
+    if args.prebuilt:
+        shutil.copyfile(args.prebuilt, binary)
+        print("+ prebuilt", args.prebuilt, "->", binary)
+    else:
+        run(["ez80asm", str(entry), str(binary)], cwd=STAGED_SRC)
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\n"
         b"cd p\r\n"

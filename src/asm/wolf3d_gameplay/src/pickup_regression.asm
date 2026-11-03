@@ -136,6 +136,7 @@ run_tests:
     call test_pickup_audio
     call test_chaingun_face
     call test_score32_bonus
+    call test_score_capped_sound
     call write_result
     call print_report
     ret
@@ -253,6 +254,7 @@ test_chaingun_face:
 test_score32_bonus:
     xor a
     ld (case_failed),a
+    call test_audio_reset
     ld (w3d_hud_dirty),a
     ld (w3d_world_dirty),a
     ld (w3d_player_score+2),a
@@ -290,6 +292,95 @@ test_score32_bonus:
     ld a,(w3d_world_dirty)
     ld b,1
     ld c,reason_world_dirty
+    call assert_equal
+    ld a,(test_audio_count+0)
+    ld b,4
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_count+1)
+    ld b,0
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,W3D_AUDIO_SOUND_BONUS1UP
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_arg_b)
+    ld b,127
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_arg_c)
+    ld b,0
+    ld c,reason_audio
+    call assert_equal
+    ld a,(result_records)
+    inc a
+    ld (result_records),a
+    ret
+
+; GiveExtraMan still plays BONUS1UPSND when the nine-life cap suppresses the
+; inventory/HUD mutation. The score and next threshold must advance normally.
+test_score_capped_sound:
+    xor a
+    ld (case_failed),a
+    call test_audio_reset
+    ld (w3d_hud_dirty),a
+    ld (w3d_world_dirty),a
+    ld (w3d_player_score+2),a
+    ld (w3d_player_score+3),a
+    ld (w3d_player_next_extra+2),a
+    ld (w3d_player_next_extra+3),a
+    ld a,0dch
+    ld (w3d_player_score+0),a
+    ld a,09bh
+    ld (w3d_player_score+1),a
+    ld a,040h
+    ld (w3d_player_next_extra+0),a
+    ld a,09ch
+    ld (w3d_player_next_extra+1),a
+    ld a,9
+    ld (w3d_player_lives),a
+    ld hl,100
+    call w3d_add_player_score
+    ld hl,w3d_player_score
+    ld de,test_score_capped_expected
+    ld c,reason_score
+    call assert_four_bytes
+    ld hl,w3d_player_next_extra
+    ld de,test_score_capped_next
+    ld c,reason_next_extra
+    call assert_four_bytes
+    ld a,(w3d_player_lives)
+    ld b,9
+    ld c,reason_lives
+    call assert_equal
+    ld a,(w3d_hud_dirty)
+    ld b,W3D_HUD_DIRTY_SCORE
+    ld c,reason_hud_dirty
+    call assert_equal
+    ld a,(w3d_world_dirty)
+    ld b,1
+    ld c,reason_world_dirty
+    call assert_equal
+    ld a,(test_audio_count+0)
+    ld b,1
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_count+1)
+    ld b,0
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,W3D_AUDIO_SOUND_BONUS1UP
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_arg_b)
+    ld b,127
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_arg_c)
+    ld b,0
+    ld c,reason_audio
     call assert_equal
     ld a,(result_records)
     inc a
@@ -689,6 +780,8 @@ test_audio_end:
 test_score32_increment:      db 058h,00fh,002h,000h ; 135,000
 test_score32_expected:       db 034h,0abh,002h,000h ; 174,900
 test_score32_next:           db 040h,00dh,003h,000h ; 200,000
+test_score_capped_expected:  db 040h,09ch,000h,000h ; 40,000
+test_score_capped_next:      db 080h,038h,001h,000h ; 80,000
 
 result_data:
     db "W3P1"

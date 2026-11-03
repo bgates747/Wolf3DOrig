@@ -54,10 +54,11 @@ second isolated profile:
   src/asm/wolf3d_gameplay/scripts/run_pickup_emulator_regression.py
 ```
 
-Its 13 directed cases cover refusal at capacity, gibs' exact health boundary,
+Its packed 13-state table plus focused sound/face/score cases cover refusal at capacity, gibs' exact health boundary,
 health/ammo saturation, zero-ammo chosen-weapon restoration, key bits, weapon
 upgrades, treasure scoring, the 40,000-point threshold, the original nine-life
 cap, full heal, the `FFFF` removed-shape sentinel, exact HUD/world dirty masks,
+unconditional extra-life sound requests (including at the nine-life cap),
 and isolation of the one changed static slot. See
 `PICKUP_REGRESSION.md` for the packed case contract.
 
@@ -76,7 +77,8 @@ Up-Arrow latch. See `USE_REGRESSION.md` for the exact contract.
 
 Important model choices match the current port contract:
 
-1. Player collision uses the original `0x5800` square radius.
+1. Player collision uses the hardware-accepted `0x4800` square radius. This is
+   an intentional Agon feel adjustment from the original `0x5800` radius.
 2. `ClipMove` tries combined X/Y, X only, Y only, then restores the base pose.
 3. A valid door tile is a traversable well containing the VDP's zero-thickness
    center-plane slab. Fractions `0..position` are passable and

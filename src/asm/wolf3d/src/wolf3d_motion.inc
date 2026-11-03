@@ -1952,9 +1952,7 @@ w3d_request_current_pickup_sound:
     cp W3D_ITEM_FOOD
     jp z,@food
     cp W3D_ITEM_FULLHEAL
-    jp nz,@none
-    ld a,W3D_AUDIO_SOUND_BONUS1UP
-    jr @request
+    jp @none                         ; GiveExtraMan already requested BONUS1UP
 @gibs:
     ld a,W3D_AUDIO_SOUND_SLURPIE
     jr @request
@@ -2160,16 +2158,22 @@ w3d_add_player_score_finish:
 @no_extra_life:
     ret
 
-; Match GiveExtraMan: lives never exceed nine.  The threshold still advances
-; when already capped, but no redundant HUD command is emitted.
+; Match GiveExtraMan: lives never exceed nine, but every award still plays
+; BONUS1UPSND even when the player is already capped. Full heal also reaches
+; this routine, so the pickup-sound dispatcher must not request it again.
 w3d_give_extra_life:
     ld a,(w3d_player_lives)
     cp 9
-    ret nc
+    jr nc,@sound
     inc a
     ld (w3d_player_lives),a
     ld a,W3D_HUD_DIRTY_LIVES
-    jp w3d_mark_hud_dirty
+    call w3d_mark_hud_dirty
+@sound:
+    ld a,W3D_AUDIO_SOUND_BONUS1UP
+    ld b,127
+    ld c,0                          ; unpositioned
+    jp w3d_audio_request
 
 ; Original treasurecount is a 16-bit per-level statistic.  It is persistent
 ; eZ80 state even though this first HUD does not display it.

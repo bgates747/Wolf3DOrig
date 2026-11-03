@@ -131,6 +131,12 @@ end-to-end gate fixed the packaged module's stale rejection of face sentinel
 3. Oryx generation 160 passes 549 player-combat/palette checks, all 32 pickup
 cases, and byte-exact serialization; the six-scene renderer/oracle gate is
 exact.
+The same source pass corrected `WL_AGENT.C::GiveExtraMan`: every award now
+requests `BONUS1UPSND`, including score awards and awards suppressed by the
+nine-life cap. Full heal routes through that one owner so the Agon multi-stream
+backend does not double the effect. Direct eZ80 coverage pins four thresholds
+crossed in one score addition and the capped-life case; Oryx generation 163
+passes all 33/33 pickup/state/sound records. Both application backends rebuild.
 
 # Phase B — Agon identity and legal presentation
 
