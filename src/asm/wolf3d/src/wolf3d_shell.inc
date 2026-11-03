@@ -50,6 +50,7 @@ W3D_SHELL_DIFFICULTY_MEDIUM: equ 2
 W3D_SHELL_SAVE_SLOT_COUNT:   equ 10
 W3D_SHELL_SAVE_NAME_SIZE:    equ 32
 W3D_SHELL_SAVE_NAME_MAX:     equ 31
+W3D_SHELL_PG13_TICKS:        equ 7*120
 W3D_SHELL_TITLE_TICKS:       equ 15*120
 W3D_SHELL_CREDITS_TICKS:     equ 10*120
 W3D_SHELL_SCORES_TICKS:      equ 10*120
@@ -109,10 +110,38 @@ w3d_shell_run:
     call w3d_shell_reset_exit_request
     call w3d_shell_setup
     call w3d_shell_show_agon_splash
+    call w3d_shell_show_original_splash
     call w3d_shell_attract_until_input
     cp W3D_SHELL_RESULT_DEMO
     ret z
     jp w3d_shell_main_menu
+
+; Original shareware PG13(): a seven-second notice which any key may shorten.
+; The exact VGA fades are an accepted platform difference, but the original
+; archive picture, blue field, anchor, duration, and non-menu input ownership
+; are retained. A key only dismisses this page; the title requires a fresh key.
+w3d_shell_show_original_splash:
+    ld hl,@blue_commands
+    ld bc,@blue_end-@blue_commands
+    rst.lil 18h
+    ld hl,W3D_SHELL_PG13_BUFFER
+    ld bc,W3D_SHELL_PG13_X
+    ld de,W3D_SHELL_PG13_Y
+    call w3d_shell_plot_at
+    ld de,W3D_SHELL_PG13_TICKS
+    call w3d_shell_wait_input_timeout
+    ld hl,@black_commands
+    ld bc,@black_end-@black_commands
+    rst.lil 18h
+    ret
+@blue_commands:
+    db 18,0,128+11          ; VGA $82 -> RGB222(0,2,3)
+    db 16
+@blue_end:
+@black_commands:
+    db 18,0,128             ; restore shell background before title
+    db 16
+@black_end:
 
 w3d_shell_resume_after_demo:
     call w3d_shell_setup

@@ -27,6 +27,11 @@ FIXTURE = STAGED_ROOT / "src/asm/wolf3d_shell/src/shell_regression.asm"
 FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
 MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
 VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+ASSEMBLER = Path(
+    os.environ.get("W3D_ASSEMBLER")
+    or shutil.which("ez80asm")
+    or STAGED_ROOT / "src/asm/wolf3d/tgt/.tools/ez80asm"
+)
 RESULT_SIZE = 16
 
 REASONS = {
@@ -89,7 +94,7 @@ def main() -> int:
     args = parser.parse_args()
     dependencies = (FAB, MOS, VDP)
     if not args.prebuilt:
-        dependencies = (PRODUCTION_SRC, FIXTURE, *dependencies)
+        dependencies = (PRODUCTION_SRC, FIXTURE, ASSEMBLER, *dependencies)
     for dependency in dependencies:
         if not dependency.exists():
             raise FileNotFoundError(f"missing shell regression dependency: {dependency}")
@@ -113,7 +118,7 @@ def main() -> int:
         shutil.copytree(PRODUCTION_SRC, build_src)
         entry = build_src / "s.asm"
         shutil.copyfile(FIXTURE, entry)
-        run(["ez80asm", entry.name, str(binary)], cwd=build_src)
+        run([str(ASSEMBLER), entry.name, str(binary)], cwd=build_src)
     digest = hashlib.sha256(binary.read_bytes()).hexdigest()
     print(f"binary: {binary.stat().st_size} bytes, sha256={digest}")
     (sdcard / "autoexec.txt").write_bytes(

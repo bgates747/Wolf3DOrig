@@ -39,6 +39,7 @@ SHELL_CHUNK_NAMES = {
     46: "episode_5",
     47: "episode_6",
     99: "title",
+    100: "pg13",
     101: "credits",
     102: "high_scores_heading",
     137: "paused",
@@ -54,12 +55,19 @@ SHELL_EXPECTED_DIMENSIONS = {
     40: (216, 48),
     **{chunk_id: (48, 24) for chunk_id in range(42, 48)},
     99: (320, 200),
+    100: (88, 64),
     101: (320, 200),
     102: (224, 56),
     137: (24, 32),
 }
 
 SHELL_CHUNKS = tuple(SHELL_CHUNK_NAMES)
+
+# Raw pictures default to their caller-selected position. PG13PIC is the one
+# startup picture whose original anchor is part of the durable shell contract.
+SHELL_CHUNK_POSITIONS = {
+    100: (216, 110),
+}
 
 # New images generated from the original control-panel drawing contract.
 # Deliberate gaps keep related selection overlays contiguous and auditable.

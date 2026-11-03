@@ -42,6 +42,7 @@ from formats.shell import (  # noqa: E402
     SHELL_CHUNKS,
     SHELL_CHUNK_BUFFER_BASE,
     SHELL_CHUNK_NAMES,
+    SHELL_CHUNK_POSITIONS,
     SHELL_COMPOSITE_BUFFER_BASE,
     SHELL_COMPOSITE_BUFFER_IDS,
     SHELL_EXPECTED_DIMENSIONS,
@@ -611,14 +612,15 @@ def build_shell_assets(
     records: list[BufferRecord] = []
     for chunk_id in SHELL_CHUNKS:
         name = SHELL_CHUNK_NAMES[chunk_id]
+        plot_x, plot_y = SHELL_CHUNK_POSITIONS.get(chunk_id, (0, 0))
         entry, record = _stage_image(
             name=name,
             image=raw_images[name],
             source=raw_sources[name],
             chunk_id=chunk_id,
             buffer_id=chunk_buffer_id(chunk_id),
-            plot_x=0,
-            plot_y=0,
+            plot_x=plot_x,
+            plot_y=plot_y,
             original_dir=original_dir,
             processed_dir=processed_dir,
             palette_file=palette_file,

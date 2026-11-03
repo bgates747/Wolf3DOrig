@@ -884,6 +884,21 @@ test_attract_timing:
     CHECK_PLOT 0,W3D_SHELL_TITLE_BUFFER,0,0
     CHECK_PLOT 6,W3D_SHELL_CREDITS_BUFFER,0,0
     CHECK_EXIT 0
+    ld a,54
+    ld (test_case),a
+    ld hl,test_sysvars
+    xor a
+    ld (hl),a
+    ld de,test_sysvars+1
+    ld bc,23
+    ldir
+    call test_reset_plots
+    ld hl,script_pg13_timeout
+    call test_set_script
+    call w3d_shell_show_original_splash
+    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_PG13_BUFFER,W3D_SHELL_PG13_X,W3D_SHELL_PG13_Y
+    CHECK_EXIT 0
     ret
 
 test_draw_contract:
@@ -1627,12 +1642,16 @@ script_main_difficulty_escape:
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
     db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
 script_title_escape:
+    db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE
     db SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_victory_escape:
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_ack_then_escape:
+    db SCRIPT_RELEASE,SCRIPT_TICK
     db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_pg13_timeout:
+    db SCRIPT_RELEASE,SCRIPT_TICK
 script_attract_cycle:
     db SCRIPT_RELEASE,SCRIPT_TICK,SCRIPT_RELEASE
     db SCRIPT_TICK,SCRIPT_RELEASE,SCRIPT_TICK,SCRIPT_RELEASE

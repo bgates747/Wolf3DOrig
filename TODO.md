@@ -214,6 +214,16 @@ neighbor allowance only if it can retain player-facing semantics without VDP
 read-back or duplicating the full renderer hot path.
 The remembered-slot F8/F9 presentation difference recorded in item 14 is
 closed.
+The startup sweep restored `WL_MAIN.C::DemoLoop`'s call to
+`WL_INTER.C::PG13`: the bundled `PG13PIC` now appears
+once per process at its original `(216,110)` anchor on the source blue field,
+waits seven seconds, and accepts one fresh key only to dismiss that page before
+the title/attract loop. Exact VGA fade timing remains an intentional platform
+difference. The fixed Agon W/S/A/D plus arrows control scheme, fixed movement
+rates, and absence of DOS mouse/joystick/run-modifier configuration are also
+explicit platform substitutions rather than hidden Phase-A work. Host asset
+contracts pass and both application backends rebuild; the direct shell target
+and one staged visual startup review remain the close gate for this correction.
 
 # Phase B — Agon identity and legal presentation
 

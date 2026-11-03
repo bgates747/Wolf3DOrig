@@ -7,11 +7,11 @@ implements that shell together with TODO 2a's Episode 1 victory return. It
 establishes the application lifecycle around a new game, a completed episode,
 an aborted game, and a clean quit.
 
-The implemented first slice is intentionally smaller than the original control
-panel:
+The original first-slice plan below is retained as design history. Production
+has since grown into the complete Phase-A shell tracked by the root TODO.
 
-1. Retain a hook for a future Agon-specific splash, but currently begin on the
-   original title screen carrying the Wolf3DOrig application version.
+1. Retain a hook for a future Agon-specific splash, then present the original
+   one-time PG-13 notice before the title carrying the Wolf3DOrig version.
 2. Enter a main menu with **New Game** and **Quit**.
 3. Reproduce the original shareware episode menu: Episode 1 is selectable and
    Episodes 2-6 remain visibly disabled. Then offer the original four
@@ -48,8 +48,8 @@ for 10 seconds, high scores for 10 seconds, and one of four recorded demos.
 Any input enters `US_ControlPanel`. Starting or loading a game calls
 `GameLoop`; returning from it resumes intro music and the attract loop.
 
-For the Agon port, a static title leading to the main menu is the useful core.
-The timed attract loop and recorded demos are independent presentation work.
+The Agon port now preserves that one-time PG-13 page and the complete timed
+title/credits/high-score/four-demo attract loop.
 
 ## Graphics inventory
 
@@ -161,7 +161,7 @@ stops the shared effect channels at its ownership boundary;
 final application exit restores the caller's base single-buffered mode:
 
 ```text
-startup -> optional Agon splash hook -> original title -> main menu
+startup -> optional Agon splash hook -> PG-13 notice -> original title -> main menu
                                                       |          |
                                                       |          +-> quit
                                                       +-> input      |
@@ -221,9 +221,10 @@ entry points, and bitmap coordinates. Production transition regressions cover
 ordinary, secret, secret-return, and victory routes. Human emulator validation
 remains mandatory before committing this emulator-dependent candidate.
 
-High scores, save/load, settings, help, demos, the original victory/intermission
-presentation, and music remain in their respective TODOs rather than silently
-expanding TODO 3a.
+High scores, save/load, settings, help, demos, victory/intermission, and music
+are now implemented and retain separate visual/audible acceptance gates in the
+root TODO. Exact VGA fade timing and unavailable DOS input hardware remain
+documented platform differences.
 
 ## Settled shell decisions
 

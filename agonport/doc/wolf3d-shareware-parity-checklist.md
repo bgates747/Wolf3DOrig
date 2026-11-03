@@ -468,6 +468,27 @@ Exact open discrepancy ledger, 2026-11-03:
    retain the conservative behavior unless a genuine renderer visibility ABI
    or an equally exact low-cost CPU predicate is established.
 
+Startup correction, 2026-11-03: the application shell skipped the original
+one-time `WL_INTER.C::PG13` presentation even though its archive art was
+already inventoried. `PG13PIC` is now admitted as raw shell asset 100, plotted
+at the source `(216,110)` anchor over the RGB222 equivalent of VGA index
+`0x82`, and held for seven seconds or one fresh dismissing key before the
+title. The page runs only on initial process entry, not after demos or gameplay
+return, matching `DemoLoop` ownership. Exact VGA fade timing is intentionally
+not emulated.
+
+Additional intentional platform substitutions, 2026-11-03:
+
+2. The accepted keyboard contract is W/S forward/back, A/D strafe, arrow keys
+   turn, Up use, Space fire, and 1-4 weapon selection. DOS Shift-run,
+   Alt-strafe, mouse, joystick, configurable scan codes, and variable movement
+   rates are not exposed as fictitious settings. This is the project's
+   deliberate modern Agon control surface, not unfinished source behavior.
+3. Source calls to `VW_FadeIn`, `VW_FadeOut`, `MenuFadeIn`, and `MenuFadeOut`
+   are represented by immediate page changes. Exact VGA palette-ramp timing is
+   an accepted presentation difference; page content, ownership, input, and
+   lifecycle transitions remain parity requirements.
+
 Debug cheats, paid-episode content, obsolete DOS copy protection, VGA palette
 timing exactness, and unavailable hardware configuration choices are not
 required unless separately promoted.

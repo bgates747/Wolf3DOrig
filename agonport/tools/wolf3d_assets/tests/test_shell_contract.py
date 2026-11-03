@@ -146,6 +146,16 @@ class ShellArchiveTests(unittest.TestCase):
                 {chunk_buffer_id(chunk_id) for chunk_id in SHELL_CHUNKS},
             )
             self.assertEqual(raw["title"].bufferId, 0x4263)
+            self.assertEqual(raw["pg13"].bufferId, 0x4264)
+            self.assertEqual(
+                (
+                    raw["pg13"].width,
+                    raw["pg13"].height,
+                    raw["pg13"].plotX,
+                    raw["pg13"].plotY,
+                ),
+                (88, 64, 216, 110),
+            )
             self.assertEqual(raw["credits"].bufferId, 0x4265)
             self.assertEqual(raw["high_scores_heading"].bufferId, 0x4266)
             self.assertEqual(raw["paused"].bufferId, 0x4289)
@@ -185,6 +195,9 @@ class ShellArchiveTests(unittest.TestCase):
             self.assertTrue((out / "shell.agnb").read_bytes().startswith(b"RIFF"))
             constants = (out / "wolf3d_shell_assets.inc").read_text()
             self.assertIn("W3D_SHELL_TITLE_BUFFER: equ $4263", constants)
+            self.assertIn("W3D_SHELL_PG13_BUFFER: equ $4264", constants)
+            self.assertIn("W3D_SHELL_PG13_X: equ 216", constants)
+            self.assertIn("W3D_SHELL_PG13_Y: equ 110", constants)
             self.assertIn("W3D_SHELL_PAUSED_BUFFER: equ $4289", constants)
             self.assertIn("W3D_SHELL_MAIN_BASE_BUFFER: equ $4300", constants)
             self.assertIn("W3D_SHELL_MAIN_BASE_WIDTH: equ 320", constants)
