@@ -705,13 +705,6 @@ w3d_actor_bite_in_range:
 ; the HUD is dirtied only on a real change, and death freezes future fixed
 ; steps without aborting the current actor pass.
 w3d_take_player_damage:
-    .if W3D_DIAGNOSTIC_INVULNERABLE
-    ld a,(w3d_current_actor_index)
-    ld (w3d_player_last_attacker),a
-    call w3d_end_chaingun_face
-    xor a
-    ret
-    .endif
     ld c,a                          ; face/HUD helpers may consume B
     ld a,(w3d_current_actor_index)
     ld (w3d_player_last_attacker),a
@@ -724,6 +717,13 @@ w3d_take_player_damage:
     srl a
     srl a
 @difficulty_ready:
+    ld c,a
+    call w3d_start_damage_flash
+    ld a,c
+    .if W3D_DIAGNOSTIC_INVULNERABLE
+    xor a
+    ret
+    .endif
     ld b,a
     ld a,(w3d_player_health)
     or a

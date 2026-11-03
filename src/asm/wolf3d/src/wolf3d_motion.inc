@@ -88,6 +88,10 @@ W3D_HUD_DIRTY_WEAPON:           equ 00001000b
 W3D_HUD_DIRTY_SCORE:            equ 00010000b
 W3D_HUD_DIRTY_LIVES:            equ 00100000b
 W3D_HUD_DIRTY_FACE:             equ 01000000b
+W3D_HUD_DIRTY_PALETTE:          equ 10000000b
+W3D_PALETTE_WHITE_FLAG:         equ 080h
+W3D_PALETTE_RED_MAX:            equ 6
+W3D_PALETTE_WHITE_MAX:          equ 3
 
     include "wolf3d_pushwall.inc"
 
@@ -221,6 +225,12 @@ w3d_seed_level_world_state:
     ld (w3d_player_face_tick_phase),a
     ld (w3d_player_face_special),a
     ld (w3d_player_face_special_ticks),a
+    ld (w3d_palette_damage_count+0),a
+    ld (w3d_palette_damage_count+1),a
+    ld (w3d_palette_bonus_count+0),a
+    ld (w3d_palette_bonus_count+1),a
+    ld (w3d_palette_tick_phase),a
+    ld (w3d_palette_shift_wire),a
     ld (w3d_player_dead),a
     ld (w3d_level_completion),a
     ld a,W3D_SLOT_NONE
@@ -317,7 +327,7 @@ w3d_mark_full_level_dirty:
     djnz @actor_loop
 
 @player:
-    ld a,W3D_HUD_DIRTY_HEALTH|W3D_HUD_DIRTY_AMMO|W3D_HUD_DIRTY_KEYS|W3D_HUD_DIRTY_WEAPON|W3D_HUD_DIRTY_SCORE|W3D_HUD_DIRTY_LIVES|W3D_HUD_DIRTY_FACE
+    ld a,W3D_HUD_DIRTY_HEALTH|W3D_HUD_DIRTY_AMMO|W3D_HUD_DIRTY_KEYS|W3D_HUD_DIRTY_WEAPON|W3D_HUD_DIRTY_SCORE|W3D_HUD_DIRTY_LIVES|W3D_HUD_DIRTY_FACE|W3D_HUD_DIRTY_PALETTE
     ld (w3d_hud_dirty),a
     ld a,1
     ld (w3d_pushwall_dirty),a
@@ -617,6 +627,7 @@ w3d_simulate_player_step:
     call w3d_collect_pending_pickups
     call w3d_simulate_player_combat
     call w3d_simulate_actors
+    call w3d_update_palette_shift
     jp w3d_demo_advance_step
 
 ; Reconstruct the original per-frame `thrustspeed` gameplay signal from this
@@ -674,6 +685,7 @@ w3d_update_player_face:
     dec a
     ld (w3d_player_face_special_ticks),a
     ret
+
 @ordinary:
     ld a,(w3d_player_face_tick_phase)
     cp 2
@@ -725,6 +737,142 @@ w3d_update_player_face:
     ld a,(w3d_hud_dirty)
     or W3D_HUD_DIRTY_FACE
     ld (w3d_hud_dirty),a
+    ret
+
+; Reproduce WL_PLAY.C's palette counters without changing the fixed 30-Hz
+; simulation.  The independent 2,2,3 cadence advances exactly seven original
+; 70-Hz tics every three quanta.  Publish the pre-decrement level, as the
+; source does, and let red damage take priority while the white bonus counter
+; continues to decay underneath it.
+w3d_update_palette_shift:
+    ld a,(w3d_palette_damage_count+1)
+    or a
+    jr nz,@red_max
+    ld a,(w3d_palette_damage_count+0)
+    or a
+    jr z,@white
+    cp 50
+    jr nc,@red_max
+    ld b,1
+    cp 10
+    jr c,@publish
+    inc b
+    cp 20
+    jr c,@publish
+    inc b
+    cp 30
+    jr c,@publish
+    inc b
+    cp 40
+    jr c,@publish
+    inc b
+    jr @publish
+@red_max:
+    ld b,W3D_PALETTE_RED_MAX
+    jr @publish
+@white:
+    ld a,(w3d_palette_bonus_count+1)
+    or a
+    jr nz,@white_max
+    ld a,(w3d_palette_bonus_count+0)
+    or a
+    jr z,@normal
+    ld b,W3D_PALETTE_WHITE_FLAG+1
+    cp 6
+    jr c,@publish
+    inc b
+    cp 12
+    jr c,@publish
+@white_max:
+    ld b,W3D_PALETTE_WHITE_FLAG+W3D_PALETTE_WHITE_MAX
+    jr @publish
+@normal:
+    ld b,0
+@publish:
+    ld a,(w3d_palette_shift_wire)
+    cp b
+    jr z,@choose_tics
+    ld a,b
+    ld (w3d_palette_shift_wire),a
+    ld a,W3D_HUD_DIRTY_PALETTE
+    call w3d_mark_hud_dirty
+@choose_tics:
+    ld a,(w3d_palette_tick_phase)
+    cp 2
+    jr z,@three_tics
+    inc a
+    ld (w3d_palette_tick_phase),a
+    ld a,2
+    jr @store_tics
+@three_tics:
+    xor a
+    ld (w3d_palette_tick_phase),a
+    ld a,3
+@store_tics:
+    ld (w3d_palette_step_tics),a
+    ld hl,w3d_palette_bonus_count
+    call w3d_decay_palette_counter
+    ld hl,w3d_palette_damage_count
+    jp w3d_decay_palette_counter
+
+; HL -> little-endian unsigned counter; saturating subtract of this quantum's
+; original-tic count.  Only H/L/D/E significant; upper GP bytes are ignored.
+w3d_decay_palette_counter:
+    ld a,(hl)
+    ld e,a
+    inc hl
+    ld a,(hl)
+    ld d,a
+    dec hl
+    ld a,d
+    or e
+    ret z
+    push hl
+    ld hl,0
+    ld a,(w3d_palette_step_tics)
+    ld l,a
+    ex de,hl
+    or a
+    sbc.s hl,de
+    jr nc,@store
+    ld hl,0
+@store:
+    ex de,hl
+    pop hl
+    ld (hl),e
+    inc hl
+    ld (hl),d
+    ret
+
+; Original StartBonusFlash always replaces the current bonus counter.
+w3d_start_bonus_flash:
+    ld a,18
+    ld (w3d_palette_bonus_count+0),a
+    xor a
+    ld (w3d_palette_bonus_count+1),a
+    ret
+
+; A=already difficulty-scaled damage. Original StartDamageFlash accumulates.
+w3d_start_damage_flash:
+    or a
+    ret z
+    ld c,a
+    ld de,0
+    ld a,c
+    ld e,a
+    ld hl,0
+    ld a,(w3d_palette_damage_count+0)
+    ld l,a
+    ld a,(w3d_palette_damage_count+1)
+    ld h,a
+    add.s hl,de
+    jr nc,@store_damage
+    ld hl,0ffffh
+@store_damage:
+    ld a,l
+    ld (w3d_palette_damage_count+0),a
+    ld a,h
+    ld (w3d_palette_damage_count+1),a
     ret
 
 ; DE is a signed turn delta; the persistent wire angle remains 0..359.
@@ -1761,6 +1909,7 @@ w3d_apply_current_pickup:
     call w3d_increment_treasure_count
 
 @consume:
+    call w3d_start_bonus_flash
     call w3d_request_current_pickup_sound
     ld a,0ffh
     ld (ix+W3D_STATIC_SHAPENUM+0),a
@@ -3194,6 +3343,18 @@ w3d_player_face_tick_phase:
 w3d_player_face_special:
     db 0
 w3d_player_face_special_ticks:
+    db 0
+
+; Transient WL_PLAY.C damage/bonus palette state. None is save-persistent.
+w3d_palette_damage_count:
+    dw 0
+w3d_palette_bonus_count:
+    dw 0
+w3d_palette_tick_phase:
+    db 0
+w3d_palette_step_tics:
+    db 0
+w3d_palette_shift_wire:
     db 0
 
 w3d_player_ammo:

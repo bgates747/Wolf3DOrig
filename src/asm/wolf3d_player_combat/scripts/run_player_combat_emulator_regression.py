@@ -33,6 +33,7 @@ PHASES = {
     4: "damage/death/drops",
     5: "weapon selection/input",
     6: "HUD face random/cadence",
+    7: "damage/bonus palette shifts",
 }
 
 REASONS = {

@@ -7,7 +7,7 @@
 #define W3P_ARGUMENT_MAGIC                0x41503357u  // "W3PA" little-endian
 #define W3P_BATCH_MAGIC                   0x55443357u  // "W3DU" little-endian
 #define W3P_MODULE_ID                     0x31503357u  // "W3P1" production renderer identity
-#define W3P_MODULE_RELEASE                0x00010100u  // module release 1.1.0
+#define W3P_MODULE_RELEASE                0x00010101u  // module release 1.1.1
 #define W3P_SCHEMA_VERSION                2u           // wire schema, independent of module release
 #define W3P_REQUIRED_CAPABILITIES         257u         // buffers plus direct colour rows
 #define W3P_ENTRY_CONFIG                  0u           // validate resource descriptor
@@ -77,6 +77,11 @@
 #define W3P_ACTOR_REMOVE_BYTES            2u           // actor id:u16
 #define W3P_STATIC_BYTES                  7u           // id:u16 plus existing 5-byte static wire
 #define W3P_HUD_BYTES                     12u          // complete HUD value record
+#define W3P_HUD_FACE_OFFSET               9u           // ordinary 0..2 or GOTGATLINGPIC sentinel 3
+#define W3P_HUD_PALETTE_OFFSET            11u          // transient palette-shift wire byte
+#define W3P_HUD_PALETTE_WHITE_FLAG        128u         // white bonus-shift selector
+#define W3P_HUD_PALETTE_RED_MAX           6u           // original NUMREDSHIFTS
+#define W3P_HUD_PALETTE_WHITE_MAX         3u           // original NUMWHITESHIFTS
 #define W3P_VIEW_WEAPON_BYTES             2u           // shape:i16
 #define W3P_PUSHWALL_BYTES                89u          // live:8,count:u8,16 completed entries
 #define W3P_PUSHWALL_STATUS               0u           // live status byte

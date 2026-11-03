@@ -22,7 +22,7 @@ SDK = Path("/Agon/mystuff/agon-vdplet/build/vdpl-014/baseline")
 SDK_PYTHON = Path("/Agon/mystuff/agon-vdplet/.venv/bin/python")
 TOOLCHAIN = Path("/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin")
 EXPECTED_PACKAGE_SHA256 = (
-    "2907f0898115c5f155f2aff733958d41f0a2f94c2080f744fde3fd2b0f7dfbde"
+    "fdd78204aabf94900415c0741fb98da7ee4035781fb3e957784522d2277ec1bc"
 )
 FRAME_BYTES = 76800
 HUD_MANIFEST = (
@@ -184,7 +184,7 @@ def main() -> None:
         "batch_max_records": 618,
         "maximum_full_snapshot_bytes": 6982,
         "atomic_validation": True,
-        "renderer_scenarios": 4,
+        "renderer_scenarios": 6,
         "renderer_frame_bytes_compared": len(renderer_frame.read_bytes()),
         "renderer_geometry_bytes_compared": len(renderer_geometry.read_bytes()),
         "renderer_frame_sha256": sha(renderer_frame),

@@ -48,6 +48,7 @@ struct Hud {
     uint8_t level;
     uint8_t face;
     uint8_t lives;
+    uint8_t palette_shift;
 };
 
 struct PushwallCompletion {

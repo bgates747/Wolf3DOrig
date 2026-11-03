@@ -169,6 +169,55 @@ void compose_background(const RenderTarget &frame) {
               kViewX + kViewWidth, kViewY + kViewHeight, kCyanBevel);
 }
 
+uint8_t shifted_component(uint8_t component, uint8_t target,
+                          uint8_t level, uint8_t steps) {
+    const int value = component +
+        (static_cast<int>(target) - component) * level / steps;
+    return static_cast<uint8_t>(value < 0 ? 0 : (value > 63 ? 63 : value));
+}
+
+uint8_t quantize_component(uint8_t component) {
+    const uint8_t quantized = static_cast<uint8_t>((component + 10u) / 21u);
+    return quantized > 3 ? 3 : quantized;
+}
+
+uint8_t palette_shift_color(uint8_t color, uint8_t shift) {
+    const uint8_t red = static_cast<uint8_t>((color & 3u) * 21u);
+    const uint8_t green = static_cast<uint8_t>(((color >> 2) & 3u) * 21u);
+    const uint8_t blue = static_cast<uint8_t>(((color >> 4) & 3u) * 21u);
+    uint8_t shifted_red;
+    uint8_t shifted_green;
+    uint8_t shifted_blue;
+    if ((shift & W3P_HUD_PALETTE_WHITE_FLAG) != 0) {
+        const uint8_t level = static_cast<uint8_t>(
+            shift & ~W3P_HUD_PALETTE_WHITE_FLAG);
+        shifted_red = shifted_component(red, 64, level, 20);
+        shifted_green = shifted_component(green, 62, level, 20);
+        shifted_blue = shifted_component(blue, 0, level, 20);
+    } else {
+        shifted_red = shifted_component(red, 64, shift, 8);
+        shifted_green = shifted_component(green, 0, shift, 8);
+        shifted_blue = shifted_component(blue, 0, shift, 8);
+    }
+    return static_cast<uint8_t>(quantize_component(shifted_red) |
+        (quantize_component(shifted_green) << 2) |
+        (quantize_component(shifted_blue) << 4));
+}
+
+void apply_palette_shift(const RenderTarget &frame, uint8_t shift) {
+    if (shift == 0) return;
+    uint8_t shifted[64];
+    for (uint8_t color = 0; color < 64; ++color)
+        shifted[color] = palette_shift_color(color, shift);
+    for (uint32_t y = 0; y < W3P_SCREEN_HEIGHT; ++y) {
+        for (uint32_t x = 0; x < W3P_SCREEN_WIDTH; ++x) {
+            const uint8_t color = static_cast<uint8_t>(
+                *target_pixel(frame, x, y) & frame.color_mask);
+            put_pixel(frame, x, y, shifted[color]);
+        }
+    }
+}
+
 ViewState setup_view(const WorldMirror &world) {
     const int32_t fine = static_cast<int32_t>(world.player.angle) * 10;
     ViewState view;
@@ -931,7 +980,10 @@ RenderDetail render_world_to_target(const WorldMirror &world,
     if (detail != RenderDetail::ok) return detail;
     detail = draw_view_weapon(world, resources, frame, stats);
     if (detail != RenderDetail::ok) return detail;
-    return draw_hud(world, resources, frame, stats);
+    detail = draw_hud(world, resources, frame, stats);
+    if (detail != RenderDetail::ok) return detail;
+    apply_palette_shift(frame, world.hud.palette_shift);
+    return RenderDetail::ok;
 }
 
 RenderDetail render_world(const WorldMirror &world,

@@ -116,13 +116,15 @@ std::vector<uint8_t> static_payload(uint16_t index, int16_t shape = 16) {
     return p;
 }
 
-std::vector<uint8_t> hud_payload(uint8_t health = 100, uint32_t score = 12345) {
+std::vector<uint8_t> hud_payload(uint8_t health = 100, uint32_t score = 12345,
+                                 uint8_t face = 0,
+                                 uint8_t palette_shift = 0) {
     std::vector<uint8_t> p = {health, 8, 3, 1};
     append_u32(p, score);
     p.push_back(1);
-    p.push_back(0);
+    p.push_back(face);
     p.push_back(3);
-    p.push_back(0);
+    p.push_back(palette_shift);
     return p;
 }
 
@@ -241,7 +243,8 @@ void test_valid_full_and_partial() {
     append_u16(remove, 2);
     partial.record(W3P_RECORD_ACTOR_REMOVE, remove);
     partial.record(W3P_RECORD_STATIC, static_payload(2, -1));
-    partial.record(W3P_RECORD_HUD, hud_payload(75, 999));
+    partial.record(W3P_RECORD_HUD, hud_payload(
+        75, 999, 3, W3P_HUD_PALETTE_WHITE_FLAG + 3));
     partial.record(W3P_RECORD_VIEW_WEAPON, weapon_payload(-1));
     partial.record(W3P_RECORD_PUSHWALL,
                    pushwall_payload(1, 10, 10, 10, 10, 0, 32, 4));
@@ -253,6 +256,9 @@ void test_valid_full_and_partial() {
                 mirror.doors[1].position == 0x8000 &&
                 mirror.actors[2].shape == -1 && mirror.statics[2].shape == -1 &&
                 mirror.hud.health == 75 && mirror.hud.score == 999 &&
+                mirror.hud.face == 3 &&
+                mirror.hud.palette_shift ==
+                    W3P_HUD_PALETTE_WHITE_FLAG + 3 &&
                 mirror.view_weapon_shape == -1 &&
                 mirror.pushwall.status == 1 &&
                 mirror.pushwall.position == 32,
@@ -361,6 +367,23 @@ void test_atomic_rejections() {
                         pushwall_payload(1, 10, 10, 11, 10, 2, 32, 4));
     expect_preserved(mirror, bad_pushwall.finish(2, 0),
                      BatchDetail::argument, "pushwall direction mismatch");
+
+    Batch bad_face;
+    bad_face.record(W3P_RECORD_HUD, hud_payload(100, 0, 4, 0));
+    expect_preserved(mirror, bad_face.finish(2, 0), BatchDetail::argument,
+                     "unknown HUD face sentinel");
+
+    Batch bad_palette;
+    bad_palette.record(W3P_RECORD_HUD, hud_payload(100, 0, 0, 7));
+    expect_preserved(mirror, bad_palette.finish(2, 0), BatchDetail::argument,
+                     "invalid red palette level");
+
+    Batch bad_white_palette;
+    bad_white_palette.record(
+        W3P_RECORD_HUD,
+        hud_payload(100, 0, 0, W3P_HUD_PALETTE_WHITE_FLAG + 4));
+    expect_preserved(mirror, bad_white_palette.finish(2, 0),
+                     BatchDetail::argument, "invalid white palette level");
 
     Batch short_record;
     short_record.record(W3P_RECORD_PLAYER, std::vector<uint8_t>(9, 0));

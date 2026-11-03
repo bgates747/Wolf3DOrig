@@ -535,8 +535,8 @@ w3d_vdplet_batch_append_hud:
     ld (w3d_vdplet_hud_payload+9),a
     ld a,(w3d_player_lives)
     ld (w3d_vdplet_hud_payload+10),a
-    xor a
-    ld (w3d_vdplet_hud_payload+11),a
+    ld a,(w3d_palette_shift_wire)
+    ld (w3d_vdplet_hud_payload+W3P_HUD_PALETTE_OFFSET),a
     ld a,W3P_RECORD_HUD
     ld b,W3P_HUD_BYTES
     call w3d_vdplet_batch_begin_record

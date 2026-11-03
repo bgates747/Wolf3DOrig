@@ -121,6 +121,16 @@ a dedicated wire sentinel, holds it for the generated duration of the selected
 resident `GETGATLINGSND` sample, resumes the ordinary random face transition,
 and cancels it immediately on damage or successful healing. The special state
 is attempt-local, while the ordinary `faceframe` remains the saved value.
+The residual sweep also restored `WL_PLAY.C`'s transient palette feedback:
+successful pickups start the original three-level white flash, scaled damage
+accumulates through the six red levels with red priority, and both counters
+decay on the exact 2,2,3 source-tic cadence. Reserved HUD byte 11 carries the
+effect schema-compatibly; the RGB222 VDPlet renderer preserves direct-row sync
+bits and uses a 64-color lookup for the source palette formula. The same
+end-to-end gate fixed the packaged module's stale rejection of face sentinel
+3. Oryx generation 160 passes 549 player-combat/palette checks, all 32 pickup
+cases, and byte-exact serialization; the six-scene renderer/oracle gate is
+exact.
 
 # Phase B — Agon identity and legal presentation
 

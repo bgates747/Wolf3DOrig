@@ -67,7 +67,7 @@ WorldMirror make_world(int scenario) {
     world.player = {spec.player_x, spec.player_y, spec.player_angle};
     world.view_weapon_shape = spec.view_weapon_shape;
     world.hud = {spec.health, spec.ammo, spec.keys, spec.weapon, spec.score,
-                 spec.level, spec.face, spec.lives};
+                 spec.level, spec.face, spec.lives, spec.palette_shift};
     for (uint8_t i = 0; i < 2; ++i) {
         world.doors[i].position = spec.doors[i].position;
         world.doors[i].tile_x = spec.doors[i].x;

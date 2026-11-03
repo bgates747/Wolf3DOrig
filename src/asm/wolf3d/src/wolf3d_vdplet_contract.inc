@@ -4,7 +4,7 @@
 W3P_ARGUMENT_MAGIC:                equ 0x41503357   ; "W3PA" little-endian
 W3P_BATCH_MAGIC:                   equ 0x55443357   ; "W3DU" little-endian
 W3P_MODULE_ID:                     equ 0x31503357   ; "W3P1" production renderer identity
-W3P_MODULE_RELEASE:                equ 0x10100      ; module release 1.1.0
+W3P_MODULE_RELEASE:                equ 0x10101      ; module release 1.1.1
 W3P_SCHEMA_VERSION:                equ 2            ; wire schema, independent of module release
 W3P_REQUIRED_CAPABILITIES:         equ 0x101        ; buffers plus direct colour rows
 W3P_ENTRY_CONFIG:                  equ 0            ; validate resource descriptor
@@ -74,6 +74,11 @@ W3P_ACTOR_SET_BYTES:               equ 0xF          ; existing actor wire record
 W3P_ACTOR_REMOVE_BYTES:            equ 2            ; actor id:u16
 W3P_STATIC_BYTES:                  equ 7            ; id:u16 plus existing 5-byte static wire
 W3P_HUD_BYTES:                     equ 0xC          ; complete HUD value record
+W3P_HUD_FACE_OFFSET:               equ 9            ; ordinary 0..2 or GOTGATLINGPIC sentinel 3
+W3P_HUD_PALETTE_OFFSET:            equ 0xB          ; transient palette-shift wire byte
+W3P_HUD_PALETTE_WHITE_FLAG:        equ 0x80         ; white bonus-shift selector
+W3P_HUD_PALETTE_RED_MAX:           equ 6            ; original NUMREDSHIFTS
+W3P_HUD_PALETTE_WHITE_MAX:         equ 3            ; original NUMWHITESHIFTS
 W3P_VIEW_WEAPON_BYTES:             equ 2            ; shape:i16
 W3P_PUSHWALL_BYTES:                equ 0x59         ; live:8,count:u8,16 completed entries
 W3P_PUSHWALL_STATUS:               equ 0            ; live status byte

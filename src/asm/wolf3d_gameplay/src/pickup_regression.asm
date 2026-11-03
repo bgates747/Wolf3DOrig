@@ -368,6 +368,12 @@ prepare_case:
     ld (w3d_hud_dirty),a
     ld (w3d_world_dirty),a
     ld (w3d_player_dirty),a
+    ld (w3d_palette_damage_count+0),a
+    ld (w3d_palette_damage_count+1),a
+    ld (w3d_palette_bonus_count+0),a
+    ld (w3d_palette_bonus_count+1),a
+    ld (w3d_palette_tick_phase),a
+    ld (w3d_palette_shift_wire),a
 
     ld a,(iy+rec_initial_health)
     ld (w3d_player_health),a
@@ -419,6 +425,19 @@ validate_case:
     ld a,(actual_return)
     ld b,(iy+rec_expected_return)
     ld c,reason_return
+    call assert_equal
+    ld b,0
+    ld a,(actual_return)
+    or a
+    jr z,@bonus_expected
+    ld b,18
+@bonus_expected:
+    ld a,(w3d_palette_bonus_count+0)
+    ld c,reason_hud_dirty
+    call assert_equal
+    ld a,(w3d_palette_bonus_count+1)
+    ld b,0
+    ld c,reason_hud_dirty
     call assert_equal
     ld a,(w3d_player_health)
     ld b,(iy+rec_expected_health)

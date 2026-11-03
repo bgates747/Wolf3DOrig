@@ -251,7 +251,7 @@ std::vector<uint8_t> hud_payload(const fixture::SceneSpec &spec,
     payload.push_back(spec.level);
     payload.push_back(spec.face);
     payload.push_back(spec.lives);
-    payload.push_back(0);
+    payload.push_back(spec.palette_shift);
     return payload;
 }
 
@@ -306,9 +306,14 @@ std::vector<uint8_t> full_batch() {
     return batch.finish(1, W3P_BATCH_FLAG_FULL);
 }
 
-std::vector<uint8_t> hud_batch(uint16_t generation, uint32_t score) {
+std::vector<uint8_t> hud_batch(uint16_t generation, uint32_t score,
+                               uint8_t face = 0,
+                               uint8_t palette_shift = 0) {
     Batch batch;
-    batch.record(W3P_RECORD_HUD, hud_payload(fixture::scene(0), score));
+    fixture::SceneSpec spec = fixture::scene(0);
+    spec.face = face;
+    spec.palette_shift = palette_shift;
+    batch.record(W3P_RECORD_HUD, hud_payload(spec, score));
     return batch.finish(generation, 0);
 }
 
@@ -345,7 +350,7 @@ void install_assets(Context &context) {
     context.buffers[fixture::kHudBase + 98].resize(320 * 40);
     fixture::fill_asset(fixture::kHudBase + 98,
                         context.buffers[fixture::kHudBase + 98].data());
-    for (uint16_t chunk = 103; chunk <= 142; ++chunk) {
+    for (uint16_t chunk = 103; chunk <= 143; ++chunk) {
         const uint16_t buffer = fixture::kHudBase + chunk;
         context.buffers[buffer].resize(fixture::asset_bytes(buffer));
         fixture::fill_asset(buffer, context.buffers[buffer].data());
@@ -463,7 +468,7 @@ int main(int argc, char **argv) {
         require(context.hidden == accepted_frame, "malformed batch changed pixels");
         require_clean(context, "malformed batch");
 
-        const auto retry_batch = hud_batch(2, 222222);
+        const auto retry_batch = hud_batch(2, 222222, 3, 6);
         context.buffers[kUpdateId] = retry_batch;
         context.color_fail_row = 117;
         expect("publication failure", vdplet_entry(&host, &apply), VDPL_E_FORMAT);
@@ -477,7 +482,7 @@ int main(int argc, char **argv) {
                 "failed row acquisition retained a native pointer");
         require_clean(context, "publication failure");
 
-        context.buffers[kUpdateId] = hud_batch(2, 333333);
+        context.buffers[kUpdateId] = hud_batch(2, 333333, 3, 6);
         expect("altered retry", vdplet_entry(&host, &apply), VDPL_E_ARGUMENT);
         require_clean(context, "altered retry");
         context.buffers[kUpdateId] = retry_batch;

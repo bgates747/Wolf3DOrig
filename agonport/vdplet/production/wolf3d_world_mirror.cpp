@@ -322,7 +322,14 @@ BatchDetail validate_record(
         detail = mark_once(validation.hud_seen);
         if (detail != BatchDetail::ok) return detail;
         if (p[0] > 100 || p[1] > 99 || (p[2] & ~3u) != 0 || p[3] > 3 ||
-            p[8] == 0 || p[8] > 10 || p[9] > 2 || p[11] != 0) {
+            p[8] == 0 || p[8] > 10 || p[W3P_HUD_FACE_OFFSET] > 3) {
+            return BatchDetail::argument;
+        }
+        if (p[W3P_HUD_PALETTE_OFFSET] > W3P_HUD_PALETTE_RED_MAX &&
+            (p[W3P_HUD_PALETTE_OFFSET] <
+                 W3P_HUD_PALETTE_WHITE_FLAG + 1 ||
+             p[W3P_HUD_PALETTE_OFFSET] >
+                 W3P_HUD_PALETTE_WHITE_FLAG + W3P_HUD_PALETTE_WHITE_MAX)) {
             return BatchDetail::argument;
         }
         return BatchDetail::ok;
@@ -440,6 +447,7 @@ void apply_record(WorldMirror &mirror, uint8_t type, const uint8_t *p) {
         mirror.hud.level = p[8];
         mirror.hud.face = p[9];
         mirror.hud.lives = p[10];
+        mirror.hud.palette_shift = p[W3P_HUD_PALETTE_OFFSET];
         break;
     case W3P_RECORD_VIEW_WEAPON:
         mirror.view_weapon_shape = load_i16(p);

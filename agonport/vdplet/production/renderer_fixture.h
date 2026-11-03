@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#include "wolf3d_production_contract.h"
+
 namespace wolf3d_renderer_fixture {
 
 constexpr uint16_t kMapId = 2;
@@ -12,7 +14,7 @@ constexpr uint16_t kHudBase = 0x4000;
 constexpr uint32_t kMapBytes = 4096;
 constexpr uint32_t kTextureBytes = 4096;
 constexpr uint32_t kMaximumAssetBytes = 12800;
-constexpr int kScenarioCount = 4;
+constexpr int kScenarioCount = 6;
 
 struct DoorSpec {
     uint16_t position;
@@ -50,6 +52,7 @@ struct SceneSpec {
     uint8_t level;
     uint8_t face;
     uint8_t lives;
+    uint8_t palette_shift;
     DoorSpec doors[2];
     ActorSpec actors[3];
     StaticSpec statics[3];
@@ -154,6 +157,9 @@ inline SceneSpec scene(int index) {
         result.level = 3;
         result.face = 3;
         result.lives = 5;
+        if (index == 4) result.palette_shift = 6;
+        if (index == 5)
+            result.palette_shift = W3P_HUD_PALETTE_WHITE_FLAG + 3;
     }
     return result;
 }

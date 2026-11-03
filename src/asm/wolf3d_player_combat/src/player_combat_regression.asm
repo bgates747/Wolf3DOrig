@@ -82,7 +82,8 @@ phase_target:       equ 3
 phase_damage:       equ 4
 phase_inventory:    equ 5
 phase_face:         equ 6
-phase_count:        equ 6
+phase_palette:      equ 7
+phase_count:        equ 7
 
 reason_scalar:      equ 1
 reason_state:       equ 2
@@ -124,8 +125,76 @@ run_tests:
     call test_weapon_selection
     call test_player_audio_requests
     call test_face_timeline
+    call test_palette_timeline
     call write_result
     call print_report
+    ret
+
+; ---------------------------------------------------------------------------
+; 7. Original red/white palette counters, priority, cadence and clearing.
+; ---------------------------------------------------------------------------
+
+test_palette_timeline:
+    ld a,phase_palette
+    ld (test_phase),a
+    call prepare_test_world
+    xor a
+    ld (w3d_hud_dirty),a
+    call w3d_start_bonus_flash
+    call w3d_update_palette_shift
+    CHECK_MEM8 w3d_palette_shift_wire,W3D_PALETTE_WHITE_FLAG+3,reason_state
+    CHECK_MEM8 w3d_palette_bonus_count+0,16,reason_state
+    CHECK_MEM8 w3d_palette_tick_phase,1,reason_state
+    CHECK_MEM8 w3d_hud_dirty,W3D_HUD_DIRTY_PALETTE,reason_inventory
+
+; The 2,2,3 sequence reaches source count 11, then drops from white level 3
+; to level 2 on the following publish.
+    xor a
+    ld (w3d_hud_dirty),a
+    call w3d_update_palette_shift
+    CHECK_MEM8 w3d_palette_bonus_count+0,14,reason_state
+    CHECK_MEM8 w3d_palette_tick_phase,2,reason_state
+    CHECK_MEM8 w3d_hud_dirty,0,reason_inventory
+    call w3d_update_palette_shift
+    CHECK_MEM8 w3d_palette_bonus_count+0,11,reason_state
+    CHECK_MEM8 w3d_palette_tick_phase,0,reason_state
+    call w3d_update_palette_shift
+    CHECK_MEM8 w3d_palette_shift_wire,W3D_PALETTE_WHITE_FLAG+2,reason_state
+    CHECK_MEM8 w3d_palette_bonus_count+0,9,reason_state
+    CHECK_MEM8 w3d_hud_dirty,W3D_HUD_DIRTY_PALETTE,reason_inventory
+
+; Damage is additive and wins over a simultaneously live bonus counter.
+    ld a,25
+    call w3d_start_damage_flash
+    xor a
+    ld (w3d_hud_dirty),a
+    call w3d_update_palette_shift
+    CHECK_MEM8 w3d_palette_shift_wire,3,reason_state
+    CHECK_MEM8 w3d_palette_damage_count+0,23,reason_state
+    CHECK_MEM8 w3d_palette_bonus_count+0,7,reason_state
+    CHECK_MEM8 w3d_hud_dirty,W3D_HUD_DIRTY_PALETTE,reason_inventory
+    ld a,40
+    call w3d_start_damage_flash
+    call w3d_update_palette_shift
+    CHECK_MEM8 w3d_palette_shift_wire,6,reason_state
+
+; A final one-point red count is visible for one update, then publishes the
+; normal palette on the next update.
+    ld a,1
+    ld (w3d_palette_damage_count+0),a
+    xor a
+    ld (w3d_palette_damage_count+1),a
+    ld (w3d_palette_bonus_count+0),a
+    ld (w3d_palette_bonus_count+1),a
+    ld (w3d_hud_dirty),a
+    call w3d_update_palette_shift
+    CHECK_MEM8 w3d_palette_shift_wire,1,reason_state
+    CHECK_MEM8 w3d_palette_damage_count+0,0,reason_state
+    xor a
+    ld (w3d_hud_dirty),a
+    call w3d_update_palette_shift
+    CHECK_MEM8 w3d_palette_shift_wire,0,reason_state
+    CHECK_MEM8 w3d_hud_dirty,W3D_HUD_DIRTY_PALETTE,reason_inventory
     ret
 
 ; ---------------------------------------------------------------------------

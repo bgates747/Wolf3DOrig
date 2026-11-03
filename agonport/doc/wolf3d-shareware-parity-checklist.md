@@ -63,6 +63,19 @@ generation 159 passes 528 player-combat/face checks, 32 pickup cases, and the
 byte-exact full/dirty serializer; the four-scenario production renderer is
 pixel-identical to its standalone oracle.
 
+Palette correction, 2026-11-03: `WL_PLAY.C`'s transient damage-red and
+pickup-white palette shifts were absent. The eZ80 now preserves the source
+damage and bonus counters, red priority, six/three level selection, and exact
+2,2,3 conversion from 30 Hz quanta to 70 Hz source tics. Reserved HUD byte 11
+now carries the transient level without a schema break. The VDPlet applies the
+original 6-bit component formulas to RGB222 through a 64-entry per-frame
+lookup while preserving direct-row sync bits; this is the closest exact
+representation after the source palette has already been quantized. The same
+end-to-end audit corrected the module validator, which still rejected the
+already-published face sentinel 3. Oryx generation 160 passes 549
+player-combat/palette checks, 32 pickup cases, and byte-exact serialization;
+six renderer scenarios remain pixel-identical to the standalone oracle.
+
 ### A1. Pushwalls and secret discovery — TODO 11
 
 Original oracle:

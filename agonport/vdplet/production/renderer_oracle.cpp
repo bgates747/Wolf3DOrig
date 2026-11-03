@@ -265,6 +265,44 @@ void render_hud(std::vector<uint8_t> &frame,
     draw_hud_pic(frame, static_cast<uint16_t>(103 + spec.weapon), 256, 208);
 }
 
+uint8_t shifted_component(uint8_t component, uint8_t target,
+                          uint8_t level, uint8_t steps) {
+    const int value = component +
+        (static_cast<int>(target) - component) * level / steps;
+    return static_cast<uint8_t>(value < 0 ? 0 : (value > 63 ? 63 : value));
+}
+
+uint8_t quantize_component(uint8_t component) {
+    const uint8_t quantized = static_cast<uint8_t>((component + 10u) / 21u);
+    return quantized > 3 ? 3 : quantized;
+}
+
+void apply_palette_shift(std::vector<uint8_t> &frame, uint8_t shift) {
+    if (shift == 0) return;
+    for (uint8_t &color : frame) {
+        const uint8_t red = static_cast<uint8_t>((color & 3u) * 21u);
+        const uint8_t green = static_cast<uint8_t>(((color >> 2) & 3u) * 21u);
+        const uint8_t blue = static_cast<uint8_t>(((color >> 4) & 3u) * 21u);
+        uint8_t shifted_red;
+        uint8_t shifted_green;
+        uint8_t shifted_blue;
+        if ((shift & W3P_HUD_PALETTE_WHITE_FLAG) != 0) {
+            const uint8_t level = static_cast<uint8_t>(
+                shift & ~W3P_HUD_PALETTE_WHITE_FLAG);
+            shifted_red = shifted_component(red, 64, level, 20);
+            shifted_green = shifted_component(green, 62, level, 20);
+            shifted_blue = shifted_component(blue, 0, level, 20);
+        } else {
+            shifted_red = shifted_component(red, 64, shift, 8);
+            shifted_green = shifted_component(green, 0, shift, 8);
+            shifted_blue = shifted_component(blue, 0, shift, 8);
+        }
+        color = static_cast<uint8_t>(quantize_component(shifted_red) |
+            (quantize_component(shifted_green) << 2) |
+            (quantize_component(shifted_blue) << 4));
+    }
+}
+
 void write_all(std::ofstream &stream, const void *data, size_t bytes) {
     stream.write(static_cast<const char *>(data), bytes);
     require(static_cast<bool>(stream), "cannot write oracle output");
@@ -295,6 +333,7 @@ int main(int argc, char **argv) {
             render_sprites(frame, renderer);
             render_view_weapon(frame, spec.view_weapon_shape);
             render_hud(frame, spec);
+            apply_palette_shift(frame, spec.palette_shift);
             write_all(frame_output, frame.data(), frame.size());
             std::vector<uint8_t> geometry(kGeometryBytes);
             size_t at = 0;
