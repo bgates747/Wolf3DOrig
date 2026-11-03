@@ -20,7 +20,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[4]
 DEFAULT_DATA_DIR = PROJECT_ROOT / "orig/data"
 DEFAULT_OUT_DIR = PROJECT_ROOT / "agonport/assets/generated/wolf3d/levels"
 
-# Temporary TODO 2b diagnostic spawn. This is the open elevator car on E1L1:
+# Optional acceptance-only diagnostic spawn. This is the open elevator car on E1L1:
 # the player stands at (25,47), facing east directly toward the ordinary exit
 # switch at (26,47). One Up-arrow press therefore requests the normal E1L2
 # transition without replaying the whole first floor. The original map data is

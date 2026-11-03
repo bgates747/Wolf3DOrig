@@ -13,6 +13,14 @@ not prerequisites.  Agon branding/legal presentation and custom-episode
 authoring follow parity as separate phases.  VDPlet rollout is an independent
 platform track and must not be confused with missing game behavior.
 
+The source oracle is specifically the non-SPEAR `WOLF1VER.H` configuration,
+which defines `UPLOAD` and selects the `.WL1` archives. Consequently the
+registered-build `NonShareware` warning, copy protection, episode-qualified
+high-score labels, total-time verification code, and paid-episode digitized
+sound table are not missing shareware behavior. Developer-only `goobers`
+debugging, demo recording, profiling, and held-M jukebox entry are likewise
+outside the ordinary shipped-game contract.
+
 ## Audit baseline: behavior already present
 
 The current port already has the following shareware behavior in production,
@@ -512,6 +520,34 @@ Additional intentional platform substitutions, 2026-11-03:
    are represented by immediate page changes. Exact VGA palette-ramp timing is
    an accepted presentation difference; page content, ownership, input, and
    lifecycle transitions remain parity requirements.
+4. `WL_INTER.C::PreloadGraphics`'s modal `GETPSYCHEDPIC` bar is replaced by the
+   Author-requested text breadcrumbs around modern AGNB container loads. Each
+   breadcrumb advances only after a complete bitmap is finalized, failures
+   remain visible, and Escape retains the common abort path. The original
+   hidden cache-fill progress bar and artificial 70-tic hold are not emulated.
+5. The shareware DOS `ORDERSCREEN` shown by `Quit(NULL)` is replaced, by prior
+   Author decision, with restored caller video mode and a plain-text
+   `Thanks for playing Wolf3DOrig!` line above the live MOS prompt. Phase B
+   adds Agon identity/legal presentation; it does not silently revive the DOS
+   order form.
+6. Original 320x200 shell pages are plotted unscaled in Agon's 320x240 mode;
+   the spare forty rows carry the visible application version or cleared shell
+   background. Gameplay retains the accepted centered 256x160 viewport and
+   original 320x40 HUD at y=200.
+7. Pickups use authoritative player/static overlap after successful movement
+   rather than DOS `spotvis` renderer visibility. This makes collection
+   independent of VDP cadence and avoids read-back while preserving refusal,
+   scoring, inventory, sound, flash, removal, and respawn behavior.
+8. The accepted player/static/actor clearance is `0x4800` instead of the
+   source `0x5800`, the target cone is 16 projected pixels instead of 25, and
+   door collision follows the rendered sliding slab rather than treating the
+   whole tile as solid. These hardware-tested feel corrections retain directed
+   boundary regressions and are not unfinished parity work.
+9. The common source tree calls `YEAHSND` at BJ's victory yell action, but the
+   shareware `AUDIOWL1.H` enum and WL1 audio corpus do not define that sound;
+   it exists only in the registered WL6 header/data. The action edge therefore
+   remains a successful no-op rather than borrowing a paid-data effect or
+   substituting an unrelated sound.
 
 Debug cheats, paid-episode content, obsolete DOS copy protection, VGA palette
 timing exactness, and unavailable hardware configuration choices are not

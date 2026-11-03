@@ -251,12 +251,12 @@ attempt; exhausting it leaves a stable red game-over placeholder until Escape.
 
 Knife, pistol, machine gun, and chaingun timelines, target selection, actor
 pain/death chains, class scores, extra lives, and stable clip/weapon drops are
-live. Sound effects are now consumers of those deterministic simulation
-events. Original-facing title/main/episode/difficulty menus, ordinary and
-secret floor transitions, and the E1L9 application-shell victory return are
-live. Music, bosses, projectiles, the complete original victory/intermission
-presentation, and high-score entry remain later layers. The remaining rollout is recorded in
-`agonport/doc/actor_gameplay_plan.md`.
+live. Sound effects and music consume deterministic simulation/shell events.
+Original-facing startup, menus, ordinary and secret transitions, intermission,
+high scores, Episode 1 Hans/BJ victory, and ending presentation are integrated.
+The repository-root `TODO.md` is authoritative for the remaining human
+acceptance gates; `agonport/doc/actor_gameplay_plan.md` is retained as design
+history.
 
 `wolf3d_fixture.inc` (the tilemap + precomputed command-stream bytes) is
 generated, not hand-written:

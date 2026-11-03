@@ -10,7 +10,7 @@ TOOLS_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(TOOLS_ROOT))
 
-from formats import actorinfo, mapfile, sprite_kinds, spritenames
+from formats import actorinfo, mapfile, sprite_kinds, spritenames, staticinfo
 from scripts.gen_render_fixture import (
     BUFFERED_WOLF3D,
     SUB_INIT_LEVEL,
@@ -184,6 +184,82 @@ class RealLevelActorFixtureTests(unittest.TestCase):
         self.assertEqual(ghost.obclass, actorinfo.ActorClass.GHOST)
         self.assertEqual(ghost.hitpoints, 0)
         self.assertEqual(ghost.flags & actorinfo.FL_SHOOTABLE, 0)
+
+
+class AllSharewareMapMarkerCoverageTests(unittest.TestCase):
+    """Prove that no bundled WL1 plane-1 object is silently discarded."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        data = REPO_ROOT / "orig/data"
+        maphead = mapfile.read_maphead((data / "MAPHEAD.WL1").read_bytes())
+        gamemaps = (data / "GAMEMAPS.WL1").read_bytes()
+        cls.levels = [
+            mapfile.read_level(gamemaps, maphead, index, maphead.magic)
+            for index, offset in enumerate(maphead.level_offsets[:10])
+            if offset > 0
+        ]
+
+    def test_every_nonzero_plane1_marker_has_exactly_one_owner(self) -> None:
+        self.assertEqual(len(self.levels), 10)
+        seen: set[int] = set()
+        for level_index, level in enumerate(self.levels):
+            player_starts = 0
+            for y, row in enumerate(level.plane1):
+                for x, marker in enumerate(row):
+                    if marker == 0:
+                        continue
+                    seen.add(marker)
+                    owners = []
+                    if 19 <= marker <= 22:
+                        owners.append("player")
+                        player_starts += 1
+                    if staticinfo.from_plane1(marker) is not None:
+                        owners.append("static")
+                    if 90 <= marker <= 99:
+                        owners.append("path/secret/exit")
+                    if actorinfo.from_plane1(
+                        marker,
+                        x,
+                        y,
+                        level.plane0,
+                        actorinfo.Difficulty.HARD,
+                    ) is not None:
+                        owners.append("actor")
+                    self.assertEqual(
+                        len(owners),
+                        1,
+                        f"level {level_index} ({x},{y}) marker {marker}: {owners}",
+                    )
+            self.assertEqual(player_starts, 1, f"level {level_index}")
+        self.assertEqual(len(seen), 104)
+
+    def test_all_level_actor_census_matches_the_bundled_shareware_maps(self) -> None:
+        expected = {
+            actorinfo.Difficulty.BABY: {
+                "GRD": 196, "DOG": 26, "DEAD-GRD": 1, "SS": 23, "HANS": 1,
+            },
+            actorinfo.Difficulty.EASY: {
+                "GRD": 196, "DOG": 26, "DEAD-GRD": 1, "SS": 23, "HANS": 1,
+            },
+            actorinfo.Difficulty.MEDIUM: {
+                "GRD": 332, "DOG": 42, "DEAD-GRD": 1, "SS": 52, "HANS": 1,
+            },
+            actorinfo.Difficulty.HARD: {
+                "GRD": 516, "DOG": 63, "DEAD-GRD": 1, "SS": 93, "HANS": 1,
+            },
+        }
+        for difficulty, wanted in expected.items():
+            census: dict[str, int] = {}
+            for level in self.levels:
+                for y, row in enumerate(level.plane1):
+                    for x, marker in enumerate(row):
+                        actor = actorinfo.from_plane1(
+                            marker, x, y, level.plane0, difficulty
+                        )
+                        if actor is not None:
+                            census[actor.kind] = census.get(actor.kind, 0) + 1
+            self.assertEqual(census, wanted)
 
 
 class ActorWireAndRuntimeTests(unittest.TestCase):

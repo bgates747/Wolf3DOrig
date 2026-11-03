@@ -598,8 +598,8 @@ w3d_actor_request_sound:
 ; IX=current guard/officer/mutant/SS. Port T_Shoot's observable gameplay
 ; order exactly: connected area, line trace, action-time distance, deterministic
 ; CPU visibility/running hitchance, one hit draw, and a second draw only on a
-; hit. Sound and damage flash are intentionally deferred; health/HUD state is
-; authoritative here.
+; hit. A line-clear attempt emits the class sound before its accuracy roll;
+; successful damage routes through the authoritative health/HUD/flash owner.
 w3d_actor_action_shoot:
     xor a
     ld (w3d_actor_combat_is_ss),a
