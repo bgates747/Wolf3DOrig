@@ -130,14 +130,14 @@ The menu uses only a small subset of the logical sound catalog:
 - `HITWALLSND` and `SHOOTDOORSND`: control-customization feedback, not needed
   by the first shell.
 
-Of these, only `NOWAYSND` is currently built, using the accepted explicit
-fallback. The generated manifest records the other six as unavailable and
-outside current scope: the shareware VSWAP digitized-sound map does not provide
-them, and the current builder does not synthesize the original PC-speaker or
-AdLib forms. The first shell can therefore be silent, reuse a restrained
-existing click, or add explicit fallbacks; implementing old-device synthesis
-is not a prerequisite. No new playback mechanism is required: any selected UI
-effects can use the accepted buffered path non-spatially at fixed gain.
+`MOVEGUN1SND`, `MOVEGUN2SND`, `SHOOTSND`, and `ESCPRESSEDSND` now use their
+authentic AUDIOT PC-speaker streams rendered offline at 7 kHz. `NOWAYSND`
+retains the accepted explicit fallback. The application loads the sound
+container once before entering the first shell and preserves its resident
+sample/command inventory across gameplay returns; session teardown stops the
+three channels without forcing another half-megabyte reload. Normalized shell
+actions use the accepted buffered path at fixed gain, including the source's
+eight-tic MOVEGUN1-to-MOVEGUN2 cursor cadence.
 
 Original music assignments are:
 
@@ -146,15 +146,18 @@ Original music assignments are:
 - `ROSTER_MUS`: high-score screen;
 - `CORNER_MUS`: temporary episode-selection cue in one path.
 
-Music remains TODO 6. The shell must work silently except for sound effects;
-its state machine should expose enter/leave hooks so music can be attached
-later without restructuring it.
+Music is now implemented as the independent nine-voice IMF subsystem described
+by TODO 6. The shell state machine retains explicit enter/leave assignments so
+music and these control-panel effects coexist without coupling menu input to
+the gameplay renderer.
 
 ## Agon-side architecture
 
 The program captures the caller's video mode, loads the application-global
 shell container, and enters an explicit top-level state machine. Each gameplay
-session selects mode 8 double buffering and owns its render callback and audio;
+session selects mode 8 double buffering and owns its render callback; sound
+samples and playback procedures remain application-global while each session
+stops the shared effect channels at its ownership boundary;
 final application exit restores the caller's base single-buffered mode:
 
 ```text

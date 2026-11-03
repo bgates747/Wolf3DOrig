@@ -23,6 +23,7 @@
 ;   w3d_audio_mark_sample_buffer_loaded  HL = exact 0x5000+logical buffer id
 ;   w3d_audio_select_transport           A = BUFFERED or DIRECT
 ;   w3d_audio_install_available_command_buffers
+;   w3d_audio_stop_channels
 ;   w3d_audio_shutdown
 ;
 ; IX and IY are preserved by producer/lifecycle entry points.  Other general
@@ -732,10 +733,17 @@ w3d_audio_procedure_play_channel:
     dw 0,0
 w3d_audio_procedure_end:
 
-; Stop current effects without disabling the VDP's three default channels.
-; Diagnostics remain readable; loaded state is cleared after the wire reset.
-w3d_audio_shutdown:
+; Stop current effects without disabling the VDP's three default channels or
+; forgetting the application-global sample/command-buffer inventory.  The
+; shell uses this at gameplay ownership boundaries so its original menu
+; effects remain available without reloading the 0.2 audio container.
+w3d_audio_stop_channels:
     push ix
+    call w3d_audio_stop_channels_inner
+    pop ix
+    ret
+
+w3d_audio_stop_channels_inner:
     call w3d_audio_discard_quantum_inner
     xor a
     ld (w3d_audio_shutdown_channel),a
@@ -753,6 +761,13 @@ w3d_audio_shutdown:
     ld (w3d_audio_shutdown_channel),a
     cp W3D_AUDIO_CHANNEL_COUNT
     jr c,@loop
+    ret
+
+; Final application teardown also invalidates the loaded-sample inventory.
+; Diagnostics remain readable after the wire reset.
+w3d_audio_shutdown:
+    push ix
+    call w3d_audio_stop_channels_inner
     xor a
     ld hl,w3d_audio_sample_loaded
     ld (hl),a

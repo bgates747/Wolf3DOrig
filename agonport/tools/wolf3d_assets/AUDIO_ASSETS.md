@@ -71,9 +71,9 @@ port values.
 
 ## Original PC-speaker effects
 
-Production requests six original effects which have no VSWAP digitized
-mapping: `DONOTHING`, `LEVELDONE`, `ENDBONUS1`, `ENDBONUS2`, `NOBONUS`, and
-`PERCENT100`.
+Production requests ten original effects which have no VSWAP digitized
+mapping: `MOVEGUN1`, `MOVEGUN2`, `SHOOT`, `ESCPRESSED`, `DONOTHING`,
+`LEVELDONE`, `ENDBONUS1`, `ENDBONUS2`, `NOBONUS`, and `PERCENT100`.
 Their authentic `PCSound` streams are stored in the first 69 AUDIOT chunks.
 Each byte is a PIT pitch (or zero for silence) held for one 140 Hz service
 tick; `ID_SD.C` uses divisor `pitch*60`.

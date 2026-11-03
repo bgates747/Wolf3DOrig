@@ -17,8 +17,12 @@ import time
 
 HERE = Path(__file__).resolve().parent
 _root_override = os.environ.get("W3D_STAGED_ROOT")
-_installed_root = Path(__file__).resolve().parents[4]
-STAGED_ROOT = Path(_root_override) if _root_override else _installed_root
+if _root_override:
+    STAGED_ROOT = Path(_root_override)
+    _installed_root = STAGED_ROOT
+else:
+    _installed_root = Path(__file__).resolve().parents[4]
+    STAGED_ROOT = _installed_root
 RUNTIME_ROOT = Path(os.environ.get("W3D_RUNTIME_ROOT", _installed_root))
 STAGED_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
 STAGED_FIXTURE = STAGED_ROOT / "src/asm/wolf3d_audio/src/audio_regression.asm"
@@ -64,21 +68,21 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    dependencies = (STAGED_SRC, STAGED_FIXTURE, FAB, MOS, VDP)
+    dependencies = (FAB, MOS, VDP)
+    if not args.prebuilt:
+        dependencies = (STAGED_SRC, STAGED_FIXTURE, *dependencies)
     missing = [path for path in dependencies if not path.exists()]
     if missing:
         raise FileNotFoundError(
             "missing audio regression dependency: " + ", ".join(map(str, missing))
         )
+    if args.prebuilt and not args.prebuilt.is_file():
+        raise FileNotFoundError(f"missing prebuilt audio fixture: {args.prebuilt}")
 
     # ez80asm retains DOS-era path-length restrictions. Keep includes and the
     # output inside one disposable short directory.
     work = Path(tempfile.mkdtemp(prefix="w"))
     atexit.register(shutil.rmtree, work, ignore_errors=True)
-    for include in STAGED_SRC.glob("*.inc"):
-        (work / include.name).symlink_to(include.resolve())
-    entry = work / "w.asm"
-    shutil.copyfile(STAGED_FIXTURE, entry)
 
     sdcard = work / "sdcard"
     app = sdcard / "w"
@@ -88,6 +92,10 @@ def main() -> int:
         shutil.copyfile(args.prebuilt, binary)
         print("+ prebuilt", args.prebuilt, "->", binary)
     else:
+        for include in STAGED_SRC.glob("*.inc"):
+            (work / include.name).symlink_to(include.resolve())
+        entry = work / "w.asm"
+        shutil.copyfile(STAGED_FIXTURE, entry)
         run(["ez80asm", str(entry), str(binary)], cwd=work)
     digest = hashlib.sha256(binary.read_bytes()).hexdigest()
     print(f"binary: {binary.stat().st_size} bytes, sha256={digest}")

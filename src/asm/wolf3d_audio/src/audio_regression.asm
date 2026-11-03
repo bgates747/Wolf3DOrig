@@ -427,12 +427,29 @@ test_command_install:
     jp assert_memory
 
 ; -----------------------------------------------------------------------------
-; 7. Shutdown resets exactly the three default channels and clears availability.
+; 7. Session stop preserves application-global availability; final shutdown
+; resets the same three channels and clears it.
 ; -----------------------------------------------------------------------------
 
 test_shutdown:
     ld a,phase_shutdown
     ld (test_phase),a
+    call w3d_audio_initialize
+    call start_capture
+    ld a,W3D_AUDIO_SOUND_ATKPISTOL
+    call w3d_audio_mark_sample_loaded
+    call w3d_audio_begin_quantum
+    REQUEST W3D_AUDIO_SOUND_ATKPISTOL,127,0
+    call w3d_audio_stop_channels
+    CHECK_MEM8 w3d_audio_capture_length+0,15,reason_wire
+    CHECK_MEM8 w3d_audio_shutdown_uart_bytes+0,15,reason_counter
+    CHECK_MEM8 w3d_audio_sample_loaded+W3D_AUDIO_SOUND_ATKPISTOL,1,reason_loaded
+    CHECK_MEM8 w3d_audio_quantum_active,0,reason_scalar
+    ld hl,test_capture
+    ld de,expected_shutdown
+    ld bc,15
+    call assert_memory
+
     call w3d_audio_initialize
     call start_capture
     ld a,W3D_AUDIO_SOUND_ATKPISTOL

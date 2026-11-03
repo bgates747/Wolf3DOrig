@@ -16,6 +16,10 @@ CHANNEL_COUNT = 3
 # this keeps runtime playback on the same proven buffered-audio path.
 PC_SPEAKER_FALLBACKS = {
     "DONOTHINGSND",
+    "MOVEGUN2SND",
+    "MOVEGUN1SND",
+    "SHOOTSND",
+    "ESCPRESSEDSND",
     "LEVELDONESND",
     "ENDBONUS1SND",
     "ENDBONUS2SND",
@@ -65,6 +69,10 @@ UPLOAD_DIGI_MAP = {
 # slice.  Tags describe semantic producers rather than assembly label names so
 # the manifest remains stable if code is reorganized.
 CURRENT_PRODUCERS = {
+    "MOVEGUN2SND": ("shell.cursor_arrive",),
+    "MOVEGUN1SND": ("shell.cursor_halfstep",),
+    "SHOOTSND": ("shell.accept",),
+    "ESCPRESSEDSND": ("shell.cancel",),
     "DONOTHINGSND": ("environment.use_no_action",),
     "NOWAYSND": ("environment.no_way",),
     "PLAYERDEATHSND": ("player.death",),

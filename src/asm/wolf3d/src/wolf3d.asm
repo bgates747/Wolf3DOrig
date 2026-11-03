@@ -472,7 +472,9 @@ main:
     ld (w3d_exit_message_ptr),hl
     call w3d_capture_original_screen_mode
     call w3d_music_initialize
+    call w3d_audio_initialize
     call w3d_main_body
+    call w3d_audio_shutdown
     call w3d_music_shutdown
     call w3d_restore_original_screen_mode
     ld hl,(w3d_exit_message_ptr)
@@ -508,6 +510,34 @@ w3d_main_body:
     ret
 @shell_loaded:
     call printNewLine
+; Sound effects are application-global just like the shell graphics.  This
+; makes the source control-panel effects available before the first game and
+; avoids reloading the same resident container after every demo, death, or
+; victory return.
+    ld hl,loading_sfx_msg
+    call printString
+    call printNewLine
+    ld de,sfx_filename
+    ld hl,printAudioDotAndPollEscape
+    call agnb_load_audio_with_abortable_callback
+    jr z,@sfx_loaded
+    call w3d_shell_query_exit_request
+    ret nz
+    call printNewLine
+    ld hl,sfx_error_msg
+    call printString
+@sfx_loaded:
+    call printNewLine
+    call w3d_poll_application_escape
+    ret nz
+    call w3d_audio_install_available_command_buffers
+    jr nc,@audio_commands_installed
+    ld hl,audio_install_error_msg
+    ld (w3d_exit_message_ptr),hl
+    ret
+@audio_commands_installed:
+    call w3d_poll_application_escape
+    ret nz
     call w3d_highscores_initialize
     call w3d_save_slots_initialize
     call w3d_shell_reset_quick_slot
@@ -693,33 +723,6 @@ w3d_run_gameplay_session:
     jp w3d_gameplay_fatal_before_runtime
 @hud_loaded:
     call printNewLine
-    ld hl,loading_sfx_msg
-    call printString
-    call printNewLine
-    call w3d_audio_initialize
-    ld de,sfx_filename
-    ld hl,printAudioDotAndPollEscape
-    call agnb_load_audio_with_abortable_callback
-    jr z,@sfx_loaded
-    call w3d_shell_query_exit_request
-    jp nz,w3d_gameplay_exit_before_runtime
-    call printNewLine
-    ld hl,sfx_error_msg
-    call printString
-@sfx_loaded:
-    call printNewLine
-; Partial containers remain useful: install procedures only for callbacks
-; that reached the finalized-sample boundary before any loader error.
-    call w3d_poll_application_escape
-    jp nz,w3d_gameplay_exit_before_runtime
-    call w3d_audio_install_available_command_buffers
-    jr nc,@audio_commands_installed
-    ld hl,audio_install_error_msg
-    ld (w3d_exit_message_ptr),hl
-    jp w3d_gameplay_fatal_before_runtime
-@audio_commands_installed:
-    call w3d_poll_application_escape
-    jp nz,w3d_gameplay_exit_before_runtime
 
 ; Gallery review pause, retained alongside the disabled diagnostic block.
 ;    ld hl,gallery_done_msg
@@ -1112,7 +1115,7 @@ w3d_gameplay_fatal_shutdown:
 
 w3d_gameplay_shutdown:
     ld (w3d_gameplay_result),a
-    call w3d_audio_shutdown
+    call w3d_audio_stop_channels
     call w3d_disable_render_notifications
     .if W3D_RENDER_BACKEND
     call w3d_vdplet_backend_close

@@ -297,6 +297,22 @@ the authentic AUDIOT PC-speaker stream rendered offline to 7 kHz PCM. Oryx
 generation 164 passes 29/29 direct use/pushwall cases and generation 165 passes
 all 287 production-audio checks.
 
+Control-panel audio correction, 2026-11-03: the shell precis correctly listed
+the original `HandleMenu` feedback but the implementation and frozen parity
+ledger still treated the first shell as intentionally silent. Production now
+plays authentic `MOVEGUN1SND`/`MOVEGUN2SND` around the original eight-tic
+cursor half-step, `SHOOTSND` on accept, `ESCPRESSEDSND` on cancel, and the
+additional `NOWAYSND` after selecting an unavailable paid episode. The four
+new effects are rendered offline from their original 140 Hz AUDIOT PC-speaker
+streams. The 454,944-byte AGNB container contains 49 records and 452,701 bytes
+of resident PCM. It is loaded once beside the application-global shell assets;
+session stop resets all three channels while preserving availability, whereas
+final shutdown additionally clears it. The final shell proof, including the
+SFX-off then SFX-on edge, passes 526/526 checks on Oryx generation 168;
+generation 167 passes 306/306 audio/lifecycle checks.
+The shell receipt was upgraded from an overflowing one-byte `W3S1` counter to
+the 16-bit `W3S2` schema during that proof.
+
 Intentional discrepancy ledger, 2026-11-03: the hardware-accepted player
 wall/slab radius and actor/static physical clearance remain `0x4800`, versus
 the source's `PLAYERSIZE`/`MINDIST` value `0x5800`. The independent original

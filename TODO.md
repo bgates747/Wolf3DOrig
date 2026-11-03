@@ -142,6 +142,15 @@ ordinary walls, wrong-face elevators, malformed door references, and unmarked
 walls request the source's `DONOTHINGSND` once per press. Its authentic 140 Hz
 PC-speaker stream is rendered offline at 7 kHz. Oryx generations 164-165 pass
 29/29 direct use/pushwall cases and all 287 production-audio checks.
+The reachable `WL_MENU.C::HandleMenu` audio contract is restored as well:
+cursor motion preserves `MOVEGUN1SND` -> eight source tics -> `MOVEGUN2SND`,
+accept uses `SHOOTSND`, cancel uses `ESCPRESSEDSND`, and an unavailable paid
+episode adds `NOWAYSND`. The four newly admitted effects use their authentic
+AUDIOT PC-speaker streams. SFX are now loaded once beside the application-global
+shell assets; gameplay teardown stops channels but preserves resident samples,
+while final application shutdown clears them. The completed shell proof,
+including SFX-off then SFX-on behavior, passes 526/526 checks on Oryx
+generation 168; generation 167 passes 306/306 audio/lifecycle checks.
 
 # Phase B — Agon identity and legal presentation
 

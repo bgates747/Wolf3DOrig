@@ -15,11 +15,11 @@ W3D_AUDIO_FLAG_REQUIRED:          equ 0x01
 W3D_AUDIO_FLAG_AVAILABLE:         equ 0x02
 W3D_AUDIO_FLAG_NATIVE:            equ 0x04
 W3D_AUDIO_FLAG_FALLBACK:          equ 0x08
-W3D_AUDIO_AVAILABLE_COUNT:        equ 45
-W3D_AUDIO_REQUIRED_COUNT:         equ 41
-W3D_AUDIO_REQUIRED_AVAILABLE:     equ 41
-W3D_AUDIO_RESIDENT_PCM_BYTES:     equ 449651
-W3D_AUDIO_CONTAINER_BYTES:        equ 451712
+W3D_AUDIO_AVAILABLE_COUNT:        equ 49
+W3D_AUDIO_REQUIRED_COUNT:         equ 45
+W3D_AUDIO_REQUIRED_AVAILABLE:     equ 45
+W3D_AUDIO_RESIDENT_PCM_BYTES:     equ 452701
+W3D_AUDIO_CONTAINER_BYTES:        equ 454944
 W3D_AUDIO_GAIN_FORWARD_ROWS:      equ 15
 W3D_AUDIO_GAIN_LATERAL_COLUMNS:   equ 30
 W3D_AUDIO_GAIN_LATERAL_BIAS:      equ 15
@@ -123,14 +123,14 @@ w3d_audio_asset_table:
     dw 0x0000,0,0,0
     db 99,0x00
     dw 0x0000,0x0000,0x0000
-    ; 04 MOVEGUN2SND (unavailable)
-    dw 0x0000,0,0,0
-    db 50,0x00
-    dw 0x0000,0x0000,0x0000
-    ; 05 MOVEGUN1SND (unavailable)
-    dw 0x0000,0,0,0
-    db 50,0x00
-    dw 0x0000,0x0000,0x0000
+    ; 04 MOVEGUN2SND (available)
+    dw 0x5004,7000,200,29
+    db 50,0x0B
+    dw 0x600C,0x600D,0x600E
+    ; 05 MOVEGUN1SND (available)
+    dw 0x5005,7000,350,50
+    db 50,0x0B
+    dw 0x600F,0x6010,0x6011
     ; 06 NOWAYSND (available)
     dw 0x5006,16384,4927,301
     db 50,0x0B
@@ -235,10 +235,10 @@ w3d_audio_asset_table:
     dw 0x501F,16384,7439,454
     db 70,0x0B
     dw 0x605D,0x605E,0x605F
-    ; 32 SHOOTSND (unavailable)
-    dw 0x0000,0,0,0
-    db 10,0x00
-    dw 0x0000,0x0000,0x0000
+    ; 32 SHOOTSND (available)
+    dw 0x5020,7000,1350,193
+    db 10,0x0B
+    dw 0x6060,0x6061,0x6062
     ; 33 HEALTH1SND (available)
     dw 0x5021,16384,24327,1485
     db 10,0x0B
@@ -263,10 +263,10 @@ w3d_audio_asset_table:
     dw 0x5026,16384,7439,454
     db 10,0x0B
     dw 0x6072,0x6073,0x6074
-    ; 39 ESCPRESSEDSND (unavailable)
-    dw 0x0000,0,0,0
-    db 50,0x00
-    dw 0x0000,0x0000,0x0000
+    ; 39 ESCPRESSEDSND (available)
+    dw 0x5027,7000,1150,164
+    db 50,0x0B
+    dw 0x6075,0x6076,0x6077
     ; 40 LEVELDONESND (available)
     dw 0x5028,7000,2050,293
     db 50,0x0B

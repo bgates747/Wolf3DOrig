@@ -53,6 +53,7 @@ W3D_SHELL_SAVE_NAME_MAX:     equ 31
 W3D_SHELL_TITLE_TICKS:       equ 15*120
 W3D_SHELL_CREDITS_TICKS:     equ 10*120
 W3D_SHELL_SCORES_TICKS:      equ 10*120
+W3D_SHELL_CURSOR_HALF_TICKS: equ 14 ; round(8 source 70-Hz tics at 120 Hz)
 
 ; Original WL_MENU.H anchors. Selected-entry overlays contain text only; the
 ; original cursor and difficulty portrait are plotted independently below.
@@ -550,9 +551,13 @@ w3d_shell_confirm_quick_load:
     cp 27
     jr nz,@wait
 @no:
+    ld a,W3D_AUDIO_SOUND_ESCPRESSED
+    call w3d_shell_play_sound
     xor a
     ret
 @yes:
+    ld a,W3D_AUDIO_SOUND_SHOOT
+    call w3d_shell_play_sound
     ld a,1
     or a
     ret
@@ -594,9 +599,13 @@ w3d_shell_confirm_end_game:
     cp 27
     jr nz,@wait
 @no:
+    ld a,W3D_AUDIO_SOUND_ESCPRESSED
+    call w3d_shell_play_sound
     xor a
     ret
 @yes:
+    ld a,W3D_AUDIO_SOUND_SHOOT
+    call w3d_shell_play_sound
     ld a,1
     or a
     ret
@@ -738,6 +747,12 @@ w3d_shell_sound_page:
     ld a,(w3d_audio_sfx_enabled)
     xor 1
     ld (w3d_audio_sfx_enabled),a
+; Turning effects off already played the generic accept while they were on.
+; Turning them on could not, so reproduce CP_Sound's post-enable ShootSnd.
+    or a
+    jp z,@redraw
+    ld a,W3D_AUDIO_SOUND_SHOOT
+    call w3d_shell_play_sound
     jp @redraw
 @toggle_music:
     ld a,(w3d_music_enabled)
@@ -1011,9 +1026,13 @@ w3d_shell_confirm_save_overwrite:
     cp 27
     jr nz,@wait
 @no:
+    ld a,W3D_AUDIO_SOUND_ESCPRESSED
+    call w3d_shell_play_sound
     xor a
     ret
 @yes:
+    ld a,W3D_AUDIO_SOUND_SHOOT
+    call w3d_shell_play_sound
     ld a,1
     or a
     ret
@@ -1109,10 +1128,14 @@ w3d_shell_edit_save_name:
     ld (hl),0
     jp @redraw
 @accept:
+    ld a,W3D_AUDIO_SOUND_SHOOT
+    call w3d_shell_play_sound
     ld a,1
     or a
     ret
 @cancel:
+    ld a,W3D_AUDIO_SOUND_ESCPRESSED
+    call w3d_shell_play_sound
     xor a
     ret
 
@@ -1225,6 +1248,8 @@ w3d_shell_choose_episode_inner:
     ld a,(w3d_shell_episode_choice)
     or a
     jr z,@accepted
+    ld a,W3D_AUDIO_SOUND_NOWAY
+    call w3d_shell_play_sound
     call w3d_shell_draw_episode_unavailable
     ld a,(w3d_shell_choice_local)
     or a
@@ -1462,6 +1487,54 @@ w3d_shell_return_quit:
     or a
     ret
 
+; Original HandleMenu feedback.  UI effects are deliberately monaural and
+; immediate; every event owns a one-request quantum outside gameplay.  Cursor
+; movement preserves DrawHalfStep's MOVEGUN1, eight source-tic pause, and
+; DrawGun's MOVEGUN2 rather than collapsing both sounds into one VDP burst.
+w3d_shell_play_sound:
+    push af
+    call w3d_audio_begin_quantum
+    pop af
+    ld b,127
+    ld c,0
+    call w3d_audio_request
+    jp w3d_audio_flush_quantum
+
+w3d_shell_play_action_sound:
+    cp W3D_SHELL_ACTION_UP
+    jr z,@move
+    cp W3D_SHELL_ACTION_DOWN
+    jr z,@move
+    cp W3D_SHELL_ACTION_ACCEPT
+    jr z,@accept
+    ld a,W3D_AUDIO_SOUND_ESCPRESSED
+    jp w3d_shell_play_sound
+@accept:
+    ld a,W3D_AUDIO_SOUND_SHOOT
+    jp w3d_shell_play_sound
+@move:
+    ld a,W3D_AUDIO_SOUND_MOVEGUN1
+    call w3d_shell_play_sound
+    call w3d_shell_cursor_half_delay
+    ld a,W3D_AUDIO_SOUND_MOVEGUN2
+    jp w3d_shell_play_sound
+
+w3d_shell_cursor_half_delay:
+    ld ix,(w3d_sysvars_pointer)
+    ld hl,(ix+sysvar_time)
+    ld de,W3D_SHELL_CURSOR_HALF_TICKS
+    add hl,de
+    ld (w3d_shell_cursor_half_deadline),hl
+@wait:
+    call w3d_music_service
+    ld ix,(w3d_sysvars_pointer)
+    ld hl,(ix+sysvar_time)
+    ld de,(w3d_shell_cursor_half_deadline)
+    or a
+    sbc hl,de
+    jr c,@wait
+    ret
+
 w3d_shell_read_keyboard:
     ld hl,(w3d_shell_keyboard_read_hook)
     jp (hl)
@@ -1515,6 +1588,9 @@ w3d_shell_wait_action:
     jr nz,@recognized
     jr @wait
 @recognized:
+    push af
+    call w3d_shell_play_action_sound
+    pop af
     cp W3D_SHELL_ACTION_ESCAPE
     jr nz,@release
     push af
@@ -1551,6 +1627,9 @@ w3d_shell_wait_pause_action:
     jr nz,@recognized
     jr @wait
 @recognized:
+    push af
+    call w3d_shell_play_action_sound
+    pop af
     push af
     call w3d_shell_pause_wait_all_released
     pop af
@@ -1635,4 +1714,6 @@ w3d_audio_sfx_enabled:
 w3d_shell_timeout_ticks:
     dl 0
 w3d_shell_timeout_started:
+    dl 0
+w3d_shell_cursor_half_deadline:
     dl 0

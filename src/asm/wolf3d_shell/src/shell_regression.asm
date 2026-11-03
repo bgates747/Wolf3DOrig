@@ -134,6 +134,44 @@ W3D_MUSIC_WONDERIN: equ 14
 W3D_MUSIC_ROSTER: equ 23
 W3D_MUSIC_URAHERO: equ 24
 
+W3D_AUDIO_SOUND_MOVEGUN2: equ 4
+W3D_AUDIO_SOUND_MOVEGUN1: equ 5
+W3D_AUDIO_SOUND_NOWAY: equ 6
+W3D_AUDIO_SOUND_SHOOT: equ 32
+W3D_AUDIO_SOUND_ESCPRESSED: equ 39
+
+w3d_audio_begin_quantum:
+    ret
+
+w3d_audio_request:
+    ld (w3d_audio_fixture_sound),a
+    ld a,(w3d_audio_sfx_enabled)
+    or a
+    ret z
+    ld a,(w3d_audio_fixture_sound)
+@record:
+    push af
+    ld a,(test_sound_count)
+    cp 64
+    jr nc,@done
+    ld de,0
+    ld e,a
+    ld hl,test_sound_history
+    add hl,de
+    pop af
+    ld (hl),a
+    push af
+    ld a,(test_sound_count)
+    inc a
+    ld (test_sound_count),a
+@done:
+    pop af
+    or a
+    ret
+
+w3d_audio_flush_quantum:
+    ret
+
 ; CheckKeys/US_ControlPanel request contract shared with the production motion
 ; and callback paths. Keep these explicit here so the shell dispatcher is
 ; tested through the same public values without importing either subsystem.
@@ -177,6 +215,9 @@ w3d_music_start:
     ret
 
 w3d_music_service:
+    ld hl,(test_sysvars)
+    inc hl
+    ld (test_sysvars),hl
     ret
 
 w3d_music_set_enabled:
@@ -219,6 +260,8 @@ REASON_SFX_PREFERENCE: equ 16
 REASON_MUSIC_PREFERENCE: equ 17
 REASON_MUSIC_ASSIGNMENT: equ 18
 REASON_QUICK_SLOT: equ 19
+REASON_SOUND_COUNT: equ 20
+REASON_SOUND_ID: equ 21
 
 start:
     push af
@@ -278,6 +321,9 @@ run_tests:
     ld a,10
     call mark_stage
     call test_quick_keys
+    ld a,11
+    call mark_stage
+    call test_shell_sounds
     ld a,1
     ld (result_done),a
     call write_result
@@ -948,6 +994,83 @@ test_quick_keys:
     call w3d_shell_reset_exit_request
     ret
 
+; Every normalized source menu action owns its audible feedback. Cursor moves
+; preserve DrawHalfStep -> DrawGun ordering; confirmation paths which read
+; characters directly retain their own SHOOT/ESC semantics.
+test_shell_sounds:
+    ld a,64
+    ld (test_case),a
+    call test_reset_sounds
+    ld hl,script_action_up
+    call test_set_script
+    call w3d_shell_wait_action
+    CHECK_MEM8 test_sound_count,2,REASON_SOUND_COUNT
+    CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_MOVEGUN1,REASON_SOUND_ID
+    CHECK_MEM8 test_sound_history+1,W3D_AUDIO_SOUND_MOVEGUN2,REASON_SOUND_ID
+
+    ld a,65
+    ld (test_case),a
+    call test_reset_sounds
+    ld hl,script_action_return
+    call test_set_script
+    call w3d_shell_wait_action
+    CHECK_MEM8 test_sound_count,1,REASON_SOUND_COUNT
+    CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_SHOOT,REASON_SOUND_ID
+
+    ld a,66
+    ld (test_case),a
+    call test_reset_sounds
+    call w3d_shell_reset_exit_request
+    ld hl,script_action_escape
+    call test_set_script
+    call w3d_shell_wait_action
+    CHECK_MEM8 test_sound_count,1,REASON_SOUND_COUNT
+    CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_ESCPRESSED,REASON_SOUND_ID
+
+    ld a,67
+    ld (test_case),a
+    call test_reset_sounds
+    ld hl,script_confirm_yes
+    call test_set_key_script
+    call w3d_shell_confirm_end_game
+    CHECK_MEM8 test_sound_count,1,REASON_SOUND_COUNT
+    CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_SHOOT,REASON_SOUND_ID
+
+    ld a,68
+    ld (test_case),a
+    call test_reset_sounds
+    ld hl,script_confirm_no
+    call test_set_key_script
+    call w3d_shell_confirm_end_game
+    CHECK_MEM8 test_sound_count,1,REASON_SOUND_COUNT
+    CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_ESCPRESSED,REASON_SOUND_ID
+
+    ld a,69
+    ld (test_case),a
+    call test_reset_sounds
+    xor a
+    ld (w3d_audio_sfx_enabled),a
+    ld hl,script_sound_toggle_return
+    call test_set_script
+    call w3d_shell_sound_page
+    CHECK_MEM8 w3d_audio_sfx_enabled,1,REASON_SFX_PREFERENCE
+    CHECK_MEM8 test_sound_count,2,REASON_SOUND_COUNT
+    CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_SHOOT,REASON_SOUND_ID
+    CHECK_MEM8 test_sound_history+1,W3D_AUDIO_SOUND_ESCPRESSED,REASON_SOUND_ID
+    ret
+
+test_reset_sounds:
+    ld a,1
+    ld (w3d_audio_sfx_enabled),a
+    xor a
+    ld (test_sound_count),a
+    ld hl,test_sound_history
+    ld (hl),a
+    ld de,test_sound_history+1
+    ld bc,63
+    ldir
+    ret
+
 test_set_script:
     ld (test_script_pointer),hl
     ret
@@ -1170,12 +1293,34 @@ test_reset_music:
 assert_a:
     ld d,a
     ld hl,result_checks
+    ld a,(hl)
+    inc a
+    ld (hl),a
+    jr nz,@checks_counted
+    inc hl
     inc (hl)
+@checks_counted:
+    ld a,d
     cp b
     ret z
     ld hl,result_errors
     ld a,(hl)
+    ld e,a
+    inc hl
+    ld a,(hl)
+    or e
+    ld e,a
+    dec hl
+; Preserve whether an earlier failure existed, then increment the u16 count.
+    ld a,(hl)
+    inc a
+    ld (hl),a
+    jr nz,@errors_counted
+    inc hl
     inc (hl)
+    dec hl
+@errors_counted:
+    ld a,e
     or a
     ret nz
     ld a,(test_case)
@@ -1228,20 +1373,23 @@ test_save_store_count: db 0
 test_music_start_count: db 0
 test_music_last: db 0
 test_music_history: ds 16
+test_sound_count: db 0
+test_sound_history: ds 64
+w3d_audio_fixture_sound: db 0
 test_plot_log: ds 32*6
 test_plot_log_end:
 
 result_data:
-    db "W3S1"
-result_checks: db 0
-result_errors: db 0
+    db "W3S2"
+result_checks: dw 0
+result_errors: dw 0
 result_first_case: db 0ffh
 result_first_reason: db 0
 result_first_expected: db 0
 result_first_actual: db 0
 result_stage: db 0
 result_done: db 0
-    db 0,0,0,0
+    db 0,0
 result_end:
 
 script_action_up: db SCRIPT_UP,SCRIPT_RELEASE

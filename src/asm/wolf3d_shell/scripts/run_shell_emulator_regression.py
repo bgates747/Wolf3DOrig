@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import atexit
+import hashlib
 import os
 from pathlib import Path
 import shutil
@@ -14,8 +15,12 @@ import tempfile
 import time
 
 _root_override = os.environ.get("W3D_STAGED_ROOT")
-_installed_root = Path(__file__).resolve().parents[4]
-STAGED_ROOT = Path(_root_override) if _root_override else _installed_root
+if _root_override:
+    STAGED_ROOT = Path(_root_override)
+    _installed_root = STAGED_ROOT
+else:
+    _installed_root = Path(__file__).resolve().parents[4]
+    STAGED_ROOT = _installed_root
 RUNTIME_ROOT = Path(os.environ.get("W3D_RUNTIME_ROOT", _installed_root))
 PRODUCTION_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
 FIXTURE = STAGED_ROOT / "src/asm/wolf3d_shell/src/shell_regression.asm"
@@ -44,6 +49,8 @@ REASONS = {
     17: "music preference",
     18: "original music assignment",
     19: "remembered quick slot",
+    20: "shell sound count",
+    21: "shell logical sound id",
 }
 
 STAGES = {
@@ -57,6 +64,7 @@ STAGES = {
     8: "attract timing",
     9: "draw contracts",
     10: "F1-F10 gameplay quick keys",
+    11: "original control-panel sounds",
     109: "main-menu Quit",
     110: "main-menu Escape",
     111: "main-menu New Game",
@@ -73,10 +81,20 @@ def run(command: list[str], *, cwd: Path | None = None) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--timeout", type=float, default=30.0)
+    parser.add_argument(
+        "--prebuilt",
+        type=Path,
+        help="use an already assembled fixture (for a cross-architecture emulator host)",
+    )
     args = parser.parse_args()
-    for dependency in (PRODUCTION_SRC, FIXTURE, FAB, MOS, VDP):
+    dependencies = (FAB, MOS, VDP)
+    if not args.prebuilt:
+        dependencies = (PRODUCTION_SRC, FIXTURE, *dependencies)
+    for dependency in dependencies:
         if not dependency.exists():
             raise FileNotFoundError(f"missing shell regression dependency: {dependency}")
+    if args.prebuilt and not args.prebuilt.is_file():
+        raise FileNotFoundError(f"missing prebuilt shell fixture: {args.prebuilt}")
 
     work = Path(tempfile.mkdtemp(prefix="ws"))
     atexit.register(shutil.rmtree, work, ignore_errors=True)
@@ -84,14 +102,20 @@ def main() -> int:
     app = sdcard / "s"
     app.mkdir(parents=True)
     binary = app / "s.bin"
-    # ez80asm retains DOS-era input and output path limits. Keep the entry
-    # basename short while resolving production bare includes from an isolated
-    # copy. This also keeps concurrent production assemblies race-free.
-    build_src = work / "src"
-    shutil.copytree(PRODUCTION_SRC, build_src)
-    entry = build_src / "s.asm"
-    shutil.copyfile(FIXTURE, entry)
-    run(["ez80asm", entry.name, str(binary)], cwd=build_src)
+    if args.prebuilt:
+        shutil.copyfile(args.prebuilt, binary)
+        print("+ prebuilt", args.prebuilt, "->", binary)
+    else:
+        # ez80asm retains DOS-era input and output path limits. Keep the entry
+        # basename short while resolving production bare includes from an isolated
+        # copy. This also keeps concurrent production assemblies race-free.
+        build_src = work / "src"
+        shutil.copytree(PRODUCTION_SRC, build_src)
+        entry = build_src / "s.asm"
+        shutil.copyfile(FIXTURE, entry)
+        run(["ez80asm", entry.name, str(binary)], cwd=build_src)
+    digest = hashlib.sha256(binary.read_bytes()).hexdigest()
+    print(f"binary: {binary.stat().st_size} bytes, sha256={digest}")
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\ncd s\r\nload s.bin\r\nrun\r\n"
     )
@@ -125,15 +149,15 @@ def main() -> int:
                 payload = result.read_bytes()
                 if (
                     len(payload) == RESULT_SIZE
-                    and payload[:4] == b"W3S1"
-                    and payload[11] == 1
+                    and payload[:4] == b"W3S2"
+                    and payload[13] == 1
                 ):
                     break
             time.sleep(0.05)
         else:
             detail = ""
-            if len(payload) == RESULT_SIZE and payload[:4] == b"W3S1":
-                detail = f"; stalled in {STAGES.get(payload[10], payload[10])}"
+            if len(payload) == RESULT_SIZE and payload[:4] == b"W3S2":
+                detail = f"; stalled in {STAGES.get(payload[12], payload[12])}"
             raise RuntimeError(f"timed out waiting for shell regression result{detail}")
     finally:
         process.terminate()
@@ -143,7 +167,9 @@ def main() -> int:
             process.kill()
             process.wait()
 
-    checks, errors, first_case, reason, expected, actual = payload[4:10]
+    checks = int.from_bytes(payload[4:6], "little")
+    errors = int.from_bytes(payload[6:8], "little")
+    first_case, reason, expected, actual = payload[8:12]
     if errors:
         print(
             f"FAIL: {errors} failures in {checks} shell checks; "
