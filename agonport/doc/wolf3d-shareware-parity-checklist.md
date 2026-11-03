@@ -559,6 +559,15 @@ game-over high-score handoff and control-panel return. Compile-time selectors
 change only those disposable applications and are absent from production.
 This closes the reachability problem, not the still-pending human visual gate.
 
+Audio-inventory correction, 2026-11-03: production already requested Hans's
+native `GUTENTAGSND`, `BOSSFIRESND`, and `MUTTISND`, and their VSWAP records
+made them audible, but the generated catalog incorrectly classified all three
+as surplus rather than current producers. The corrected source-to-producer
+contract marks 49 effects required and 49 available; only the alternate
+UPLOAD guard `DEATHSCREAM3SND` remains native but intentionally unrequested.
+This changes requirement metadata, not PCM, buffer IDs, rates, priorities, or
+playback behavior.
+
 Debug cheats, paid-episode content, obsolete DOS copy protection, VGA palette
 timing exactness, and unavailable hardware configuration choices are not
 required unless separately promoted.

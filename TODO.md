@@ -234,6 +234,11 @@ encounter on one health with either one displayed life or the source's final
 zero-life attempt. They preserve the production death, fizzle, respawn,
 score-checkpoint, high-score, and menu paths; only the initial health/lives are
 overridden. Visual acceptance remains part of the Phase-A batch.
+The source-to-producer audio sweep also corrected the asset inventory for
+Hans's three native effects: `GUTENTAGSND`, `BOSSFIRESND`, and `MUTTISND` were
+already requested and audible, but were falsely marked unrequired. All 49
+reachable production effects are now required and available, preventing a
+future trim from silently removing the boss audio contract.
 The startup sweep restored `WL_MAIN.C::DemoLoop`'s call to
 `WL_INTER.C::PG13`: the bundled `PG13PIC` now appears
 once per process at its original `(216,110)` anchor on the source blue field,

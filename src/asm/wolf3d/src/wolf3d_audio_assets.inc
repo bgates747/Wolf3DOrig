@@ -16,8 +16,8 @@ W3D_AUDIO_FLAG_AVAILABLE:         equ 0x02
 W3D_AUDIO_FLAG_NATIVE:            equ 0x04
 W3D_AUDIO_FLAG_FALLBACK:          equ 0x08
 W3D_AUDIO_AVAILABLE_COUNT:        equ 50
-W3D_AUDIO_REQUIRED_COUNT:         equ 46
-W3D_AUDIO_REQUIRED_AVAILABLE:     equ 46
+W3D_AUDIO_REQUIRED_COUNT:         equ 49
+W3D_AUDIO_REQUIRED_AVAILABLE:     equ 49
 W3D_AUDIO_RESIDENT_PCM_BYTES:     equ 453101
 W3D_AUDIO_CONTAINER_BYTES:        equ 455388
 W3D_AUDIO_GAIN_FORWARD_ROWS:      equ 15
@@ -330,7 +330,7 @@ w3d_audio_asset_table:
     dw 0x0000,0x0000,0x0000
     ; 55 GUTENTAGSND (available)
     dw 0x5037,7000,6334,905
-    db 70,0x06
+    db 70,0x07
     dw 0x60A5,0x60A6,0x60A7
     ; 56 LEBENSND (available)
     dw 0x5038,7000,5874,839
@@ -338,7 +338,7 @@ w3d_audio_asset_table:
     dw 0x60A8,0x60A9,0x60AA
     ; 57 MUTTISND (available)
     dw 0x5039,7000,5781,826
-    db 10,0x06
+    db 10,0x07
     dw 0x60AB,0x60AC,0x60AD
     ; 58 NAZIFIRESND (available)
     dw 0x503A,7000,8815,1259
@@ -346,7 +346,7 @@ w3d_audio_asset_table:
     dw 0x60AE,0x60AF,0x60B0
     ; 59 BOSSFIRESND (available)
     dw 0x503B,7000,10716,1531
-    db 50,0x06
+    db 50,0x07
     dw 0x60B1,0x60B2,0x60B3
     ; 60 SSFIRESND (available)
     dw 0x503C,7000,5410,773
