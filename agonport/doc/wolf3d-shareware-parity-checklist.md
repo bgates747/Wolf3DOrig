@@ -299,8 +299,13 @@ slots, overwrite/cancel, corrupt/version mismatch, and continuation through a
 floor transition and death.
 
 Status 2026-11-03: implementation is complete and all ten transactional
-direct-target cases pass. The remaining gate is staged continuation review
-during combat, doors, pushwalls, floor transitions, and death.
+direct-target cases pass. The round-trip case now seeds active combat timing,
+a moving door and timer, a mutable static, a fractional pushwall with history,
+floor ratios and secrets, and the death score checkpoint. It clears live state,
+decodes, rebuilds derived state, re-encodes, and requires the complete image to
+be byte-identical. Oryx generation 195 passes, so the remaining human gate is
+narrowly the ten-slot menu, overwrite/cancel/file flow, and one visibly clean
+resumed gameplay frame rather than separate saves in every dynamic state.
 
 ### A7. Remaining control-panel pages — TODO 16
 

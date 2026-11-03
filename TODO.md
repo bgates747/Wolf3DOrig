@@ -74,9 +74,12 @@ deferred canonical-level restore, and direct eZ80 corruption/round-trip fixture
 are implemented. The image also preserves the original level-entry score
 checkpoint used by death/restart, and rejects checksum-consistent tile maps
 whose door references could escape the staged door table. All ten transactional
-direct-target save-image cases pass. Remaining gates are staged visual
-save/load and continuation checks during combat, doors,
-pushwalls, floor transitions, and death.
+direct-target save-image cases pass. The round trip now seeds active weapon
+timing, a moving door/timer, a mutable static, a fractional pushwall/history,
+floor ratios/secrets, and the death score checkpoint, then requires the entire
+decoded/re-encoded image to remain byte-identical; Oryx generation 195 passes.
+Remaining close gate: staged visual acceptance of the ten-slot menu,
+overwrite/cancel/file flow, and one resumed gameplay frame.
 
 [ ] 16. Complete the original-facing control-panel pages: Sound, Control,
 Change View, Read This/help, View Scores/End Game state, and Back to Game.

@@ -51,6 +51,7 @@ REASON_SLOT_IO:     equ 9
 REASON_SLOT_META:   equ 10
 REASON_OLD_SCORE:   equ 11
 REASON_FACE:        equ 12
+REASON_IMAGE:       equ 13
 
 start:
     push af
@@ -137,6 +138,116 @@ prepare_state:
     ld (w3d_runtime_tilemap+97),a
     ld a,3
     ld (w3d_runtime_area_map+97),a
+
+; Seed every mutable live-state family that is easy to lose at a save/load
+; seam. The complete encoded image is compared after decode/re-encode below,
+; so one directed case covers combat, moving doors, statics, pushwalls,
+; per-floor ratios and the death score checkpoint byte-for-byte.
+    ld a,1
+    ld (w3d_player_attack_active),a
+    ld a,2
+    ld (w3d_player_attack_frame),a
+    ld a,034h
+    ld (w3d_player_attack_count+0),a
+    ld a,012h
+    ld (w3d_player_attack_count+1),a
+    ld a,7
+    ld (w3d_player_attack_record_tics),a
+    ld a,3
+    ld (w3d_player_weapon_frame),a
+    ld a,09ah
+    ld (w3d_player_weapon_shape+0),a
+    ld a,078h
+    ld (w3d_player_weapon_shape+1),a
+    ld a,2
+    ld (w3d_door_motion_phase),a
+
+    ld a,17
+    ld (w3d_level_ratios+0),a
+    ld a,23
+    ld (w3d_level_ratios+1),a
+    ld a,41
+    ld (w3d_level_ratios+2),a
+
+    ld a,5
+    ld (w3d_doors+W3D_DOOR_TILEX),a
+    ld a,6
+    ld (w3d_doors+W3D_DOOR_TILEY),a
+    ld a,1
+    ld (w3d_doors+W3D_DOOR_VERTICAL),a
+    ld a,2
+    ld (w3d_doors+W3D_DOOR_LOCK),a
+    ld a,W3D_DOOR_ACTION_OPENING
+    ld (w3d_doors+W3D_DOOR_ACTION),a
+    ld a,034h
+    ld (w3d_doors+W3D_DOOR_POSITION+0),a
+    ld a,012h
+    ld (w3d_doors+W3D_DOOR_POSITION+1),a
+    ld a,7
+    ld (w3d_doors+W3D_DOOR_TEXTURE_ID),a
+    ld a,1
+    ld (w3d_doors+W3D_DOOR_AREA1),a
+    ld a,2
+    ld (w3d_doors+W3D_DOOR_AREA2),a
+    ld a,078h
+    ld (w3d_door_timers+0),a
+    ld a,056h
+    ld (w3d_door_timers+1),a
+
+    ld a,1
+    ld (w3d_static_count+0),a
+    xor a
+    ld (w3d_static_count+1),a
+    ld a,7
+    ld (w3d_statics+W3D_STATIC_TILEX),a
+    ld a,8
+    ld (w3d_statics+W3D_STATIC_TILEY),a
+    ld a,034h
+    ld (w3d_statics+W3D_STATIC_SHAPENUM+0),a
+    ld a,012h
+    ld (w3d_statics+W3D_STATIC_SHAPENUM+1),a
+    ld a,W3D_STATIC_FLAG_BONUS
+    ld (w3d_statics+W3D_STATIC_FLAGS),a
+    ld a,W3D_ITEM_FIRSTAID
+    ld (w3d_statics+W3D_STATIC_ITEMNUMBER),a
+
+    ld a,W3D_PUSHWALL_STATUS_ACTIVE
+    ld (w3d_pushwall_render+W3D_PUSHWALL_RENDER_STATUS),a
+    ld a,10
+    ld (w3d_pushwall_render+W3D_PUSHWALL_RENDER_ORIGIN_X),a
+    ld (w3d_pushwall_render+W3D_PUSHWALL_RENDER_CURRENT_X),a
+    ld a,13
+    ld (w3d_pushwall_render+W3D_PUSHWALL_RENDER_ORIGIN_Y),a
+    ld a,12
+    ld (w3d_pushwall_render+W3D_PUSHWALL_RENDER_CURRENT_Y),a
+    xor a
+    ld (w3d_pushwall_render+W3D_PUSHWALL_RENDER_DIR),a
+    ld a,17
+    ld (w3d_pushwall_render+W3D_PUSHWALL_RENDER_POS),a
+    ld a,5
+    ld (w3d_pushwall_render+W3D_PUSHWALL_RENDER_TEXTURE),a
+    ld a,1
+    ld (w3d_pushwall_history_count),a
+    ld a,10
+    ld (w3d_pushwall_history+0),a
+    ld (w3d_pushwall_history+2),a
+    ld a,13
+    ld (w3d_pushwall_history+1),a
+    ld a,12
+    ld (w3d_pushwall_history+3),a
+    ld a,42
+    ld (w3d_pushwall_history+4),a
+    ld a,035h
+    ld (w3d_pushwall_state+0),a
+    ld a,1
+    ld (w3d_pushwall_state+1),a
+    ld (w3d_player_secret_count+0),a
+    xor a
+    ld (w3d_player_secret_count+1),a
+    ld a,2
+    ld (w3d_player_secret_total+0),a
+    xor a
+    ld (w3d_player_secret_total+1),a
     ret
 
 clear_round_trip_state:
@@ -154,6 +265,41 @@ clear_round_trip_state:
     ld (w3d_death_oldscore+3),a
     ld (w3d_runtime_tilemap+97),a
     ld (w3d_runtime_area_map+97),a
+    ld hl,w3d_player_attack_active
+    ld (hl),a
+    ld de,w3d_player_attack_active+1
+    ld bc,w3d_player_weapon_shape+2-w3d_player_attack_active-1
+    ldir
+    ld (w3d_door_motion_phase),a
+    ld (w3d_level_ratios+0),a
+    ld (w3d_level_ratios+1),a
+    ld (w3d_level_ratios+2),a
+    ld (w3d_level_door_count),a
+    ld hl,w3d_doors
+    ld (hl),a
+    ld de,w3d_doors+1
+    ld bc,W3D_DOOR_SIZE-1
+    ldir
+    ld (w3d_door_timers+0),a
+    ld (w3d_door_timers+1),a
+    ld (w3d_static_count+0),a
+    ld (w3d_static_count+1),a
+    ld hl,w3d_statics
+    ld (hl),a
+    ld de,w3d_statics+1
+    ld bc,W3D_STATIC_SIZE-1
+    ldir
+    ld hl,w3d_pushwall_payload
+    ld (hl),a
+    ld de,w3d_pushwall_payload+1
+    ld bc,W3D_PUSHWALL_PAYLOAD_SIZE-1
+    ldir
+    ld (w3d_pushwall_state+0),a
+    ld (w3d_pushwall_state+1),a
+    ld (w3d_player_secret_count+0),a
+    ld (w3d_player_secret_count+1),a
+    ld (w3d_player_secret_total+0),a
+    ld (w3d_player_secret_total+1),a
     ret
 
 refresh_checksum:
@@ -195,6 +341,10 @@ case_round_trip:
     ld a,1
     ld (test_case),a
     call prepare_image
+    ld hl,w3d_save_file_buffer
+    ld de,round_trip_image
+    ld bc,W3D_SAVE_FILE_SIZE
+    ldir
     call clear_round_trip_state
     call w3d_save_decode
     ld b,0
@@ -245,6 +395,26 @@ case_round_trip:
     ld c,REASON_ACTORAT
     call assert_a
 @actorat_ok:
+    call w3d_save_encode
+    ld hl,w3d_save_file_buffer
+    ld de,round_trip_image
+    ld bc,W3D_SAVE_FILE_SIZE
+@image:
+    ld a,(de)
+    ld b,a
+    ld a,(hl)
+    cp b
+    jr nz,@image_bad
+    inc hl
+    inc de
+    dec.s bc
+    ld a,b
+    or c
+    jr nz,@image
+    jp finish_case
+@image_bad:
+    ld c,REASON_IMAGE
+    call assert_a
     jp finish_case
 
 case_header_rejected:
@@ -518,3 +688,5 @@ result_end:
 
 w3d_level_ratios:
     ds W3D_LEVEL_RATIO_SIZE*W3D_LEVEL_RATIO_COUNT
+round_trip_image:
+    ds W3D_SAVE_FILE_SIZE

@@ -48,6 +48,8 @@ REASONS = {
     9: "slot file I/O",
     10: "slot metadata",
     11: "level-entry score checkpoint",
+    12: "face frame",
+    13: "complete re-encoded image",
 }
 
 
