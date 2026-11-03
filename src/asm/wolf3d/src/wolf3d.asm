@@ -428,6 +428,12 @@ printAudioDot:
 ; Preserve the exact loaded-sample bookkeeping before checking Escape.
 printAudioDotAndPollEscape:
     call printAudioDot
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+    push af
+    ld a,(agnb_audio_metadata+agnb_audio_meta_bufferId)
+    call w3d_startup_trace_audio_sample
+    pop af
+    .endif
     call w3d_music_service
     jp w3d_poll_application_escape
 
@@ -472,24 +478,81 @@ gallery_x:
 gallery_y:
     dl 32
 
+; A=stage byte. Diagnostic builds emit one existing buffered-debug command to
+; reserved buffer D0xx. The VDP consumes the six bytes and prints its normal
+; debug line on USB serial; no callback or MOS-visible reply is generated.
+; Production compiles every caller and this emitter out.
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+w3d_startup_trace_stage:
+    push af
+    push bc
+    push hl
+    ld (w3d_startup_trace_stage_id),a
+    ld hl,w3d_startup_trace_command
+    ld bc,w3d_startup_trace_command_end-w3d_startup_trace_command
+    rst.lil 18h
+    pop hl
+    pop bc
+    pop af
+    ret
+
+; A=logical sound ID. D1xx separates finalized PCM records from lifecycle
+; stages without requiring any extra parser feature in the diagnostic VDP.
+w3d_startup_trace_audio_sample:
+    push af
+    push bc
+    push hl
+    ld (w3d_startup_trace_sample_id),a
+    ld hl,w3d_startup_trace_sample_command
+    ld bc,w3d_startup_trace_sample_command_end-w3d_startup_trace_sample_command
+    rst.lil 18h
+    pop hl
+    pop bc
+    pop af
+    ret
+
+w3d_startup_trace_command:
+    db 23,0,0a0h
+w3d_startup_trace_stage_id:
+    db 0,0d0h
+    db 080h
+w3d_startup_trace_command_end:
+w3d_startup_trace_sample_command:
+    db 23,0,0a0h
+w3d_startup_trace_sample_id:
+    db 0,0d1h
+    db 080h
+w3d_startup_trace_sample_command_end:
+    .endif
+
 main:
+    W3D_STARTUP_TRACE 001h
     ld hl,farewell_msg
     ld (w3d_exit_message_ptr),hl
     call w3d_capture_original_screen_mode
+    W3D_STARTUP_TRACE 002h
     call w3d_seed_random_from_clock
     call w3d_music_initialize
+    W3D_STARTUP_TRACE 003h
     call w3d_audio_initialize
+    W3D_STARTUP_TRACE 004h
     call w3d_config_initialize
+    W3D_STARTUP_TRACE 005h
     call w3d_main_body
+    W3D_STARTUP_TRACE 006h
     call w3d_config_save
+    W3D_STARTUP_TRACE 007h
     call w3d_audio_shutdown
+    W3D_STARTUP_TRACE 008h
     call w3d_music_shutdown
+    W3D_STARTUP_TRACE 009h
     call w3d_restore_original_screen_mode
     ld hl,(w3d_exit_message_ptr)
     call printString
     ret
 
 w3d_main_body:
+    W3D_STARTUP_TRACE 010h
 ; Establish the application-global Escape latch before the first potentially
 ; long container load.  w3d_shell_run resets it again for a fresh shell
 ; lifecycle; it deliberately remains sticky everywhere else. Clear the older
@@ -507,16 +570,19 @@ w3d_main_body:
     ld hl,loading_shell_msg
     call printString
     call printNewLine
+    W3D_STARTUP_TRACE 011h
     ld de,shell_filename
     ld hl,printImageDotAndPollEscape
     call agnb_load_images_with_abortable_callback
     jr z,@shell_loaded
     call w3d_shell_query_exit_request
     ret nz
+    W3D_STARTUP_TRACE 0f1h
     ld hl,assets_error_msg
     ld (w3d_exit_message_ptr),hl
     ret
 @shell_loaded:
+    W3D_STARTUP_TRACE 012h
     call printNewLine
 ; Sound effects are application-global just like the shell graphics.  This
 ; makes the source control-panel effects available before the first game and
@@ -525,25 +591,31 @@ w3d_main_body:
     ld hl,loading_sfx_msg
     call printString
     call printNewLine
+    W3D_STARTUP_TRACE 020h
     ld de,sfx_filename
     ld hl,printAudioDotAndPollEscape
     call agnb_load_audio_with_abortable_callback
     jr z,@sfx_loaded
     call w3d_shell_query_exit_request
     ret nz
+    W3D_STARTUP_TRACE 0f2h
     call printNewLine
     ld hl,sfx_error_msg
     call printString
 @sfx_loaded:
+    W3D_STARTUP_TRACE 021h
     call printNewLine
     call w3d_poll_application_escape
     ret nz
+    W3D_STARTUP_TRACE 022h
     call w3d_audio_install_available_command_buffers
     jr nc,@audio_commands_installed
+    W3D_STARTUP_TRACE 0f3h
     ld hl,audio_install_error_msg
     ld (w3d_exit_message_ptr),hl
     ret
 @audio_commands_installed:
+    W3D_STARTUP_TRACE 023h
     call w3d_poll_application_escape
     ret nz
     call w3d_highscores_initialize
@@ -552,7 +624,9 @@ w3d_main_body:
     .if W3D_DIAGNOSTIC_HIGHSCORE_MODE
     call w3d_acceptance_run_highscore
     .else
+    W3D_STARTUP_TRACE 024h
     call w3d_shell_run
+    W3D_STARTUP_TRACE 025h
     .endif
 
 @route_shell_result:
@@ -638,6 +712,7 @@ w3d_acceptance_run_highscore:
 ; authoritative when this routine begins, so the matching level package and
 ; actor population are loaded only after the shell returns NEW_GAME.
 w3d_run_gameplay_session:
+    W3D_STARTUP_TRACE 060h
     call w3d_shell_clear
     xor a
     ld (w3d_victory_final_render_submitted),a
@@ -707,6 +782,7 @@ w3d_run_gameplay_session:
     xor a
     .endif
 @level_selected:
+    W3D_STARTUP_TRACE 061h
     call w3d_load_level_package
     push af
     call w3d_poll_application_escape
@@ -719,6 +795,7 @@ w3d_run_gameplay_session:
     pop af
     jp w3d_gameplay_exit_before_runtime
 @level_state_loaded:
+    W3D_STARTUP_TRACE 062h
 
     ld hl,loading_msg
     call printString
@@ -738,6 +815,7 @@ w3d_run_gameplay_session:
     ld de,w3d_level_tiles_filename
 ;    ld hl,printImageBreadcrumb ; diagnostic wall gallery
     ld hl,printImageDotAndPollEscape ; normal breadcrumb-only loading
+    W3D_STARTUP_TRACE 063h
     call agnb_load_images_with_abortable_callback
     jr z,@assets_loaded
     call w3d_shell_query_exit_request
@@ -746,12 +824,14 @@ w3d_run_gameplay_session:
     ld (w3d_exit_message_ptr),hl
     jp w3d_gameplay_fatal_before_runtime
 @assets_loaded:
+    W3D_STARTUP_TRACE 064h
     call printNewLine
     ld hl,loading_sprites_msg
     call printString
     call printNewLine
     ld de,w3d_level_sprites_filename
     ld hl,printImageDotAndPollEscape
+    W3D_STARTUP_TRACE 065h
     call agnb_load_images_with_abortable_callback
     jr z,@sprites_loaded
     call w3d_shell_query_exit_request
@@ -760,12 +840,14 @@ w3d_run_gameplay_session:
     ld (w3d_exit_message_ptr),hl
     jp w3d_gameplay_fatal_before_runtime
 @sprites_loaded:
+    W3D_STARTUP_TRACE 066h
     call printNewLine
     ld hl,loading_hud_msg
     call printString
     call printNewLine
     ld de,hud_filename
     ld hl,printImageDotAndPollEscape
+    W3D_STARTUP_TRACE 067h
     call agnb_load_images_with_abortable_callback
     jr z,@hud_loaded
     call w3d_shell_query_exit_request
@@ -774,6 +856,7 @@ w3d_run_gameplay_session:
     ld (w3d_exit_message_ptr),hl
     jp w3d_gameplay_fatal_before_runtime
 @hud_loaded:
+    W3D_STARTUP_TRACE 068h
     call printNewLine
 
 ; Gallery review pause, retained alongside the disabled diagnostic block.
@@ -792,10 +875,12 @@ w3d_run_gameplay_session:
     .endif
     ld hl,w3d_display_setup
     ld bc,w3d_display_setup_end-w3d_display_setup
+    W3D_STARTUP_TRACE 069h
     rst.lil 18h
     .if W3D_RENDER_BACKEND
     call w3d_wait_for_gameplay_mode
     jp c,w3d_gameplay_fatal_before_runtime
+    W3D_STARTUP_TRACE 06ah
     .endif
 
     call w3d_initialize_control_clock
@@ -837,8 +922,10 @@ w3d_run_gameplay_session:
     call w3d_enable_render_notifications
     ei
     .if W3D_RENDER_BACKEND
+    W3D_STARTUP_TRACE 06bh
     call w3d_vdplet_backend_open
     jp c,w3d_gameplay_fatal_shutdown
+    W3D_STARTUP_TRACE 06ch
     .endif
     call w3d_music_start_current_floor
 
@@ -849,6 +936,7 @@ w3d_run_gameplay_session:
     call w3d_death_prepare_next_render
     call w3d_submit_level_reset
     jp c,w3d_gameplay_fatal_shutdown
+    W3D_STARTUP_TRACE 06dh
 
 mainloop:
     call w3d_music_service
@@ -1139,6 +1227,7 @@ w3d_gameplay_resume:
     jp mainloop
 
 w3d_gameplay_fatal_before_runtime:
+    W3D_STARTUP_TRACE 0f4h
     ld a,W3D_GAMEPLAY_RESULT_FATAL
     ret
 
@@ -1171,15 +1260,18 @@ w3d_gameplay_demo_done_shutdown:
     jr w3d_gameplay_shutdown
 
 w3d_gameplay_fatal_shutdown:
+    W3D_STARTUP_TRACE 0f5h
     ld a,W3D_GAMEPLAY_RESULT_FATAL
 
 w3d_gameplay_shutdown:
+    W3D_STARTUP_TRACE 070h
     ld (w3d_gameplay_result),a
     call w3d_audio_stop_channels
     call w3d_disable_render_notifications
     .if W3D_RENDER_BACKEND
     call w3d_vdplet_backend_close
     jr nc,@renderer_closed
+    W3D_STARTUP_TRACE 0f6h
     ld a,W3D_GAMEPLAY_RESULT_FATAL
     ld (w3d_gameplay_result),a
 @renderer_closed:

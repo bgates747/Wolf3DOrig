@@ -107,10 +107,13 @@ w3d_shell_show_agon_splash:
 ; Initial application entry: setup -> reserved Agon hook -> source-timed
 ; original attract pages -> control panel. Returns W3D_SHELL_RESULT_* in A.
 w3d_shell_run:
+    W3D_STARTUP_TRACE 030h
     call w3d_shell_reset_exit_request
     call w3d_shell_setup
+    W3D_STARTUP_TRACE 031h
     call w3d_shell_show_agon_splash
     call w3d_shell_show_original_splash
+    W3D_STARTUP_TRACE 039h
     call w3d_shell_attract_until_input
     cp W3D_SHELL_RESULT_DEMO
     ret z
@@ -124,9 +127,12 @@ w3d_shell_run:
 w3d_shell_show_original_splash:
     ld hl,W3D_SHELL_SIGNON_BUFFER
     call w3d_shell_plot_full_screen
+    W3D_STARTUP_TRACE 032h
     call w3d_shell_wait_local_any_press
+    W3D_STARTUP_TRACE 033h
     ld a,W3D_MUSIC_NAZI_NOR
     call w3d_music_start
+    W3D_STARTUP_TRACE 034h
     ld a,1
     ld (w3d_shell_intro_music_ready),a
     ld hl,@blue_commands
@@ -136,8 +142,10 @@ w3d_shell_show_original_splash:
     ld bc,W3D_SHELL_PG13_X
     ld de,W3D_SHELL_PG13_Y
     call w3d_shell_plot_at
+    W3D_STARTUP_TRACE 035h
     ld de,W3D_SHELL_PG13_TICKS
     call w3d_shell_wait_input_timeout
+    W3D_STARTUP_TRACE 036h
     ld hl,@black_commands
     ld bc,@black_end-@black_commands
     rst.lil 18h
@@ -220,6 +228,7 @@ w3d_shell_draw_title:
 ; -----------------------------------------------------------------------------
 
 w3d_shell_main_menu:
+    W3D_STARTUP_TRACE 050h
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
     ld a,W3D_MUSIC_WONDERIN
@@ -300,6 +309,7 @@ w3d_shell_main_menu:
 ; CP_NewGame's difficulty Escape returns to episode selection. A second
 ; Escape from the episode page returns to the parent main menu.
     jp z,@new_game
+    W3D_STARTUP_TRACE 053h
     ld a,W3D_SHELL_RESULT_NEW_GAME
     or a                    ; caller may branch on NZ
     ret
@@ -1121,6 +1131,7 @@ w3d_shell_help_clear_buffers:
 ; exit, matching IN_UserInput's attract-loop role.
 w3d_shell_attract_until_input:
 @title:
+    W3D_STARTUP_TRACE 040h
     ld a,(w3d_shell_intro_music_ready)
     or a
     jr z,@start_title_music
@@ -1134,20 +1145,26 @@ w3d_shell_attract_until_input:
     call w3d_shell_draw_title
     ld de,W3D_SHELL_TITLE_TICKS
     call w3d_shell_wait_input_timeout
+    W3D_STARTUP_TRACE 041h
     ret nz
     call w3d_shell_clear
     ld hl,W3D_SHELL_CREDITS_BUFFER
     call w3d_shell_plot_full_screen
+    W3D_STARTUP_TRACE 042h
     ld de,W3D_SHELL_CREDITS_TICKS
     call w3d_shell_wait_input_timeout
+    W3D_STARTUP_TRACE 043h
     ret nz
     ld a,W3D_MUSIC_ROSTER
     call w3d_music_start
     call w3d_highscores_draw
+    W3D_STARTUP_TRACE 044h
     ld de,W3D_SHELL_SCORES_TICKS
     call w3d_shell_wait_input_timeout
+    W3D_STARTUP_TRACE 045h
     ret nz
     call w3d_demo_prepare_next
+    W3D_STARTUP_TRACE 046h
     ld a,W3D_SHELL_RESULT_DEMO
     or a
     ret
@@ -1558,6 +1575,7 @@ w3d_shell_choose_episode_inner:
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
 @begin:
+    W3D_STARTUP_TRACE 051h
     xor a
     ld (w3d_shell_episode_choice),a
 @redraw:
@@ -1676,6 +1694,7 @@ w3d_shell_choose_difficulty_inner:
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
 @begin:
+    W3D_STARTUP_TRACE 052h
     ld a,W3D_SHELL_DIFFICULTY_MEDIUM
     ld (w3d_shell_difficulty),a
 @redraw:

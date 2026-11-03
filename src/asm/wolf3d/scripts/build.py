@@ -22,6 +22,7 @@ INVULNERABLE_SELECTOR = "W3D_DIAGNOSTIC_INVULNERABLE:"
 HIGHSCORE_SELECTOR = "W3D_DIAGNOSTIC_HIGHSCORE_MODE:"
 START_HEALTH_SELECTOR = "W3D_DIAGNOSTIC_START_HEALTH:"
 START_LIVES_SELECTOR = "W3D_DIAGNOSTIC_START_LIVES:"
+STARTUP_TRACE_SELECTOR = "W3D_DIAGNOSTIC_STARTUP_TRACE:"
 HIGHSCORE_MODES = {"none": 0, "qualifying": 1, "nonqualifying": 2}
 BACKENDS = {
     "standalone": "W3D_RENDER_BACKEND_STANDALONE",
@@ -169,6 +170,20 @@ def select_starting_player_state(
     path.write_text("\n".join(lines) + "\n")
 
 
+def select_startup_trace(path: Path, enabled: bool) -> None:
+    lines = path.read_text().splitlines()
+    matches = [
+        index for index, line in enumerate(lines)
+        if line.startswith(STARTUP_TRACE_SELECTOR)
+    ]
+    if len(matches) != 1:
+        raise SystemExit("wolf3d diagnostic-startup-trace selector changed")
+    lines[matches[0]] = (
+        f"W3D_DIAGNOSTIC_STARTUP_TRACE: equ {int(enabled)}"
+    )
+    path.write_text("\n".join(lines) + "\n")
+
+
 def build(
     assembler: Path,
     backend: str,
@@ -178,6 +193,7 @@ def build(
     highscore_mode: str = "none",
     start_health: int | None = None,
     start_lives: int | None = None,
+    startup_trace: bool = False,
 ) -> dict[str, object]:
     if backend == "vdplet-direct":
         if module is None:
@@ -199,6 +215,8 @@ def build(
     # ez80asm retains a DOS-era output-filename ceiling. Keep diagnostic
     # suffixes compact even though their surrounding manifests are descriptive.
     suffix = "" if initial_level == 0 else f"-l{initial_level:02d}"
+    if startup_trace:
+        suffix += "-t"
     output_name = f"{base_name}{suffix}.bin"
     output = TARGET / output_name
     with tempfile.TemporaryDirectory(prefix="w3b") as name:
@@ -212,6 +230,7 @@ def build(
         select_starting_player_state(
             source / "wolf3d_backend.inc", start_health, start_lives
         )
+        select_startup_trace(source / "wolf3d_backend.inc", startup_trace)
         if module is not None:
             select_package(source / "wolf3d_vdplet_package.inc", module.stat().st_size)
         temporary_output = temporary / output_name
@@ -232,6 +251,7 @@ def build(
         "diagnostic_highscore_mode": highscore_mode,
         "diagnostic_start_health": start_health,
         "diagnostic_start_lives": start_lives,
+        "diagnostic_startup_trace": startup_trace,
         "assembler": str(assembler),
         "output": str(output.relative_to(PROJECT.parents[2])),
         "bytes": output.stat().st_size,
@@ -277,6 +297,10 @@ def main() -> None:
         "--diagnostic-start-lives", type=int,
         help="acceptance-only build: override new-game starting lives (0..9)",
     )
+    parser.add_argument(
+        "--diagnostic-startup-trace", action="store_true",
+        help="hardware-diagnostic build: emit bounded USB-only startup breadcrumbs",
+    )
     args = parser.parse_args()
     receipt = build(
         resolve_assembler(args.assembler),
@@ -287,6 +311,7 @@ def main() -> None:
         args.highscore_acceptance,
         args.diagnostic_start_health,
         args.diagnostic_start_lives,
+        args.diagnostic_startup_trace,
     )
     print(json.dumps(receipt, indent=2))
 

@@ -22,3 +22,23 @@ W3D_DIAGNOSTIC_HIGHSCORE_MODE: equ 0
 ; reviewed without repeatedly losing ordinary games.
 W3D_DIAGNOSTIC_START_HEALTH:   equ 0ffh
 W3D_DIAGNOSTIC_START_LIVES:    equ 0ffh
+
+; Hardware-diagnostic-only startup breadcrumbs. The durable builder enables
+; this only in a disposable image; every production build compiles the calls
+; and emitter out completely. Each marker is one existing BUFFERED_DEBUG_INFO
+; command to a reserved empty buffer ID, so the stock/current VDP emits it only
+; on its USB debug serial stream and sends no reply to the eZ80.
+W3D_DIAGNOSTIC_STARTUP_TRACE:  equ 0
+
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+    MACRO W3D_STARTUP_TRACE marker
+        push af
+        ld a,marker
+        call w3d_startup_trace_stage
+        pop af
+    ENDMACRO
+    .else
+    MACRO W3D_STARTUP_TRACE marker
+@disabled:
+    ENDMACRO
+    .endif
