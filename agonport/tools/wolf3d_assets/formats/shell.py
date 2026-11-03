@@ -97,6 +97,7 @@ SHELL_COMPOSITE_BUFFER_IDS = {
     "sound_on_music_off_page": 0x4345,
     "sound_off_music_off_page": 0x4346,
     **{f"quit_notice_{index}": 0x4350 + index for index in range(9)},
+    "current_game_notice": 0x4359,
 }
 
 # Original WL_MENU.H palette indices.
@@ -159,6 +160,12 @@ END_GAME_MESSAGE = (
     "Are you sure you want\n"
     "to end the game you\n"
     "are playing? (Y or N):"
+)
+
+CURRENT_GAME_MESSAGE = (
+    "You are currently in\n"
+    "a game. Continuing will\n"
+    "erase old game. Ok?"
 )
 
 QUIT_MESSAGES = (

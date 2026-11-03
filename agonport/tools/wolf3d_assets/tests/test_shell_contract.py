@@ -17,6 +17,7 @@ from formats.shell import (  # noqa: E402
     BKGDCOLOR,
     BORDCOLOR,
     COMPOSED_DEACTIVE_RGB,
+    CURRENT_GAME_MESSAGE,
     END_GAME_MESSAGE,
     EPISODE_UNAVAILABLE_MESSAGE,
     QUIT_MESSAGES,
@@ -81,6 +82,7 @@ EXPECTED_COMPOSITES = {
     "quit_notice_6": (0x4356, 156, 37, 83, 82),
     "quit_notice_7": (0x4357, 276, 50, 23, 76),
     "quit_notice_8": (0x4358, 284, 37, 19, 82),
+    "current_game_notice": (0x4359, 206, 50, 58, 76),
 }
 
 
@@ -113,6 +115,7 @@ class ShellArchiveTests(unittest.TestCase):
         self.assertEqual(font.measure("New Game"), (82, 13))
         self.assertEqual(font.measure(EPISODE_UNAVAILABLE_MESSAGE), (240, 52))
         self.assertEqual(font.measure(END_GAME_MESSAGE), (204, 39))
+        self.assertEqual(font.measure(CURRENT_GAME_MESSAGE), (195, 39))
         self.assertEqual(len(QUIT_MESSAGES), 9)
         self.assertEqual(font.measure(QUIT_MESSAGES[0]), (195, 39))
         self.assertEqual(font.measure(QUIT_MESSAGES[8]), (263, 26))

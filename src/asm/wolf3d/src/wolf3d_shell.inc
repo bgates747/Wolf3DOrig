@@ -260,7 +260,9 @@ w3d_shell_main_menu:
     jp z,@redraw
 @difficulty:
     call w3d_shell_choose_difficulty_local
-    jp z,@redraw
+; CP_NewGame's difficulty Escape returns to episode selection. A second
+; Escape from the episode page returns to the parent main menu.
+    jp z,@new_game
     ld a,W3D_SHELL_RESULT_NEW_GAME
     or a                    ; caller may branch on NZ
     ret
@@ -372,8 +374,15 @@ w3d_shell_pause_menu:
 @new_game:
     call w3d_shell_choose_episode_local
     jp z,@redraw
-    call w3d_shell_choose_difficulty_local
+; CP_NewGame asks only after a valid episode was selected and before the
+; difficulty page. Cancelling preserves the current game and returns here.
+    call w3d_shell_confirm_current_game
+    or a
     jp z,@redraw
+    call w3d_shell_choose_difficulty_local
+; The original jumps back through firstpart, including the episode page and
+; (after another valid selection) this current-game confirmation.
+    jp z,@new_game
     ld a,W3D_SHELL_PAUSE_NEW_GAME
     or a
     ret
@@ -506,7 +515,8 @@ w3d_shell_pause_quick:
     or a
     ret
 @end_game:
-    call w3d_shell_confirm_end_game
+; F7 temporarily uses WindowH=160 exactly like F10.
+    call w3d_shell_confirm_end_game_quick
     or a
     jp z,@resume
     ld a,W3D_SHELL_PAUSE_END_GAME
@@ -605,6 +615,21 @@ w3d_shell_confirm_end_game:
     ld hl,W3D_SHELL_END_GAME_NOTICE_BUFFER
     ld bc,W3D_SHELL_END_GAME_NOTICE_X
     ld de,W3D_SHELL_END_GAME_NOTICE_Y
+    jr w3d_shell_confirm_notice
+
+w3d_shell_confirm_end_game_quick:
+    ld hl,W3D_SHELL_END_GAME_NOTICE_BUFFER
+    ld bc,W3D_SHELL_END_GAME_NOTICE_X
+    ld de,W3D_SHELL_END_GAME_NOTICE_Y-20
+    jr w3d_shell_confirm_notice
+
+; Original in-game CP_NewGame -> Confirm(CURGAME). The startup main menu never
+; uses this warning because no game exists yet.
+w3d_shell_confirm_current_game:
+    ld hl,W3D_SHELL_CURRENT_GAME_NOTICE_BUFFER
+    ld bc,W3D_SHELL_CURRENT_GAME_NOTICE_X
+    ld de,W3D_SHELL_CURRENT_GAME_NOTICE_Y
+w3d_shell_confirm_notice:
     call w3d_shell_plot_at
 @wait:
     call w3d_shell_read_key
@@ -1487,8 +1512,9 @@ w3d_shell_choose_difficulty_inner:
 @global_cancel:
     jp w3d_shell_return_quit
 
-; Episode/difficulty screens use global Escape during startup but local Escape
-; when invoked from the in-game New Game row.
+; The explicit global entry points retain application-exit Escape for callers
+; that require it. CP_NewGame uses the local variants from both parent menus:
+; Episode returns to its parent, while Difficulty is routed back to Episode.
 w3d_shell_wait_choice_action:
     ld a,(w3d_shell_choice_local)
     or a

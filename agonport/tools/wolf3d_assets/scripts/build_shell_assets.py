@@ -23,6 +23,7 @@ from formats.shell import (  # noqa: E402
     BORDCOLOR,
     COMPOSED_DEACTIVE_RGB,
     CONTROL_PAGE_LINES,
+    CURRENT_GAME_MESSAGE,
     CHANGE_VIEW_PAGE_LINES,
     DEACTIVE,
     DIFFICULTY_LABELS,
@@ -447,6 +448,9 @@ def _compose_images(
             f"quit_notice_{index}": _compose_message_notice(font, message)
             for index, message in enumerate(QUIT_MESSAGES)
         },
+        "current_game_notice": _compose_message_notice(
+            font, CURRENT_GAME_MESSAGE
+        ),
     }
     for index, label in enumerate(EPISODE_LABELS, start=1):
         images[f"episode_{index}_selected"] = ComposedImage(

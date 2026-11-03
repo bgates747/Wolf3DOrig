@@ -762,11 +762,31 @@ test_pause_menu:
     ld a,48
     ld (test_case),a
     call w3d_shell_reset_exit_request
+    call test_reset_plots
     ld hl,script_pause_new_game
     call test_set_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     call w3d_shell_pause_menu
     CHECK_A W3D_SHELL_PAUSE_NEW_GAME,REASON_RESULT
     CHECK_MEM8 w3d_requested_difficulty,2,REASON_DIFFICULTY
+    CHECK_MEM8 test_plot_count,23,REASON_PLOT_COUNT
+    CHECK_PLOT 108,W3D_SHELL_CURRENT_GAME_NOTICE_BUFFER,W3D_SHELL_CURRENT_GAME_NOTICE_X,W3D_SHELL_CURRENT_GAME_NOTICE_Y
+    CHECK_EXIT 0
+    ld a,73
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    call test_reset_plots
+    ld hl,script_pause_new_game_then_back
+    call test_set_script
+    ld hl,script_confirm_no
+    call test_set_key_script
+    call w3d_shell_pause_menu
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+; The full cancel/back trace makes 34 plot calls; the bounded fixture retains
+; the first 32, including the notice under test.
+    CHECK_MEM8 test_plot_count,32,REASON_PLOT_COUNT
+    CHECK_PLOT 108,W3D_SHELL_CURRENT_GAME_NOTICE_BUFFER,W3D_SHELL_CURRENT_GAME_NOTICE_X,W3D_SHELL_CURRENT_GAME_NOTICE_Y
     CHECK_EXIT 0
     ret
 
@@ -1026,6 +1046,7 @@ test_quick_keys:
 
     ld a,62
     ld (test_case),a
+    call test_reset_plots
     ld hl,script_quick_release
     call test_set_script
     ld hl,script_confirm_yes
@@ -1033,6 +1054,7 @@ test_quick_keys:
     ld a,w3d_panel_request_end_game
     call w3d_shell_pause_quick
     CHECK_A W3D_SHELL_PAUSE_END_GAME,REASON_RESULT
+    CHECK_PLOT 0,W3D_SHELL_END_GAME_NOTICE_BUFFER,W3D_SHELL_END_GAME_NOTICE_X,W3D_SHELL_END_GAME_NOTICE_Y-20
     CHECK_EXIT 0
 
     ld a,63
@@ -1558,6 +1580,12 @@ script_pause_new_game:
     db SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
     db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
     db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+script_pause_new_game_then_back:
+    db SCRIPT_RELEASE,SCRIPT_DOWN,SCRIPT_RELEASE
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+    db SCRIPT_RETURN,SCRIPT_RELEASE
+    db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_UP,SCRIPT_RELEASE
+    db SCRIPT_RETURN,SCRIPT_RELEASE
 script_sound_toggle_return:
     db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_music_toggle_return:
@@ -1589,6 +1617,7 @@ script_difficulty_baby:
 script_difficulty_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_main_difficulty_escape:
     db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
     db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
 script_title_escape:

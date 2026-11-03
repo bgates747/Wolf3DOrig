@@ -107,10 +107,23 @@ only for Y/y. N/n or Escape cancels with `ESCPRESSEDSND`; acceptance uses
 `SHOOTSND`. Main-menu Escape and Quit, the in-game Quit row, and F10 now share
 that contract. F10 preserves the source's temporary `WindowH=160` placement by
 moving the composed prompt twenty pixels upward. The same audit corrected the
-startup RNG seed and the main-menu Episode/Difficulty cancellation path: both
-submenus now return locally rather than setting the application exit latch.
+startup RNG seed and the main-menu Episode cancellation path, which returns
+locally rather than setting the application exit latch. The follow-up audit
+restores Difficulty cancellation to Episode selection, matching `firstpart`.
 Oryx generation 172 passes all 559 direct production-shell checks, and the
 nine composed prompt assets pass their exact source-string/geometry contract.
+
+New-game-flow correction, 2026-11-03: the in-game control panel now preserves
+`CP_NewGame`'s warning that the current game will be erased. The exact
+three-line `CURGAME` message is composed from the original WL1 font and window
+geometry; N/n or Escape returns to the running game's control panel, while
+Y/y proceeds to difficulty selection. Cancelling Difficulty follows the
+source's `firstpart` jump back through Episode selection and asks the warning
+again after the next valid episode choice. The startup shell deliberately
+omits the warning because no game is in progress. F7's temporary
+`WindowH=160` confirmation placement is separately pinned. Oryx generation
+175 passes all 581 direct production-shell checks, including the complete
+accept, cancel, nested-cancel, and prompt-coordinate traces.
 
 ### A1. Pushwalls and secret discovery — TODO 11
 
@@ -363,7 +376,8 @@ panel bypassed original `CP_Quit` and returned directly to MOS. The complete
 nine-message source table is now generated as reusable shell assets, selection
 consumes the same two gameplay RNG draws with exact C precedence, and all four
 reachable entry routes share Y/N/Escape and sound semantics. Main-menu Episode
-and Difficulty Escape are local cancellations again. Oryx generation 172
+Escape is a local cancellation again; the follow-up audit restores Difficulty
+Escape to Episode selection. Oryx generation 172
 passes 559/559 target checks; standalone is 273,505 bytes, SHA-256
 `872aae9c708eddd93fa8f60662035dfaa23127653d36d459c0022c2a6452ba9f`,
 and VDPlet-direct is 285,125 bytes, SHA-256

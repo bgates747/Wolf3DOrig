@@ -183,11 +183,19 @@ shared `US_RndT` bytes and preserves the source expression
 `first & (7 + (second & 1))`, selecting all nine original humorous prompts.
 Main-menu Escape, Quit, pause-menu Quit, and F10 now require Y/N confirmation;
 F10 reproduces the source's 160-pixel control-panel window by shifting its
-prompt twenty pixels upward. Cancelling Episode or Difficulty now returns to
-the main menu instead of exiting the application. Oryx generation 172 passes
+prompt twenty pixels upward. Episode cancellation now returns to its parent;
+the follow-up audit restores Difficulty cancellation to the Episode page.
+Oryx generation 172 passes
 559/559 shell checks, including exact prompt selection/coordinates, Y/N/Escape
 semantics, sound feedback, and exit-latch ownership; both application backends
 rebuild.
+The next source pass restored `CP_NewGame`'s in-progress-game warning and its
+nested cancellation contract. The exact original `CURGAME` window appears
+only from the in-game panel; cancel returns to that panel, accept enters
+Difficulty, and cancelling Difficulty returns through Episode selection and
+the warning again. F7's source `WindowH=160` prompt placement is now covered
+separately. Oryx generation 175 passes all 581/581 production-shell checks;
+both application backends rebuild.
 
 # Phase B — Agon identity and legal presentation
 
