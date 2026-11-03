@@ -691,6 +691,12 @@ w3d_run_gameplay_session:
 ; after every finalized destination image.
     ld hl,w3d_audio_wait_for_vdp_ingress
     call w3d_intermission_set_ingress_fence_hook
+    ld hl,w3d_intermission_audio_hook
+    call w3d_intermission_set_sound_hook
+    ld hl,w3d_intermission_award_hook_production
+    call w3d_intermission_set_award_hook
+    ld hl,w3d_intermission_wait_30hz
+    call w3d_intermission_set_wait_hook
     call w3d_initialize_motion_state
     call w3d_initialize_death_state
     ld hl,w3d_reseed_level_attempt
@@ -897,6 +903,63 @@ w3d_gameplay_shutdown:
     ld a,(w3d_gameplay_result)
     ret
 
+; Intermission hooks ---------------------------------------------------------
+
+; A=logical id.  Count-up events are not part of the gameplay simulation
+; queue, so each one owns and flushes a single immediate quantum.
+w3d_intermission_audio_hook:
+    push af
+    call w3d_audio_begin_quantum
+    pop af
+    ld b,127
+    ld c,0
+    call w3d_audio_request
+    jp w3d_audio_flush_quantum
+
+; DE -> little-endian u32 bonus.
+w3d_intermission_award_hook_production:
+    push de
+    ld hl,w3d_player_next_extra
+    ld de,w3d_intermission_old_next_extra
+    ld bc,4
+    ldir
+    pop de
+    ex de,hl
+    call w3d_add_player_score32_ptr
+    ld hl,w3d_player_next_extra
+    ld de,w3d_intermission_old_next_extra
+    ld b,4
+@compare_threshold:
+    ld a,(de)
+    cp (hl)
+    jr nz,@extra_life
+    inc hl
+    inc de
+    djnz @compare_threshold
+    ret
+@extra_life:
+    ld a,W3D_AUDIO_SOUND_BONUS1UP
+    jp w3d_intermission_audio_hook
+
+; Pace post-loading count-up at 30 Hz from the MOS 120 Hz clock. Loading-time
+; image callbacks intentionally do not call this hook: their completed-record
+; boundaries already provide useful animation cadence without stalling AGNB.
+w3d_intermission_wait_30hz:
+    ld ix,(w3d_sysvars_pointer)
+    ld hl,(ix+sysvar_time)
+    ld (w3d_intermission_wait_started),hl
+@wait:
+    ld ix,(w3d_sysvars_pointer)
+    ld hl,(ix+sysvar_time)
+    ld de,(w3d_intermission_wait_started)
+    or a
+    sbc hl,de
+    ld de,4
+    or a
+    sbc hl,de
+    jr c,@wait
+    ret
+
 W3D_GAMEPLAY_RESULT_EXIT:     equ 0
 W3D_GAMEPLAY_RESULT_VICTORY:  equ 1
 W3D_GAMEPLAY_RESULT_FATAL:    equ 2
@@ -905,3 +968,7 @@ w3d_gameplay_result:
     db W3D_GAMEPLAY_RESULT_EXIT
 w3d_victory_final_render_submitted:
     db 0
+w3d_intermission_wait_started:
+    dl 0
+w3d_intermission_old_next_extra:
+    ds 4

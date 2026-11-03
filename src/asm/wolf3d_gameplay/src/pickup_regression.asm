@@ -118,6 +118,7 @@ run_tests:
     djnz @loop
 
     call test_pickup_audio
+    call test_score32_bonus
     call write_result
     call print_report
     ret
@@ -177,6 +178,54 @@ test_pickup_audio:
     lea iy,iy+audio_case_size
     pop bc
     djnz @loop
+    ret
+
+; Floor completion may award 135,000 points in one call. Exercise the shipping
+; 32-bit GivePoints path across four extra-life thresholds.
+test_score32_bonus:
+    xor a
+    ld (case_failed),a
+    ld (w3d_hud_dirty),a
+    ld (w3d_world_dirty),a
+    ld (w3d_player_score+2),a
+    ld (w3d_player_score+3),a
+    ld (w3d_player_next_extra+2),a
+    ld (w3d_player_next_extra+3),a
+    ld a,0dch
+    ld (w3d_player_score+0),a
+    ld a,09bh
+    ld (w3d_player_score+1),a
+    ld a,040h
+    ld (w3d_player_next_extra+0),a
+    ld a,09ch
+    ld (w3d_player_next_extra+1),a
+    ld a,3
+    ld (w3d_player_lives),a
+    ld hl,test_score32_increment
+    call w3d_add_player_score32_ptr
+    ld hl,w3d_player_score
+    ld de,test_score32_expected
+    ld c,reason_score
+    call assert_four_bytes
+    ld hl,w3d_player_next_extra
+    ld de,test_score32_next
+    ld c,reason_next_extra
+    call assert_four_bytes
+    ld a,(w3d_player_lives)
+    ld b,7
+    ld c,reason_lives
+    call assert_equal
+    ld a,(w3d_hud_dirty)
+    ld b,W3D_HUD_DIRTY_SCORE|W3D_HUD_DIRTY_LIVES
+    ld c,reason_hud_dirty
+    call assert_equal
+    ld a,(w3d_world_dirty)
+    ld b,1
+    ld c,reason_world_dirty
+    call assert_equal
+    ld a,(result_records)
+    inc a
+    ld (result_records),a
     ret
 
 prepare_audio_pickup:
@@ -547,6 +596,10 @@ test_audio_last_id:         db 0
 test_audio_arg_b:           db 0
 test_audio_arg_c:           db 0
 test_audio_end:
+
+test_score32_increment:      db 058h,00fh,002h,000h ; 135,000
+test_score32_expected:       db 034h,0abh,002h,000h ; 174,900
+test_score32_next:           db 040h,00dh,003h,000h ; 200,000
 
 result_data:
     db "W3P1"

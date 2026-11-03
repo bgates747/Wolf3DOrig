@@ -1669,6 +1669,32 @@ w3d_add_player_score:
     ld a,(w3d_player_score+3)
     adc a,0
     ld (w3d_player_score+3),a
+    jr w3d_add_player_score_finish
+
+; HL -> little-endian unsigned 32-bit point increment.  Floor completion can
+; award as much as 135,000 points, so its faithful GivePoints path cannot use
+; the original convenience entry above.  The pointer form also keeps all four
+; bytes explicit on an eZ80 without touching the upper byte of a 24-bit GP
+; register.
+w3d_add_player_score32_ptr:
+    push ix
+    push hl
+    pop ix
+    ld a,(w3d_player_score+0)
+    add a,(ix+0)
+    ld (w3d_player_score+0),a
+    ld a,(w3d_player_score+1)
+    adc a,(ix+1)
+    ld (w3d_player_score+1),a
+    ld a,(w3d_player_score+2)
+    adc a,(ix+2)
+    ld (w3d_player_score+2),a
+    ld a,(w3d_player_score+3)
+    adc a,(ix+3)
+    ld (w3d_player_score+3),a
+    pop ix
+
+w3d_add_player_score_finish:
     ld a,W3D_HUD_DIRTY_SCORE
     call w3d_mark_hud_dirty
 

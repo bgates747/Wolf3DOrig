@@ -54,6 +54,10 @@ W3D_ITEM_CHALICE:         equ 10
 W3D_ITEM_BIBLE:           equ 11
 W3D_ITEM_CROWN:           equ 12
 W3D_ITEM_FULLHEAL:        equ 18
+W3D_AUDIO_SOUND_ENDBONUS1: equ 42
+W3D_AUDIO_SOUND_ENDBONUS2: equ 43
+W3D_AUDIO_SOUND_NOBONUS:   equ 47
+W3D_AUDIO_SOUND_PERCENT100: equ 48
 
 ; Production-owned globals are reduced to the exact fields this include reads.
 w3d_level_requested_index:  db 0
@@ -62,6 +66,8 @@ w3d_level_actor_count:      db 0
 w3d_level_static_seed_ptr:  dl test_static_seeds
 w3d_level_static_count:     dw 0
 w3d_player_kill_count:      dw 0
+w3d_player_secret_count:    dw 0
+w3d_player_secret_total:    dw 0
 w3d_player_treasure_count:  dw 0
 w3d_player_health:          db 100
 w3d_player_ammo:            db 8
@@ -100,6 +106,13 @@ REASON_ACK_RELEASED:   equ 23
 REASON_EXIT_QUERY_COUNT: equ 24
 REASON_INGRESS_FENCE_COUNT: equ 25
 REASON_INGRESS_FAILURE: equ 26
+REASON_TIMELEFT:        equ 27
+REASON_BONUS_BYTE:      equ 28
+REASON_RATIO_RECORD:    equ 29
+REASON_AWARD_COUNT:     equ 30
+REASON_SOUND_COUNT:     equ 31
+REASON_SOUND_ID:        equ 32
+REASON_STAGE:           equ 33
 
 start:
     push af
@@ -144,6 +157,9 @@ run_tests:
     call test_finish_hook_only_escape_abort
     call test_loading_ingress_fence
     call test_loading_ingress_failure
+    call test_bonus_derivation_and_ratio_record
+    call test_finalize_awards_once
+    call test_countup_state_machine
     call write_result
     ret
 
@@ -285,6 +301,135 @@ test_percent:
     CHECK_A 100,REASON_PERCENT
     ret
 
+test_bonus_derivation_and_ratio_record:
+    ld a,24
+    ld (test_case),a
+    call test_reset_shell_stubs
+    xor a
+    ld (w3d_level_requested_index),a
+    ld a,1
+    ld (w3d_intermission_level_minutes),a
+    ld a,2
+    ld (w3d_intermission_level_seconds),a
+    ld a,1
+    ld (w3d_intermission_par_minutes),a
+    ld a,30
+    ld (w3d_intermission_par_seconds),a
+    ld a,66
+    ld (w3d_intermission_kill_ratio),a
+    ld a,50
+    ld (w3d_intermission_secret_ratio),a
+    ld a,100
+    ld (w3d_intermission_treasure_ratio),a
+    call w3d_intermission_prepare_ordinary
+    CHECK_MEM8 w3d_intermission_elapsed_seconds+0,62,REASON_SECONDS
+    CHECK_MEM8 w3d_intermission_elapsed_seconds+1,0,REASON_SECONDS
+    CHECK_MEM8 w3d_intermission_timeleft+0,28,REASON_TIMELEFT
+    CHECK_MEM8 w3d_intermission_timeleft+1,0,REASON_TIMELEFT
+; 28*500 + one perfect ratio = 24,000 = 0x00005dc0.
+    CHECK_MEM8 w3d_intermission_final_bonus+0,0c0h,REASON_BONUS_BYTE
+    CHECK_MEM8 w3d_intermission_final_bonus+1,05dh,REASON_BONUS_BYTE
+    CHECK_MEM8 w3d_intermission_final_bonus+2,0,REASON_BONUS_BYTE
+    CHECK_MEM8 w3d_intermission_final_bonus+3,0,REASON_BONUS_BYTE
+    CHECK_MEM8 w3d_intermission_stage,W3D_INTERMISSION_STAGE_TIME,REASON_STAGE
+    CHECK_MEM8 w3d_level_ratios+W3D_LEVEL_RATIO_KILL,66,REASON_RATIO_RECORD
+    CHECK_MEM8 w3d_level_ratios+W3D_LEVEL_RATIO_KILL+1,0,REASON_RATIO_RECORD
+    CHECK_MEM8 w3d_level_ratios+W3D_LEVEL_RATIO_SECRET,50,REASON_RATIO_RECORD
+    CHECK_MEM8 w3d_level_ratios+W3D_LEVEL_RATIO_TREASURE,100,REASON_RATIO_RECORD
+    CHECK_MEM8 w3d_level_ratios+W3D_LEVEL_RATIO_TIME,62,REASON_RATIO_RECORD
+    CHECK_MEM8 w3d_level_ratios+W3D_LEVEL_RATIO_TIME+1,0,REASON_RATIO_RECORD
+    ret
+
+test_finalize_awards_once:
+    ld a,25
+    ld (test_case),a
+    call test_reset_shell_stubs
+    ld hl,test_award_points
+    call w3d_intermission_set_award_hook
+    xor a
+    ld (w3d_level_requested_index),a
+    ld a,0c0h
+    ld (w3d_intermission_final_bonus+0),a
+    ld a,05dh
+    ld (w3d_intermission_final_bonus+1),a
+    xor a
+    ld (w3d_intermission_final_bonus+2),a
+    ld (w3d_intermission_final_bonus+3),a
+    ld (w3d_intermission_bonus_awarded),a
+    ld a,66
+    ld (w3d_intermission_kill_ratio),a
+    ld a,50
+    ld (w3d_intermission_secret_ratio),a
+    ld a,100
+    ld (w3d_intermission_treasure_ratio),a
+    call w3d_intermission_finalize
+    CHECK_MEM8 test_award_count,1,REASON_AWARD_COUNT
+    CHECK_MEM8 test_award_value+0,0c0h,REASON_BONUS_BYTE
+    CHECK_MEM8 test_award_value+1,05dh,REASON_BONUS_BYTE
+    CHECK_MEM8 test_award_value+2,0,REASON_BONUS_BYTE
+    CHECK_MEM8 test_award_value+3,0,REASON_BONUS_BYTE
+    CHECK_MEM8 w3d_intermission_stage,W3D_INTERMISSION_STAGE_DONE,REASON_STAGE
+    call w3d_intermission_finalize
+    CHECK_MEM8 test_award_count,1,REASON_AWARD_COUNT
+    ret
+
+test_countup_state_machine:
+    ld a,26
+    ld (test_case),a
+    call test_reset_shell_stubs
+    ld hl,test_record_sound
+    call w3d_intermission_set_sound_hook
+    ld hl,test_award_points
+    call w3d_intermission_set_award_hook
+    xor a
+    ld (w3d_level_requested_index),a
+    ld (w3d_intermission_current_ratio),a
+    ld (w3d_intermission_stage_counter+0),a
+    ld (w3d_intermission_stage_counter+1),a
+    ld (w3d_intermission_kill_ratio),a
+    ld (w3d_intermission_secret_ratio),a
+    ld (w3d_intermission_treasure_ratio),a
+    ld (w3d_intermission_bonus_awarded),a
+    ld (w3d_intermission_current_bonus+0),a
+    ld (w3d_intermission_current_bonus+1),a
+    ld (w3d_intermission_current_bonus+2),a
+    ld (w3d_intermission_current_bonus+3),a
+    ld a,1000&0ffh
+    ld (w3d_intermission_final_bonus+0),a
+    ld a,1000>>8
+    ld (w3d_intermission_final_bonus+1),a
+    xor a
+    ld (w3d_intermission_final_bonus+2),a
+    ld (w3d_intermission_final_bonus+3),a
+    ld a,2
+    ld (w3d_intermission_timeleft+0),a
+    xor a
+    ld (w3d_intermission_timeleft+1),a
+    ld a,W3D_INTERMISSION_STAGE_TIME
+    ld (w3d_intermission_stage),a
+
+; i=0,1,2; then one zero-valued iteration for each ratio.
+    call w3d_intermission_advance_countup
+    call w3d_intermission_advance_countup
+    call w3d_intermission_advance_countup
+    call w3d_intermission_advance_countup
+    call w3d_intermission_advance_countup
+    call w3d_intermission_advance_countup
+    CHECK_MEM8 w3d_intermission_stage,W3D_INTERMISSION_STAGE_DONE,REASON_STAGE
+    CHECK_MEM8 w3d_intermission_current_bonus+0,1000&0ffh,REASON_BONUS_BYTE
+    CHECK_MEM8 w3d_intermission_current_bonus+1,1000>>8,REASON_BONUS_BYTE
+    CHECK_MEM8 test_award_count,1,REASON_AWARD_COUNT
+    CHECK_MEM8 test_sound_count,8,REASON_SOUND_COUNT
+    CHECK_MEM8 test_sound_log+0,W3D_AUDIO_SOUND_ENDBONUS1,REASON_SOUND_ID
+    CHECK_MEM8 test_sound_log+1,W3D_AUDIO_SOUND_ENDBONUS2,REASON_SOUND_ID
+    CHECK_MEM8 test_sound_log+2,W3D_AUDIO_SOUND_ENDBONUS1,REASON_SOUND_ID
+    CHECK_MEM8 test_sound_log+3,W3D_AUDIO_SOUND_NOBONUS,REASON_SOUND_ID
+    CHECK_MEM8 test_sound_log+4,W3D_AUDIO_SOUND_ENDBONUS1,REASON_SOUND_ID
+    CHECK_MEM8 test_sound_log+5,W3D_AUDIO_SOUND_NOBONUS,REASON_SOUND_ID
+    CHECK_MEM8 test_sound_log+6,W3D_AUDIO_SOUND_ENDBONUS1,REASON_SOUND_ID
+    CHECK_MEM8 test_sound_log+7,W3D_AUDIO_SOUND_NOBONUS,REASON_SOUND_ID
+    ret
+
 test_ordinary_draw:
     ld a,13
     ld (test_case),a
@@ -327,7 +472,7 @@ test_ordinary_draw:
 
     CHECK_MEM8 test_setup_count,1,REASON_SETUP_COUNT
     CHECK_MEM8 test_wait_count,0,REASON_WAIT_COUNT
-    CHECK_MEM8 test_plot_count,37,REASON_PLOT_COUNT
+    CHECK_MEM8 test_plot_count,35,REASON_PLOT_COUNT
     CHECK_MEM8 test_result_a,W3D_INTERMISSION_RESULT_CONTINUE,REASON_RESULT
     CHECK_MEM8 test_result_carry,0,REASON_CARRY
     CHECK_MEM8 w3d_intermission_input_armed,0,REASON_INPUT_ARMED
@@ -372,13 +517,14 @@ test_ordinary_draw:
     CHECK_PLOT 168,W3D_INTERMISSION_COLON_BUFFER,240,96
     CHECK_PLOT 174,W3D_INTERMISSION_DIGIT_0_BUFFER+3,248,96
     CHECK_PLOT 180,W3D_INTERMISSION_DIGIT_0_BUFFER+0,264,96
-; 2/3 kills -> 66%, secret -> 0%, 5/5 treasures -> 100%.
-    CHECK_PLOT 186,W3D_INTERMISSION_DIGIT_0_BUFFER+6,264,112
-    CHECK_PLOT 192,W3D_INTERMISSION_DIGIT_0_BUFFER+6,280,112
-    CHECK_PLOT 198,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,128
-    CHECK_PLOT 204,W3D_INTERMISSION_DIGIT_0_BUFFER+1,248,144
-    CHECK_PLOT 210,W3D_INTERMISSION_DIGIT_0_BUFFER+0,264,144
-    CHECK_PLOT 216,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,144
+; Count-up starts at zero while authoritative targets retain 66/0/100.
+    CHECK_PLOT 186,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,112
+    CHECK_PLOT 192,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,128
+    CHECK_PLOT 198,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,144
+    CHECK_PLOT 204,W3D_INTERMISSION_DIGIT_0_BUFFER+0,272,56
+    CHECK_MEM8 w3d_intermission_kill_ratio,66,REASON_PERCENT
+    CHECK_MEM8 w3d_intermission_secret_ratio,0,REASON_PERCENT
+    CHECK_MEM8 w3d_intermission_treasure_ratio,100,REASON_PERCENT
     ld hl,test_plot_log
     ld de,test_ordinary_plot_log
     ld bc,37*6
@@ -665,6 +811,35 @@ test_ingress_fence:
     scf
     ret
 
+; Intermission hook seams. Award receives DE -> little-endian u32; sound
+; receives the logical AUDIOWL1 id in A.
+test_award_points:
+    ld hl,test_award_count
+    inc (hl)
+    ex de,hl
+    ld de,test_award_value
+    ld bc,4
+    ldir
+    ret
+
+test_record_sound:
+    push af
+    ld a,(test_sound_count)
+    cp 16
+    jr nc,@count
+    ld de,0
+    ld e,a
+    ld hl,test_sound_log
+    add hl,de
+    pop af
+    ld (hl),a
+    push af
+@count:
+    ld hl,test_sound_count
+    inc (hl)
+    pop af
+    ret
+
 ; Deterministic keymap seam. With zero scripted frames this returns the
 ; mutable test_keymap. Otherwise each call advances through one 16-byte frame,
 ; retaining the final frame after the script is exhausted.
@@ -775,13 +950,28 @@ test_reset_shell_stubs:
     ld (test_result_a),a
     ld (test_result_carry),a
     ld (test_keyboard_script_frames),a
+    ld (test_award_count),a
+    ld (test_sound_count),a
     ld hl,test_keymap
     ld (test_keyboard_script_ptr),hl
     call w3d_intermission_reset_application_exit_query_hook
     call w3d_intermission_reset_ingress_fence_hook
+    call w3d_intermission_reset_sound_hook
+    call w3d_intermission_reset_award_hook
+    call w3d_intermission_reset_wait_hook
     ld hl,test_keymap
     ld (hl),a
     ld de,test_keymap+1
+    ld bc,15
+    ldir
+    ld hl,test_award_value
+    ld (hl),a
+    ld de,test_award_value+1
+    ld bc,3
+    ldir
+    ld hl,test_sound_log
+    ld (hl),a
+    ld de,test_sound_log+1
     ld bc,15
     ldir
     call test_reset_plot_stub
@@ -891,6 +1081,10 @@ test_exit_query_count: db 0
 test_application_exit: db 0
 test_ingress_fence_count: db 0
 test_ingress_fence_failure: db 0
+test_award_count: db 0
+test_award_value: ds 4
+test_sound_count: db 0
+test_sound_log: ds 16
 test_result_a: db 0
 test_result_carry: db 0
 test_keyboard_script_ptr: dl test_keymap

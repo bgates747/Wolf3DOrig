@@ -11,14 +11,19 @@ the current dated development log, then remove it from this file.
 plane-1 marker 98 in W3L packages; prioritize facing-adjacent pushwalls in Use;
 reproduce busy/blocked rejection, cardinal fractional motion through at most
 two cells, collision/DDA ownership changes, sounds, secret count, and complete
-attempt/level reset. Qualify all four directions and a real Episode 1 secret.
+attempt/level reset. Implementation, host tests, 28-case direct-eZ80 behavior,
+schema-2 serialization, and all four directions are complete. Remaining close
+gate: accept the staged real E1L1 secret-wall visual/collision review and, when
+practical, repeat it on hardware.
 
 [ ] 12. Complete `WL_INTER.C::LevelCompleted` behavior atop the accepted
 nonblocking transition lifecycle: visible time/ratio count-up, skip-to-final,
 500-point par seconds, 10,000-point 100% awards, the secret-floor 15,000-point
 award, original tally sounds, final score/life effects, and persistent
 per-floor `LevelRatios`. Escape must retain priority while destination loading
-and presentation overlap.
+and presentation overlap. Implementation and the 128-check intermission plus
+32-case score regressions pass. Remaining close gate: accept staged ordinary
+count-up/skip/next-floor and secret-floor score presentation.
 
 [ ] 13. Replace the generic Episode 1 victory acknowledgment with the original
 shareware path: in-world victory/BJ sequence, total time and eight-floor ratio
@@ -98,20 +103,21 @@ cutover, and physical qualification remain later gated work. See
 `agonport/doc/wolf3d-vdplet-migration.md`.
 
 [ ] 8e. Replace the bounded static scene with the production render contract.
-Schema 1, synchronized C++/assembly constants, the 5,360-byte compact mirror,
-validated atomic full/dirty batches, complete pure renderer, real ABI 1.3
+Schema 2, synchronized C++/assembly constants, the 5,448-byte compact mirror,
+validated atomic full/dirty batches (including live/completed pushwalls),
+complete pure renderer, real ABI 1.3
 CONFIG/APPLY_AND_RENDER/RESET wrapper, host lifecycle/retry matrix, and linked
 Xtensa package admission are complete. The exact package also passes its real
 runtime-emulator gate with two oracle-exact frames, native error/retry,
 INFO17, timing, teardown, stale-handle, reload, and empty-slot evidence. Next
-The production eZ80 descriptor/full/dirty serializer now also passes its direct
-MOS target regression: byte-identical frozen retry, in-flight dirty-state
+The production eZ80 descriptor/full/dirty serializer passes its direct MOS
+target regression: byte-identical frozen retry, in-flight dirty-state
 preservation, exact generation-2 delta, dirty consumption, and empty-batch
-refusal. Next connect CONFIG, update-buffer upload, requested RUN completion,
-C3 presentation, and exact retry to the app's existing one-in-flight render
-handoff while retaining the standalone default. App-paced fizzle, complete
-human/performance/physical gates, default cutover, and removal of the standalone
-rollback path remain later work. The first Console8 run under stock MOS Arthur
+refusal. CONFIG, update-buffer upload, requested RUN completion, C3
+presentation, exact retry, app-paced fizzle, and the production direct-row
+renderer are integrated in the app while retaining the copied-pixel oracle.
+Complete performance/physical gates and removal of rollback paths remain later
+work. The first Console8 run under stock MOS Arthur
 loaded the complete level/assets but intermittently returned to MOS before the
 first frame; the same exact cohort was playable in Flexe. A no-protocol-change
 diagnostic build reproduced the failure on the Olimex bench and localized it to

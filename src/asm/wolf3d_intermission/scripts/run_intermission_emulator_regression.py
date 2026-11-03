@@ -55,6 +55,13 @@ REASONS = {
     24: "application-exit query count",
     25: "ordered-ingress fence count",
     26: "ordered-ingress failure latch",
+    27: "par time remaining",
+    28: "32-bit bonus byte",
+    29: "persistent level-ratio record",
+    30: "single point-award call",
+    31: "count-up sound count",
+    32: "count-up logical sound id",
+    33: "count-up stage",
 }
 
 

@@ -6,24 +6,42 @@
 ; colour 127.  build_hud_assets.py reproduces the invariant 320x200 fields at
 ; $4100/$4101 and stages the original dynamic glyphs at $4038..$4043.
 ;
-; Final values are presented immediately and the destination floor may begin
-; loading as soon as w3d_intermission_begin returns.  An abortable AGNB loader
-; can use w3d_intermission_loading_tick directly: it polls Escape, latches a
-; fresh non-Escape acknowledgment, and advances BJ's two-frame breathing
-; animation at completed-image boundaries.  w3d_intermission_finish returns
-; after a latched acknowledgment has been released, or waits for the complete
-; release/press/release contract after loading.
+; The original score/count-up state starts immediately and the destination
+; floor may begin loading as soon as w3d_intermission_begin returns.  An
+; abortable AGNB loader uses w3d_intermission_loading_tick directly: it polls
+; Escape, latches a fresh non-Escape acknowledgment, advances the count-up,
+; and animates BJ at completed-image boundaries.  After loading,
+; w3d_intermission_finish paces any remaining count-up while continuing to
+; honor Escape and the complete release/press/release acknowledgment contract.
 ;
 ; Kill and treasure totals are derived from the completed floor's immutable
-; W3L seeds before the destination package replaces them. Pushwall secrets are
-; not implemented yet, so their honest current ratio is zero. Bonus count-up
-; and scoring remain later fidelity work.
+; W3L seeds before the destination package replaces them. Pushwall secret
+; count/total state is authoritative in the simulation.  Bonus arithmetic,
+; score/life thresholds, and the eight ordinary-floor ratio records match the
+; shareware LevelCompleted contract; unavailable intermission samples remain
+; logical sound requests and become audible if those assets are later added.
 ; =============================================================================
 
 W3D_INTERMISSION_RESULT_CONTINUE:  equ 0
 W3D_INTERMISSION_RESULT_ESCAPE:    equ 2
 W3D_INTERMISSION_RESULT_INGRESS:   equ 3
 W3D_INTERMISSION_ANIMATION_DIVIDER: equ 4
+
+W3D_INTERMISSION_STAGE_TIME:         equ 0
+W3D_INTERMISSION_STAGE_KILL:         equ 1
+W3D_INTERMISSION_STAGE_SECRET:       equ 2
+W3D_INTERMISSION_STAGE_TREASURE:     equ 3
+W3D_INTERMISSION_STAGE_DONE:         equ 4
+
+; Compact durable equivalent of shareware LRstruct.  Values retain the
+; original widths (three 16-bit ratios and a 32-bit elapsed-second count) so a
+; later save-game/victory implementation can consume them without migration.
+W3D_LEVEL_RATIO_KILL:                 equ 0
+W3D_LEVEL_RATIO_SECRET:               equ 2
+W3D_LEVEL_RATIO_TREASURE:             equ 4
+W3D_LEVEL_RATIO_TIME:                 equ 6
+W3D_LEVEL_RATIO_SIZE:                 equ 10
+W3D_LEVEL_RATIO_COUNT:                equ 8
 
 W3D_INTERMISSION_GUY_1_BUFFER:      equ 04037h
 W3D_INTERMISSION_GUY_2_BUFFER:      equ 04060h
@@ -50,6 +68,7 @@ W3D_INTERMISSION_PAR_Y:              equ 96
 W3D_INTERMISSION_KILL_RATIO_Y:       equ 112
 W3D_INTERMISSION_SECRET_RATIO_Y:     equ 128
 W3D_INTERMISSION_TREASURE_RATIO_Y:   equ 144
+W3D_INTERMISSION_BONUS_Y:            equ 56
 W3D_INTERMISSION_STATUSBAR_Y:        equ 200
 
 W3D_INTERMISSION_HUD_NUMBER_Y:       equ 216
@@ -82,10 +101,19 @@ w3d_intermission_begin:
     ld (w3d_intermission_ingress_failed),a
     ld (w3d_intermission_animation_counter),a
     ld (w3d_intermission_portrait_frame),a
+    ld (w3d_intermission_bonus_awarded),a
+    ld (w3d_intermission_stage_counter+0),a
+    ld (w3d_intermission_stage_counter+1),a
+    ld (w3d_intermission_current_ratio),a
+    ld hl,w3d_intermission_current_bonus
+    ld (hl),a
+    ld de,w3d_intermission_current_bonus+1
+    ld bc,3
+    ldir
     call w3d_shell_setup
     ld a,(w3d_level_requested_index)
     cp 9
-    jr z,@secret_floor
+    jp z,@secret_floor
 
     ld hl,W3D_INTERMISSION_FLOOR_BASE_BUFFER
     call w3d_shell_plot_full_screen
@@ -102,10 +130,16 @@ w3d_intermission_begin:
     ld a,(w3d_player_kill_count+1)
     ld b,a
     call w3d_intermission_percent
+    ld (w3d_intermission_kill_ratio),a
+    xor a
     ld de,W3D_INTERMISSION_KILL_RATIO_Y
     call w3d_intermission_draw_percentage
 
-; Pushwalls/secret discovery are not part of the current simulation.
+; Secret ratio uses original plane-1 marker totals and successful pushes.
+    ld de,(w3d_player_secret_total)
+    ld bc,(w3d_player_secret_count)
+    call w3d_intermission_percent
+    ld (w3d_intermission_secret_ratio),a
     xor a
     ld de,W3D_INTERMISSION_SECRET_RATIO_Y
     call w3d_intermission_draw_percentage
@@ -118,17 +152,408 @@ w3d_intermission_begin:
     ld a,(w3d_player_treasure_count+1)
     ld b,a
     call w3d_intermission_percent
+    ld (w3d_intermission_treasure_ratio),a
+    xor a
     ld de,W3D_INTERMISSION_TREASURE_RATIO_Y
     call w3d_intermission_draw_percentage
+    call w3d_intermission_prepare_ordinary
+    call w3d_intermission_draw_bonus
     jr @done
 
 @secret_floor:
     ld hl,W3D_INTERMISSION_SECRET_BASE_BUFFER
     call w3d_shell_plot_full_screen
+    ld a,15000&0ffh
+    ld (w3d_intermission_final_bonus+0),a
+    ld a,15000>>8
+    ld (w3d_intermission_final_bonus+1),a
+    xor a
+    ld (w3d_intermission_final_bonus+2),a
+    ld (w3d_intermission_final_bonus+3),a
+    ld a,W3D_INTERMISSION_STAGE_DONE
+    ld (w3d_intermission_stage),a
+    call w3d_intermission_finalize
     call w3d_intermission_draw_statusbar
 
 @done:
     xor a
+    ret
+
+; Capture every source-floor value needed after the destination W3L replaces
+; the live package, derive the exact original bonus, and persist the ordinary
+; LevelRatios record used by the Episode 1 victory averages.
+w3d_intermission_prepare_ordinary:
+; elapsed seconds = minutes*60 + seconds (the gameplay clock already clamps
+; at 99:00, matching the original LevelCompleted cap).
+    ld hl,0
+    ld a,(w3d_intermission_level_minutes)
+    or a
+    jr z,@elapsed_seconds
+    ld b,a
+@elapsed_minutes:
+    ld de,60
+    add.s hl,de
+    djnz @elapsed_minutes
+@elapsed_seconds:
+    ld de,0
+    ld a,(w3d_intermission_level_seconds)
+    ld e,a
+    add.s hl,de
+    ld a,l
+    ld (w3d_intermission_elapsed_seconds+0),a
+    ld a,h
+    ld (w3d_intermission_elapsed_seconds+1),a
+
+; par seconds = displayed minutes*60 + seconds.
+    ld hl,0
+    ld a,(w3d_intermission_par_minutes)
+    or a
+    jr z,@par_seconds
+    ld b,a
+@par_minutes:
+    ld de,60
+    add.s hl,de
+    djnz @par_minutes
+@par_seconds:
+    ld de,0
+    ld a,(w3d_intermission_par_seconds)
+    ld e,a
+    add.s hl,de
+
+; timeleft = max(par-elapsed,0).
+    ld de,0
+    ld a,(w3d_intermission_elapsed_seconds+0)
+    ld e,a
+    ld a,(w3d_intermission_elapsed_seconds+1)
+    ld d,a
+    or a
+    sbc.s hl,de
+    jr nc,@timeleft_ready
+    ld hl,0
+@timeleft_ready:
+    ld a,l
+    ld (w3d_intermission_timeleft+0),a
+    ld a,h
+    ld (w3d_intermission_timeleft+1),a
+
+; final bonus starts at timeleft*500.  E1's maximum timeleft is 210, so the
+; compact one-time loop is bounded and keeps the arithmetic auditable.
+    xor a
+    ld hl,w3d_intermission_final_bonus
+    ld (hl),a
+    ld de,w3d_intermission_final_bonus+1
+    ld bc,3
+    ldir
+    ld bc,0
+    ld a,(w3d_intermission_timeleft+0)
+    ld c,a
+    ld a,(w3d_intermission_timeleft+1)
+    ld b,a
+@time_bonus_loop:
+    ld a,b
+    or c
+    jr z,@ratio_bonus
+    ld de,500
+    call w3d_intermission_add_de_to_final_bonus
+    dec.s bc
+    jr @time_bonus_loop
+
+@ratio_bonus:
+    ld a,(w3d_intermission_kill_ratio)
+    call w3d_intermission_add_perfect_bonus
+    ld a,(w3d_intermission_secret_ratio)
+    call w3d_intermission_add_perfect_bonus
+    ld a,(w3d_intermission_treasure_ratio)
+    call w3d_intermission_add_perfect_bonus
+    call w3d_intermission_store_level_ratio
+
+; A zero time bonus skips directly to the kill count-up, exactly as the C
+; source skips its first loop when `bonus` is zero.
+    ld a,(w3d_intermission_timeleft+0)
+    ld b,a
+    ld a,(w3d_intermission_timeleft+1)
+    or b
+    ld a,W3D_INTERMISSION_STAGE_TIME
+    jr nz,@stage_ready
+    ld a,W3D_INTERMISSION_STAGE_KILL
+@stage_ready:
+    ld (w3d_intermission_stage),a
+    ret
+
+; A=ratio. Add the original 10,000-point perfect-ratio award when A==100.
+w3d_intermission_add_perfect_bonus:
+    cp 100
+    ret nz
+    ld de,10000
+    jr w3d_intermission_add_de_to_final_bonus
+
+; DE=unsigned 16-bit increment, added to the little-endian final bonus.
+w3d_intermission_add_de_to_final_bonus:
+    ld a,(w3d_intermission_final_bonus+0)
+    add a,e
+    ld (w3d_intermission_final_bonus+0),a
+    ld a,(w3d_intermission_final_bonus+1)
+    adc a,d
+    ld (w3d_intermission_final_bonus+1),a
+    ld a,(w3d_intermission_final_bonus+2)
+    adc a,0
+    ld (w3d_intermission_final_bonus+2),a
+    ld a,(w3d_intermission_final_bonus+3)
+    adc a,0
+    ld (w3d_intermission_final_bonus+3),a
+    ret
+
+; Store the completed ordinary-floor LRstruct-equivalent.  Intermission is
+; never entered for E1L9 victory, but the bound keeps injected regressions and
+; future routing changes from corrupting adjacent state.
+w3d_intermission_store_level_ratio:
+    ld a,(w3d_level_requested_index)
+    cp W3D_LEVEL_RATIO_COUNT
+    ret nc
+    ld hl,w3d_level_ratios
+    or a
+    jr z,@ratio_address_ready
+    ld b,a
+@ratio_address:
+    ld de,W3D_LEVEL_RATIO_SIZE
+    add hl,de
+    djnz @ratio_address
+@ratio_address_ready:
+    ld a,(w3d_intermission_kill_ratio)
+    ld (hl),a
+    inc hl
+    ld (hl),0
+    inc hl
+    ld a,(w3d_intermission_secret_ratio)
+    ld (hl),a
+    inc hl
+    ld (hl),0
+    inc hl
+    ld a,(w3d_intermission_treasure_ratio)
+    ld (hl),a
+    inc hl
+    ld (hl),0
+    inc hl
+    ld a,(w3d_intermission_elapsed_seconds+0)
+    ld (hl),a
+    inc hl
+    ld a,(w3d_intermission_elapsed_seconds+1)
+    ld (hl),a
+    inc hl
+    ld (hl),0
+    inc hl
+    ld (hl),0
+    ret
+
+; Advance exactly one original-facing count-up quantum.  Destination image
+; callbacks provide most quanta for free; after loading, finish supplies the
+; same routine through an installable pacing hook.
+w3d_intermission_advance_countup:
+    ld a,(w3d_intermission_stage)
+    cp W3D_INTERMISSION_STAGE_DONE
+    ret z
+    cp W3D_INTERMISSION_STAGE_TIME
+    jp z,@time
+
+; Select the active ratio target and its screen row.
+    cp W3D_INTERMISSION_STAGE_KILL
+    jr nz,@not_kill
+    ld a,(w3d_intermission_kill_ratio)
+    ld de,W3D_INTERMISSION_KILL_RATIO_Y
+    jr @ratio_selected
+@not_kill:
+    ld a,(w3d_intermission_stage)
+    cp W3D_INTERMISSION_STAGE_SECRET
+    jr nz,@treasure
+    ld a,(w3d_intermission_secret_ratio)
+    ld de,W3D_INTERMISSION_SECRET_RATIO_Y
+    jr @ratio_selected
+@treasure:
+    ld a,(w3d_intermission_treasure_ratio)
+    ld de,W3D_INTERMISSION_TREASURE_RATIO_Y
+@ratio_selected:
+    ld (w3d_intermission_ratio_target),a
+    ld a,(w3d_intermission_current_ratio)
+    call w3d_intermission_draw_percentage
+
+; ENDBONUS1 fires at 0,10,... just as `!(i%10)` in the C source.
+    ld a,(w3d_intermission_current_ratio)
+    call w3d_intermission_reduce_modulo_ten
+    or a
+    jr nz,@ratio_no_tick_sound
+    ld a,W3D_AUDIO_SOUND_ENDBONUS1
+    call w3d_intermission_emit_sound
+@ratio_no_tick_sound:
+    ld a,(w3d_intermission_current_ratio)
+    ld b,a
+    ld a,(w3d_intermission_ratio_target)
+    cp b
+    jr z,@ratio_complete
+    ld a,b
+    inc a
+    ld (w3d_intermission_current_ratio),a
+    ret
+
+@ratio_complete:
+    ld a,b
+    cp 100
+    jr nz,@ratio_not_perfect
+    ld de,10000
+    call w3d_intermission_add_de_to_current_bonus
+    call w3d_intermission_draw_bonus
+    ld a,W3D_AUDIO_SOUND_PERCENT100
+    call w3d_intermission_emit_sound
+    jr @next_ratio
+@ratio_not_perfect:
+    or a
+    jr nz,@ratio_partial
+    ld a,W3D_AUDIO_SOUND_NOBONUS
+    call w3d_intermission_emit_sound
+    jr @next_ratio
+@ratio_partial:
+    ld a,W3D_AUDIO_SOUND_ENDBONUS2
+    call w3d_intermission_emit_sound
+@next_ratio:
+    xor a
+    ld (w3d_intermission_current_ratio),a
+    ld a,(w3d_intermission_stage)
+    inc a
+    ld (w3d_intermission_stage),a
+    cp W3D_INTERMISSION_STAGE_DONE
+    ret nz
+    jp w3d_intermission_finalize
+
+@time:
+    call w3d_intermission_draw_bonus
+; Original time count-up uses the same tick at i=0 and every 50 seconds.
+    ld a,(w3d_intermission_stage_counter+1)
+    or a
+    jr nz,@time_no_tick_sound
+    ld a,(w3d_intermission_stage_counter+0)
+    or a
+    jr z,@time_tick_sound
+    cp 50
+    jr z,@time_tick_sound
+    cp 100
+    jr z,@time_tick_sound
+    cp 150
+    jr z,@time_tick_sound
+    cp 200
+    jr nz,@time_no_tick_sound
+@time_tick_sound:
+    ld a,W3D_AUDIO_SOUND_ENDBONUS1
+    call w3d_intermission_emit_sound
+@time_no_tick_sound:
+    ld a,(w3d_intermission_stage_counter+0)
+    ld b,a
+    ld a,(w3d_intermission_timeleft+0)
+    cp b
+    jr nz,@time_continue
+    ld a,(w3d_intermission_stage_counter+1)
+    ld b,a
+    ld a,(w3d_intermission_timeleft+1)
+    cp b
+    jr nz,@time_continue
+    ld a,W3D_AUDIO_SOUND_ENDBONUS2
+    call w3d_intermission_emit_sound
+    ld a,W3D_INTERMISSION_STAGE_KILL
+    ld (w3d_intermission_stage),a
+    xor a
+    ld (w3d_intermission_stage_counter+0),a
+    ld (w3d_intermission_stage_counter+1),a
+    ret
+@time_continue:
+    ld hl,w3d_intermission_stage_counter
+    inc (hl)
+    jr nz,@time_add
+    inc hl
+    inc (hl)
+@time_add:
+    ld de,500
+    jp w3d_intermission_add_de_to_current_bonus
+
+; DE=unsigned 16-bit increment, added to displayed count-up bonus.
+w3d_intermission_add_de_to_current_bonus:
+    ld a,(w3d_intermission_current_bonus+0)
+    add a,e
+    ld (w3d_intermission_current_bonus+0),a
+    ld a,(w3d_intermission_current_bonus+1)
+    adc a,d
+    ld (w3d_intermission_current_bonus+1),a
+    ld a,(w3d_intermission_current_bonus+2)
+    adc a,0
+    ld (w3d_intermission_current_bonus+2),a
+    ld a,(w3d_intermission_current_bonus+3)
+    adc a,0
+    ld (w3d_intermission_current_bonus+3),a
+    ret
+
+; A fresh acknowledgment skips only the animation, never its authoritative
+; result.  Destination loading and the required release still continue.
+w3d_intermission_handle_ack_skip:
+    ld a,(w3d_intermission_acknowledged)
+    or a
+    ret z
+    ld a,(w3d_intermission_stage)
+    cp W3D_INTERMISSION_STAGE_DONE
+    ret z
+    jr w3d_intermission_finalize
+
+; Install the exact final display, award points once, and refresh the HUD score
+; and lives.  The secret screen already owns its literal "15000 BONUS!" art,
+; so it deliberately skips ordinary dynamic fields.
+w3d_intermission_finalize:
+    ld a,(w3d_intermission_bonus_awarded)
+    or a
+    ret nz
+    ld hl,w3d_intermission_final_bonus
+    ld de,w3d_intermission_current_bonus
+    ld bc,4
+    ldir
+    ld a,(w3d_level_requested_index)
+    cp 9
+    jr z,@award
+    ld a,(w3d_intermission_kill_ratio)
+    ld de,W3D_INTERMISSION_KILL_RATIO_Y
+    call w3d_intermission_draw_percentage
+    ld a,(w3d_intermission_secret_ratio)
+    ld de,W3D_INTERMISSION_SECRET_RATIO_Y
+    call w3d_intermission_draw_percentage
+    ld a,(w3d_intermission_treasure_ratio)
+    ld de,W3D_INTERMISSION_TREASURE_RATIO_Y
+    call w3d_intermission_draw_percentage
+    call w3d_intermission_draw_bonus
+@award:
+    ld hl,w3d_intermission_final_bonus
+    call w3d_intermission_award_points
+    ld a,1
+    ld (w3d_intermission_bonus_awarded),a
+    ld a,W3D_INTERMISSION_STAGE_DONE
+    ld (w3d_intermission_stage),a
+    ld a,(w3d_level_requested_index)
+    cp 9
+    ret z
+    jp w3d_intermission_draw_statusbar
+
+; A=logical sound id.  Production installs an immediate one-quantum transport;
+; the focused arithmetic regression retains the no-op default.
+w3d_intermission_emit_sound:
+    ld hl,(w3d_intermission_sound_hook)
+    jp (hl)
+
+w3d_intermission_sound_default:
+    ret
+
+; HL -> little-endian u32 points.  The installed hook receives DE=that pointer.
+; Production delegates to GivePoints parity;
+; the default keeps this include independently testable.
+w3d_intermission_award_points:
+    push hl
+    ld hl,(w3d_intermission_award_hook)
+    pop de
+    jp (hl)
+
+w3d_intermission_award_default:
     ret
 
 ; Nonblocking completed-image callback for the destination AGNB loaders.
@@ -140,6 +565,7 @@ w3d_intermission_begin:
 w3d_intermission_loading_tick:
     call w3d_intermission_poll_input
     ret c
+    call w3d_intermission_handle_ack_skip
 
 ; AGNB's FatFS reads pace the producer only indirectly. During an in-session
 ; floor transition the emulator can still accept several complete 4 KiB
@@ -156,6 +582,8 @@ w3d_intermission_loading_tick:
     scf
     ret
 @ingress_ready:
+
+    call w3d_intermission_advance_countup
 
     ld a,(w3d_intermission_animation_counter)
     inc a
@@ -195,9 +623,14 @@ w3d_intermission_finish:
 @wait:
     call w3d_intermission_poll_input
     ret c
+    call w3d_intermission_handle_ack_skip
     ld a,(w3d_intermission_ack_released)
     or a
-    jr z,@wait
+    jr nz,@continue
+    call w3d_intermission_wait_quantum
+    call w3d_intermission_advance_countup
+    jr @wait
+@continue:
     xor a
     ret
 
@@ -289,6 +722,42 @@ w3d_intermission_run_ingress_fence:
 
 w3d_intermission_ingress_fence_default:
     xor a
+    ret
+
+; Install production lifecycle seams without coupling this reusable include to
+; the audio engine, score owner, or MOS clock.
+w3d_intermission_set_sound_hook:
+    ld (w3d_intermission_sound_hook),hl
+    ret
+
+w3d_intermission_reset_sound_hook:
+    ld hl,w3d_intermission_sound_default
+    ld (w3d_intermission_sound_hook),hl
+    ret
+
+w3d_intermission_set_award_hook:
+    ld (w3d_intermission_award_hook),hl
+    ret
+
+w3d_intermission_reset_award_hook:
+    ld hl,w3d_intermission_award_default
+    ld (w3d_intermission_award_hook),hl
+    ret
+
+w3d_intermission_set_wait_hook:
+    ld (w3d_intermission_wait_hook),hl
+    ret
+
+w3d_intermission_reset_wait_hook:
+    ld hl,w3d_intermission_wait_default
+    ld (w3d_intermission_wait_hook),hl
+    ret
+
+w3d_intermission_wait_quantum:
+    ld hl,(w3d_intermission_wait_hook)
+    jp (hl)
+
+w3d_intermission_wait_default:
     ret
 
 w3d_intermission_ingress_has_failed:
@@ -585,6 +1054,10 @@ w3d_intermission_draw_hud_digit_string:
 ; The in-place divide is bounded: 6 digits * 4 bytes * 8 bits.
 w3d_intermission_prepare_score_digits:
     ld hl,w3d_player_score
+    jr w3d_intermission_prepare_u32_digits
+
+; HL -> little-endian u32. Result uses the shared six-digit workspace.
+w3d_intermission_prepare_u32_digits:
     ld de,w3d_intermission_score_work
     ld bc,4
     ldir
@@ -618,6 +1091,59 @@ w3d_intermission_prepare_score_digits:
     jr nz,@score_digit
     xor a
     ld (w3d_intermission_hud_started),a
+    ret
+
+; Draw the current animated bonus as original 16x16 digits, right-aligned at
+; x=288 like `Write(36-strlen(tempstr)*2,7,tempstr)` in WL_INTER.C.  Count-up
+; values only gain digits, so the invariant background needs no erase pass.
+w3d_intermission_draw_bonus:
+    ld hl,w3d_intermission_current_bonus
+    call w3d_intermission_prepare_u32_digits
+    ld ix,w3d_intermission_score_digits
+    ld b,6
+@find_first:
+    ld a,(ix)
+    or a
+    jr nz,@first_ready
+    ld a,b
+    cp 1
+    jr z,@first_ready
+    lea ix,ix+1
+    djnz @find_first
+@first_ready:
+    ld a,b
+    ld (w3d_intermission_bonus_digit_count),a
+    ld hl,288
+    ld de,16
+@x_loop:
+    or a
+    sbc.s hl,de
+    djnz @x_loop
+    ld a,l
+    ld (w3d_intermission_bonus_x+0),a
+    ld a,h
+    ld (w3d_intermission_bonus_x+1),a
+@draw_loop:
+    ld a,(ix)
+    ld bc,0
+    ld a,(w3d_intermission_bonus_x+0)
+    ld c,a
+    ld a,(w3d_intermission_bonus_x+1)
+    ld b,a
+    ld de,W3D_INTERMISSION_BONUS_Y
+    ld a,(ix)
+    call w3d_intermission_draw_digit
+    ld hl,16
+    add.s hl,bc
+    ld a,l
+    ld (w3d_intermission_bonus_x+0),a
+    ld a,h
+    ld (w3d_intermission_bonus_x+1),a
+    lea ix,ix+1
+    ld a,(w3d_intermission_bonus_digit_count)
+    dec a
+    ld (w3d_intermission_bonus_digit_count),a
+    jr nz,@draw_loop
     ret
 
 ; One byte of big-endian long division by ten. A is the incoming remainder
@@ -922,7 +1448,7 @@ w3d_intermission_draw_digit:
     ret
 
 w3d_intermission_par_times:
-    db 1,30, 2,0, 2,0, 3,30, 3,0, 3,0, 2,30, 2,30
+    db 1,30, 2,0, 2,0, 3,30, 3,0, 3,0, 2,30, 2,30, 0,0, 0,0
 
 w3d_intermission_par_minutes:
     db 0
@@ -942,6 +1468,34 @@ w3d_intermission_score_work:
     ds 4
 w3d_intermission_score_digits:
     ds 6
+w3d_intermission_kill_ratio:
+    db 0
+w3d_intermission_secret_ratio:
+    db 0
+w3d_intermission_treasure_ratio:
+    db 0
+w3d_intermission_ratio_target:
+    db 0
+w3d_intermission_current_ratio:
+    db 0
+w3d_intermission_stage:
+    db W3D_INTERMISSION_STAGE_DONE
+w3d_intermission_stage_counter:
+    dw 0
+w3d_intermission_elapsed_seconds:
+    dw 0
+w3d_intermission_timeleft:
+    dw 0
+w3d_intermission_current_bonus:
+    ds 4
+w3d_intermission_final_bonus:
+    ds 4
+w3d_intermission_bonus_awarded:
+    db 0
+w3d_intermission_bonus_digit_count:
+    db 0
+w3d_intermission_bonus_x:
+    dw 0
 w3d_intermission_input_armed:
     db 0
 w3d_intermission_acknowledged:
@@ -960,3 +1514,14 @@ w3d_intermission_application_exit_query_hook:
     dl w3d_intermission_application_exit_query_default
 w3d_intermission_ingress_fence_hook:
     dl w3d_intermission_ingress_fence_default
+w3d_intermission_sound_hook:
+    dl w3d_intermission_sound_default
+w3d_intermission_award_hook:
+    dl w3d_intermission_award_default
+w3d_intermission_wait_hook:
+    dl w3d_intermission_wait_default
+
+; One record for each ordinary E1 floor (E1L1..E1L8). Secret/boss screens do
+; not overwrite this table, matching the original victory-average contract.
+w3d_level_ratios:
+    ds W3D_LEVEL_RATIO_SIZE*W3D_LEVEL_RATIO_COUNT

@@ -73,6 +73,10 @@ eZ80 tests for four directions, blocked/no-marker/busy rejection, both cell
 crossings, stop-after-two, collision and count state; a staged E1 secret-room
 visual/control test on Flexe and hardware when practical.
 
+Status 2026-11-03: implementation and automated acceptance are complete. The
+28-case direct-eZ80 behavior regression and schema-2 full/dirty serializer pass;
+the stopped real-E1L1 review profile awaits human visual/collision acceptance.
+
 ### A2. Original floor-completion arithmetic and count-up — TODO 12
 
 Original oracle: `WL_INTER.C::LevelCompleted`.
@@ -89,6 +93,11 @@ serializing I/O behind the presentation.
 Acceptance: direct-eZ80 boundary cases for zero totals, 0/partial/100 ratios,
 par under/over, secret floor, skipped and unskipped animation, exact bonus and
 score/life thresholds, plus staged ordinary and secret transitions.
+
+Status 2026-11-03: implementation passes 128 direct intermission checks and
+the expanded 32-case pickup/score regression. The stopped ordinary-transition
+profile awaits human count-up/skip/next-floor review; the secret presentation
+will be batched with it.
 
 ### A3. Episode 1 victory path and ending — TODO 13
 
