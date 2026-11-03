@@ -55,7 +55,7 @@ save/load, F4 sound, F5 view, F6 controls, F7 end game, F8/F9 remembered-slot
 quick save/load, and F10 quit. The callback-only FabGL Pause key now reproduces
 `CheckPause`: authentic PAUSED art over the drained gameplay frame, music
 off, fresh-key acknowledgment, floor-music resume, and authoritative buffer
-rebuild. Direct production evidence passes 255/255 shell, 492/492
+rebuild. Direct production evidence passes 559/559 shell, 492/492
 physical-keymap/player-combat, and 228/228 callback/death checks.
 Remaining close gate: one batched visual pause/resume/page/save/load/end-game/
 quit review, including callback-time F keys and F8/F9 reuse of the selected
@@ -79,7 +79,7 @@ Translate or visibly disable DOS-only choices rather than misrepresent them.
 The exact ten-row source order, startup/in-game substitutions, local Escape,
 in-game New Game, persistent SFX toggle, real key guide, fixed-view disclosure,
 and concise help page are implemented and assemble cleanly. Remaining close
-gate: one batched visual review; the shared 131-check shell target fixture is
+gate: one batched visual review; the shared 559-check shell target fixture is
 green.
 
 [ ] 17. Implement the original attract loop—15-second title, 10-second
@@ -108,7 +108,7 @@ audit found that this persistence was process-local despite
 `WL_MAIN.C::ReadConfig/WriteConfig`; item 18 now supplies durable cross-launch
 persistence for the two meaningful Agon preferences.
 The direct sequencer fixture passes 48/48 and the integrated production-shell
-fixture passes 255/255 on real eZ80 emulation. Remaining close gate: one
+fixture passes 559/559 on real eZ80 emulation. Remaining close gate: one
 audible emulator/hardware review of representative gameplay, menu,
 intermission, and victory transitions, including timbre/mix and both toggles.
 
@@ -177,6 +177,17 @@ initial ticcount in the original row-major spawn order. Oryx generation 171
 passes 618/618 direct eZ80 checks, pinning deterministic demos, ordinary seeded
 starts, zero-duration states, and the resulting shared RNG position; both
 application backends rebuild.
+The shell audit then restored `WL_MENU.C::CP_Quit` and F10's randomized
+confirmation instead of exiting immediately. Production consumes the same two
+shared `US_RndT` bytes and preserves the source expression
+`first & (7 + (second & 1))`, selecting all nine original humorous prompts.
+Main-menu Escape, Quit, pause-menu Quit, and F10 now require Y/N confirmation;
+F10 reproduces the source's 160-pixel control-panel window by shifting its
+prompt twenty pixels upward. Cancelling Episode or Difficulty now returns to
+the main menu instead of exiting the application. Oryx generation 172 passes
+559/559 shell checks, including exact prompt selection/coordinates, Y/N/Escape
+semantics, sound feedback, and exit-latch ownership; both application backends
+rebuild.
 
 # Phase B — Agon identity and legal presentation
 

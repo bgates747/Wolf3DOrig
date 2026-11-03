@@ -472,6 +472,7 @@ main:
     ld hl,farewell_msg
     ld (w3d_exit_message_ptr),hl
     call w3d_capture_original_screen_mode
+    call w3d_seed_random_from_clock
     call w3d_music_initialize
     call w3d_audio_initialize
     call w3d_config_initialize

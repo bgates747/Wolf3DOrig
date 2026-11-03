@@ -230,6 +230,16 @@ w3d_music_set_enabled:
 
     include "wolf3d_shell.inc"
 
+; Deterministic replacement for the production US_RndT stream. Quit prompts
+; consume exactly two bytes; individual cases select the source pair so the C
+; precedence and all nine possible notice indices remain observable.
+w3d_random_byte:
+    ld hl,(test_random_script_pointer)
+    ld a,(hl)
+    inc hl
+    ld (test_random_script_pointer),hl
+    ret
+
 SCRIPT_RELEASE: equ 0
 SCRIPT_UP: equ 1
 SCRIPT_DOWN: equ 2
@@ -291,6 +301,8 @@ run_tests:
     call w3d_shell_set_keyboard_read_hook
     ld hl,test_key_hook
     call w3d_shell_set_key_read_hook
+    ld hl,script_random_zero
+    call test_set_random_script
     ld a,1
     call mark_stage
     call test_input_actions
@@ -412,6 +424,10 @@ test_main_results:
     add a,100
     call mark_stage
     call w3d_shell_reset_exit_request
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld hl,script_main_quit
     call test_set_script
     call w3d_shell_main_menu
@@ -423,12 +439,16 @@ test_main_results:
 @quit_flag:
     CHECK_A 0,REASON_FLAGS
     CHECK_MEM8 w3d_shell_main_choice,W3D_SHELL_MAIN_QUIT,REASON_SELECTION
-    CHECK_EXIT 0
+    CHECK_EXIT 1
     ld a,10
     ld (test_case),a
     add a,100
     call mark_stage
     call w3d_shell_reset_exit_request
+    ld hl,script_random_eight
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld hl,script_main_escape
     call test_set_script
     call w3d_shell_main_menu
@@ -458,6 +478,10 @@ test_main_results:
     call w3d_shell_reset_exit_request
     xor a
     ld (test_highscore_view_count),a
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld hl,script_main_view_scores
     call test_set_script
     call w3d_shell_main_menu
@@ -512,6 +536,10 @@ test_episode_semantics:
     ld a,15
     ld (test_case),a
     call w3d_shell_reset_exit_request
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld hl,script_main_episode_escape
     call test_set_script
     call w3d_shell_main_menu
@@ -567,6 +595,10 @@ test_difficulty_semantics:
     ld a,21
     ld (test_case),a
     call w3d_shell_reset_exit_request
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld hl,script_main_difficulty_escape
     call test_set_script
     call w3d_shell_main_menu
@@ -593,6 +625,10 @@ test_lifecycle_entries:
     ld (test_case),a
     xor a
     ld (test_version_prints),a
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld hl,script_ack_then_escape
     call test_set_script
     call w3d_shell_run
@@ -606,6 +642,10 @@ test_lifecycle_entries:
     xor a
     ld (test_victory_present_count),a
     ld (test_highscore_handoff_count),a
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld hl,script_victory_escape
     call test_set_script
     call w3d_shell_resume_after_victory
@@ -623,6 +663,10 @@ test_lifecycle_entries:
     xor a
     ld (test_victory_present_count),a
     ld (test_highscore_handoff_count),a
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld hl,script_ack_then_escape
     call test_set_script
     call w3d_shell_resume_after_victory
@@ -637,6 +681,10 @@ test_lifecycle_entries:
     xor a
     ld (test_victory_present_count),a
     ld (test_highscore_handoff_count),a
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld hl,script_action_escape
     call test_set_script
     call w3d_shell_resume_after_game_over
@@ -694,6 +742,10 @@ test_pause_menu:
     ld a,41
     ld (test_case),a
     call w3d_shell_reset_exit_request
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld hl,script_pause_quit
     call test_set_script
     call w3d_shell_pause_menu
@@ -987,6 +1039,10 @@ test_quick_keys:
     ld (test_case),a
     ld hl,script_quick_release
     call test_set_script
+    ld hl,script_random_eight
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
     ld a,w3d_panel_request_quit
     call w3d_shell_pause_quick
     CHECK_A W3D_SHELL_PAUSE_QUIT,REASON_RESULT
@@ -1057,6 +1113,61 @@ test_shell_sounds:
     CHECK_MEM8 test_sound_count,2,REASON_SOUND_COUNT
     CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_SHOOT,REASON_SOUND_ID
     CHECK_MEM8 test_sound_history+1,W3D_AUDIO_SOUND_ESCPRESSED,REASON_SOUND_ID
+
+; CP_Quit's normal prompt uses the original full-height Message() anchor.
+    ld a,70
+    ld (test_case),a
+    call test_reset_sounds
+    call test_reset_plots
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_no
+    call test_set_key_script
+    xor a
+    call w3d_shell_confirm_quit
+    CHECK_A 0,REASON_RESULT
+    CHECK_MEM8 w3d_shell_quit_choice,0,REASON_SELECTION
+    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_QUIT_NOTICE_0_BUFFER,W3D_SHELL_QUIT_NOTICE_0_X,W3D_SHELL_QUIT_NOTICE_0_Y
+    CHECK_MEM8 test_sound_count,1,REASON_SOUND_COUNT
+    CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_ESCPRESSED,REASON_SOUND_ID
+
+; F10 reproduces WindowH=160 by shifting the same composed prompt 20 pixels.
+; The pair 8,1 also proves the source's first & (7 + (second & 1)) precedence.
+    ld a,71
+    ld (test_case),a
+    call test_reset_sounds
+    call test_reset_plots
+    ld hl,script_random_eight
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
+    ld a,1
+    call w3d_shell_confirm_quit
+    CHECK_A 1,REASON_RESULT
+    CHECK_MEM8 w3d_shell_quit_choice,8,REASON_SELECTION
+    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_QUIT_NOTICE_8_BUFFER,W3D_SHELL_QUIT_NOTICE_8_X,W3D_SHELL_QUIT_NOTICE_8_Y-20
+    CHECK_MEM8 test_sound_count,1,REASON_SOUND_COUNT
+    CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_SHOOT,REASON_SOUND_ID
+
+; An odd first draw with an even mask retains the ordinary 0..7 path.
+    ld a,72
+    ld (test_case),a
+    call test_reset_sounds
+    call test_reset_plots
+    ld hl,script_random_five
+    call test_set_random_script
+    ld hl,script_confirm_escape
+    call test_set_key_script
+    xor a
+    call w3d_shell_confirm_quit
+    CHECK_A 0,REASON_RESULT
+    CHECK_MEM8 w3d_shell_quit_choice,5,REASON_SELECTION
+    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_QUIT_NOTICE_5_BUFFER,W3D_SHELL_QUIT_NOTICE_5_X,W3D_SHELL_QUIT_NOTICE_5_Y
+    CHECK_MEM8 test_sound_count,1,REASON_SOUND_COUNT
+    CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_ESCPRESSED,REASON_SOUND_ID
     ret
 
 test_reset_sounds:
@@ -1077,6 +1188,10 @@ test_set_script:
 
 test_set_key_script:
     ld (test_key_script_pointer),hl
+    ret
+
+test_set_random_script:
+    ld (test_random_script_pointer),hl
     ret
 
 test_key_hook:
@@ -1354,6 +1469,7 @@ output_handle: db 0
 test_case: db 0
 test_script_pointer: dl 0
 test_key_script_pointer: dl 0
+test_random_script_pointer: dl 0
 test_keymap: ds 16
 test_selected_bitmap: dw 0
 test_select_count: db 0
@@ -1463,6 +1579,7 @@ script_episode_unavailable_escape:
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_main_episode_escape:
     db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
+    db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
 script_difficulty_medium: db SCRIPT_RETURN,SCRIPT_RELEASE
 script_difficulty_hard: db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
 script_difficulty_easy: db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
@@ -1473,6 +1590,7 @@ script_difficulty_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_main_difficulty_escape:
     db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
+    db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
 script_title_escape:
     db SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
@@ -1492,6 +1610,10 @@ script_quick_release:
     db SCRIPT_RELEASE
 script_quick_save_keys:
     db 'Y',13
+
+script_random_zero: db 0,0
+script_random_eight: db 8,1
+script_random_five: db 5,0
 
 test_sysvars:
     ds 24

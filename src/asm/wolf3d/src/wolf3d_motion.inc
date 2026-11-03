@@ -277,14 +277,8 @@ w3d_seed_level_world_state:
     jr nz,@actor_spawn_seed_ready
     ld a,1
     ld (w3d_actor_spawn_randomize),a
-    ld ix,(w3d_sysvars_pointer)
-    ld a,(ix+sysvar_time)
-@actor_spawn_seed_mod100:
-    cp 100
-    jr c,@actor_spawn_seed_store
-    sub 100
-    jr @actor_spawn_seed_mod100
-@actor_spawn_seed_store:
+    call w3d_seed_random_from_clock
+    ld a,(w3d_random_index)
     ld (w3d_actor_spawn_seed),a
 @actor_spawn_seed_ready:
     call w3d_initialize_actor_simulation
@@ -297,6 +291,21 @@ w3d_seed_level_world_state:
 ; inventory policy the caller established. New-game startup sets canonical
 ; pistol inventory above; death code reapplies it after this hook; a level
 ; transition deliberately retains the player's current inventory.
+w3d_seed_random_from_clock:
+; US_Startup and each ordinary SetupGameLevel seed the shared table from the
+; low byte of the host clock. DOS used its 0..99 hundredths byte; MOS exposes a
+; 120-Hz counter, so reduce its changing low byte to the same bounded range.
+    ld ix,(w3d_sysvars_pointer)
+    ld a,(ix+sysvar_time)
+@mod100:
+    cp 100
+    jr c,@store
+    sub 100
+    jr @mod100
+@store:
+    ld (w3d_random_index),a
+    ret
+
 w3d_seed_level_attempt_state:
     call w3d_seed_level_world_state
     jp w3d_initialize_player_combat

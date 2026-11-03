@@ -200,7 +200,7 @@ w3d_shell_main_menu:
     cp W3D_SHELL_ACTION_ACCEPT
     jr z,@accept
     cp W3D_SHELL_ACTION_ESCAPE
-    jp z,@quit
+    jp z,@escape_quit
     jr @wait
 @move:
     cp W3D_SHELL_ACTION_UP
@@ -256,11 +256,11 @@ w3d_shell_main_menu:
     call w3d_music_start
     jp @redraw
 @new_game:
-    call w3d_shell_choose_episode
-    jp z,@quit
+    call w3d_shell_choose_episode_local
+    jp z,@redraw
 @difficulty:
-    call w3d_shell_choose_difficulty
-    jp z,@quit
+    call w3d_shell_choose_difficulty_local
+    jp z,@redraw
     ld a,W3D_SHELL_RESULT_NEW_GAME
     or a                    ; caller may branch on NZ
     ret
@@ -299,7 +299,16 @@ w3d_shell_main_menu:
     ld a,W3D_SHELL_RESULT_LOAD_GAME
     or a
     ret
+@escape_quit:
+; HandleMenu returns -1 on Escape and CP_Quit then owns the confirmation.
+; Undo wait_action's application-global latch until the player accepts it.
+    call w3d_shell_reset_exit_request
 @quit:
+    xor a                           ; ordinary 320x200 Message() center
+    call w3d_shell_confirm_quit
+    or a
+    jp z,@redraw
+    call w3d_shell_request_exit
     jp w3d_shell_return_quit
 
 w3d_shell_draw_main_menu:
@@ -351,6 +360,11 @@ w3d_shell_pause_menu:
     jp z,@change_view
     cp W3D_SHELL_MAIN_READ_THIS
     jp z,@read_this
+@quit:
+    xor a                           ; full control-panel window
+    call w3d_shell_confirm_quit
+    or a
+    jp z,@redraw
     call w3d_shell_request_exit
     ld a,W3D_SHELL_PAUSE_QUIT
     or a
@@ -451,7 +465,13 @@ w3d_shell_pause_quick:
     jp z,@quick_save
     cp w3d_panel_request_quick_load
     jp z,@quick_load
-    call w3d_shell_request_exit       ; F10 / unknown fail-safe
+; F10's source quick path temporarily sets WindowH=160, so center the same
+; prompt twenty pixels higher than the ordinary control-panel version.
+    ld a,1
+    call w3d_shell_confirm_quit
+    or a
+    jp z,@resume
+    call w3d_shell_request_exit
     ld a,W3D_SHELL_PAUSE_QUIT
     or a
     ret
@@ -609,6 +629,99 @@ w3d_shell_confirm_end_game:
     ld a,1
     or a
     ret
+
+; Original CP_Quit/F10 confirmation. The source expression is intentionally
+; preserved with C precedence: first_random & (7 + (second_random & 1)). This
+; selects the exact nine humorous WL1 prompts and consumes two shared RNG
+; bytes. A=0 uses the normal 320x200 center; A!=0 reproduces F10's temporary
+; WindowH=160 by shifting the composed prompt twenty pixels upward.
+w3d_shell_confirm_quit:
+    ld (w3d_shell_quit_quick),a
+    call w3d_random_byte
+    ld (w3d_shell_quit_random),a
+    call w3d_random_byte
+    and 1
+    add a,7
+    ld b,a
+    ld a,(w3d_shell_quit_random)
+    and b
+    ld (w3d_shell_quit_choice),a
+
+    ld d,a
+    ld e,7
+    mlt de
+    inc de
+    dec.s de
+    ld hl,w3d_shell_quit_notices
+    add hl,de
+    push hl
+    pop ix
+    ld l,(ix+0)
+    ld h,(ix+1)
+    inc hl
+    dec.s hl
+    ld c,(ix+3)
+    ld b,(ix+4)
+    ld e,(ix+5)
+    ld d,(ix+6)
+    ld a,(w3d_shell_quit_quick)
+    or a
+    jr z,@plot
+    ld a,e
+    sub 20
+    ld e,a
+@plot:
+    call w3d_shell_plot_at
+@wait:
+    call w3d_shell_read_key
+    cp 'Y'
+    jr z,@yes
+    cp 'y'
+    jr z,@yes
+    cp 'N'
+    jr z,@no
+    cp 'n'
+    jr z,@no
+    cp 27
+    jr nz,@wait
+@no:
+    ld a,W3D_AUDIO_SOUND_ESCPRESSED
+    call w3d_shell_play_sound
+    xor a
+    ret
+@yes:
+    ld a,W3D_AUDIO_SOUND_SHOOT
+    call w3d_shell_play_sound
+    ld a,1
+    or a
+    ret
+
+w3d_shell_quit_notices:
+    dl W3D_SHELL_QUIT_NOTICE_0_BUFFER
+    dw W3D_SHELL_QUIT_NOTICE_0_X,W3D_SHELL_QUIT_NOTICE_0_Y
+    dl W3D_SHELL_QUIT_NOTICE_1_BUFFER
+    dw W3D_SHELL_QUIT_NOTICE_1_X,W3D_SHELL_QUIT_NOTICE_1_Y
+    dl W3D_SHELL_QUIT_NOTICE_2_BUFFER
+    dw W3D_SHELL_QUIT_NOTICE_2_X,W3D_SHELL_QUIT_NOTICE_2_Y
+    dl W3D_SHELL_QUIT_NOTICE_3_BUFFER
+    dw W3D_SHELL_QUIT_NOTICE_3_X,W3D_SHELL_QUIT_NOTICE_3_Y
+    dl W3D_SHELL_QUIT_NOTICE_4_BUFFER
+    dw W3D_SHELL_QUIT_NOTICE_4_X,W3D_SHELL_QUIT_NOTICE_4_Y
+    dl W3D_SHELL_QUIT_NOTICE_5_BUFFER
+    dw W3D_SHELL_QUIT_NOTICE_5_X,W3D_SHELL_QUIT_NOTICE_5_Y
+    dl W3D_SHELL_QUIT_NOTICE_6_BUFFER
+    dw W3D_SHELL_QUIT_NOTICE_6_X,W3D_SHELL_QUIT_NOTICE_6_Y
+    dl W3D_SHELL_QUIT_NOTICE_7_BUFFER
+    dw W3D_SHELL_QUIT_NOTICE_7_X,W3D_SHELL_QUIT_NOTICE_7_Y
+    dl W3D_SHELL_QUIT_NOTICE_8_BUFFER
+    dw W3D_SHELL_QUIT_NOTICE_8_X,W3D_SHELL_QUIT_NOTICE_8_Y
+
+w3d_shell_quit_quick:
+    db 0
+w3d_shell_quit_random:
+    db 0
+w3d_shell_quit_choice:
+    db 0
 
 w3d_shell_draw_pause_menu:
     call w3d_shell_clear

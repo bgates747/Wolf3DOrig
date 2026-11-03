@@ -100,6 +100,18 @@ of the authoritative saved simulation state. Oryx generation 171 passes all
 618 direct eZ80 checks. The measured real-E1L1 patrol route remains 0.217 ms
 per fixed frame because this correction runs only during attempt seeding.
 
+Quit-flow correction, 2026-11-03: `WL_MENU.C::CP_Quit` does not immediately
+terminate. It selects one of nine original prompts using two shared `US_RndT`
+draws and the exact source expression `first & (7 + (second & 1))`, then exits
+only for Y/y. N/n or Escape cancels with `ESCPRESSEDSND`; acceptance uses
+`SHOOTSND`. Main-menu Escape and Quit, the in-game Quit row, and F10 now share
+that contract. F10 preserves the source's temporary `WindowH=160` placement by
+moving the composed prompt twenty pixels upward. The same audit corrected the
+startup RNG seed and the main-menu Episode/Difficulty cancellation path: both
+submenus now return locally rather than setting the application exit latch.
+Oryx generation 172 passes all 559 direct production-shell checks, and the
+nine composed prompt assets pass their exact source-string/geometry contract.
+
 ### A1. Pushwalls and secret discovery — TODO 11
 
 Original oracle:
@@ -345,6 +357,19 @@ selection, custom key bindings, mouse sensitivity, and view size remain
 unavailable/fixed rather than being encoded as fictitious choices. Oryx
 generation 170 passes 30/30 direct eZ80 checks, including all flag combinations
 and real MOS save/load plus corruption, truncation, and trailing-data rejection.
+
+Quit-confirmation correction, 2026-11-03: the otherwise functional control
+panel bypassed original `CP_Quit` and returned directly to MOS. The complete
+nine-message source table is now generated as reusable shell assets, selection
+consumes the same two gameplay RNG draws with exact C precedence, and all four
+reachable entry routes share Y/N/Escape and sound semantics. Main-menu Episode
+and Difficulty Escape are local cancellations again. Oryx generation 172
+passes 559/559 target checks; standalone is 273,505 bytes, SHA-256
+`872aae9c708eddd93fa8f60662035dfaa23127653d36d459c0022c2a6452ba9f`,
+and VDPlet-direct is 285,125 bytes, SHA-256
+`a2d0b9efdbc3b5c59933ea3f1ab4c06cbff1b8b3baa41c161631daecc571e7e6`,
+against the unchanged 18,636-byte module
+`266f809ff76e56733251da202e5c4747cd9c12d247d799d486471a262c0404b7`.
 
 Intentional discrepancy ledger, 2026-11-03: the hardware-accepted player
 wall/slab radius and actor/static physical clearance remain `0x4800`, versus

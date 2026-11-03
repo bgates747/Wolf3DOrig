@@ -34,6 +34,7 @@ from formats.shell import (  # noqa: E402
     MAIN_LABELS,
     ORDER_HIGHLIGHT,
     ORDER_NORMAL,
+    QUIT_MESSAGES,
     READHCOLOR,
     READ_THIS_PAGE_LINES,
     SHELL_CHUNKS,
@@ -332,6 +333,35 @@ def _compose_end_game_notice(font: WolfFont) -> Image.Image:
     return image
 
 
+def _compose_message_notice(font: WolfFont, text: str) -> ComposedImage:
+    """Reproduce WL_MENU.C Message(), centered in its normal 320x200 window."""
+
+    height = font.height
+    width = 0
+    message_width = 0
+    for character in text:
+        if character == "\n":
+            message_width = max(message_width, width)
+            width = 0
+            height += font.height
+        else:
+            width += font.glyph_width(character)
+    message_width = max(message_width, width + 10)
+
+    # DrawWindow/DrawOutline include the right and bottom coordinates.
+    image = Image.new(
+        "RGB", (message_width + 11, height + 11), _color(TEXTCOLOR)
+    )
+    _draw_window(image, 0, 0, message_width + 10, height + 10, TEXTCOLOR)
+    _draw_outline(image, 0, 0, message_width + 10, height + 10, 0, HIGHLIGHT)
+    _draw_text(image, font, (5, 5), text, 0)
+    return ComposedImage(
+        image,
+        160 - message_width // 2 - 5,
+        100 - height // 2 - 5,
+    )
+
+
 def _compose_images(
     raw: dict[str, Image.Image], font: WolfFont
 ) -> dict[str, ComposedImage]:
@@ -413,6 +443,10 @@ def _compose_images(
             0,
             0,
         ),
+        **{
+            f"quit_notice_{index}": _compose_message_notice(font, message)
+            for index, message in enumerate(QUIT_MESSAGES)
+        },
     }
     for index, label in enumerate(EPISODE_LABELS, start=1):
         images[f"episode_{index}_selected"] = ComposedImage(

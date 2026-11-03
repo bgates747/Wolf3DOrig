@@ -96,6 +96,7 @@ SHELL_COMPOSITE_BUFFER_IDS = {
     "read_this_page": 0x4344,
     "sound_on_music_off_page": 0x4345,
     "sound_off_music_off_page": 0x4346,
+    **{f"quit_notice_{index}": 0x4350 + index for index in range(9)},
 }
 
 # Original WL_MENU.H palette indices.
@@ -158,6 +159,18 @@ END_GAME_MESSAGE = (
     "Are you sure you want\n"
     "to end the game you\n"
     "are playing? (Y or N):"
+)
+
+QUIT_MESSAGES = (
+    "Dost thou wish to\nleave with such hasty\nabandon?",
+    "Chickening out...\nalready?",
+    "Press N for more carnage.\nPress Y to be a weenie.",
+    "So, you think you can\nquit this easily, huh?",
+    "Press N to save the world.\nPress Y to abandon it in\nits hour of need.",
+    "Press N if you are brave.\nPress Y to cower in shame.",
+    "Heroes, press N.\nWimps, press Y.",
+    "You are at an intersection.\nA sign says, 'Press Y to quit.'\n>",
+    "For guns and glory, press N.\nFor work and worry, press Y.",
 )
 
 CONTROL_PAGE_LINES = (

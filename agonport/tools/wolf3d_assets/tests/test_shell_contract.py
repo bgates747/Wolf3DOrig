@@ -19,6 +19,7 @@ from formats.shell import (  # noqa: E402
     COMPOSED_DEACTIVE_RGB,
     END_GAME_MESSAGE,
     EPISODE_UNAVAILABLE_MESSAGE,
+    QUIT_MESSAGES,
     SHELL_CHUNKS,
     SHELL_CHUNK_NAMES,
     SHELL_COMPOSITE_BUFFER_IDS,
@@ -71,6 +72,15 @@ EXPECTED_COMPOSITES = {
     "read_this_page": (0x4344, 320, 200, 0, 0),
     "sound_on_music_off_page": (0x4345, 320, 200, 0, 0),
     "sound_off_music_off_page": (0x4346, 320, 200, 0, 0),
+    "quit_notice_0": (0x4350, 206, 50, 58, 76),
+    "quit_notice_1": (0x4351, 151, 37, 85, 82),
+    "quit_notice_2": (0x4352, 247, 37, 37, 82),
+    "quit_notice_3": (0x4353, 209, 37, 56, 82),
+    "quit_notice_4": (0x4354, 251, 50, 35, 76),
+    "quit_notice_5": (0x4355, 264, 37, 29, 82),
+    "quit_notice_6": (0x4356, 156, 37, 83, 82),
+    "quit_notice_7": (0x4357, 276, 50, 23, 76),
+    "quit_notice_8": (0x4358, 284, 37, 19, 82),
 }
 
 
@@ -103,6 +113,9 @@ class ShellArchiveTests(unittest.TestCase):
         self.assertEqual(font.measure("New Game"), (82, 13))
         self.assertEqual(font.measure(EPISODE_UNAVAILABLE_MESSAGE), (240, 52))
         self.assertEqual(font.measure(END_GAME_MESSAGE), (204, 39))
+        self.assertEqual(len(QUIT_MESSAGES), 9)
+        self.assertEqual(font.measure(QUIT_MESSAGES[0]), (195, 39))
+        self.assertEqual(font.measure(QUIT_MESSAGES[8]), (263, 26))
         width, height, glyph = font.glyph_mask("A")
         self.assertEqual((width, height, len(glyph)), (10, 13, 130))
         self.assertTrue(any(glyph))
