@@ -228,6 +228,12 @@ behind-player scan; the WL1 starting-area census has at most five dormant
 actors even on Death Incarnate.
 The remembered-slot F8/F9 presentation difference recorded in item 14 is
 closed.
+The residual death/game-over gate no longer requires repeatedly losing normal
+games: two disposable, compile-time acceptance profiles begin the real E1L1
+encounter on one health with either one displayed life or the source's final
+zero-life attempt. They preserve the production death, fizzle, respawn,
+score-checkpoint, high-score, and menu paths; only the initial health/lives are
+overridden. Visual acceptance remains part of the Phase-A batch.
 The startup sweep restored `WL_MAIN.C::DemoLoop`'s call to
 `WL_INTER.C::PG13`: the bundled `PG13PIC` now appears
 once per process at its original `(216,110)` anchor on the source blue field,

@@ -20,6 +20,8 @@ SELECTOR = "W3D_RENDER_BACKEND:"
 START_SELECTOR = "W3D_INITIAL_LEVEL:"
 INVULNERABLE_SELECTOR = "W3D_DIAGNOSTIC_INVULNERABLE:"
 HIGHSCORE_SELECTOR = "W3D_DIAGNOSTIC_HIGHSCORE_MODE:"
+START_HEALTH_SELECTOR = "W3D_DIAGNOSTIC_START_HEALTH:"
+START_LIVES_SELECTOR = "W3D_DIAGNOSTIC_START_LIVES:"
 HIGHSCORE_MODES = {"none": 0, "qualifying": 1, "nonqualifying": 2}
 BACKENDS = {
     "standalone": "W3D_RENDER_BACKEND_STANDALONE",
@@ -143,6 +145,30 @@ def select_highscore_mode(path: Path, mode: str) -> None:
     path.write_text("\n".join(lines) + "\n")
 
 
+def select_starting_player_state(
+    path: Path, health: int | None, lives: int | None
+) -> None:
+    if health is not None and not 0 <= health <= 100:
+        raise SystemExit("diagnostic starting health must be in 0..100")
+    if lives is not None and not 0 <= lives <= 9:
+        raise SystemExit("diagnostic starting lives must be in 0..9")
+    lines = path.read_text().splitlines()
+    for selector, value, label in (
+        (START_HEALTH_SELECTOR, health, "health"),
+        (START_LIVES_SELECTOR, lives, "lives"),
+    ):
+        matches = [
+            index for index, line in enumerate(lines)
+            if line.startswith(selector)
+        ]
+        if len(matches) != 1:
+            raise SystemExit(f"wolf3d diagnostic-start-{label} selector changed")
+        lines[matches[0]] = (
+            f"{selector} equ {0xff if value is None else value}"
+        )
+    path.write_text("\n".join(lines) + "\n")
+
+
 def build(
     assembler: Path,
     backend: str,
@@ -150,6 +176,8 @@ def build(
     initial_level: int = 0,
     invulnerable: bool = False,
     highscore_mode: str = "none",
+    start_health: int | None = None,
+    start_lives: int | None = None,
 ) -> dict[str, object]:
     if backend == "vdplet-direct":
         if module is None:
@@ -181,6 +209,9 @@ def build(
         select_initial_level(source / "wolf3d_start.inc", initial_level)
         select_invulnerable(source / "wolf3d_backend.inc", invulnerable)
         select_highscore_mode(source / "wolf3d_backend.inc", highscore_mode)
+        select_starting_player_state(
+            source / "wolf3d_backend.inc", start_health, start_lives
+        )
         if module is not None:
             select_package(source / "wolf3d_vdplet_package.inc", module.stat().st_size)
         temporary_output = temporary / output_name
@@ -199,6 +230,8 @@ def build(
         "initial_level": initial_level,
         "diagnostic_invulnerable": invulnerable,
         "diagnostic_highscore_mode": highscore_mode,
+        "diagnostic_start_health": start_health,
+        "diagnostic_start_lives": start_lives,
         "assembler": str(assembler),
         "output": str(output.relative_to(PROJECT.parents[2])),
         "bytes": output.stat().st_size,
@@ -236,6 +269,14 @@ def main() -> None:
         "--highscore-acceptance", choices=tuple(HIGHSCORE_MODES), default="none",
         help="acceptance-only build: enter a qualifying or non-qualifying score flow",
     )
+    parser.add_argument(
+        "--diagnostic-start-health", type=int,
+        help="acceptance-only build: override new-game starting health (0..100)",
+    )
+    parser.add_argument(
+        "--diagnostic-start-lives", type=int,
+        help="acceptance-only build: override new-game starting lives (0..9)",
+    )
     args = parser.parse_args()
     receipt = build(
         resolve_assembler(args.assembler),
@@ -244,6 +285,8 @@ def main() -> None:
         args.initial_level,
         args.invulnerable,
         args.highscore_acceptance,
+        args.diagnostic_start_health,
+        args.diagnostic_start_lives,
     )
     print(json.dumps(receipt, indent=2))
 

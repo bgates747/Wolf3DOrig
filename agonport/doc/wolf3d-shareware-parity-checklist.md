@@ -550,6 +550,15 @@ Additional intentional platform substitutions, 2026-11-03:
    remains a successful no-op rather than borrowing a paid-data effect or
    substituting an unrelated sound.
 
+Death-lifecycle acceptance support, 2026-11-03: the durable acceptance cohort
+now includes two copied E1L1 applications at the canonical starting pose. Both
+begin with one health point; one begins with one displayed life to exercise a
+normal death, fizzle, score rollback and fresh attempt, while the other begins
+with zero displayed lives to exercise the source's final playable attempt,
+game-over high-score handoff and control-panel return. Compile-time selectors
+change only those disposable applications and are absent from production.
+This closes the reachability problem, not the still-pending human visual gate.
+
 Debug cheats, paid-episode content, obsolete DOS copy protection, VGA palette
 timing exactness, and unavailable hardware configuration choices are not
 required unless separately promoted.

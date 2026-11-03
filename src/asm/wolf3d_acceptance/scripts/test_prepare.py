@@ -28,25 +28,39 @@ class AcceptancePackageTests(unittest.TestCase):
     def test_catalog_covers_both_transitions_and_special_actor_scenes(self) -> None:
         self.assertEqual(
             [scenario.name for scenario in prepare.SCENARIOS],
-            ["pushwall", "ordinary-transition", "secret-transition", "hans", "victory", "ghosts", "pause-resume", "highscore-qualifying", "highscore-nonqualifying"],
+            ["pushwall", "ordinary-transition", "secret-transition", "hans", "victory", "ghosts", "pause-resume", "death-respawn", "game-over", "highscore-qualifying", "highscore-nonqualifying"],
         )
         self.assertEqual(
             [scenario.initial_level for scenario in prepare.SCENARIOS],
-            [0, 0, 9, 8, 8, 9, 0, 0, 0],
+            [0, 0, 9, 8, 8, 9, 0, 0, 0, 0, 0],
         )
         self.assertEqual(
             [scenario.invulnerable for scenario in prepare.SCENARIOS],
-            [False, False, False, True, False, False, False, False, False],
+            [False, False, False, True, False, False, False, False, False, False, False],
         )
         self.assertEqual(
             [scenario.highscore_mode for scenario in prepare.SCENARIOS],
-            ["none"] * 7 + ["qualifying", "nonqualifying"],
+            ["none"] * 9 + ["qualifying", "nonqualifying"],
+        )
+        self.assertEqual(
+            [(scenario.start_health, scenario.start_lives)
+             for scenario in prepare.SCENARIOS],
+            [(None, None)] * 7 + [(1, 1), (1, 0)] + [(None, None)] * 2,
         )
         self.assertFalse(prepare.SCENARIOS[3].one_hit_hans)
         self.assertEqual(
             stage_oryx.SCENARIOS,
             tuple(scenario.name for scenario in prepare.SCENARIOS),
         )
+
+    def test_death_profiles_use_canonical_start_pose_and_distinct_lives(self) -> None:
+        for scenario, lives in zip(prepare.SCENARIOS[7:9], (1, 0)):
+            with self.subTest(scenario=scenario.name):
+                package = parse_package(prepare.patch_state(self.state(0), scenario))
+                x, y, angle = struct.unpack("<iiH", package.player_pose)
+                self.assertEqual((x >> 16, y >> 16, angle), (29, 57, 0))
+                self.assertEqual(scenario.start_health, 1)
+                self.assertEqual(scenario.start_lives, lives)
 
     def test_pushwall_pose_faces_real_e1l1_secret_wall(self) -> None:
         scenario = prepare.SCENARIOS[0]

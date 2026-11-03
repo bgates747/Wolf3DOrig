@@ -126,6 +126,14 @@ w3d_initialize_motion_state:
     ld (w3d_player_weapon),a
     ld (w3d_player_best_weapon),a
     ld (w3d_player_chosen_weapon),a
+    .if 0ffh-W3D_DIAGNOSTIC_START_HEALTH
+    ld a,W3D_DIAGNOSTIC_START_HEALTH
+    ld (w3d_player_health),a
+    .endif
+    .if 0ffh-W3D_DIAGNOSTIC_START_LIVES
+    ld a,W3D_DIAGNOSTIC_START_LIVES
+    ld (w3d_player_lives),a
+    .endif
     jp w3d_seed_level_attempt_state
 
 ; Rebuild every mutable world/per-level field from the active level bindings

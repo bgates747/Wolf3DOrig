@@ -52,6 +52,8 @@ class Scenario:
     one_hit_hans: bool = False
     invulnerable: bool = False
     highscore_mode: str = "none"
+    start_health: int | None = None
+    start_lives: int | None = None
 
 
 SCENARIOS = (
@@ -65,6 +67,10 @@ SCENARIOS = (
     Scenario("victory", 8, (34, 8), 90),
     Scenario("ghosts", 9, (5, 34), 0, ghosts=True),
     Scenario("pause-resume", 0, (29, 57), 0),
+    Scenario("death-respawn", 0, (29, 57), 0,
+             start_health=1, start_lives=1),
+    Scenario("game-over", 0, (29, 57), 0,
+             start_health=1, start_lives=0),
     Scenario("highscore-qualifying", 0, (29, 57), 0,
              highscore_mode="qualifying"),
     Scenario("highscore-nonqualifying", 0, (29, 57), 0,
@@ -280,6 +286,8 @@ def build_application(
     level: int,
     invulnerable: bool = False,
     highscore_mode: str = "none",
+    start_health: int | None = None,
+    start_lives: int | None = None,
 ) -> Path:
     command = [
         sys.executable,
@@ -292,6 +300,10 @@ def build_application(
         command.append("--invulnerable")
     if highscore_mode != "none":
         command.extend(("--highscore-acceptance", highscore_mode))
+    if start_health is not None:
+        command.extend(("--diagnostic-start-health", str(start_health)))
+    if start_lives is not None:
+        command.extend(("--diagnostic-start-lives", str(start_lives)))
     subprocess.run(command, cwd=PROJECT, check=True)
     suffix = "" if level == 0 else f"-l{level:02d}"
     return require(GAME / f"tgt/wolf3d-vdplet-direct{suffix}.bin")
@@ -332,6 +344,8 @@ def prepare_scenario(scenario: Scenario, application: Path) -> dict[str, object]
             "one_hit_hans": scenario.one_hit_hans,
             "diagnostic_invulnerable": scenario.invulnerable,
             "diagnostic_highscore_mode": scenario.highscore_mode,
+            "diagnostic_start_health": scenario.start_health,
+            "diagnostic_start_lives": scenario.start_lives,
             "application_sha256": sha(temporary / "wolf3d.bin"),
             "module_sha256": sha(temporary / "wolf3d.vdpl"),
             "files": {
@@ -358,23 +372,31 @@ def main() -> None:
     # mortal application path retained for another scenario.
     with tempfile.TemporaryDirectory(prefix="applications-", dir=TARGET) as name:
         application_dir = Path(name)
-        applications: dict[tuple[int, bool, str], Path] = {}
-        for level, invulnerable, highscore_mode in sorted({
-            (scenario.initial_level, scenario.invulnerable, scenario.highscore_mode)
+        applications: dict[
+            tuple[int, bool, str, int | None, int | None], Path
+        ] = {}
+        for level, invulnerable, highscore_mode, start_health, start_lives in sorted({
+            (scenario.initial_level, scenario.invulnerable,
+             scenario.highscore_mode, scenario.start_health,
+             scenario.start_lives)
             for scenario in SCENARIOS
-        }):
-            source = build_application(level, invulnerable, highscore_mode)
+        }, key=lambda values: tuple(-1 if value is None else value for value in values)):
+            source = build_application(
+                level, invulnerable, highscore_mode, start_health, start_lives
+            )
             destination = application_dir / (
                 f"level_{level:02d}-{'invulnerable' if invulnerable else 'mortal'}"
-                f"-{highscore_mode}.bin"
+                f"-{highscore_mode}-h{start_health}-l{start_lives}.bin"
             )
             shutil.copyfile(source, destination)
-            applications[(level, invulnerable, highscore_mode)] = destination
+            applications[(level, invulnerable, highscore_mode,
+                          start_health, start_lives)] = destination
         receipts = [
             prepare_scenario(
                 scenario,
                 applications[(scenario.initial_level, scenario.invulnerable,
-                              scenario.highscore_mode)],
+                              scenario.highscore_mode, scenario.start_health,
+                              scenario.start_lives)],
             )
             for scenario in SCENARIOS
         ]

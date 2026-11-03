@@ -20,6 +20,8 @@ SCENARIOS = (
     "victory",
     "ghosts",
     "pause-resume",
+    "death-respawn",
+    "game-over",
     "highscore-qualifying",
     "highscore-nonqualifying",
 )
