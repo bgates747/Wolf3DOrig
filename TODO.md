@@ -56,10 +56,14 @@ pass their direct shell fixture. The residual `WL_PLAY.C::CheckKeys` /
 `WL_MENU.C::CP_CheckQuick` routes are now implemented for F1 help, F2/F3
 save/load, F4 sound, F5 view, F6 controls, F7 end game, F8/F9 remembered-slot
 quick save/load, and F10 quit. The callback-only FabGL Pause key now reproduces
-`CheckPause`: authentic PAUSED art over the drained gameplay frame, music
-off, fresh-key acknowledgment, floor-music resume, and authoritative buffer
-rebuild. Direct production evidence passes 559/559 shell, 492/492
-physical-keymap/player-combat, and 228/228 callback/death checks.
+`CheckPause`: authentic PAUSED art over the drained gameplay frame, frozen
+IMF cursor/timing, source-correct OPL key-off silence, fresh-key
+acknowledgment, continuation from the same sequencer position, and an
+authoritative buffer rebuild. F7-F10 and the two shipped message chords also
+restore the source's stopped-gameplay backdrop and exact floor/menu-music
+ownership rather than opening on a cleared shell surface. Direct production
+evidence passes 492/492 physical-keymap/player-combat and 228/228
+callback/death checks.
 Remaining close gate: one batched visual pause/resume/page/save/load/end-game/
 quit review, including callback-time F keys and F8/F9 reuse of the selected
 slot. Remembered-slot F8/F9 now also reproduce the original transient
@@ -123,8 +127,9 @@ Sound independently controls SFX and music preferences. The residual source
 audit found that this persistence was process-local despite
 `WL_MAIN.C::ReadConfig/WriteConfig`; item 18 now supplies durable cross-launch
 persistence for the two meaningful Agon preferences.
-The direct sequencer fixture passes 48/48 and the integrated production-shell
-fixture passes 559/559 on real eZ80 emulation. Remaining close gate: one
+The direct sequencer and integrated production-shell fixtures cover track
+assignment, pause continuity, quick-key ownership, and first-use F8/F9
+promotion on real eZ80 emulation. Remaining close gate: one
 audible emulator/hardware review of representative gameplay, menu,
 intermission, and victory transitions, including timbre/mix and both toggles.
 

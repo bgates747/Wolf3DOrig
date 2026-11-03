@@ -85,6 +85,10 @@ run_tests:
     ld a,4
     ld (result_stage),a
     call write_result
+    call case_pause_resume
+    ld a,5
+    ld (result_stage),a
+    call write_result
     call case_canonical_lifecycle
     ld a,1
     ld (result_done),a
@@ -192,6 +196,83 @@ case_scheduler_loop:
     CHECK_MEM8 w3d_music_events_remaining+0,1,REASON_SCHEDULER
     CHECK_MEM8 w3d_music_started_at+0,2,REASON_SCHEDULER
     CHECK_MEM8 w3d_music_next_due+0,1,REASON_SCHEDULER
+    ret
+
+case_pause_resume:
+    ld a,12
+    ld (test_case),a
+    ld hl,test_track
+    ld (w3d_music_track_start),hl
+    xor a
+    ld (test_sysvars+sysvar_time),a
+    ld (test_sysvars+sysvar_time+1),a
+    call w3d_music_restart_track
+    ld a,1
+    ld (w3d_music_active),a
+    call w3d_music_service
+    CHECK_MEM8 w3d_music_events_remaining+0,1,REASON_SCHEDULER
+    CHECK_MEM8 w3d_music_next_due+0,1,REASON_SCHEDULER
+
+; Seed one live voice exactly as an IMF key-on would. Pause must silence the
+; VDP channel without destroying these shadow registers. ID_SD.C::SD_MusicOn
+; only re-enables the sequencer; it does not re-key a note silenced by
+; SD_MusicOff, so resume must emit no voice-start command.
+    ld a,044h
+    ld (w3d_music_registers+0a0h),a
+    ld a,032h
+    ld (w3d_music_registers+0b0h),a
+    xor a
+    ld (w3d_music_registers+043h),a
+    ld (w3d_music_registers+0e3h),a
+    call w3d_music_pause
+    CHECK_MEM8 w3d_music_active,0,REASON_LIFECYCLE
+    CHECK_MEM8 w3d_music_paused,1,REASON_LIFECYCLE
+    CHECK_MEM8 w3d_music_events_remaining+0,1,REASON_SCHEDULER
+
+; Fifty wall-clock ticks later, resume must retain the cursor and make the
+; scheduler epoch fifty ticks newer. The next event remains one music tick
+; away rather than firing immediately or restarting from event zero.
+    ld a,50
+    ld (test_sysvars+sysvar_time),a
+    ld hl,test_capture
+    ld de,64
+    call w3d_music_capture_start
+    call w3d_music_resume
+    call w3d_music_capture_stop
+    CHECK_MEM8 w3d_music_active,1,REASON_LIFECYCLE
+    CHECK_MEM8 w3d_music_paused,0,REASON_LIFECYCLE
+    CHECK_MEM8 w3d_music_started_at+0,50,REASON_SCHEDULER
+    CHECK_MEM8 w3d_music_capture_overflow,0,REASON_WIRE
+    CHECK_MEM8 w3d_music_capture_remaining+0,64,REASON_WIRE
+    CHECK_MEM8 w3d_music_registers+0a0h,044h,REASON_LIFECYCLE
+    CHECK_MEM8 w3d_music_registers+0b0h,0,REASON_LIFECYCLE
+
+; The first later IMF key-on must now be treated as an off->on edge and
+; recreate the native oscillator from the retained frequency/operator shadow.
+    ld hl,test_capture
+    ld de,64
+    call w3d_music_capture_start
+    ld a,0b0h
+    ld (w3d_music_event_register),a
+    ld a,032h
+    ld (w3d_music_event_value),a
+    call w3d_music_apply_event
+    call w3d_music_capture_stop
+    CHECK_MEM8 test_capture+0,23,REASON_WIRE
+    CHECK_MEM8 test_capture+3,3,REASON_WIRE
+    CHECK_MEM8 test_capture+4,10,REASON_WIRE
+    CHECK_MEM8 test_capture+8,3,REASON_WIRE
+    CHECK_MEM8 test_capture+9,4,REASON_WIRE
+    CHECK_MEM8 test_capture+14,3,REASON_WIRE
+    CHECK_MEM8 test_capture+15,0,REASON_WIRE
+    CHECK_MEM8 w3d_music_capture_remaining+0,43,REASON_WIRE
+    call w3d_music_service
+    CHECK_MEM8 w3d_music_events_remaining+0,1,REASON_SCHEDULER
+    ld a,51
+    ld (test_sysvars+sysvar_time),a
+    call w3d_music_service
+    CHECK_MEM8 w3d_music_events_remaining+0,0,REASON_SCHEDULER
+    CHECK_MEM8 w3d_music_next_due+0,2,REASON_SCHEDULER
     ret
 
 case_canonical_lifecycle:

@@ -247,7 +247,8 @@ and hands the viewport to the VDP-owned original red fizzle. The eZ80 then
 applies release-before-new-press acknowledgment, original life/score
 semantics, a complete authoritative E1L1 attempt reseed, and one
 purpose-tagged respawn render. Displayed life zero remains one final playable
-attempt; exhausting it leaves a stable red game-over placeholder until Escape.
+attempt; exhausting it follows the original game-over path into high-score
+qualification and then returns to the control panel.
 
 Knife, pistol, machine gun, and chaingun timelines, target selection, actor
 pain/death chains, class scores, extra lives, and stable clip/weapon drops are

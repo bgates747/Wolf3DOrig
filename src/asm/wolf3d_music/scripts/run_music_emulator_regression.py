@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import atexit
+import hashlib
 import os
 from pathlib import Path
 import shutil
@@ -20,9 +21,21 @@ STAGED_ROOT = Path(root_override) if root_override else installed_root
 RUNTIME_ROOT = Path(os.environ.get("W3D_RUNTIME_ROOT", installed_root))
 PRODUCTION_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
 FIXTURE = STAGED_ROOT / "src/asm/wolf3d_music/src/music_regression.asm"
-FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
-MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
-VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+FAB = Path(os.environ.get(
+    "W3D_EMULATOR", RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
+))
+MOS = Path(os.environ.get(
+    "W3D_MOS", RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
+))
+VDP = Path(os.environ.get(
+    "W3D_VDP", RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+))
+FIRMWARE = os.environ.get("W3D_FIRMWARE", "platform")
+ASSEMBLER = Path(
+    os.environ.get("W3D_ASSEMBLER")
+    or shutil.which("ez80asm")
+    or STAGED_ROOT / "src/asm/wolf3d/tgt/.tools/ez80asm"
+)
 RESULT_SIZE = 16
 
 REASONS = {
@@ -32,7 +45,8 @@ REASONS = {
 }
 STAGES = {
     1: "frequency/volume/waveform", 2: "voice-start wire",
-    3: "scheduler loop", 4: "canonical lifecycle",
+    3: "scheduler loop", 4: "pause/resume continuity",
+    5: "canonical lifecycle",
 }
 
 
@@ -44,26 +58,46 @@ def run(command: list[str], *, cwd: Path | None = None) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--timeout", type=float, default=30.0)
+    parser.add_argument(
+        "--prebuilt",
+        type=Path,
+        help="use an already assembled fixture (for a cross-architecture emulator host)",
+    )
     args = parser.parse_args()
-    for dependency in (PRODUCTION_SRC, FIXTURE, FAB, MOS, VDP):
+    dependencies = (FAB, MOS, VDP)
+    if not args.prebuilt:
+        dependencies = (PRODUCTION_SRC, FIXTURE, ASSEMBLER, *dependencies)
+    for dependency in dependencies:
         if not dependency.exists():
             raise FileNotFoundError(f"missing music regression dependency: {dependency}")
+    if args.prebuilt and not args.prebuilt.is_file():
+        raise FileNotFoundError(f"missing prebuilt music fixture: {args.prebuilt}")
 
     work = Path(tempfile.mkdtemp(prefix="wm"))
     atexit.register(shutil.rmtree, work, ignore_errors=True)
-    build_src = work / "src"
-    shutil.copytree(PRODUCTION_SRC, build_src)
-    entry = build_src / "m.asm"
-    shutil.copyfile(FIXTURE, entry)
     sdcard = work / "sd"
     app = sdcard / "m"
     app.mkdir(parents=True)
     binary = app / "m.bin"
-    run(["ez80asm", entry.name, str(binary)], cwd=build_src)
+    if args.prebuilt:
+        shutil.copyfile(args.prebuilt, binary)
+        print("+ prebuilt", args.prebuilt, "->", binary)
+    else:
+        build_src = work / "src"
+        shutil.copytree(PRODUCTION_SRC, build_src)
+        entry = build_src / "m.asm"
+        shutil.copyfile(FIXTURE, entry)
+        run([str(ASSEMBLER), entry.name, str(binary)], cwd=build_src)
+    digest = hashlib.sha256(binary.read_bytes()).hexdigest()
+    print(f"binary: {binary.stat().st_size} bytes, sha256={digest}")
     (sdcard / "autoexec.txt").write_bytes(b"SET KEYBOARD 1\r\ncd m\r\nload m.bin\r\nrun\r\n")
 
     result = app / "music_result.bin"
     environment = os.environ.copy()
+    artifacts = Path(
+        environment.setdefault("AGON_FLEXE_ARTIFACTS", str(work / "flexe-artifacts"))
+    )
+    artifacts.mkdir(parents=True, exist_ok=True)
     environment["SDL_VIDEODRIVER"] = "dummy"
     environment["SDL_AUDIODRIVER"] = "dummy"
     local_lib = str(Path.home() / ".local/lib")
@@ -71,7 +105,7 @@ def main() -> int:
         ":" + environment["LD_LIBRARY_PATH"] if environment.get("LD_LIBRARY_PATH") else ""
     )
     emulator = [
-        str(FAB.resolve()), "--renderer", "sw", "--firmware", "console8",
+        str(FAB.resolve()), "--renderer", "sw", "--firmware", FIRMWARE,
         "--mos", str(MOS.resolve()), "--vdp", str(VDP.resolve()),
         "--sdcard", str(sdcard), "--zero",
     ]

@@ -89,6 +89,7 @@ fa_create_always:               equ 08h
     include "wolf3d_actor_sim.inc"
     include "wolf3d_victory.inc"
     include "wolf3d_motion.inc"
+    include "wolf3d_panel_music.inc"
     include "wolf3d_player_combat.inc"
     include "wolf3d_death.inc"
     include "wolf3d_audio_spatial.inc"
@@ -1033,14 +1034,21 @@ w3d_gameplay_pause:
     ld a,(w3d_gameplay_panel_request)
     cp w3d_panel_request_pause
     jr z,@pause_overlay
-    ld a,W3D_MUSIC_WONDERIN
-    call w3d_music_start
+    call w3d_gameplay_panel_open_music
+    call w3d_gameplay_backdrop_capture
     call w3d_arm_gameplay_mode_fence
     call w3d_shell_setup
     call w3d_wait_for_gameplay_mode
-    jp c,w3d_gameplay_fatal_shutdown
+    jr nc,@shell_mode_ready
+    call w3d_gameplay_backdrop_release
+    jp w3d_gameplay_fatal_shutdown
+@shell_mode_ready:
+    call w3d_gameplay_backdrop_plot
     ld a,(w3d_gameplay_panel_request)
     call w3d_shell_pause_quick
+    push af
+    call w3d_gameplay_backdrop_release
+    pop af
     cp W3D_SHELL_PAUSE_RESUME
     jp z,w3d_gameplay_resume
     cp W3D_SHELL_PAUSE_NEW_GAME
@@ -1067,10 +1075,11 @@ w3d_gameplay_pause:
 
 @pause_overlay:
 ; WL_PLAY.C draws PAUSEDPIC at (16 chars, 64 pixels), turns music off, waits
-; for a fresh acknowledgment, then resumes the current floor track. Rendering
-; has already drained, so the bitmap and C3 operate without competing with a
-; VDPlet render owner. The normal resume path reconstructs both framebuffers.
-    call w3d_music_stop
+; for a fresh acknowledgment, then resumes the sequencer at the same position.
+; Rendering has already drained, so the bitmap and C3 operate without
+; competing with a VDPlet render owner. The normal resume path reconstructs
+; both framebuffers.
+    call w3d_music_pause
     ld hl,W3D_SHELL_PAUSED_BUFFER
     call selectBitmap
     ld bc,128
@@ -1114,7 +1123,7 @@ w3d_gameplay_pause_wait_all_released:
     ret
 
 w3d_gameplay_resume:
-    call w3d_music_start_current_floor
+    call w3d_gameplay_panel_resume_music
     call w3d_arm_gameplay_mode_fence
     ld hl,w3d_display_setup
     ld bc,w3d_display_setup_end-w3d_display_setup

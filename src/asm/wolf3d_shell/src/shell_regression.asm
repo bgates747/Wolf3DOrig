@@ -234,6 +234,7 @@ w3d_panel_request_cheater: equ 12
 w3d_panel_request_keen: equ 13
 
 w3d_music_enabled: db 1
+w3d_gameplay_panel_request: db 0
 
 w3d_music_start:
     ld (test_music_last),a
@@ -260,6 +261,16 @@ w3d_music_start:
     pop af
     ret
 
+w3d_music_start_current_floor:
+    ld hl,test_music_floor_restart_count
+    inc (hl)
+    ret
+
+w3d_music_resume:
+    ld hl,test_music_resume_count
+    inc (hl)
+    ret
+
 w3d_music_service:
     ld hl,(test_sysvars)
     inc hl
@@ -275,6 +286,7 @@ w3d_music_set_enabled:
     ret
 
     include "wolf3d_shell.inc"
+    include "wolf3d_panel_music.inc"
 
 ; Deterministic replacement for the production US_RndT stream. Quit prompts
 ; consume exactly two bytes; individual cases select the source pair so the C
@@ -391,6 +403,9 @@ run_tests:
     ld a,12
     call mark_stage
     call test_shell_sounds
+    ld a,13
+    call mark_stage
+    call test_gameplay_panel_music
     ld a,1
     ld (result_done),a
     call write_result
@@ -1155,6 +1170,7 @@ test_quick_keys:
     ld a,58
     ld (test_case),a
     call w3d_shell_reset_quick_slot
+    call test_reset_music
     xor a
     ld (test_save_store_count),a
     ld hl,script_quick_full_panel
@@ -1162,11 +1178,13 @@ test_quick_keys:
     ld hl,script_quick_save_keys
     call test_set_key_script
     ld a,w3d_panel_request_save
+    ld (w3d_gameplay_panel_request),a
     call w3d_shell_pause_quick
     CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
     CHECK_MEM8 test_save_store_count,1,REASON_SELECTION
     CHECK_MEM8 w3d_shell_quick_slot_valid,1,REASON_QUICK_SLOT
     CHECK_MEM8 w3d_shell_quick_slot,0,REASON_QUICK_SLOT
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
 
     ld a,59
     ld (test_case),a
@@ -1176,37 +1194,45 @@ test_quick_keys:
     ld hl,script_quick_full_panel
     call test_set_script
     ld a,w3d_panel_request_load
+    ld (w3d_gameplay_panel_request),a
     call w3d_shell_pause_quick
     CHECK_A W3D_SHELL_PAUSE_LOAD_GAME,REASON_RESULT
     CHECK_MEM8 test_save_load_count,1,REASON_SELECTION
     CHECK_MEM8 w3d_shell_quick_slot_valid,1,REASON_QUICK_SLOT
     CHECK_MEM8 w3d_shell_quick_slot,0,REASON_QUICK_SLOT
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
 
     ld a,60
     ld (test_case),a
+    call test_reset_music
     call test_reset_plots
     ld hl,script_quick_release
     call test_set_script
     ld a,w3d_panel_request_quick_save
+    ld (w3d_gameplay_panel_request),a
     call w3d_shell_pause_quick
     CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
     CHECK_MEM8 test_save_store_count,2,REASON_SELECTION
     CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
     CHECK_PLOT 0,W3D_SHELL_SAVING_NOTICE_BUFFER,W3D_SHELL_SAVING_NOTICE_X,W3D_SHELL_SAVING_NOTICE_Y
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
 
     ld a,61
     ld (test_case),a
+    call test_reset_music
     call test_reset_plots
     ld hl,script_quick_release
     call test_set_script
     ld hl,script_confirm_yes
     call test_set_key_script
     ld a,w3d_panel_request_quick_load
+    ld (w3d_gameplay_panel_request),a
     call w3d_shell_pause_quick
     CHECK_A W3D_SHELL_PAUSE_LOAD_GAME,REASON_RESULT
     CHECK_MEM8 test_save_load_count,2,REASON_SELECTION
     CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
     CHECK_PLOT 0,W3D_SHELL_QUICK_LOAD_NOTICE_BUFFER,W3D_SHELL_QUICK_LOAD_NOTICE_X,W3D_SHELL_QUICK_LOAD_NOTICE_Y
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
 
     ld a,62
     ld (test_case),a
@@ -1378,6 +1404,162 @@ test_shell_sounds:
     CHECK_PLOT 0,W3D_SHELL_QUIT_NOTICE_5_BUFFER,W3D_SHELL_QUIT_NOTICE_5_X,W3D_SHELL_QUIT_NOTICE_5_Y
     CHECK_MEM8 test_sound_count,1,REASON_SOUND_COUNT
     CHECK_MEM8 test_sound_history+0,W3D_AUDIO_SOUND_ESCPRESSED,REASON_SOUND_ID
+    ret
+
+; CheckKeys' two ordinary message boxes preserve the live floor sequencer.
+; Full control-panel requests select WONDERIN and restart the floor track;
+; Pause freezes and resumes the existing sequencer position through its own
+; production path.
+test_gameplay_panel_music:
+    ld a,92
+    ld (test_case),a
+    call test_reset_music
+    ld a,w3d_panel_request_cheater
+    ld (w3d_gameplay_panel_request),a
+    call w3d_gameplay_panel_open_music
+    call w3d_gameplay_panel_resume_music
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_floor_restart_count,0,REASON_MUSIC_ASSIGNMENT
+
+    ld a,93
+    ld (test_case),a
+    call test_reset_music
+    ld a,w3d_panel_request_keen
+    ld (w3d_gameplay_panel_request),a
+    call w3d_gameplay_panel_open_music
+    call w3d_gameplay_panel_resume_music
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_floor_restart_count,0,REASON_MUSIC_ASSIGNMENT
+
+    ld a,94
+    ld (test_case),a
+    call test_reset_music
+    ld a,w3d_panel_request_menu
+    ld (w3d_gameplay_panel_request),a
+    call w3d_gameplay_panel_open_music
+    call w3d_gameplay_panel_resume_music
+    CHECK_MEM8 test_music_start_count,1,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_last,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_floor_restart_count,1,REASON_MUSIC_ASSIGNMENT
+
+    ld a,95
+    ld (test_case),a
+    call test_reset_music
+    ld a,w3d_panel_request_end_game
+    ld (w3d_gameplay_panel_request),a
+    call w3d_gameplay_panel_open_music
+    call w3d_gameplay_panel_resume_music
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_floor_restart_count,0,REASON_MUSIC_ASSIGNMENT
+
+    ld a,96
+    ld (test_case),a
+    call test_reset_music
+    ld a,w3d_panel_request_quick_save
+    ld (w3d_gameplay_panel_request),a
+    call w3d_gameplay_panel_open_music
+    call w3d_gameplay_panel_resume_music
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_floor_restart_count,0,REASON_MUSIC_ASSIGNMENT
+
+    ld a,97
+    ld (test_case),a
+    call test_reset_music
+    ld a,w3d_panel_request_quick_load
+    ld (w3d_gameplay_panel_request),a
+    call w3d_gameplay_panel_open_music
+    call w3d_gameplay_panel_resume_music
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_floor_restart_count,1,REASON_MUSIC_ASSIGNMENT
+
+    ld a,98
+    ld (test_case),a
+    call test_reset_music
+    ld a,w3d_panel_request_pause
+    ld (w3d_gameplay_panel_request),a
+    call w3d_gameplay_panel_resume_music
+    CHECK_MEM8 test_music_floor_restart_count,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_resume_count,1,REASON_MUSIC_ASSIGNMENT
+
+; With no remembered slot, F8/F9 promote themselves to the ordinary full
+; Save/Load page at the moment CP_CheckQuick discovers that fact.
+    ld a,99
+    ld (test_case),a
+    call w3d_shell_reset_quick_slot
+    call test_reset_music
+    ld hl,script_quick_full_panel
+    call test_set_script
+    ld hl,script_quick_save_keys
+    call test_set_key_script
+    ld a,w3d_panel_request_quick_save
+    ld (w3d_gameplay_panel_request),a
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+    CHECK_MEM8 w3d_gameplay_panel_request,w3d_panel_request_save,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_start_count,1,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_last,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
+
+    ld a,100
+    ld (test_case),a
+    call w3d_shell_reset_quick_slot
+    call test_reset_music
+    ld hl,script_quick_full_panel
+    call test_set_script
+    ld a,w3d_panel_request_quick_load
+    ld (w3d_gameplay_panel_request),a
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_LOAD_GAME,REASON_RESULT
+    CHECK_MEM8 w3d_gameplay_panel_request,w3d_panel_request_load,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_start_count,1,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_last,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
+
+; Full pages clear and redraw their own shell surface. Source quick paths and
+; ordinary CheckKeys messages preserve a captured gameplay backdrop; Pause
+; owns its separate PAUSEDPIC path.
+    ld a,101
+    ld (test_case),a
+    ld a,w3d_panel_request_menu
+    call w3d_panel_request_uses_gameplay_backdrop
+    call test_z_to_a
+    CHECK_A 0,REASON_PLOT_BUFFER
+    ld a,w3d_panel_request_control
+    call w3d_panel_request_uses_gameplay_backdrop
+    call test_z_to_a
+    CHECK_A 0,REASON_PLOT_BUFFER
+    ld a,w3d_panel_request_end_game
+    call w3d_panel_request_uses_gameplay_backdrop
+    call test_z_to_a
+    CHECK_A 1,REASON_PLOT_BUFFER
+    ld a,w3d_panel_request_quick_load
+    call w3d_panel_request_uses_gameplay_backdrop
+    call test_z_to_a
+    CHECK_A 1,REASON_PLOT_BUFFER
+    ld a,w3d_panel_request_quit
+    call w3d_panel_request_uses_gameplay_backdrop
+    call test_z_to_a
+    CHECK_A 1,REASON_PLOT_BUFFER
+    ld a,w3d_panel_request_pause
+    call w3d_panel_request_uses_gameplay_backdrop
+    call test_z_to_a
+    CHECK_A 0,REASON_PLOT_BUFFER
+    ld a,w3d_panel_request_cheater
+    call w3d_panel_request_uses_gameplay_backdrop
+    call test_z_to_a
+    CHECK_A 1,REASON_PLOT_BUFFER
+    ld a,w3d_panel_request_keen
+    call w3d_panel_request_uses_gameplay_backdrop
+    call test_z_to_a
+    CHECK_A 1,REASON_PLOT_BUFFER
+    ret
+
+; CALL preserves the producer's flags, so convert its entry Z state to a
+; stable byte without requiring fixture-specific flag macros.
+test_z_to_a:
+    jr z,@set
+    xor a
+    ret
+@set:
+    ld a,1
     ret
 
 test_reset_sounds:
@@ -1631,6 +1813,8 @@ test_reset_music:
     xor a
     ld (test_music_start_count),a
     ld (test_music_last),a
+    ld (test_music_floor_restart_count),a
+    ld (test_music_resume_count),a
     ld hl,test_music_history
     ld (hl),a
     ld de,test_music_history+1
@@ -1734,6 +1918,8 @@ test_save_load_count: db 0
 test_save_store_count: db 0
 test_music_start_count: db 0
 test_music_last: db 0
+test_music_floor_restart_count: db 0
+test_music_resume_count: db 0
 test_music_history: ds 16
 test_sound_count: db 0
 test_sound_history: ds 64

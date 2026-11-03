@@ -14,6 +14,11 @@ Run:
 
 The generated payloads appear under `src/asm/wolf3d_acceptance/tgt/`:
 
+`hans` and `ghosts` are retained regression profiles, not open implementation
+items. Their movement/combat/state behavior has already been accepted; keeping
+the deterministic entry points prevents later actor work from silently
+regressing them.
+
 - `pushwall`: real E1L1, one tile south of the original secret wall at
   `(10,13)` and facing north. Press Up once to start the wall, then watch it
   move two tiles and verify that the newly revealed passage is traversable.
@@ -41,6 +46,14 @@ The generated payloads appear under `src/asm/wolf3d_acceptance/tgt/`:
 - `pause-resume`: real E1L1 at the canonical starting pose. Press Escape,
   verify the in-game End Game / Back to Game / Quit panel, choose Back to Game,
   and confirm that the same level state resumes with a clean complete frame.
+  Pause must resume the floor music at the same sequencer position. As on the
+  original AdLib driver, notes held at the pause boundary stay silenced until
+  a later IMF key edge; the track itself must not restart. F1-F6 use the full
+  control-panel surface and menu music; F7, remembered F8, F10,
+  M+L+I, and B+A+T draw over a captured stopped gameplay frame without
+  interrupting floor music; F9 restarts the floor track after its quick-load
+  confirmation. First-use F8/F9 deliberately promote to the full Save/Load
+  page and therefore use menu music.
 - `death-respawn`: real E1L1 at the canonical starting pose, with one health
   point and one displayed life. Let the nearby guard kill the player; verify
   the turn-to-killer, death cry, fizzle, fresh E1L1 attempt, zero displayed

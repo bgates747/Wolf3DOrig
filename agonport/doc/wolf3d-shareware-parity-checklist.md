@@ -1,6 +1,6 @@
 # Wolf3DOrig shareware-parity audit and completion checklist
 
-Date: 2026-11-02
+Date: 2026-11-03
 
 This is the source-grounded definition of "duplicate the original shareware
 behavior" for Wolf3DOrig.  The active, intentionally promoted work remains in
@@ -52,6 +52,43 @@ This audit therefore retires stale TODO 4 (paid-actor dispatcher expansion)
 and TODO 5 (the now-complete WL1 special-actor tranche).  TODO 2c's lifecycle
 and loading contract is also complete.  Its remaining *original presentation
 and scoring* is narrower and is promoted separately below.
+
+## Exact outstanding Phase-A acceptance gates
+
+Implementation is not reopened merely because a deterministic review profile
+still exists. In particular, Hans and the four Episode 1 ghosts are completed,
+accepted actor behavior; their profiles are retained only as regression
+coverage. Phase A has the following finite remaining gates:
+
+- [ ] A1 / TODO 11: visually accept the real E1L1 pushwall moving two cells,
+  changing collision/DDA ownership, and revealing a traversable passage;
+  repeat on hardware when practical.
+- [ ] A2 / TODO 12: visually accept ordinary and secret-floor count-up,
+  skip-to-final, exact bonuses/ratios, and the resulting E1L2 entry.
+- [ ] A3 / TODO 13: visually accept the complete E1L9 BJ sequence, totals,
+  two-page shareware ending, high-score handoff, and shell return.
+- [ ] A4 / TODO 7: visually accept both qualifying name-entry/persistence and
+  non-qualifying timeout/dismissal high-score paths.
+- [ ] A5 / TODO 14: visually accept Pause continuity plus F1-F10, M+L+I, and
+  B+A+T page/backdrop/music ownership; exercise resume, End Game, and clean
+  Quit from the same finite batch.
+- [ ] A6 / TODO 15: visually accept ten-slot save/load, overwrite/cancel/file
+  interaction, remembered F8/F9, and one clean resumed gameplay frame.
+- [ ] A7 / TODO 16: visually review every reachable control-panel page and
+  navigate representative first/middle/last pages of the 41-page HELP article.
+- [ ] A8 / TODO 17: visually cycle all four canonical demos, abort one with
+  local input, and verify return to the control panel without persistent-state
+  mutation.
+- [ ] A9 / TODO 6: audibly review representative shell, floor, intermission,
+  victory, and simultaneous-SFX transitions plus both independent toggles;
+  hardware is authoritative for timbre/mix/latency.
+- [ ] A10 / TODO 18: visually accept sign-on/PG13/title, ordinary death and
+  final-attempt game-over paths, then perform the final emulator plus hardware
+  discrepancy-ledger review across an ordinary Episode 1 session.
+
+Every automated or source-grounded prerequisite for these gates is recorded
+in the sections below. A failed gate promotes only the observed discrepancy;
+it does not reopen an already accepted subsystem wholesale.
 
 ## Phase A: exact remaining original shareware behavior
 
@@ -268,14 +305,28 @@ and 224/224 callback/death checks.
 
 Pause correction, 2026-11-03: FabGL `VK_PAUSE` has no MOS keymap bit, so the
 interrupt callback now owns an explicit Pause request and a separately armed
-fresh-key acknowledgment. The foreground drains the renderer, stops music,
-plots authentic WL1 `PAUSEDPIC` chunk 137 at source coordinates (128,64),
-presents it, waits for a new key (including a second callback-only Pause), and
-then resumes floor music while rebuilding both gameplay buffers. Oryx
-generation 153 passes the expanded 228/228 callback/death checks and both
-application backends assemble. These quick keys and Pause are required
-behavior, not optional DOS hardware configuration; TODO 14 now retains only
-the batched visual/input acceptance gate.
+fresh-key acknowledgment. The foreground drains the renderer, freezes the IMF
+cursor and scheduler epoch, plots authentic WL1 `PAUSEDPIC` chunk 137 at
+source coordinates (128,64), presents it, and waits for a new key (including a
+second callback-only Pause). Resume removes the wall-clock gap without
+rewinding the stream. Matching `ID_SD.C::SD_MusicOff`, all OPL key-on shadow
+bytes are cleared; a note held across Pause therefore remains silent until a
+later IMF key edge rather than being spuriously re-keyed. Both gameplay
+buffers are rebuilt authoritatively. Oryx generation 153 passes the expanded
+228/228 callback/death checks and both application backends assemble. These
+quick keys and Pause are required behavior, not optional DOS hardware
+configuration; TODO 14 now retains only the batched visual/input acceptance
+gate.
+
+Quick-overlay correction, 2026-11-03: the source copies the stopped play screen
+before F7-F10 and the ordinary M+L+I/B+A+T message boxes. Production now
+captures the complete VDP 2.6+ RGBA2222 gameplay surface before entering MODE
+8, replots it behind those overlays, and releases the transient buffer on every
+return/error path. F1-F6 and Escape retain the full control-panel surface and
+WONDERIN; F7, remembered F8, F10, M+L+I, and B+A+T preserve floor music; F9
+restarts it after the quick-load confirmation. First-use F8/F9 promote to the
+full Save/Load page and menu music. The open gate remains the same finite
+visual/input batch.
 
 Status 2026-11-03: the latest production shell passes 595/595 checks, the
 physical-keymap/player-combat target passes 492/492, and callback/death passes
@@ -368,9 +419,10 @@ Acceptance: format/conversion tests, assignment table tests, lifecycle stress,
 simultaneous SFX/music hardware review, and clean teardown/relaunch.
 
 Status 2026-11-03: implementation is complete. The nonblocking nine-voice
-sequencer and every Episode 1 assignment pass 48/48 direct checks; integrated
-shell lifecycle and independent preference coverage are green. The remaining
-gate is audible emulator/hardware review of timbre, mix, transitions, and both
+sequencer and every Episode 1 assignment have direct target coverage;
+integrated shell lifecycle, source-correct Pause continuity, quick-key music
+ownership, and independent preference coverage are green. The remaining gate
+is audible emulator/hardware review of timbre, mix, transitions, and both
 toggles. OPL2 timbre is intentionally approximated by native oscillators and
 is not an unfinished exact-emulation requirement.
 

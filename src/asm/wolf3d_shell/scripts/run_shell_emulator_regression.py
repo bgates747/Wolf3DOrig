@@ -80,6 +80,7 @@ STAGES = {
     10: "draw contracts",
     11: "F1-F10 gameplay quick keys",
     12: "original control-panel sounds",
+    13: "gameplay panel music ownership",
     109: "main-menu Quit",
     110: "main-menu Escape",
     111: "main-menu New Game",

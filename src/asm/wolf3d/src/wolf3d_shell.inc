@@ -572,7 +572,16 @@ w3d_shell_pause_quick:
     ret
 @quick_save:
     call w3d_shell_quick_slot_available
-    jp z,@save
+    jr nz,@quick_save_available
+; First-use F8 enters the full save page, which starts menu music and restarts
+; the floor track on return. Promote the request so the gameplay owner knows
+; this was not the remembered-slot overlay path.
+    ld a,w3d_panel_request_save
+    ld (w3d_gameplay_panel_request),a
+    ld a,W3D_MUSIC_WONDERIN
+    call w3d_music_start
+    jp @save
+@quick_save_available:
 ; CP_CheckQuick shows Message(STR_SAVING"...") before writing the remembered
 ; slot. The notice remains over the drained gameplay frame until resume.
     ld hl,W3D_SHELL_SAVING_NOTICE_BUFFER
@@ -589,7 +598,13 @@ w3d_shell_pause_quick:
     jp @resume
 @quick_load:
     call w3d_shell_quick_slot_available
-    jp z,@load
+    jr nz,@quick_load_available
+    ld a,w3d_panel_request_load
+    ld (w3d_gameplay_panel_request),a
+    ld a,W3D_MUSIC_WONDERIN
+    call w3d_music_start
+    jp @load
+@quick_load_available:
     call w3d_shell_confirm_quick_load
     or a
     jp z,@resume

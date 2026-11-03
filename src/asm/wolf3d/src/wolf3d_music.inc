@@ -13,6 +13,8 @@
 ;   w3d_music_initialize
 ;   w3d_music_start          A=music id
 ;   w3d_music_service        call freely; MOS 120-Hz clock owns cadence
+;   w3d_music_pause          silence and freeze the current sequencer position
+;   w3d_music_resume         resume a paused track without restarting it
 ;   w3d_music_stop
 ;   w3d_music_shutdown
 ;   w3d_music_start_current_floor
@@ -31,6 +33,7 @@ w3d_music_initialize:
     ld (w3d_music_enabled),a
     xor a
     ld (w3d_music_active),a
+    ld (w3d_music_paused),a
     ld (w3d_music_initialized),a
     ld (w3d_music_capture_enabled),a
     ld (w3d_music_current_id),a
@@ -113,7 +116,78 @@ w3d_music_stop:
 w3d_music_stop_inner:
     xor a
     ld (w3d_music_active),a
+    ld (w3d_music_paused),a
     jp w3d_music_reset_voices
+
+; Match SD_MusicOff/SD_MusicOn as used by CheckPause: process everything due
+; at the pause boundary, silence live channels without discarding the IMF
+; cursor/register shadow, then remove the wall-clock gap when resuming.
+w3d_music_pause:
+    push ix
+    push iy
+    ld a,(w3d_music_active)
+    or a
+    jr z,@done
+    call w3d_music_service_inner
+    ld ix,(w3d_sysvars_pointer)
+    ld hl,(ix+sysvar_time)
+    ld (w3d_music_paused_at),hl
+    xor a
+    ld (w3d_music_active),a
+    inc a
+    ld (w3d_music_paused),a
+    call w3d_music_reset_voices
+; SD_MusicOff writes zero to every OPL B0 key-on register. Mirror that hardware
+; state in the sequencer shadow so the next continuing IMF B0 write with bit 5
+; set is classified as a fresh key edge and restarts the native oscillator.
+    ld hl,w3d_music_registers+0b0h
+    ld b,W3D_MUSIC_VOICE_COUNT
+    xor a
+@clear_key_on:
+    ld (hl),a
+    inc hl
+    djnz @clear_key_on
+@done:
+    pop iy
+    pop ix
+    ret
+
+w3d_music_resume:
+    push ix
+    push iy
+    ld a,(w3d_music_paused)
+    or a
+    jr z,@done
+    ld a,(w3d_music_enabled)
+    or a
+    jr z,@discard
+
+; Shift the scheduler epoch by the paused duration.  IMF due times and cursor
+; remain untouched, so the first post-resume service sees the same elapsed
+; music time it saw at the pause boundary.
+    ld ix,(w3d_sysvars_pointer)
+    ld hl,(ix+sysvar_time)
+    ld de,(w3d_music_paused_at)
+    or a
+    sbc.s hl,de
+    ld de,(w3d_music_started_at)
+    add.s hl,de
+    ld (w3d_music_started_at),hl
+    call w3d_music_enable_channels
+
+; ID_SD.C::SD_MusicOn only sets sqActive again. SD_MusicOff wrote zero to
+; every OPL key-on register, so any note held across Pause remains silent until
+; the continuing IMF stream reaches a later key edge. Preserve the cursor and
+; non-key register shadow, but do not re-key native voices here.
+    ld a,1
+    ld (w3d_music_active),a
+@discard:
+    xor a
+    ld (w3d_music_paused),a
+@done:
+    pop iy
+    pop ix
+    ret
 
 w3d_music_shutdown:
     push ix
@@ -664,6 +738,7 @@ w3d_music_episode1_floor_tracks:
 ; State ----------------------------------------------------------------------
 
 w3d_music_active:              db 0
+w3d_music_paused:              db 0
 w3d_music_enabled:             db 1
 w3d_music_initialized:         db 0
 w3d_music_current_id:          db 0
@@ -676,6 +751,7 @@ w3d_music_old_value:           db 0
 w3d_music_track_start:         dl 0
 w3d_music_cursor:              dl 0
 w3d_music_started_at:          dl 0
+w3d_music_paused_at:           dl 0
 w3d_music_elapsed:             dl 0
 ; Three-byte backing is deliberate: native ADL register loads/stores are
 ; 24-bit, while the IMF format and comparisons use only the low word.  The
