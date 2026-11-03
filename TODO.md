@@ -86,7 +86,16 @@ abort and return to the control panel.
 [ ] 6. Implement music playback as a separate subsystem from the accepted
 sound-effects implementation, preserving original Episode 1 title/menu,
 floor, intermission, victory, and high-score assignments without coupling
-simulation to playback.
+simulation to playback. The canonical WL1 IMF streams are now extracted
+deterministically, retimed cumulatively from 700 Hz to MOS's 120 Hz clock, and
+played by a nonblocking nine-voice sequencer on VDP channels 3-11 while SFX
+retain channels 0-2. Original title, menu, Read This, score, ten-floor,
+intermission, victory, game-over, and return assignments are integrated;
+Sound independently controls persistent-in-process SFX and music preferences.
+The direct sequencer fixture passes 48/48 and the integrated production-shell
+fixture passes 233/233 on real eZ80 emulation. Remaining close gate: one
+audible emulator/hardware review of representative gameplay, menu,
+intermission, and victory transitions, including timbre/mix and both toggles.
 
 [ ] 18. Perform a source-linked, end-to-end Episode 1 residual parity sweep
 after items 11-17 and 6: scoring, inventory, difficulty, actors, secrets,

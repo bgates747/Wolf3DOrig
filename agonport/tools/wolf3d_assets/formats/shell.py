@@ -92,6 +92,8 @@ SHELL_COMPOSITE_BUFFER_IDS = {
     "control_page": 0x4342,
     "change_view_page": 0x4343,
     "read_this_page": 0x4344,
+    "sound_on_music_off_page": 0x4345,
+    "sound_off_music_off_page": 0x4346,
 }
 
 # Original WL_MENU.H palette indices.

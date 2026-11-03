@@ -41,6 +41,8 @@ REASONS = {
     14: "high-score handoff/view",
     15: "End Game confirmation plot sequence",
     16: "sound-effects preference",
+    17: "music preference",
+    18: "original music assignment",
 }
 
 STAGES = {

@@ -125,6 +125,53 @@ w3d_demo_prepare_next:
     inc (hl)
     ret
 
+; Music sequencing has a dedicated direct regression.  The shell fixture
+; records the production-facing contract so page/lifecycle assignments and
+; the independent music preference cannot drift without target evidence.
+W3D_MUSIC_CORNER: equ 0
+W3D_MUSIC_NAZI_NOR: equ 7
+W3D_MUSIC_WONDERIN: equ 14
+W3D_MUSIC_ROSTER: equ 23
+W3D_MUSIC_URAHERO: equ 24
+
+w3d_music_enabled: db 1
+
+w3d_music_start:
+    ld (test_music_last),a
+    push af
+    push bc
+    ld b,a
+    push de
+    push hl
+    ld a,(test_music_start_count)
+    cp 16
+    jr nc,@history_done
+    ld de,0
+    ld e,a
+    ld hl,test_music_history
+    add hl,de
+    ld a,b
+    ld (hl),a
+@history_done:
+    ld hl,test_music_start_count
+    inc (hl)
+    pop hl
+    pop de
+    pop bc
+    pop af
+    ret
+
+w3d_music_service:
+    ret
+
+w3d_music_set_enabled:
+    or a
+    jr z,@disabled
+    ld a,1
+@disabled:
+    ld (w3d_music_enabled),a
+    ret
+
     include "wolf3d_shell.inc"
 
 SCRIPT_RELEASE: equ 0
@@ -154,6 +201,8 @@ REASON_VICTORY_PRESENT: equ 13
 REASON_HIGHSCORE_HANDOFF: equ 14
 REASON_CONFIRM_PLOTS: equ 15
 REASON_SFX_PREFERENCE: equ 16
+REASON_MUSIC_PREFERENCE: equ 17
+REASON_MUSIC_ASSIGNMENT: equ 18
 
 start:
     push af
@@ -463,6 +512,7 @@ test_difficulty_semantics:
 test_lifecycle_entries:
     ld a,22
     ld (test_case),a
+    call test_reset_music
     xor a
     ld (test_version_prints),a
     ld hl,script_title_escape
@@ -470,6 +520,9 @@ test_lifecycle_entries:
     call w3d_shell_run
     CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
     CHECK_MEM8 test_version_prints,1,REASON_VERSION
+    CHECK_MEM8 test_music_start_count,2,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+0,W3D_MUSIC_NAZI_NOR,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+1,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
     CHECK_EXIT 1
     ld a,23
     ld (test_case),a
@@ -483,6 +536,7 @@ test_lifecycle_entries:
     CHECK_EXIT 1
     ld a,24
     ld (test_case),a
+    call test_reset_music
     call w3d_shell_reset_exit_request
     xor a
     ld (test_victory_present_count),a
@@ -493,6 +547,10 @@ test_lifecycle_entries:
     CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
     CHECK_MEM8 test_victory_present_count,1,REASON_VICTORY_PRESENT
     CHECK_MEM8 test_highscore_handoff_count,1,REASON_HIGHSCORE_HANDOFF
+    CHECK_MEM8 test_music_start_count,3,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+0,W3D_MUSIC_URAHERO,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+1,W3D_MUSIC_ROSTER,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+2,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
     CHECK_EXIT 1
     ld a,25
     ld (test_case),a
@@ -509,6 +567,7 @@ test_lifecycle_entries:
     CHECK_EXIT 1
     ld a,35
     ld (test_case),a
+    call test_reset_music
     call w3d_shell_reset_exit_request
     xor a
     ld (test_victory_present_count),a
@@ -519,6 +578,9 @@ test_lifecycle_entries:
     CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
     CHECK_MEM8 test_victory_present_count,0,REASON_VICTORY_PRESENT
     CHECK_MEM8 test_highscore_handoff_count,1,REASON_HIGHSCORE_HANDOFF
+    CHECK_MEM8 test_music_start_count,2,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+0,W3D_MUSIC_ROSTER,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+1,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
     CHECK_EXIT 1
     ret
 
@@ -597,17 +659,56 @@ test_control_pages:
     call w3d_shell_reset_exit_request
     ld a,1
     ld (w3d_audio_sfx_enabled),a
+    ld (w3d_music_enabled),a
     call test_reset_plots
     ld hl,script_sound_toggle_return
     call test_set_script
     call w3d_shell_sound_page
     CHECK_MEM8 w3d_audio_sfx_enabled,0,REASON_SFX_PREFERENCE
     CHECK_EXIT 0
-    CHECK_MEM8 test_plot_count,2,REASON_PLOT_COUNT
+    CHECK_MEM8 test_plot_count,4,REASON_PLOT_COUNT
     CHECK_PLOT 0,W3D_SHELL_SOUND_ON_PAGE_BUFFER,0,0
-    CHECK_PLOT 6,W3D_SHELL_SOUND_OFF_PAGE_BUFFER,0,0
+    CHECK_PLOT 6,W3D_SHELL_CURSOR_1_BUFFER,42,54
+    CHECK_PLOT 12,W3D_SHELL_SOUND_OFF_PAGE_BUFFER,0,0
+    CHECK_PLOT 18,W3D_SHELL_CURSOR_1_BUFFER,42,54
     ld a,1
     ld (w3d_audio_sfx_enabled),a
+    ld (w3d_music_enabled),a
+    ld a,52
+    ld (test_case),a
+    call test_reset_music
+    call test_reset_plots
+    ld hl,script_music_toggle_return
+    call test_set_script
+    call w3d_shell_sound_page
+    CHECK_MEM8 w3d_audio_sfx_enabled,1,REASON_SFX_PREFERENCE
+    CHECK_MEM8 w3d_music_enabled,0,REASON_MUSIC_PREFERENCE
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_plot_count,6,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_SOUND_ON_PAGE_BUFFER,0,0
+    CHECK_PLOT 6,W3D_SHELL_CURSOR_1_BUFFER,42,54
+    CHECK_PLOT 12,W3D_SHELL_SOUND_ON_PAGE_BUFFER,0,0
+    CHECK_PLOT 18,W3D_SHELL_CURSOR_1_BUFFER,42,74
+    CHECK_PLOT 24,W3D_SHELL_SOUND_ON_MUSIC_OFF_PAGE_BUFFER,0,0
+    CHECK_PLOT 30,W3D_SHELL_CURSOR_1_BUFFER,42,74
+    ld a,53
+    ld (test_case),a
+    call test_reset_music
+    call test_reset_plots
+    ld hl,script_music_toggle_return
+    call test_set_script
+    call w3d_shell_sound_page
+    CHECK_MEM8 w3d_audio_sfx_enabled,1,REASON_SFX_PREFERENCE
+    CHECK_MEM8 w3d_music_enabled,1,REASON_MUSIC_PREFERENCE
+    CHECK_MEM8 test_music_start_count,1,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_last,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_plot_count,6,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_SOUND_ON_MUSIC_OFF_PAGE_BUFFER,0,0
+    CHECK_PLOT 6,W3D_SHELL_CURSOR_1_BUFFER,42,54
+    CHECK_PLOT 12,W3D_SHELL_SOUND_ON_MUSIC_OFF_PAGE_BUFFER,0,0
+    CHECK_PLOT 18,W3D_SHELL_CURSOR_1_BUFFER,42,74
+    CHECK_PLOT 24,W3D_SHELL_SOUND_ON_PAGE_BUFFER,0,0
+    CHECK_PLOT 30,W3D_SHELL_CURSOR_1_BUFFER,42,74
     ld a,50
     ld (test_case),a
     call test_reset_plots
@@ -626,6 +727,7 @@ test_attract_timing:
     xor a
     ld (test_highscore_draw_count),a
     ld (test_demo_prepare_count),a
+    call test_reset_music
     ld hl,test_sysvars
     ld (hl),a
     ld de,test_sysvars+1
@@ -638,6 +740,9 @@ test_attract_timing:
     CHECK_A W3D_SHELL_RESULT_DEMO,REASON_RESULT
     CHECK_MEM8 test_highscore_draw_count,1,REASON_HIGHSCORE_HANDOFF
     CHECK_MEM8 test_demo_prepare_count,1,REASON_RESULT
+    CHECK_MEM8 test_music_start_count,2,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+0,W3D_MUSIC_NAZI_NOR,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+1,W3D_MUSIC_ROSTER,REASON_MUSIC_ASSIGNMENT
     CHECK_MEM8 test_plot_count,2,REASON_PLOT_COUNT
     CHECK_PLOT 0,W3D_SHELL_TITLE_BUFFER,0,0
     CHECK_PLOT 6,W3D_SHELL_CREDITS_BUFFER,0,0
@@ -919,6 +1024,17 @@ test_reset_plots:
     ldir
     ret
 
+test_reset_music:
+    xor a
+    ld (test_music_start_count),a
+    ld (test_music_last),a
+    ld hl,test_music_history
+    ld (hl),a
+    ld de,test_music_history+1
+    ld bc,15
+    ldir
+    ret
+
 ; A=actual, B=expected, C=reason.
 assert_a:
     ld d,a
@@ -978,6 +1094,9 @@ test_highscore_draw_count: db 0
 test_demo_prepare_count: db 0
 test_save_load_count: db 0
 test_save_store_count: db 0
+test_music_start_count: db 0
+test_music_last: db 0
+test_music_history: ds 16
 test_plot_log: ds 32*6
 test_plot_log_end:
 
@@ -1046,6 +1165,9 @@ script_pause_new_game:
     db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
 script_sound_toggle_return:
     db SCRIPT_RETURN,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_music_toggle_return:
+    db SCRIPT_DOWN,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_local_escape:
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_main_escape: db SCRIPT_ESCAPE,SCRIPT_RELEASE

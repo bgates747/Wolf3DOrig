@@ -69,6 +69,8 @@ EXPECTED_COMPOSITES = {
     "control_page": (0x4342, 320, 200, 0, 0),
     "change_view_page": (0x4343, 320, 200, 0, 0),
     "read_this_page": (0x4344, 320, 200, 0, 0),
+    "sound_on_music_off_page": (0x4345, 320, 200, 0, 0),
+    "sound_off_music_off_page": (0x4346, 320, 200, 0, 0),
 }
 
 

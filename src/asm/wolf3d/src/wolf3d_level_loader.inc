@@ -425,6 +425,7 @@ w3d_transition_to_next_level:
     ret c
     .endif
     call w3d_seed_level_transition_state
+    call w3d_music_start_current_floor
 ; Loading may take seconds. Re-prime the fixed-step clock so disk/VDU transfer
 ; time never appears as a simulation backlog on the new floor.
     call w3d_initialize_control_clock

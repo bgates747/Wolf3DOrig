@@ -218,22 +218,23 @@ def _compose_information_page(
 
 
 def _compose_sound_page(
-    raw: dict[str, Image.Image], font: WolfFont, enabled: bool
+    raw: dict[str, Image.Image], font: WolfFont, sfx_enabled: bool,
+    music_enabled: bool,
 ) -> Image.Image:
-    state = "ON" if enabled else "OFF"
+    sfx_state = "ON" if sfx_enabled else "OFF"
+    music_state = "ON" if music_enabled else "OFF"
     return _compose_information_page(
         raw,
         font,
         "Sound",
         (
-            "Agon sound effects",
+            f"Sound effects       {sfx_state}",
             "",
-            state,
+            f"Music               {music_state}",
             "",
-            "Enter toggles sound.",
+            "Up/Down selects.",
+            "Enter toggles.",
             "Escape returns.",
-            "",
-            "Music is not yet available.",
         ),
     )
 
@@ -384,10 +385,16 @@ def _compose_images(
             _text_overlay(font, MAIN_LABELS[8], HIGHLIGHT), 100, 159
         ),
         "sound_on_page": ComposedImage(
-            _compose_sound_page(raw, font, True), 0, 0
+            _compose_sound_page(raw, font, True, True), 0, 0
         ),
         "sound_off_page": ComposedImage(
-            _compose_sound_page(raw, font, False), 0, 0
+            _compose_sound_page(raw, font, False, True), 0, 0
+        ),
+        "sound_on_music_off_page": ComposedImage(
+            _compose_sound_page(raw, font, True, False), 0, 0
+        ),
+        "sound_off_music_off_page": ComposedImage(
+            _compose_sound_page(raw, font, False, False), 0, 0
         ),
         "control_page": ComposedImage(
             _compose_information_page(raw, font, "Control", CONTROL_PAGE_LINES),

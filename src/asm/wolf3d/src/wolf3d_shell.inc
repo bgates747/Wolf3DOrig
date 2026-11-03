@@ -126,9 +126,13 @@ w3d_shell_resume_after_victory:
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
     call w3d_shell_setup
+    ld a,W3D_MUSIC_URAHERO
+    call w3d_music_start
     call w3d_victory_present
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
+    ld a,W3D_MUSIC_ROSTER
+    call w3d_music_start
     call w3d_highscores_handle_game_end
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
@@ -140,6 +144,8 @@ w3d_shell_resume_after_game_over:
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
     call w3d_shell_setup
+    ld a,W3D_MUSIC_ROSTER
+    call w3d_music_start
     call w3d_highscores_handle_game_end
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
@@ -178,6 +184,8 @@ w3d_shell_draw_title:
 w3d_shell_main_menu:
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
+    ld a,W3D_MUSIC_WONDERIN
+    call w3d_music_start
     ld a,W3D_SHELL_MAIN_NEW_GAME
     ld (w3d_shell_main_choice),a
 @redraw:
@@ -238,9 +246,13 @@ w3d_shell_main_menu:
     jp z,@back_to_demo
     cp W3D_SHELL_MAIN_VIEW_SCORES
     jr nz,@new_game
+    ld a,W3D_MUSIC_ROSTER
+    call w3d_music_start
     call w3d_highscores_view
     call w3d_shell_query_exit_request
     jp nz,@quit
+    ld a,W3D_MUSIC_WONDERIN
+    call w3d_music_start
     jp @redraw
 @new_game:
     call w3d_shell_choose_episode
@@ -263,13 +275,19 @@ w3d_shell_main_menu:
     call w3d_shell_information_page
     jp @redraw
 @read_this:
+    ld a,W3D_MUSIC_CORNER
+    call w3d_music_start
     ld hl,W3D_SHELL_READ_THIS_PAGE_BUFFER
     call w3d_shell_information_page
+    ld a,W3D_MUSIC_WONDERIN
+    call w3d_music_start
     jp @redraw
 @back_to_demo:
     call w3d_shell_attract_until_input
     cp W3D_SHELL_RESULT_DEMO
     ret z
+    ld a,W3D_MUSIC_WONDERIN
+    call w3d_music_start
     jp @redraw
 @load_game:
     xor a                   ; load screen, shell/global context
@@ -515,15 +533,36 @@ w3d_shell_pause_selected_buffers:
 ; Shared translated control-panel pages. These waits are always local: Escape
 ; closes the page rather than quitting either the game or application.
 w3d_shell_sound_page:
+    xor a
+    ld (w3d_shell_sound_choice),a
 @redraw:
     call w3d_shell_clear
+    ld a,(w3d_music_enabled)
+    or a
+    jr z,@music_off
     ld a,(w3d_audio_sfx_enabled)
     or a
     ld hl,W3D_SHELL_SOUND_OFF_PAGE_BUFFER
     jr z,@draw
     ld hl,W3D_SHELL_SOUND_ON_PAGE_BUFFER
+    jr @draw
+@music_off:
+    ld a,(w3d_audio_sfx_enabled)
+    or a
+    ld hl,W3D_SHELL_SOUND_OFF_MUSIC_OFF_PAGE_BUFFER
+    jr z,@draw
+    ld hl,W3D_SHELL_SOUND_ON_MUSIC_OFF_PAGE_BUFFER
 @draw:
     call w3d_shell_plot_full_screen
+    ld a,(w3d_shell_sound_choice)
+    or a
+    ld de,54
+    jr z,@cursor
+    ld de,74
+@cursor:
+    ld hl,W3D_SHELL_CURSOR_1_BUFFER
+    ld bc,42
+    call w3d_shell_plot_at
 @wait:
     call w3d_shell_wait_pause_action
     cp W3D_SHELL_ACTION_ESCAPE
@@ -531,14 +570,33 @@ w3d_shell_sound_page:
     cp W3D_SHELL_ACTION_ACCEPT
     jr z,@toggle
     cp W3D_SHELL_ACTION_UP
-    jr z,@toggle
+    jr z,@move
     cp W3D_SHELL_ACTION_DOWN
     jr nz,@wait
+@move:
+    ld a,(w3d_shell_sound_choice)
+    xor 1
+    ld (w3d_shell_sound_choice),a
+    jp @redraw
 @toggle:
+    ld a,(w3d_shell_sound_choice)
+    or a
+    jr nz,@toggle_music
     ld a,(w3d_audio_sfx_enabled)
     xor 1
     ld (w3d_audio_sfx_enabled),a
-    jr @redraw
+    jp @redraw
+@toggle_music:
+    ld a,(w3d_music_enabled)
+    xor 1
+    push af
+    call w3d_music_set_enabled
+    pop af
+    or a
+    jp z,@redraw
+    ld a,W3D_MUSIC_WONDERIN
+    call w3d_music_start
+    jp @redraw
 
 ; HL=full-screen page buffer. Return on local Escape or Accept.
 w3d_shell_information_page:
@@ -560,6 +618,8 @@ w3d_shell_information_page:
 ; exit, matching IN_UserInput's attract-loop role.
 w3d_shell_attract_until_input:
 @title:
+    ld a,W3D_MUSIC_NAZI_NOR
+    call w3d_music_start
     call w3d_shell_draw_title
     ld de,W3D_SHELL_TITLE_TICKS
     call w3d_shell_wait_input_timeout
@@ -570,6 +630,8 @@ w3d_shell_attract_until_input:
     ld de,W3D_SHELL_CREDITS_TICKS
     call w3d_shell_wait_input_timeout
     ret nz
+    ld a,W3D_MUSIC_ROSTER
+    call w3d_music_start
     call w3d_highscores_draw
     ld de,W3D_SHELL_SCORES_TICKS
     call w3d_shell_wait_input_timeout
@@ -1248,6 +1310,7 @@ w3d_shell_read_keyboard:
     jp (hl)
 
 w3d_shell_read_keyboard_default:
+    call w3d_music_service
     MOSCALL mos_getkbmap
     ret
 
@@ -1265,6 +1328,7 @@ w3d_shell_read_key:
     jp (hl)
 
 w3d_shell_read_key_default:
+    call w3d_music_service
     MOSCALL mos_getkey
     ret
 
@@ -1397,6 +1461,8 @@ w3d_shell_difficulty:
     db W3D_SHELL_DIFFICULTY_MEDIUM
 w3d_shell_pause_choice:
     db W3D_SHELL_PAUSE_CHOICE_BACK
+w3d_shell_sound_choice:
+    db 0
 w3d_shell_choice_local:
     db 0
 ; User-facing preference deliberately lives outside w3d_audio_state_begin so

@@ -570,6 +570,7 @@ w3d_intermission_award_default:
 ; Escape is held. The zero/nonzero result makes this entry point directly
 ; compatible with agnb_load_images_with_abortable_callback.
 w3d_intermission_loading_tick:
+    call w3d_music_service
     call w3d_intermission_poll_input
     ret c
     call w3d_intermission_handle_ack_skip

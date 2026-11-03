@@ -20,8 +20,9 @@
 ; Native-rate digitized combat, pickup, door, and environment effects are
 ; loaded through AGNB and arbitrated once per caught-up simulation quantum.
 ; Episode 1 floor routing, original-looking floor intermissions, and the E1L9
-; victory return are live. Bosses, projectiles, music, and the intermission's
-; original count-up/bonus animation remain future work.
+; victory return are live. Bosses and the intermission's original count-up/
+; bonus animation are live; projectile parity remains future work. Original
+; IMF register streams drive a nonblocking nine-voice VDP music translation.
 ; =============================================================================
 
 mos_getkey:      equ 00h
@@ -62,8 +63,10 @@ fa_create_always:               equ 08h
     include "agnb_dependencies.inc"
     include "agnb_api.inc"
     include "wolf3d_audio_assets.inc"
+    include "wolf3d_music_assets.inc"
     include "wolf3d_shell_assets.inc"
     include "wolf3d_version.inc"
+    include "wolf3d_music.inc"
     include "wolf3d_highscores.inc"
     include "wolf3d_shell.inc"
     include "wolf3d_intermission.inc"
@@ -400,6 +403,7 @@ w3d_poll_application_escape:
 ; One dot still means one finalized bitmap; only Escape returns nonzero.
 printImageDotAndPollEscape:
     call printImageDot
+    call w3d_music_service
     jp w3d_poll_application_escape
 
 ; One dot means one PCM record was streamed, converted to a VDP sample, and
@@ -419,6 +423,7 @@ printAudioDot:
 ; Preserve the exact loaded-sample bookkeeping before checking Escape.
 printAudioDotAndPollEscape:
     call printAudioDot
+    call w3d_music_service
     jp w3d_poll_application_escape
 
 ; Canonical Agon bitmap-buffer selection. The one-byte padding deliberately
@@ -466,7 +471,9 @@ main:
     ld hl,farewell_msg
     ld (w3d_exit_message_ptr),hl
     call w3d_capture_original_screen_mode
+    call w3d_music_initialize
     call w3d_main_body
+    call w3d_music_shutdown
     call w3d_restore_original_screen_mode
     ld hl,(w3d_exit_message_ptr)
     call printString
@@ -773,6 +780,7 @@ w3d_run_gameplay_session:
     call w3d_vdplet_backend_open
     jp c,w3d_gameplay_fatal_shutdown
     .endif
+    call w3d_music_start_current_floor
 
 ; The initial world snapshot is complete. Use the same generic init/full-replay
 ; path as a later floor transition; the generated fixture command stream is no
@@ -783,6 +791,7 @@ w3d_run_gameplay_session:
     jp c,w3d_gameplay_fatal_shutdown
 
 mainloop:
+    call w3d_music_service
 ; A completed or user-aborted attract demo drains its one outstanding frame,
 ; then returns to the source-timed shell without scoring or persistence.
     ld a,(w3d_demo_finished)
@@ -826,6 +835,8 @@ mainloop:
 ; captured and presented the source-level state.  We reach this seam only
 ; after the previous renderer/fizzle owner drained, and victory deliberately
 ; bypasses it for the separate episode-ending lifecycle below.
+    ld a,W3D_MUSIC_ENDLEVEL
+    call w3d_music_start
     call w3d_intermission_begin
     call w3d_transition_to_next_level
     jr nc,@transition_ready
@@ -960,6 +971,8 @@ mainloop:
 ; while the single-buffered shell is visible; no render command is submitted,
 ; and resuming rebuilds both native framebuffers from authoritative eZ80 state.
 w3d_gameplay_pause:
+    ld a,W3D_MUSIC_WONDERIN
+    call w3d_music_start
     call w3d_arm_gameplay_mode_fence
     call w3d_shell_setup
     call w3d_wait_for_gameplay_mode
@@ -989,6 +1002,7 @@ w3d_gameplay_pause:
     ld (w3d_player_killer),a
 
 @resume:
+    call w3d_music_start_current_floor
     call w3d_arm_gameplay_mode_fence
     ld hl,w3d_display_setup
     ld bc,w3d_display_setup_end-w3d_display_setup
@@ -1099,6 +1113,7 @@ w3d_intermission_wait_30hz:
     ld hl,(ix+sysvar_time)
     ld (w3d_intermission_wait_started),hl
 @wait:
+    call w3d_music_service
     ld ix,(w3d_sysvars_pointer)
     ld hl,(ix+sysvar_time)
     ld de,(w3d_intermission_wait_started)

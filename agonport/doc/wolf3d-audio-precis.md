@@ -1,8 +1,8 @@
 # Wolf3D audio précis and Agon implementation contract
 
-Status: approved design reference, 2026-07-31. This document records the
-original Wolf3D audio architecture and the decisions governing the initial
-Wolf3DOrig sound-effects implementation. Music remains a separate phase.
+Status: approved design reference, updated 2026-11-03. This document records
+the original Wolf3D audio architecture and the decisions governing the
+Wolf3DOrig sound-effects and music implementations.
 
 ## 1. Sources of authority
 
@@ -15,7 +15,9 @@ call sites, priorities, positional origins, and music selection:
 - `orig/src/WOLFSRC/WL_GAME.C`: listener-relative positioning and attenuation;
 - `orig/src/WOLFSRC/WL_ACT1.C`, `WL_ACT2.C`, `WL_STATE.C`, `WL_AGENT.C`, and
   `WL_PLAY.C`: gameplay call sites; and
-- `orig/src/WOLFSRC/AUDIOWL1.H`: shareware sound and music IDs.
+- `orig/src/WOLFSRC/AUDIOWL1.H`: shareware logical sound IDs; and
+- the actually included `AUDIOWL6.H` layout plus the bundled
+  `AUDIOHED.WL1`/`AUDIOT.WL1`: authoritative full-layout music chunks.
 
 Existing Agon projects provide proven implementation mechanics:
 
@@ -121,9 +123,10 @@ The first phase covers sounds belonging to gameplay already implemented:
    actor alert/death voices, player damage, and player death; and
 3. pickups: ammunition, weapons, health, treasure, keys, and extra life.
 
-Menus, intermission narration, unimplemented bosses/projectiles, and music are
-later work. Logical IDs and priorities stay stable so later coverage does not
-require rewriting gameplay call sites.
+Menus, intermission narration, and unimplemented projectile effects remain
+separate work. Logical IDs and priorities stay stable so later coverage does
+not require rewriting gameplay call sites. Music is implemented by the
+separate subsystem in section 8 and never participates in SFX arbitration.
 
 ## 6. AGNB asset and loading contract
 
@@ -190,7 +193,7 @@ The backend counts UART bytes emitted for audio and measures eZ80 dispatch
 time. These measurements are diagnostic; audio must not reduce or stall the
 fixed simulation cadence.
 
-## 8. Music boundary
+## 8. Music subsystem
 
 Wolf3D music is IMF-like OPL2 register sequencing, not PCM or MIDI. Each music
 chunk contains a u16 byte length followed by four-byte events:
@@ -202,12 +205,28 @@ u16 delay in 700 Hz ticks
 ```
 
 The stream loops and expresses already-rendered OPL2 programming rather than
-notes and instruments. The Author has a heavily modified MIDI playback system
-for Agon; if its repository is encountered, record its location for follow-up.
-A later phase will compare its event model, timing, looping, instruments, and
-channel use with IMF. No music channels, conversion, or sequencing are part of
-the initial sound-effects implementation, but the sound channel/ID allocation
-must leave room for them.
+notes and instruments. The bundled archive uses the full 87-sound layout:
+music begins at chunk 261, not the stale compact-layout value 207 found in an
+older `AUDIOWL1.H`. The generator validates all 27 tracks, retains every OPL
+register/value write, and converts the 700 Hz delays cumulatively to MOS's
+120 Hz clock. Cumulative nearest rounding preserves each complete loop length
+without accumulating per-event error.
+
+The nonblocking eZ80 sequencer maps OPL voices 0-8 to VDP oscillator channels
+3-11, leaving digitized SFX on channels 0-2. OPL FNUM/block, carrier level,
+and waveform writes become VDP frequency, volume, and native waveform changes.
+This preserves source melody, rhythm, looping, voice count, and track selection
+while openly approximating the unavailable two-operator FM timbre. All table
+indices and u16 command fields are ADL-safe; the direct target regression
+deliberately poisons upper register bytes and validates exact emitted wire
+commands.
+
+Original Episode 1 floor assignments are `(GETTHEM, SEARCHN, POW, SUSPENSE)`
+repeated for floors 1-8, `WARMARCH` for floor 9, and `CORNER` for the secret
+floor. Shell assignments are `NAZI_NOR` for title/credits, `WONDERIN` for the
+control panel, `CORNER` for Read This, `ROSTER` for scores, `ENDLEVEL` for
+intermission, and `URAHERO` for victory. The sound page independently toggles
+SFX and music; disabled music stays silent across later context changes.
 
 ## 9. Validation and acceptance
 
