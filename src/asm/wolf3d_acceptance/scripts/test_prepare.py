@@ -28,15 +28,19 @@ class AcceptancePackageTests(unittest.TestCase):
     def test_catalog_covers_both_transitions_and_special_actor_scenes(self) -> None:
         self.assertEqual(
             [scenario.name for scenario in prepare.SCENARIOS],
-            ["pushwall", "ordinary-transition", "secret-transition", "hans", "victory", "ghosts", "pause-resume"],
+            ["pushwall", "ordinary-transition", "secret-transition", "hans", "victory", "ghosts", "pause-resume", "highscore-qualifying", "highscore-nonqualifying"],
         )
         self.assertEqual(
             [scenario.initial_level for scenario in prepare.SCENARIOS],
-            [0, 0, 9, 8, 8, 9, 0],
+            [0, 0, 9, 8, 8, 9, 0, 0, 0],
         )
         self.assertEqual(
             [scenario.invulnerable for scenario in prepare.SCENARIOS],
-            [False, False, False, True, False, False, False],
+            [False, False, False, True, False, False, False, False, False],
+        )
+        self.assertEqual(
+            [scenario.highscore_mode for scenario in prepare.SCENARIOS],
+            ["none"] * 7 + ["qualifying", "nonqualifying"],
         )
         self.assertFalse(prepare.SCENARIOS[3].one_hit_hans)
         self.assertEqual(

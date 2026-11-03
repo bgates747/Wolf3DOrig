@@ -20,6 +20,8 @@ SCENARIOS = (
     "victory",
     "ghosts",
     "pause-resume",
+    "highscore-qualifying",
+    "highscore-nonqualifying",
 )
 REMOTE_ROOT = "/home/smith/Agon/mystuff/Wolf3dOrig"
 REMOTE_ACCEPTANCE = REMOTE_ROOT + "/src/asm/wolf3d_acceptance"

@@ -42,7 +42,10 @@ name entry, score/floor display, control-panel view, game-over/victory handoff,
 and a versioned, corruption-safe Agon persistence file. The table, ordering,
 name editor, timed non-qualifying path, screen, handoffs, and transactional
 482-byte persistence image pass 62/62 direct-target checks. Remaining close
-gate: visual acceptance of qualifying and non-qualifying flows.
+gate: visual acceptance of qualifying and non-qualifying flows. Two disposable
+acceptance builds now enter those exact production paths immediately after the
+real shell/SFX bootstrap, supplying only a guaranteed candidate score; they
+are prepared locally and await the next Oryx batch.
 
 [ ] 14. Restore the original in-game control-panel and pause flow in place of
 temporary gameplay-Escape-to-MOS behavior. Support resume, end game, and an

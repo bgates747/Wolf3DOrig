@@ -545,7 +545,11 @@ w3d_main_body:
     call w3d_highscores_initialize
     call w3d_save_slots_initialize
     call w3d_shell_reset_quick_slot
+    .if W3D_DIAGNOSTIC_HIGHSCORE_MODE
+    call w3d_acceptance_run_highscore
+    .else
     call w3d_shell_run
+    .endif
 
 @route_shell_result:
     cp W3D_SHELL_RESULT_NEW_GAME
@@ -585,6 +589,46 @@ w3d_main_body:
 @restart_new_game:
     call w3d_shell_reset_quick_slot
     jr @run_gameplay
+
+; Disposable visual-acceptance route. Production assembles this branch out.
+; It starts after the real shell/SFX bootstrap, uses the production table,
+; editor, timeout, persistence, music, and control panel, and merely supplies
+; a deterministic candidate so the Author need not play to reach either path.
+    .if W3D_DIAGNOSTIC_HIGHSCORE_MODE
+w3d_acceptance_run_highscore:
+    call w3d_shell_setup
+    ld a,W3D_MUSIC_ROSTER
+    call w3d_music_start
+    call w3d_highscores_reset_defaults
+    xor a
+    ld (w3d_level_requested_index),a
+    ld hl,w3d_player_score
+    ld a,W3D_DIAGNOSTIC_HIGHSCORE_MODE
+    cp 1
+    jr nz,@nonqualifying
+    ld (hl),0ffh
+    inc hl
+    ld (hl),0ffh
+    inc hl
+    ld (hl),0ffh
+    inc hl
+    ld (hl),07fh
+    jr @candidate_ready
+@nonqualifying:
+    xor a
+    ld (hl),a
+    inc hl
+    ld (hl),a
+    inc hl
+    ld (hl),a
+    inc hl
+    ld (hl),a
+@candidate_ready:
+    call w3d_highscores_handle_game_end
+    call w3d_shell_query_exit_request
+    ret nz
+    jp w3d_shell_main_menu
+    .endif
 
 ; One complete gameplay ownership lifetime. A selected difficulty is already
 ; authoritative when this routine begins, so the matching level package and

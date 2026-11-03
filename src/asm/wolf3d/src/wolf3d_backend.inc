@@ -9,3 +9,9 @@ W3D_RENDER_BACKEND:            equ W3D_RENDER_BACKEND_STANDALONE
 ; its disposable source copy when a staged scene needs indefinite observation.
 ; Every production build retains normal player damage and death.
 W3D_DIAGNOSTIC_INVULNERABLE:   equ 0
+
+; Acceptance-only high-score entry. 0 is every production build, 1 presents
+; a guaranteed qualifying name-entry candidate, and 2 presents the original
+; timed non-qualifying table. The durable builder changes only a disposable
+; source copy.
+W3D_DIAGNOSTIC_HIGHSCORE_MODE: equ 0

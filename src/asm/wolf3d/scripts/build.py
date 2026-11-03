@@ -19,6 +19,8 @@ TARGET = PROJECT / "tgt"
 SELECTOR = "W3D_RENDER_BACKEND:"
 START_SELECTOR = "W3D_INITIAL_LEVEL:"
 INVULNERABLE_SELECTOR = "W3D_DIAGNOSTIC_INVULNERABLE:"
+HIGHSCORE_SELECTOR = "W3D_DIAGNOSTIC_HIGHSCORE_MODE:"
+HIGHSCORE_MODES = {"none": 0, "qualifying": 1, "nonqualifying": 2}
 BACKENDS = {
     "standalone": "W3D_RENDER_BACKEND_STANDALONE",
     "vdplet-direct": "W3D_RENDER_BACKEND_VDPLET_DIRECT",
@@ -127,12 +129,27 @@ def select_invulnerable(path: Path, enabled: bool) -> None:
     path.write_text("\n".join(lines) + "\n")
 
 
+def select_highscore_mode(path: Path, mode: str) -> None:
+    lines = path.read_text().splitlines()
+    matches = [
+        index for index, line in enumerate(lines)
+        if line.startswith(HIGHSCORE_SELECTOR)
+    ]
+    if len(matches) != 1:
+        raise SystemExit("wolf3d diagnostic-high-score selector changed")
+    lines[matches[0]] = (
+        f"W3D_DIAGNOSTIC_HIGHSCORE_MODE: equ {HIGHSCORE_MODES[mode]}"
+    )
+    path.write_text("\n".join(lines) + "\n")
+
+
 def build(
     assembler: Path,
     backend: str,
     module: Path | None,
     initial_level: int = 0,
     invulnerable: bool = False,
+    highscore_mode: str = "none",
 ) -> dict[str, object]:
     if backend == "vdplet-direct":
         if module is None:
@@ -163,6 +180,7 @@ def build(
         select_backend(source / "wolf3d_backend.inc", backend)
         select_initial_level(source / "wolf3d_start.inc", initial_level)
         select_invulnerable(source / "wolf3d_backend.inc", invulnerable)
+        select_highscore_mode(source / "wolf3d_backend.inc", highscore_mode)
         if module is not None:
             select_package(source / "wolf3d_vdplet_package.inc", module.stat().st_size)
         temporary_output = temporary / output_name
@@ -180,6 +198,7 @@ def build(
         "backend": backend,
         "initial_level": initial_level,
         "diagnostic_invulnerable": invulnerable,
+        "diagnostic_highscore_mode": highscore_mode,
         "assembler": str(assembler),
         "output": str(output.relative_to(PROJECT.parents[2])),
         "bytes": output.stat().st_size,
@@ -213,6 +232,10 @@ def main() -> None:
         "--invulnerable", action="store_true",
         help="acceptance-only build: record attacks but suppress player damage",
     )
+    parser.add_argument(
+        "--highscore-acceptance", choices=tuple(HIGHSCORE_MODES), default="none",
+        help="acceptance-only build: enter a qualifying or non-qualifying score flow",
+    )
     args = parser.parse_args()
     receipt = build(
         resolve_assembler(args.assembler),
@@ -220,6 +243,7 @@ def main() -> None:
         args.module,
         args.initial_level,
         args.invulnerable,
+        args.highscore_acceptance,
     )
     print(json.dumps(receipt, indent=2))
 

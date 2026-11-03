@@ -41,6 +41,12 @@ The generated payloads appear under `src/asm/wolf3d_acceptance/tgt/`:
 - `pause-resume`: real E1L1 at the canonical starting pose. Press Escape,
   verify the in-game End Game / Back to Game / Quit panel, choose Back to Game,
   and confirm that the same level state resumes with a clean complete frame.
+- `highscore-qualifying`: after the real startup load, enters the production
+  high-score path with a guaranteed qualifying score. Type and edit a name,
+  press Return, verify the inserted row, persistence write, and menu return.
+- `highscore-nonqualifying`: enters the same production path with a guaranteed
+  non-qualifying score. Verify the original table and its finite timeout (or
+  dismiss it with a key), followed by the main menu.
 
 The application still shows the ordinary title/menu/difficulty flow. Selecting
 any difficulty enters the scenario's chosen floor; every difficulty package is
@@ -49,7 +55,7 @@ patched identically. Escape retains the production clean-exit path.
 `prepare.py` writes an `expected.json` manifest compatible with the existing
 VDPlet profile stager. These are review artifacts, not release payloads.
 
-After generation, stage all seven hash-pinned, stopped Oryx profiles with:
+After generation, stage all nine hash-pinned, stopped Oryx profiles with:
 
 ```bash
 .venv/bin/python src/asm/wolf3d_acceptance/scripts/stage_oryx.py
@@ -77,6 +83,8 @@ cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/hans && ./flexe-ago
 cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/victory && ./flexe-agon-emulator
 cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/ghosts && ./flexe-agon-emulator
 cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/pause-resume && ./flexe-agon-emulator
+cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/highscore-qualifying && ./flexe-agon-emulator
+cd ~/Agon/mystuff/Wolf3dOrig/.emulator/wolf3d-acceptance-r01/highscore-nonqualifying && ./flexe-agon-emulator
 ```
 
 Close each emulator before launching the next. These commands are launch

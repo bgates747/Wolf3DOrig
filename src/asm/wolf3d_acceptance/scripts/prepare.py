@@ -51,6 +51,7 @@ class Scenario:
     ghosts: bool = False
     one_hit_hans: bool = False
     invulnerable: bool = False
+    highscore_mode: str = "none"
 
 
 SCENARIOS = (
@@ -64,6 +65,10 @@ SCENARIOS = (
     Scenario("victory", 8, (34, 8), 90),
     Scenario("ghosts", 9, (5, 34), 0, ghosts=True),
     Scenario("pause-resume", 0, (29, 57), 0),
+    Scenario("highscore-qualifying", 0, (29, 57), 0,
+             highscore_mode="qualifying"),
+    Scenario("highscore-nonqualifying", 0, (29, 57), 0,
+             highscore_mode="nonqualifying"),
 )
 
 
@@ -271,7 +276,11 @@ def patch_state(data: bytes, scenario: Scenario) -> bytes:
     return build_package(package)
 
 
-def build_application(level: int, invulnerable: bool = False) -> Path:
+def build_application(
+    level: int,
+    invulnerable: bool = False,
+    highscore_mode: str = "none",
+) -> Path:
     command = [
         sys.executable,
         str(GAME / "scripts/build.py"),
@@ -281,6 +290,8 @@ def build_application(level: int, invulnerable: bool = False) -> Path:
     ]
     if invulnerable:
         command.append("--invulnerable")
+    if highscore_mode != "none":
+        command.extend(("--highscore-acceptance", highscore_mode))
     subprocess.run(command, cwd=PROJECT, check=True)
     suffix = "" if level == 0 else f"-l{level:02d}"
     return require(GAME / f"tgt/wolf3d-vdplet-direct{suffix}.bin")
@@ -315,6 +326,7 @@ def prepare_scenario(scenario: Scenario, application: Path) -> dict[str, object]
             "synthetic_ghosts": scenario.ghosts,
             "one_hit_hans": scenario.one_hit_hans,
             "diagnostic_invulnerable": scenario.invulnerable,
+            "diagnostic_highscore_mode": scenario.highscore_mode,
             "application_sha256": sha(temporary / "wolf3d.bin"),
             "module_sha256": sha(temporary / "wolf3d.vdpl"),
             "files": {
@@ -341,21 +353,23 @@ def main() -> None:
     # mortal application path retained for another scenario.
     with tempfile.TemporaryDirectory(prefix="applications-", dir=TARGET) as name:
         application_dir = Path(name)
-        applications: dict[tuple[int, bool], Path] = {}
-        for level, invulnerable in sorted({
-            (scenario.initial_level, scenario.invulnerable)
+        applications: dict[tuple[int, bool, str], Path] = {}
+        for level, invulnerable, highscore_mode in sorted({
+            (scenario.initial_level, scenario.invulnerable, scenario.highscore_mode)
             for scenario in SCENARIOS
         }):
-            source = build_application(level, invulnerable)
+            source = build_application(level, invulnerable, highscore_mode)
             destination = application_dir / (
-                f"level_{level:02d}-{'invulnerable' if invulnerable else 'mortal'}.bin"
+                f"level_{level:02d}-{'invulnerable' if invulnerable else 'mortal'}"
+                f"-{highscore_mode}.bin"
             )
             shutil.copyfile(source, destination)
-            applications[(level, invulnerable)] = destination
+            applications[(level, invulnerable, highscore_mode)] = destination
         receipts = [
             prepare_scenario(
                 scenario,
-                applications[(scenario.initial_level, scenario.invulnerable)],
+                applications[(scenario.initial_level, scenario.invulnerable,
+                              scenario.highscore_mode)],
             )
             for scenario in SCENARIOS
         ]
