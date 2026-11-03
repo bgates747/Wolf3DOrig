@@ -5,29 +5,74 @@ unfinished work. IDs are stable references and are not reused. When an item is
 accepted, rejected, or superseded, record its ID, evidence, and rationale in
 the current dated development log, then remove it from this file.
 
-[ ] 2c. Present the original-style floor-completion intermission before each
-ordinary or secret floor transition, using the bundled level-end artwork and
-the completed floor's authoritative time, kill, secret, and treasure state.
-Draw it immediately, begin loading the destination without an acknowledgment
-pause, and use finalized-asset callbacks to animate/poll input while loading.
-An acknowledgment may be latched during loading; Escape must instead converge
-on the common clean application-exit path from every shell, load, intermission,
-and gameplay phase.
+# Phase A — original Episode 1 shareware parity
+
+[ ] 11. Implement original pushwalls and secret discovery: preserve/count
+plane-1 marker 98 in W3L packages; prioritize facing-adjacent pushwalls in Use;
+reproduce busy/blocked rejection, cardinal fractional motion through at most
+two cells, collision/DDA ownership changes, sounds, secret count, and complete
+attempt/level reset. Qualify all four directions and a real Episode 1 secret.
+
+[ ] 12. Complete `WL_INTER.C::LevelCompleted` behavior atop the accepted
+nonblocking transition lifecycle: visible time/ratio count-up, skip-to-final,
+500-point par seconds, 10,000-point 100% awards, the secret-floor 15,000-point
+award, original tally sounds, final score/life effects, and persistent
+per-floor `LevelRatios`. Escape must retain priority while destination loading
+and presentation overlap.
+
+[ ] 13. Replace the generic Episode 1 victory acknowledgment with the original
+shareware path: in-world victory/BJ sequence, total time and eight-floor ratio
+averages, Episode 1 ending/shareware text, acknowledgment, high-score handoff,
+and shell return. Paid-episode death cameras/endings are out of scope.
+
+[ ] 7. Implement the original seven-entry high-score table, qualification and
+name entry, score/floor display, control-panel view, game-over/victory handoff,
+and a versioned, corruption-safe Agon persistence file.
+
+[ ] 14. Restore the original in-game control-panel and pause flow in place of
+temporary gameplay-Escape-to-MOS behavior. Support resume, end game, and an
+explicit clean Quit to MOS while preserving the common asynchronous Escape,
+mode-restoration, and VDPlet-teardown guarantees.
+
+[ ] 15. Implement the ten-slot save/load menu and a versioned Agon save format
+which reconstructs VDP state from complete authoritative eZ80 simulation state
+and rejects truncated/incompatible files safely.
+
+[ ] 16. Complete the original-facing control-panel pages: Sound, Control,
+Change View, Read This/help, View Scores/End Game state, and Back to Game.
+Translate or visibly disable DOS-only choices rather than misrepresent them.
+
+[ ] 17. Implement the original attract loop—15-second title, 10-second
+credits, 10-second high scores, and four deterministic Episode 1 demos—with
+input entering the control panel and no persistent-state mutation.
+
+[ ] 6. Implement music playback as a separate subsystem from the accepted
+sound-effects implementation, preserving original Episode 1 title/menu,
+floor, intermission, victory, and high-score assignments without coupling
+simulation to playback.
+
+[ ] 18. Perform a source-linked, end-to-end Episode 1 residual parity sweep
+after items 11-17 and 6: scoring, inventory, difficulty, actors, secrets,
+transitions, death/game-over, menus, audio, and ending. Record every intentional
+Agon difference and require emulator plus hardware acceptance.
+
+# Phase B — Agon identity and legal presentation
 
 [ ] 3b. Add the reserved Agon-specific splash and presentation hook without
 changing the accepted original-facing startup flow.
 
-[ ] 4. Widen or remap the byte-sized actor-state dispatcher before importing
-the remaining original actor states, avoiding the current 254-ID ceiling.
+[ ] 19. Present application and compatible renderer identities, educational/
+noncommercial and third-party-rights disclaimers, the Author's no-rights and
+no-liability statement, and accurate project/handwritten-assembly/LLM credits.
 
-[ ] 5. Implement bosses, projectiles, ghosts, and other special actor
-behaviors from the original game.
+# Phase C — custom episodes
 
-[ ] 6. Implement music playback as a separate subsystem from the accepted
-sound-effects implementation.
+[ ] 20. Replace the five disabled paid-episode menu slots with `YOUR EPISODE
+HERE`; define and validate a versioned custom-episode manifest and durable
+map/asset build-install path; ship one minimal example while leaving original
+Episode 1 immutable.
 
-[ ] 7. Add high-score entry and remaining presentation polish after the core
-game progression is established.
+# Independent platform track
 
 [ ] 8. Replace the requirement for a dedicated Wolf3D VDP firmware with a
 loadable Wolf3D VDPlet running on the shared VDPlet runtime. The completed
