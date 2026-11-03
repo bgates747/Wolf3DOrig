@@ -18,6 +18,8 @@ from .vgagraph import VgaGraph
 SHELL_CHUNK_BUFFER_BASE = 0x4200
 SHELL_COMPOSITE_BUFFER_BASE = 0x4300
 SHELL_FONT_CHUNK = 2
+SHELL_SIGNON_BUFFER_ID = 0x428A
+SHELL_SIGNON_SIZE = (320, 200)
 
 # Grounded in the bundled v1.4 archive's STRUCTPIC table and visual audit.
 # Chunk 21 is intentionally absent: it is H_GALACTIXPIC/help art in this data.

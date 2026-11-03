@@ -116,11 +116,19 @@ w3d_shell_run:
     ret z
     jp w3d_shell_main_menu
 
-; Original shareware PG13(): a seven-second notice which any key may shorten.
-; The exact VGA fades are an accepted platform difference, but the original
-; archive picture, blue field, anchor, duration, and non-menu input ownership
-; are retained. A key only dismisses this page; the title requires a fresh key.
+; Original shareware startup: the linked 320x200 sign-on waits for one fresh
+; local key, then INTROSONG begins and PG13() runs for seven seconds. DOS heap
+; bars and ISA-device checkboxes remain at their linked defaults because they
+; have no honest Agon equivalent. The exact VGA fades are an accepted platform
+; difference. Each page owns its input, so the title requires a fresh key.
 w3d_shell_show_original_splash:
+    ld hl,W3D_SHELL_SIGNON_BUFFER
+    call w3d_shell_plot_full_screen
+    call w3d_shell_wait_local_any_press
+    ld a,W3D_MUSIC_NAZI_NOR
+    call w3d_music_start
+    ld a,1
+    ld (w3d_shell_intro_music_ready),a
     ld hl,@blue_commands
     ld bc,@blue_end-@blue_commands
     rst.lil 18h
@@ -1080,8 +1088,16 @@ w3d_shell_help_clear_buffers:
 ; exit, matching IN_UserInput's attract-loop role.
 w3d_shell_attract_until_input:
 @title:
+    ld a,(w3d_shell_intro_music_ready)
+    or a
+    jr z,@start_title_music
+    xor a
+    ld (w3d_shell_intro_music_ready),a
+    jr @draw_title
+@start_title_music:
     ld a,W3D_MUSIC_NAZI_NOR
     call w3d_music_start
+@draw_title:
     call w3d_shell_draw_title
     ld de,W3D_SHELL_TITLE_TICKS
     call w3d_shell_wait_input_timeout
@@ -1945,6 +1961,21 @@ w3d_shell_pause_wait_all_released:
     djnz @scan
     ret
 
+; Fresh local acknowledgment used by FinishSignon. Escape is an ordinary
+; acknowledgment here, exactly as DOS IN_Ack; it must not request app exit.
+w3d_shell_wait_local_any_press:
+    call w3d_shell_pause_wait_all_released
+@wait:
+    call w3d_shell_read_keyboard
+    ld b,16
+@scan:
+    ld a,(ix)
+    or a
+    jr nz,w3d_shell_pause_wait_all_released
+    inc ix
+    djnz @scan
+    jr @wait
+
 w3d_shell_wait_any_press:
     call w3d_shell_wait_all_released
     call w3d_shell_query_exit_request
@@ -1987,6 +2018,8 @@ w3d_shell_keyboard_read_hook:
 w3d_shell_key_read_hook:
     dl w3d_shell_read_key_default
 w3d_shell_exit_requested:
+    db 0
+w3d_shell_intro_music_ready:
     db 0
 w3d_shell_main_choice:
     db W3D_SHELL_MAIN_NEW_GAME

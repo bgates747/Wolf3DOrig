@@ -90,9 +90,10 @@ production now renders all 41 canonical `HELPART` pages from VGAGRAPH chunk
 and page numbers. `ShowArticle` navigation, CORNER music, local Escape, damaged
 container fallback, and complete on-exit VDP-buffer reclamation are integrated;
 the 2.6 MiB page container loads only while the article is open. Host contracts
-pass and both application backends assemble. Remaining close gate: run the
-expanded direct shell fixture and visually review the complete article plus
-the other control-panel pages in the next batched Oryx lease.
+pass and both application backends assemble. The expanded production-shell
+fixture passes 683/683 on Oryx generation 185. Remaining close gate: visually
+review the complete article plus the other control-panel pages in the next
+batched Oryx lease.
 
 [ ] 17. Implement the original attract loop—15-second title, 10-second
 credits, 10-second high scores, and four deterministic Episode 1 demos—with
@@ -232,8 +233,16 @@ the title/attract loop. Exact VGA fade timing remains an intentional platform
 difference. The fixed Agon W/S/A/D plus arrows control scheme, fixed movement
 rates, and absence of DOS mouse/joystick/run-modifier configuration are also
 explicit platform substitutions rather than hidden Phase-A work. Host asset
-contracts pass and both application backends rebuild; the direct shell target
-and one staged visual startup review remain the close gate for this correction.
+contracts pass, both application backends rebuild, and Oryx generation 185
+passes all 683 direct production-shell checks. One staged visual startup review
+remains the close gate for this correction.
+The follow-up audit restored the preceding executable-linked sign-on as well:
+a strict OMF extractor reconstructs the exact 64,000-byte `SIGNON.OBJ` image,
+the shell presents `FinishSignon`'s fresh-key prompt, and `INTROSONG` now begins
+before PG13 and continues into the title. DOS-only memory/device overlays remain
+at their linked defaults as an explicit platform substitution. Host contracts,
+both backends, and the corrected 683/683 direct shell rerun pass; the same
+batched visual startup review remains the close gate.
 
 # Phase B — Agon identity and legal presentation
 

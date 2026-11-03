@@ -11,7 +11,8 @@ The original first-slice plan below is retained as design history. Production
 has since grown into the complete Phase-A shell tracked by the root TODO.
 
 1. Retain a hook for a future Agon-specific splash, then present the original
-   one-time PG-13 notice before the title carrying the Wolf3DOrig version.
+   executable-linked sign-on and one-time PG-13 notice before the title
+   carrying the Wolf3DOrig version.
 2. Enter a main menu with **New Game** and **Quit**.
 3. Reproduce the original shareware episode menu: Episode 1 is selectable and
    Episodes 2-6 remain visibly disabled. Then offer the original four
@@ -48,7 +49,9 @@ for 10 seconds, high scores for 10 seconds, and one of four recorded demos.
 Any input enters `US_ControlPanel`. Starting or loading a game calls
 `GameLoop`; returning from it resumes intro music and the attract loop.
 
-The Agon port now preserves that one-time PG-13 page and the complete timed
+The Agon port now extracts the executable-linked sign-on from `SIGNON.OBJ`,
+preserves its fresh-key acknowledgment, begins the original intro music before
+the one-time PG-13 page, and continues through the complete timed
 title/credits/high-score/four-demo attract loop.
 
 ## Graphics inventory
@@ -56,8 +59,10 @@ title/credits/high-score/four-demo attract loop.
 ### Opening and attract-loop art
 
 - **Sign-on screen:** `introscn`, a 320x200 image linked into the original DOS
-  executable rather than stored as an ordinary `VGAGRAPH` picture. It is not
-  required for the first shell and is awkward to treat as canonical data.
+  executable rather than stored as an ordinary `VGAGRAPH` picture. The durable
+  OMF extractor reconstructs its gapless 64,000-byte LEDATA segment and applies
+  `FinishSignon`'s `Press a key` state. DOS heap bars and ISA-device checkboxes
+  remain at their linked defaults because they have no honest Agon equivalent.
 - **PG-13 notice:** `PG13PIC`, drawn over a solid background.
 - **Title:** `TITLEPIC`, a complete 320x200 screen.
 - **Credits:** `CREDITSPIC`, a complete 320x200 screen.
@@ -162,7 +167,7 @@ stops the shared effect channels at its ownership boundary;
 final application exit restores the caller's base single-buffered mode:
 
 ```text
-startup -> optional Agon splash hook -> PG-13 notice -> original title -> main menu
+startup -> optional Agon splash hook -> sign-on -> PG-13 notice -> original title -> main menu
                                                       |          |
                                                       |          +-> quit
                                                       +-> input      |
@@ -189,7 +194,8 @@ Implemented boundaries:
 - `src/asm/wolf3d_shell/`: isolated direct-eZ80 semantic and drawing
   regression for the production shell include.
 
-Resident shell assets load once at startup and remain available across gameplay
+Resident shell assets, including the sign-on screen, load once at startup and
+remain available across gameplay
 sessions. The 2.6 MiB HELP article loads only when Read This/F1 is selected and
 all 41 page buffers are cleared before returning to the parent panel.
 Level-specific wall and sprite containers remain separate and are replaced on

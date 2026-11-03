@@ -318,9 +318,9 @@ embedded pictures, proportional layout, colors, and page numbers. Production
 loads the reproducible 2.6 MiB `help.agnb` only on selection, preserves the
 original arrow/Page Up/Page Down/Enter/Escape behavior and CORNER music, and
 clears all 41 page buffers on success, abort, or failure. Host asset contracts
-pass and both application backends assemble; the expanded direct shell target
-assembles and awaits its next Oryx batch. Remaining gate: direct-target plus
-visual review of article navigation and every reachable panel page.
+pass, both application backends assemble, and Oryx generation 185 passes all
+683 direct production-shell checks. Remaining gate: visual review of article
+navigation and every reachable panel page.
 
 ### A8. Attract loop and recorded demos — TODO 17
 
@@ -485,6 +485,21 @@ at the source `(216,110)` anchor over the RGB222 equivalent of VGA index
 title. The page runs only on initial process entry, not after demos or gameplay
 return, matching `DemoLoop` ownership. Exact VGA fade timing is intentionally
 not emulated.
+
+Follow-up startup correction, 2026-11-03: the earlier audit still began one
+screen too late. `WL_MAIN.C::SignonScreen/FinishSignon` first presents the
+320x200 `introscn` linked into `SIGNON.OBJ`, waits for a fresh local key, then
+starts `INTROSONG` before PG13 and carries that same track into the title.
+Production now extracts the object's exact gapless 64,000-byte LEDATA segment
+with a bounded OMF parser, composes the source `Press a key` state, and retains
+the same local-key/music handoff. DOS heap bars and ISA-device checkboxes stay
+at their linked defaults because they have no truthful Agon analogue; the
+transient `Working...` text is omitted because Agon assets have already loaded
+before the shell starts. The raw segment and rendered presentation identities,
+malformed-OMF rejection, both application backends, and the direct startup
+fixture are pinned; Oryx generation 185 passes the complete 683-check direct
+production-shell target. A staged visual sign-on/PG13/title review remains part
+of the next human shell batch.
 
 Additional intentional platform substitutions, 2026-11-03:
 

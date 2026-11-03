@@ -14,6 +14,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[4]
 sys.path.insert(0, str(TOOLS_ROOT))
 
 from formats.palette import WOLF3D_PALETTE_RGB888  # noqa: E402
+from formats.omf import OmfError, extract_ledata_segment  # noqa: E402
 from formats.article import (  # noqa: E402
     ARTICLE_BUFFER_BASE,
     ARTICLE_PAGE_COUNT,
@@ -32,6 +33,8 @@ from formats.shell import (  # noqa: E402
     SHELL_CHUNK_NAMES,
     SHELL_COMPOSITE_BUFFER_IDS,
     SHELL_EXPECTED_DIMENSIONS,
+    SHELL_SIGNON_BUFFER_ID,
+    SHELL_SIGNON_SIZE,
     STRIPE,
     chunk_buffer_id,
     decode_wolf_font,
@@ -40,7 +43,9 @@ from formats.vgagraph import read_vgagraph  # noqa: E402
 from scripts.build_shell_assets import build_shell_assets  # noqa: E402
 
 DATA_DIR = PROJECT_ROOT / "orig/data"
+SIGNON_OBJ = PROJECT_ROOT / "orig/src/WOLFSRC/OBJ/SIGNON.OBJ"
 PALETTE_FILE = TOOLS_ROOT / "palettes/Agon64.gpl"
+TRACKED_CONSTANTS = PROJECT_ROOT / "src/asm/wolf3d/src/wolf3d_shell_assets.inc"
 
 EXPECTED_COMPOSITES = {
     "main_base": (0x4300, 320, 200, 0, 0),
@@ -104,6 +109,44 @@ def _archive():
 
 
 class ShellArchiveTests(unittest.TestCase):
+    def test_linked_signon_omf_contract(self) -> None:
+        pixels = extract_ledata_segment(
+            SIGNON_OBJ.read_bytes(), segment_index=1, expected_size=320 * 200
+        )
+        self.assertEqual(len(pixels), 64_000)
+        self.assertEqual(
+            hashlib.sha256(pixels).hexdigest(),
+            "4fd711cdde7929645a46dd572ab61feacc8d3b79844250835b0ce87312a2c999",
+        )
+        self.assertEqual(pixels[0], 0x29)
+
+    def test_omf_extractor_rejects_gaps_overlaps_and_bad_checksums(self) -> None:
+        def record(payload: bytes, checksum: int = 0) -> bytes:
+            length = len(payload) + 1
+            return bytes((0xA0, length & 0xFF, length >> 8)) + payload + bytes((checksum,))
+
+        gap = record(b"\x01\x00\x00A")
+        with self.assertRaisesRegex(OmfError, "gaps"):
+            extract_ledata_segment(gap, segment_index=1, expected_size=2)
+
+        overlap = record(b"\x01\x00\x00AB") + record(b"\x01\x01\x00C")
+        with self.assertRaisesRegex(OmfError, "overlap"):
+            extract_ledata_segment(overlap, segment_index=1, expected_size=2)
+
+        bad_checksum = record(b"\x01\x00\x00A", checksum=1)
+        with self.assertRaisesRegex(OmfError, "checksum"):
+            extract_ledata_segment(
+                bad_checksum, segment_index=1, expected_size=1
+            )
+
+        two_byte_index = record(b"\x81\x01\x00\x00Z")
+        self.assertEqual(
+            extract_ledata_segment(
+                two_byte_index, segment_index=0x101, expected_size=1
+            ),
+            b"Z",
+        )
+
     def test_real_v14_chunk_dimensions_and_false_backdrop_is_absent(self) -> None:
         archive = _archive()
         self.assertNotIn(21, SHELL_CHUNKS)
@@ -151,7 +194,9 @@ class ShellArchiveTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             out = Path(temporary) / "shell"
             entries = build_shell_assets(DATA_DIR, out, PALETTE_FILE, override_dir=None)
-            self.assertEqual(len(entries), len(SHELL_CHUNKS) + len(EXPECTED_COMPOSITES))
+            self.assertEqual(
+                len(entries), len(SHELL_CHUNKS) + len(EXPECTED_COMPOSITES) + 1
+            )
             self.assertEqual(
                 len({entry.bufferId for entry in entries}),
                 len(entries),
@@ -183,8 +228,15 @@ class ShellArchiveTests(unittest.TestCase):
                 (raw["paused"].width, raw["paused"].height), (24, 32)
             )
 
+            signon = next(entry for entry in entries if entry.name == "signon")
+            self.assertEqual(signon.bufferId, SHELL_SIGNON_BUFFER_ID)
+            self.assertEqual((signon.width, signon.height), SHELL_SIGNON_SIZE)
+            self.assertEqual((signon.plotX, signon.plotY), (0, 0))
+            self.assertIn("SIGNON.OBJ", signon.source)
             composed = {
-                entry.name: entry for entry in entries if entry.chunkId is None
+                entry.name: entry
+                for entry in entries
+                if entry.chunkId is None and entry.name != "signon"
             }
             self.assertEqual(set(composed), set(EXPECTED_COMPOSITES))
             self.assertEqual(
@@ -225,11 +277,13 @@ class ShellArchiveTests(unittest.TestCase):
                 ARTICLE_BUFFER_BASE + ARTICLE_PAGE_COUNT - 1,
             )
             constants = (out / "wolf3d_shell_assets.inc").read_text()
+            self.assertEqual(constants, TRACKED_CONSTANTS.read_text())
             self.assertIn("W3D_SHELL_TITLE_BUFFER: equ $4263", constants)
             self.assertIn("W3D_SHELL_PG13_BUFFER: equ $4264", constants)
             self.assertIn("W3D_SHELL_PG13_X: equ 216", constants)
             self.assertIn("W3D_SHELL_PG13_Y: equ 110", constants)
             self.assertIn("W3D_SHELL_PAUSED_BUFFER: equ $4289", constants)
+            self.assertIn("W3D_SHELL_SIGNON_BUFFER: equ $428A", constants)
             self.assertIn("W3D_SHELL_MAIN_BASE_BUFFER: equ $4300", constants)
             self.assertIn("W3D_SHELL_MAIN_BASE_WIDTH: equ 320", constants)
             self.assertIn("W3D_HELP_PAGE_BUFFER_BASE: equ $4600", constants)
@@ -276,6 +330,13 @@ class ShellArchiveTests(unittest.TestCase):
                 self.assertEqual(
                     processed_main.getpixel((glyph_x, glyph_y))[:3],
                     (170, 170, 170),
+                )
+
+            with Image.open(out / "orig/signon.png") as signon_image:
+                self.assertEqual(signon_image.size, SHELL_SIGNON_SIZE)
+                self.assertEqual(
+                    hashlib.sha256(signon_image.tobytes()).hexdigest(),
+                    "ec4230a8566ed0c0d149debd7bff2046a52ab3381be68ff59f0bd353e151fc5a",
                 )
 
     def test_override_dimensions_are_enforced(self) -> None:

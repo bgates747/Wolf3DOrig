@@ -22,6 +22,7 @@ from formats.article import (  # noqa: E402
     ARTICLE_PAGE_COUNT,
     render_help_article,
 )
+from formats.omf import extract_ledata_segment  # noqa: E402
 from formats.palette import WOLF3D_PALETTE_RGB888  # noqa: E402
 from formats.shell import (  # noqa: E402
     BKGDCOLOR,
@@ -52,6 +53,8 @@ from formats.shell import (  # noqa: E402
     SHELL_COMPOSITE_BUFFER_BASE,
     SHELL_COMPOSITE_BUFFER_IDS,
     SHELL_EXPECTED_DIMENSIONS,
+    SHELL_SIGNON_BUFFER_ID,
+    SHELL_SIGNON_SIZE,
     STRIPE,
     TEXTCOLOR,
     WolfFont,
@@ -64,6 +67,7 @@ SCRIPT_FILE = Path(__file__).resolve()
 TOOLS_ROOT = SCRIPT_FILE.parents[1]
 PROJECT_ROOT = SCRIPT_FILE.parents[4]
 DEFAULT_DATA_DIR = PROJECT_ROOT / "orig/data"
+DEFAULT_SIGNON_OBJ = PROJECT_ROOT / "orig/src/WOLFSRC/OBJ/SIGNON.OBJ"
 DEFAULT_OUT_DIR = PROJECT_ROOT / "agonport/assets/generated/wolf3d/shell"
 DEFAULT_OVERRIDE_DIR = PROJECT_ROOT / "agonport/assets/overrides/wolf3d/shell"
 DEFAULT_PALETTE_FILE = TOOLS_ROOT / "palettes/Agon64.gpl"
@@ -493,6 +497,27 @@ def _compose_images(
     return images
 
 
+def _compose_signon(signon_obj: Path, font: WolfFont) -> Image.Image:
+    """Reproduce the source-visible final shareware sign-on state.
+
+    The linked object is the original 320x200 chunky VGA image. DOS-specific
+    heap/device probes have no honest Agon equivalent, so their linked defaults
+    remain untouched. ``FinishSignon``'s bottom bar and fresh-key prompt are
+    applied exactly; the transient ``Working...`` text is not useful after the
+    Agon assets have already loaded.
+    """
+
+    pixels = extract_ledata_segment(
+        signon_obj.read_bytes(), segment_index=1, expected_size=320 * 200
+    )
+    image = Image.new("RGB", SHELL_SIGNON_SIZE)
+    image.putdata(tuple(WOLF3D_PALETTE_RGB888[value] for value in pixels))
+    draw = ImageDraw.Draw(image)
+    draw.rectangle((0, 189, 299, 199), fill=_color(pixels[0]))
+    _draw_centered(image, font, 190, "Press a key", 14)
+    return image
+
+
 def _convert(source: Path, processed: Path, rgba2: Path, palette: Path) -> None:
     shutil.copy2(source, processed)
     au.convert_to_palette(str(processed), str(processed), str(palette), "rgb", None)
@@ -508,11 +533,12 @@ def _write_constants(path: Path, entries: list[ShellManifestEntry]) -> None:
         f"W3D_HELP_PAGE_COUNT: equ {ARTICLE_PAGE_COUNT}\n\n",
     ]
     for entry in entries:
-        origin = (
-            f"WL1 v1.4 chunk {entry.chunkId}"
-            if entry.chunkId is not None
-            else "composed from WL1 v1.4 resources"
-        )
+        if entry.chunkId is not None:
+            origin = f"WL1 v1.4 chunk {entry.chunkId}"
+        elif entry.name == "signon":
+            origin = "linked WL1 v1.4 SIGNON.OBJ"
+        else:
+            origin = "composed from WL1 v1.4 resources"
         prefix = f"W3D_SHELL_{entry.name.upper()}"
         lines.extend(
             (
@@ -577,6 +603,7 @@ def build_shell_assets(
     out_dir: Path,
     palette_file: Path,
     override_dir: Path | None = DEFAULT_OVERRIDE_DIR,
+    signon_obj: Path = DEFAULT_SIGNON_OBJ,
 ) -> list[ShellManifestEntry]:
     archive = read_vgagraph(
         data_dir / "VGADICT.WL1",
@@ -584,6 +611,7 @@ def build_shell_assets(
         data_dir / "VGAGRAPH.WL1",
     )
     font = decode_wolf_font(archive)
+    startup_font = decode_wolf_font(archive, 1)
     original_dir = out_dir / "orig"
     processed_dir = out_dir / "processed"
     for generated_dir in (original_dir, processed_dir):
@@ -636,6 +664,21 @@ def build_shell_assets(
         entries.append(entry)
         records.append(record)
 
+    signon_entry, signon_record = _stage_image(
+        name="signon",
+        image=_compose_signon(signon_obj, startup_font),
+        source="SIGNON.OBJ segment 1 with WL_MAIN.C FinishSignon prompt",
+        chunk_id=None,
+        buffer_id=SHELL_SIGNON_BUFFER_ID,
+        plot_x=0,
+        plot_y=0,
+        original_dir=original_dir,
+        processed_dir=processed_dir,
+        palette_file=palette_file,
+    )
+    entries.append(signon_entry)
+    records.append(signon_record)
+
     for name, composed in _compose_images(raw_images, font).items():
         entry, record = _stage_image(
             name=name,
@@ -652,7 +695,7 @@ def build_shell_assets(
         entries.append(entry)
         records.append(record)
 
-    article_font = decode_wolf_font(archive, 1)
+    article_font = startup_font
     help_entries: list[ShellManifestEntry] = []
     help_records: list[BufferRecord] = []
     for index, image in enumerate(render_help_article(archive, article_font)):
@@ -690,14 +733,21 @@ def build_shell_assets(
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-dir", type=Path, default=DEFAULT_DATA_DIR)
+    parser.add_argument("--signon-obj", type=Path, default=DEFAULT_SIGNON_OBJ)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
     parser.add_argument("--palette", type=Path, default=DEFAULT_PALETTE_FILE)
     parser.add_argument("--override-dir", type=Path, default=DEFAULT_OVERRIDE_DIR)
     args = parser.parse_args()
     entries = build_shell_assets(
-        args.data_dir, args.out_dir, args.palette, args.override_dir
+        args.data_dir,
+        args.out_dir,
+        args.palette,
+        args.override_dir,
+        args.signon_obj,
     )
-    originals = sum(entry.chunkId is not None for entry in entries)
+    originals = sum(
+        entry.chunkId is not None or entry.name == "signon" for entry in entries
+    )
     composites = len(entries) - originals
     print(
         f"Wrote {args.out_dir / 'shell.agnb'}: {originals} original and "

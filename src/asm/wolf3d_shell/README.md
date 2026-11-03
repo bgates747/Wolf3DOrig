@@ -24,6 +24,12 @@ fallback, callback-time load abort, and exact clearing of buffers
 `$4600..$4628`. The AGNB parser and offline article renderer retain their own
 format/asset regressions; this target proves their shell lifecycle contract.
 
+Startup coverage begins one screen earlier than VGAGRAPH: it checks the linked
+`SIGNON.OBJ` buffer, fresh local acknowledgment, PG13 anchor/timing, and the
+original `NAZI_NOR` handoff which starts before PG13 and continues into the
+first title. Escape on sign-on remains an ordinary DOS `IN_Ack`, not a global
+application-exit request.
+
 The production shell owns the latch and exposes three helpers:
 
 - `w3d_shell_reset_exit_request` starts a fresh application lifecycle.

@@ -298,8 +298,9 @@ explicit fallback assets retain 16384 Hz. Provenance, stable IDs, resident
 bytes, and exact tests are documented in
 `agonport/tools/wolf3d_assets/AUDIO_ASSETS.md`.
 
-Generate the original-facing title/control-panel container, composed menu
-screens, manifest, and synchronized assembly constants with:
+Generate the original executable-linked sign-on, title/control-panel
+container, composed menu screens, manifest, and synchronized assembly
+constants with:
 
 ```bash
 .venv/bin/python agonport/tools/wolf3d_assets/scripts/build_shell_assets.py

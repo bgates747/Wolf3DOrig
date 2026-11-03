@@ -1025,12 +1025,16 @@ test_attract_timing:
     ld de,test_sysvars+1
     ld bc,23
     ldir
+    call test_reset_music
     call test_reset_plots
-    ld hl,script_pg13_timeout
+    ld hl,script_signon_pg13_timeout
     call test_set_script
     call w3d_shell_show_original_splash
-    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
-    CHECK_PLOT 0,W3D_SHELL_PG13_BUFFER,W3D_SHELL_PG13_X,W3D_SHELL_PG13_Y
+    CHECK_MEM8 test_plot_count,2,REASON_PLOT_COUNT
+    CHECK_PLOT 0,W3D_SHELL_SIGNON_BUFFER,0,0
+    CHECK_PLOT 6,W3D_SHELL_PG13_BUFFER,W3D_SHELL_PG13_X,W3D_SHELL_PG13_Y
+    CHECK_MEM8 test_music_start_count,1,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+0,W3D_MUSIC_NAZI_NOR,REASON_MUSIC_ASSIGNMENT
     CHECK_EXIT 0
     ret
 
@@ -1110,13 +1114,16 @@ test_quick_keys:
     ld (test_case),a
     call w3d_shell_reset_exit_request
     call test_reset_plots
+    call test_reset_help
     ld hl,script_quick_page_escape
     call test_set_script
     ld a,w3d_panel_request_help
     call w3d_shell_pause_quick
     CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
-    CHECK_MEM8 test_plot_log+0,W3D_SHELL_READ_THIS_PAGE_BUFFER&0ffh,REASON_PLOT_BUFFER
-    CHECK_MEM8 test_plot_log+1,W3D_SHELL_READ_THIS_PAGE_BUFFER>>8,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_plot_log+0,W3D_HELP_PAGE_BUFFER_BASE&0ffh,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_plot_log+1,W3D_HELP_PAGE_BUFFER_BASE>>8,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_help_load_count,1,REASON_HELP_LOAD_COUNT
+    CHECK_MEM8 test_help_clear_count,W3D_HELP_PAGE_COUNT,REASON_HELP_CLEAR_COUNT
 
     ld a,55
     ld (test_case),a
@@ -1855,14 +1862,17 @@ script_main_difficulty_escape:
     db SCRIPT_UP,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
 script_title_escape:
     db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE
+    db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE
     db SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_victory_escape:
     db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_ack_then_escape:
+    db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE
     db SCRIPT_RELEASE,SCRIPT_TICK
     db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
-script_pg13_timeout:
+script_signon_pg13_timeout:
+    db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE
     db SCRIPT_RELEASE,SCRIPT_TICK
 script_attract_cycle:
     db SCRIPT_RELEASE,SCRIPT_TICK,SCRIPT_RELEASE
