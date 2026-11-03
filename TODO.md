@@ -103,7 +103,10 @@ deterministically, retimed cumulatively from 700 Hz to MOS's 120 Hz clock, and
 played by a nonblocking nine-voice sequencer on VDP channels 3-11 while SFX
 retain channels 0-2. Original title, menu, Read This, score, ten-floor,
 intermission, victory, game-over, and return assignments are integrated;
-Sound independently controls persistent-in-process SFX and music preferences.
+Sound independently controls SFX and music preferences. The residual source
+audit found that this persistence was process-local despite
+`WL_MAIN.C::ReadConfig/WriteConfig`; item 18 now supplies durable cross-launch
+persistence for the two meaningful Agon preferences.
 The direct sequencer fixture passes 48/48 and the integrated production-shell
 fixture passes 255/255 on real eZ80 emulation. Remaining close gate: one
 audible emulator/hardware review of representative gameplay, menu,
@@ -157,6 +160,14 @@ slide. Its authentic 57 ms PC-speaker stream uses a generated two-quantum
 self-retrigger guard while Agon's independent sound channels remain available
 to unrelated events. Oryx generation 169 passes all 10,030 production
 ClipMove/sound/cooldown records; both application backends rebuild.
+`WL_MAIN.C::ReadConfig/WriteConfig` also exposed a stale claim: the translated
+Sound page retained SFX/music selections only until return to MOS. Production
+now loads and saves a versioned, exact-length, Fletcher-guarded `wolf3d.cfg`
+containing those two meaningful Agon preferences, with on/on fallback for
+missing, truncated, trailing, corrupt, or future-version files. Unavailable
+DOS devices, fixed Agon controls, and the accepted fixed viewport are not
+serialized as fictitious choices. Oryx generation 170 passes all 30/30 direct
+eZ80 format and real-MOS-file checks; both application backends rebuild.
 
 # Phase B — Agon identity and legal presentation
 

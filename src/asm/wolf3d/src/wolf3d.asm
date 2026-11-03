@@ -67,6 +67,7 @@ fa_create_always:               equ 08h
     include "wolf3d_shell_assets.inc"
     include "wolf3d_version.inc"
     include "wolf3d_music.inc"
+    include "wolf3d_config.inc"
     include "wolf3d_highscores.inc"
     include "wolf3d_shell.inc"
     include "wolf3d_intermission.inc"
@@ -473,7 +474,9 @@ main:
     call w3d_capture_original_screen_mode
     call w3d_music_initialize
     call w3d_audio_initialize
+    call w3d_config_initialize
     call w3d_main_body
+    call w3d_config_save
     call w3d_audio_shutdown
     call w3d_music_shutdown
     call w3d_restore_original_screen_mode

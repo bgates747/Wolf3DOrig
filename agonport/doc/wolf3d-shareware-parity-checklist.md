@@ -324,6 +324,16 @@ bytes. Oryx generation 169 passes 10,030 production ClipMove records,
 including the request edge and cooldown expiry, and both application backends
 assemble.
 
+Config-persistence correction, 2026-11-03: `WL_MAIN.C::ReadConfig` and
+`WriteConfig` persist sound/music modes across process launches. The translated
+Sound page was only process-persistent. Production now uses a narrow 16-byte
+Agon config for SFX and music: versioned header/footer, exact-length admission,
+Fletcher-16, transactional publication, and safe on/on fallback. DOS device
+selection, custom key bindings, mouse sensitivity, and view size remain
+unavailable/fixed rather than being encoded as fictitious choices. Oryx
+generation 170 passes 30/30 direct eZ80 checks, including all flag combinations
+and real MOS save/load plus corruption, truncation, and trailing-data rejection.
+
 Intentional discrepancy ledger, 2026-11-03: the hardware-accepted player
 wall/slab radius and actor/static physical clearance remain `0x4800`, versus
 the source's `PLAYERSIZE`/`MINDIST` value `0x5800`. The independent original
