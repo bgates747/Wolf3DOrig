@@ -410,7 +410,7 @@ w3d_player_combat_refresh_shape:
 ; Deterministic CPU target selection
 ; ---------------------------------------------------------------------------
 
-; Return A=nearest ordinary shootable actor in the strict center cone with a
+; Return A=nearest supported shootable actor in the strict center cone with a
 ; clear CPU line trace, or W3D_SLOT_NONE.  The original candidate set required
 ; renderer-owned FL_VISABLE before its final CheckLine.  A write-only VDP
 ; cannot return that bit, so current projection plus CheckLine is the durable
@@ -447,6 +447,8 @@ w3d_player_select_attack_target:
     cp W3D_CLASS_SS
     jr z,@class_ok
     cp W3D_CLASS_DOG
+    jr z,@class_ok
+    cp W3D_CLASS_BOSS
     jr nz,@next
 @class_ok:
     call w3d_player_target_in_shoot_cone

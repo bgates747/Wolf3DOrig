@@ -340,6 +340,149 @@ test_reaction_delays:
     ld a,(test_audio_kind)
     ld b,0
     ld c,reason_audio
+    call assert_equal
+
+; Reproduce the staged E1L9 scheduling boundary as well as the state dispatch:
+; player area 2, ACTIVE_NO Hans in area 3, and a closed door joining 3 <-> 2.
+; Before the door moves the boss is unscheduled.  Its first positive position
+; rebuilds connectivity, after which the real zero-tic boss stand state must
+; dispatch T_Stand, acquire sight, wait one tic, and enter boss chase.
+    ld a,8
+    ld (test_detail),a
+    call prepare_one_actor
+    ld a,3
+    ld (ix+W3D_ACTOR_AREA),a
+    xor a
+    ld (ix+W3D_ACTOR_ACTIVE),a       ; ACTIVE_NO, as generated for Hans
+    ld a,W3D_CLASS_BOSS
+    ld (ix+W3D_ACTOR_CLASS),a
+    ld a,W3D_STATE_BOSS_STAND
+    ld (ix+W3D_ACTOR_STATE+0),a
+    xor a
+    ld (ix+W3D_ACTOR_STATE+1),a
+    ld (ix+W3D_ACTOR_TICCOUNT+0),a
+    ld (ix+W3D_ACTOR_TICCOUNT+1),a
+    ld a,W3D_ACTOR_FLAG_SHOOTABLE|W3D_ACTOR_FLAG_AMBUSH
+    ld (ix+W3D_ACTOR_FLAGS),a
+
+    ld a,1
+    ld (w3d_area_by_player+2),a
+    xor a
+    ld (w3d_area_by_player+3),a
+    ld a,2
+    ld (w3d_player_area),a
+    ld a,1
+    ld (w3d_level_door_count),a
+    ld a,22
+    ld (w3d_doors+W3D_DOOR_TILEX),a
+    ld a,20
+    ld (w3d_doors+W3D_DOOR_TILEY),a
+    ld a,W3D_DOOR_ACTION_OPENING
+    ld (w3d_doors+W3D_DOOR_ACTION),a
+    ld a,3
+    ld (w3d_doors+W3D_DOOR_AREA1),a
+    ld a,2
+    ld (w3d_doors+W3D_DOOR_AREA2),a
+    xor a
+    ld (w3d_door_motion_phase),a
+
+; Closed/disconnected: no state think, no acquisition, no fault/removal.
+    call w3d_simulate_actors
+    ld a,1
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_STATE+0)
+    ld b,W3D_STATE_BOSS_STAND
+    ld c,reason_state_tics
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_TEMP2+0)
+    ld b,0
+    ld c,reason_temp2
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_FLAGS)
+    ld b,W3D_ACTOR_FLAG_SHOOTABLE|W3D_ACTOR_FLAG_AMBUSH
+    ld c,reason_flags
+    call assert_equal
+
+; First opening quantum creates the live graph edge and schedules area 3.
+    call w3d_simulate_doors
+    ld a,(w3d_doors+W3D_DOOR_POSITION+0)
+    ld b,055h
+    ld c,reason_scalar
+    call assert_equal
+    ld a,(w3d_doors+W3D_DOOR_POSITION+1)
+    ld b,09h
+    ld c,reason_scalar
+    call assert_equal
+    ld a,(w3d_area_by_player+2)
+    ld b,1
+    ld c,reason_scalar
+    call assert_equal
+    ld a,(w3d_area_by_player+3)
+    ld b,1
+    ld c,reason_scalar
+    call assert_equal
+    call test_audio_reset             ; discard the expected door-open sound
+
+; First scheduled pass seeds the fixed one-tic boss delay and clears ambush.
+    call w3d_simulate_actors
+    ld a,1
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_STATE+0)
+    ld b,W3D_STATE_BOSS_STAND
+    ld c,reason_state_tics
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_TEMP2+0)
+    ld b,1
+    ld c,reason_temp2
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_FLAGS)
+    ld b,W3D_ACTOR_FLAG_SHOOTABLE
+    ld c,reason_flags
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_ACTIVE)
+    ld b,W3D_ACTOR_ACTIVE_NO
+    ld c,reason_pose_active
+    call assert_equal
+
+; Next pass consumes the delay and applies original FirstSighting effects.
+    call w3d_simulate_actors
+    ld a,1
+    call w3d_actor_pointer_from_id
+    ld a,(ix+W3D_ACTOR_STATE+0)
+    ld b,W3D_STATE_BOSS_CHASE1
+    ld c,reason_state_tics
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_TICCOUNT+0)
+    ld b,10
+    ld c,reason_state_tics
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_SPEED+0)
+    ld b,0
+    ld c,reason_speed
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_SPEED+1)
+    ld b,6
+    ld c,reason_speed
+    call assert_equal
+    ld a,(ix+W3D_ACTOR_FLAGS)
+    ld b,W3D_ACTOR_FLAG_SHOOTABLE|W3D_ACTOR_FLAG_ATTACKMODE|W3D_ACTOR_FLAG_FIRSTATTACK
+    ld c,reason_flags
+    call assert_equal
+    ld a,(test_audio_count)
+    ld b,1
+    ld c,reason_audio
+    call assert_equal
+    ld a,(test_audio_last_id)
+    ld b,W3D_AUDIO_SOUND_GUTENTAG
+    ld c,reason_audio
+    call assert_equal
+    ld a,(w3d_actor_count)
+    ld b,1
+    ld c,reason_containment
+    call assert_equal
+    ld a,(w3d_actor_fault_count+0)
+    ld b,0
+    ld c,reason_containment
     jp assert_equal
 
 ; ---------------------------------------------------------------------------

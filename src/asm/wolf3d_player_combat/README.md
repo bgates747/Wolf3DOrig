@@ -22,7 +22,9 @@ Run the host oracle from the repository root:
 
 `src/player_combat_regression.asm` separately executes the production eZ80
 weapon timeline, target selection, ordinary-enemy injury/death transitions,
-scoring, and runtime pickup drops. It also pins the original release/repress
+scoring, and runtime pickup drops. Its full hitscan-path boss case prevents a
+shootable Hans from being filtered before the already-tested boss death path.
+It also pins the original release/repress
 behavior of automatic weapons, synchronous occlusion, the `GiveAmmo`
 attack-frame guard, and first-person weapon-shape dirty edges.
 

@@ -18,6 +18,7 @@ SOURCE = PROJECT / "src"
 TARGET = PROJECT / "tgt"
 SELECTOR = "W3D_RENDER_BACKEND:"
 START_SELECTOR = "W3D_INITIAL_LEVEL:"
+INVULNERABLE_SELECTOR = "W3D_DIAGNOSTIC_INVULNERABLE:"
 BACKENDS = {
     "standalone": "W3D_RENDER_BACKEND_STANDALONE",
     "vdplet-direct": "W3D_RENDER_BACKEND_VDPLET_DIRECT",
@@ -112,11 +113,26 @@ def select_initial_level(path: Path, level: int) -> None:
     path.write_text("\n".join(lines) + "\n")
 
 
+def select_invulnerable(path: Path, enabled: bool) -> None:
+    lines = path.read_text().splitlines()
+    matches = [
+        index for index, line in enumerate(lines)
+        if line.startswith(INVULNERABLE_SELECTOR)
+    ]
+    if len(matches) != 1:
+        raise SystemExit("wolf3d diagnostic-invulnerability selector changed")
+    lines[matches[0]] = (
+        f"W3D_DIAGNOSTIC_INVULNERABLE: equ {int(enabled)}"
+    )
+    path.write_text("\n".join(lines) + "\n")
+
+
 def build(
     assembler: Path,
     backend: str,
     module: Path | None,
     initial_level: int = 0,
+    invulnerable: bool = False,
 ) -> dict[str, object]:
     if backend == "vdplet-direct":
         if module is None:
@@ -146,6 +162,7 @@ def build(
         shutil.copytree(SOURCE, source)
         select_backend(source / "wolf3d_backend.inc", backend)
         select_initial_level(source / "wolf3d_start.inc", initial_level)
+        select_invulnerable(source / "wolf3d_backend.inc", invulnerable)
         if module is not None:
             select_package(source / "wolf3d_vdplet_package.inc", module.stat().st_size)
         temporary_output = temporary / output_name
@@ -162,6 +179,7 @@ def build(
     receipt = {
         "backend": backend,
         "initial_level": initial_level,
+        "diagnostic_invulnerable": invulnerable,
         "assembler": str(assembler),
         "output": str(output.relative_to(PROJECT.parents[2])),
         "bytes": output.stat().st_size,
@@ -187,12 +205,17 @@ def main() -> None:
     parser.add_argument("--assembler", type=Path)
     parser.add_argument("--module", type=Path)
     parser.add_argument("--initial-level", type=int, default=0)
+    parser.add_argument(
+        "--invulnerable", action="store_true",
+        help="acceptance-only build: record attacks but suppress player damage",
+    )
     args = parser.parse_args()
     receipt = build(
         resolve_assembler(args.assembler),
         args.backend,
         args.module,
         args.initial_level,
+        args.invulnerable,
     )
     print(json.dumps(receipt, indent=2))
 

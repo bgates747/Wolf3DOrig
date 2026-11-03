@@ -112,6 +112,14 @@ test_state_table:
     ld iy,expected_injury_states
     ld de,expected_injury_states_end-expected_injury_states
     ld c,reason_table
+    call assert_memory
+; WL_DEF.H orders Hans as walk 296..299, shoot 300..302, dead 303,
+; then die 304..306. Pin the complete source-derived graph so firing and
+; death art can never be transposed while timing/actions still look valid.
+    ld ix,w3d_actor_states+1224        ; 136 * 9
+    ld iy,expected_boss_states
+    ld de,expected_boss_states_end-expected_boss_states
+    ld c,reason_table
     jp assert_memory
 
 ; ---------------------------------------------------------------------------
@@ -256,6 +264,30 @@ test_target_boundaries:
     ld (test_tilemap+717),a             ; y=11, x=13
     call w3d_player_select_attack_target
     CHECK_A 2,reason_target
+
+; Bosses share the ordinary hitscan target selector.  This is intentionally
+; a complete gun-to-death-path test: accepting boss damage directly is not
+; sufficient if the selector filters Hans out before DamageActor is reached.
+    call prepare_test_world
+    ld ix,w3d_actors+W3D_ACTOR_SIZE
+    ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_BOSS
+    ld (ix+W3D_ACTOR_STATE+0),W3D_STATE_BOSS_CHASE1
+    ld (ix+W3D_ACTOR_STATE+1),0
+    ld (ix+W3D_ACTOR_HITPOINTS+0),1
+    ld (ix+W3D_ACTOR_HITPOINTS+1),0
+    call w3d_player_gun_attack
+    CHECK_MEM8 w3d_player_last_attack_target,1,reason_target
+    CHECK_MEM8 w3d_player_last_attack_hit,1,reason_target
+    CHECK_MEM8 w3d_player_last_attack_damage,1,reason_scalar
+    CHECK_MEM8 w3d_player_last_damage_result,W3D_DAMAGE_RESULT_KILLED,reason_scalar
+    ld a,1
+    call w3d_actor_pointer_from_id
+    CHECK_IX8 W3D_ACTOR_STATE+0,W3D_STATE_BOSS_DIE1,reason_state
+    CHECK_IX8 W3D_ACTOR_STATE+1,0,reason_state
+    CHECK_IX8 W3D_ACTOR_FLAGS,W3D_ACTOR_FLAG_ATTACKMODE|W3D_ACTOR_FLAG_NONMARK,reason_state
+    CHECK_MEM8 w3d_player_score+0,088h,reason_inventory
+    CHECK_MEM8 w3d_player_score+1,013h,reason_inventory
+    CHECK_MEM8 w3d_player_kill_count,1,reason_inventory
     ret
 
 ; ---------------------------------------------------------------------------
@@ -916,6 +948,69 @@ expected_injury_states:
     db 0,0
     dw W3D_STATE_SS_DEAD
 expected_injury_states_end:
+
+expected_boss_states:
+    dw 304
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM
+    dw W3D_STATE_BOSS_DIE2
+    dw 305
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_DIE3
+    dw 306
+    db 0
+    dw 15
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_DEAD
+    dw 303
+    db 0
+    dw 0
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_DEAD
+    dw 300
+    db 0
+    dw 30
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_SHOOT2
+    dw 301
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT3
+    dw 302
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT4
+    dw 301
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT5
+    dw 302
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT6
+    dw 301
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT7
+    dw 302
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
+    dw W3D_STATE_BOSS_SHOOT8
+    dw 300
+    db 0
+    dw 10
+    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+    dw W3D_STATE_BOSS_CHASE1
+expected_boss_states_end:
 
 report_banner:      db 13,10,"Wolf3D player combat direct regression",13,10,0
 report_pass:        db "PASS",13,10,0

@@ -19,9 +19,12 @@ The generated payloads appear under `src/asm/wolf3d_acceptance/tgt/`:
 - `secret-transition`: real E1L10, inside its return elevator facing the
   switch. Press Up once to display the secret-floor completion screen and
   enter E1L2.
-- `hans`: real E1L9, one door away from Hans Grosse. Only the copied
-  fixture's HP is reduced to one so a single successful hit exercises his
-  complete death, score, sound, and gold-key-drop path.
+- `hans`: real E1L9, one door away from Hans Grosse. His canonical full hit
+  pool is preserved for the selected difficulty (850/950/1050/1200), while
+  this copied application suppresses player damage so Hans's complete firing
+  animation can be observed indefinitely. Hans has no original pain
+  animation; his alternating firing frames are not hit feedback. Production
+  builds remain mortal.
 - `ghosts`: real E1L10 geometry with four copied actor slots replaced by the
   four original ghost classes in one open room around the player. The
   shareware `VSWAP.WL1` does not contain the paid game's ghost shapes

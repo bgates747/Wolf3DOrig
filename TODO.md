@@ -101,15 +101,3 @@ rows, and any already-real bitmap baseline using complete render/presentation
 boundaries; report workspace and speed separately, and presume no speed benefit
 until measured. A physical gate is still required before physical or
 default-cutover claims.
-
-[ ] 10. Repair Hans Grosse activation and complete his staged acceptance.
-Console8 review established that Hans is spawned, rendered and blocks player
-movement, but remains entirely inert: no animation, alert voice, chase, fire or
-damage. Compare the real E1L9 actor record and complete stand-state scheduling,
-area/sight gate, reaction delay, `FirstSighting`, chase and attack path against
-the original source. Preserve his one-hit diagnostic HP override only in the
-copied acceptance package. Add a regression which enters through the real
-zero-duration boss stand state and proves that sight acquisition retains the
-actor, applies the original immediate boss reaction delay, emits the alert,
-enters the widened chase state, animates and remains eligible to shoot. Rebuild
-the Hans fixture and require emulator then physical acceptance before closing.

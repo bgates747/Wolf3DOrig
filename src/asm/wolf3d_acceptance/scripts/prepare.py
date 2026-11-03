@@ -50,12 +50,16 @@ class Scenario:
     angle: int
     ghosts: bool = False
     one_hit_hans: bool = False
+    invulnerable: bool = False
 
 
 SCENARIOS = (
     Scenario("ordinary-transition", 0, (25, 47), 0),
     Scenario("secret-transition", 9, (45, 11), 180),
-    Scenario("hans", 8, (34, 17), 90, one_hit_hans=True),
+    Scenario(
+        "hans", 8, (34, 17), 90,
+        invulnerable=True,
+    ),
     Scenario("ghosts", 9, (5, 34), 0, ghosts=True),
 )
 
@@ -264,7 +268,7 @@ def patch_state(data: bytes, scenario: Scenario) -> bytes:
     return build_package(package)
 
 
-def build_application(level: int) -> Path:
+def build_application(level: int, invulnerable: bool = False) -> Path:
     command = [
         sys.executable,
         str(GAME / "scripts/build.py"),
@@ -272,6 +276,8 @@ def build_application(level: int) -> Path:
         "--module", str(require(MODULE)),
         "--initial-level", str(level),
     ]
+    if invulnerable:
+        command.append("--invulnerable")
     subprocess.run(command, cwd=PROJECT, check=True)
     suffix = "" if level == 0 else f"-l{level:02d}"
     return require(GAME / f"tgt/wolf3d-vdplet-direct{suffix}.bin")
@@ -305,6 +311,7 @@ def prepare_scenario(scenario: Scenario, application: Path) -> dict[str, object]
             "player_angle": scenario.angle,
             "synthetic_ghosts": scenario.ghosts,
             "one_hit_hans": scenario.one_hit_hans,
+            "diagnostic_invulnerable": scenario.invulnerable,
             "application_sha256": sha(temporary / "wolf3d.bin"),
             "module_sha256": sha(temporary / "wolf3d.vdpl"),
             "files": {
@@ -327,11 +334,17 @@ def prepare_scenario(scenario: Scenario, application: Path) -> dict[str, object]
 def main() -> None:
     TARGET.mkdir(parents=True, exist_ok=True)
     applications = {
-        level: build_application(level)
-        for level in sorted({scenario.initial_level for scenario in SCENARIOS})
+        key: build_application(*key)
+        for key in sorted({
+            (scenario.initial_level, scenario.invulnerable)
+            for scenario in SCENARIOS
+        })
     }
     receipts = [
-        prepare_scenario(scenario, applications[scenario.initial_level])
+        prepare_scenario(
+            scenario,
+            applications[(scenario.initial_level, scenario.invulnerable)],
+        )
         for scenario in SCENARIOS
     ]
     print(json.dumps({

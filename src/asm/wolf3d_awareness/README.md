@@ -83,9 +83,9 @@ W3D_RUNTIME_ROOT=/home/smith/Agon/mystuff/Wolf3dOrig \
   scripts/run_awareness_emulator_regression.py
 ```
 
-The accepted direct corpus reports 321/321 checks across 11 cases. Its binary
-is 44,655 bytes with SHA-256
-`8311d9390862a71cdfce5788a89b00e25de83721b5c0bf79f7a3bff934f22ceb`.
+The current direct corpus reports 377/377 checks across 11 cases. Its binary
+is 65,100 bytes with SHA-256
+`050b1f10b9f27e9850860eba1bb0913c48b6a7c046bed48587898650fb3991c3`.
 A reference run measured 10,000 connected quiet visual acquisitions in
-1,099 ms, or approximately 0.1099 ms per call; comparisons and file I/O are
+1,098 ms, or approximately 0.1098 ms per call; comparisons and file I/O are
 outside the timed loop.

@@ -33,6 +33,10 @@ class BackendContractTests(unittest.TestCase):
             "W3D_RENDER_BACKEND:            equ W3D_RENDER_BACKEND_STANDALONE",
             self.selector,
         )
+        self.assertIn(
+            "W3D_DIAGNOSTIC_INVULNERABLE:   equ 0",
+            self.selector,
+        )
 
     def test_production_start_floor_remains_tracked_default(self) -> None:
         self.assertIn("W3D_INITIAL_LEVEL: equ 0", self.start_selector)

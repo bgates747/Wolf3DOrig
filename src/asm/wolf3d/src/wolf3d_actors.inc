@@ -100,7 +100,10 @@ w3d_actor_states:
     dw 296             ; 15 s_bossstand
     db 0
     dw 0
-    db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
+; Hans uses the original T_Stand awareness path.  THINK_NONE leaves the actor
+; collidable and renderable but makes SightPlayer unreachable, producing an
+; inert boss even after his area becomes connected through the entrance door.
+    db W3D_STATE_THINK_STAND,W3D_STATE_ACTION_NONE
     dw W3D_STATE_BOSS_STAND
     dw 385             ; 16 s_gretelstand
     db 0
@@ -740,17 +743,17 @@ w3d_actor_states:
     db W3D_STATE_THINK_CHASE,W3D_STATE_ACTION_NONE
     dw W3D_STATE_BOSS_CHASE1
 
-    dw 300             ; 136 s_bossdie1 / SPR_BOSS_DIE1
+    dw 304             ; 136 s_bossdie1 / SPR_BOSS_DIE1
     db 0
     dw 15
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_DEATH_SCREAM
     dw W3D_STATE_BOSS_DIE2
-    dw 301             ; 137 s_bossdie2 / SPR_BOSS_DIE2
+    dw 305             ; 137 s_bossdie2 / SPR_BOSS_DIE2
     db 0
     dw 15
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
     dw W3D_STATE_BOSS_DIE3
-    dw 302             ; 138 s_bossdie3 / SPR_BOSS_DIE3
+    dw 306             ; 138 s_bossdie3 / SPR_BOSS_DIE3
     db 0
     dw 15
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
@@ -761,42 +764,42 @@ w3d_actor_states:
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
     dw W3D_STATE_BOSS_DEAD
 
-    dw 304             ; 140 s_bossshoot1 / SPR_BOSS_SHOOT1
+    dw 300             ; 140 s_bossshoot1 / SPR_BOSS_SHOOT1
     db 0
     dw 30
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
     dw W3D_STATE_BOSS_SHOOT2
-    dw 305             ; 141 s_bossshoot2 / SPR_BOSS_SHOOT2
+    dw 301             ; 141 s_bossshoot2 / SPR_BOSS_SHOOT2
     db 0
     dw 10
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
     dw W3D_STATE_BOSS_SHOOT3
-    dw 306             ; 142 s_bossshoot3 / SPR_BOSS_SHOOT3
+    dw 302             ; 142 s_bossshoot3 / SPR_BOSS_SHOOT3
     db 0
     dw 10
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
     dw W3D_STATE_BOSS_SHOOT4
-    dw 305             ; 143 s_bossshoot4 / SPR_BOSS_SHOOT2
+    dw 301             ; 143 s_bossshoot4 / SPR_BOSS_SHOOT2
     db 0
     dw 10
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
     dw W3D_STATE_BOSS_SHOOT5
-    dw 306             ; 144 s_bossshoot5 / SPR_BOSS_SHOOT3
+    dw 302             ; 144 s_bossshoot5 / SPR_BOSS_SHOOT3
     db 0
     dw 10
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
     dw W3D_STATE_BOSS_SHOOT6
-    dw 305             ; 145 s_bossshoot6 / SPR_BOSS_SHOOT2
+    dw 301             ; 145 s_bossshoot6 / SPR_BOSS_SHOOT2
     db 0
     dw 10
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
     dw W3D_STATE_BOSS_SHOOT7
-    dw 306             ; 146 s_bossshoot7 / SPR_BOSS_SHOOT3
+    dw 302             ; 146 s_bossshoot7 / SPR_BOSS_SHOOT3
     db 0
     dw 10
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_SHOOT
     dw W3D_STATE_BOSS_SHOOT8
-    dw 304             ; 147 s_bossshoot8 / SPR_BOSS_SHOOT1
+    dw 300             ; 147 s_bossshoot8 / SPR_BOSS_SHOOT1
     db 0
     dw 10
     db W3D_STATE_THINK_NONE,W3D_STATE_ACTION_NONE
