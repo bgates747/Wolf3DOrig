@@ -134,6 +134,21 @@ W3D_MUSIC_WONDERIN: equ 14
 W3D_MUSIC_ROSTER: equ 23
 W3D_MUSIC_URAHERO: equ 24
 
+; CheckKeys/US_ControlPanel request contract shared with the production motion
+; and callback paths. Keep these explicit here so the shell dispatcher is
+; tested through the same public values without importing either subsystem.
+w3d_panel_request_menu: equ 0
+w3d_panel_request_help: equ 1
+w3d_panel_request_save: equ 2
+w3d_panel_request_load: equ 3
+w3d_panel_request_sound: equ 4
+w3d_panel_request_view: equ 5
+w3d_panel_request_control: equ 6
+w3d_panel_request_end_game: equ 7
+w3d_panel_request_quick_save: equ 8
+w3d_panel_request_quick_load: equ 9
+w3d_panel_request_quit: equ 10
+
 w3d_music_enabled: db 1
 
 w3d_music_start:
@@ -203,6 +218,7 @@ REASON_CONFIRM_PLOTS: equ 15
 REASON_SFX_PREFERENCE: equ 16
 REASON_MUSIC_PREFERENCE: equ 17
 REASON_MUSIC_ASSIGNMENT: equ 18
+REASON_QUICK_SLOT: equ 19
 
 start:
     push af
@@ -259,6 +275,9 @@ run_tests:
     ld a,9
     call mark_stage
     call test_draw_contract
+    ld a,10
+    call mark_stage
+    call test_quick_keys
     ld a,1
     ld (result_done),a
     call write_result
@@ -817,6 +836,118 @@ test_draw_contract:
     TEST_DIFFICULTY_DRAW 3,W3D_SHELL_DIFFICULTY_HARD_SELECTED_BUFFER,139,137,W3D_SHELL_DIFFICULTY_HARD_BUFFER,37
     ret
 
+; Original CheckKeys F1-F10 dispatch. Page routes return to play, F7/F10
+; retain their end/quit results, and F8/F9 reuse the last slot selected by a
+; successful full save/load panel.
+test_quick_keys:
+    ld a,54
+    ld (test_case),a
+    call w3d_shell_reset_exit_request
+    call test_reset_plots
+    ld hl,script_quick_page_escape
+    call test_set_script
+    ld a,w3d_panel_request_help
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+    CHECK_MEM8 test_plot_log+0,W3D_SHELL_READ_THIS_PAGE_BUFFER&0ffh,REASON_PLOT_BUFFER
+    CHECK_MEM8 test_plot_log+1,W3D_SHELL_READ_THIS_PAGE_BUFFER>>8,REASON_PLOT_BUFFER
+
+    ld a,55
+    ld (test_case),a
+    ld hl,script_quick_page_escape
+    call test_set_script
+    ld a,w3d_panel_request_sound
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+
+    ld a,56
+    ld (test_case),a
+    ld hl,script_quick_page_escape
+    call test_set_script
+    ld a,w3d_panel_request_view
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+
+    ld a,57
+    ld (test_case),a
+    ld hl,script_quick_page_escape
+    call test_set_script
+    ld a,w3d_panel_request_control
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+
+    ld a,58
+    ld (test_case),a
+    call w3d_shell_reset_quick_slot
+    xor a
+    ld (test_save_store_count),a
+    ld hl,script_quick_full_panel
+    call test_set_script
+    ld hl,script_quick_save_keys
+    call test_set_key_script
+    ld a,w3d_panel_request_save
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+    CHECK_MEM8 test_save_store_count,1,REASON_SELECTION
+    CHECK_MEM8 w3d_shell_quick_slot_valid,1,REASON_QUICK_SLOT
+    CHECK_MEM8 w3d_shell_quick_slot,0,REASON_QUICK_SLOT
+
+    ld a,59
+    ld (test_case),a
+    call w3d_shell_reset_quick_slot
+    xor a
+    ld (test_save_load_count),a
+    ld hl,script_quick_full_panel
+    call test_set_script
+    ld a,w3d_panel_request_load
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_LOAD_GAME,REASON_RESULT
+    CHECK_MEM8 test_save_load_count,1,REASON_SELECTION
+    CHECK_MEM8 w3d_shell_quick_slot_valid,1,REASON_QUICK_SLOT
+    CHECK_MEM8 w3d_shell_quick_slot,0,REASON_QUICK_SLOT
+
+    ld a,60
+    ld (test_case),a
+    ld hl,script_quick_release
+    call test_set_script
+    ld a,w3d_panel_request_quick_save
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_RESUME,REASON_RESULT
+    CHECK_MEM8 test_save_store_count,2,REASON_SELECTION
+
+    ld a,61
+    ld (test_case),a
+    ld hl,script_quick_release
+    call test_set_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
+    ld a,w3d_panel_request_quick_load
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_LOAD_GAME,REASON_RESULT
+    CHECK_MEM8 test_save_load_count,2,REASON_SELECTION
+
+    ld a,62
+    ld (test_case),a
+    ld hl,script_quick_release
+    call test_set_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
+    ld a,w3d_panel_request_end_game
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_END_GAME,REASON_RESULT
+    CHECK_EXIT 0
+
+    ld a,63
+    ld (test_case),a
+    ld hl,script_quick_release
+    call test_set_script
+    ld a,w3d_panel_request_quit
+    call w3d_shell_pause_quick
+    CHECK_A W3D_SHELL_PAUSE_QUIT,REASON_RESULT
+    CHECK_EXIT 1
+    call w3d_shell_reset_exit_request
+    ret
+
 test_set_script:
     ld (test_script_pointer),hl
     ret
@@ -1205,6 +1336,14 @@ script_attract_cycle:
     db SCRIPT_RELEASE,SCRIPT_TICK,SCRIPT_RELEASE
     db SCRIPT_TICK,SCRIPT_RELEASE,SCRIPT_TICK,SCRIPT_RELEASE
     db SCRIPT_ANY,SCRIPT_RELEASE
+script_quick_page_escape:
+    db SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
+script_quick_full_panel:
+    db SCRIPT_RELEASE,SCRIPT_RELEASE,SCRIPT_RETURN,SCRIPT_RELEASE
+script_quick_release:
+    db SCRIPT_RELEASE
+script_quick_save_keys:
+    db 'Y',13
 
 test_sysvars:
     ds 24

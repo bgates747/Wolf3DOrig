@@ -510,6 +510,7 @@ w3d_main_body:
     call printNewLine
     call w3d_highscores_initialize
     call w3d_save_slots_initialize
+    call w3d_shell_reset_quick_slot
     call w3d_shell_run
 
 @route_shell_result:
@@ -522,6 +523,7 @@ w3d_main_body:
     ret
 @run_new_game:
     call w3d_demo_cancel
+    call w3d_shell_reset_quick_slot
     jr @run_gameplay
 @run_loaded_game:
     call w3d_demo_cancel
@@ -530,7 +532,7 @@ w3d_main_body:
     cp W3D_GAMEPLAY_RESULT_LOAD
     jr z,@run_gameplay
     cp W3D_GAMEPLAY_RESULT_NEW_GAME
-    jr z,@run_gameplay
+    jr z,@restart_new_game
     cp W3D_GAMEPLAY_RESULT_DEMO_DONE
     jr z,@demo_done
     cp W3D_GAMEPLAY_RESULT_VICTORY
@@ -546,6 +548,9 @@ w3d_main_body:
     call w3d_demo_cancel
     call w3d_shell_resume_after_demo
     jr @route_shell_result
+@restart_new_game:
+    call w3d_shell_reset_quick_slot
+    jr @run_gameplay
 
 ; One complete gameplay ownership lifetime. A selected difficulty is already
 ; authoritative when this routine begins, so the matching level package and
@@ -977,7 +982,8 @@ w3d_gameplay_pause:
     call w3d_shell_setup
     call w3d_wait_for_gameplay_mode
     jp c,w3d_gameplay_fatal_shutdown
-    call w3d_shell_pause_menu
+    ld a,(w3d_gameplay_panel_request)
+    call w3d_shell_pause_quick
     cp W3D_SHELL_PAUSE_RESUME
     jr z,@resume
     cp W3D_SHELL_PAUSE_NEW_GAME

@@ -34,7 +34,27 @@ fa_create_always:    equ 08h
     include "wolf3d_version.inc"
     include "wolf3d_actors.inc"
     include "wolf3d_areas.inc"
+; Death/render isolation does not import the full victory presentation, while
+; current production actor/motion code exposes these callbacks and state.
+w3d_victory_think_bj_jump:
+    ret
+w3d_victory_think_bj_run:
+    ret
+w3d_victory_bj_yell:
+    ret
+w3d_victory_bj_done:
+    ret
     include "wolf3d_actor_sim.inc"
+w3d_initialize_victory_state:
+    xor a
+    ld (w3d_victory_active),a
+    ret
+w3d_begin_victory_sequence:
+    ret
+w3d_simulate_victory_step:
+    ret
+w3d_victory_active:
+    db 0
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
     include "wolf3d_death.inc"
@@ -45,6 +65,29 @@ fa_create_always:    equ 08h
 W3D_FIXTURE_STATIC_BYTES: equ W3D_FIXTURE_STATIC_COUNT*W3D_STATIC_SIZE
 W3D_STATIC_TAIL_COUNT:    equ W3D_MAX_STATICS-W3D_FIXTURE_STATIC_COUNT
 W3D_STATIC_TAIL_BYTES:    equ W3D_STATIC_TAIL_COUNT*W3D_STATIC_SIZE
+
+    macro CHECK_CALLBACK_PANEL_KEY vkey,panel_value,case
+        call w3d_initialize_render_state
+        xor a
+        ld (callback_keyboard_packet+0),a
+        ld (callback_keyboard_packet+1),a
+        ld a,vkey
+        ld (callback_keyboard_packet+2),a
+        ld a,1
+        ld (callback_keyboard_packet+3),a
+        ld de,callback_keyboard_packet
+        call w3d_render_packet_callback
+        ld c,1
+        ld d,case
+        ld a,(w3d_gameplay_panel_request)
+        ld b,panel_value
+        call expect_a
+        ld c,1
+        ld d,case+20
+        ld a,(w3d_exit_requested)
+        ld b,1
+        call expect_a
+    endmacro
 
 start:
     push af
@@ -141,6 +184,40 @@ test_callback_routing:
     call test_memory_equal
     ld c,1
     ld d,8
+    ld b,1
+    call expect_a
+
+; The callback sees key-down records between foreground keymap polls. Pin the
+; exact FabGL F1-F10 range as the same request values used by CheckKeys.
+    CHECK_CALLBACK_PANEL_KEY 159,w3d_panel_request_help,9
+    CHECK_CALLBACK_PANEL_KEY 160,w3d_panel_request_save,10
+    CHECK_CALLBACK_PANEL_KEY 161,w3d_panel_request_load,11
+    CHECK_CALLBACK_PANEL_KEY 162,w3d_panel_request_sound,12
+    CHECK_CALLBACK_PANEL_KEY 163,w3d_panel_request_view,13
+    CHECK_CALLBACK_PANEL_KEY 164,w3d_panel_request_control,14
+    CHECK_CALLBACK_PANEL_KEY 165,w3d_panel_request_end_game,15
+    CHECK_CALLBACK_PANEL_KEY 166,w3d_panel_request_quick_save,16
+    CHECK_CALLBACK_PANEL_KEY 167,w3d_panel_request_quick_load,17
+    CHECK_CALLBACK_PANEL_KEY 168,w3d_panel_request_quit,18
+
+; Escape remains the ordinary control-panel request rather than F10 Quit.
+    call w3d_initialize_render_state
+    ld a,27
+    ld (callback_keyboard_packet+0),a
+    xor a
+    ld (callback_keyboard_packet+2),a
+    ld a,1
+    ld (callback_keyboard_packet+3),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld c,1
+    ld d,19
+    ld a,(w3d_gameplay_panel_request)
+    ld b,w3d_panel_request_menu
+    call expect_a
+    ld c,1
+    ld d,39
+    ld a,(w3d_exit_requested)
     ld b,1
     jp expect_a
 
@@ -1705,6 +1782,7 @@ version_packet_template:
 callback_render_packet: ds 10
 callback_fizzle_packet: ds 10
 callback_version_packet: ds W3D_VERSION_REPLY_SIZE
+callback_keyboard_packet: ds 4
 test_bearing_angle:     ds 2
 test_render_purpose:    db 0
 test_fizzle_token:      ds 2

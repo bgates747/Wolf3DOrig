@@ -421,6 +421,159 @@ w3d_shell_pause_menu:
     call w3d_shell_save_load_menu
     jp @redraw
 
+; A=w3d_panel_request_* selected by CheckKeys-style gameplay polling. The
+; caller has already drained rendering and entered the single-buffered shell.
+; F1-F6 jump directly to their source pages, F7/F10 retain confirmation/quit
+; semantics, and F8/F9 use the last successful slot after their first full
+; save/load selection.
+w3d_shell_pause_quick:
+    ld (w3d_shell_quick_request),a
+    call w3d_shell_pause_wait_all_released
+    ld a,(w3d_shell_quick_request)
+    or a
+    jp z,w3d_shell_pause_menu
+    cp w3d_panel_request_help
+    jp z,@help
+    cp w3d_panel_request_save
+    jp z,@save
+    cp w3d_panel_request_load
+    jp z,@load
+    cp w3d_panel_request_sound
+    jp z,@sound
+    cp w3d_panel_request_view
+    jp z,@view
+    cp w3d_panel_request_control
+    jp z,@control
+    cp w3d_panel_request_end_game
+    jp z,@end_game
+    cp w3d_panel_request_quick_save
+    jp z,@quick_save
+    cp w3d_panel_request_quick_load
+    jp z,@quick_load
+    call w3d_shell_request_exit       ; F10 / unknown fail-safe
+    ld a,W3D_SHELL_PAUSE_QUIT
+    or a
+    ret
+@help:
+    ld hl,W3D_SHELL_READ_THIS_PAGE_BUFFER
+    call w3d_shell_information_page
+    jp @resume
+@sound:
+    call w3d_shell_sound_page
+    jp @resume
+@view:
+    ld hl,W3D_SHELL_CHANGE_VIEW_PAGE_BUFFER
+    call w3d_shell_information_page
+    jp @resume
+@control:
+    ld hl,W3D_SHELL_CONTROL_PAGE_BUFFER
+    call w3d_shell_information_page
+    jp @resume
+@save:
+    ld a,1
+    ld b,1
+    call w3d_shell_save_load_menu
+    jp @resume
+@load:
+    xor a
+    ld b,1
+    call w3d_shell_save_load_menu
+    or a
+    jp z,@resume
+@loaded:
+    ld a,W3D_SHELL_PAUSE_LOAD_GAME
+    or a
+    ret
+@end_game:
+    call w3d_shell_confirm_end_game
+    or a
+    jp z,@resume
+    ld a,W3D_SHELL_PAUSE_END_GAME
+    or a
+    ret
+@quick_save:
+    call w3d_shell_quick_slot_available
+    jp z,@save
+    ld a,(w3d_shell_quick_slot)
+    push af
+    call w3d_shell_slot_name_pointer
+    pop af
+    call w3d_save_slot_store
+    jp nc,@resume
+    call w3d_shell_quick_io_error
+    jp @resume
+@quick_load:
+    call w3d_shell_quick_slot_available
+    jp z,@load
+    xor a
+    ld (w3d_shell_slot_mode),a
+    ld a,1
+    ld (w3d_shell_slot_context),a
+    ld a,(w3d_shell_quick_slot)
+    ld (w3d_shell_slot_choice),a
+    call w3d_shell_draw_save_load_menu
+    call w3d_shell_confirm_quick_load
+    or a
+    jp z,@resume
+    ld a,(w3d_shell_quick_slot)
+    call w3d_save_slot_load
+    jp nc,@loaded
+    call w3d_shell_quick_io_error
+@resume:
+    ld a,W3D_SHELL_PAUSE_RESUME
+    or a
+    ret
+
+w3d_shell_quick_slot_available:
+    ld a,(w3d_shell_quick_slot_valid)
+    or a
+    ret z
+    ld a,(w3d_shell_quick_slot)
+    jp w3d_shell_slot_is_available
+
+w3d_shell_confirm_quick_load:
+    ld a,4
+    ld c,28
+    call w3d_shell_slot_set_cursor
+    ld hl,w3d_shell_quick_load_text
+    call printString
+@wait:
+    call w3d_shell_read_key
+    cp 'Y'
+    jr z,@yes
+    cp 'y'
+    jr z,@yes
+    cp 'N'
+    jr z,@no
+    cp 'n'
+    jr z,@no
+    cp 27
+    jr nz,@wait
+@no:
+    xor a
+    ret
+@yes:
+    ld a,1
+    or a
+    ret
+
+w3d_shell_quick_io_error:
+    call w3d_shell_draw_slot_io_error
+    jp w3d_shell_wait_any_local_press
+
+w3d_shell_reset_quick_slot:
+    xor a
+    ld (w3d_shell_quick_slot_valid),a
+    ld (w3d_shell_quick_slot),a
+    ret
+
+w3d_shell_remember_quick_slot:
+    ld a,(w3d_shell_slot_choice)
+    ld (w3d_shell_quick_slot),a
+    ld a,1
+    ld (w3d_shell_quick_slot_valid),a
+    ret
+
 ; Original CP_EndGame -> Confirm(ENDGAMESTR).  Y accepts; N or Escape cancels
 ; and returns to the in-game panel without setting the application exit latch.
 w3d_shell_confirm_end_game:
@@ -710,6 +863,7 @@ w3d_shell_save_load_menu:
     ld a,(w3d_shell_slot_choice)
     call w3d_save_slot_load
     jr c,@io_error
+    call w3d_shell_remember_quick_slot
     ld a,1
     or a
     ret
@@ -728,6 +882,7 @@ w3d_shell_save_load_menu:
     ld hl,w3d_shell_slot_name_edit
     call w3d_save_slot_store
     jr c,@io_error
+    call w3d_shell_remember_quick_slot
     ld a,1
     or a
     ret
@@ -1005,6 +1160,8 @@ w3d_shell_empty_slot_text:
     db "      - empty -",0
 w3d_shell_overwrite_text:
     db "Overwrite this game? (Y or N)",0
+w3d_shell_quick_load_text:
+    db "Load this game? (Y or N)",0
 w3d_shell_slot_io_error_text:
     db "Save/load failed. Press any key.",0
 w3d_shell_slot_clear_name:
@@ -1462,6 +1619,12 @@ w3d_shell_difficulty:
 w3d_shell_pause_choice:
     db W3D_SHELL_PAUSE_CHOICE_BACK
 w3d_shell_sound_choice:
+    db 0
+w3d_shell_quick_request:
+    db 0
+w3d_shell_quick_slot_valid:
+    db 0
+w3d_shell_quick_slot:
     db 0
 w3d_shell_choice_local:
     db 0

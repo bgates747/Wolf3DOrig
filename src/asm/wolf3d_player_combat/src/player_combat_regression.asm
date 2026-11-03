@@ -34,13 +34,45 @@ fa_create_always:   equ 0x08
         CHECK_A expected,why
     endmacro
 
+    macro CHECK_PANEL_KEY offset,mask,panel_value
+        call prepare_test_world
+        xor a
+        ld (w3d_exit_requested),a
+        ld (w3d_gameplay_panel_request),a
+        ld a,mask
+        ld (w3d_keyboard_masks+offset),a
+        call w3d_latch_exit_request
+        CHECK_MEM8 w3d_exit_requested,1,reason_inventory
+        CHECK_MEM8 w3d_gameplay_panel_request,panel_value,reason_inventory
+    endmacro
+
     include "wolf3d_backend.inc"
     include "wolf3d_audio_assets.inc"
     include "wolf3d_sight.inc"
     include "wolf3d_fixture.inc"
     include "wolf3d_actors.inc"
     include "wolf3d_areas.inc"
+; The player-combat fixture does not include the victory presentation module,
+; but production actor simulation exposes its BJ-jump think callback.
+w3d_victory_think_bj_jump:
+    ret
+w3d_victory_think_bj_run:
+    ret
+w3d_victory_bj_yell:
+    ret
+w3d_victory_bj_done:
+    ret
     include "wolf3d_actor_sim.inc"
+w3d_initialize_victory_state:
+    xor a
+    ld (w3d_victory_active),a
+    ret
+w3d_begin_victory_sequence:
+    ret
+w3d_simulate_victory_step:
+    ret
+w3d_victory_active:
+    db 0
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
 
@@ -102,10 +134,10 @@ test_state_table:
     ld a,phase_states
     ld (test_phase),a
     ld a,W3D_STATE_COUNT
-    CHECK_A 152,reason_scalar
+    CHECK_A 162,reason_scalar
     ld hl,w3d_actor_states_end-w3d_actor_states
     ld a,l
-    CHECK_A 058h,reason_scalar
+    CHECK_A 0b2h,reason_scalar
     ld a,h
     CHECK_A 5,reason_scalar
     ld ix,w3d_actor_states+909        ; 101 * 9, literal avoids precedence
@@ -409,6 +441,20 @@ test_weapon_selection:
     ld (w3d_keyboard_masks+14),a
     call w3d_latch_exit_request
     CHECK_MEM8 w3d_exit_requested,1,reason_inventory
+    CHECK_MEM8 w3d_gameplay_panel_request,w3d_panel_request_menu,reason_inventory
+
+; MOS's BBC-compatible keymap scatters F1-F10 across three bytes. Pin every
+; source CheckKeys/CP_CheckQuick route rather than assuming enum adjacency.
+    CHECK_PANEL_KEY 14,00000010b,w3d_panel_request_help
+    CHECK_PANEL_KEY 14,00000100b,w3d_panel_request_save
+    CHECK_PANEL_KEY 14,00001000b,w3d_panel_request_load
+    CHECK_PANEL_KEY 2,00010000b,w3d_panel_request_sound
+    CHECK_PANEL_KEY 14,00010000b,w3d_panel_request_view
+    CHECK_PANEL_KEY 14,00100000b,w3d_panel_request_control
+    CHECK_PANEL_KEY 2,01000000b,w3d_panel_request_end_game
+    CHECK_PANEL_KEY 14,01000000b,w3d_panel_request_quick_save
+    CHECK_PANEL_KEY 14,10000000b,w3d_panel_request_quick_load
+    CHECK_PANEL_KEY 3,01000000b,w3d_panel_request_quit
 
 ; Number keys continue to select carried weapons; pin the fourth physical key
 ; here while the host oracle covers all four selection policies.
@@ -799,6 +845,8 @@ test_audio_reset:
 w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
+    db 0
+w3d_gameplay_panel_request:
     db 0
 
 expected_injury_states:

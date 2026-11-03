@@ -37,6 +37,7 @@ w3d_initialize_render_state:
     ld (w3d_completion_ready),a
     ld (w3d_sequence_initialized),a
     ld (w3d_exit_requested),a
+    ld (w3d_gameplay_panel_request),a
     ld (w3d_callback_error),a
     ld (w3d_frame_presented),a
     ld (w3d_async_owner),a
@@ -510,13 +511,13 @@ w3d_render_packet_callback:
 
     .if W3D_RENDER_BACKEND
     call w3d_vdplet_try_capture_packet
-    jr c,@done
+    jp c,@done
     .endif
 
 ; W3DV is a startup compatibility reply, not a render event or keyboard
 ; record. The helper consumes cookie-matched and malformed replies atomically.
     call w3d_try_capture_version_packet
-    jr c,@done
+    jp c,@done
 
     ld a,(ix+0)
     cp 'W'
@@ -561,20 +562,36 @@ w3d_render_packet_callback:
     ld a,1
     jr z,@fizzle_ready
     ld (w3d_completion_ready),a
-    jr @done
+    jp @done
 @fizzle_ready:
     ld (w3d_fizzle_completion_ready),a
-    jr @done
+    jp @done
 
 @keyboard:
-; Escape key-down requests shutdown. The foreground waits for any outstanding
-; render completion before removing this callback.
+; Escape and the original F1-F10 quick keys are latched on key-down. The
+; foreground drains any outstanding render before changing video/control
+; ownership. Demo polling clears the same request before returning to shell.
     ld a,(ix+3)
     cp 1
-    jr nz,@done
+    jp nz,@done
+    ld a,(w3d_exit_requested)
+    or a
+    jp nz,@done
+    ld a,(ix+2)
+    cp 159                         ; FabGL VK_F1
+    jr c,@escape
+    cp 169                         ; one beyond VK_F10
+    jr nc,@escape
+    sub 158                        ; panel request 1..10
+    ld (w3d_gameplay_panel_request),a
+    jr @request
+@escape:
     ld a,(ix+0)
     cp 27
-    jr nz,@done
+    jp nz,@done
+    xor a
+    ld (w3d_gameplay_panel_request),a
+@request:
     ld a,1
     ld (w3d_exit_requested),a
 
@@ -606,6 +623,11 @@ w3d_sequence_initialized:
     db 0
 
 w3d_exit_requested:
+    db 0
+
+; Source CheckKeys/CP_CheckQuick request selected by Escape or F1-F10.  The
+; foreground drains the current renderer before showing any control page.
+w3d_gameplay_panel_request:
     db 0
 
 w3d_callback_error:

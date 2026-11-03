@@ -43,6 +43,7 @@ REASONS = {
     16: "sound-effects preference",
     17: "music preference",
     18: "original music assignment",
+    19: "remembered quick slot",
 }
 
 STAGES = {
@@ -55,6 +56,7 @@ STAGES = {
     7: "control pages",
     8: "attract timing",
     9: "draw contracts",
+    10: "F1-F10 gameplay quick keys",
     109: "main-menu Quit",
     110: "main-menu Escape",
     111: "main-menu New Game",

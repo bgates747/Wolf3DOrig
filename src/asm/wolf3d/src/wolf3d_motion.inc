@@ -13,7 +13,8 @@
 ;   Up Arrow    operate the adjacent door (rising edge)
 ;   Space       attack/fire
 ;   1/2/3/4     knife/pistol/submachine gun/gatling gun
-;   Escape      clean exit
+;   Escape      in-game control panel
+;   F1..F10     original direct panel/quick actions
 ;
 ; Player collision follows Wolf3D's square PLAYERSIZE AABB and ClipMove
 ; ordering: combined X/Y, then X only, then Y only. Unlike the DOS tile-wide
@@ -58,6 +59,20 @@ W3D_CONTROL_D:                  equ 00001000b
 W3D_CONTROL_LEFT:               equ 00010000b
 W3D_CONTROL_RIGHT:              equ 00100000b
 W3D_CONTROL_USE:                equ 01000000b
+
+; Shared CheckKeys/CP_CheckQuick request values. Escape selects the ordinary
+; menu; F1-F10 deliberately map to the contiguous source action range 1..10.
+w3d_panel_request_menu:       equ 0
+w3d_panel_request_help:       equ 1
+w3d_panel_request_save:       equ 2
+w3d_panel_request_load:       equ 3
+w3d_panel_request_sound:      equ 4
+w3d_panel_request_view:       equ 5
+w3d_panel_request_control:    equ 6
+w3d_panel_request_end_game:   equ 7
+w3d_panel_request_quick_save: equ 8
+w3d_panel_request_quick_load: equ 9
+w3d_panel_request_quit:       equ 10
 
 ; Motion owns the recorded-demo hooks it calls. Keeping the generated streams
 ; and state machine here also preserves every standalone direct fixture that
@@ -325,9 +340,52 @@ w3d_poll_keys:
     ; fall through
 
 w3d_latch_exit_request:
+    ld a,(w3d_exit_requested)
+    or a
+    ret nz
     ld a,(w3d_keyboard_masks+14)
-    and 00000001b                  ; Escape
+    bit 0,a                         ; Escape opens the ordinary panel
+    jr nz,@menu
+    bit 1,a                         ; F1: Help
+    ld b,w3d_panel_request_help
+    jr nz,@quick
+    bit 2,a                         ; F2: Save
+    ld b,w3d_panel_request_save
+    jr nz,@quick
+    bit 3,a                         ; F3: Load
+    ld b,w3d_panel_request_load
+    jr nz,@quick
+    bit 4,a                         ; F5: Change View
+    ld b,w3d_panel_request_view
+    jr nz,@quick
+    bit 5,a                         ; F6: Control
+    ld b,w3d_panel_request_control
+    jr nz,@quick
+    bit 6,a                         ; F8: Quick Save
+    ld b,w3d_panel_request_quick_save
+    jr nz,@quick
+    bit 7,a                         ; F9: Quick Load
+    ld b,w3d_panel_request_quick_load
+    jr nz,@quick
+    ld a,(w3d_keyboard_masks+2)
+    bit 4,a                         ; F4: Sound
+    ld b,w3d_panel_request_sound
+    jr nz,@quick
+    bit 6,a                         ; F7: End Game
+    ld b,w3d_panel_request_end_game
+    jr nz,@quick
+    ld a,(w3d_keyboard_masks+3)
+    bit 6,a                         ; F10: Quit
+    ld b,w3d_panel_request_quit
     ret z
+@quick:
+    ld a,b
+    ld (w3d_gameplay_panel_request),a
+    jr @requested
+@menu:
+    xor a
+    ld (w3d_gameplay_panel_request),a
+@requested:
     ld a,1
     ld (w3d_exit_requested),a
     ret

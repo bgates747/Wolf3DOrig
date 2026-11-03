@@ -147,6 +147,17 @@ unrecoverable error may still use the global clean-exit path.
 Acceptance: deterministic input/state tests, resume without reseed, end-game
 to shell, quit to MOS, and Escape from every asynchronous boundary.
 
+Residual audit correction, 2026-11-03: the source's direct F1-F10 routes were
+missing even though the in-game panel and Escape flow were present. `CheckKeys`
+sends F1 help, F2 save, F3 load, F4 sound, F5 view, and F6 controls directly
+into their pages; `CP_CheckQuick` owns F7 end game, remembered-slot F8/F9 quick
+save/load, and F10 quit. The production polling path, interrupt-time FabGL
+callback path, dispatcher, and remembered-slot lifecycle now implement those
+routes. Oryx generation 152 passes 255/255 shell, 492/492 keymap/player-combat,
+and 224/224 callback/death checks. These are required behavior, not optional
+DOS hardware configuration; TODO 14 now retains only the batched visual/input
+acceptance gate.
+
 ### A6. Save/load game — TODO 15
 
 Original oracle: `WL_MAIN.C::SaveTheGame` / `LoadTheGame` and

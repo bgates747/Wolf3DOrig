@@ -46,8 +46,14 @@ temporary gameplay-Escape-to-MOS behavior. Support resume, end game, and an
 explicit clean Quit to MOS while preserving the common asynchronous Escape,
 mode-restoration, and VDPlet-teardown guarantees. The in-game panel, source
 row substitutions, resume, confirmed End Game, New Game, and clean Quit paths
-pass the 131-check shell target fixture. Remaining close gate: one batched
-visual pause/resume/end-game/quit review.
+pass their direct shell fixture. The residual `WL_PLAY.C::CheckKeys` /
+`WL_MENU.C::CP_CheckQuick` routes are now implemented for F1 help, F2/F3
+save/load, F4 sound, F5 view, F6 controls, F7 end game, F8/F9 remembered-slot
+quick save/load, and F10 quit. Direct production evidence passes 255/255 shell,
+492/492 physical-keymap/player-combat, and 224/224 callback/death checks.
+Remaining close gate: one batched visual pause/resume/page/save/load/end-game/
+quit review, including callback-time F keys and F8/F9 reuse of the selected
+slot.
 
 [ ] 15. Implement the ten-slot save/load menu and a versioned Agon save format
 which reconstructs VDP state from complete authoritative eZ80 simulation state
@@ -93,7 +99,7 @@ retain channels 0-2. Original title, menu, Read This, score, ten-floor,
 intermission, victory, game-over, and return assignments are integrated;
 Sound independently controls persistent-in-process SFX and music preferences.
 The direct sequencer fixture passes 48/48 and the integrated production-shell
-fixture passes 233/233 on real eZ80 emulation. Remaining close gate: one
+fixture passes 255/255 on real eZ80 emulation. Remaining close gate: one
 audible emulator/hardware review of representative gameplay, menu,
 intermission, and victory transitions, including timbre/mix and both toggles.
 
