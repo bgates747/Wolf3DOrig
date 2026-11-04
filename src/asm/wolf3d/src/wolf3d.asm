@@ -821,9 +821,18 @@ w3d_main_body:
     pop af
     jr @route_shell_result
 @demo_done:
+    ld a,(w3d_demo_aborted)
+    push af
     call w3d_demo_cancel
     call w3d_open_shell_callback
+    pop af
+    or a
+    jr nz,@demo_aborted
     call w3d_shell_resume_after_demo
+    jr @demo_shell_done
+@demo_aborted:
+    call w3d_shell_resume_after_demo_abort
+@demo_shell_done:
     push af
     call w3d_close_shell_callback
     pop af

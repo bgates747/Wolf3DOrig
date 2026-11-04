@@ -143,7 +143,7 @@ w3d_save_slot_names:
 
 ; The full victory presentation has its own direct regression.  This shell
 ; seam records that the production lifecycle invokes it exactly once before
-; returning to the main menu.
+; returning to the attract cycle.
 w3d_victory_present:
     ld hl,test_victory_present_count
     inc (hl)
@@ -742,19 +742,20 @@ test_lifecycle_entries:
     call test_set_random_script
     ld hl,script_confirm_yes
     call test_set_key_script
-    ld hl,script_victory_escape
+    ld hl,script_attract_cycle
     call test_set_script
     call w3d_shell_resume_after_victory
-    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_A W3D_SHELL_RESULT_DEMO,REASON_RESULT
     CHECK_MEM8 test_victory_present_count,1,REASON_VICTORY_PRESENT
     CHECK_MEM8 test_highscore_handoff_count,1,REASON_HIGHSCORE_HANDOFF
     CHECK_MEM8 test_music_start_count,3,REASON_MUSIC_ASSIGNMENT
     CHECK_MEM8 test_music_history+0,W3D_MUSIC_URAHERO,REASON_MUSIC_ASSIGNMENT
     CHECK_MEM8 test_music_history+1,W3D_MUSIC_ROSTER,REASON_MUSIC_ASSIGNMENT
-    CHECK_MEM8 test_music_history+2,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
-    CHECK_EXIT 1
+    CHECK_MEM8 test_music_history+2,W3D_MUSIC_NAZI_NOR,REASON_MUSIC_ASSIGNMENT
+    CHECK_EXIT 0
     ld a,25
     ld (test_case),a
+    call test_reset_music
     call w3d_shell_reset_exit_request
     xor a
     ld (test_victory_present_count),a
@@ -763,12 +764,17 @@ test_lifecycle_entries:
     call test_set_random_script
     ld hl,script_confirm_yes
     call test_set_key_script
-    ld hl,script_ack_then_escape
+    ld hl,script_attract_input_then_quit
     call test_set_script
     call w3d_shell_resume_after_victory
     CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
     CHECK_MEM8 test_victory_present_count,1,REASON_VICTORY_PRESENT
     CHECK_MEM8 test_highscore_handoff_count,1,REASON_HIGHSCORE_HANDOFF
+    CHECK_MEM8 test_music_start_count,4,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+0,W3D_MUSIC_URAHERO,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+1,W3D_MUSIC_ROSTER,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+2,W3D_MUSIC_NAZI_NOR,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+3,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
     CHECK_EXIT 1
     ld a,35
     ld (test_case),a
@@ -781,15 +787,30 @@ test_lifecycle_entries:
     call test_set_random_script
     ld hl,script_confirm_yes
     call test_set_key_script
-    ld hl,script_action_escape
+    ld hl,script_attract_cycle
     call test_set_script
     call w3d_shell_resume_after_game_over
-    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_A W3D_SHELL_RESULT_DEMO,REASON_RESULT
     CHECK_MEM8 test_victory_present_count,0,REASON_VICTORY_PRESENT
     CHECK_MEM8 test_highscore_handoff_count,1,REASON_HIGHSCORE_HANDOFF
     CHECK_MEM8 test_music_start_count,2,REASON_MUSIC_ASSIGNMENT
     CHECK_MEM8 test_music_history+0,W3D_MUSIC_ROSTER,REASON_MUSIC_ASSIGNMENT
-    CHECK_MEM8 test_music_history+1,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+1,W3D_MUSIC_NAZI_NOR,REASON_MUSIC_ASSIGNMENT
+    CHECK_EXIT 0
+    ld a,103
+    ld (test_case),a
+    call test_reset_music
+    call w3d_shell_reset_exit_request
+    ld hl,script_random_zero
+    call test_set_random_script
+    ld hl,script_confirm_yes
+    call test_set_key_script
+    ld hl,script_main_quit
+    call test_set_script
+    call w3d_shell_resume_after_demo_abort
+    CHECK_A W3D_SHELL_RESULT_QUIT,REASON_RESULT
+    CHECK_MEM8 test_music_start_count,1,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_history+0,W3D_MUSIC_WONDERIN,REASON_MUSIC_ASSIGNMENT
     CHECK_EXIT 1
     ret
 
@@ -1054,9 +1075,8 @@ test_attract_timing:
     CHECK_A W3D_SHELL_RESULT_DEMO,REASON_RESULT
     CHECK_MEM8 test_highscore_draw_count,1,REASON_HIGHSCORE_HANDOFF
     CHECK_MEM8 test_demo_prepare_count,1,REASON_RESULT
-    CHECK_MEM8 test_music_start_count,2,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_start_count,1,REASON_MUSIC_ASSIGNMENT
     CHECK_MEM8 test_music_history+0,W3D_MUSIC_NAZI_NOR,REASON_MUSIC_ASSIGNMENT
-    CHECK_MEM8 test_music_history+1,W3D_MUSIC_ROSTER,REASON_MUSIC_ASSIGNMENT
     CHECK_MEM8 test_plot_count,2,REASON_PLOT_COUNT
     CHECK_PLOT 0,W3D_SHELL_TITLE_BUFFER,0,0
     CHECK_PLOT 6,W3D_SHELL_CREDITS_BUFFER,0,0
@@ -2166,6 +2186,9 @@ script_attract_cycle:
     db SCRIPT_RELEASE,SCRIPT_TICK,SCRIPT_RELEASE
     db SCRIPT_TICK,SCRIPT_RELEASE,SCRIPT_TICK,SCRIPT_RELEASE
     db SCRIPT_ANY,SCRIPT_RELEASE
+script_attract_input_then_quit:
+    db SCRIPT_RELEASE,SCRIPT_ANY,SCRIPT_RELEASE
+    db SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_quick_page_escape:
     db SCRIPT_RELEASE,SCRIPT_ESCAPE,SCRIPT_RELEASE
 script_quick_full_panel:

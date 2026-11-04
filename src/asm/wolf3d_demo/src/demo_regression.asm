@@ -77,6 +77,7 @@ REASON_CADENCE:    equ 6
 REASON_CURSOR:     equ 7
 REASON_FINISHED:   equ 8
 REASON_EXIT_LATCH: equ 9
+REASON_ABORTED:    equ 10
 
 start:
     push af
@@ -160,6 +161,7 @@ case_control_decode:
     ld (w3d_demo_cursor),hl
     xor a
     ld (w3d_demo_finished),a
+    ld (w3d_demo_aborted),a
     call w3d_demo_sample_controls
     CHECK_MEM8 w3d_controls,0d1h,REASON_CONTROLS
 
@@ -292,6 +294,7 @@ case_terminal_and_abort:
     ld (w3d_demo_active),a
     xor a
     ld (w3d_demo_finished),a
+    ld (w3d_demo_aborted),a
     ld a,70
     ld (w3d_demo_cadence),a
     ld hl,test_terminal_record
@@ -300,6 +303,7 @@ case_terminal_and_abort:
     ld (w3d_demo_stream_end),hl
     call w3d_demo_advance_step
     CHECK_MEM8 w3d_demo_finished,1,REASON_FINISHED
+    CHECK_MEM8 w3d_demo_aborted,0,REASON_ABORTED
     ld a,0ffh
     ld (w3d_controls),a
     call w3d_demo_sample_controls
@@ -318,9 +322,13 @@ case_terminal_and_abort:
     ld (w3d_exit_requested),a
     xor a
     ld (w3d_demo_finished),a
+    ld (w3d_demo_aborted),a
     call w3d_demo_latch_input_abort
     CHECK_MEM8 w3d_demo_finished,1,REASON_FINISHED
+    CHECK_MEM8 w3d_demo_aborted,1,REASON_ABORTED
     CHECK_MEM8 w3d_exit_requested,0,REASON_EXIT_LATCH
+    call w3d_demo_cancel
+    CHECK_MEM8 w3d_demo_aborted,0,REASON_ABORTED
     ret
 
 assert_a:

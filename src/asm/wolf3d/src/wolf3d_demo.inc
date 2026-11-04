@@ -53,6 +53,7 @@ w3d_demo_prepare_next:
     ld (w3d_demo_active),a
     xor a
     ld (w3d_demo_finished),a
+    ld (w3d_demo_aborted),a
     ret
 
 ; Called after ordinary level-state initialization. The prepared stream must
@@ -68,6 +69,7 @@ w3d_demo_begin_session:
     xor a
     ld (w3d_demo_cadence),a
     ld (w3d_demo_finished),a
+    ld (w3d_demo_aborted),a
     ld (w3d_demo_turn_fraction+0),a
     ld (w3d_demo_turn_fraction+1),a
     ld (w3d_demo_back_fraction),a
@@ -77,6 +79,7 @@ w3d_demo_cancel:
     xor a
     ld (w3d_demo_active),a
     ld (w3d_demo_finished),a
+    ld (w3d_demo_aborted),a
     ret
 
 ; Convert the signed original per-tic controls to this port's 30-Hz distance
@@ -330,6 +333,7 @@ w3d_demo_latch_input_abort:
 @abort:
     ld a,1
     ld (w3d_demo_finished),a
+    ld (w3d_demo_aborted),a
     xor a
     ld (w3d_exit_requested),a
     ret
@@ -451,6 +455,8 @@ w3d_demo_advance_step:
 w3d_demo_active:
     db 0
 w3d_demo_finished:
+    db 0
+w3d_demo_aborted:
     db 0
 w3d_demo_next_index:
     db 0

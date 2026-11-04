@@ -181,8 +181,15 @@ w3d_shell_resume_after_demo:
     ret z
     jp w3d_shell_main_menu
 
+; A local key abort during PlayDemo sets playstate=ex_abort in the original
+; DemoLoop and enters US_ControlPanel immediately. Natural stream exhaustion
+; instead restarts the title/credits/scores cycle above.
+w3d_shell_resume_after_demo_abort:
+    call w3d_shell_setup
+    jp w3d_shell_main_menu
+
 ; Present the original Episode 1 Victory()/ENDART1 lifecycle, run the exact
-; CheckHighScore(score,mapon+1) handoff, then resume the same main-menu flow.
+; CheckHighScore(score,mapon+1) handoff, then resume DemoLoop's attract flow.
 w3d_shell_resume_after_victory:
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
@@ -197,10 +204,12 @@ w3d_shell_resume_after_victory:
     call w3d_highscores_handle_game_end
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
-    jp w3d_shell_main_menu
+; DemoLoop resumes INTROSONG and the attract cycle after GameLoop returns.
+; It does not enter the control panel until that cycle receives local input.
+    jp w3d_shell_resume_after_demo
 
 ; Game over omits Victory()/ENDART1 but otherwise uses the same original
-; CheckHighScore(score,mapon+1) -> control-panel handoff.
+; CheckHighScore(score,mapon+1) -> DemoLoop attract handoff.
 w3d_shell_resume_after_game_over:
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
@@ -210,7 +219,7 @@ w3d_shell_resume_after_game_over:
     call w3d_highscores_handle_game_end
     call w3d_shell_query_exit_request
     jp nz,w3d_shell_return_quit
-    jp w3d_shell_main_menu
+    jp w3d_shell_resume_after_demo
 
 w3d_shell_show_title:
     call w3d_shell_query_exit_request
@@ -1208,8 +1217,9 @@ w3d_shell_attract_until_input:
     call w3d_shell_wait_input_timeout
     W3D_STARTUP_TRACE 043h
     ret nz
-    ld a,W3D_MUSIC_ROSTER
-    call w3d_music_start
+; DemoLoop leaves INTROSONG running across title, credits, and the attract
+; high-score page. ROSTER_MUS is selected only by CheckHighScore after an
+; actual game ends (or by the explicit View Scores control-panel action).
     call w3d_highscores_draw
     W3D_STARTUP_TRACE 044h
     ld de,W3D_SHELL_SCORES_TICKS

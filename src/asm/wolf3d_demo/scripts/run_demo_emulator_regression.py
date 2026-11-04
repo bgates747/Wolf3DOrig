@@ -43,6 +43,7 @@ REASONS = {
     7: "stream cursor",
     8: "finished flag",
     9: "application exit latch",
+    10: "local-abort reason",
 }
 
 STAGES = {
