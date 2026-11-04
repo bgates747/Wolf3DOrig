@@ -444,9 +444,17 @@ Acceptance: timer/input tests, deterministic demo completion/abort, and a full
 visual cycle.
 
 Status 2026-11-03: implementation is complete. Archive extraction and stream
-identity are deterministic; the direct demo state target passes 21/21 and the
+identity are deterministic; the expanded direct demo target passes 51/51 and the
 analog/cadence target passes 48/48. The remaining gate is a visual cycle
 through all four demos plus local input abort and control-panel return.
+
+Abort-routing correction, 2026-11-04: production had collapsed natural demo
+exhaustion and local-input abort into one completion flag, so both restarted
+the title cycle. The original enters `US_ControlPanel` only for
+`playstate == ex_abort`. A separate transient abort reason now routes local
+input directly to the main menu while natural completion alone resumes the
+title/credits/scores cycle; the direct demo fixture pins both outcomes and
+cancel-time cleanup.
 
 ### A9. Music — TODO 6
 
@@ -479,6 +487,19 @@ records. Host asset contracts pass 76 tests plus 24 subtests; Oryx generation
 240 passes 306/306 direct audio-service and 578/578 player-combat checks.
 Audible hardware review remains required because byte and wire proofs cannot
 accept timbre.
+
+Attract ownership correction, 2026-11-04: `WL_MAIN.C::DemoLoop` starts
+`INTROSONG` before `PG13()` and leaves that one stream running through title,
+credits, and the timed attract-loop high-score page. Production had
+incorrectly restarted `ROSTER_MUS` for that page. The draw now leaves
+`INTROSONG` untouched; `ROSTER_MUS` remains owned by post-game
+`CheckHighScore` and the explicit View Scores menu action. The direct shell
+fixture pins one music start across the complete timed attract-page cycle.
+The same audit restores DemoLoop's terminal-game reentry: after victory or
+game-over high-score handling, the original restarts `INTROSONG` and resumes
+title/credits/scores/demo rather than opening the main menu immediately.
+Production now follows that route; only subsequent local attract input enters
+the control panel and selects `WONDERIN`.
 
 ### A10. Residual parity sweep — TODO 18
 
@@ -676,14 +697,24 @@ Additional intentional platform substitutions, 2026-11-03:
    it exists only in the registered WL6 header/data. The action edge therefore
    remains a successful no-op rather than borrowing a paid-data effect or
    substituting an unrelated sound.
+10. At asynchronous loading, renderer ownership, intermission/victory, and
+    post-game high-score boundaries, Escape retains the Author-requested
+    common clean-exit priority so a stalled or long-running Agon transfer can
+    always return through VDPlet teardown and MOS mode restoration. Ordinary
+    control-panel Escape, Episode/Difficulty cancellation, gameplay Pause,
+    sign-on acknowledgment, and attract-page input remain locally scoped like
+    the source. This makes a few DOS acknowledgments terminate the Agon
+    application rather than merely dismiss their page; it is a deliberate
+    platform-safety policy, not an unfinished input route.
 
 Death-lifecycle acceptance support, 2026-11-03: the durable acceptance cohort
 now includes two copied E1L1 applications at the canonical starting pose. Both
 begin with one health point; one begins with one displayed life to exercise a
 normal death, fizzle, score rollback and fresh attempt, while the other begins
 with zero displayed lives to exercise the source's final playable attempt,
-game-over high-score handoff and control-panel return. Compile-time selectors
-change only those disposable applications and are absent from production.
+game-over high-score handoff and attract-cycle return. Local attract input then
+enters the control panel. Compile-time selectors change only those disposable
+applications and are absent from production.
 This closes the reachability problem, not the still-pending human visual gate.
 
 Audio-inventory correction, 2026-11-03: production already requested Hans's

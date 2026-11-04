@@ -61,7 +61,8 @@ regressing them.
 - `game-over`: the same real E1L1 encounter with one health point and zero
   displayed lives (the source's final playable attempt). Let the guard kill
   the player; verify the complete death presentation, high-score handoff, and
-  return to the control panel rather than another level attempt.
+  return to the title/credits/scores attract cycle rather than another level
+  attempt. Local input from that cycle must then enter the control panel.
 - `highscore-qualifying`: after the real startup load, enters the production
   high-score path with a guaranteed qualifying score. Type and edit a name,
   press Return, verify the inserted row, persistence write, and menu return.

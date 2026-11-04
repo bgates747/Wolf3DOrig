@@ -108,7 +108,7 @@ and page numbers. `ShowArticle` navigation, CORNER music, local Escape, damaged
 container fallback, and complete on-exit VDP-buffer reclamation are integrated;
 the 2.6 MiB page container loads only while the article is open. Host contracts
 pass and both application backends assemble. The expanded production-shell
-fixture passes 683/683 on Oryx generation 185. Remaining close gate: visually
+fixture passes 764/764 on Oryx generation 248. Remaining close gate: visually
 review the complete article plus the other control-panel pages in the next
 batched Oryx lease.
 
@@ -124,6 +124,15 @@ local input abort, shell/gameplay lifecycle, magnitude-preserving analog motion,
 and direct-target state fixtures are implemented and qualified. Remaining
 close gate: a staged visual pass through all four demos, including local input
 abort and return to the control panel.
+Residual startup audit corrected two lifecycle errors: the attract high-score
+page now leaves `INTROSONG` running instead of selecting post-game
+`ROSTER_MUS`, and local demo input now enters the control panel while only
+natural stream exhaustion restarts the title cycle. Oryx r21 passes 51/51
+direct recorded-demo checks and 764/764 production-shell checks with the
+corrections. The complete eleven-profile VDPlet-direct cohort also assembles
+with them and folds into the existing visual gate.
+Victory and game-over high-score completion now also rejoin that attract cycle
+instead of opening the main menu directly, matching `WL_MAIN.C::DemoLoop`.
 
 [ ] 6. Implement music playback as a separate subsystem from the accepted
 sound-effects implementation, preserving original Episode 1 title/menu,
