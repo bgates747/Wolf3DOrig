@@ -79,6 +79,10 @@ REASONS = {
     38: "victory treasure average",
     39: "double-buffer present count",
     40: "completed-floor key flags",
+    41: "ENDART1 load count",
+    42: "ENDART1 clear count",
+    43: "ENDART1 page index",
+    44: "ENDART1 clear buffer",
 }
 
 

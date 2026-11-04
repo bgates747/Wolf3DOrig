@@ -18,6 +18,9 @@ from formats.omf import OmfError, extract_ledata_segment  # noqa: E402
 from formats.article import (  # noqa: E402
     ARTICLE_BUFFER_BASE,
     ARTICLE_PAGE_COUNT,
+    END_ARTICLE_BUFFER_BASE,
+    END_ARTICLE_PAGE_COUNT,
+    render_end_article,
     render_help_article,
 )
 from formats.shell import (  # noqa: E402
@@ -194,6 +197,20 @@ class ShellArchiveTests(unittest.TestCase):
             "0749d9287fe586eea04ddda1ab0796aee313c6feac6b810987706bd7a63cbab2",
         )
 
+    def test_original_end_article_layout_contract(self) -> None:
+        archive = _archive()
+        pages = render_end_article(archive, decode_wolf_font(archive, 1))
+        self.assertEqual(len(pages), END_ARTICLE_PAGE_COUNT)
+        self.assertTrue(all(page.size == (320, 200) for page in pages))
+        self.assertEqual(
+            hashlib.sha256(pages[0].tobytes()).hexdigest(),
+            "051259805f8638f0c0cc4f39e332ba91200a8143788bfc624fd5fbfd1a4438fa",
+        )
+        self.assertEqual(
+            hashlib.sha256(pages[1].tobytes()).hexdigest(),
+            "db0bdc962800954f27feec3610660085f7228aff1443f1bd4e6b7a0dec78c8cd",
+        )
+
     def test_build_has_stable_raw_and_composed_contract(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             out = Path(temporary) / "shell"
@@ -270,6 +287,7 @@ class ShellArchiveTests(unittest.TestCase):
             self.assertEqual(len(manifest), len(entries))
             self.assertTrue((out / "shell.agnb").read_bytes().startswith(b"RIFF"))
             self.assertTrue((out / "help.agnb").read_bytes().startswith(b"RIFF"))
+            self.assertTrue((out / "end.agnb").read_bytes().startswith(b"RIFF"))
             help_manifest = [
                 json.loads(line)
                 for line in (out / "help_assets.jsonl").read_text().splitlines()
@@ -279,6 +297,16 @@ class ShellArchiveTests(unittest.TestCase):
             self.assertEqual(
                 help_manifest[-1]["bufferId"],
                 ARTICLE_BUFFER_BASE + ARTICLE_PAGE_COUNT - 1,
+            )
+            end_manifest = [
+                json.loads(line)
+                for line in (out / "end_assets.jsonl").read_text().splitlines()
+            ]
+            self.assertEqual(len(end_manifest), END_ARTICLE_PAGE_COUNT)
+            self.assertEqual(end_manifest[0]["bufferId"], END_ARTICLE_BUFFER_BASE)
+            self.assertEqual(
+                end_manifest[-1]["bufferId"],
+                END_ARTICLE_BUFFER_BASE + END_ARTICLE_PAGE_COUNT - 1,
             )
             constants = (out / "wolf3d_shell_assets.inc").read_text()
             self.assertEqual(constants, TRACKED_CONSTANTS.read_text())
@@ -292,6 +320,8 @@ class ShellArchiveTests(unittest.TestCase):
             self.assertIn("W3D_SHELL_MAIN_BASE_WIDTH: equ 320", constants)
             self.assertIn("W3D_HELP_PAGE_BUFFER_BASE: equ $4600", constants)
             self.assertIn("W3D_HELP_PAGE_COUNT: equ 41", constants)
+            self.assertIn("W3D_END_PAGE_BUFFER_BASE: equ $4629", constants)
+            self.assertIn("W3D_END_PAGE_COUNT: equ 2", constants)
             self.assertIn("W3D_SHELL_HIGH_SCORES_BASE_BUFFER: equ $4304", constants)
             self.assertIn(
                 "W3D_SHELL_EPISODE_UNAVAILABLE_NOTICE_X: equ 35", constants

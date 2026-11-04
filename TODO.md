@@ -41,7 +41,12 @@ state graph, totals arithmetic, shareware-text handoff, and target regression
 are complete. The three-letter total-time verification code is intentionally
 absent: it is inside `#ifndef UPLOAD` and therefore not part of the WL1
 shareware configuration. Remaining close gate: staged visual acceptance of
-the complete E1L9 sequence and return to the shell.
+the complete E1L9 sequence and return to the shell. The prior 40-column
+ENDART1 approximation has now been replaced by an exact offline rendering of
+VGAGRAPH.WL1 chunk 155: original frame art, proportional font, embedded BJ
+picture, wrapping, colors, `pg N of 2` footer, and ShowArticle navigation are
+carried in a reclaimable two-page `end.agnb`. The project's explicit global
+Escape-to-MOS policy remains the one intentional navigation difference.
 
 [ ] 7. Implement the original seven-entry high-score table, qualification and
 name entry, score/floor display, control-panel view, game-over/victory handoff,

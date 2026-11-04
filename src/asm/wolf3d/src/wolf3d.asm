@@ -126,6 +126,8 @@ shell_filename:
     db "shell.agnb",0
 help_filename:
     db "help.agnb",0
+end_filename:
+    db "end.agnb",0
 loading_msg:
     db "Loading floor wall/door textures (tiles.agnb)",0
 loading_sprites_msg:

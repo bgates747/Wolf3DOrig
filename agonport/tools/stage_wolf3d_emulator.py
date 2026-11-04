@@ -50,6 +50,7 @@ def main() -> None:
         "sfx.agnb": GENERATED / "audio/sfx.agnb",
         "shell.agnb": GENERATED / "shell/shell.agnb",
         "help.agnb": GENERATED / "shell/help.agnb",
+        "end.agnb": GENERATED / "shell/end.agnb",
     }
     for name, source in shared.items():
         replace_symlink(APP / name, require_file(source))
@@ -77,7 +78,7 @@ def main() -> None:
         )
 
     print(f"Staged {binary.stat().st_size} byte application at {APP}")
-    print("Linked 10 runtime level directories plus shell/help/HUD/SFX shared assets")
+    print("Linked 10 runtime level directories plus shell/help/end/HUD/SFX shared assets")
 
 
 if __name__ == "__main__":

@@ -97,6 +97,8 @@ def available_asset_sets(level: str) -> dict[str, AssetSet]:
         "sprites": AssetSet("sprites", level_dir / "sprites.agnb", level_dir / "sprites.jsonl"),
         "hud": AssetSet("hud", GENERATED_DIR / "hud" / "hud.agnb", GENERATED_DIR / "hud" / "hud_assets.jsonl"),
         "shell": AssetSet("shell", GENERATED_DIR / "shell" / "shell.agnb", GENERATED_DIR / "shell" / "shell_assets.jsonl"),
+        "help": AssetSet("help", GENERATED_DIR / "shell" / "help.agnb", GENERATED_DIR / "shell" / "help_assets.jsonl"),
+        "end": AssetSet("end", GENERATED_DIR / "shell" / "end.agnb", GENERATED_DIR / "shell" / "end_assets.jsonl"),
     }
     return {name: item for name, item in candidates.items() if item.container.is_file()}
 

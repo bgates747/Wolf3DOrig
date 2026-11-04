@@ -98,6 +98,17 @@ Every automated or source-grounded prerequisite for these gates is recorded
 in the sections below. A failed gate promotes only the observed discrepancy;
 it does not reopen an already accepted subsystem wholesale.
 
+Ending-article correction, 2026-11-04: the earlier Episode 1 handoff retained
+the exact `ENDART1` prose but flattened it into two 40-column MOS text pages.
+Production now renders VGAGRAPH.WL1 chunk 155 with the same source-derived
+`ShowArticle` translator used by HELP: original frame and BJ art, proportional
+font, wrapping, colors, and `pg N of 2` footer. The two 320x200 pages live in
+a separate 128 KiB `end.agnb`, load only after the victory summary, support
+the original previous/next key families, and are reclaimed on every exit or
+failure path. A missing/corrupt optional container falls back to the resident
+exact prose. Escape deliberately retains the Author's stronger Agon-wide
+clean-return-to-MOS policy instead of merely closing the article.
+
 ## Phase A: exact remaining original shareware behavior
 
 Items are ordered by implementation priority, not by cosmetic visibility.

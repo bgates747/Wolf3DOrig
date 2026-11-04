@@ -206,6 +206,7 @@ class BackendContractTests(unittest.TestCase):
     def test_package_rebuilds_standard_level_states(self) -> None:
         self.assertIn('ASSET_SCRIPTS / "build_level_packages.py"', self.packager)
         self.assertNotIn('"--diagnostic-e1l1-elevator-start"', self.packager)
+        self.assertIn('GENERATED / "shell/end.agnb"', self.packager)
 
     def test_profile_verifies_old_identity_before_replacement(self) -> None:
         self.assertIn("def retire_verified_profile_identity", self.profiler)

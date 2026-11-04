@@ -1566,9 +1566,9 @@ w3d_intermission_draw_digit:
 ; ---------------------------------------------------------------------------
 
 ; Reproduce the non-SPEAR WL_INTER.C victory summary from the eight ordinary
-; LevelRatios records, then show the two pages of the bundled WL1 ENDART1
-; article.  The in-world BJ sequence owns the preceding gameplay phase; this
-; routine begins only after its renderer and VDPlet have shut down cleanly.
+; LevelRatios records, then show the exact two-page WL1 ENDART1 article. The
+; in-world BJ sequence owns the preceding gameplay phase; this routine begins
+; only after its renderer and VDPlet have shut down cleanly.
 w3d_victory_present:
     call w3d_victory_calculate_totals
     call @summary
@@ -1583,13 +1583,133 @@ w3d_victory_present:
     call w3d_shell_wait_any_press
     call w3d_shell_query_exit_request
     ret nz
+    call w3d_victory_end_article
+    jp w3d_shell_query_exit_request
+
+; Original WL_TEXT.C ShowArticle navigation over the two pages rendered from
+; VGAGRAPH.WL1 chunk 155. The 128 KiB container is loaded only for this ending
+; and every buffer is reclaimed on all exit/failure paths. Unlike DOS's local
+; article Escape, the Agon application's explicit global-Escape safety policy
+; remains authoritative here and requests a clean return to MOS.
+w3d_victory_end_article:
+    xor a
+    ld (w3d_victory_end_page),a
+    ld (w3d_victory_end_load_aborted),a
+    ld de,end_filename
+    ld hl,w3d_victory_end_load_callback
+    call agnb_load_images_with_abortable_callback
+    jr z,@loaded
+    call w3d_victory_end_clear_buffers
+    ld a,(w3d_victory_end_load_aborted)
+    or a
+    jp nz,@finish
+; Missing/corrupt optional art must not strand a completed game. The resident
+; exact-prose fallback retains the old acknowledgment flow.
     call w3d_victory_draw_end_page_1
     call w3d_shell_wait_any_press
     call w3d_shell_query_exit_request
-    ret nz
+    jp nz,@finish
     call w3d_victory_draw_end_page_2
     call w3d_shell_wait_any_press
+    jp @finish
+@loaded:
+    call w3d_shell_wait_all_released
+    call w3d_shell_query_exit_request
+    jp nz,@leave
+@draw:
+    call w3d_shell_clear
+    call w3d_victory_end_plot_page
+    call w3d_vdu_present
+    call w3d_shell_clear
+    call w3d_victory_end_plot_page
+@wait:
+    call w3d_music_service
+    call w3d_shell_read_keyboard
+    bit 0,(ix+14)                   ; Escape: application-global clean exit
+    jr nz,@escape
+    bit 1,(ix+7)                    ; Up
+    jr nz,@previous
+    bit 1,(ix+3)                    ; Left
+    jr nz,@previous
+    bit 7,(ix+7)                    ; Page Up
+    jr nz,@previous
+    bit 1,(ix+5)                    ; Down
+    jr nz,@next
+    bit 1,(ix+15)                   ; Right
+    jr nz,@next
+    bit 6,(ix+9)                    ; Page Down
+    jr nz,@next
+    bit 1,(ix+9)                    ; Return
+    jr nz,@next
+    bit 4,(ix+7)                    ; keypad Enter
+    jr nz,@next
+    jr @wait
+@previous:
+    ld a,(w3d_victory_end_page)
+    or a
+    jr z,@wait_release
+    dec a
+    ld (w3d_victory_end_page),a
+    jr @changed
+@next:
+    ld a,(w3d_victory_end_page)
+    cp W3D_END_PAGE_COUNT-1
+    jr nc,@wait_release
+    inc a
+    ld (w3d_victory_end_page),a
+@changed:
+    call w3d_shell_wait_all_released
+    call w3d_shell_query_exit_request
+    jr nz,@leave
+    jr @draw
+@wait_release:
+    call w3d_shell_wait_all_released
+    call w3d_shell_query_exit_request
+    jr nz,@leave
+    jr @wait
+@escape:
+    call w3d_shell_request_exit
+    call w3d_shell_wait_all_released
+@leave:
+    call w3d_victory_end_clear_buffers
+@finish:
     jp w3d_shell_query_exit_request
+
+w3d_victory_end_plot_page:
+    ld hl,W3D_END_PAGE_BUFFER_BASE
+    ld a,(w3d_victory_end_page)
+    ld e,a
+    ld d,0
+    add.s hl,de
+    jp w3d_shell_plot_full_screen
+
+; Keep URAHERO responsive during the upload. Escape aborts the transfer and
+; promotes the common application exit latch before the callback returns NZ.
+w3d_victory_end_load_callback:
+    call w3d_music_service
+    call w3d_shell_read_keyboard
+    bit 0,(ix+14)
+    jr z,@continue
+    call w3d_shell_request_exit
+    ld a,1
+    ld (w3d_victory_end_load_aborted),a
+    ret
+@continue:
+    xor a
+    ret
+
+w3d_victory_end_clear_buffers:
+    ld hl,W3D_END_PAGE_BUFFER_BASE
+    ld b,W3D_END_PAGE_COUNT
+@clear:
+    push bc
+    push hl
+    call vdu_clear_buffer
+    pop hl
+    pop bc
+    inc hl
+    djnz @clear
+    ret
 
 ; Sum u32 time and three u16 percentages, then divide the ratios by eight.
 w3d_victory_calculate_totals:
@@ -1754,9 +1874,8 @@ w3d_victory_draw_average:
     ld bc,224
     jp w3d_intermission_draw_digit
 
-; ENDART1 is the bundled shareware article at VGAGRAPH.WL1 chunk 155.  These
-; page strings retain its exact prose while mapping the DOS article markup to
-; the Agon's native 40-column text surface.
+; Resident fallback for a missing/corrupt end.agnb. These strings retain the
+; exact ENDART1 prose while mapping its markup to the native text surface.
 w3d_victory_draw_end_page_1:
     call @frame
     call w3d_vdu_present
@@ -1837,6 +1956,10 @@ w3d_victory_kill_average:
 w3d_victory_secret_average:
     db 0
 w3d_victory_treasure_average:
+    db 0
+w3d_victory_end_page:
+    db 0
+w3d_victory_end_load_aborted:
     db 0
 w3d_intermission_kill_ratio:
     db 0

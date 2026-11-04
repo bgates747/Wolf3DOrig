@@ -20,6 +20,10 @@ from formats.article import (  # noqa: E402
     ARTICLE_BUFFER_BASE,
     ARTICLE_CHUNK,
     ARTICLE_PAGE_COUNT,
+    END_ARTICLE_BUFFER_BASE,
+    END_ARTICLE_CHUNK,
+    END_ARTICLE_PAGE_COUNT,
+    render_end_article,
     render_help_article,
 )
 from formats.omf import extract_ledata_segment  # noqa: E402
@@ -535,6 +539,8 @@ def _write_constants(path: Path, entries: list[ShellManifestEntry]) -> None:
         f"W3D_SHELL_COMPOSITE_BUFFER_BASE: equ ${SHELL_COMPOSITE_BUFFER_BASE:04X}\n\n",
         f"W3D_HELP_PAGE_BUFFER_BASE: equ ${ARTICLE_BUFFER_BASE:04X}\n",
         f"W3D_HELP_PAGE_COUNT: equ {ARTICLE_PAGE_COUNT}\n\n",
+        f"W3D_END_PAGE_BUFFER_BASE: equ ${END_ARTICLE_BUFFER_BASE:04X}\n",
+        f"W3D_END_PAGE_COUNT: equ {END_ARTICLE_PAGE_COUNT}\n\n",
     ]
     for entry in entries:
         if entry.chunkId is not None:
@@ -719,6 +725,25 @@ def build_shell_assets(
         help_entries.append(entry)
         help_records.append(record)
 
+    end_entries: list[ShellManifestEntry] = []
+    end_records: list[BufferRecord] = []
+    for index, image in enumerate(render_end_article(archive, article_font)):
+        name = f"end_page_{index + 1:02d}"
+        entry, record = _stage_image(
+            name=name,
+            image=image,
+            source=f"rendered from VGAGRAPH.WL1 ENDART1 chunk {END_ARTICLE_CHUNK}",
+            chunk_id=END_ARTICLE_CHUNK,
+            buffer_id=END_ARTICLE_BUFFER_BASE + index,
+            plot_x=0,
+            plot_y=0,
+            original_dir=original_dir,
+            processed_dir=processed_dir,
+            palette_file=palette_file,
+        )
+        end_entries.append(entry)
+        end_records.append(record)
+
     (out_dir / "shell_assets.jsonl").write_text(
         "".join(json.dumps(asdict(entry), sort_keys=True) + "\n" for entry in entries)
     )
@@ -730,6 +755,13 @@ def build_shell_assets(
         )
     )
     (out_dir / "help.agnb").write_bytes(build_container(help_records))
+    (out_dir / "end_assets.jsonl").write_text(
+        "".join(
+            json.dumps(asdict(entry), sort_keys=True) + "\n"
+            for entry in end_entries
+        )
+    )
+    (out_dir / "end.agnb").write_bytes(build_container(end_records))
     _write_constants(out_dir / "wolf3d_shell_assets.inc", entries)
     return entries
 
@@ -761,6 +793,11 @@ def main() -> None:
     print(
         f"Wrote {args.out_dir / 'help.agnb'}: {ARTICLE_PAGE_COUNT} original "
         f"HELP article pages, {ARTICLE_PAGE_COUNT * 320 * 200} RGBA2222 bytes"
+    )
+    print(
+        f"Wrote {args.out_dir / 'end.agnb'}: {END_ARTICLE_PAGE_COUNT} original "
+        "ENDART1 pages, "
+        f"{END_ARTICLE_PAGE_COUNT * 320 * 200} RGBA2222 bytes"
     )
 
 

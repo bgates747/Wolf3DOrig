@@ -58,6 +58,8 @@ W3D_AUDIO_SOUND_ENDBONUS1: equ 42
 W3D_AUDIO_SOUND_ENDBONUS2: equ 43
 W3D_AUDIO_SOUND_NOBONUS:   equ 47
 W3D_AUDIO_SOUND_PERCENT100: equ 48
+W3D_END_PAGE_BUFFER_BASE:    equ 04629h
+W3D_END_PAGE_COUNT:          equ 2
 
 ; Production-owned globals are reduced to the exact fields this include reads.
 w3d_level_requested_index:  db 0
@@ -134,6 +136,10 @@ REASON_VICTORY_SECRET:  equ 37
 REASON_VICTORY_TREASURE: equ 38
 REASON_PRESENT_COUNT:    equ 39
 REASON_KEY_FLAGS:        equ 40
+REASON_END_LOAD_COUNT:   equ 41
+REASON_END_CLEAR_COUNT:  equ 42
+REASON_END_PAGE:         equ 43
+REASON_END_CLEAR_BUFFER: equ 44
 
 start:
     push af
@@ -183,6 +189,7 @@ run_tests:
     call test_countup_state_machine
     call test_victory_totals
     call test_victory_time_clamp
+    call test_victory_end_article_navigation
     call write_result
     ret
 
@@ -482,6 +489,28 @@ test_victory_time_clamp:
     call w3d_victory_split_time
     CHECK_MEM8 w3d_victory_minutes,99,REASON_VICTORY_MINUTES
     CHECK_MEM8 w3d_victory_seconds,99,REASON_VICTORY_SECONDS
+    ret
+
+test_victory_end_article_navigation:
+    ld a,24
+    ld (test_case),a
+    call test_reset_shell_stubs
+    ld a,1
+    ld (test_end_load_success),a
+    ld hl,test_end_article_input_script
+    ld (test_keyboard_script_ptr),hl
+    ld a,8                         ; seven frames, then retain release
+    ld (test_keyboard_script_frames),a
+    call w3d_victory_end_article
+    CHECK_A 1,REASON_ESCAPE_LATCH
+    CHECK_MEM8 test_end_load_count,1,REASON_END_LOAD_COUNT
+    CHECK_MEM8 test_end_clear_count,2,REASON_END_CLEAR_COUNT
+    CHECK_MEM8 test_end_clear_first+0,W3D_END_PAGE_BUFFER_BASE&0ffh,REASON_END_CLEAR_BUFFER
+    CHECK_MEM8 test_end_clear_first+1,W3D_END_PAGE_BUFFER_BASE>>8,REASON_END_CLEAR_BUFFER
+    CHECK_MEM8 test_end_clear_second+0,02ah,REASON_END_CLEAR_BUFFER
+    CHECK_MEM8 test_end_clear_second+1,046h,REASON_END_CLEAR_BUFFER
+    CHECK_MEM8 w3d_victory_end_page,0,REASON_END_PAGE
+    CHECK_MEM8 test_present_count,3,REASON_PRESENT_COUNT
     ret
 
 test_ordinary_draw:
@@ -861,7 +890,61 @@ w3d_shell_clear:
     ret
 
 w3d_shell_query_exit_request:
+    ld a,(test_application_exit)
+    or a
+    ret
+
+w3d_shell_request_exit:
+    ld a,1
+    ld (test_application_exit),a
+    or a
+    ret
+
+w3d_shell_wait_all_released:
+    call w3d_shell_read_keyboard
+    ld b,16
+@scan:
+    ld a,(ix)
+    or a
+    jr nz,w3d_shell_wait_all_released
+    inc ix
+    djnz @scan
+    ret
+
+vdu_clear_buffer:
+    ld a,(test_end_clear_count)
+    or a
+    jr nz,@second
+    ld a,l
+    ld (test_end_clear_first+0),a
+    ld a,h
+    ld (test_end_clear_first+1),a
+    jr @count
+@second:
+    ld a,l
+    ld (test_end_clear_second+0),a
+    ld a,h
+    ld (test_end_clear_second+1),a
+@count:
+    ld hl,test_end_clear_count
+    inc (hl)
+    ret
+
+; Visual ENDART1 behavior has its own focused shell/asset contracts. This
+; arithmetic fixture retains a failed optional-load seam so the complete
+; production include remains linkable without introducing filesystem state.
+agnb_load_images_with_abortable_callback:
+    ld a,(test_end_load_count)
+    inc a
+    ld (test_end_load_count),a
+    ld a,(test_end_load_success)
+    or a
+    jr z,@failure
     xor a
+    ret
+@failure:
+    ld a,1
+    or a
     ret
 
 printString:
@@ -1029,6 +1112,13 @@ test_reset_shell_stubs:
     ld (test_award_count),a
     ld (test_sound_count),a
     ld (test_present_count),a
+    ld (test_end_load_success),a
+    ld (test_end_load_count),a
+    ld (test_end_clear_count),a
+    ld (test_end_clear_first),a
+    ld (test_end_clear_first+1),a
+    ld (test_end_clear_second),a
+    ld (test_end_clear_second+1),a
     ld hl,test_keymap
     ld (test_keyboard_script_ptr),hl
     call w3d_intermission_reset_application_exit_query_hook
@@ -1163,6 +1253,7 @@ test_victory_ratios:
     VICTORY_RATIO 30,70,100,150
 
 result_filename: db "intermission_result.bin",0
+end_filename: db "end.agnb",0
 output_handle: db 0
 test_case: db 0
 test_total_low: db 0
@@ -1190,8 +1281,21 @@ test_finish_input_script:
     db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; complete release
     db 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; fresh non-Escape key
     db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; release after acknowledgment
+test_end_article_input_script:
+    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; initial release
+    db 0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0 ; Down -> page 2
+    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; release
+    db 0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0 ; Up -> page 1
+    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; release
+    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0 ; Escape
+    db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; release
 test_plot_count: db 0
 test_present_count: db 0
+test_end_load_success: db 0
+test_end_load_count: db 0
+test_end_clear_count: db 0
+test_end_clear_first: dw 0
+test_end_clear_second: dw 0
 test_plot_log: ds 64*6
 test_plot_log_end:
 test_ordinary_plot_log: ds 37*6

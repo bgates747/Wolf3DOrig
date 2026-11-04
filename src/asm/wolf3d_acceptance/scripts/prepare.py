@@ -320,6 +320,7 @@ def prepare_scenario(scenario: Scenario, application: Path) -> dict[str, object]
             "audio/sfx.agnb",
             "shell/shell.agnb",
             "shell/help.agnb",
+            "shell/end.agnb",
         ):
             source = require(GENERATED / relative)
             shutil.copyfile(source, temporary / source.name)

@@ -73,8 +73,9 @@ regressing them.
 The application still shows the ordinary title/menu/difficulty flow. Selecting
 any difficulty enters the scenario's chosen floor; every difficulty package is
 patched identically. Escape retains the production clean-exit path. Each
-payload also carries the separate `help.agnb`, so Read This/F1 exercises the
-same on-demand 41-page article as production.
+payload also carries the separate `help.agnb` and `end.agnb`, so Read This/F1
+and the Episode 1 victory exercise the same on-demand original articles as
+production.
 
 `prepare.py` writes an `expected.json` manifest compatible with the existing
 VDPlet profile stager. These are review artifacts, not release payloads.

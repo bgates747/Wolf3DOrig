@@ -1,9 +1,9 @@
-"""Render the original WL1 ``ShowArticle`` markup into indexed pages.
+"""Render original WL1 ``ShowArticle`` markup into indexed pages.
 
 This is a deliberately literal offline translation of ``WL_TEXT.C``.  The
-Agon client can therefore display the complete shareware HELP article with a
-single bitmap plot per page instead of reimplementing proportional layout in
-the eZ80 menu loop.
+Agon client can therefore display the complete shareware HELP and ENDART1
+articles with a single bitmap plot per page instead of reimplementing
+proportional layout in the eZ80 menu loop.
 """
 
 from __future__ import annotations
@@ -17,9 +17,17 @@ from .shell import WolfFont
 from .vgagraph import VgaGraph
 
 
-ARTICLE_CHUNK = 150
-ARTICLE_PAGE_COUNT = 41
-ARTICLE_BUFFER_BASE = 0x4600
+HELP_ARTICLE_CHUNK = 150
+HELP_ARTICLE_PAGE_COUNT = 41
+HELP_ARTICLE_BUFFER_BASE = 0x4600
+END_ARTICLE_CHUNK = 155
+END_ARTICLE_PAGE_COUNT = 2
+END_ARTICLE_BUFFER_BASE = 0x4629
+
+# Backward-compatible names retained for the existing HELP callers.
+ARTICLE_CHUNK = HELP_ARTICLE_CHUNK
+ARTICLE_PAGE_COUNT = HELP_ARTICLE_PAGE_COUNT
+ARTICLE_BUFFER_BASE = HELP_ARTICLE_BUFFER_BASE
 BACKCOLOR = 0x11
 FONTHEIGHT = 10
 TOPMARGIN = 16
@@ -62,7 +70,7 @@ class _Layout:
                     self.overflowed = True
                     return
                 self.position += 1
-            raise ValueError("HELP article overflow lacks a following page break")
+            raise ValueError("article overflow lacks a following page break")
         self.x = self.left[self.row]
         self.y += FONTHEIGHT
 
@@ -105,13 +113,13 @@ class _Layout:
         while self.position < len(self.text) and self.text[self.position].isdigit():
             self.position += 1
         if start == self.position:
-            raise ValueError("HELP article command lacks a number")
+            raise ValueError("article command lacks a number")
         return int(self.text[start:self.position])
 
     def end_of_line(self) -> None:
         newline = self.text.find("\n", self.position)
         if newline < 0:
-            raise ValueError("unterminated HELP article command")
+            raise ValueError("unterminated article command")
         self.position = newline + 1
 
     def command(self) -> bool:
@@ -165,7 +173,7 @@ class _Layout:
             if self.x < self.left[self.row]:
                 self.x = self.left[self.row]
         else:
-            raise ValueError(f"unsupported HELP article command ^{command}")
+            raise ValueError(f"unsupported article command ^{command}")
         return False
 
 
@@ -179,8 +187,16 @@ def _new_page(archive: VgaGraph) -> Image.Image:
     return page
 
 
-def render_help_article(archive: VgaGraph, font: WolfFont) -> tuple[Image.Image, ...]:
-    text = archive.expand_chunk(ARTICLE_CHUNK).decode("ascii")
+def render_article(
+    archive: VgaGraph,
+    font: WolfFont,
+    *,
+    chunk: int,
+    page_count: int,
+) -> tuple[Image.Image, ...]:
+    """Render one source article and require its canonical page count."""
+
+    text = archive.expand_chunk(chunk).decode("ascii")
     position = 0
     pages: list[Image.Image] = []
     while True:
@@ -189,10 +205,10 @@ def render_help_article(archive: VgaGraph, font: WolfFont) -> tuple[Image.Image,
         if text[position:position + 2].upper() == "^E":
             break
         if text[position:position + 2].upper() != "^P":
-            raise ValueError("HELP article page does not begin with ^P")
+            raise ValueError(f"article chunk {chunk} page does not begin with ^P")
         newline = text.find("\n", position)
         if newline < 0:
-            raise ValueError("unterminated HELP article page header")
+            raise ValueError("unterminated article page header")
         layout = _Layout(_new_page(archive), text, newline + 1, font, archive)
         done = False
         while not done:
@@ -213,12 +229,31 @@ def render_help_article(archive: VgaGraph, font: WolfFont) -> tuple[Image.Image,
         pages.append(layout.page)
         position = layout.position
 
-    if len(pages) != ARTICLE_PAGE_COUNT:
+    if len(pages) != page_count:
         raise ValueError(
-            f"HELP article contains {len(pages)} pages, expected {ARTICLE_PAGE_COUNT}"
+            f"article chunk {chunk} contains {len(pages)} pages, "
+            f"expected {page_count}"
         )
     for index, page in enumerate(pages, 1):
         label = f"pg {index} of {len(pages)}"
         layout = _Layout(page, "", 0, font, archive)
         layout.draw_text(label, 213, 183, 0x4F)
     return tuple(pages)
+
+
+def render_help_article(archive: VgaGraph, font: WolfFont) -> tuple[Image.Image, ...]:
+    return render_article(
+        archive,
+        font,
+        chunk=HELP_ARTICLE_CHUNK,
+        page_count=HELP_ARTICLE_PAGE_COUNT,
+    )
+
+
+def render_end_article(archive: VgaGraph, font: WolfFont) -> tuple[Image.Image, ...]:
+    return render_article(
+        archive,
+        font,
+        chunk=END_ARTICLE_CHUNK,
+        page_count=END_ARTICLE_PAGE_COUNT,
+    )

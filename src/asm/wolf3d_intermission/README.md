@@ -55,7 +55,10 @@ This focused regression executes the production `wolf3d_level_time.inc` and
 - Escape abortion from both loading and finish, including Escape before input
   arming and Escape overriding an already-latched ordinary acknowledgment; and
 - hook-only loading and finish abortion with an empty live keymap, proving a
-  short callback-latched Escape cannot fall through the transition.
+  short callback-latched Escape cannot fall through the transition; and
+- the production ENDART1 loader's page 1 -> page 2 -> page 1 navigation,
+  retained-surface redraws, application-global Escape, and exact clearing of
+  its two on-demand VDP buffers.
 
 The drawing and shell seams are deterministic recorders, and the keyboard seam
 returns scripted sixteen-byte MOS keymaps. All arithmetic, seed scanning, par
