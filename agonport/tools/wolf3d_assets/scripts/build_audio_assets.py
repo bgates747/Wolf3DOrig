@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 """Build Wolf3DOrig's native-rate AGNB 0.2 sound-effect assets.
 
-Defaults consume the local shareware ``VSWAP/AUDIOHED/AUDIOT.WL1`` files and
-the canonical 22-effect AGNB test collection.  Original VSWAP bytes are never
-resampled.  Every available logical sound receives its stable sample buffer
+Defaults consume the local shareware ``VSWAP/AUDIOHED/AUDIOT.WL1`` files.
+Original VSWAP bytes are never resampled; reachable effects without a shareware
+digitized mapping use their authentic AUDIOT PC-speaker streams rendered
+offline at 7 kHz. The canonical 22-effect AGNB test collection remains only an
+explicit contingency source for future unmapped effects. Every available
+logical sound receives its stable sample buffer
 ``0x5000 + logicalId``; its three callable playback buffers are reserved at
 ``0x6000 + logicalId*3 + channel``.
 """

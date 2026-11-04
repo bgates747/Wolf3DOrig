@@ -26,6 +26,25 @@ PC_SPEAKER_FALLBACKS = {
     "ENDBONUS2SND",
     "NOBONUSSND",
     "PERCENT100SND",
+    "NOWAYSND",
+    "PLAYERDEATHSND",
+    "DOGDEATHSND",
+    "GETKEYSND",
+    "ATKKNIFESND",
+    "GETMACHINESND",
+    "GETAMMOSND",
+    "HEALTH1SND",
+    "HEALTH2SND",
+    "BONUS1SND",
+    "BONUS2SND",
+    "BONUS3SND",
+    "GETGATLINGSND",
+    "BONUS1UPSND",
+    "BONUS4SND",
+    "AHHHGSND",
+    "SPIONSND",
+    "NEINSOVASSND",
+    "DOGATTACKSND",
 }
 
 
@@ -129,8 +148,10 @@ class FallbackSpec:
 
 
 # The canonical 22-effect collection is transport-test material, not native
-# Wolf3D fidelity.  These mappings are deliberately explicit so none can be
-# mistaken for an original VSWAP digitized effect.  Wilhelm is intentionally
+# Wolf3D fidelity. These mappings remain explicit as toolchain contingencies,
+# but every currently reachable entry below is resolved first from its
+# authentic AUDIOT.WL1 PC-speaker stream by PC_SPEAKER_FALLBACKS. None may be
+# mistaken for an original VSWAP digitized effect. Wilhelm is intentionally
 # absent; it remains reserved for a later easter egg.
 FALLBACKS = {
     "NOWAYSND": FallbackSpec(

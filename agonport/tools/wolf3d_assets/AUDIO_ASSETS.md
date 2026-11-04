@@ -2,9 +2,9 @@
 
 This directory's audio path turns the original shareware sound inventory into
 one deterministic AGNB 0.2 container. It preserves original digitized bytes
-and sample rates without upsampling or normalization. Eleven effects omitted
-from the shareware digitized set are rendered offline from their original
-PC-speaker pitch streams; no runtime synthesis is required.
+and sample rates without upsampling or normalization. Thirty currently used
+effects omitted from the shareware digitized set are rendered offline from
+their original PC-speaker pitch streams; no runtime synthesis is required.
 
 ## Generated outputs
 
@@ -32,9 +32,10 @@ Run the exact-byte and contract tests with:
 ```
 
 The generator defaults to the repository's `orig/data/*.WL1` files and
-`orig/src/WOLFSRC/AUDIOWL1.H`/`WL_GAME.C`. The approved temporary fallback
-collection is `../agon-utils/examples/agnb/audio/assets/processed`. Pass
-`--no-fallbacks` to audit native-only availability.
+`orig/src/WOLFSRC/AUDIOWL1.H`/`WL_GAME.C`. The former temporary test-pack
+mapping remains an explicit contingency at
+`../agon-utils/examples/agnb/audio/assets/processed`, but no current producer
+selects it. `--no-fallbacks` therefore generates the same production assets.
 
 ## Stable IDs
 
@@ -71,9 +72,14 @@ port values.
 
 ## Original PC-speaker effects
 
-Production requests eleven original effects which have no VSWAP digitized
-mapping: `HITWALL`, `MOVEGUN1`, `MOVEGUN2`, `SHOOT`, `ESCPRESSED`, `DONOTHING`,
-`LEVELDONE`, `ENDBONUS1`, `ENDBONUS2`, `NOBONUS`, and `PERCENT100`.
+Production requests thirty original effects which have no VSWAP digitized
+mapping. They include the shell/intermission effects (`HITWALL`, `MOVEGUN1`,
+`MOVEGUN2`, `SHOOT`, `ESCPRESSED`, `DONOTHING`, `LEVELDONE`, `ENDBONUS1`,
+`ENDBONUS2`, `NOBONUS`, and `PERCENT100`) plus the formerly generic player,
+combat, actor, and pickup effects (`NOWAY`, `PLAYERDEATH`, `DOGDEATH`,
+`GETKEY`, `ATKKNIFE`, `GETMACHINE`, `GETAMMO`, `HEALTH1`, `HEALTH2`,
+`BONUS1` through `BONUS4`, `GETGATLING`, `BONUS1UP`, `AHHHG`, `SPION`,
+`NEINSOVAS`, and `DOGATTACK`).
 Their authentic `PCSound` streams are stored in the first 69 AUDIOT chunks.
 Each byte is a PIT pitch (or zero for silence) held for one 140 Hz service
 tick; `ID_SD.C` uses divisor `pitch*60`.
@@ -85,12 +91,13 @@ manifest labels these records `pc_speaker_original`, retains their source
 chunk and original AdLib arbitration priority, and keeps runtime playback on
 the same buffered-sample path as every other effect.
 
-## Approved fallback inventory
+## Test-pack contingency inventory
 
-The current environment/combat/pickup producers require 19 logical sounds
-that have no mapped native WL1 digitized effect. They use explicit PCM from
-the 22-effect AGNB test collection and are always labeled
-`test_pack_fallback` in the manifest:
+The tool retains explicit mappings for nineteen samples from the canonical
+22-effect AGNB transport-test collection. Production no longer selects any of
+them: every corresponding logical sound resolves first to the authentic
+PC-speaker stream above and is labeled `pc_speaker_original` in the manifest.
+The dormant contingency mappings are:
 
 - `NOWAY` -> `gun_empty.wav`
 - `PLAYERDEATH` -> `scream.wav`
@@ -104,14 +111,14 @@ the 22-effect AGNB test collection and are always labeled
 - `NEINSOVAS` -> `ugh.wav`
 - `DOGATTACK` -> `dog_woof_single.wav`
 
-These fallback WAVs remain at their native 16384 Hz. They are not claims of
-original-game fidelity. `wilhelm.wav` is deliberately excluded and reserved
-for a future easter egg.
+If a future non-WL1 logical effect explicitly promotes one of these files, its
+native 16384 Hz rate is preserved. They are not claims of original-game
+fidelity. `wilhelm.wav` remains excluded and reserved for a future easter egg.
 
-With the approved fallback directory present, every current environment,
-combat, actor, player-damage/death, pickup, elevator, and intermission producer
-has an available asset. Logical sounds outside that scope remain durable
-unavailable manifest entries rather than being silently discarded.
+The WL1 archives alone now supply every current environment, combat, actor,
+player-damage/death, pickup, elevator, and intermission producer. Logical
+sounds outside that scope remain durable unavailable manifest entries rather
+than being silently discarded.
 
 ## Monaural distance gain
 

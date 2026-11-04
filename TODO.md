@@ -146,6 +146,11 @@ The residual `WL_GAME.C::GameLoop` audit also restores the source death
 boundary: floor music stops before the death turn/fizzle and restarts only
 after a surviving attempt has been reseeded. The expanded direct death target
 passes 241/241 checks; audible acceptance remains part of the same close gate.
+The SFX provenance sweep has also replaced all nineteen generic test-pack
+substitutions with their authentic AUDIOT.WL1 PC-speaker streams rendered
+offline at 7 kHz. The production container now has zero generic fallback
+records and 259,674 resident PCM bytes; audible hardware acceptance remains
+part of this gate.
 
 [ ] 18. Perform a source-linked, end-to-end Episode 1 residual parity sweep
 after items 11-17 and 6: scoring, inventory, difficulty, actors, secrets,

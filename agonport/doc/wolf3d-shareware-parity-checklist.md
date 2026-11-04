@@ -468,6 +468,18 @@ is audible emulator/hardware review of timbre, mix, transitions, and both
 toggles. OPL2 timbre is intentionally approximated by native oscillators and
 is not an unfinished exact-emulation requirement.
 
+SFX provenance correction, 2026-11-04: all nineteen reachable effects which
+still used the generic 22-effect transport-test collection now use their
+authentic `AUDIOT.WL1` PC-speaker streams rendered offline at 7 kHz. This
+includes player death, knife, dog effects, weapon/ammo/health/treasure/key
+pickups, and the officer/mutant voices. Native VSWAP digitized mappings remain
+byte-identical and retain priority. The 50-record AGNB container falls from
+453,101 to 259,674 resident PCM bytes and contains zero generic fallback
+records. Host asset contracts pass 76 tests plus 24 subtests; Oryx generation
+240 passes 306/306 direct audio-service and 578/578 player-combat checks.
+Audible hardware review remains required because byte and wire proofs cannot
+accept timbre.
+
 ### A10. Residual parity sweep — TODO 18
 
 After A1-A9, replay Episode 1 end-to-end and compare every reachable state to

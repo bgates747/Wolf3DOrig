@@ -18,13 +18,13 @@ W3D_AUDIO_FLAG_FALLBACK:          equ 0x08
 W3D_AUDIO_AVAILABLE_COUNT:        equ 50
 W3D_AUDIO_REQUIRED_COUNT:         equ 49
 W3D_AUDIO_REQUIRED_AVAILABLE:     equ 49
-W3D_AUDIO_RESIDENT_PCM_BYTES:     equ 453101
-W3D_AUDIO_CONTAINER_BYTES:        equ 455388
+W3D_AUDIO_RESIDENT_PCM_BYTES:     equ 259674
+W3D_AUDIO_CONTAINER_BYTES:        equ 261956
 W3D_AUDIO_GAIN_FORWARD_ROWS:      equ 15
 W3D_AUDIO_GAIN_LATERAL_COLUMNS:   equ 30
 W3D_AUDIO_GAIN_LATERAL_BIAS:      equ 15
 W3D_AUDIO_MONO_GAIN_BYTES:        equ 450
-W3D_AUDIO_GETGATLING_HOLD_TICKS:  equ 14
+W3D_AUDIO_GETGATLING_HOLD_TICKS:  equ 21
 W3D_AUDIO_HITWALL_HOLD_TICKS:     equ 2
 
 W3D_AUDIO_ENTRY_SAMPLE_ID:        equ 0
@@ -133,7 +133,7 @@ w3d_audio_asset_table:
     db 50,0x0B
     dw 0x600F,0x6010,0x6011
     ; 06 NOWAYSND (available)
-    dw 0x5006,16384,4927,301
+    dw 0x5006,7000,1800,257
     db 50,0x0B
     dw 0x6012,0x6013,0x6014
     ; 07 NAZIHITPLAYERSND (unavailable)
@@ -145,11 +145,11 @@ w3d_audio_asset_table:
     db 50,0x00
     dw 0x0000,0x0000,0x0000
     ; 09 PLAYERDEATHSND (available)
-    dw 0x5009,16384,12382,756
+    dw 0x5009,7000,2300,329
     db 50,0x0B
     dw 0x601B,0x601C,0x601D
     ; 10 DOGDEATHSND (available)
-    dw 0x500A,16384,7264,443
+    dw 0x500A,7000,2150,307
     db 99,0x0B
     dw 0x601E,0x601F,0x6020
     ; 11 ATKGATLINGSND (available)
@@ -157,7 +157,7 @@ w3d_audio_asset_table:
     db 99,0x07
     dw 0x6021,0x6022,0x6023
     ; 12 GETKEYSND (available)
-    dw 0x500C,16384,24327,1485
+    dw 0x500C,7000,4500,643
     db 99,0x0B
     dw 0x6024,0x6025,0x6026
     ; 13 NOITEMSND (unavailable)
@@ -201,7 +201,7 @@ w3d_audio_asset_table:
     db 1,0x07
     dw 0x6042,0x6043,0x6044
     ; 23 ATKKNIFESND (available)
-    dw 0x5017,16384,4083,249
+    dw 0x5017,7000,2000,286
     db 1,0x0B
     dw 0x6045,0x6046,0x6047
     ; 24 ATKPISTOLSND (available)
@@ -229,11 +229,11 @@ w3d_audio_asset_table:
     db 50,0x07
     dw 0x6057,0x6058,0x6059
     ; 30 GETMACHINESND (available)
-    dw 0x501E,16384,7439,454
+    dw 0x501E,7000,4600,657
     db 90,0x0B
     dw 0x605A,0x605B,0x605C
     ; 31 GETAMMOSND (available)
-    dw 0x501F,16384,7439,454
+    dw 0x501F,7000,3150,450
     db 70,0x0B
     dw 0x605D,0x605E,0x605F
     ; 32 SHOOTSND (available)
@@ -241,27 +241,27 @@ w3d_audio_asset_table:
     db 10,0x0B
     dw 0x6060,0x6061,0x6062
     ; 33 HEALTH1SND (available)
-    dw 0x5021,16384,24327,1485
+    dw 0x5021,7000,3450,493
     db 10,0x0B
     dw 0x6063,0x6064,0x6065
     ; 34 HEALTH2SND (available)
-    dw 0x5022,16384,24327,1485
+    dw 0x5022,7000,4450,636
     db 90,0x0B
     dw 0x6066,0x6067,0x6068
     ; 35 BONUS1SND (available)
-    dw 0x5023,16384,24327,1485
+    dw 0x5023,7000,5950,850
     db 99,0x0B
     dw 0x6069,0x606A,0x606B
     ; 36 BONUS2SND (available)
-    dw 0x5024,16384,24327,1485
+    dw 0x5024,7000,7450,1064
     db 20,0x0B
     dw 0x606C,0x606D,0x606E
     ; 37 BONUS3SND (available)
-    dw 0x5025,16384,24327,1485
+    dw 0x5025,7000,10400,1486
     db 20,0x0B
     dw 0x606F,0x6070,0x6071
     ; 38 GETGATLINGSND (available)
-    dw 0x5026,16384,7439,454
+    dw 0x5026,7000,4750,679
     db 10,0x0B
     dw 0x6072,0x6073,0x6074
     ; 39 ESCPRESSEDSND (available)
@@ -285,11 +285,11 @@ w3d_audio_asset_table:
     db 50,0x0B
     dw 0x6081,0x6082,0x6083
     ; 44 BONUS1UPSND (available)
-    dw 0x502C,16384,24327,1485
+    dw 0x502C,7000,6600,943
     db 50,0x0B
     dw 0x6084,0x6085,0x6086
     ; 45 BONUS4SND (available)
-    dw 0x502D,16384,24327,1485
+    dw 0x502D,7000,9800,1400
     db 50,0x0B
     dw 0x6087,0x6088,0x6089
     ; 46 PUSHWALLSND (available)
@@ -317,7 +317,7 @@ w3d_audio_asset_table:
     db 85,0x07
     dw 0x6099,0x609A,0x609B
     ; 52 AHHHGSND (available)
-    dw 0x5034,16384,6755,412
+    dw 0x5034,7000,4950,707
     db 85,0x0B
     dw 0x609C,0x609D,0x609E
     ; 53 DIESND (unavailable)
@@ -373,15 +373,15 @@ w3d_audio_asset_table:
     db 60,0x00
     dw 0x0000,0x0000,0x0000
     ; 66 SPIONSND (available)
-    dw 0x5042,16384,14394,879
+    dw 0x5042,7000,5300,757
     db 60,0x0B
     dw 0x60C6,0x60C7,0x60C8
     ; 67 NEINSOVASSND (available)
-    dw 0x5043,16384,6313,385
+    dw 0x5043,7000,3800,543
     db 85,0x0B
     dw 0x60C9,0x60CA,0x60CB
     ; 68 DOGATTACKSND (available)
-    dw 0x5044,16384,8976,548
+    dw 0x5044,7000,1200,171
     db 99,0x0B
     dw 0x60CC,0x60CD,0x60CE
 w3d_audio_asset_table_end:

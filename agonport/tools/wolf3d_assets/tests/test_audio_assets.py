@@ -6,7 +6,6 @@ import struct
 import sys
 import tempfile
 import unittest
-import wave
 from pathlib import Path
 
 
@@ -105,17 +104,6 @@ def _independent_vswap_sounds(data: bytes) -> tuple[bytes | None, ...]:
     return tuple(sounds)
 
 
-def _independent_wav(path: Path) -> tuple[int, bytes]:
-    with wave.open(str(path), "rb") as wav_file:
-        if (
-            wav_file.getnchannels() != 1
-            or wav_file.getsampwidth() != 1
-            or wav_file.getcomptype() != "NONE"
-        ):
-            raise AssertionError(f"test fallback is not unsigned-8 mono PCM: {path}")
-        return wav_file.getframerate(), wav_file.readframes(wav_file.getnframes())
-
-
 class AudioAssetTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -160,8 +148,8 @@ class AudioAssetTests(unittest.TestCase):
         missing = [name for name in CURRENT_PRODUCERS if not by_name[name].available]
         self.assertEqual(missing, [])
         self.assertEqual(self.manifest["totals"]["nativeRecords"], 20)
-        self.assertEqual(self.manifest["totals"]["fallbackRecords"], 19)
-        self.assertEqual(self.manifest["totals"]["pcSpeakerRecords"], 11)
+        self.assertEqual(self.manifest["totals"]["fallbackRecords"], 0)
+        self.assertEqual(self.manifest["totals"]["pcSpeakerRecords"], 30)
         self.assertEqual(self.manifest["totals"]["containerRecords"], 50)
         self.assertEqual(
             self.manifest["totals"]["requiredUnavailableLogicalSounds"], 0
@@ -210,18 +198,14 @@ class AudioAssetTests(unittest.TestCase):
             self.assertEqual(rate, 7000)
             self.assertEqual(pcm, source_sounds[digi_index])
 
-    def test_fallback_pcm_is_preserved_byte_for_byte_at_its_native_rate(self) -> None:
-        records = {buffer_id: (rate, pcm) for buffer_id, _format, rate, pcm in _audio_records(self.container)}
+    def test_generic_test_pack_is_not_selected_for_production(self) -> None:
         by_name = {sound.name: sound for sound in self.sounds}
-        for name, fallback in FALLBACKS.items():
-            expected_rate, expected_pcm = _independent_wav(
-                DEFAULT_FALLBACK_DIR / fallback.filename
-            )
-            sound = by_name[name]
-            rate, pcm = records[sample_buffer_id(sound.logical_id)]
-            self.assertEqual(rate, expected_rate)
-            self.assertEqual(pcm, expected_pcm)
-            self.assertEqual(sound.source_kind, "test_pack_fallback")
+        self.assertTrue(set(FALLBACKS) <= set(PC_SPEAKER_FALLBACKS))
+        self.assertFalse(
+            any(sound.source_kind == "test_pack_fallback" for sound in self.sounds)
+        )
+        for name in FALLBACKS:
+            self.assertEqual(by_name[name].source_kind, "pc_speaker_original")
 
     def test_original_pc_speaker_fallbacks_are_deterministic_7khz_pcm(self) -> None:
         audiohed = DEFAULT_AUDIOHED.read_bytes()
@@ -283,8 +267,8 @@ class AudioAssetTests(unittest.TestCase):
             [entry["priority"] for entry in self.manifest["sounds"]], expected
         )
 
-    def test_unavailable_records_remain_explicit_when_fallbacks_are_disabled(self) -> None:
-        _container, manifest, _include, sounds = build_assets(
+    def test_pc_speaker_sources_do_not_depend_on_test_pack(self) -> None:
+        container, manifest, include_text, sounds = build_assets(
             vswap_path=DEFAULT_VSWAP,
             audiohed_path=DEFAULT_AUDIOHED,
             audiot_path=DEFAULT_AUDIOT,
@@ -294,20 +278,11 @@ class AudioAssetTests(unittest.TestCase):
         )
         by_name = {sound.name: sound for sound in sounds}
         for name in FALLBACKS:
-            self.assertFalse(by_name[name].available)
-        manifest_by_name = {entry["name"]: entry for entry in manifest["sounds"]}
-        for name in FALLBACKS:
-            entry = manifest_by_name[name]
-            self.assertIsNone(entry["sampleBufferId"])
-            self.assertEqual(entry["commandBufferIds"], [])
-            self.assertEqual(
-                entry["reservedSampleBufferId"], sample_buffer_id(entry["logicalId"])
-            )
-            self.assertEqual(
-                entry["reservedCommandBufferIds"],
-                list(command_buffer_ids(entry["logicalId"])),
-            )
-            self.assertEqual(entry["unavailableReason"], "fallback collection disabled")
+            self.assertTrue(by_name[name].available)
+            self.assertEqual(by_name[name].source_kind, "pc_speaker_original")
+        self.assertEqual(container, self.container)
+        self.assertEqual(manifest, self.manifest)
+        self.assertEqual(include_text, self.include_text)
 
     def test_mono_gain_table_matches_original_source_and_contract(self) -> None:
         left, right = parse_attenuation_tables(DEFAULT_WL_GAME.read_text(encoding="latin-1"))

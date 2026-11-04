@@ -26,10 +26,11 @@ byte stream before writing a result mailbox from a real eZ80 run:
 ```
 
 For a staged source tree, set `W3D_STAGED_ROOT`; set `W3D_RUNTIME_ROOT` when
-the emulator artifacts live in another Wolf3DOrig checkout. The runner uses a
-headless stock VDP because it validates eZ80 state and bytes rather than
-audible playback. Bespoke-emulator and hardware listening remain explicit
-human acceptance gates after application integration.
+the emulator artifacts live in another Wolf3DOrig checkout. Modern qualified
+profiles may instead supply `W3D_EMULATOR`, `W3D_MOS`, `W3D_VDP`,
+`W3D_FIRMWARE`, and `W3D_ASSEMBLER` explicitly. The runner is headless because
+it validates eZ80 state and bytes rather than audible playback. Human emulator
+and hardware listening remain explicit gates after application integration.
 
 The same fixture also measures backend CPU dispatch with the established PRT1
 hardware stopwatch (`18.432 MHz / 256 / 72 = 1 kHz`). It times 10,000 loaded

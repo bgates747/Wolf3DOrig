@@ -1,6 +1,6 @@
 # Wolf3D audio précis and Agon implementation contract
 
-Status: approved design reference, updated 2026-11-03. This document records
+Status: approved design reference, updated 2026-11-04. This document records
 the original Wolf3D audio architecture and the decisions governing the
 Wolf3DOrig sound-effects and music implementations.
 
@@ -47,10 +47,10 @@ container space, loading time, and bandwidth. The original VSWAP/DigiMap data
 is authoritative wherever it supplies a digitized effect.
 
 The existing 22-effect `sfx.agnb` collection is a proven transport test set,
-not the primary asset source. Its samples may fill required gaps—especially
-pickup effects which were synthesized in the original—at their existing sample
-rates and without resampling merely for uniformity. Any glaring uncovered gap
-must be reported before inventing or synthesizing a replacement.
+not a production asset source. All currently reachable logical effects are
+now supplied by authentic WL1 VSWAP digitized bytes or AUDIOT PC-speaker
+streams. Any future uncovered gap must be reported before promoting a generic
+sample, inventing a replacement, or synthesizing one.
 
 The collection's Wilhelm scream is reserved for a future easter egg. It does
 not replace an original death sound in the initial implementation.
@@ -62,9 +62,11 @@ pitch-control byte stream serviced at roughly 140 Hz. AdLib effects contain an
 OPL2 instrument, block/octave value, and frequency byte stream at roughly the
 same service rate. Neither representation is PCM.
 
-The initial Agon implementation uses native digitized effects where available
-and suitable existing PCM fallbacks for required gaps. Runtime emulation of
-PC-speaker or OPL2 sound effects is outside this phase.
+The Agon implementation uses native digitized effects where available. For
+every currently reachable logical effect without a WL1 digitized mapping, the
+generator renders the authentic PC-speaker pitch stream offline to unsigned
+7 kHz PCM. This keeps runtime playback on the accepted buffered-sample path;
+runtime PC-speaker or OPL2 sound-effect emulation remains unnecessary.
 
 ## 3. Runtime event and concurrency contract
 
@@ -138,8 +140,9 @@ AUDI  u8 format=0x09, u16 explicit sample rate
 DATA  nonempty unsigned 8-bit mono PCM
 ```
 
-Mixed sample rates are valid. Native Wolf effects use 7000 Hz; fallback assets
-retain their existing rates.
+Mixed sample rates remain valid, but every current production effect is now an
+authentic WL1 source at 7000 Hz. A future explicitly approved contingency
+sample would retain its existing rate.
 
 The canonical AGNB loader validates metadata and record bounds, streams PCM
 through its image-owned 8 KiB transfer window, consolidates the buffer, and
