@@ -15,7 +15,6 @@ fa_read:            equ 01h
 fa_write:           equ 02h
 fa_create_always:   equ 08h
 sysvar_time:        equ 00h
-W3D_SHELL_HIGH_SCORES_BASE_BUFFER: equ 04304h
 
     macro MOSCALL function
         ld a,function
@@ -33,12 +32,15 @@ W3D_SHELL_HIGH_SCORES_BASE_BUFFER: equ 04304h
         CHECK_A expected,reason
     endmacro
 
+    include "wolf3d_shell_assets.inc"
     include "wolf3d_highscores.inc"
 
 ; Presentation and production-state seams are inert in this core regression.
 w3d_vdu_present:
 w3d_shell_clear:
 w3d_shell_plot_full_screen:
+selectBitmap:
+plotBitmap:
 printString:
 w3d_shell_wait_any_press:
 w3d_shell_wait_all_released:
@@ -116,6 +118,7 @@ REASON_TERMINATOR: equ 7
 REASON_FILE_RESULT: equ 8
 REASON_CURSOR:      equ 9
 REASON_WAIT:        equ 10
+REASON_WIDTH:       equ 11
 
 start:
     push af
@@ -154,6 +157,8 @@ run_tests:
     call test_decimal_formatting
     call test_production_file_round_trip
     call test_name_editor
+    call test_proportional_width
+    call test_input_pixel_limit
     call test_cursor_contract
     call test_timed_nonqualifying_wait
     call write_result
@@ -473,6 +478,36 @@ test_name_editor:
     CHECK_MEM8 w3d_highscores+2,0,REASON_TERMINATOR
     ret
 
+test_proportional_width:
+    ld a,16
+    ld (test_case),a
+    ld hl,test_default_top_name
+    call w3d_highscores_measure_string
+    ld a,b
+    CHECK_A 0,REASON_WIDTH
+    ld a,c
+    CHECK_A 100,REASON_WIDTH
+    ret
+
+test_input_pixel_limit:
+    ld a,17
+    ld (test_case),a
+    call w3d_highscores_reset_defaults
+    call candidate_default_score
+    ld a,2
+    ld (w3d_highscores_candidate_completed),a
+    call w3d_highscores_consider
+    ld hl,test_narrow_name_keys
+    ld (test_name_key_pointer),hl
+    ld hl,test_name_key_hook
+    call w3d_highscores_set_key_hook
+    call w3d_highscores_edit_inserted_name
+    call w3d_highscores_reset_key_hook
+    CHECK_MEM8 w3d_highscores_name_length,33,REASON_WIDTH
+    CHECK_MEM8 w3d_highscores+32,'i',REASON_NAME
+    CHECK_MEM8 w3d_highscores+33,0,REASON_TERMINATOR
+    ret
+
 test_name_key_hook:
     ld hl,(test_name_key_pointer)
     ld a,(hl)
@@ -537,6 +572,9 @@ test_zero_u32: db 0,0,0,0
 test_max_u32: db 0ffh,0ffh,0ffh,0ffh
 test_max_u16: dw 0ffffh
 test_name_keys: db 'B','J',8,'!',13
+test_default_top_name: db "id software-'92",0
+test_narrow_name_keys:
+    db "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii",13
 test_name_key_pointer: dl test_name_keys
 result_filename: db "highscores_result.bin",0
 output_handle: db 0

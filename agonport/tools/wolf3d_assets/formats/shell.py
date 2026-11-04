@@ -21,6 +21,21 @@ SHELL_FONT_CHUNK = 2
 SHELL_SIGNON_BUFFER_ID = 0x428A
 SHELL_SIGNON_SIZE = (320, 200)
 
+# DrawHighScores selects STARTFONT (VGAGRAPH chunk 1), not the larger menu
+# font used by the control panel. Keep every printable character plus the
+# original I-bar and fixed-width score digits in one contiguous buffer range
+# so the eZ80 can reproduce the source's mutable proportional rows.
+HIGHSCORE_FONT_CHUNK = 1
+HIGHSCORE_GLYPH_FIRST = 32
+HIGHSCORE_GLYPH_LAST = 138
+HIGHSCORE_GLYPH_BUFFER_BASE = 0x4380
+
+
+def highscore_glyph_buffer_id(code: int) -> int:
+    if not HIGHSCORE_GLYPH_FIRST <= code <= HIGHSCORE_GLYPH_LAST:
+        raise ValueError(f"High-score glyph code is outside the staged range: {code}")
+    return HIGHSCORE_GLYPH_BUFFER_BASE + code - HIGHSCORE_GLYPH_FIRST
+
 # Grounded in the bundled v1.4 archive's STRUCTPIC table and visual audit.
 # Chunk 21 is intentionally absent: it is H_GALACTIXPIC/help art in this data.
 SHELL_CHUNK_NAMES = {

@@ -31,6 +31,10 @@ from formats.shell import (  # noqa: E402
     CURRENT_GAME_MESSAGE,
     END_GAME_MESSAGE,
     EPISODE_UNAVAILABLE_MESSAGE,
+    HIGHSCORE_FONT_CHUNK,
+    HIGHSCORE_GLYPH_BUFFER_BASE,
+    HIGHSCORE_GLYPH_FIRST,
+    HIGHSCORE_GLYPH_LAST,
     KEEN_MESSAGE,
     QUIT_MESSAGES,
     SAVING_MESSAGE,
@@ -43,6 +47,7 @@ from formats.shell import (  # noqa: E402
     STRIPE,
     chunk_buffer_id,
     decode_wolf_font,
+    highscore_glyph_buffer_id,
 )
 from formats.vgagraph import read_vgagraph  # noqa: E402
 from scripts.build_shell_assets import build_shell_assets  # noqa: E402
@@ -216,14 +221,24 @@ class ShellArchiveTests(unittest.TestCase):
             out = Path(temporary) / "shell"
             entries = build_shell_assets(DATA_DIR, out, PALETTE_FILE, override_dir=None)
             self.assertEqual(
-                len(entries), len(SHELL_CHUNKS) + len(EXPECTED_COMPOSITES) + 1
+                len(entries),
+                len(SHELL_CHUNKS)
+                + len(EXPECTED_COMPOSITES)
+                + 1
+                + HIGHSCORE_GLYPH_LAST
+                - HIGHSCORE_GLYPH_FIRST
+                + 1,
             )
             self.assertEqual(
                 len({entry.bufferId for entry in entries}),
                 len(entries),
             )
 
-            raw = {entry.name: entry for entry in entries if entry.chunkId is not None}
+            raw = {
+                entry.name: entry
+                for entry in entries
+                if entry.name in SHELL_CHUNK_NAMES.values()
+            }
             self.assertEqual(
                 {entry.chunkId for entry in raw.values()}, set(SHELL_CHUNKS)
             )
@@ -248,6 +263,25 @@ class ShellArchiveTests(unittest.TestCase):
             self.assertEqual(
                 (raw["paused"].width, raw["paused"].height), (24, 32)
             )
+
+            highscore_font = decode_wolf_font(_archive(), HIGHSCORE_FONT_CHUNK)
+            glyphs = {
+                entry.name: entry
+                for entry in entries
+                if entry.name.startswith("highscore_glyph_")
+            }
+            self.assertEqual(
+                len(glyphs), HIGHSCORE_GLYPH_LAST - HIGHSCORE_GLYPH_FIRST + 1
+            )
+            for code in range(HIGHSCORE_GLYPH_FIRST, HIGHSCORE_GLYPH_LAST + 1):
+                entry = glyphs[f"highscore_glyph_{code:03d}"]
+                self.assertEqual(entry.chunkId, HIGHSCORE_FONT_CHUNK)
+                self.assertEqual(entry.bufferId, highscore_glyph_buffer_id(code))
+                self.assertEqual(entry.width, highscore_font.widths[code])
+                self.assertEqual(entry.height, highscore_font.height)
+            self.assertEqual(highscore_glyph_buffer_id(32), HIGHSCORE_GLYPH_BUFFER_BASE)
+            self.assertEqual(highscore_font.widths[128], 2)
+            self.assertEqual(list(highscore_font.widths[129:139]), [8] * 10)
 
             signon = next(entry for entry in entries if entry.name == "signon")
             self.assertEqual(signon.bufferId, SHELL_SIGNON_BUFFER_ID)
@@ -322,6 +356,10 @@ class ShellArchiveTests(unittest.TestCase):
             self.assertIn("W3D_HELP_PAGE_COUNT: equ 41", constants)
             self.assertIn("W3D_END_PAGE_BUFFER_BASE: equ $4629", constants)
             self.assertIn("W3D_END_PAGE_COUNT: equ 2", constants)
+            self.assertIn("W3D_HIGHSCORE_GLYPH_BUFFER_BASE: equ $4380", constants)
+            self.assertIn("W3D_HIGHSCORE_GLYPH_FIRST: equ 32", constants)
+            self.assertIn("W3D_HIGHSCORE_GLYPH_LAST: equ 138", constants)
+            self.assertIn("W3D_HIGHSCORE_GLYPH_HEIGHT: equ 10", constants)
             self.assertIn("W3D_SHELL_HIGH_SCORES_BASE_BUFFER: equ $4304", constants)
             self.assertIn(
                 "W3D_SHELL_EPISODE_UNAVAILABLE_NOTICE_X: equ 35", constants

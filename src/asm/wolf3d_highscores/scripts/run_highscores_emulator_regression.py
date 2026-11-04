@@ -46,6 +46,7 @@ REASONS = {
     8: "persistence validation result",
     9: "cursor register/layout contract",
     10: "timed non-qualifying display wait",
+    11: "proportional glyph width/input pixel limit",
 }
 
 

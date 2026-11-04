@@ -22,12 +22,14 @@ W3D_HIGHSCORE_FILE_HEADER_SIZE:   equ 16
 W3D_HIGHSCORE_FILE_PAYLOAD_SIZE:  equ 462
 W3D_HIGHSCORE_FILE_FOOTER:        equ 478
 W3D_HIGHSCORE_FILE_SIZE:          equ 482
-W3D_HIGHSCORE_VISIBLE_NAME_MAX:   equ 12
-W3D_HIGHSCORE_ROW_FIRST:          equ 9
-W3D_HIGHSCORE_ROW_STEP:           equ 2
-W3D_HIGHSCORE_NAME_COLUMN:        equ 4
-W3D_HIGHSCORE_LEVEL_END_COLUMN:   equ 22
-W3D_HIGHSCORE_SCORE_END_COLUMN:   equ 33
+W3D_HIGHSCORE_INPUT_WIDTH:         equ 100
+W3D_HIGHSCORE_ROW_FIRST_Y:         equ 76
+W3D_HIGHSCORE_ROW_STEP_Y:          equ 16
+W3D_HIGHSCORE_NAME_X:              equ 32
+W3D_HIGHSCORE_LEVEL_END_X:         equ 176
+W3D_HIGHSCORE_SCORE_END_X:         equ 264
+W3D_HIGHSCORE_CURSOR_GLYPH:        equ 128
+W3D_HIGHSCORE_DIGIT_GLYPH_ZERO:    equ 129
 ; IN_UserInput(500) at the original 70 Hz, rounded to MOS's 120 Hz clock.
 W3D_HIGHSCORE_DISPLAY_TICKS:       equ 857
 
@@ -157,9 +159,9 @@ w3d_highscores_wait_nonqualifying:
 @pressed:
     jp w3d_shell_wait_all_released
 
-; Draw the invariant original backdrop plus the seven mutable records. Mode
-; 136 retains mode 8's native 8-pixel text grid, matching the source column
-; anchors; every row is separated by 16 pixels exactly as DrawHighScores does.
+; Draw the invariant original backdrop plus the seven mutable records. The
+; mutable text uses STARTFONT (chunk 1), exactly as DrawHighScores does. Names
+; are proportional; level and score digits use fixed-width glyphs 129..138.
 w3d_highscores_draw:
     call @frame
     call w3d_vdu_present
@@ -172,57 +174,188 @@ w3d_highscores_draw:
     rst.lil 18h
     ld ix,w3d_highscores
     ld b,W3D_HIGHSCORE_COUNT
-    ld c,W3D_HIGHSCORE_ROW_FIRST
+    ld a,W3D_HIGHSCORE_ROW_FIRST_Y
+    ld (w3d_highscores_row_y),a
 @row:
     push bc
     push ix
     push ix
     pop hl
-    push hl
-    ld a,W3D_HIGHSCORE_NAME_COLUMN
-    call w3d_highscores_set_cursor
-    pop hl
-    call printString
+    ld bc,W3D_HIGHSCORE_NAME_X
+    ld a,(w3d_highscores_row_y)
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    call w3d_highscores_plot_string
     pop ix
 
     push ix
     lea hl,ix+W3D_HIGHSCORE_COMPLETED
     call w3d_highscores_format_u16
     call w3d_highscores_string_length
-    ld a,W3D_HIGHSCORE_LEVEL_END_COLUMN
-    sub e
+    ld a,e
+    add a,a
+    add a,a
+    add a,a
+    ld c,a
+    ld b,0
+    inc bc
+    dec.s bc
+    ld hl,W3D_HIGHSCORE_LEVEL_END_X
+    or a
+    sbc.s hl,bc
+    push hl
+    pop bc
     pop ix
     push ix
-    push hl
-    call w3d_highscores_set_cursor
-    pop hl
-    call printString
+    lea hl,ix+W3D_HIGHSCORE_COMPLETED
+    call w3d_highscores_format_u16
+    ld a,(w3d_highscores_row_y)
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    call w3d_highscores_plot_number
     pop ix
 
     push ix
     lea hl,ix+W3D_HIGHSCORE_SCORE
     call w3d_highscores_format_u32
     call w3d_highscores_string_length
-    ld a,W3D_HIGHSCORE_SCORE_END_COLUMN
-    sub e
+    ld a,e
+    add a,a
+    add a,a
+    add a,a
+    ld c,a
+    ld b,0
+    inc bc
+    dec.s bc
+    ld hl,W3D_HIGHSCORE_SCORE_END_X
+    or a
+    sbc.s hl,bc
+    push hl
+    pop bc
     pop ix
     push ix
-    push hl
-    call w3d_highscores_set_cursor
-    pop hl
-    call printString
+    lea hl,ix+W3D_HIGHSCORE_SCORE
+    call w3d_highscores_format_u32
+    ld a,(w3d_highscores_row_y)
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    call w3d_highscores_plot_number
     pop ix
     pop bc
-    ld a,c
-    add a,W3D_HIGHSCORE_ROW_STEP
-    ld c,a
+    ld a,(w3d_highscores_row_y)
+    add a,W3D_HIGHSCORE_ROW_STEP_Y
+    ld (w3d_highscores_row_y),a
     lea ix,ix+W3D_HIGHSCORE_RECORD_SIZE
-    djnz @row
+    dec b
+    jp nz,@row
     ret
 
-; Edit at most the 100-pixel original input width (twelve native characters).
-; The stored format retains the original 57-character capacity for forward
-; compatibility. Escape requests the common clean application exit.
+; HL=NUL-terminated text, BC=x, DE=y. Every staged glyph carries the exact
+; BORDCOLOR cell background, so a full frame also erases prior edit state.
+w3d_highscores_plot_string:
+    ld (w3d_highscores_text_pointer),hl
+    ld (w3d_highscores_plot_x),bc
+    ld (w3d_highscores_plot_y),de
+@next:
+    ld hl,(w3d_highscores_text_pointer)
+    ld a,(hl)
+    or a
+    ret z
+    inc hl
+    ld (w3d_highscores_text_pointer),hl
+    call w3d_highscores_plot_glyph
+    jr @next
+
+; Translate ASCII digits to STARTFONT's fixed-width 129..138 range, matching
+; the original `*str += 129-'0'` loop.
+w3d_highscores_plot_number:
+    ld (w3d_highscores_text_pointer),hl
+    ld (w3d_highscores_plot_x),bc
+    ld (w3d_highscores_plot_y),de
+@next:
+    ld hl,(w3d_highscores_text_pointer)
+    ld a,(hl)
+    or a
+    ret z
+    inc hl
+    ld (w3d_highscores_text_pointer),hl
+    add a,W3D_HIGHSCORE_DIGIT_GLYPH_ZERO-'0'
+    call w3d_highscores_plot_glyph
+    jr @next
+
+; A=staged STARTFONT code. Advance the persistent plot X by its source width.
+w3d_highscores_plot_glyph:
+    cp W3D_HIGHSCORE_GLYPH_FIRST
+    ret c
+    cp W3D_HIGHSCORE_GLYPH_LAST+1
+    ret nc
+    ld (w3d_highscores_glyph_code),a
+    sub W3D_HIGHSCORE_GLYPH_FIRST
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    ld hl,W3D_HIGHSCORE_GLYPH_BUFFER_BASE
+    add hl,de
+    call selectBitmap
+    ld bc,(w3d_highscores_plot_x)
+    ld de,(w3d_highscores_plot_y)
+    call plotBitmap
+    ld a,(w3d_highscores_glyph_code)
+    call w3d_highscores_glyph_width
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    ld hl,(w3d_highscores_plot_x)
+    add hl,de
+    ld (w3d_highscores_plot_x),hl
+    ret
+
+; A=staged STARTFONT code. Return A=source pixel width.
+w3d_highscores_glyph_width:
+    sub W3D_HIGHSCORE_GLYPH_FIRST
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    ld hl,w3d_highscore_glyph_widths
+    add hl,de
+    ld a,(hl)
+    ret
+
+; HL=NUL-terminated STARTFONT text. Return BC=source pixel width, preserving HL.
+w3d_highscores_measure_string:
+    push hl
+    ld bc,0
+@next:
+    ld a,(hl)
+    or a
+    jr z,@done
+    inc hl
+    push hl
+    call w3d_highscores_glyph_width
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    ld a,c
+    add a,e
+    ld c,a
+    pop hl
+    jr @next
+@done:
+    pop hl
+    ret
+
+; Edit at most the source's 57 characters and 100 proportional pixels. Escape
+; retains the project's common clean application-exit policy.
 w3d_highscores_edit_inserted_name:
     xor a
     ld (w3d_highscores_name_length),a
@@ -236,39 +369,63 @@ w3d_highscores_edit_inserted_name:
 @draw_cursor:
     ld a,(w3d_highscores_inserted_slot)
     add a,a
-    add a,W3D_HIGHSCORE_ROW_FIRST
-    ld c,a
-    ld a,(w3d_highscores_name_length)
-    add a,W3D_HIGHSCORE_NAME_COLUMN
-    call w3d_highscores_set_cursor
-    ld a,'_'
-    rst.lil 10h
-    ret
+    add a,a
+    add a,a
+    add a,a
+    add a,W3D_HIGHSCORE_ROW_FIRST_Y
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    ld hl,w3d_highscores_name_edit
+    call w3d_highscores_measure_string
+    ld hl,W3D_HIGHSCORE_NAME_X-1
+    add hl,bc
+    ld (w3d_highscores_plot_x),hl
+    ld (w3d_highscores_plot_y),de
+    ld a,W3D_HIGHSCORE_CURSOR_GLYPH
+    jp w3d_highscores_plot_glyph
 @key:
     call w3d_highscores_read_key
     cp 27
-    jr z,@escape
+    jp z,@escape
     cp 13
-    jr z,@accept
+    jp z,@accept
     cp 10
-    jr z,@accept
+    jp z,@accept
     cp 8
-    jr z,@backspace
+    jp z,@backspace
     cp 127
-    jr z,@backspace
+    jp z,@backspace
     cp 32
-    jr c,@key
+    jp c,@key
     cp 127
-    jr nc,@key
-    ld b,a
+    jp nc,@key
+    ld (w3d_highscores_pending_char),a
     ld a,(w3d_highscores_name_length)
-    cp W3D_HIGHSCORE_VISIBLE_NAME_MAX
-    jr nc,@key
+    cp W3D_HIGHSCORE_NAME_MAX
+    jp nc,@key
+    ld hl,w3d_highscores_name_edit
+    call w3d_highscores_measure_string
+    ld a,(w3d_highscores_pending_char)
+    call w3d_highscores_glyph_width
+    ld e,a
+    ld d,0
+    inc de
+    dec.s de
+    ld a,c
+    add a,e
+    ld c,a
+    ld hl,W3D_HIGHSCORE_INPUT_WIDTH
+    or a
+    sbc.s hl,bc
+    jp c,@key
+    ld a,(w3d_highscores_name_length)
     ld e,a
     ld d,0
     inc de
     dec.s de                 ; undocumented eZ80 idiom: DEU=0
-    ld a,b
+    ld a,(w3d_highscores_pending_char)
     ld hl,w3d_highscores_name_edit
     add hl,de
     ld (hl),a
@@ -282,7 +439,7 @@ w3d_highscores_edit_inserted_name:
 @backspace:
     ld a,(w3d_highscores_name_length)
     or a
-    jr z,@key
+    jp z,@key
     dec a
     ld (w3d_highscores_name_length),a
     ld e,a
@@ -727,7 +884,19 @@ w3d_highscores_text_colours_end:
 w3d_highscores_name_length:
     db 0
 w3d_highscores_name_edit:
-    ds W3D_HIGHSCORE_VISIBLE_NAME_MAX+1
+    ds W3D_HIGHSCORE_NAME_SIZE
+w3d_highscores_text_pointer:
+    dl 0
+w3d_highscores_plot_x:
+    dl 0
+w3d_highscores_plot_y:
+    dl 0
+w3d_highscores_glyph_code:
+    db 0
+w3d_highscores_row_y:
+    db 0
+w3d_highscores_pending_char:
+    db 0
 w3d_highscores_number_work:
     ds 4
 w3d_highscores_number_text:
