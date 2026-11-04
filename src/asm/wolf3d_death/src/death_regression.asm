@@ -226,6 +226,93 @@ test_callback_routing:
     ld b,1
     call expect_a
 
+; The same physical key has source CheckPause semantics while the ordinary
+; control-panel shell owns the callback. It must not leak into gameplay's
+; exit/panel latches, and typematic repeats remain edge-triggered.
+    call w3d_initialize_render_state
+    call w3d_begin_shell_callback_context
+    xor a
+    ld (callback_keyboard_packet+0),a
+    ld a,144
+    ld (callback_keyboard_packet+2),a
+    ld a,1
+    ld (callback_keyboard_packet+3),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld c,1
+    ld d,64
+    ld a,(w3d_shell_pause_toggle_requested)
+    ld b,0
+    call expect_a
+    xor a
+    ld (callback_keyboard_packet+3),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld a,1
+    ld (w3d_shell_pause_toggle_enabled),a
+    ld (callback_keyboard_packet+3),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld d,65
+    ld a,(w3d_shell_pause_toggle_requested)
+    ld b,1
+    call expect_a
+    ld d,66
+    ld a,(w3d_exit_requested)
+    ld b,0
+    call expect_a
+    xor a
+    ld (w3d_shell_pause_toggle_requested),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld d,67
+    ld a,(w3d_shell_pause_toggle_requested)
+    ld b,0
+    call expect_a
+    xor a
+    ld (callback_keyboard_packet+3),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld a,1
+    ld (callback_keyboard_packet+3),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld d,68
+    ld a,(w3d_shell_pause_toggle_requested)
+    ld b,1
+    call expect_a
+
+; Function keys and Escape remain MOS-owned in shell context. They must not
+; accidentally open a gameplay panel or set the gameplay exit latch.
+    call w3d_initialize_render_state
+    call w3d_begin_shell_callback_context
+    ld a,159
+    ld (callback_keyboard_packet+2),a
+    ld a,1
+    ld (callback_keyboard_packet+3),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld d,69
+    ld a,(w3d_gameplay_panel_request)
+    ld b,0
+    call expect_a
+    ld d,70
+    ld a,(w3d_exit_requested)
+    ld b,0
+    call expect_a
+    ld a,27
+    ld (callback_keyboard_packet+0),a
+    xor a
+    ld (callback_keyboard_packet+2),a
+    ld a,1
+    ld (callback_keyboard_packet+3),a
+    ld de,callback_keyboard_packet
+    call w3d_render_packet_callback
+    ld d,71
+    ld a,(w3d_exit_requested)
+    ld b,0
+    call expect_a
+
 ; Escape remains the ordinary control-panel request rather than F10 Quit.
     call w3d_initialize_render_state
     ld a,27
@@ -1247,6 +1334,13 @@ test_reseed_ok:
 test_production_reseed_and_submission:
     call w3d_initialize_render_state
     call w3d_initialize_motion_state
+; Ordinary SetupGameLevel seeds actor phases from MOS time. Pin that external
+; input to zero so this directed full-reseed comparison reproduces the package
+; generator's seed-zero actor records without switching into demo semantics.
+    ld hl,test_sysvars
+    ld (w3d_sysvars_pointer),hl
+    xor a
+    ld (test_sysvars+sysvar_time),a
     ld a,(w3d_player_area)
     ld (test_saved_player_area),a
 
@@ -1481,7 +1575,7 @@ test_production_reseed_and_submission:
     call expect_a
     ld a,(w3d_hud_dirty)
     ld d,28
-    ld b,W3D_HUD_DIRTY_HEALTH|W3D_HUD_DIRTY_AMMO|W3D_HUD_DIRTY_KEYS|W3D_HUD_DIRTY_WEAPON|W3D_HUD_DIRTY_SCORE|W3D_HUD_DIRTY_LIVES
+    ld b,W3D_HUD_DIRTY_HEALTH|W3D_HUD_DIRTY_AMMO|W3D_HUD_DIRTY_KEYS|W3D_HUD_DIRTY_WEAPON|W3D_HUD_DIRTY_SCORE|W3D_HUD_DIRTY_LIVES|W3D_HUD_DIRTY_FACE|W3D_HUD_DIRTY_PALETTE
     call expect_a
     ld a,(w3d_player_dirty)
     ld d,29
@@ -1814,6 +1908,7 @@ test_render_purpose:    db 0
 test_fizzle_token:      ds 2
 test_reseed_calls:      db 0
 test_saved_player_area: db 0
+test_sysvars:          ds 4
 test_memory_expected:  db 0
 test_gate_remaining:   db 0
 test_gate_reason:      db 0

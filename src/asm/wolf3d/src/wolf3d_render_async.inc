@@ -40,6 +40,10 @@ w3d_initialize_render_state:
     ld (w3d_gameplay_panel_request),a
     ld (w3d_pause_ack_armed),a
     ld (w3d_pause_ack_requested),a
+    ld (w3d_shell_callback_active),a
+    ld (w3d_shell_pause_toggle_enabled),a
+    ld (w3d_shell_pause_toggle_requested),a
+    ld (w3d_shell_pause_key_down),a
     ld (w3d_callback_error),a
     ld (w3d_frame_presented),a
     ld (w3d_async_owner),a
@@ -458,6 +462,35 @@ w3d_remove_render_callback:
     MOSCALL mos_setkbvector
     ret
 
+; The original control-panel CheckPause() observes FabGL's Pause key even
+; though MOS has no corresponding held-key-map bit.  The ordinary shell owns
+; the callback only while it is active; gameplay already owns the callback
+; and uses the lighter begin/end pair around its nested control panel.
+w3d_begin_shell_callback_context:
+    xor a
+    ld (w3d_shell_pause_toggle_enabled),a
+    ld (w3d_shell_pause_toggle_requested),a
+    ld (w3d_shell_pause_key_down),a
+    ld a,1
+    ld (w3d_shell_callback_active),a
+    ret
+
+w3d_end_shell_callback_context:
+    xor a
+    ld (w3d_shell_callback_active),a
+    ld (w3d_shell_pause_toggle_enabled),a
+    ld (w3d_shell_pause_toggle_requested),a
+    ld (w3d_shell_pause_key_down),a
+    ret
+
+w3d_open_shell_callback:
+    call w3d_begin_shell_callback_context
+    jp w3d_install_render_callback
+
+w3d_close_shell_callback:
+    call w3d_remove_render_callback
+    jp w3d_end_shell_callback_context
+
 w3d_enable_render_notifications:
     .if W3D_RENDER_BACKEND
     ret
@@ -570,6 +603,34 @@ w3d_render_packet_callback:
     jp @done
 
 @keyboard:
+; CheckPause() is a control-panel music toggle, distinct from the gameplay
+; PAUSED overlay.  Edge-latch VK_PAUSE here while leaving every ordinary key
+; record untouched for MOS and the shell's normal keymap reader.
+    ld a,(w3d_shell_callback_active)
+    or a
+    jr z,@gameplay_keyboard
+    ld a,(ix+2)
+    cp 144                         ; FabGL VK_PAUSE
+    jp nz,@done
+    ld a,(w3d_shell_pause_toggle_enabled)
+    or a
+    jp z,@done
+    ld a,(ix+3)
+    cp 1
+    jr nz,@shell_pause_release
+    ld a,(w3d_shell_pause_key_down)
+    or a
+    jp nz,@done
+    ld a,1
+    ld (w3d_shell_pause_key_down),a
+    ld (w3d_shell_pause_toggle_requested),a
+    jp @done
+@shell_pause_release:
+    xor a
+    ld (w3d_shell_pause_key_down),a
+    jp @done
+
+@gameplay_keyboard:
 ; Pause, Escape, and the original F1-F10 quick keys are latched on key-down. The
 ; foreground drains any outstanding render before changing video/control
 ; ownership. Demo polling clears the same request before returning to shell.
@@ -661,6 +722,21 @@ w3d_pause_ack_armed:
     db 0
 
 w3d_pause_ack_requested:
+    db 0
+
+; Control-panel CheckPause() callback state.  The request is consumed by the
+; foreground shell reader; key_down prevents typematic repeats from toggling
+; the music more than once per physical press.
+w3d_shell_callback_active:
+    db 0
+
+w3d_shell_pause_toggle_enabled:
+    db 0
+
+w3d_shell_pause_toggle_requested:
+    db 0
+
+w3d_shell_pause_key_down:
     db 0
 
 w3d_callback_error:

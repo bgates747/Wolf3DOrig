@@ -108,6 +108,8 @@ w3d_shell_show_agon_splash:
 ; original attract pages -> control panel. Returns W3D_SHELL_RESULT_* in A.
 w3d_shell_run:
     W3D_STARTUP_TRACE 030h
+    xor a
+    ld (w3d_shell_music_paused),a
     call w3d_shell_reset_exit_request
     call w3d_shell_setup
     W3D_STARTUP_TRACE 031h
@@ -1903,13 +1905,33 @@ w3d_shell_cursor_half_delay:
     ret
 
 w3d_shell_read_keyboard:
+    call w3d_shell_service_pause_toggle
     ld hl,(w3d_shell_keyboard_read_hook)
     jp (hl)
+
+; Source WL_MENU.C::CheckPause toggles the current music sequencer without
+; changing the persistent Music preference.  SD_MusicOff/On preserve the IMF
+; cursor, which maps directly to the production pause/resume pair.
+w3d_shell_service_pause_toggle:
+    ld a,(w3d_shell_pause_toggle_requested)
+    or a
+    ret z
+    xor a
+    ld (w3d_shell_pause_toggle_requested),a
+    ld a,(w3d_shell_music_paused)
+    xor 1
+    ld (w3d_shell_music_paused),a
+    or a
+    jp z,w3d_music_resume
+    jp w3d_music_pause
 
 w3d_shell_read_keyboard_default:
     call w3d_music_service
     MOSCALL mos_getkbmap
     ret
+
+w3d_shell_music_paused:
+    db 0
 
 w3d_shell_set_key_read_hook:
     ld (w3d_shell_key_read_hook),hl
@@ -1933,6 +1955,8 @@ w3d_shell_read_key_default:
 ; edge-triggered: wait for complete release before returning it to a state.
 ; Accept honors both Enter keys and Space, matching original HandleMenu.
 w3d_shell_wait_action:
+    ld a,1
+    ld (w3d_shell_pause_toggle_enabled),a
 @wait:
     call w3d_shell_read_keyboard
     bit 0,(ix+14)            ; Escape wins even if another key is also held
@@ -1967,11 +1991,17 @@ w3d_shell_wait_action:
     push af
     call w3d_shell_wait_all_released
     pop af
+    push af
+    xor a
+    ld (w3d_shell_pause_toggle_enabled),a
+    pop af
     ret
 
 ; In-game Escape means resume, not application exit.  All recognized keys are
 ; still edge-triggered so one held press cannot immediately select a row.
 w3d_shell_wait_pause_action:
+    ld a,1
+    ld (w3d_shell_pause_toggle_enabled),a
 @wait:
     call w3d_shell_read_keyboard
     bit 0,(ix+14)
@@ -1999,6 +2029,10 @@ w3d_shell_wait_pause_action:
     pop af
     push af
     call w3d_shell_pause_wait_all_released
+    pop af
+    push af
+    xor a
+    ld (w3d_shell_pause_toggle_enabled),a
     pop af
     ret
 

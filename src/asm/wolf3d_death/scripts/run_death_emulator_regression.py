@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import atexit
+import hashlib
 import os
 from pathlib import Path
 import shutil
@@ -15,8 +16,12 @@ import time
 
 
 _root_override = os.environ.get("W3D_STAGED_ROOT")
-_installed_root = Path(__file__).resolve().parents[4]
-STAGED_ROOT = Path(_root_override) if _root_override else _installed_root
+if _root_override:
+    STAGED_ROOT = Path(_root_override)
+    _installed_root = STAGED_ROOT
+else:
+    _installed_root = Path(__file__).resolve().parents[4]
+    STAGED_ROOT = _installed_root
 RUNTIME_ROOT = Path(os.environ.get("W3D_RUNTIME_ROOT", _installed_root))
 PRODUCTION_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
 FIXTURE = STAGED_ROOT / "src/asm/wolf3d_death/src/death_regression.asm"
@@ -26,7 +31,7 @@ VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
 
 RESULT_SIZE = 16
 RESULT_SCHEMA = 1
-EXPECTED_CHECKS = 228
+EXPECTED_CHECKS = 236
 LOG_TAIL_BYTES = 16 * 1024
 
 CASE_NAMES = {
@@ -90,11 +95,19 @@ def emulator_failure_message(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--timeout", type=float, default=30.0)
+    parser.add_argument(
+        "--prebuilt",
+        type=Path,
+        help="use an already assembled fixture (for a cross-architecture emulator host)",
+    )
     args = parser.parse_args()
 
-    dependencies = [PRODUCTION_SRC, FIXTURE, FAB, MOS, VDP]
+    dependencies = [FAB, MOS, VDP]
     production_includes = sorted(PRODUCTION_SRC.glob("*.inc"))
-    dependencies.extend(production_includes)
+    if args.prebuilt:
+        dependencies.append(args.prebuilt)
+    else:
+        dependencies.extend([PRODUCTION_SRC, FIXTURE, *production_includes])
     missing = [path for path in dependencies if not path.exists()]
     if missing:
         raise FileNotFoundError(
@@ -105,18 +118,25 @@ def main() -> int:
     # binary, and MOS working directory deliberately short and isolated.
     work = Path(tempfile.mkdtemp(prefix="wd"))
     atexit.register(shutil.rmtree, work, ignore_errors=True)
-    build = work / "s"
-    build.mkdir()
-    for include in production_includes:
-        shutil.copyfile(include, build / include.name)
-    entry = build / "d.asm"
-    shutil.copyfile(FIXTURE, entry)
-
     sdcard = work / "sd"
     app = sdcard / "d"
     app.mkdir(parents=True)
     binary = app / "d.bin"
-    run(["ez80asm", entry.name, str(binary)], cwd=build)
+    if args.prebuilt:
+        shutil.copyfile(args.prebuilt, binary)
+        print("+ prebuilt", args.prebuilt, "->", binary)
+    else:
+        build = work / "s"
+        build.mkdir()
+        for include in production_includes:
+            shutil.copyfile(include, build / include.name)
+        entry = build / "d.asm"
+        shutil.copyfile(FIXTURE, entry)
+        run(["ez80asm", entry.name, str(binary)], cwd=build)
+    print(
+        f"binary: {binary.stat().st_size} bytes, "
+        f"sha256={hashlib.sha256(binary.read_bytes()).hexdigest()}"
+    )
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\n"
         b"cd d\r\n"

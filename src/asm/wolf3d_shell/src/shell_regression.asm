@@ -71,6 +71,7 @@ fa_create_always: equ 08h
         CHECK_PLOT 18,b1,235,107
     endmacro
 
+    include "wolf3d_backend.inc"
     include "wolf3d_shell_assets.inc"
 TEST_HELP_LAST: equ W3D_HELP_PAGE_BUFFER_BASE+W3D_HELP_PAGE_COUNT-1
 w3d_app_version_text: db "Wolf3DOrig App 0.1.0 Alpha 1",0
@@ -235,6 +236,8 @@ w3d_panel_request_keen: equ 13
 
 w3d_music_enabled: db 1
 w3d_gameplay_panel_request: db 0
+w3d_shell_pause_toggle_enabled: db 0
+w3d_shell_pause_toggle_requested: db 0
 
 w3d_music_start:
     ld (test_music_last),a
@@ -263,6 +266,11 @@ w3d_music_start:
 
 w3d_music_start_current_floor:
     ld hl,test_music_floor_restart_count
+    inc (hl)
+    ret
+
+w3d_music_pause:
+    ld hl,test_music_pause_count
     inc (hl)
     ret
 
@@ -406,6 +414,9 @@ run_tests:
     ld a,13
     call mark_stage
     call test_gameplay_panel_music
+    ld a,14
+    call mark_stage
+    call test_menu_pause_music
     ld a,1
     ld (result_done),a
     call write_result
@@ -1552,6 +1563,34 @@ test_gameplay_panel_music:
     CHECK_A 1,REASON_PLOT_BUFFER
     ret
 
+; WL_MENU.C::CheckPause toggles only the live sequencer.  It neither changes
+; the persistent Music preference nor restarts the selected track.
+test_menu_pause_music:
+    ld a,102
+    ld (test_case),a
+    call test_reset_music
+    xor a
+    ld (w3d_shell_music_paused),a
+    ld a,1
+    ld (w3d_shell_pause_toggle_requested),a
+    call w3d_shell_service_pause_toggle
+    CHECK_MEM8 w3d_shell_pause_toggle_requested,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 w3d_shell_music_paused,1,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_pause_count,1,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_resume_count,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 w3d_music_enabled,1,REASON_MUSIC_PREFERENCE
+
+    ld a,1
+    ld (w3d_shell_pause_toggle_requested),a
+    call w3d_shell_service_pause_toggle
+    CHECK_MEM8 w3d_shell_pause_toggle_requested,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 w3d_shell_music_paused,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_pause_count,1,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_resume_count,1,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_start_count,0,REASON_MUSIC_ASSIGNMENT
+    CHECK_MEM8 test_music_floor_restart_count,0,REASON_MUSIC_ASSIGNMENT
+    ret
+
 ; CALL preserves the producer's flags, so convert its entry Z state to a
 ; stable byte without requiring fixture-specific flag macros.
 test_z_to_a:
@@ -1814,7 +1853,9 @@ test_reset_music:
     ld (test_music_start_count),a
     ld (test_music_last),a
     ld (test_music_floor_restart_count),a
+    ld (test_music_pause_count),a
     ld (test_music_resume_count),a
+    ld (w3d_shell_pause_toggle_requested),a
     ld hl,test_music_history
     ld (hl),a
     ld de,test_music_history+1
@@ -1919,6 +1960,7 @@ test_save_store_count: db 0
 test_music_start_count: db 0
 test_music_last: db 0
 test_music_floor_restart_count: db 0
+test_music_pause_count: db 0
 test_music_resume_count: db 0
 test_music_history: ds 16
 test_sound_count: db 0

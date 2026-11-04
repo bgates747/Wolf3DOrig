@@ -625,7 +625,11 @@ w3d_main_body:
     call w3d_acceptance_run_highscore
     .else
     W3D_STARTUP_TRACE 024h
+    call w3d_open_shell_callback
     call w3d_shell_run
+    push af
+    call w3d_close_shell_callback
+    pop af
     W3D_STARTUP_TRACE 025h
     .endif
 
@@ -655,14 +659,26 @@ w3d_main_body:
     jr z,@victory
     cp W3D_GAMEPLAY_RESULT_GAME_OVER
     ret nz
+    call w3d_open_shell_callback
     call w3d_shell_resume_after_game_over
+    push af
+    call w3d_close_shell_callback
+    pop af
     jr @route_shell_result
 @victory:
+    call w3d_open_shell_callback
     call w3d_shell_resume_after_victory
+    push af
+    call w3d_close_shell_callback
+    pop af
     jr @route_shell_result
 @demo_done:
     call w3d_demo_cancel
+    call w3d_open_shell_callback
     call w3d_shell_resume_after_demo
+    push af
+    call w3d_close_shell_callback
+    pop af
     jr @route_shell_result
 @restart_new_game:
     call w3d_shell_reset_quick_slot
@@ -1133,8 +1149,20 @@ w3d_gameplay_pause:
 @shell_mode_ready:
     call w3d_gameplay_backdrop_plot
     ld a,(w3d_gameplay_panel_request)
+; The PAUSED overlay must retain gameplay callback semantics so a second Pause
+; can acknowledge it.  Only ordinary in-game control-panel pages inherit
+; WL_MENU.C::CheckPause's music-toggle context.
+    cp w3d_panel_request_pause
+    jr z,@invoke_shell_quick
+    push af
+    call w3d_begin_shell_callback_context
+    pop af
+@invoke_shell_quick:
     call w3d_shell_pause_quick
     push af
+    ld a,(w3d_shell_callback_active)
+    or a
+    call nz,w3d_end_shell_callback_context
     call w3d_gameplay_backdrop_release
     pop af
     cp W3D_SHELL_PAUSE_RESUME

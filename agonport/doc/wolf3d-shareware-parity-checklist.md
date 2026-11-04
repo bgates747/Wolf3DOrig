@@ -318,6 +318,22 @@ quick keys and Pause are required behavior, not optional DOS hardware
 configuration; TODO 14 now retains only the batched visual/input acceptance
 gate.
 
+Menu-Pause audit correction, 2026-11-03: `WL_MENU.C::CheckPause` is not the
+gameplay PAUSED overlay. It is a second source behavior called from
+`HandleMenu` (and the original interactive view-size page): one Pause press
+calls `SD_MusicOff`, the next calls `SD_MusicOn`, and neither changes the saved
+Music preference. The Agon shell now installs its keyboard callback during
+ordinary control-panel ownership, edge-latches FabGL `VK_PAUSE` only while a
+menu action loop has explicitly armed `CheckPause`, and services the toggle in
+foreground code through the existing cursor-preserving IMF pause/resume pair.
+Pause outside those source menu loops is ignored, while nested gameplay control
+pages retain the gameplay callback's distinct second-Pause acknowledgment.
+Direct shell and callback fixtures cover the transient toggle, preference
+preservation, edge latch, inactive-loop rejection, and absence of gameplay
+exit/panel leakage. Both production backends assemble. Oryx generation 236
+passes the expanded 745/745 production-shell and 236/236 callback/death target
+fixtures; the maintained host suite passes 427 tests and 10,344 subtests.
+
 Quick-overlay correction, 2026-11-03: the source copies the stopped play screen
 before F7-F10 and the ordinary M+L+I/B+A+T message boxes. Production now
 captures the complete VDP 2.6+ RGBA2222 gameplay surface before entering MODE
@@ -329,8 +345,9 @@ full Save/Load page and menu music. The open gate remains the same finite
 visual/input batch.
 
 Status 2026-11-03: the latest production shell passes 595/595 checks, the
-physical-keymap/player-combat target passes 492/492, and callback/death passes
-228/228. The open acceptance gate is one visual/input pass through Pause,
+physical-keymap/player-combat target passes 492/492. The subsequently expanded
+callback/death fixture passes 236/236 and production shell passes 745/745 on
+Oryx generation 236. The open acceptance gate is one visual/input pass through Pause,
 pages, save/load, End Game, and Quit. Remembered-slot F8/F9 now reproduce the
 original transient `Saving...` and named-load surfaces; Oryx generation 177
 passes 595/595 shell checks.
