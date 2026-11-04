@@ -252,6 +252,17 @@ ammo fallback, movement, RNG, damage and sound ordering otherwise match. The
 accepted 16-pixel aiming cone, reduced-Q8 target depth, and synchronous CPU
 projection plus `CheckLine` replacement for renderer-owned `FL_VISABLE` remain
 explicit Agon policies.
+The difficulty audit found no defect. Shell choices map source-order Baby,
+Easy, Medium, Hard to values 0..3 with Medium as the original default. All 40
+level/difficulty packages retain identical geometry while applying the exact
+base/Medium/Hard plane-1 population fallthrough, source hit pools, filtered
+kill totals, and difficulty identity. Baby alone quarters incoming damage;
+difficulty survives floor transitions, death reseeds, and save/load. The
+ten-map actor/package/shell group passes 34/34 host checks, the combat oracle
+passes 39/39, and the acceptance-package contract passes 10/10. Existing
+direct shell, combat, death, transition, and save proofs already pin the
+corresponding target boundaries; no new implementation or target case was
+warranted.
 The shell audit then restored `WL_MENU.C::CP_Quit` and F10's randomized
 confirmation instead of exiting immediately. Production consumes the same two
 shared `US_RndT` bytes and preserves the source expression
