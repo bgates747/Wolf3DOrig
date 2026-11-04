@@ -226,6 +226,13 @@ initial ticcount in the original row-major spawn order. Oryx generation 171
 passes 618/618 direct eZ80 checks, pinning deterministic demos, ordinary seeded
 starts, zero-duration states, and the resulting shared RNG position; both
 application backends rebuild.
+The follow-up Episode 1 actor-state audit compared every reachable spawn,
+scheduler, stand/path/chase, dog/ghost, ranged/melee, pain/death, score/drop,
+and boss-audio path to `WL_GAME.C`, `WL_PLAY.C`, `WL_ACT2.C`, and `WL_STATE.C`.
+The all-floor marker census and actor/package host targets pass 27 tests, while
+the existing direct chase/combat/death targets already pin the runtime edges.
+Victory correctly bypasses all hostile simulation at the fixed-step dispatcher.
+No additional actor parity defect or missing test boundary was found.
 The shell audit then restored `WL_MENU.C::CP_Quit` and F10's randomized
 confirmation instead of exiting immediately. Production consumes the same two
 shared `US_RndT` bytes and preserves the source expression
