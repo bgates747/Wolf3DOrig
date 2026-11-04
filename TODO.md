@@ -241,6 +241,17 @@ are retained and recorded: fixed-step square-overlap pickup contact replaces
 the DOS renderer's `TransformTile` side effect, and full heal emits one audible
 one-up instead of issuing the same monophonic sample twice into Agon's
 independent streams.
+The player-weapon audit found one source-order defect: Use was processed during
+an active weapon animation, whereas `WL_AGENT.C::T_Attack` suppresses a newly
+pressed Use button until the attack returns to `T_Player`. Production now
+defers that unarmed edge and operates exactly once on the first idle quantum if
+the key remains held. Oryx generation 251 passes 30/30 direct production
+use/pushwall cases; the independent player-combat and gameplay host oracles
+pass 48/48 and 55/55. Weapon selection, tap/automatic timelines, release/repress,
+ammo fallback, movement, RNG, damage and sound ordering otherwise match. The
+accepted 16-pixel aiming cone, reduced-Q8 target depth, and synchronous CPU
+projection plus `CheckLine` replacement for renderer-owned `FL_VISABLE` remain
+explicit Agon policies.
 The shell audit then restored `WL_MENU.C::CP_Quit` and F10's randomized
 confirmation instead of exiting immediately. Production consumes the same two
 shared `US_RndT` bytes and preserves the source expression

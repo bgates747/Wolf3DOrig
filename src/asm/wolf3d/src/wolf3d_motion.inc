@@ -2516,6 +2516,14 @@ w3d_handle_use_edge:
     ld a,(w3d_controls)
     and W3D_CONTROL_USE
     jr z,@released
+; WL_AGENT.C::T_Attack clears a newly pressed Use button for the duration of
+; an active weapon animation.  Do not arm the edge latch here: if the player
+; keeps holding Use, the first idle quantum after the attack must operate it.
+; A latch which was already down before the attack remains down and therefore
+; cannot invent an extra operation when the animation ends.
+    ld a,(w3d_player_attack_active)
+    or a
+    ret nz
     ld a,(w3d_use_was_down)
     or a
     ret nz

@@ -17,6 +17,7 @@ mos_fclose:         equ 0x0b
 mos_fwrite:         equ 0x1b
 fa_write:           equ 0x02
 fa_create_always:   equ 0x08
+sysvar_time:        equ 0x00
 
     macro MOSCALL function
         ld a,function
@@ -49,7 +50,7 @@ w3d_victory_active:
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
 
-use_case_count:     equ 29
+use_case_count:     equ 30
 
 reason_index:       equ 1
 reason_action:      equ 2
@@ -109,6 +110,7 @@ run_tests:
     call case_disconnected_open_silent
     call case_malformed_areas_silent
     call case_use_edge_latch
+    call case_active_attack_defers_use
     call case_elevator_east_normal
     call case_elevator_west_secret
     call case_elevator_north_ignored
@@ -202,6 +204,7 @@ begin_case:
     ld (w3d_world_dirty),a
     ld (w3d_use_was_down),a
     ld (w3d_controls),a
+    ld (w3d_player_attack_active),a
     ld (w3d_player_key_flags),a
     ld (w3d_level_completion),a
     ld (w3d_actor_tic_phase),a
@@ -662,6 +665,54 @@ case_use_edge_latch:
     ld a,(w3d_door_timers+1)
     ld b,0
     ld c,reason_timer_high
+    call assert_equal
+    jp finish_case
+
+; WL_AGENT.C::T_Attack discards a newly pressed Use button while the weapon
+; animation owns the player state. Holding it must defer exactly one operation
+; until the first idle quantum rather than losing it or opening mid-shot.
+case_active_attack_defers_use:
+    call begin_case
+    call pose_center
+    call map_door_at_10_10
+    ld a,020h
+    ld (w3d_player_pose+1),a
+    ld a,1
+    ld (w3d_player_attack_active),a
+    ld a,W3D_CONTROL_USE
+    ld (w3d_controls),a
+    call w3d_handle_use_edge
+
+    ld a,(w3d_doors+W3D_DOOR_ACTION)
+    ld b,W3D_DOOR_ACTION_CLOSED
+    ld c,reason_action
+    call assert_equal
+    ld a,(w3d_use_was_down)
+    ld b,0
+    ld c,reason_latch
+    call assert_equal
+    ld a,(w3d_door_dirty)
+    ld b,0
+    ld c,reason_target_dirty
+    call assert_equal
+    ld a,(w3d_world_dirty)
+    ld b,0
+    ld c,reason_world_dirty
+    call assert_equal
+    ld a,(test_audio_count)
+    ld b,0
+    ld c,reason_audio
+    call assert_equal
+
+; End the attack without releasing Use. The preserved unarmed edge must now
+; start the door exactly once and publish the ordinary held-key latch.
+    xor a
+    ld (w3d_player_attack_active),a
+    call w3d_handle_use_edge
+    call expect_opening_zero
+    ld a,(w3d_use_was_down)
+    ld b,1
+    ld c,reason_latch
     call assert_equal
     jp finish_case
 
@@ -1148,6 +1199,10 @@ w3d_mark_render_submitted:
     ret
 w3d_audio_begin_quantum:
     ret
+w3d_sysvars_pointer:
+    dl test_sysvars
+test_sysvars:
+    ds 32
 w3d_audio_request:
     ld (test_audio_last_id),a
     xor a

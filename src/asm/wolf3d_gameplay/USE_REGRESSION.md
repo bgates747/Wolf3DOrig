@@ -20,7 +20,7 @@ SD-card profile, reads `use_result.bin`, and removes the profile on exit.
 For a differently architected emulator host, assemble on the source machine
 and pass `--prebuilt path/to/u.bin`.
 
-The twenty-nine assembly-resident cases cover the original door, elevator,
+The thirty assembly-resident cases cover the original door, elevator,
 pushwall, sound, and edge-latch behavior. The core door-resolution cases are:
 
 1. The player at the E1L1-reproducible near-well step (`tile+0x2000`) operates
@@ -43,6 +43,9 @@ pushwall, sound, and edge-latch behavior. The core door-resolution cases are:
     the first operation the harness deliberately resets the door and dirty
     state behind the still-set latch, proves a second held sample does
     nothing, releases Up Arrow, and proves the next press operates it again.
+14. A newly pressed and held Up Arrow during an active weapon animation does
+    not operate or arm the edge latch; the first idle quantum afterward
+    operates exactly once without requiring a release and re-press.
 
 The remaining cases cover first motion sounds, area reachability, both
 elevator routes, all four pushwall directions and crossing outcomes, and the

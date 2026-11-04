@@ -72,11 +72,12 @@ profile:
   src/asm/wolf3d_gameplay/scripts/run_use_emulator_regression.py
 ```
 
-Its 29 cases reproduce both reachable halves of an E1L1 door well, all four
+Its 30 cases reproduce both reachable halves of an E1L1 door well, all four
 exterior approaches, ordinary adjacent fallback, malformed-current fail-closed
 behavior, locks, action transitions, complete dirty/timer state, the held
-Up-Arrow latch, all pushwall outcomes, elevator routing, and original
-`DONOTHINGSND` no-action responses. See `USE_REGRESSION.md` for the contract.
+Up-Arrow latch, source-correct Use deferral during a weapon animation, all
+pushwall outcomes, elevator routing, and original `DONOTHINGSND` no-action
+responses. See `USE_REGRESSION.md` for the contract.
 
 Important model choices match the current port contract:
 

@@ -37,3 +37,12 @@ Run it from the repository root:
 
 For a staged source tree, set `W3D_STAGED_ROOT`; set `W3D_RUNTIME_ROOT` when
 the emulator links live in a different Wolf3DOrig checkout.
+
+The residual Episode 1 parity audit records three intentional Agon policies.
+The accepted aiming cone is 16 projected pixels instead of the DOS
+`viewwidth/10` value. Full `transx` and renderer-owned `FL_VISABLE` are not
+available across the write-only renderer boundary, so targeting uses reduced
+Q8 depth plus current CPU projection and `CheckLine`; equal reduced depths
+retain live-list order, and a clear farther actor is not masked by an opaque
+nearer one. Player input and attack animation still advance on the fixed
+2,2,3 original-tic cadence used by the rest of the 30 Hz simulation.
