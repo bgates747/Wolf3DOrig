@@ -233,6 +233,14 @@ The all-floor marker census and actor/package host targets pass 27 tests, while
 the existing direct chase/combat/death targets already pin the runtime edges.
 Victory correctly bypasses all hostile simulation at the fixed-step dispatcher.
 No additional actor parity defect or missing test boundary was found.
+The inventory/pickup audit likewise found no state defect. All reachable WL1
+items preserve the source refusal, mutation, score/life, sound, flash, HUD, and
+removal rules; host static/gameplay/combat targets pass 8/8, 55/55, and 48/48,
+with the existing direct pickup proof at 33/33. Two intentional Agon differences
+are retained and recorded: fixed-step square-overlap pickup contact replaces
+the DOS renderer's `TransformTile` side effect, and full heal emits one audible
+one-up instead of issuing the same monophonic sample twice into Agon's
+independent streams.
 The shell audit then restored `WL_MENU.C::CP_Quit` and F10's randomized
 confirmation instead of exiting immediately. Production consumes the same two
 shared `US_RndT` bytes and preserves the source expression
