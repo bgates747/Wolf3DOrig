@@ -251,6 +251,16 @@ and plays them through the unchanged buffered runtime path. Oryx generation
 154 passes 287/287 audio and 135/135 intermission target checks. Audible
 acceptance remains part of the staged presentation gate.
 
+Completion-key correction, 2026-11-04: `WL_GAME.C::GameLoop` clears
+`gamestate.keys` before calling `LevelCompleted`, so the completed-floor HUD
+must show two empty key slots.  The port previously retained the source-floor
+key flags while composing the tally and cleared them only when seeding the
+destination.  `w3d_intermission_begin` now owns the source-order clear before
+status-bar composition.  Its direct eZ80 regression seeds both keys, requires
+the authoritative flags to become zero, and requires both empty-key buffers;
+Oryx generation 240 passes 155/155 checks.  Both production backends assemble
+with diagnostics disabled.
+
 ### A3. Episode 1 victory path and ending — TODO 13
 
 Original oracle:

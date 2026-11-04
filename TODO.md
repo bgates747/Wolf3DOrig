@@ -28,6 +28,10 @@ are rendered offline from their authentic PC-speaker streams; the production
 audio target passes 287 checks. Remaining close gate:
 accept staged ordinary
 count-up/skip/next-floor and secret-floor score presentation.
+The residual source-order audit also corrects the completed-floor HUD: both
+keys are cleared before `LevelCompleted` composes its status bar, rather than
+remaining visible until destination seeding. The direct intermission target
+passes 155/155 checks; this visual correction folds into the existing gate.
 
 [ ] 13. Replace the generic Episode 1 victory acknowledgment with the original
 shareware path: in-world victory/BJ sequence, total time and eight-floor ratio

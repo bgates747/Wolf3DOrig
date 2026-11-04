@@ -39,7 +39,8 @@ This focused regression executes the production `wolf3d_level_time.inc` and
   ratio/time record;
 - immediate, nonblocking ordinary-floor presentation with its base, status
   bar, floor number, time, E1L1 par, zero-valued count-up fields, and bonus
-  digit at their exact production coordinates;
+  digit at their exact production coordinates, including source-order clearing
+  of both completed-floor keys before the status bar is composed;
 - immediate, nonblocking secret-floor base/status-bar presentation;
 - the time/kill/secret/treasure count-up state sequence, original logical
   tally/terminal sound choices, one-shot final award, and idempotent finalize;

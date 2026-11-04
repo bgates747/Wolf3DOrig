@@ -102,6 +102,12 @@ W3D_INTERMISSION_HUD_WEAPON_Y:       equ 208
 ; floor result before any destination state can replace that source data, then
 ; returns A=0/carry clear so loading may begin immediately.
 w3d_intermission_begin:
+; WL_GAME.C clears gamestate.keys before LevelCompleted draws the completed
+; floor.  Do this before composing the retained status bar so a key carried
+; into the elevator cannot leak onto the tally screen; destination seeding
+; will independently start the next floor with the same empty inventory.
+    xor a
+    ld (w3d_player_key_flags),a
     xor a
     ld (w3d_intermission_input_armed),a
     ld (w3d_intermission_acknowledged),a

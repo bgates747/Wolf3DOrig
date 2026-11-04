@@ -133,6 +133,7 @@ REASON_VICTORY_KILL:    equ 36
 REASON_VICTORY_SECRET:  equ 37
 REASON_VICTORY_TREASURE: equ 38
 REASON_PRESENT_COUNT:    equ 39
+REASON_KEY_FLAGS:        equ 40
 
 start:
     push af
@@ -511,8 +512,9 @@ test_ordinary_draw:
     ld (w3d_player_health),a
     ld a,8
     ld (w3d_player_ammo),a
-    ld a,1
+    ld a,3
     ld (w3d_player_key_flags),a
+    ld a,1
     ld (w3d_player_weapon),a
     ld a,3
     ld (w3d_player_lives),a
@@ -544,7 +546,9 @@ test_ordinary_draw:
     CHECK_PLOT 0,W3D_INTERMISSION_FLOOR_BASE_BUFFER,0,0
     CHECK_PLOT 6,W3D_INTERMISSION_STATUSBAR_BUFFER,0,200
 ; Live status-bar overlay: floor 1, score 012345 with one leading blank,
-; lives 3, health-band face 6A, health 7, ammo 8, gold key, pistol.
+; lives 3, health-band face 6A, health 7, ammo 8, both completed-floor keys
+; cleared before LevelCompleted exactly as in WL_GAME.C, and pistol.
+    CHECK_MEM8 w3d_player_key_flags,0,REASON_KEY_FLAGS
     CHECK_PLOT 12,W3D_INTERMISSION_HUD_BLANK_BUFFER,16,216
     CHECK_PLOT 18,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+1,24,216
     CHECK_PLOT 24,W3D_INTERMISSION_HUD_BLANK_BUFFER,48,216
@@ -560,7 +564,7 @@ test_ordinary_draw:
     CHECK_PLOT 84,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+7,184,216
     CHECK_PLOT 90,W3D_INTERMISSION_HUD_BLANK_BUFFER,216,216
     CHECK_PLOT 96,W3D_INTERMISSION_HUD_DIGIT_0_BUFFER+8,224,216
-    CHECK_PLOT 102,W3D_INTERMISSION_KEY_GOLD_BUFFER,240,204
+    CHECK_PLOT 102,W3D_INTERMISSION_KEY_NONE_BUFFER,240,204
     CHECK_PLOT 108,W3D_INTERMISSION_KEY_NONE_BUFFER,240,220
     CHECK_PLOT 114,W3D_INTERMISSION_WEAPON_KNIFE_BUFFER+1,256,208
     CHECK_PLOT 120,W3D_INTERMISSION_DIGIT_0_BUFFER+1,208,16
