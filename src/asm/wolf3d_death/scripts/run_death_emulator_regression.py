@@ -25,13 +25,25 @@ else:
 RUNTIME_ROOT = Path(os.environ.get("W3D_RUNTIME_ROOT", _installed_root))
 PRODUCTION_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
 FIXTURE = STAGED_ROOT / "src/asm/wolf3d_death/src/death_regression.asm"
-FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
-MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
-VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+FAB = Path(os.environ.get(
+    "W3D_EMULATOR", RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
+))
+MOS = Path(os.environ.get(
+    "W3D_MOS", RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
+))
+VDP = Path(os.environ.get(
+    "W3D_VDP", RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+))
+FIRMWARE = os.environ.get("W3D_FIRMWARE", "platform")
+ASSEMBLER = Path(
+    os.environ.get("W3D_ASSEMBLER")
+    or shutil.which("ez80asm")
+    or STAGED_ROOT / "src/asm/wolf3d/tgt/.tools/ez80asm"
+)
 
 RESULT_SIZE = 16
 RESULT_SCHEMA = 1
-EXPECTED_CHECKS = 236
+EXPECTED_CHECKS = 241
 LOG_TAIL_BYTES = 16 * 1024
 
 CASE_NAMES = {
@@ -107,7 +119,7 @@ def main() -> int:
     if args.prebuilt:
         dependencies.append(args.prebuilt)
     else:
-        dependencies.extend([PRODUCTION_SRC, FIXTURE, *production_includes])
+        dependencies.extend([ASSEMBLER, PRODUCTION_SRC, FIXTURE, *production_includes])
     missing = [path for path in dependencies if not path.exists()]
     if missing:
         raise FileNotFoundError(
@@ -132,7 +144,7 @@ def main() -> int:
             shutil.copyfile(include, build / include.name)
         entry = build / "d.asm"
         shutil.copyfile(FIXTURE, entry)
-        run(["ez80asm", entry.name, str(binary)], cwd=build)
+        run([str(ASSEMBLER), entry.name, str(binary)], cwd=build)
     print(
         f"binary: {binary.stat().st_size} bytes, "
         f"sha256={hashlib.sha256(binary.read_bytes()).hexdigest()}"
@@ -146,6 +158,10 @@ def main() -> int:
 
     result = app / "death_result.bin"
     environment = os.environ.copy()
+    artifacts = Path(
+        environment.setdefault("AGON_FLEXE_ARTIFACTS", str(work / "flexe-artifacts"))
+    )
+    artifacts.mkdir(parents=True, exist_ok=True)
     environment["SDL_VIDEODRIVER"] = "dummy"
     environment["SDL_AUDIODRIVER"] = "dummy"
     local_lib = str(Path.home() / ".local/lib")
@@ -159,7 +175,7 @@ def main() -> int:
         "--renderer",
         "sw",
         "--firmware",
-        "console8",
+        FIRMWARE,
         "--mos",
         str(MOS.resolve()),
         "--vdp",

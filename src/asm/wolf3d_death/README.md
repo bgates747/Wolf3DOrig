@@ -17,7 +17,7 @@ in a deliberately short temporary path because `ez80asm` retains DOS-era path
 and filename limits. It creates an isolated temporary SD card and does not
 modify the application build.
 
-The expected result is `182/182` checks. The real eZ80 fixture covers:
+The expected result is `241/241` checks. The real eZ80 fixture covers:
 
 - callback-routine routing and complete ten-byte mailbox copying for ordinary
   render and fizzle events;
@@ -30,6 +30,8 @@ The expected result is `182/182` checks. The real eZ80 fixture covers:
 - lethal promotion, weapon suppression, shortest-path turning, angle wrap,
   the exact 180-degree tie, and the original-rate `4,4,6` degree cadence at
   30 Hz;
+- the original `GameLoop` music boundary: floor music stops once before the
+  death turn/fizzle and restarts once only after a successful attempt reseed;
 - the direct semantic transition from final-target purpose to target-sync
   purpose and only then to fizzle ownership;
 - validated fizzle-event consumption, release-before-new-press acknowledgment,

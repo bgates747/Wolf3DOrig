@@ -13,6 +13,8 @@
 ;   fizzle:  DE=uint16 token -> carry clear once command bytes were accepted
 ;   reseed:  no arguments -> carry clear after the authoritative level world
 ;            has been rebuilt, without submitting a render
+;   music:   no arguments; stop/restart the current floor track at the source
+;            GameLoop death boundaries
 ;
 ; Hook setters take a 24-bit code pointer in HL. The defaults provide a real
 ; actor bearing and the frozen fizzle_to_red wire command. Reseed deliberately
@@ -63,6 +65,9 @@ w3d_initialize_death_state:
     ld (w3d_death_fizzle_hook),hl
     ld hl,w3d_death_default_reseed
     ld (w3d_death_reseed_hook),hl
+    ld hl,w3d_death_default_music_hook
+    ld (w3d_death_music_stop_hook),hl
+    ld (w3d_death_music_restart_hook),hl
 
     ld a,W3D_DEATH_FIZZLE_TOKEN_SEED & 0ffh
     ld (w3d_death_fizzle_token+0),a
@@ -80,6 +85,14 @@ w3d_death_set_fizzle_hook:
 
 w3d_death_set_reseed_hook:
     ld (w3d_death_reseed_hook),hl
+    ret
+
+w3d_death_set_music_stop_hook:
+    ld (w3d_death_music_stop_hook),hl
+    ret
+
+w3d_death_set_music_restart_hook:
+    ld (w3d_death_music_restart_hook),hl
     ret
 
 ; Capture the score at level entry/completion. Death restores this checkpoint
@@ -148,6 +161,10 @@ w3d_death_promote_lethal_latch:
     ld (w3d_death_ack_armed),a
     ld a,W3D_DEATH_PHASE_WAIT_DEAD_FRAME
     ld (w3d_death_phase),a
+; WL_GAME.C stops the floor track after PlayLoop returns and before Died()
+; starts its turn/fizzle presentation.  Keep that source boundary distinct
+; from the player-death SFX, which is requested immediately afterward.
+    call w3d_death_call_music_stop_hook
 ; This is the single authoritative lethal-promotion edge. The preceding
 ; nonzero damage already queued TAKEDAMAGESND; now queue the original player
 ; death sound at full unpositioned gain, once before presentation begins.
@@ -743,6 +760,10 @@ w3d_death_attempt_reseed:
     call w3d_death_call_reseed_hook
     jr c,@fault
     call w3d_death_reset_player_attempt
+; The original restarts the current floor track after SetupGameLevel and
+; before drawing the fresh attempt.  The respawn render is the corresponding
+; translated boundary; restart once here, never during the red hold.
+    call w3d_death_call_music_restart_hook
     ld a,W3D_DEATH_PHASE_WAIT_RESPAWN_FRAME
     ld (w3d_death_phase),a
     ret
@@ -821,6 +842,17 @@ w3d_death_call_fizzle_hook:
 w3d_death_call_reseed_hook:
     ld hl,(w3d_death_reseed_hook)
     jp (hl)
+
+w3d_death_call_music_stop_hook:
+    ld hl,(w3d_death_music_stop_hook)
+    jp (hl)
+
+w3d_death_call_music_restart_hook:
+    ld hl,(w3d_death_music_restart_hook)
+    jp (hl)
+
+w3d_death_default_music_hook:
+    ret
 
 ; A=killer slot -> carry clear, HL=0..359. The reduced 8.8 actor vector is
 ; precise over a 64x64 level. A 257-byte atan table limits quantization to
@@ -1167,6 +1199,10 @@ w3d_death_bearing_hook:
 w3d_death_fizzle_hook:
     dl 0
 w3d_death_reseed_hook:
+    dl 0
+w3d_death_music_stop_hook:
+    dl 0
+w3d_death_music_restart_hook:
     dl 0
 w3d_death_bearing_signs:
     db 0

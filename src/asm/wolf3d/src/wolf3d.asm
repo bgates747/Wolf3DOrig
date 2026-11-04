@@ -1120,6 +1120,13 @@ w3d_run_gameplay_session:
     call w3d_demo_begin_session
     W3D_STARTUP_TRACE 088h
 @simulation_state_ready:
+; GameLoop stops floor music before Died() and restarts it only after the
+; attempt world has been rebuilt.  The death module owns those exact edges;
+; production supplies the actual IMF sequencer operations here.
+    ld hl,w3d_music_stop
+    call w3d_death_set_music_stop_hook
+    ld hl,w3d_music_start_current_floor
+    call w3d_death_set_music_restart_hook
     ld hl,w3d_reseed_level_attempt
     call w3d_death_set_reseed_hook
     W3D_STARTUP_TRACE 089h

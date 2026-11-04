@@ -799,11 +799,23 @@ test_death_audio:
     ld a,(test_audio_flags)
     ld b,0
     call expect_a
+    ld d,10
+    ld a,(test_music_stop_count)
+    ld b,1
+    call expect_a
+    ld d,11
+    ld a,(test_music_restart_count)
+    ld b,0
+    call expect_a
     call w3d_death_promote_lethal_latch
     ld d,6
     call expect_carry_clear
     ld d,7
     ld a,(test_audio_count)
+    ld b,1
+    call expect_a
+    ld d,12
+    ld a,(test_music_stop_count)
     ld b,1
     call expect_a
 
@@ -815,6 +827,10 @@ test_death_audio:
     call expect_carry_clear
     ld d,9
     ld a,(test_audio_count)
+    ld b,0
+    call expect_a
+    ld d,13
+    ld a,(test_music_stop_count)
     ld b,0
     jp expect_a
 
@@ -988,6 +1004,10 @@ prepare_death_test:
     ld (w3d_player_score+2),a
     ld (w3d_player_score+3),a
     call w3d_initialize_death_state
+    ld hl,test_music_stop
+    call w3d_death_set_music_stop_hook
+    ld hl,test_music_restart
+    call w3d_death_set_music_restart_hook
     ld a,1
     ld (w3d_player_dead),a
     ld (w3d_player_killer),a
@@ -1087,6 +1107,7 @@ test_fizzle_ok:
     ret
 
 test_hold_and_lives:
+    call test_audio_reset
     call w3d_initialize_render_state
     ld a,1
     ld (w3d_player_score+0),a
@@ -1099,6 +1120,10 @@ test_hold_and_lives:
     call w3d_initialize_death_state
     ld hl,test_reseed_ok
     call w3d_death_set_reseed_hook
+    ld hl,test_music_stop
+    call w3d_death_set_music_stop_hook
+    ld hl,test_music_restart
+    call w3d_death_set_music_restart_hook
     xor a
     ld (test_reseed_calls),a
     ld a,3
@@ -1217,6 +1242,10 @@ test_hold_and_lives:
     ld a,(w3d_player_key_flags)
     ld b,0
     call expect_a
+    ld d,30
+    ld a,(test_music_restart_count)
+    ld b,1
+    call expect_a
     ld a,W3D_RENDER_PURPOSE_RESPAWN
     call w3d_death_accept_render_purpose
     ld d,13
@@ -1291,6 +1320,7 @@ test_hold_and_lives:
     jp expect_a
 
 prepare_life_finish:
+    call test_audio_reset
     xor a
     ld (w3d_player_score+0),a
     ld (w3d_player_score+1),a
@@ -1299,6 +1329,10 @@ prepare_life_finish:
     call w3d_initialize_death_state
     ld hl,test_reseed_ok
     call w3d_death_set_reseed_hook
+    ld hl,test_music_stop
+    call w3d_death_set_music_stop_hook
+    ld hl,test_music_restart
+    call w3d_death_set_music_restart_hook
     ret
 
 test_reseed_ok:
@@ -1854,6 +1888,14 @@ w3d_audio_request_actor:
     jp w3d_audio_request
 w3d_audio_request_tile:
     jp w3d_audio_request
+test_music_stop:
+    ld hl,test_music_stop_count
+    inc (hl)
+    ret
+test_music_restart:
+    ld hl,test_music_restart_count
+    inc (hl)
+    ret
 test_audio_reset:
     xor a
     ld hl,test_audio_begin
@@ -1917,6 +1959,8 @@ test_audio_count:      dw 0
 test_audio_last_id:    db 0
 test_audio_gain:       db 0
 test_audio_flags:      db 0
+test_music_stop_count: db 0
+test_music_restart_count: db 0
 test_audio_end:
 test_render_gate_cases:
     db W3D_DEATH_PHASE_ALIVE,1

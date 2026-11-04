@@ -138,6 +138,10 @@ assignment, pause continuity, quick-key ownership, and first-use F8/F9
 promotion on real eZ80 emulation. Remaining close gate: one
 audible emulator/hardware review of representative gameplay, menu,
 intermission, and victory transitions, including timbre/mix and both toggles.
+The residual `WL_GAME.C::GameLoop` audit also restores the source death
+boundary: floor music stops before the death turn/fizzle and restarts only
+after a surviving attempt has been reseeded. The expanded direct death target
+passes 241/241 checks; audible acceptance remains part of the same close gate.
 
 [ ] 18. Perform a source-linked, end-to-end Episode 1 residual parity sweep
 after items 11-17 and 6: scoring, inventory, difficulty, actors, secrets,

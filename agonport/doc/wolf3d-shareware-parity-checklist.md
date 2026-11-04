@@ -1,6 +1,6 @@
 # Wolf3DOrig shareware-parity audit and completion checklist
 
-Date: 2026-11-03
+Date: 2026-11-04
 
 This is the source-grounded definition of "duplicate the original shareware
 behavior" for Wolf3DOrig.  The active, intentionally promoted work remains in
@@ -93,6 +93,21 @@ it does not reopen an already accepted subsystem wholesale.
 ## Phase A: exact remaining original shareware behavior
 
 Items are ordered by implementation priority, not by cosmetic visibility.
+
+Death-music correction, 2026-11-04: the residual `WL_GAME.C::GameLoop`
+lifecycle audit found that DOS stops the floor track after `PlayLoop` returns
+and before `Died()` begins, then restarts it only after `SetupGameLevel` has
+rebuilt a surviving attempt.  The translated state machine had allowed the
+floor IMF stream to continue through the death turn, red fizzle, and hold.
+Production now installs explicit stop/restart hooks in the reusable death
+module: lethal promotion stops music exactly once before `PLAYERDEATHSND`, a
+final-life game over never restarts it, and a surviving attempt restarts the
+current floor exactly once after successful reseed and before its respawn
+render.  The same audit reconfirmed signed-life semantics, canonical pistol /
+eight-ammo respawn inventory, key clearing, 32-bit score checkpoint restore,
+ordinary/secret routing, and the E1 secret-floor return to E1L2.  The expanded
+direct eZ80 regression passes 241/241 checks on Oryx generation 240; standalone
+and VDPlet-direct production images both assemble with diagnostics disabled.
 
 Residual correction, 2026-11-03: the audit found that the renderer accepted a
 HUD face-frame byte but the eZ80 serializer always sent zero. The fixed 30 Hz
