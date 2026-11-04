@@ -154,7 +154,7 @@ intermission, and victory transitions, including timbre/mix and both toggles.
 The residual `WL_GAME.C::GameLoop` audit also restores the source death
 boundary: floor music stops before the death turn/fizzle and restarts only
 after a surviving attempt has been reseeded. The expanded direct death target
-passes 241/241 checks; audible acceptance remains part of the same close gate.
+passes 248/248 checks; audible acceptance remains part of the same close gate.
 The SFX provenance sweep has also replaced all nineteen generic test-pack
 substitutions with their authentic AUDIOT.WL1 PC-speaker streams rendered
 offline at 7 kHz. The production container now has zero generic fallback
@@ -276,6 +276,21 @@ shareware episode is far below that boundary. The maintained host score/build
 group passes 105 tests and 10,157 subtests; existing direct pickup,
 intermission, death, save, and high-score targets already pin the target-side
 boundaries, so no new implementation or emulator run was warranted.
+The death/game-over audit found one visible ordering defect at the boundary
+between the death turn and red fizzle. Original `Died()` calls
+`FinishPaletteShifts()` before drawing the final source page; DOS can restore
+the VGA palette without rewriting indexed pixels, while the RGB222 port had
+baked the lethal red shift into both final target surfaces. Production now
+clears the palette wire and marks the palette field dirty before either final
+target render, while deliberately preserving the source counters until the
+next attempt. Oryx generation 253 passes 248/248 direct death-state checks,
+including rotating and already-aligned deaths. The rest of the path remains
+source-correct: shortest turn toward a valid killer, one-second exact-LFSR red
+fizzle, translated 100/70-second hold, signed-life semantics, score-only
+attempt rollback, canonical pistol/eight-ammo respawn, and final-attempt game
+over. The 60-slice/60-Hz presentation of the source's 70-frame/70-Hz fizzle,
+global clean Escape, and invalid/coincident-killer guard remain intentional
+Agon timing and safety policies.
 The shell audit then restored `WL_MENU.C::CP_Quit` and F10's randomized
 confirmation instead of exiting immediately. Production consumes the same two
 shared `US_RndT` bytes and preserves the source expression

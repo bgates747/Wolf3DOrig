@@ -109,6 +109,17 @@ ordinary/secret routing, and the E1 secret-floor return to E1L2.  The expanded
 direct eZ80 regression passes 241/241 checks on Oryx generation 240; standalone
 and VDPlet-direct production images both assemble with diagnostics disabled.
 
+Death-palette follow-up, 2026-11-04: original `Died()` calls
+`FinishPaletteShifts()` after turning toward the killer and before the red
+fizzle. DOS can restore its display palette without rewriting the indexed
+source page; the RGB222 port instead bakes the shift into each rendered
+surface. Production now clears the visible palette wire before synchronizing
+either final target surface, marks the palette byte dirty, and leaves the
+damage/bonus counters intact until normal attempt initialization. Oryx
+generation 253 passes the expanded 248/248 direct death-state regression. The
+fixture binary is 93,570 bytes, SHA-256
+`a03d9d39c5a1f71f784090d6739d85d8beed18669132b4c42874ff07d9721d8d`.
+
 Residual correction, 2026-11-03: the audit found that the renderer accepted a
 HUD face-frame byte but the eZ80 serializer always sent zero. The fixed 30 Hz
 simulation now implements `WL_AGENT.C::UpdateFace` with an exact 2/2/3 mapping

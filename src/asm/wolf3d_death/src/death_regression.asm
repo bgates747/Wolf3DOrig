@@ -880,6 +880,10 @@ test_turn_routes_and_cadence:
     ld (w3d_player_pose+8),a
     ld a,350 >> 8
     ld (w3d_player_pose+9),a
+    ld a,W3D_PALETTE_RED_MAX
+    ld (w3d_palette_shift_wire),a
+    ld a,77
+    ld (w3d_palette_damage_count+0),a
     call w3d_death_promote_lethal_latch
     ld c,5
     ld d,1
@@ -949,6 +953,19 @@ test_turn_routes_and_cadence:
     ld a,(w3d_death_phase)
     ld b,W3D_DEATH_PHASE_WAIT_TARGET_FRAME
     call expect_a
+    ld d,21
+    ld a,(w3d_palette_shift_wire)
+    ld b,0
+    call expect_a
+    ld d,22
+    ld a,(w3d_hud_dirty)
+    and W3D_HUD_DIRTY_PALETTE
+    ld b,W3D_HUD_DIRTY_PALETTE
+    call expect_a
+    ld d,23
+    ld a,(w3d_palette_damage_count+0)
+    ld b,77
+    call expect_a
     call w3d_death_prepare_next_render
     ld d,12
     ld b,W3D_RENDER_PURPOSE_DEATH_TARGET
@@ -993,6 +1010,41 @@ test_turn_routes_and_cadence:
     ld d,16
     ld a,(w3d_death_turn_remaining+0)
     ld b,180
+    call expect_a
+
+; No-turn deaths still execute the source's one final target refresh and
+; FinishPaletteShifts boundary before fizzle ownership.
+    call prepare_death_test
+    ld hl,test_bearing_ok
+    call w3d_death_set_bearing_hook
+    xor a
+    ld (test_bearing_angle+0),a
+    ld (test_bearing_angle+1),a
+    ld (w3d_player_pose+8),a
+    ld (w3d_player_pose+9),a
+    ld a,3
+    ld (w3d_palette_shift_wire),a
+    ld a,55
+    ld (w3d_palette_damage_count+0),a
+    call w3d_death_promote_lethal_latch
+    ld a,W3D_RENDER_PURPOSE_DEAD_FACE
+    call w3d_death_accept_render_purpose
+    ld d,24
+    ld a,(w3d_death_phase)
+    ld b,W3D_DEATH_PHASE_WAIT_TARGET_FRAME
+    call expect_a
+    ld d,25
+    ld a,(w3d_palette_shift_wire)
+    ld b,0
+    call expect_a
+    ld d,26
+    ld a,(w3d_hud_dirty)
+    and W3D_HUD_DIRTY_PALETTE
+    ld b,W3D_HUD_DIRTY_PALETTE
+    call expect_a
+    ld d,27
+    ld a,(w3d_palette_damage_count+0)
+    ld b,55
     jp expect_a
 
 prepare_death_test:

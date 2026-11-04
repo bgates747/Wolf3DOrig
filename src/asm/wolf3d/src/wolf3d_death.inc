@@ -400,6 +400,7 @@ w3d_death_accept_render_purpose:
 @target_frame_needed:
 ; Submit one purpose-tagged target frame even when no rotation was needed. It
 ; gives the fizzle an unambiguous, fully presented source surface.
+    call w3d_death_finish_palette_shifts
     ld a,W3D_DEATH_PHASE_WAIT_TARGET_FRAME
     ld (w3d_death_phase),a
     ld a,1
@@ -545,6 +546,12 @@ w3d_death_advance_turn:
     or l
     ret nz
 @finished:
+; Died() calls FinishPaletteShifts after the turn and before the red fizzle.
+; DOS could restore the display palette without touching the indexed source
+; page.  RGB222 rendering bakes that shift into each surface, so clear the
+; wire value before the two exact final-target renders which synchronize both
+; physical pages for the fizzle.
+    call w3d_death_finish_palette_shifts
     ld a,W3D_DEATH_PHASE_WAIT_TARGET_FRAME
     ld (w3d_death_phase),a
 ; The final exact target angle is dirty even if a slower turn frame remains in
@@ -552,6 +559,22 @@ w3d_death_advance_turn:
     ld a,1
     ld (w3d_player_dirty),a
     ld (w3d_world_dirty),a
+    ret
+
+; Translate FinishPaletteShifts' visible effect.  The source deliberately
+; leaves bonuscount/damagecount intact here; a surviving attempt's next
+; PlayLoop clears them.  Preserve those counters and only restore the normal
+; presented palette.  Marking the HUD palette field makes the next target
+; render carry the zero through either backend.
+w3d_death_finish_palette_shifts:
+    ld a,(w3d_palette_shift_wire)
+    or a
+    ret z
+    xor a
+    ld (w3d_palette_shift_wire),a
+    ld a,(w3d_hud_dirty)
+    or W3D_HUD_DIRTY_PALETTE
+    ld (w3d_hud_dirty),a
     ret
 
 ; DE is a signed low-16-bit turn delta. The .s suffix is intentional: the
