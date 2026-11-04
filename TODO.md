@@ -263,6 +263,19 @@ passes 39/39, and the acceptance-package contract passes 10/10. Existing
 direct shell, combat, death, transition, and save proofs already pin the
 corresponding target boundaries; no new implementation or target case was
 warranted.
+The scoring audit also found no reachable Episode 1 defect. Kill and treasure
+awards, 40,000-point extra lives (including the nine-life sound), ordinary and
+secret intermission bonuses, six-digit HUD truncation, full-width high-score
+handoff, successful-floor checkpointing, failed-attempt score rollback, and
+save/load persistence preserve the source lifecycle. In particular, a failed
+attempt retains lives already earned and the advanced next-extra threshold
+while restoring only score, matching `WL_GAME.C` rather than treating the
+attempt as a transaction. The port uses an unsigned 32-bit score internally;
+the original Borland `long` is signed, but every score reachable in the finite
+shareware episode is far below that boundary. The maintained host score/build
+group passes 105 tests and 10,157 subtests; existing direct pickup,
+intermission, death, save, and high-score targets already pin the target-side
+boundaries, so no new implementation or emulator run was warranted.
 The shell audit then restored `WL_MENU.C::CP_Quit` and F10's randomized
 confirmation instead of exiting immediately. Production consumes the same two
 shared `US_RndT` bytes and preserves the source expression
