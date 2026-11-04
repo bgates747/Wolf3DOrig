@@ -894,11 +894,15 @@ test_face_timeline:
 
 ; Damage and successful healing both call DrawFace immediately and cancel the
 ; special presentation even while its modeled sound hold remains active.
+; Original TakeDamage itself is silent: the native TAKEDAMAGESND mapping is
+; never requested by the WL1 producer path.
     call w3d_begin_chaingun_face
+    call test_audio_reset
     ld a,1
     ld (w3d_current_actor_index),a
     call w3d_take_player_damage
     CHECK_MEM8 w3d_player_face_special,0,reason_state
+    CHECK_MEM8 test_audio_count+0,0,reason_audio
     call w3d_begin_chaingun_face
     ld a,99
     ld (w3d_player_health),a
@@ -912,6 +916,7 @@ test_face_timeline:
     call w3d_take_player_damage
     CHECK_MEM8 w3d_player_health,100,reason_inventory
     CHECK_MEM8 w3d_player_face_special,0,reason_state
+    CHECK_MEM8 test_audio_count+0,0,reason_audio
     ret
 
 ; ---------------------------------------------------------------------------

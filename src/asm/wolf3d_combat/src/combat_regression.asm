@@ -14,6 +14,7 @@ mos_fwrite:         equ 0x1b
 mos_getkbmap:       equ 0x1e
 fa_write:           equ 0x02
 fa_create_always:   equ 0x08
+sysvar_time:        equ 0x00
 
 prt_reload_1ms:     equ 72
 TMR1_CTL:           equ 083h
@@ -57,9 +58,31 @@ timing_iterations:  equ 10000
     include "wolf3d_fixture.inc"
     include "wolf3d_actors.inc"
     include "wolf3d_areas.inc"
+; This focused fixture does not include the victory presentation module, but
+; production actor simulation and motion expose its public seams.
+w3d_victory_think_bj_jump:
+w3d_victory_think_bj_run:
+w3d_victory_bj_yell:
+w3d_victory_bj_done:
+    ret
     include "wolf3d_actor_sim.inc"
+w3d_initialize_victory_state:
+    xor a
+    ld (w3d_victory_active),a
+    ret
+w3d_begin_victory_sequence:
+w3d_simulate_victory_step:
+    ret
+w3d_victory_active:
+    db 0
     include "wolf3d_motion.inc"
     include "wolf3d_player_combat.inc"
+
+; Standalone production-motion clock seam. Directed combat cases overwrite
+; the RNG index explicitly; this backing sysvar only keeps the ordinary level
+; seed path linked and deterministic in the focused fixture.
+w3d_sysvars_pointer: dl test_sysvars
+test_sysvars:       ds 24
 
 phase_states:       equ 1
 phase_entry:        equ 2
@@ -140,10 +163,10 @@ test_state_table:
     ld a,1
     ld (test_detail),a
     ld a,W3D_STATE_COUNT
-    CHECK_A 152,reason_scalar
+    CHECK_A 162,reason_scalar
     ld hl,w3d_actor_states_end-w3d_actor_states
     ld a,l
-    CHECK_A 058h,reason_scalar
+    CHECK_A 0b2h,reason_scalar
     ld a,h
     CHECK_A 5,reason_scalar
     ld ix,w3d_actor_states+693       ; 77 * 9
@@ -427,10 +450,9 @@ test_shoot:
     CHECK_MEM8 w3d_actor_combat_hitchance+0,208,reason_scalar
     CHECK_MEM8 w3d_random_index,39,reason_rng
     CHECK_MEM8 w3d_player_health,94,reason_health
-    CHECK_MEM8 test_audio_count+0,2,reason_audio
-    CHECK_MEM8 test_audio_previous_id,W3D_AUDIO_SOUND_BOSSFIRE,reason_audio
-    CHECK_MEM8 test_audio_last_id,W3D_AUDIO_SOUND_TAKEDAMAGE,reason_audio
-    CHECK_MEM8 test_audio_kind,0,reason_audio
+    CHECK_MEM8 test_audio_count+0,1,reason_audio
+    CHECK_MEM8 test_audio_last_id,W3D_AUDIO_SOUND_BOSSFIRE,reason_audio
+    CHECK_MEM8 test_audio_kind,1,reason_audio
     ret
 
 ; ---------------------------------------------------------------------------
@@ -725,7 +747,8 @@ test_audio_events:
     CHECK_MEM8 test_audio_arg_b,12,reason_audio
     CHECK_MEM8 test_audio_arg_c,10,reason_audio
 
-; SS chooses its distinct shot id. A guard hit orders shot before player pain.
+; SS chooses its distinct shot id. A guard hit adds no invented player-pain
+; event; TakeDamage's source feedback is visual.
     call prepare_shoot_east2
     ld (ix+W3D_ACTOR_CLASS),W3D_CLASS_SS
     ld a,4                          ; table[5]=241: miss chance 240 exactly
@@ -738,12 +761,9 @@ test_audio_events:
     ld a,1                          ; 109 hits, 220 damages
     ld (w3d_random_index),a
     call w3d_actor_action_shoot
-    CHECK_MEM8 test_audio_count+0,2,reason_audio
-    CHECK_MEM8 test_audio_previous_id,58,reason_audio
-    CHECK_MEM8 test_audio_last_id,16,reason_audio
-    CHECK_MEM8 test_audio_kind,0,reason_audio
-    CHECK_MEM8 test_audio_arg_b,127,reason_audio
-    CHECK_MEM8 test_audio_arg_c,0,reason_audio
+    CHECK_MEM8 test_audio_count+0,1,reason_audio
+    CHECK_MEM8 test_audio_last_id,58,reason_audio
+    CHECK_MEM8 test_audio_kind,1,reason_audio
 
 ; Every valid dog bite action barks, including an out-of-range no-RNG action;
 ; a wrong-class direct call fails closed and silent.
@@ -761,17 +781,14 @@ test_audio_events:
     call w3d_actor_action_bite
     CHECK_MEM8 test_audio_count+0,0,reason_audio
 
-; Zero damage is silent; actual damage is full-gain unpositioned id 16.
+; Both zero and nonzero player damage are silent in the original source.
     call prepare_guard
     xor a
     call w3d_take_player_damage
     CHECK_MEM8 test_audio_count+0,0,reason_audio
     ld a,1
     call w3d_take_player_damage
-    CHECK_MEM8 test_audio_count+0,1,reason_audio
-    CHECK_MEM8 test_audio_last_id,16,reason_audio
-    CHECK_MEM8 test_audio_arg_b,127,reason_audio
-    CHECK_MEM8 test_audio_arg_c,0,reason_audio
+    CHECK_MEM8 test_audio_count+0,0,reason_audio
 
 ; A_DeathScream: guard consumes exactly one native RNG byte and uses parity;
 ; the fixed class sounds consume none. All are actor-positioned.
@@ -835,7 +852,7 @@ test_containment_scheduler:
     ld a,1
     ld (test_detail),a
     call prepare_guard
-    ld a,4
+    ld a,W3D_STATE_ACTION_BJ_DONE+1
     call w3d_actor_dispatch_action
     ld a,0
     adc a,0
@@ -1545,6 +1562,8 @@ test_audio_reset:
 w3d_elapsed_ticks:
     dl 0
 w3d_exit_requested:
+    db 0
+w3d_gameplay_panel_request:
     db 0
 
 test_audio_begin:

@@ -116,7 +116,10 @@ native 16384 Hz rate is preserved. They are not claims of original-game
 fidelity. `wilhelm.wav` remains excluded and reserved for a future easter egg.
 
 The WL1 archives alone now supply every current environment, combat, actor,
-player-damage/death, pickup, elevator, and intermission producer. Logical
+player-death, pickup, elevator, and intermission producer. `TAKEDAMAGESND`
+remains a byte-exact native WL1 record because it appears in `wolfdigimap`,
+but the shareware source never requests it; visual palette/HUD feedback owns
+ordinary player damage. Logical
 sounds outside that scope remain durable unavailable manifest entries rather
 than being silently discarded.
 

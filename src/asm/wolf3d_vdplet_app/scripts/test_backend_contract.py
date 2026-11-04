@@ -52,16 +52,22 @@ class BackendContractTests(unittest.TestCase):
         self.assertLess(startup, runtime_open)
         self.assertLess(runtime_close, callback_remove)
 
-    def test_mode_transition_is_fenced_before_vdplet_discovery(self) -> None:
-        display = self.main.index("ld hl,w3d_display_setup")
-        fence = self.main.index("call w3d_wait_for_gameplay_mode", display)
-        callback = self.main.index("call w3d_install_render_callback", fence)
-        runtime_open = self.main.index("call w3d_vdplet_backend_open", callback)
-        self.assertLess(display, fence)
-        self.assertLess(fence, callback)
-        self.assertLess(callback, runtime_open)
-        arm = self.main.index("call w3d_arm_gameplay_mode_fence", display - 100)
-        self.assertLess(arm, display)
+    def test_application_lifetime_display_is_acquired_before_assets(self) -> None:
+        main = self.main.index("\nmain:\n")
+        display = self.main.index("call w3d_enter_gameplay_display", main)
+        audio = self.main.index("call w3d_audio_initialize", display)
+        body = self.main.index("call w3d_main_body", audio)
+        self.assertLess(display, audio)
+        self.assertLess(audio, body)
+        enter = self.main.split("w3d_enter_gameplay_display:", 1)[1]
+        enter = enter.split("w3d_display_acquired:", 1)[0]
+        arm = enter.index("call w3d_arm_gameplay_mode_fence")
+        send = enter.index("rst.lil 18h")
+        fence = enter.index("call w3d_wait_for_gameplay_mode")
+        self.assertLess(arm, send)
+        self.assertLess(send, fence)
+        self.assertIn("w3d_display_mode_command", enter)
+        self.assertIn("w3d_display_post_mode_setup", enter)
         self.assertIn("MOSCALL mos_clearvdpflags", self.main)
         self.assertIn("MOSCALL mos_waitforvdpflags", self.main)
         self.assertIn("W3D_MODE_FENCE_WAIT_PASSES:     equ 10", self.main)
@@ -69,30 +75,29 @@ class BackendContractTests(unittest.TestCase):
         fence_body = fence_body.split("w3d_mode_fence_error_msg:", 1)[0]
         self.assertIn("ld c,vdp_pflag_mode", fence_body)
         self.assertIn("djnz @wait", fence_body)
-        self.assertIn("jp c,w3d_gameplay_fatal_before_runtime", self.main)
+        self.assertIn("jp c,@restore_screen", self.main)
 
     def test_exit_mode_restore_is_fenced_before_returning_to_mos(self) -> None:
         restore = self.main.split("w3d_restore_original_screen_mode:", 1)[1]
         restore = restore.split("w3d_restore_mode_command:", 1)[0]
         arm = restore.index("call w3d_arm_gameplay_mode_fence")
         send = restore.index("rst.lil 18h")
-        wait = restore.index("jp w3d_wait_for_gameplay_mode")
+        wait = restore.index("call w3d_wait_for_gameplay_mode")
         self.assertLess(arm, send)
         self.assertLess(send, wait)
 
-    def test_floor_transition_fences_mode_before_vdplet_reset(self) -> None:
+    def test_floor_transition_reuses_acquired_display_before_vdplet_reset(self) -> None:
         loader = (SOURCE / "wolf3d_level_loader.inc").read_text()
-        display = loader.index("ld hl,w3d_display_setup")
-        arm = loader.rindex("call w3d_arm_gameplay_mode_fence", 0, display)
-        fence = loader.index("call w3d_wait_for_gameplay_mode", display)
-        seed = loader.index("call w3d_seed_level_transition_state", fence)
+        ingress = loader.index("call w3d_audio_wait_for_vdp_ingress")
+        display = loader.index("call w3d_enter_gameplay_display", ingress)
+        seed = loader.index("call w3d_seed_level_transition_state", display)
         reset = loader.index("call w3d_submit_level_reset", seed)
-        self.assertLess(arm, display)
-        self.assertLess(display, fence)
-        self.assertLess(fence, seed)
+        self.assertLess(ingress, display)
+        self.assertLess(display, seed)
         self.assertLess(seed, reset)
-        guarded = loader[arm:seed]
-        self.assertIn(".if W3D_RENDER_BACKEND", guarded)
+        guarded = loader[ingress:seed]
+        self.assertNotIn("w3d_display_mode_command", guarded)
+        self.assertNotIn("w3d_arm_gameplay_mode_fence", guarded)
         self.assertIn("ret c", guarded)
 
     def test_physical_startup_failure_preserves_stage_and_status(self) -> None:

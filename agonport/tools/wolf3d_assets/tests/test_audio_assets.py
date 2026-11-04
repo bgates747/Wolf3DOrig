@@ -142,6 +142,7 @@ class AudioAssetTests(unittest.TestCase):
             set(UPLOAD_DIGI_MAP) - set(CURRENT_PRODUCERS),
             {
                 "DEATHSCREAM3SND",
+                "TAKEDAMAGESND",
             },
         )
         by_name = {sound.name: sound for sound in self.sounds}

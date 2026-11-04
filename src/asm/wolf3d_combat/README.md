@@ -123,6 +123,11 @@ needed by the first production fixture:
 6. Damage flash, `gotgatgun=0`, health redraw, and face redraw occur even for
    zero reduced damage and under god mode.
 
+`TakeDamage` itself requests no sound. `TAKEDAMAGESND` has an original WL1
+digitized mapping but no reachable `SD_PlaySound`/`PlaySoundLocActor` producer
+in the shareware source. Gunfire or dog-attack audio remains owned by the
+attacker action, and the later lethal transition owns `PLAYERDEATHSND`.
+
 This means a successful zero-damage hit is not equivalent to a miss. An
 in-flight attack during victory still performs its gates and RNG and still
 sounds; only `TakeDamage` returns early.

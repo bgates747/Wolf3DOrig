@@ -165,9 +165,9 @@ w3d_death_promote_lethal_latch:
 ; starts its turn/fizzle presentation.  Keep that source boundary distinct
 ; from the player-death SFX, which is requested immediately afterward.
     call w3d_death_call_music_stop_hook
-; This is the single authoritative lethal-promotion edge. The preceding
-; nonzero damage already queued TAKEDAMAGESND; now queue the original player
-; death sound at full unpositioned gain, once before presentation begins.
+; This is the single authoritative lethal-promotion edge. TakeDamage has no
+; source SFX producer; queue the original player-death sound at full
+; unpositioned gain, once before presentation begins.
     ld a,W3D_AUDIO_SOUND_PLAYERDEATH
     ld b,127
     ld c,0

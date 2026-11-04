@@ -17,15 +17,33 @@ import time
 
 HERE = Path(__file__).resolve().parent
 _root_override = os.environ.get("W3D_STAGED_ROOT")
-_installed_root = Path(__file__).resolve().parents[4]
-STAGED_ROOT = Path(_root_override) if _root_override else _installed_root
+if _root_override:
+    STAGED_ROOT = Path(_root_override)
+    _installed_root = STAGED_ROOT
+else:
+    _installed_root = Path(__file__).resolve().parents[4]
+    STAGED_ROOT = _installed_root
 RUNTIME_ROOT = Path(os.environ.get("W3D_RUNTIME_ROOT", _installed_root))
 STAGED_SRC = STAGED_ROOT / "src/asm/wolf3d/src"
-FAB = RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
-MOS = RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
-VDP = RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+FIXTURE = STAGED_ROOT / "src/asm/wolf3d_combat/src/combat_regression.asm"
+FAB = Path(os.environ.get(
+    "W3D_EMULATOR", RUNTIME_ROOT / "agonport/emulator/fab-agon-emulator"
+))
+MOS = Path(os.environ.get(
+    "W3D_MOS", RUNTIME_ROOT / "agonport/emulator/mos_console8.bin"
+))
+VDP = Path(os.environ.get(
+    "W3D_VDP", RUNTIME_ROOT / "agonport/emulator/vdp_stock.so"
+))
+FIRMWARE = os.environ.get("W3D_FIRMWARE", "platform")
+ASSEMBLER = Path(
+    os.environ.get("W3D_ASSEMBLER")
+    or shutil.which("ez80asm")
+    or STAGED_ROOT / "src/asm/wolf3d/tgt/.tools/ez80asm"
+)
 RESULT_SIZE = 32
 TIMING_ITERATIONS = 10_000
+LOG_TAIL_BYTES = 16 * 1024
 
 PHASES = {
     1: "state table",
@@ -61,12 +79,62 @@ def run(command: list[str], *, cwd: Path | None = None) -> None:
     subprocess.run(command, check=True, cwd=cwd)
 
 
+def read_log_tail(path: Path) -> str:
+    """Return a bounded, decode-safe subprocess log tail."""
+    try:
+        with path.open("rb") as stream:
+            stream.seek(0, os.SEEK_END)
+            size = stream.tell()
+            truncated = size > LOG_TAIL_BYTES
+            stream.seek(max(0, size - LOG_TAIL_BYTES))
+            payload = stream.read()
+    except OSError as exc:
+        return f"<unable to read {path.name}: {exc}>"
+    decoded = payload.decode("utf-8", errors="replace").strip()
+    if truncated:
+        decoded = "<earlier output omitted>\n" + decoded
+    return decoded
+
+
+def emulator_failure_message(
+    summary: str,
+    *,
+    stdout_log: Path,
+    stderr_log: Path,
+    mailbox: bytes,
+) -> str:
+    sections = [summary]
+    if mailbox:
+        sections.append(f"last mailbox ({len(mailbox)} bytes): {mailbox.hex(' ')}")
+    stdout_tail = read_log_tail(stdout_log)
+    stderr_tail = read_log_tail(stderr_log)
+    if stdout_tail:
+        sections.append("emulator stdout tail:\n" + stdout_tail)
+    if stderr_tail:
+        sections.append("emulator stderr tail:\n" + stderr_tail)
+    if not stdout_tail and not stderr_tail:
+        sections.append("emulator produced no stdout/stderr diagnostics")
+    return "\n".join(sections)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--timeout", type=float, default=60.0)
+    parser.add_argument(
+        "--prebuilt",
+        type=Path,
+        help="use an already assembled fixture (for a cross-architecture emulator host)",
+    )
     args = parser.parse_args()
 
-    dependencies = (STAGED_SRC, FAB, MOS, VDP)
+    dependencies = [FAB, MOS, VDP]
+    production_includes = sorted(STAGED_SRC.glob("*.inc"))
+    if args.prebuilt:
+        dependencies.append(args.prebuilt)
+    else:
+        dependencies.extend(
+            [ASSEMBLER, STAGED_SRC, FIXTURE, *production_includes]
+        )
     missing = [path for path in dependencies if not path.exists()]
     if missing:
         raise FileNotFoundError(
@@ -77,16 +145,19 @@ def main() -> int:
     # in a disposable short directory, as every other direct fixture does.
     work = Path(tempfile.mkdtemp(prefix="w"))
     atexit.register(shutil.rmtree, work, ignore_errors=True)
-    for include in STAGED_SRC.glob("*.inc"):
-        (work / include.name).symlink_to(include.resolve())
-
-    entry = work / "w.asm"
-    shutil.copyfile(HERE.parent / "src/combat_regression.asm", entry)
     sdcard = work / "sdcard"
     app = sdcard / "w"
     app.mkdir(parents=True)
     binary = app / "w.bin"
-    run(["ez80asm", str(entry), str(binary)], cwd=work)
+    if args.prebuilt:
+        shutil.copyfile(args.prebuilt, binary)
+        print("+ prebuilt", args.prebuilt, "->", binary)
+    else:
+        for include in production_includes:
+            shutil.copyfile(include, work / include.name)
+        entry = work / "w.asm"
+        shutil.copyfile(FIXTURE, entry)
+        run([str(ASSEMBLER), str(entry), str(binary)], cwd=work)
     digest = hashlib.sha256(binary.read_bytes()).hexdigest()
     print(f"binary: {binary.stat().st_size} bytes, sha256={digest}")
     (sdcard / "autoexec.txt").write_bytes(
@@ -98,6 +169,10 @@ def main() -> int:
 
     result = app / "combat_result.bin"
     environment = os.environ.copy()
+    artifacts = Path(
+        environment.setdefault("AGON_FLEXE_ARTIFACTS", str(work / "flexe-artifacts"))
+    )
+    artifacts.mkdir(parents=True, exist_ok=True)
     environment["SDL_VIDEODRIVER"] = "dummy"
     environment["SDL_AUDIODRIVER"] = "dummy"
     local_lib = str(Path.home() / ".local/lib")
@@ -109,43 +184,56 @@ def main() -> int:
     emulator = [
         str(FAB.resolve()),
         "--renderer", "sw",
-        "--firmware", "console8",
+        "--firmware", FIRMWARE,
         "--mos", str(MOS.resolve()),
         "--vdp", str(VDP.resolve()),
         "--sdcard", str(sdcard),
         "--zero",
     ]
     print("+", " ".join(emulator))
-    process = subprocess.Popen(
-        emulator,
-        cwd=work,
-        env=environment,
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-    )
-    try:
-        deadline = time.monotonic() + args.timeout
-        payload = b""
-        while time.monotonic() < deadline:
-            if process.poll() is not None:
-                raise RuntimeError(f"emulator exited with {process.returncode}")
-            if result.exists():
-                payload = result.read_bytes()
-                if len(payload) == RESULT_SIZE and payload[:4] == b"W3CO":
-                    break
-            time.sleep(0.05)
-        else:
-            observed = (
-                f" ({len(payload)} bytes, prefix={payload[:4]!r})" if payload else ""
-            )
-            raise RuntimeError("timed out waiting for combat emulator result" + observed)
-    finally:
-        process.terminate()
+    stdout_log = work / "emulator.stdout.log"
+    stderr_log = work / "emulator.stderr.log"
+    payload = b""
+    failure: str | None = None
+    with stdout_log.open("wb") as stdout_stream, stderr_log.open("wb") as stderr_stream:
+        process = subprocess.Popen(
+            emulator,
+            cwd=work,
+            env=environment,
+            stdout=stdout_stream,
+            stderr=stderr_stream,
+        )
         try:
-            process.wait(timeout=2)
-        except subprocess.TimeoutExpired:
-            process.kill()
-            process.wait()
+            deadline = time.monotonic() + args.timeout
+            while time.monotonic() < deadline:
+                if process.poll() is not None:
+                    failure = f"emulator exited with {process.returncode}"
+                    break
+                if result.exists():
+                    payload = result.read_bytes()
+                    if len(payload) == RESULT_SIZE and payload[:4] == b"W3CO":
+                        break
+                time.sleep(0.05)
+            else:
+                failure = "timed out waiting for combat emulator result"
+        finally:
+            if process.poll() is None:
+                process.terminate()
+                try:
+                    process.wait(timeout=2)
+                except subprocess.TimeoutExpired:
+                    process.kill()
+                    process.wait()
+
+    if failure is not None:
+        raise RuntimeError(
+            emulator_failure_message(
+                failure,
+                stdout_log=stdout_log,
+                stderr_log=stderr_log,
+                mailbox=payload,
+            )
+        )
 
     checks = int.from_bytes(payload[4:6], "little")
     errors = int.from_bytes(payload[6:8], "little")

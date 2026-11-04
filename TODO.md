@@ -263,7 +263,7 @@ score-checkpoint, high-score, and menu paths; only the initial health/lives are
 overridden. Visual acceptance remains part of the Phase-A batch.
 The source-to-producer audio sweep also corrected the asset inventory for
 Hans's three native effects: `GUTENTAGSND`, `BOSSFIRESND`, and `MUTTISND` were
-already requested and audible, but were falsely marked unrequired. All 49
+already requested and audible, but were falsely marked unrequired. All 48
 reachable production effects are now required and available, preventing a
 future trim from silently removing the boss audio contract.
 The startup sweep restored `WL_MAIN.C::DemoLoop`'s call to

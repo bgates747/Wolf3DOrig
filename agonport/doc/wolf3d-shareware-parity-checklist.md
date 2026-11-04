@@ -690,16 +690,19 @@ Audio-inventory correction, 2026-11-03: production already requested Hans's
 native `GUTENTAGSND`, `BOSSFIRESND`, and `MUTTISND`, and their VSWAP records
 made them audible, but the generated catalog incorrectly classified all three
 as surplus rather than current producers. The corrected source-to-producer
-contract marks 49 effects required and 49 available; only the alternate
-UPLOAD guard `DEATHSCREAM3SND` remains native but intentionally unrequested.
+contract marks 48 effects required and 48 available. The alternate UPLOAD
+guard `DEATHSCREAM3SND` and mapped-but-unproduced `TAKEDAMAGESND` remain
+native but intentionally unrequested.
 This changes requirement metadata, not PCM, buffer IDs, rates, priorities, or
 playback behavior.
 
-The complete follow-up source census confirms that all 49 reachable WL1
+The complete follow-up source census confirms that all 48 reachable WL1
 `UPLOAD` producers are declared, required, available, and referenced by
-production assembly. `DEATHSCREAM3SND` is intentionally the one uploaded
-native mapping outside the producer set because the shareware
-`A_DeathScream` branch selects only screams 1 and 2. Calls belonging solely to
+production assembly. `DEATHSCREAM3SND` is intentionally outside the producer
+set because the shareware `A_DeathScream` branch selects only screams 1 and 2.
+`TAKEDAMAGESND` is also outside it: `wolfdigimap` maps native digitized index
+14, but no WL1 `SD_PlaySound` or `PlaySoundLocActor` call requests that logical
+effect. Calls belonging solely to
 paid episodes, Spear, or unavailable DOS input remapping are not
 misrepresented as Episode 1 requirements.
 

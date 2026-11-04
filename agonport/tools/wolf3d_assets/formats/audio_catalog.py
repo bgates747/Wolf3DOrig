@@ -100,7 +100,6 @@ CURRENT_PRODUCERS = {
     "DOGDEATHSND": ("actor.dog.death",),
     "ATKGATLINGSND": ("player.chaingun",),
     "GETKEYSND": ("pickup.key",),
-    "TAKEDAMAGESND": ("player.damage",),
     "OPENDOORSND": ("environment.door_open",),
     "CLOSEDOORSND": ("environment.door_close",),
     "HALTSND": ("actor.guard.alert",),

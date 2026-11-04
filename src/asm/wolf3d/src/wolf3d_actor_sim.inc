@@ -736,11 +736,11 @@ w3d_actor_request_sound:
     pop ix
     ret
 
-; IX=current guard/officer/mutant/SS. Port T_Shoot's observable gameplay
+; IX=current guard/officer/mutant/SS/Hans. Port T_Shoot's observable gameplay
 ; order exactly: connected area, line trace, action-time distance, deterministic
-; CPU visibility/running hitchance, one hit draw, and a second draw only on a
-; hit. A line-clear attempt emits the class sound before its accuracy roll;
-; successful damage routes through the authoritative health/HUD/flash owner.
+; CPU visibility/running hitchance, one hit draw, a second draw only on a hit,
+; TakeDamage, then the class firing sound. Successful damage routes through
+; the authoritative health/HUD/flash owner.
 w3d_actor_action_shoot:
     xor a
     ld (w3d_actor_combat_is_ss),a
@@ -779,17 +779,12 @@ w3d_actor_action_shoot:
     add hl,de
     ld a,(hl)
     or a
-    jp z,@no_shot
+    jp z,@no_action
 
     ld iy,w3d_actor_sight_context
     call w3d_CheckLine
     or a
-    jp z,@no_shot
-
-; T_Shoot emits only after both connected-area and LOS gates succeed, whether
-; the later accuracy roll hits or misses.
-    ld a,(w3d_actor_combat_shoot_sound)
-    call w3d_actor_request_sound
+    jp z,@no_action
 
     call w3d_actor_tile_deltas_abs
     ld a,(w3d_actor_chase_abs_x)
@@ -857,7 +852,7 @@ w3d_actor_action_shoot:
     ld b,a
     ld a,(w3d_actor_combat_hitchance+1)
     bit 7,a
-    jp nz,@no_shot
+    jp nz,@emit_sound
     or a
     jr nz,@hit
     ld a,b
@@ -866,7 +861,7 @@ w3d_actor_action_shoot:
     ld c,a
     ld a,b
     cp c
-    jp nc,@no_shot                    ; strict random < hitchance
+    jp nc,@emit_sound                  ; strict random < hitchance
 @hit:
     call w3d_random_byte
     ld b,a
@@ -883,7 +878,12 @@ w3d_actor_action_shoot:
     srl b
     ld a,b
     call w3d_take_player_damage
-@no_shot:
+@emit_sound:
+; A qualified miss still fires. Disconnected-area and blocked-line returns do
+; not reach this producer, matching the source's early returns.
+    ld a,(w3d_actor_combat_shoot_sound)
+    call w3d_actor_request_sound
+@no_action:
     or a
     ret
 @corrupt:
@@ -959,7 +959,10 @@ w3d_actor_bite_in_range:
 ; A=raw damage; w3d_current_actor_index is the attacker. Medium is the
 ; generated fixture default; baby quarters damage. Health saturates at zero,
 ; the HUD is dirtied only on a real change, and death freezes future fixed
-; steps without aborting the current actor pass.
+; steps without aborting the current actor pass. WL_AGENT.C::TakeDamage does
+; not request TAKEDAMAGESND: that logical sound has a digitized mapping but no
+; reachable UPLOAD producer. Damage feedback is the palette flash and HUD/face
+; update; the later death transition owns PLAYERDEATHSND.
 w3d_take_player_damage:
     ld c,a                          ; face/HUD helpers may consume B
     ld a,(w3d_current_actor_index)
@@ -1009,11 +1012,7 @@ w3d_take_player_damage:
     ld (w3d_player_dead),a
 @changed:
 ; Zero raw/scaled damage returns above. Every actual health change, including
-; a lethal one, gets the unpositioned player-pain sound before HUD dirtiness.
-    ld a,W3D_AUDIO_SOUND_TAKEDAMAGE
-    ld b,127
-    ld c,0
-    call w3d_audio_request
+; a lethal one, dirties the authoritative HUD without inventing an extra SFX.
     ld a,1
     ld (w3d_pickup_scan_needed),a
     ld a,W3D_HUD_DIRTY_HEALTH
