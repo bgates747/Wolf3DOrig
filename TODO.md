@@ -38,8 +38,10 @@ shareware path: in-world victory/BJ sequence, total time and eight-floor ratio
 averages, Episode 1 ending/shareware text, acknowledgment, high-score handoff,
 and shell return. Paid-episode death cameras/endings are out of scope. The BJ
 state graph, totals arithmetic, shareware-text handoff, and target regression
-are complete. Remaining close gate: staged visual acceptance of the complete
-E1L9 sequence and return to the shell.
+are complete. The three-letter total-time verification code is intentionally
+absent: it is inside `#ifndef UPLOAD` and therefore not part of the WL1
+shareware configuration. Remaining close gate: staged visual acceptance of
+the complete E1L9 sequence and return to the shell.
 
 [ ] 7. Implement the original seven-entry high-score table, qualification and
 name entry, score/floor display, control-panel view, game-over/victory handoff,

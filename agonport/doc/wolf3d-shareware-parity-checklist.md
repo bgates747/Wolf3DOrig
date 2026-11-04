@@ -24,6 +24,14 @@ the unconditional M+L+I inventory/score/time chord or B+A+T Commander Keen
 message in `WL_PLAY.C::CheckKeys`; those are reachable in an ordinary WL1
 process and remain parity requirements.
 
+Victory verification-code audit, 2026-11-04: `WL_INTER.C::Victory` does cache
+`C_TIMECODEPIC` in every non-SPEAR build, which makes the adjacent code look
+superficially applicable. The actual draw/string calculation is nested inside
+`#ifndef UPLOAD`; `WOLF1VER.H` defines `UPLOAD`. The three-letter code and its
+label are therefore registered-build behavior, not a missing WL1 feature.
+The transient implementation experiment was removed before commit, and the
+existing Episode 1 victory visual gate remains unchanged.
+
 ## Audit baseline: behavior already present
 
 The current port already has the following shareware behavior in production,

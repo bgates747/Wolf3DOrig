@@ -90,9 +90,19 @@ def run(command: list[str], *, cwd: Path | None = None) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--timeout", type=float, default=30.0)
+    parser.add_argument(
+        "--prebuilt",
+        type=Path,
+        help="use an already assembled fixture on a cross-architecture host",
+    )
     args = parser.parse_args()
 
-    for dependency in (PRODUCTION_SRC, FIXTURE, FAB, MOS, VDP):
+    dependencies = [FAB, MOS, VDP]
+    if args.prebuilt:
+        dependencies.append(args.prebuilt)
+    else:
+        dependencies.extend((PRODUCTION_SRC, FIXTURE))
+    for dependency in dependencies:
         if not dependency.exists():
             raise FileNotFoundError(
                 f"missing intermission regression dependency: {dependency}"
@@ -102,16 +112,19 @@ def main() -> int:
     # of the production include directory so concurrent app builds are safe.
     work = Path(tempfile.mkdtemp(prefix="wi"))
     atexit.register(shutil.rmtree, work, ignore_errors=True)
-    build_src = work / "src"
-    shutil.copytree(PRODUCTION_SRC, build_src)
-    entry = build_src / "i.asm"
-    shutil.copyfile(FIXTURE, entry)
-
     sdcard = work / "sd"
     app = sdcard / "i"
     app.mkdir(parents=True)
     binary = app / "i.bin"
-    run([ASSEMBLER, entry.name, str(binary)], cwd=build_src)
+    if args.prebuilt:
+        shutil.copyfile(args.prebuilt, binary)
+        print(f"+ prebuilt {args.prebuilt} -> {binary}")
+    else:
+        build_src = work / "src"
+        shutil.copytree(PRODUCTION_SRC, build_src)
+        entry = build_src / "i.asm"
+        shutil.copyfile(FIXTURE, entry)
+        run([ASSEMBLER, entry.name, str(binary)], cwd=build_src)
     (sdcard / "autoexec.txt").write_bytes(
         b"SET KEYBOARD 1\r\ncd i\r\nload i.bin\r\nrun\r\n"
     )

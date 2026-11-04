@@ -71,3 +71,8 @@ Run from the repository root:
 The runner copies the production assembly directory into a short isolated
 temporary path before assembling, avoiding `ez80asm`'s legacy path limit and
 remaining safe alongside a production build.
+
+On an emulator host whose CPU cannot execute the local `ez80asm`, assemble the
+fixture on the source host and pass the resulting binary with `--prebuilt`.
+The runner still creates an isolated SD image, executes the same target checks,
+and validates the identical result schema; only assembly is skipped.
