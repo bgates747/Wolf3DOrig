@@ -350,10 +350,15 @@ Acceptance: ordering/tie/no-qualification boundaries, name editing, file
 round-trip/corruption recovery, game-over and victory integration, and visual
 review.
 
-Status 2026-11-03: implementation is complete. The seven-row table, ordering,
-name editor, timed non-qualifying path, game-over/victory handoffs, and
-transactional 482-byte persistence image pass 62/62 direct checks. The only
-open gate is visual acceptance of qualifying and non-qualifying flows.
+Status 2026-11-04: the seven-row table, ordering, timed non-qualifying path,
+game-over/victory handoffs, and transactional 482-byte persistence image pass
+direct checks. A residual comparison corrected the mutable rows from MOS's
+fixed 8x8 font to the exact STARTFONT proportional name glyphs and original
+fixed-width numeric glyphs. Name entry now uses a proportional 100-pixel bound
+and the source's 57-character storage rather than a twelve-cell approximation.
+It still needs `US_LineInput`'s cursor-aware insertion/navigation/Delete
+semantics and exact pre-insertion width behavior. Direct target execution and
+visual acceptance of qualifying and non-qualifying flows remain open gates.
 
 ### A5. In-game control panel, pause, and original key flow — TODO 14
 

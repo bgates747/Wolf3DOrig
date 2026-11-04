@@ -52,11 +52,17 @@ Escape-to-MOS policy remains the one intentional navigation difference.
 name entry, score/floor display, control-panel view, game-over/victory handoff,
 and a versioned, corruption-safe Agon persistence file. The table, ordering,
 name editor, timed non-qualifying path, screen, handoffs, and transactional
-482-byte persistence image pass 62/62 direct-target checks. Remaining close
-gate: visual acceptance of qualifying and non-qualifying flows. Two disposable
-acceptance builds now enter those exact production paths immediately after the
-real shell/SFX bootstrap, supplying only a guaranteed candidate score; they
-are prepared locally and await the next Oryx batch.
+482-byte persistence image pass direct-target checks. A residual source audit
+found that the mutable rows were incorrectly rendered with MOS's fixed 8x8
+font. They now use the exact STARTFONT proportional name glyphs and original
+fixed-width numeric glyphs. The editor now uses the 57-character store and a
+proportional 100-pixel bound instead of twelve fixed cells. Remaining work is
+to reproduce `US_LineInput`'s cursor-aware insertion, Left/Right/Home/End and
+Delete semantics (including its pre-insertion width quirk), then run the direct
+eZ80 target and visually accept qualifying and non-qualifying flows. Two
+disposable acceptance builds enter those exact production paths immediately
+after the real shell/SFX bootstrap, supplying only a guaranteed candidate
+score. The prepared Oryx request was relinquished on 2026-11-04 before launch.
 
 [ ] 14. Restore the original in-game control-panel and pause flow in place of
 temporary gameplay-Escape-to-MOS behavior. Support resume, end game, and an
