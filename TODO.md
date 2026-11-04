@@ -291,6 +291,20 @@ attempt rollback, canonical pistol/eight-ammo respawn, and final-attempt game
 over. The 60-slice/60-Hz presentation of the source's 70-frame/70-Hz fizzle,
 global clean Escape, and invalid/coincident-killer guard remain intentional
 Agon timing and safety policies.
+The secret/pushwall and floor-routing audit found no reachable Episode 1 state
+defect. All ten W3L packages preserve the exact source marker census
+`5,4,10,7,5,4,2,13,2,15`; the renderer's 16-completion history therefore has
+one entry of headroom. Activation, one-/two-cell travel, blocked continuation,
+secret counting, floor-area inheritance, save/restore, ordinary `0 -> 1`,
+secret `0 -> 9`, secret return `9 -> 1`, and E1L9 victory routing preserve the
+source lifecycle. The retained immutable pushwall trigger while a wall is
+active is an intentional safety substitution: the original clears plane 1 but
+can then misread the moving wall's `0xc0` tile bits as an out-of-range door on
+a rapid second Use press; the port safely ignores that press. The focused
+level/package/gameplay/acceptance/backend host group passes 93 tests and 10,144
+subtests, while the existing direct transition matrix and 30-case Use target
+already pin the target-side routes. Visual pushwall and ordinary/secret tally
+acceptance remain folded into the existing Phase-A human gate.
 The shell audit then restored `WL_MENU.C::CP_Quit` and F10's randomized
 confirmation instead of exiting immediately. Production consumes the same two
 shared `US_RndT` bytes and preserves the source expression

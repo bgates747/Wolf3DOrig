@@ -231,6 +231,17 @@ Status 2026-11-03: implementation and automated acceptance are complete. The
 28-case direct-eZ80 behavior regression and schema-2 full/dirty serializer pass;
 the stopped real-E1L1 review profile awaits human visual/collision acceptance.
 
+Residual audit 2026-11-04: all ten canonical packages retain the exact
+source pushwall counts `(5,4,10,7,5,4,2,13,2,15)`, so the 16-entry completed
+overlay transport has one entry of headroom. Activation, blocked starts,
+one-/two-cell motion and blocked continuation, area inheritance, counts,
+save/restore, and completed-overlay rendering have source-linked automated
+coverage. The port deliberately keeps the trigger recognizable while its one
+global wall is active: original `PushWall` clears plane 1 immediately, after
+which a rapid released/repressed Use can interpret the moving wall's `0xc0`
+bits as an out-of-range door number. Ignoring that press is a documented Agon
+safety substitution. No reachable Episode 1 state correction was required.
+
 ### A2. Original floor-completion arithmetic and count-up — TODO 12
 
 Original oracle: `WL_INTER.C::LevelCompleted`.
@@ -247,6 +258,16 @@ serializing I/O behind the presentation.
 Acceptance: direct-eZ80 boundary cases for zero totals, 0/partial/100 ratios,
 par under/over, secret floor, skipped and unskipped animation, exact bonus and
 score/life thresholds, plus staged ordinary and secret transitions.
+
+Routing audit 2026-11-04: the production matrix retains ordinary `0 -> 1`,
+secret `0 -> 9`, `9 -> 1` through `ElevatorBackTo[0]`, and both explicit and
+defensive E1L9 victory without loading level 9 as a post-boss destination.
+Keys clear before source-floor HUD composition, bonus finalization precedes
+the destination score checkpoint, persistent inventory survives, per-floor
+world state resets, and renderer ownership drains before the destination reset.
+The focused host group passes 93 tests and 10,144 subtests; the existing direct
+matrix already pins the target routes. No implementation correction was
+required; staged tally/pushwall presentation remains in the human gate.
 
 Status 2026-11-03: implementation passes 135 direct intermission checks and
 the expanded 32-case pickup/score regression. The stopped ordinary-transition
