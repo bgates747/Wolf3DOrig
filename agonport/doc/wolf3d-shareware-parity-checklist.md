@@ -695,6 +695,14 @@ UPLOAD guard `DEATHSCREAM3SND` remains native but intentionally unrequested.
 This changes requirement metadata, not PCM, buffer IDs, rates, priorities, or
 playback behavior.
 
+The complete follow-up source census confirms that all 49 reachable WL1
+`UPLOAD` producers are declared, required, available, and referenced by
+production assembly. `DEATHSCREAM3SND` is intentionally the one uploaded
+native mapping outside the producer set because the shareware
+`A_DeathScream` branch selects only screams 1 and 2. Calls belonging solely to
+paid episodes, Spear, or unavailable DOS input remapping are not
+misrepresented as Episode 1 requirements.
+
 Command-line-gated `goobers` debug keys, paid-episode content, obsolete DOS
 copy protection, VGA palette timing exactness, and unavailable hardware
 configuration choices are not required unless separately promoted. The
