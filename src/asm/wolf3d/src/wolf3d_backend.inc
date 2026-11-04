@@ -37,8 +37,56 @@ W3D_DIAGNOSTIC_STARTUP_TRACE:  equ 0
         call w3d_startup_trace_stage
         pop af
     ENDMACRO
+    MACRO W3D_STARTUP_TRACE_AGNB_ERROR filename
+        push af
+        push bc
+        push de
+        push hl
+        ld a,(agnb_last_error)
+        or 080h
+        call w3d_startup_trace_stage
+        ld a,(agnb_last_open_fresult)
+        call w3d_startup_trace_fresult
+        ld a,0fdh
+        call w3d_startup_trace_path_byte
+        ld a,(agnb_open_mb_before)
+        call w3d_startup_trace_path_byte
+        ld a,(agnb_open_de_before)
+        call w3d_startup_trace_path_byte
+        ld a,(agnb_open_de_before+1)
+        call w3d_startup_trace_path_byte
+        ld a,(agnb_open_de_before+2)
+        call w3d_startup_trace_path_byte
+        ld a,(agnb_open_de_after)
+        call w3d_startup_trace_path_byte
+        ld a,(agnb_open_de_after+1)
+        call w3d_startup_trace_path_byte
+        ld a,(agnb_open_de_after+2)
+        call w3d_startup_trace_path_byte
+
+; Dump the string through the exact pointer passed to FatFS, then the known
+; label separately. This distinguishes a bad caller pointer from corruption
+; inside FatFS without trusting either copy.
+        ld hl,(agnb_open_de_before)
+        call w3d_startup_trace_path
+        ld a,0fch
+        call w3d_startup_trace_path_byte
+        ld hl,filename
+        call w3d_startup_trace_path
+
+; A valid relative name can still fail if the process working directory has
+; changed. Capture FatFS's own view of cwd at the same failure boundary.
+        call w3d_startup_trace_emit_cwd
+        pop hl
+        pop de
+        pop bc
+        pop af
+    ENDMACRO
     .else
     MACRO W3D_STARTUP_TRACE marker
+@disabled:
+    ENDMACRO
+    MACRO W3D_STARTUP_TRACE_AGNB_ERROR filename
 @disabled:
     ENDMACRO
     .endif

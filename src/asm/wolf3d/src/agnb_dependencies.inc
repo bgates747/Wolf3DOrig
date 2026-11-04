@@ -21,6 +21,7 @@
 ffs_fopen:             equ $80
 ffs_fclose:            equ $81
 ffs_fread:             equ $82
+ffs_getcwd:            equ $9e
 fa_read:               equ $01
 ffobjid_objsize:       equ 11
 fil_obj:               equ 0

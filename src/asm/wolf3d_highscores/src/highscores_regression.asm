@@ -36,6 +36,7 @@ W3D_SHELL_HIGH_SCORES_BASE_BUFFER: equ 04304h
     include "wolf3d_highscores.inc"
 
 ; Presentation and production-state seams are inert in this core regression.
+w3d_vdu_present:
 w3d_shell_clear:
 w3d_shell_plot_full_screen:
 printString:

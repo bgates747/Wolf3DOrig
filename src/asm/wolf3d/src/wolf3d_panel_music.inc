@@ -9,7 +9,7 @@
 
 ; VDP 2.6+ screen capture produces a mode-independent RGBA2222 bitmap. Keep
 ; the original CP_CheckQuick/Message() presentation over the stopped gameplay
-; frame even though the Agon shell itself uses a single-buffered mode.
+; frame while the retained double-buffered shell owns presentation.
 W3D_GAMEPLAY_BACKDROP_BUFFER: equ $4700
 
 ; A=request. Return Z for requests which preserve floor music on entry.

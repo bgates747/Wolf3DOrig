@@ -157,10 +157,13 @@ w3d_highscores_wait_nonqualifying:
 @pressed:
     jp w3d_shell_wait_all_released
 
-; Draw the invariant original backdrop plus the seven mutable records.  Mode
-; 8's native 8-pixel text grid matches the source's column anchors; every row
-; is separated by 16 pixels exactly as DrawHighScores does.
+; Draw the invariant original backdrop plus the seven mutable records. Mode
+; 136 retains mode 8's native 8-pixel text grid, matching the source column
+; anchors; every row is separated by 16 pixels exactly as DrawHighScores does.
 w3d_highscores_draw:
+    call @frame
+    call w3d_vdu_present
+@frame:
     call w3d_shell_clear
     ld hl,W3D_SHELL_HIGH_SCORES_BASE_BUFFER
     call w3d_shell_plot_full_screen
@@ -226,6 +229,11 @@ w3d_highscores_edit_inserted_name:
     ld (w3d_highscores_name_edit),a
 @redraw:
     call w3d_highscores_draw
+    call @draw_cursor
+    call w3d_vdu_present
+    call @draw_cursor
+    jr @key
+@draw_cursor:
     ld a,(w3d_highscores_inserted_slot)
     add a,a
     add a,W3D_HIGHSCORE_ROW_FIRST
@@ -235,6 +243,7 @@ w3d_highscores_edit_inserted_name:
     call w3d_highscores_set_cursor
     ld a,'_'
     rst.lil 10h
+    ret
 @key:
     call w3d_highscores_read_key
     cp 27
@@ -269,7 +278,7 @@ w3d_highscores_edit_inserted_name:
     ld a,e
     inc a
     ld (w3d_highscores_name_length),a
-    jr @redraw
+    jp @redraw
 @backspace:
     ld a,(w3d_highscores_name_length)
     or a
@@ -284,7 +293,7 @@ w3d_highscores_edit_inserted_name:
     add hl,de
     xor a
     ld (hl),a
-    jr @redraw
+    jp @redraw
 @escape:
     call w3d_shell_request_exit
 @accept:

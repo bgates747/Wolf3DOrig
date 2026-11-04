@@ -203,6 +203,15 @@ agnb_record_has_data:      equ 2
 
 agnb_record_flags:         db 0
 agnb_last_error:           db agnb_error_ok
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+; Retain FatFS's native result from the most recent open attempt. Public AGNB
+; callers continue to receive the stable agnb_error_open value; diagnostics can
+; still distinguish missing paths, invalid objects, and exhausted handles.
+agnb_last_open_fresult:     db 0
+agnb_open_mb_before:        db 0
+agnb_open_de_before:        dl 0
+agnb_open_de_after:         dl 0
+    .endif
 agnb_file_is_open:         db 0
 
 
@@ -262,10 +271,18 @@ agnb_compare_fourcc:
 ;          agnb_fil initialized and agnb_file_is_open set on success
 ; destroys: AF, BC, HL
 agnb_open:
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+    ld (agnb_open_de_before),de
+    ld a,mb
+    ld (agnb_open_mb_before),a
+    .endif
 ; begin fail-closed: do not leave stale success state if ffs_fopen fails
     xor a
     ld (agnb_file_is_open),a
     ld (agnb_last_error),a
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+    ld (agnb_last_open_fresult),a
+    .endif
 
 ; Each newly opened container starts at physical and logical offset zero.
 ; The original single-container caller received this state from BSS
@@ -280,6 +297,9 @@ agnb_open:
     ld hl,agnb_fil
     ld c,fa_read
     FFSCALL ffs_fopen
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+    ld (agnb_open_de_after),de
+    .endif
     or a
     jr nz,@error
 
@@ -290,6 +310,9 @@ agnb_open:
     ret
 
 @error:
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+    ld (agnb_last_open_fresult),a
+    .endif
     ld a,agnb_error_open
     ld (agnb_last_error),a
     or a

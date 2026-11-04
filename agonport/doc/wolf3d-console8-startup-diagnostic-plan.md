@@ -71,6 +71,95 @@ After an explicit Olimex lease grant and fresh Extender handoff:
 No graphical emulator is launched by this task.  The SD card is never
 unmounted.  No startup file is changed.
 
+## 2026-11-03 allocation-order result
+
+The valid physical r13 experiment used the required `vdplet-direct` backend
+and the production module above. Its diagnostic application is
+`diagnostic-r13-wolf3d.bin`, SHA-256
+`7782aa718a5b0c2bafdb0d00d6ad3d4a1d9370937d47cad387308fef79b70045`.
+Both application and module were read back byte-identical from
+`/mystuff/wolfdiag/` before execution.
+
+r13 selected mode 136 once, before music, shell, SFX, level buffers or VDPlet
+allocation, then retained it for the process lifetime.  Its passive trace
+reached `D00A/D00B` around that early selection, completed all asset loading,
+reached `D06B/D06C` around VDPlet open/configuration, and reached `D06D` after
+the first render submission.  This is a successful startup/render-boundary
+result for the allocation-order mitigation.
+
+The subsequent timeout was not the former startup failure.  The runner sent
+Escape after `D06D`; Escape now enters the source-correct in-game control
+panel.  That shell had not yet been converted from single-buffer assumptions,
+so it remained on the hidden page and an IMF voice sustained while the runner
+incorrectly waited for application-exit marker `D009`.  The follow-up keeps
+mode 136, mirrors complete shell/intermission pages across both framebuffers,
+and navigates the actual Quit confirmation in the runner.
+
+Diagnostics r06 through r11 accidentally selected the standalone backend.
+They are retained as evidence of the diagnostic-pipeline mistake but are
+invalid for VDPlet behavior or root-cause conclusions.  The accepted Console8
+failures plus valid r13 make early final-mode allocation a strong mitigation,
+not definitive proof of the firmware trigger.
+
+Golem received durable report
+`2026-11-03_23-43-45_wolf3dorig_wolf-mode136-allocation-hardening-one` and
+accepted generic task `VDPL-023`.  Its source review independently found
+unchecked allocation/rollback gaps in the mode-change path.  Firmware
+hardening and Wolf's consumer mitigation remain separate tasks; no additional
+physical experiment was requested by Golem.
+
+## r14 retained-surface candidate
+
+The follow-up implementation is now assembly-qualified.  It keeps mode 136
+for the process lifetime and makes complete shell, modal, high-score and
+intermission states coherent on both framebuffer surfaces.  The gameplay hot
+path is unchanged.  The exact production application is 288,634 bytes with
+SHA-256
+`ac8498fb834efa8bada84e74610d21092515bd9e83ada9e8e2a3f7a8656b9777`;
+the exact 18,636-byte module has SHA-256
+`266f809ff76e56733251da202e5c4747cd9c12d247d799d486471a262c0404b7`.
+
+The focused shell, intermission and high-score fixtures assemble with hashes
+`186bba23745c0ebd9464dfa753e00f3457a465fc91c468e7e89edcf768940441`,
+`8a710ff58db92bafab8bfdd1176543d6e6e08f54215b36caa860b23d8f75e7fd`,
+and `296ab4cbc5f3235f5069fb234eb70691079f83abacacaa148126a627793cc61c`.
+They were not executed because the authorized Pi generation explicitly
+excluded emulator and hardware work.  The next run must therefore remain a
+bounded qualification: exact deployment and read-back, one startup through
+`D06D`, visible Escape control panel, Down/Enter/Y quit confirmation, and
+clean `D009` MOS return.  The user reset the prior target after the sustained
+note; that reset ends r13 and is not evidence for or against r14.
+
+### r14 physical result
+
+The exact application/module pair was read back from the target with the
+hashes above.  One bounded direct run reached `D06D` after completing all
+startup, asset, VDPlet-open and first-render boundaries without an application
+failure marker or reset.  It did not reach `D009`: the runner issued Enter only
+about 262 ms after Down and `Y` only about 265 ms after Enter.  A retained-mode
+menu action and the subsequent randomized confirmation each redraw both
+surfaces, so those keys were not safely paced.  The result qualifies r14's
+startup/render boundary but does not qualify its scripted Quit path.  The
+runner now leaves one second after each redraw-triggering action; no second
+physical run was made.
+
+The exact incoming native VDP was restored and its entire retained 4 MiB image
+verified with SHA-256
+`17caa5b0b2ede84bb627e207f10994b13dd3abfa2d04fc807ec393414fe33378`.
+A fresh listener start/status/EXIT proved the restored actual CLI.  The bench
+was returned neutral, listener-offline and holder-free, then released to the
+Golem waiter.  Evidence is rooted at `physical-r01/r14-direct-01/` and
+`physical-r01/r14-release-observation.json`.
+
+Automated retained-page semantics were subsequently qualified on Oryx
+generation 239.  The production shell passes 756/756 checks, intermission
+154/154, and high scores 62/62.  The only corrections found were stale fixture
+assumptions: semantic text counts must ignore the replayed physical page, and
+complete ordinary/secret intermission reconstructions include BJ's portrait
+as plot 36/21.  Exact logs and runtime identities are preserved in
+`agonport/emulator/evidence/mode136-retained-ui-g239/`.  A human visual review
+is still required before claiming the retained-page presentation accepted.
+
 ## Interpretation guardrails
 
 - Music is live synthesis from the original IMF/OPL event streams, translated

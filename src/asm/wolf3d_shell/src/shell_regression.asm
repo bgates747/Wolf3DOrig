@@ -53,6 +53,7 @@ fa_create_always: equ 08h
         ld a,v0
         ld (w3d_shell_episode_choice),a
         call w3d_shell_draw_episode_menu
+        CHECK_MEM8 test_present_count,1,REASON_PRESENT_COUNT
         CHECK_MEM8 test_plot_count,3,REASON_PLOT_COUNT
         CHECK_PLOT 6,b0,98,p0
         CHECK_PLOT 12,W3D_SHELL_CURSOR_1_BUFFER,8,p1
@@ -65,6 +66,7 @@ fa_create_always: equ 08h
         ld a,v0
         ld (w3d_shell_difficulty),a
         call w3d_shell_draw_difficulty_menu
+        CHECK_MEM8 test_present_count,1,REASON_PRESENT_COUNT
         CHECK_MEM8 test_plot_count,4,REASON_PLOT_COUNT
         CHECK_PLOT 6,b0,74,p0
         CHECK_PLOT 12,W3D_SHELL_CURSOR_1_BUFFER,48,p1
@@ -293,6 +295,18 @@ w3d_music_set_enabled:
     ld (w3d_music_enabled),a
     ret
 
+; Production draws every logical shell frame into both mode-136 pages. Record
+; only canonical page zero so the long-standing semantic plot history still
+; contains one copy of each logical frame, while the independent present count
+; proves that the new double-buffer boundary was exercised.
+w3d_vdu_present:
+    ld hl,test_present_count
+    inc (hl)
+    ld a,(test_draw_page)
+    xor 1
+    ld (test_draw_page),a
+    ret
+
     include "wolf3d_shell.inc"
     include "wolf3d_panel_music.inc"
 
@@ -344,6 +358,7 @@ REASON_SOUND_COUNT: equ 20
 REASON_SOUND_ID: equ 21
 REASON_HELP_LOAD_COUNT: equ 22
 REASON_HELP_CLEAR_COUNT: equ 23
+REASON_PRESENT_COUNT: equ 24
 
 start:
     push af
@@ -1076,6 +1091,7 @@ test_draw_contract:
     xor a
     ld (w3d_shell_main_choice),a
     call w3d_shell_draw_main_menu
+    CHECK_MEM8 test_present_count,1,REASON_PRESENT_COUNT
     CHECK_MEM8 test_plot_count,3,REASON_PLOT_COUNT
     CHECK_MEM8 test_plot_log+0,W3D_SHELL_MAIN_BASE_BUFFER&0ffh,REASON_PLOT_BUFFER
     CHECK_MEM8 test_selected_bitmap+0,W3D_SHELL_CURSOR_1_BUFFER&0ffh,REASON_PLOT_BUFFER
@@ -1734,6 +1750,9 @@ selectBitmap:
     ld (test_selected_bitmap+0),a
     ld a,h
     ld (test_selected_bitmap+1),a
+    ld a,(test_draw_page)
+    or a
+    ret nz
     push bc
     push de
     push hl
@@ -1762,6 +1781,9 @@ selectBitmap:
 
 plotBitmap:
     push af
+    ld a,(test_draw_page)
+    or a
+    jr nz,@ignored_page
     ld a,c
     ld (test_plot_x+0),a
     ld a,b
@@ -1817,6 +1839,7 @@ plotBitmap:
     pop hl
     pop de
     pop bc
+@ignored_page:
     pop af
     ret
 
@@ -1824,6 +1847,12 @@ printString:
     push af
     push de
     push hl
+; Text is replayed on both retained mode-136 pages just like bitmap plots.
+; Count semantic output only on canonical page zero so the fixture measures
+; one logical frame rather than two physical surfaces.
+    ld a,(test_draw_page)
+    or a
+    jr nz,@not_version
     ld de,w3d_app_version_text
     or a
     sbc hl,de
@@ -1841,6 +1870,8 @@ test_reset_plots:
     ld (test_plot_count),a
     ld (test_select_count),a
     ld (test_notice_plots),a
+    ld (test_present_count),a
+    ld (test_draw_page),a
     ld hl,test_plot_log
     ld (hl),a
     ld de,test_plot_log+1
@@ -1948,6 +1979,8 @@ test_select_history: ds 16*2
 test_plot_x: dw 0
 test_plot_y: dw 0
 test_plot_count: db 0
+test_present_count: db 0
+test_draw_page: db 0
 test_notice_plots: db 0
 test_version_prints: db 0
 test_victory_present_count: db 0

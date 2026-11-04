@@ -91,7 +91,9 @@ w3d_shell_setup:
     rst.lil 18h
     ret
 @commands:
-    db 22,8                 ; 320x240x64, single buffered
+; Mode 136 is acquired once, before application-global assets are loaded.
+; Never tear it down here: doing so would force a later second-framebuffer
+; allocation after shell, SFX, and level buffers have fragmented VDP SRAM.
     db 23,0,0c0h,0          ; native logical coordinates
     db 23,1,0               ; cursor hidden
     db 18,0,128             ; black graphics background
@@ -129,6 +131,9 @@ w3d_shell_run:
 w3d_shell_show_original_splash:
     ld hl,W3D_SHELL_SIGNON_BUFFER
     call w3d_shell_plot_full_screen
+    call w3d_vdu_present
+    ld hl,W3D_SHELL_SIGNON_BUFFER
+    call w3d_shell_plot_full_screen
     W3D_STARTUP_TRACE 032h
     call w3d_shell_wait_local_any_press
     W3D_STARTUP_TRACE 033h
@@ -137,6 +142,14 @@ w3d_shell_show_original_splash:
     W3D_STARTUP_TRACE 034h
     ld a,1
     ld (w3d_shell_intro_music_ready),a
+    ld hl,@blue_commands
+    ld bc,@blue_end-@blue_commands
+    rst.lil 18h
+    ld hl,W3D_SHELL_PG13_BUFFER
+    ld bc,W3D_SHELL_PG13_X
+    ld de,W3D_SHELL_PG13_Y
+    call w3d_shell_plot_at
+    call w3d_vdu_present
     ld hl,@blue_commands
     ld bc,@blue_end-@blue_commands
     rst.lil 18h
@@ -211,6 +224,9 @@ w3d_shell_show_title:
     ret
 
 w3d_shell_draw_title:
+    call @frame
+    call w3d_vdu_present
+@frame:
     call w3d_shell_clear
     ld hl,W3D_SHELL_TITLE_BUFFER
     call selectBitmap
@@ -358,6 +374,9 @@ w3d_shell_main_menu:
     jp w3d_shell_return_quit
 
 w3d_shell_draw_main_menu:
+    call @frame
+    call w3d_vdu_present
+@frame:
     call w3d_shell_clear
     ld hl,W3D_SHELL_MAIN_BASE_BUFFER
     call w3d_shell_plot_full_screen
@@ -549,14 +568,14 @@ w3d_shell_pause_quick:
     ld hl,W3D_SHELL_CHEATER_NOTICE_BUFFER
     ld bc,W3D_SHELL_CHEATER_NOTICE_X
     ld de,W3D_SHELL_CHEATER_NOTICE_Y
-    call w3d_shell_plot_at
+    call w3d_shell_plot_at_both
     call w3d_shell_wait_any_local_press
     jp @resume
 @keen:
     ld hl,W3D_SHELL_KEEN_NOTICE_BUFFER
     ld bc,W3D_SHELL_KEEN_NOTICE_X
     ld de,W3D_SHELL_KEEN_NOTICE_Y
-    call w3d_shell_plot_at
+    call w3d_shell_plot_at_both
     call w3d_shell_wait_any_local_press
     jp @resume
 @save:
@@ -599,7 +618,7 @@ w3d_shell_pause_quick:
     ld hl,W3D_SHELL_SAVING_NOTICE_BUFFER
     ld bc,W3D_SHELL_SAVING_NOTICE_X
     ld de,W3D_SHELL_SAVING_NOTICE_Y
-    call w3d_shell_plot_at
+    call w3d_shell_plot_at_both
     ld a,(w3d_shell_quick_slot)
     push af
     call w3d_shell_slot_name_pointer
@@ -640,6 +659,11 @@ w3d_shell_confirm_quick_load:
 ; Original CP_CheckQuick confirms `Load Game called\n"<name>"?` over the
 ; drained play border. The mutable name uses the same Agon text path as the
 ; full slot panel inside a source-styled Message()/DrawOutline window.
+    call @frame
+    call w3d_vdu_present
+    call @frame
+    jr @wait
+@frame:
     ld hl,W3D_SHELL_QUICK_LOAD_NOTICE_BUFFER
     ld bc,W3D_SHELL_QUICK_LOAD_NOTICE_X
     ld de,W3D_SHELL_QUICK_LOAD_NOTICE_Y
@@ -662,6 +686,7 @@ w3d_shell_confirm_quick_load:
     call printString
     ld hl,w3d_shell_quick_load_suffix
     call printString
+    ret
 @wait:
     call w3d_shell_read_key
     cp 'Y'
@@ -724,7 +749,7 @@ w3d_shell_confirm_current_game:
     ld bc,W3D_SHELL_CURRENT_GAME_NOTICE_X
     ld de,W3D_SHELL_CURRENT_GAME_NOTICE_Y
 w3d_shell_confirm_notice:
-    call w3d_shell_plot_at
+    call w3d_shell_plot_at_both
 @wait:
     call w3d_shell_read_key
     cp 'Y'
@@ -790,7 +815,7 @@ w3d_shell_confirm_quit:
     sub 20
     ld e,a
 @plot:
-    call w3d_shell_plot_at
+    call w3d_shell_plot_at_both
 @wait:
     call w3d_shell_read_key
     cp 'Y'
@@ -843,6 +868,9 @@ w3d_shell_quit_choice:
     db 0
 
 w3d_shell_draw_pause_menu:
+    call @frame
+    call w3d_vdu_present
+@frame:
     call w3d_shell_clear
     ld hl,W3D_SHELL_MAIN_BASE_BUFFER
     call w3d_shell_plot_full_screen
@@ -930,6 +958,11 @@ w3d_shell_sound_page:
     xor a
     ld (w3d_shell_sound_choice),a
 @redraw:
+    call @frame
+    call w3d_vdu_present
+    call @frame
+    jr @wait
+@frame:
     call w3d_shell_clear
     ld a,(w3d_music_enabled)
     or a
@@ -957,6 +990,7 @@ w3d_shell_sound_page:
     ld hl,W3D_SHELL_CURSOR_1_BUFFER
     ld bc,42
     call w3d_shell_plot_at
+    ret
 @wait:
     call w3d_shell_wait_pause_action
     cp W3D_SHELL_ACTION_ESCAPE
@@ -1001,6 +1035,11 @@ w3d_shell_sound_page:
 ; HL=full-screen page buffer. Return on local Escape or Accept.
 w3d_shell_information_page:
     push hl
+    call w3d_shell_clear
+    pop hl
+    push hl
+    call w3d_shell_plot_full_screen
+    call w3d_vdu_present
     call w3d_shell_clear
     pop hl
     call w3d_shell_plot_full_screen
@@ -1052,6 +1091,14 @@ w3d_shell_help_article:
     ld d,0
     add hl,de
     call w3d_shell_plot_full_screen
+    call w3d_vdu_present
+    call w3d_shell_clear
+    ld hl,W3D_HELP_PAGE_BUFFER_BASE
+    ld a,(w3d_shell_help_page)
+    ld e,a
+    ld d,0
+    add hl,de
+    call w3d_shell_plot_full_screen
 @wait:
     call w3d_music_service
     call w3d_shell_read_keyboard
@@ -1089,7 +1136,7 @@ w3d_shell_help_article:
     ld (w3d_shell_help_page),a
 @changed:
     call w3d_shell_pause_wait_all_released
-    jr @draw
+    jp @draw
 @wait_release:
     call w3d_shell_pause_wait_all_released
     jr @wait
@@ -1149,6 +1196,10 @@ w3d_shell_attract_until_input:
     call w3d_shell_wait_input_timeout
     W3D_STARTUP_TRACE 041h
     ret nz
+    call w3d_shell_clear
+    ld hl,W3D_SHELL_CREDITS_BUFFER
+    call w3d_shell_plot_full_screen
+    call w3d_vdu_present
     call w3d_shell_clear
     ld hl,W3D_SHELL_CREDITS_BUFFER
     call w3d_shell_plot_full_screen
@@ -1302,6 +1353,9 @@ w3d_shell_slot_is_available:
     ret
 
 w3d_shell_draw_save_load_menu:
+    call @frame
+    call w3d_vdu_present
+@frame:
     call w3d_shell_clear
     ld a,(w3d_shell_slot_mode)
     or a
@@ -1370,11 +1424,17 @@ w3d_shell_slot_set_cursor:
     ret
 
 w3d_shell_confirm_save_overwrite:
+    call @frame
+    call w3d_vdu_present
+    call @frame
+    jr @wait
+@frame:
     ld a,4
     ld c,28
     call w3d_shell_slot_set_cursor
     ld hl,w3d_shell_overwrite_text
     call printString
+    ret
 @wait:
     call w3d_shell_read_key
     cp 'Y'
@@ -1427,6 +1487,11 @@ w3d_shell_edit_save_name:
     ld (de),a
 @redraw:
     call w3d_shell_draw_save_load_menu
+    call @draw_name
+    call w3d_vdu_present
+    call @draw_name
+    jr @read
+@draw_name:
     ld a,(w3d_shell_slot_choice)
     add a,a
     add a,7
@@ -1443,6 +1508,8 @@ w3d_shell_edit_save_name:
     call w3d_shell_slot_set_cursor
     ld hl,w3d_shell_slot_name_edit
     call printString
+    ret
+@read:
     call w3d_shell_read_key
     cp 27
     jr z,@cancel
@@ -1502,6 +1569,9 @@ w3d_shell_edit_save_name:
     ret
 
 w3d_shell_draw_slot_io_error:
+    call @frame
+    call w3d_vdu_present
+@frame:
     ld a,4
     ld c,28
     call w3d_shell_slot_set_cursor
@@ -1642,6 +1712,9 @@ w3d_shell_choose_episode_inner:
     jp w3d_shell_return_quit
 
 w3d_shell_draw_episode_menu:
+    call @frame
+    call w3d_vdu_present
+@frame:
     call w3d_shell_clear
     ld hl,W3D_SHELL_EPISODE_BASE_BUFFER
     call w3d_shell_plot_full_screen
@@ -1672,6 +1745,9 @@ w3d_shell_draw_episode_menu:
     jp w3d_shell_plot_at
 
 w3d_shell_draw_episode_unavailable:
+    call @frame
+    call w3d_vdu_present
+@frame:
     ld hl,W3D_SHELL_EPISODE_UNAVAILABLE_NOTICE_BUFFER
     ld bc,W3D_SHELL_EPISODE_UNAVAILABLE_NOTICE_X
     ld de,W3D_SHELL_EPISODE_UNAVAILABLE_NOTICE_Y
@@ -1752,6 +1828,9 @@ w3d_shell_wait_choice_action:
     jp w3d_shell_wait_action
 
 w3d_shell_draw_difficulty_menu:
+    call @frame
+    call w3d_vdu_present
+@frame:
     call w3d_shell_clear
     ld hl,W3D_SHELL_DIFFICULTY_BASE_BUFFER
     call w3d_shell_plot_full_screen
@@ -1816,6 +1895,20 @@ w3d_shell_plot_at:
     pop de
     pop bc
     jp plotBitmap
+
+; Modal overlays are composed over a page which has already been mirrored.
+; Plot once into the hidden page, present it, then replay into the new hidden
+; page so later overlays never inherit a stale gameplay or attract frame.
+w3d_shell_plot_at_both:
+    push hl
+    push bc
+    push de
+    call w3d_shell_plot_at
+    call w3d_vdu_present
+    pop de
+    pop bc
+    pop hl
+    jp w3d_shell_plot_at
 
 ; -----------------------------------------------------------------------------
 ; Input normalization and deterministic hook

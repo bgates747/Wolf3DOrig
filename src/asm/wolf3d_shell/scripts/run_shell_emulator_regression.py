@@ -65,6 +65,7 @@ REASONS = {
     21: "shell logical sound id",
     22: "help container load count",
     23: "help buffer clear count",
+    24: "double-buffer present count",
 }
 
 STAGES = {

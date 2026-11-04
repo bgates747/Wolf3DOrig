@@ -414,16 +414,13 @@ w3d_transition_to_next_level:
 ; canonical mode-reply flag before RESET/CONFIG emits any VDPlet traffic.  A
 ; missing fence here is intermittent: the first destination frame may appear,
 ; while a later dirty render remains permanently in flight.
-    .if W3D_RENDER_BACKEND
-    call w3d_arm_gameplay_mode_fence
-    .endif
-    ld hl,w3d_display_setup
-    ld bc,w3d_display_setup_end-w3d_display_setup
-    rst.lil 18h
-    .if W3D_RENDER_BACKEND
-    call w3d_wait_for_gameplay_mode
+; First fence the complete AGNB/tilemap command stream itself.  The mode-reply
+; fence below proves framebuffer reconstruction completed, but it cannot make
+; an unsafe mode command retroactively safe once that command was queued.
+    call w3d_audio_wait_for_vdp_ingress
     ret c
-    .endif
+    call w3d_enter_gameplay_display
+    ret c
     call w3d_seed_level_transition_state
     call w3d_music_start_current_floor
 ; Loading may take seconds. Re-prime the fixed-step clock so disk/VDU transfer

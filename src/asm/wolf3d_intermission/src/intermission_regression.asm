@@ -82,6 +82,15 @@ w3d_player_score:           dl 0
 w3d_music_service:
     ret
 
+; A production commit presents the completed logical state, then reconstructs
+; that same state in the new hidden page. Keep only that final reconstructed
+; page in the plot log so every assertion describes what the next flip would
+; reveal, and count the flip independently.
+w3d_vdu_present:
+    ld hl,test_present_count
+    inc (hl)
+    jp test_reset_plot_stub
+
     include "wolf3d_level_time.inc"
     include "wolf3d_intermission.inc"
 
@@ -123,6 +132,7 @@ REASON_VICTORY_SECONDS: equ 35
 REASON_VICTORY_KILL:    equ 36
 REASON_VICTORY_SECRET:  equ 37
 REASON_VICTORY_TREASURE: equ 38
+REASON_PRESENT_COUNT:    equ 39
 
 start:
     push af
@@ -515,7 +525,11 @@ test_ordinary_draw:
 
     CHECK_MEM8 test_setup_count,1,REASON_SETUP_COUNT
     CHECK_MEM8 test_wait_count,0,REASON_WAIT_COUNT
-    CHECK_MEM8 test_plot_count,35,REASON_PLOT_COUNT
+; The retained-page reconstruction contains the complete logical frame,
+; including BJ's current portrait.  The old single-page fixture stopped at
+; bonus digits and therefore undercounted this final plot.
+    CHECK_MEM8 test_plot_count,36,REASON_PLOT_COUNT
+    CHECK_MEM8 test_present_count,1,REASON_PRESENT_COUNT
     CHECK_MEM8 test_result_a,W3D_INTERMISSION_RESULT_CONTINUE,REASON_RESULT
     CHECK_MEM8 test_result_carry,0,REASON_CARRY
     CHECK_MEM8 w3d_intermission_input_armed,0,REASON_INPUT_ARMED
@@ -565,6 +579,7 @@ test_ordinary_draw:
     CHECK_PLOT 192,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,128
     CHECK_PLOT 198,W3D_INTERMISSION_DIGIT_0_BUFFER+0,280,144
     CHECK_PLOT 204,W3D_INTERMISSION_DIGIT_0_BUFFER+0,272,56
+    CHECK_PLOT 210,W3D_INTERMISSION_GUY_1_BUFFER,0,16
     CHECK_MEM8 w3d_intermission_kill_ratio,66,REASON_PERCENT
     CHECK_MEM8 w3d_intermission_secret_ratio,0,REASON_PERCENT
     CHECK_MEM8 w3d_intermission_treasure_ratio,100,REASON_PERCENT
@@ -584,12 +599,13 @@ test_secret_draw:
     call capture_result
     CHECK_MEM8 test_setup_count,1,REASON_SETUP_COUNT
     CHECK_MEM8 test_wait_count,0,REASON_WAIT_COUNT
-    CHECK_MEM8 test_plot_count,20,REASON_PLOT_COUNT
+    CHECK_MEM8 test_plot_count,21,REASON_PLOT_COUNT
     CHECK_MEM8 test_result_a,W3D_INTERMISSION_RESULT_CONTINUE,REASON_RESULT
     CHECK_MEM8 test_result_carry,0,REASON_CARRY
     CHECK_PLOT 0,W3D_INTERMISSION_SECRET_BASE_BUFFER,0,0
     CHECK_PLOT 6,W3D_INTERMISSION_STATUSBAR_BUFFER,0,200
     CHECK_PLOT 114,W3D_INTERMISSION_WEAPON_KNIFE_BUFFER+1,256,208
+    CHECK_PLOT 120,W3D_INTERMISSION_GUY_1_BUFFER,0,16
     ret
 
 test_animation_cadence:
@@ -609,28 +625,29 @@ test_animation_cadence:
     CHECK_MEM8 test_result_carry,0,REASON_CARRY
     call w3d_intermission_loading_tick
     call w3d_intermission_loading_tick
-    CHECK_MEM8 test_plot_count,0,REASON_PLOT_COUNT
+    CHECK_MEM8 test_plot_count,21,REASON_PLOT_COUNT
     CHECK_MEM8 w3d_intermission_animation_counter,3,REASON_ANIMATION_COUNT
     CHECK_MEM8 w3d_intermission_portrait_frame,0,REASON_PORTRAIT_FRAME
+    CHECK_PLOT 120,W3D_INTERMISSION_GUY_1_BUFFER,0,16
 
 ; Boundary four breathes to GUY2; boundary eight returns to GUY1.
     call w3d_intermission_loading_tick
     call capture_result
     CHECK_MEM8 test_result_a,W3D_INTERMISSION_RESULT_CONTINUE,REASON_RESULT
     CHECK_MEM8 test_result_carry,0,REASON_CARRY
-    CHECK_MEM8 test_plot_count,1,REASON_PLOT_COUNT
+    CHECK_MEM8 test_plot_count,21,REASON_PLOT_COUNT
     CHECK_MEM8 w3d_intermission_animation_counter,0,REASON_ANIMATION_COUNT
     CHECK_MEM8 w3d_intermission_portrait_frame,1,REASON_PORTRAIT_FRAME
-    CHECK_PLOT 0,W3D_INTERMISSION_GUY_2_BUFFER,0,16
+    CHECK_PLOT 120,W3D_INTERMISSION_GUY_2_BUFFER,0,16
 
     call w3d_intermission_loading_tick
     call w3d_intermission_loading_tick
     call w3d_intermission_loading_tick
     call w3d_intermission_loading_tick
-    CHECK_MEM8 test_plot_count,2,REASON_PLOT_COUNT
+    CHECK_MEM8 test_plot_count,21,REASON_PLOT_COUNT
     CHECK_MEM8 w3d_intermission_animation_counter,0,REASON_ANIMATION_COUNT
     CHECK_MEM8 w3d_intermission_portrait_frame,0,REASON_PORTRAIT_FRAME
-    CHECK_PLOT 6,W3D_INTERMISSION_GUY_1_BUFFER,0,16
+    CHECK_PLOT 120,W3D_INTERMISSION_GUY_1_BUFFER,0,16
     ret
 
 test_held_key_arming_and_ack_latch:
@@ -1007,6 +1024,7 @@ test_reset_shell_stubs:
     ld (test_keyboard_script_frames),a
     ld (test_award_count),a
     ld (test_sound_count),a
+    ld (test_present_count),a
     ld hl,test_keymap
     ld (test_keyboard_script_ptr),hl
     call w3d_intermission_reset_application_exit_query_hook
@@ -1169,6 +1187,7 @@ test_finish_input_script:
     db 1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; fresh non-Escape key
     db 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 ; release after acknowledgment
 test_plot_count: db 0
+test_present_count: db 0
 test_plot_log: ds 64*6
 test_plot_log_end:
 test_ordinary_plot_log: ds 37*6

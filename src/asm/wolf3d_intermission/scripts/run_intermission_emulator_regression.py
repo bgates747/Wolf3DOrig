@@ -77,6 +77,7 @@ REASONS = {
     36: "victory kill average",
     37: "victory secret average",
     38: "victory treasure average",
+    39: "double-buffer present count",
 }
 
 

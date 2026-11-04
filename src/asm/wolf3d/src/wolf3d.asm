@@ -181,16 +181,25 @@ farewell_msg:
 w3d_exit_message_ptr:
     dl farewell_msg
 
-; Select the 320x240x64 double-buffered display only after all bootstrap
-; diagnostics and asset loading are complete. The renderer draws its 256x160
-; view into the hidden surface; validated W3DR completion presents it with C3.
-w3d_display_setup:
+; Select the 320x240x64 double-buffered display before loading the level's
+; VDP-resident image set.  Mode 136 must allocate a second 320x240 framebuffer;
+; asking for it only after the large tile/sprite/HUD containers have fragmented
+; SRAM is both needlessly fragile and, on physical VDPs, intermittently fatal.
+; The renderer draws its 256x160 view into the hidden surface; validated W3DR
+; completion presents it with C3.
+w3d_display_mode_command:
     db 22,8+128             ; MODE 8: 320x240x64, double buffered
+w3d_display_mode_command_end:
+
+; These commands must not share the VDU burst containing VDU 22.  The mode
+; reply below owns the framebuffer-rebuild boundary; only after it arrives is
+; it safe to configure and clear the newly constructed surface.
+w3d_display_post_mode_setup:
     db 23,0,$C0,0           ; logical coordinate scaling off
     db 23,1,0               ; cursor off
     db 18,0,128             ; graphics background logical colour 0 (black)
     db 16                   ; clear current graphics draw buffer
-w3d_display_setup_end:
+w3d_display_post_mode_setup_end:
 
 ; Diagnostic gallery setup. Mode 0 leaves ample room for a 4x4 grid of the
 ; sixteen 64x64 textures without scaling or clipping.
@@ -203,8 +212,9 @@ w3d_gallery_setup:
 w3d_gallery_setup_end:
 
 ; Preserve the caller's display geometry before either loading gallery or game
-; changes it. Wolf3D always restores the same base mode in single-buffered
-; form: bit 7 is a VDP double-buffer request, not part of the MOS mode number.
+; changes it. Wolf3D always restores the same base mode without the caller's
+; buffering request: bit 7 is a VDP double-buffer flag, not part of the MOS
+; mode number.
 w3d_capture_original_screen_mode:
     MOSCALL mos_sysvars
     ld (w3d_sysvars_pointer),ix
@@ -223,13 +233,21 @@ w3d_restore_original_screen_mode:
     ld hl,w3d_restore_mode_command
     ld bc,w3d_restore_mode_command_end-w3d_restore_mode_command
     rst.lil 18h
-    jp w3d_wait_for_gameplay_mode
+    call w3d_wait_for_gameplay_mode
+    ret c
+    ld hl,w3d_restore_post_mode_command
+    ld bc,w3d_restore_post_mode_command_end-w3d_restore_post_mode_command
+    rst.lil 18h
+    or a
+    ret
 
 w3d_restore_mode_command:
     db 22,0                 ; saved base mode, patched during startup
+w3d_restore_mode_command_end:
+w3d_restore_post_mode_command:
     db 12                   ; CLS: clear text viewport
     db 16                   ; CLG: clear graphics viewport
-w3d_restore_mode_command_end:
+w3d_restore_post_mode_command_end:
 
 ; A mode change is asynchronous: RST 18h returns after queuing VDU 22, while
 ; the VDP rebuilds its framebuffer and MOS consumes the resulting mode packet.
@@ -266,6 +284,34 @@ w3d_wait_for_gameplay_mode:
     pop bc
     or a
     ret
+
+; Enter gameplay mode without placing any later VDU selector inside the
+; asynchronous framebuffer reconstruction window.  A second ordered ingress
+; fence proves the post-mode setup was parsed before renderer traffic begins.
+w3d_enter_gameplay_display:
+    ld a,(w3d_display_acquired)
+    or a
+    jr nz,@configure
+    call w3d_arm_gameplay_mode_fence
+    ld hl,w3d_display_mode_command
+    ld bc,w3d_display_mode_command_end-w3d_display_mode_command
+    rst.lil 18h
+    call w3d_wait_for_gameplay_mode
+    ret c
+    ld a,1
+    ld (w3d_display_acquired),a
+@configure:
+    ld hl,w3d_display_post_mode_setup
+    ld bc,w3d_display_post_mode_setup_end-w3d_display_post_mode_setup
+    rst.lil 18h
+    jp w3d_audio_wait_for_vdp_ingress
+
+; Mode 136 is an application-lifetime allocation.  Once acquired, shell,
+; intermission, pause, and gameplay owners share the same two physical
+; surfaces; later calls above only restore draw-state and never rebuild the
+; framebuffer under VDP SRAM pressure.
+w3d_display_acquired:
+    db 0
 
 w3d_mode_fence_error_msg:
     db "VDP gameplay mode transition did not complete.",10,0
@@ -486,12 +532,14 @@ gallery_y:
 w3d_startup_trace_stage:
     push af
     push bc
+    push de
     push hl
     ld (w3d_startup_trace_stage_id),a
     ld hl,w3d_startup_trace_command
     ld bc,w3d_startup_trace_command_end-w3d_startup_trace_command
     rst.lil 18h
     pop hl
+    pop de
     pop bc
     pop af
     ret
@@ -501,11 +549,88 @@ w3d_startup_trace_stage:
 w3d_startup_trace_audio_sample:
     push af
     push bc
+    push de
     push hl
     ld (w3d_startup_trace_sample_id),a
     ld hl,w3d_startup_trace_sample_command
     ld bc,w3d_startup_trace_sample_command_end-w3d_startup_trace_sample_command
     rst.lil 18h
+    pop hl
+    pop de
+    pop bc
+    pop af
+    ret
+
+; A=raw FatFS FRESULT from the failed open. D3xx keeps it separate from the
+; D0xx lifecycle and D1xx audio streams.
+w3d_startup_trace_fresult:
+    push af
+    push bc
+    push de
+    push hl
+    ld (w3d_startup_trace_fresult_id),a
+    ld hl,w3d_startup_trace_fresult_command
+    ld bc,w3d_startup_trace_fresult_command_end-w3d_startup_trace_fresult_command
+    rst.lil 18h
+    pop hl
+    pop de
+    pop bc
+    pop af
+    ret
+
+; HL=zero-terminated filename. Emit D2FE, one D2xx byte per character, D2FF.
+; This is deliberately verbose but diagnostic-only and runs solely on failure.
+w3d_startup_trace_path:
+    push af
+    push bc
+    push hl
+    ld a,0feh
+    call w3d_startup_trace_path_byte
+@next:
+    ld a,(hl)
+    or a
+    jr z,@end
+    call w3d_startup_trace_path_byte
+    inc hl
+    jr @next
+@end:
+    ld a,0ffh
+    call w3d_startup_trace_path_byte
+    pop hl
+    pop bc
+    pop af
+    ret
+
+w3d_startup_trace_path_byte:
+    push af
+    push bc
+    push de
+    push hl
+    ld (w3d_startup_trace_path_id),a
+    ld hl,w3d_startup_trace_path_command
+    ld bc,w3d_startup_trace_path_command_end-w3d_startup_trace_path_command
+    rst.lil 18h
+    pop hl
+    pop de
+    pop bc
+    pop af
+    ret
+
+; Emit D2FB, D3xx for FatFS's getcwd result, then its zero-terminated cwd as
+; D2 bytes. Keep the direct FatFS macro out of the backend macro definition so
+; ordinary builds can discard all diagnostic code before macro expansion.
+w3d_startup_trace_emit_cwd:
+    push af
+    push bc
+    push hl
+    ld a,0fbh
+    call w3d_startup_trace_path_byte
+    ld hl,w3d_startup_trace_cwd
+    ld bc,w3d_startup_trace_cwd_size
+    FFSCALL ffs_getcwd
+    call w3d_startup_trace_fresult
+    ld hl,w3d_startup_trace_cwd
+    call w3d_startup_trace_path
     pop hl
     pop bc
     pop af
@@ -523,6 +648,21 @@ w3d_startup_trace_sample_id:
     db 0,0d1h
     db 080h
 w3d_startup_trace_sample_command_end:
+w3d_startup_trace_fresult_command:
+    db 23,0,0a0h
+w3d_startup_trace_fresult_id:
+    db 0,0d3h
+    db 080h
+w3d_startup_trace_fresult_command_end:
+w3d_startup_trace_path_command:
+    db 23,0,0a0h
+w3d_startup_trace_path_id:
+    db 0,0d2h
+    db 080h
+w3d_startup_trace_path_command_end:
+w3d_startup_trace_cwd_size: equ 128
+w3d_startup_trace_cwd:
+    blkb w3d_startup_trace_cwd_size,0
     .endif
 
 main:
@@ -531,6 +671,13 @@ main:
     ld (w3d_exit_message_ptr),hl
     call w3d_capture_original_screen_mode
     W3D_STARTUP_TRACE 002h
+; Reserve both physical mode-8 surfaces before the first shell bitmap, sound
+; sample, or command buffer can allocate VDP SRAM.  This deliberately makes
+; mode 136 an application-global resource rather than a gameplay transition.
+    W3D_STARTUP_TRACE 00ah
+    call w3d_enter_gameplay_display
+    jp c,@restore_screen
+    W3D_STARTUP_TRACE 00bh
     call w3d_seed_random_from_clock
     call w3d_music_initialize
     W3D_STARTUP_TRACE 003h
@@ -546,6 +693,7 @@ main:
     W3D_STARTUP_TRACE 008h
     call w3d_music_shutdown
     W3D_STARTUP_TRACE 009h
+@restore_screen:
     call w3d_restore_original_screen_mode
     ld hl,(w3d_exit_message_ptr)
     call printString
@@ -729,6 +877,16 @@ w3d_acceptance_run_highscore:
 ; actor population are loaded only after the shell returns NEW_GAME.
 w3d_run_gameplay_session:
     W3D_STARTUP_TRACE 060h
+; The shell/attract track is useful while the player is choosing a game, but
+; continuing to service a delayed IMF stream from every AGNB callback makes
+; it compete with the large level/SFX/HUD upload. On physical hardware that
+; backlog was audible and compounded the former late framebuffer-allocation
+; hazard. Silence the old context before loading, then fence its final nine
+; voice-reset commands. The selected floor track starts only after the
+; gameplay renderer has opened, below.
+    call w3d_music_stop
+    call w3d_audio_wait_for_vdp_ingress
+    jp c,w3d_gameplay_fatal_before_runtime
     call w3d_shell_clear
     xor a
     ld (w3d_victory_final_render_submitted),a
@@ -813,6 +971,15 @@ w3d_run_gameplay_session:
 @level_state_loaded:
     W3D_STARTUP_TRACE 062h
 
+; Reassert the already-established display state before tiles, sprites, and HUD
+; claim additional VDP SRAM. Since main acquired mode 136 first, this call only
+; restores draw configuration and fences it; it cannot request another
+; framebuffer under later memory pressure.
+    W3D_STARTUP_TRACE 069h
+    call w3d_enter_gameplay_display
+    jp c,w3d_gameplay_fatal_before_runtime
+    W3D_STARTUP_TRACE 06ah
+
     ld hl,loading_msg
     call printString
     call printNewLine
@@ -833,7 +1000,12 @@ w3d_run_gameplay_session:
     ld hl,printImageDotAndPollEscape ; normal breadcrumb-only loading
     W3D_STARTUP_TRACE 063h
     call agnb_load_images_with_abortable_callback
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+    jp z,@assets_loaded
+    .else
     jr z,@assets_loaded
+    .endif
+    W3D_STARTUP_TRACE_AGNB_ERROR w3d_level_tiles_filename
     call w3d_shell_query_exit_request
     jp nz,w3d_gameplay_exit_before_runtime
     ld hl,assets_error_msg
@@ -849,7 +1021,12 @@ w3d_run_gameplay_session:
     ld hl,printImageDotAndPollEscape
     W3D_STARTUP_TRACE 065h
     call agnb_load_images_with_abortable_callback
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+    jp z,@sprites_loaded
+    .else
     jr z,@sprites_loaded
+    .endif
+    W3D_STARTUP_TRACE_AGNB_ERROR w3d_level_sprites_filename
     call w3d_shell_query_exit_request
     jp nz,w3d_gameplay_exit_before_runtime
     ld hl,assets_error_msg
@@ -865,7 +1042,12 @@ w3d_run_gameplay_session:
     ld hl,printImageDotAndPollEscape
     W3D_STARTUP_TRACE 067h
     call agnb_load_images_with_abortable_callback
+    .if W3D_DIAGNOSTIC_STARTUP_TRACE
+    jp z,@hud_loaded
+    .else
     jr z,@hud_loaded
+    .endif
+    W3D_STARTUP_TRACE_AGNB_ERROR hud_filename
     call w3d_shell_query_exit_request
     jp nz,w3d_gameplay_exit_before_runtime
     ld hl,assets_error_msg
@@ -886,26 +1068,26 @@ w3d_run_gameplay_session:
     call printNewLine
     call w3d_replace_level_tilemap_buffer
 
-    .if W3D_RENDER_BACKEND
-    call w3d_arm_gameplay_mode_fence
-    .endif
-    ld hl,w3d_display_setup
-    ld bc,w3d_display_setup_end-w3d_display_setup
-    W3D_STARTUP_TRACE 069h
-    rst.lil 18h
-    .if W3D_RENDER_BACKEND
-    call w3d_wait_for_gameplay_mode
+; AGNB image uploads and the tilemap-buffer replacement are asynchronous at
+; the VDP parser boundary.  The framebuffer is already reserved, but the first
+; renderer command must still wait until that complete asset stream has been
+; consumed.  The ordered screen-info reply is the same proven ingress fence
+; used by audio command-buffer setup.
+    W3D_STARTUP_TRACE 06eh
+    call w3d_audio_wait_for_vdp_ingress
     jp c,w3d_gameplay_fatal_before_runtime
-    W3D_STARTUP_TRACE 06ah
-    .endif
+    W3D_STARTUP_TRACE 06fh
 
     call w3d_initialize_control_clock
+    W3D_STARTUP_TRACE 080h
     call w3d_initialize_render_state
+    W3D_STARTUP_TRACE 081h
 ; Intermission polling primarily reads the held-key map, but the installed MOS
 ; callback may observe and latch a shorter Escape entirely between two asset
 ; boundaries. Give it the same common predicate so that event cannot be lost.
     ld hl,w3d_query_application_exit
     call w3d_intermission_set_application_exit_query_hook
+    W3D_STARTUP_TRACE 082h
 ; Transition-time AGNB streaming has no textual breadcrumb delay. Reuse the
 ; proven audio-loader screen-info round trip as an ordered VDP ingress fence
 ; after every finalized destination image.
@@ -917,9 +1099,11 @@ w3d_run_gameplay_session:
     call w3d_intermission_set_award_hook
     ld hl,w3d_intermission_wait_30hz
     call w3d_intermission_set_wait_hook
+    W3D_STARTUP_TRACE 083h
     ld a,(w3d_save_pending_load)
     or a
     jr z,@initialize_new_game
+    W3D_STARTUP_TRACE 084h
 ; Death initialization normally captures the just-created level-entry score.
 ; A saved game already owns that checkpoint, so clear/install the death
 ; lifecycle first and let the transactional decode restore oldscore afterward.
@@ -928,15 +1112,23 @@ w3d_run_gameplay_session:
     jp c,w3d_gameplay_fatal_shutdown
     jr @simulation_state_ready
 @initialize_new_game:
+    W3D_STARTUP_TRACE 085h
     call w3d_initialize_motion_state
+    W3D_STARTUP_TRACE 086h
     call w3d_initialize_death_state
+    W3D_STARTUP_TRACE 087h
     call w3d_demo_begin_session
+    W3D_STARTUP_TRACE 088h
 @simulation_state_ready:
     ld hl,w3d_reseed_level_attempt
     call w3d_death_set_reseed_hook
+    W3D_STARTUP_TRACE 089h
     call w3d_install_render_callback
+    W3D_STARTUP_TRACE 08ah
     call w3d_enable_render_notifications
+    W3D_STARTUP_TRACE 08bh
     ei
+    W3D_STARTUP_TRACE 08ch
     .if W3D_RENDER_BACKEND
     W3D_STARTUP_TRACE 06bh
     call w3d_vdplet_backend_open
@@ -1132,17 +1324,17 @@ mainloop:
 
 ; Gameplay Escape opens the original in-game control-panel seam after every
 ; asynchronous owner has drained. The VDPlet and callback remain installed
-; while the single-buffered shell is visible; no render command is submitted,
-; and resuming rebuilds both native framebuffers from authoritative eZ80 state.
+; while the retained double-buffered shell is visible; no render command is
+; submitted, and resuming rebuilds both native framebuffers from authoritative
+; eZ80 state.
 w3d_gameplay_pause:
     ld a,(w3d_gameplay_panel_request)
     cp w3d_panel_request_pause
     jr z,@pause_overlay
     call w3d_gameplay_panel_open_music
     call w3d_gameplay_backdrop_capture
-    call w3d_arm_gameplay_mode_fence
     call w3d_shell_setup
-    call w3d_wait_for_gameplay_mode
+    call w3d_audio_wait_for_vdp_ingress
     jr nc,@shell_mode_ready
     call w3d_gameplay_backdrop_release
     jp w3d_gameplay_fatal_shutdown
@@ -1240,11 +1432,7 @@ w3d_gameplay_pause_wait_all_released:
 
 w3d_gameplay_resume:
     call w3d_gameplay_panel_resume_music
-    call w3d_arm_gameplay_mode_fence
-    ld hl,w3d_display_setup
-    ld bc,w3d_display_setup_end-w3d_display_setup
-    rst.lil 18h
-    call w3d_wait_for_gameplay_mode
+    call w3d_enter_gameplay_display
     jp c,w3d_gameplay_fatal_shutdown
     call w3d_initialize_control_clock
     call w3d_initialize_render_state

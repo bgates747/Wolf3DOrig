@@ -94,8 +94,9 @@ W3D_INTERMISSION_HUD_WEAPON_X:       equ 256
 W3D_INTERMISSION_HUD_WEAPON_Y:       equ 208
 
 ; Called only after the completed floor's asynchronous owner has drained.
-; Switching to mode 8 single-buffered makes the presentation stable; the
-; transition loader restores mode 8+128 before it submits the next world.
+; Mode 136 remains allocated for the process lifetime. Complete logical
+; intermission states are presented and replayed into the new hidden page so
+; neither page exposes stale gameplay or partial count-up state.
 ;
 ; This entry point is deliberately nonblocking. It draws the complete source-
 ; floor result before any destination state can replace that source data, then
@@ -184,8 +185,100 @@ w3d_intermission_begin:
     call w3d_intermission_draw_statusbar
 
 @done:
+    call w3d_intermission_commit_frame
     xor a
     ret
+
+; Shell/intermission presentation remains in mode 136 for the entire process.
+; Every completed logical frame is therefore presented once, then rebuilt in
+; the new hidden page. This keeps incremental count-up and modal drawing from
+; alternating between a current page and stale gameplay pixels.
+w3d_intermission_commit_frame:
+    call w3d_vdu_present
+    jp w3d_intermission_redraw_current_frame
+
+w3d_intermission_redraw_current_frame:
+    ld a,(w3d_level_requested_index)
+    cp 9
+    jr z,@secret
+
+    ld hl,W3D_INTERMISSION_FLOOR_BASE_BUFFER
+    call w3d_shell_plot_full_screen
+    call w3d_intermission_draw_statusbar
+    call w3d_intermission_draw_floor_number
+    call w3d_intermission_draw_time
+    call w3d_intermission_draw_par
+
+; Values before the active stage are complete, the active ratio uses the
+; current count, and later stages remain zero.  TIME precedes every ratio.
+    xor a
+    ld b,a
+    ld a,(w3d_intermission_stage)
+    cp W3D_INTERMISSION_STAGE_KILL
+    jr c,@kill_ready
+    jr z,@kill_current
+    ld a,(w3d_intermission_kill_ratio)
+    jr @kill_ready_a
+@kill_current:
+    ld a,(w3d_intermission_current_ratio)
+@kill_ready_a:
+    ld b,a
+@kill_ready:
+    ld a,b
+    ld de,W3D_INTERMISSION_KILL_RATIO_Y
+    call w3d_intermission_draw_percentage
+
+    xor a
+    ld b,a
+    ld a,(w3d_intermission_stage)
+    cp W3D_INTERMISSION_STAGE_SECRET
+    jr c,@secret_ready
+    jr z,@secret_current
+    ld a,(w3d_intermission_secret_ratio)
+    jr @secret_ready_a
+@secret_current:
+    ld a,(w3d_intermission_current_ratio)
+@secret_ready_a:
+    ld b,a
+@secret_ready:
+    ld a,b
+    ld de,W3D_INTERMISSION_SECRET_RATIO_Y
+    call w3d_intermission_draw_percentage
+
+    xor a
+    ld b,a
+    ld a,(w3d_intermission_stage)
+    cp W3D_INTERMISSION_STAGE_TREASURE
+    jr c,@treasure_ready
+    jr z,@treasure_current
+    ld a,(w3d_intermission_treasure_ratio)
+    jr @treasure_ready_a
+@treasure_current:
+    ld a,(w3d_intermission_current_ratio)
+@treasure_ready_a:
+    ld b,a
+@treasure_ready:
+    ld a,b
+    ld de,W3D_INTERMISSION_TREASURE_RATIO_Y
+    call w3d_intermission_draw_percentage
+    call w3d_intermission_draw_bonus
+    jr @portrait
+
+@secret:
+    ld hl,W3D_INTERMISSION_SECRET_BASE_BUFFER
+    call w3d_shell_plot_full_screen
+    call w3d_intermission_draw_statusbar
+
+@portrait:
+    ld a,(w3d_intermission_portrait_frame)
+    ld hl,W3D_INTERMISSION_GUY_1_BUFFER
+    or a
+    jr z,@plot_portrait
+    ld hl,W3D_INTERMISSION_GUY_2_BUFFER
+@plot_portrait:
+    ld bc,0
+    ld de,16
+    jp w3d_shell_plot_at
 
 ; Capture every source-floor value needed after the destination W3L replaces
 ; the live package, derive the exact original bonus, and persist the ordinary
@@ -599,6 +692,7 @@ w3d_intermission_loading_tick:
     cp W3D_INTERMISSION_ANIMATION_DIVIDER
     jr nc,@animate
     ld (w3d_intermission_animation_counter),a
+    call w3d_intermission_commit_frame
     xor a
     ret
 
@@ -616,6 +710,7 @@ w3d_intermission_loading_tick:
     ld bc,0
     ld de,16
     call w3d_shell_plot_at
+    call w3d_intermission_commit_frame
     xor a
     ret
 
@@ -635,9 +730,13 @@ w3d_intermission_finish:
     call w3d_intermission_handle_ack_skip
     ld a,(w3d_intermission_ack_released)
     or a
-    jr nz,@continue
+    jr z,@advance
+    call w3d_intermission_commit_frame
+    jr @continue
+@advance:
     call w3d_intermission_wait_quantum
     call w3d_intermission_advance_countup
+    call w3d_intermission_commit_frame
     jr @wait
 @continue:
     xor a
@@ -1466,9 +1565,15 @@ w3d_intermission_draw_digit:
 ; routine begins only after its renderer and VDPlet have shut down cleanly.
 w3d_victory_present:
     call w3d_victory_calculate_totals
+    call @summary
+    call w3d_vdu_present
+    call @summary
+    jr @summary_ready
+@summary:
     ld hl,W3D_INTERMISSION_VICTORY_BASE_BUFFER
     call w3d_shell_plot_full_screen
-    call w3d_victory_draw_totals
+    jp w3d_victory_draw_totals
+@summary_ready:
     call w3d_shell_wait_any_press
     call w3d_shell_query_exit_request
     ret nz
@@ -1647,6 +1752,9 @@ w3d_victory_draw_average:
 ; page strings retain its exact prose while mapping the DOS article markup to
 ; the Agon's native 40-column text surface.
 w3d_victory_draw_end_page_1:
+    call @frame
+    call w3d_vdu_present
+@frame:
     call w3d_shell_clear
     ld hl,@text
     jp printString
@@ -1664,6 +1772,9 @@ w3d_victory_draw_end_page_1:
     db 31,10,22,"Press any key",0
 
 w3d_victory_draw_end_page_2:
+    call @frame
+    call w3d_vdu_present
+@frame:
     call w3d_shell_clear
     ld hl,@text
     jp printString
