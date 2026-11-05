@@ -413,6 +413,29 @@ Episode 1 immutable.
 
 # Independent platform track
 
+## WOLF-PERF-003 — bespoke VDP versus VDPlet frame performance
+
+[Task plan](agonport/doc/tasks/WOLF-PERF-003/PLAN.md). Smith authorizes the plan
+freeze/commit/push and implementation on 2026-11-05. Use the same enemy-free
+E1L1 (34,36), 720-degree/20-second fixture on both backends.
+
+- [ ] WOLF-PERF-003-01 — Inventory and freeze matched production sources,
+  renderer/runtime identities, workload and timing boundaries.
+- [ ] WOLF-PERF-003-02 — Adapt the fixture to the standalone backend and add
+  bounded VDP draw/completion instrumentation without timed logging.
+- [ ] WOLF-PERF-003-03 — Prepare a matched quiet VDPlet control from the same
+  game source, assets, pose sequence and measurement contract.
+- [ ] WOLF-PERF-003-04 — Qualify scene/sequence parity, recorder integrity,
+  failure paths and timer/vector restoration on the host.
+- [ ] WOLF-PERF-003-05 — Build and qualify both backends headlessly on Oryx;
+  collect the frozen reversed-order matched emulator cohort.
+- [ ] WOLF-PERF-003-06 — Prepare the matched physical package/restoration plan,
+  coordinate firmware and obtain the actual Extender grant before execution.
+- [ ] WOLF-PERF-003-07 — Report draw time, submission/completion costs,
+  throughput, pacing and concrete comparison limitations with raw evidence.
+- [ ] WOLF-PERF-003-08 — Obtain Smith's acceptance and record each disposition
+  in the dated development log under its immutable ID.
+
 [ ] 8. Replace the requirement for a dedicated Wolf3D VDP firmware with a
 loadable Wolf3D VDPlet running on the shared VDPlet runtime. The completed
 feasibility study is a conditional go. Under GOLEM-057, implement and qualify
