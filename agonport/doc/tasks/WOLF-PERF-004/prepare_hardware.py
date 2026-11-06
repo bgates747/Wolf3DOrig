@@ -9,7 +9,7 @@ T = Path(__file__).resolve().parent
 P3 = T.parent / 'WOLF-PERF-003'
 E = Path('/Agon/mystuff/agon-extender')
 D = Path('/Agon/mystuff/agon-dev-env')
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def save(p, value):
@@ -85,9 +85,10 @@ def prepare():
               E / '.venv/lib/python3.14/site-packages/esptool/reset.py', E / '.venv/lib/python3.14/site-packages/serial/serialposix.py']
     sources = [source / n for n in ('reset.asm','handlers.asm','serial.asm','mos_api.asm','mos.c','vdp_protocol.asm','emos.c')]
     files = list(stage.values()) + list(listings.values()) + list(modules.values()) + guest_sources + tools + sources
-    files += [rom,mapfile,restore,native_app,installed,native_b,release,B/'restore.bin',B/'install-b.bin',B/'source-binding.json',T/'HARDWARE-RUN-01.md',T/'hardware.py',T/'bootstrap.py',T/'prepare_hardware.py',T/'test_hardware.py',P3/'hardware/physical09.py',P3/'hardware/trace04.py',P3/'hardware/host_interrupt08.py',P3/'analyze.py',T.parent/'WOLF-PERF-001/hardware/physical.py']
+    files += [rom,mapfile,restore,native_app,installed,native_b,release,B/'restore.bin',B/'install-b.bin',B/'source-binding.json',T/'HARDWARE-RUN-02.md',T/'hardware.py',T/'bootstrap.py',T/'prepare_hardware.py',T/'test_hardware.py',P3/'hardware/physical09.py',P3/'hardware/trace04.py',P3/'hardware/host_interrupt08.py',P3/'analyze.py',T.parent/'WOLF-PERF-001/hardware/physical.py']
     inputs = {str(p):sha(p) for p in files}
-    kit = dict(task='WOLF-PERF-004-hardware-r01',request='a280de32ebe5',remote=remote,
+    request = json.loads((T / 'build/bench-request02.json').read_text())['request']
+    kit = dict(task='WOLF-PERF-004-hardware-r01',request=request,remote=remote,
         incoming_components=components, incoming_release=str(release), incoming_generation=59,
         original_module_sha256=sha(modules['original']),candidate_module_sha256=sha(modules['candidate']),native_b_sha256=sha(native_b),
         modules=modules,stage=stage,listings=listings,restore=str(B/'restore.bin'),install_b=str(B/'install-b.bin'),flash_span=len(data),

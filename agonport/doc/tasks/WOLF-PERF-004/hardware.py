@@ -17,7 +17,7 @@ T = Path(__file__).resolve().parent
 sys.path.insert(0, str(T))
 P3 = T.parent / 'WOLF-PERF-003'
 sys.path.insert(0, str(P3 / 'hardware'))
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 spec = importlib.util.spec_from_file_location('wp004_physical54', P3 / 'hardware/physical09.py')
 h = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(h)
@@ -28,6 +28,12 @@ SEQUENCE = (
     ('original', 'unpaced'), ('candidate', 'unpaced'),
     ('candidate', 'unpaced'), ('original', 'unpaced'),
 )
+CLEANUP_RESERVE = 360
+GUEST_BOUND = 300
+
+
+class BudgetStop(RuntimeError):
+    """A new operation was refused before submission; retain custody, no replay."""
 
 
 def verify_kit(kit):
@@ -77,6 +83,38 @@ class Bench(h.Bench):
         self.remote = self.kit['remote']
         self.out = B / 'evidence'
         self.out.mkdir(exist_ok=False)
+        self.cleaning = False
+
+    def admit(self, operation, allowance=0):
+        if self.cleaning:
+            return
+        remaining = self.deadline - time.monotonic()
+        if remaining <= CLEANUP_RESERVE + allowance:
+            raise BudgetStop(f'{operation}: {remaining:.3f}s remain; require more than '
+                             f'{CLEANUP_RESERVE + allowance}s before submission')
+
+    def transfer(self, folder, label, op, remote, local):
+        self.admit('new transfer ' + label)
+        # Once submitted, the inherited same-job resume/finite bound remains.
+        # No cutoff exception is injected into an in-flight write or GET.
+        return super().transfer(folder, label, op, remote, local)
+
+    def metadata(self, folder, label):
+        self.admit('new metadata session ' + label)
+        return super().metadata(folder, label)
+
+    def line(self, folder, label, command):
+        self.admit('guest RUN' if command == 'RUN .' else 'CLI ' + label,
+                   GUEST_BOUND if command == 'RUN .' else 0)
+        return super().line(folder, label, command)
+
+    def case(self, index, backend, mode):
+        self.admit('guest case ' + str(index), GUEST_BOUND)
+        return super().case(index, backend, mode)
+
+    def probe(self, label):
+        self.admit('resource probe ' + label, GUEST_BOUND)
+        return super().probe(label)
 
     def entry(self):
         p = self.folder('entry')
@@ -114,7 +152,7 @@ class Bench(h.Bench):
         for i, (name, local) in enumerate(self.kit['stage'].items()):
             if name in ('state.txt', 'route.txt'):
                 continue  # Already PUT/GET verified before the entry RAM reads.
-            assert time.monotonic() < self.deadline - 360
+            self.admit('staging file ' + name)
             self.upload(p, f'file-{i:02d}', local, self.remote + '/' + name)
             print('STAGED', name, flush=True)
         self.exit(p, 'exit')
@@ -152,6 +190,7 @@ class Bench(h.Bench):
             assert subprocess.run(['fuser', str(Path(port).resolve())], capture_output=True).returncode == 1
 
     def install_module(self, arm, index):
+        self.admit('module selection ' + str(index), GUEST_BOUND)
         assert arm in ('original', 'candidate')
         p = self.folder(f'module-{index:02d}-{arm}')
         if not self.get('/sd/status')['online']:
@@ -164,6 +203,7 @@ class Bench(h.Bench):
 
     def run_cases(self):
         for index, (arm, mode) in enumerate(SEQUENCE, 1):
+            self.admit('new module/case ' + str(index), GUEST_BOUND)
             self.install_module(arm, index)
             self.case(index, 'vdplet', mode)
             p = self.out / f'{index:02d}-vdplet-{mode}'
@@ -205,16 +245,19 @@ class Bench(h.Bench):
     def suite(self):
         try:
             self.deadline = time.monotonic() + 3600
+            self.cleaning = False
             self.entry()
             self.stage()
             self.flash('b', self.kit['install_b'])
             self.probe('entry')
             self.run_cases()
+            self.cleaning = True  # Restoration is never refused by dispatch cutoff.
             self.flash('restore', self.kit['restore'])
             self.handback()
             h.save(self.out / 'complete.json', dict(passed=True, guests=6, resource_probes=7, restored=True))
         except h.SetupFailure as error:
             h.save(self.out / 'failure.json', dict(error=repr(error), next_dispatch_stopped=True, actual_mos_return=True, epoch=time.time()))
+            self.cleaning = True  # Known actual return; save RAM then restore.
             self.preserve_setup()
             h.save(self.out / 'setup-stopped-restored.json', dict(restored=True, benchmark_claim=False))
         except BaseException as error:

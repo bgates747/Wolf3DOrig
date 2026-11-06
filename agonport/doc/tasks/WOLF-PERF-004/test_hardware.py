@@ -124,6 +124,7 @@ class EntryModel(hardware.Bench):
         route = self.out / 'route.txt'; route.write_bytes(b'ROUTE')
         self.kit = {'stage': {'state.txt': str(state), 'route.txt': str(route)}}
         self.deadline = hardware.time.monotonic() + 3600
+        self.cleaning = False
     def own(self): pass
     def cli(self, p, label): return b'Directory: /\r\n/ *'
     def service(self, *args): pass
@@ -159,6 +160,52 @@ class EntryTests(unittest.TestCase):
             b = EntryModel(folder, collision=True)
             with self.assertRaisesRegex(AssertionError, 'collision'): b.entry()
             self.assertFalse(any(e[0] == 'upload' for e in b.events))
+
+
+class BudgetTests(unittest.TestCase):
+    def model(self, remaining):
+        b = object.__new__(hardware.Bench)
+        b.deadline = 1000 + remaining
+        b.cleaning = False
+        return b
+
+    def test_no_new_module_case_inside_guest_plus_cleanup_reserve(self):
+        for remaining in (330,360,600,660):
+            with self.subTest(remaining=remaining), patch.object(hardware.time,'monotonic',return_value=1000):
+                b = self.model(remaining)
+                with patch.object(b,'install_module') as submit:
+                    with self.assertRaises(hardware.BudgetStop): b.run_cases()
+                    submit.assert_not_called()
+
+    def test_run_is_rechecked_after_setup_and_before_keyboard_submission(self):
+        with patch.object(hardware.time,'monotonic',return_value=1000), patch.object(hardware.h.Bench,'line') as submit:
+            b = self.model(660)
+            with self.assertRaises(hardware.BudgetStop): b.line(None,'run','RUN .')
+            submit.assert_not_called()
+            b.deadline += 1
+            b.line(None,'run','RUN .')
+            submit.assert_called_once()
+
+    def test_collection_refused_before_submission_but_inflight_job_finishes(self):
+        now = [1000]
+        with patch.object(hardware.time,'monotonic',side_effect=lambda:now[0]):
+            b = self.model(361)
+            def completed_job(*args):
+                now[0] += 400  # Existing finite job is not interrupted at cutoff.
+                return 'completed-original-job'
+            with patch.object(hardware.h.Bench,'transfer',side_effect=completed_job) as submit:
+                self.assertEqual(b.transfer(None,'one','get','remote','local'),'completed-original-job')
+                with self.assertRaises(hardware.BudgetStop): b.transfer(None,'two','get','remote','local')
+                self.assertEqual(submit.call_count,1)
+
+    def test_metadata_collection_guard_and_cleanup_exemption(self):
+        with patch.object(hardware.time,'monotonic',return_value=1000), patch.object(hardware.h.Bench,'metadata') as submit:
+            b = self.model(360)
+            with self.assertRaises(hardware.BudgetStop): b.metadata(None,'collection')
+            submit.assert_not_called()
+            b.cleaning = True
+            b.metadata(None,'restoration')
+            submit.assert_called_once()
 
 
 if __name__ == '__main__':
