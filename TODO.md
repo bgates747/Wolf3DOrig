@@ -34,8 +34,10 @@ practical Wolf work while Oryx is down; preserve the independent audit baseline.
   [Actual63 passes](agonport/doc/tasks/WOLF-PERF-004/PHYSICAL63-RESULT.md):6guests/
   7probes,1200samples per arm; draw91.5588→68.5399ms, completed fixture
   10.5230→13.8823FPS on nominal clocks. Exact restoration/release complete.
-- [ ] WOLF-PERF-004-06 — Restore/release, report raw comparison/limits and share
+- [x] WOLF-PERF-004-06 — Restore/release, report raw comparison/limits and share
   substantive results/gaps with owners; no default adoption in this tranche.
+  Actual63 released22:44:20UTC; report0baa1cf delivered to Extender/VDPlet via
+  durable result mail and steering. SD mounted; production defaults unchanged.
   [Actual61 stopped](agonport/doc/tasks/WOLF-PERF-004/PHYSICAL61-RESULT.md) before
   candidate execution; exact restoration/release complete, no measured comparison.
 - [x] WOLF-PERF-004-07 — Correct documented repeated-replacement backup lifecycle
