@@ -648,3 +648,18 @@ all firmware/app/tail/featureabsence retained unchanged, noflash needed.
 Released51 at07:58:18UTC nextnull; scheduler notified. Originalcode/frozenkit/
 log/journal retained; HARDWARE-R07-RESULT.md. Read-only Pi manager source/log
 consult requested; no new reservation/reproduction before host disposition.
+
+
+### Existing host logs exhausted; signal-stop receipt qualified offline
+
+Pi manager read-only source/journal/rollout audit found no confirmed supervisor
+kill/persistent mainhostrestart or outertimeout. Alive07:54:35/firstdead07:55:29
+are observation bounds;~178s until discovery not exact signaltime/180stimeout.
+New SSHserver presence not cause evidence, signal sender remains unknown.
+Corrected report preserves those limits. New08 host-only launch+TERM/INT/HUP
+receipt records PID/parent/time/stack then exits via normal unwinding, no signal
+ignore/detach/bypass/replay. Isolated ownedchild tests3signals prove receipt,
+finally cleanup/no continuation. Six controller tests pass. No compiled/timed
+change. Fresh HARDWARE-RUN-08 identifies same14/8 finite suite with usefulhost
+interruption evidence if it recurs, not a repair claim; source disposition
+complete but originalcause remains unknown. Freeze before normal fresh grant.
