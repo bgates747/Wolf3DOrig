@@ -24,8 +24,11 @@ practical Wolf work while Oryx is down; preserve the independent audit baseline.
   [r03 passes](agonport/doc/tasks/WOLF-PERF-004/R03-RESULT.md): exact600frames/
   300headings/page/guard/geometry/service counts, unchanged original1907 target;
   candidate54568e45, same text/data/package/stack envelopes. Pi261 released.
-- [ ] WOLF-PERF-004-04 — Reconcile current Extender context and freeze the finite
+- [x] WOLF-PERF-004-04 — Reconcile current Extender context and freeze the finite
   physical input/run/restoration package before actual fresh admission.
+  Corrected [hardware02 readiness](agonport/doc/tasks/WOLF-PERF-004/HARDWARE-READINESS-02.md)
+  frozen/pushed99b8385;155 input pins verify. Actual60 restored tuple matches
+  frozen incoming identities. Fresh scheduler grant remains required.
 - [ ] WOLF-PERF-004-05 — Execute original/candidate reversed-order600pose hardware
   arms with resource/counter/return checks and first-failure stop.
 - [ ] WOLF-PERF-004-06 — Restore/release, report raw comparison/limits and share
