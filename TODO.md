@@ -23,6 +23,10 @@ released and54568 is the explicit control, with no default adoption.
 - [ ] WOLF-PERF-005-04 — Freeze current-context finite hardware kit before grant.
 - [ ] WOLF-PERF-005-05 — Execute matched completed-work/resource physical arms.
 - [ ] WOLF-PERF-005-06 — Exact restore/release/report and owner evidence return.
+- [x] WOLF-PERF-005-07 — Diagnose/preserve/restore stopped65 producer mismatch;
+  [result](agonport/doc/tasks/WOLF-PERF-005/PHYSICAL65-RESULT.md), no timing claim.
+- [ ] WOLF-PERF-005-08 — Correct/qualify per-arm producer lengths and terminal
+  startup-return recognition under [amendment01](agonport/doc/tasks/WOLF-PERF-005/AMENDMENT-01.md), then freeze a fresh kit.
 
 ## WOLF-PERF-004 — redundant background initialization candidate
 
