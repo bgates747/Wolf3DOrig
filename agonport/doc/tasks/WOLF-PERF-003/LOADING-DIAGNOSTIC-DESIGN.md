@@ -1,7 +1,8 @@
 # Loading-query diagnostic design — WOLF-PERF-003-16
 
-Status: source-only proposal after Olimex42. Not a frozen run plan, executable,
-reservation or grant. Preserve hardware03 source, RAM and serial evidence.
+Status: initial source proposal after Olimex42, now implemented as the separately
+identified [loading04 preparation](HARDWARE-LOADING-R04.md). That record owns the
+selected finite plan/current readiness. Preserve hardware03 source/RAM/serial.
 
 The question is why a loading-only mode query fails after a breadcrumb flip,
 with one printed0x86 and no recognized reply. Longer waits did not recover it.

@@ -493,7 +493,9 @@ E1L1 (34,36), 720-degree/20-second fixture on both backends.
   phase1 afterC3; stray0x86 in serial, saved170086query intact. Root layer open.
   [New evidence](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R03-RESULT.md).
   [Diagnostic design](agonport/doc/tasks/WOLF-PERF-003/LOADING-DIAGNOSTIC-DESIGN.md)
-  is source-only; fresh component binding/admission required after bench43 changes.
+  led to [loading04](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-LOADING-R04.md):
+  assembly/layout and five host checks pass; FIFOc5c0fb2067e2 PREPARING, actual
+  incoming native/tail binding and fresh admission pending after MechAgon43.
 
 - [x] WOLF-PERF-003-17 — Localize the missing FIRST native A warmup completion
   before selecting another hardware cohort. Hardware02 fourth guest completed

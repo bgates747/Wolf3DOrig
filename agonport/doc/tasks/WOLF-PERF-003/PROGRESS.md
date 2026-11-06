@@ -519,3 +519,37 @@ pins nine inspected sources and proposes disjoint phase/count profiling, then
 separate scratch-reuse and mode-specific flush candidates. No claimed speedup,
 implementation/build/run/deployment.003-18 open; preserve matched baseline and
 current003-16 loading blocker/component reconciliation before physical work.
+
+
+### Loading04 prepared after pushed checkpoint9e52f7f
+
+Smith requested commit/push and proceed; reviewed checkpoint9e52f7f pushed to
+feature/standardized-deployment. Explicit local ignores retain26 RAM/custody
+files without rewriting/deleting evidence.73 Python sources parse; timing decoder
+accept/corrupt regression passes. Frozen serial whitespace retained as evidence.
+
+Extender21:14:06 source return: c9c8b6b ROMb5a1f4aa/P4a967fac2 retained and
+independently rehashed with both maps/nativeA. Private RAM bindings verified.
+Legacy serial/handlers/reply parser and clear/wait bodies unchanged versus5735812;
+new25h unused. Parallel carrier descriptor fix is not a Wolf UART repair.
+MechAgon43 remains operator; last native20029942 is historical entry, not promised
+current/restored state. No Wolf target contact.
+
+Loading04 task-owned guest removes reachable wp_run, retains asset/C3/query
+sends and existing ten same-pending waits; no warmup/render/PRT. WPQ3 RAM ring32
+completed fences+current,4288B after-main file and oldWPL2 retained. Hooks preserve
+application registers/IRQ enabled, read only pinned ordinary RAM, no callback
+I/O/VDU or UART status ports. Paint/C3 stamps live separately until fence entry;
+blocked query/wait leaves current incomplete. Nominal full-call time/non-atomic
+reverse-reply state cannot establish native parse/inter-byte arrival.
+
+Pi193 actual checkout/assert: one assembly0.202s and decoder/source/layout checks
+pass; guest314228B SHA9c07b14240835e121089455bf17809ec7eea8a643d89cd7550f6943b4c67baf5.
+Released21:18:50EST Nov5 nextnull; no child/compiler custody. Three schema checks
+and two actual-controller return/failure checks pass; no emulator/physical proof.
+Finite HARDWARE-LOADING-R04.md selects up to4 loading-only invocations, first
+failure stop, fresh load04 namespace and exact actual incoming native/tail restore.
+FIFOc5c0fb2067e2 PREPARING; Extender substantive mail/steer delivered.
+Candidate-kit ready=false until actual MechAgon release/native/tail reconciliation;
+physical04 refuses unbound input. No grant/firmware/native write or new timing.
+Wall-column003-18 remains parked.
