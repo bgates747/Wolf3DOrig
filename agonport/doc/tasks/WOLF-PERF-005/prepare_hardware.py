@@ -10,7 +10,7 @@ P3 = T.parent / 'WOLF-PERF-003'
 P4 = T.parent / 'WOLF-PERF-004'
 E = Path('/Agon/mystuff/agon-extender')
 D = Path('/Agon/mystuff/agon-dev-env')
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def save(p, value):
@@ -20,9 +20,9 @@ def save(p, value):
 def prepare():
     B.mkdir(exist_ok=False)
     old = json.loads((P3 / 'build/hardware09/kit.json').read_text())
-    release = P4 / 'build/hardware03/release63.json'
+    release = T / 'build/hardware01/release65.json'
     released = json.loads(release.read_text())
-    assert released['generation'] == 63 and released['released']
+    assert released['generation'] == 65 and released['released']
     components = released['release_observation']['components']
     assert components['native_vdp_sha256'] == '5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07'
     restore = Path('/Agon/mystuff/MechAgon/.runtime/render001/native-install-r01/candidate-sectors.bin')
@@ -38,16 +38,22 @@ def prepare():
     data = bytearray(restore.read_bytes()); data[:native_b.stat().st_size] = native_b.read_bytes()
     assert len(data) == 1105920
     (B / 'install-b.bin').write_bytes(data)
-    remote = '/test/wolf/perf005/r01'
+    remote = '/test/wolf/perf005/r02'
     (B / 'state.txt').write_bytes(('SAVE '+remote+'/post-mode.bin &BC349 &1\r\nSAVE '+remote+'/post-callback.bin &BC38E &3\r\nEMOS sdserve --fast /\r\n').encode())
     (B / 'route.txt').write_bytes(('SAVE '+remote+'/route.bin &BCB25 &1\r\nEMOS sdserve --fast /\r\n').encode())
-    names = ['wolf3d.cfg','hud.agnb','sfx.agnb','shell.agnb'] + [n for n in old['stage'] if n.startswith('level_00/')] + ['b-unpaced.bin','b-control.bin','resource-probe.bin']
+    names = ['wolf3d.cfg','hud.agnb','sfx.agnb','shell.agnb'] + [n for n in old['stage'] if n.startswith('level_00/')] + ['resource-probe.bin']
     stage = {n: old['stage'][n] for n in names}
     for p in stage.values():
         assert sha(p) == old['inputs'][p], ('Changed retained physical54 input', p)
     modules = {a: str(T / 'build/r02' / a / 'module/wolf_perf.vdpl') for a in ('original','candidate')}
+    guests = json.loads((T/'build/guests02/bindings.json').read_text())
+    import guest_binding
+    guest_binding.qualify(guests)
+    for modes in guests.values():
+        for guest in modes.values():
+            stage[guest['remote_name']] = guest['guest']
     stage.update({'wolf3d.vdpl': modules['original'], 'state.txt': str(B / 'state.txt'), 'route.txt': str(B / 'route.txt')})
-    listings = {n: old['listings'][n] for n in ('vdplet-control','vdplet-unpaced')}
+    listings = {'vdplet-'+mode:guests['original'][mode]['listing'] for mode in ('control','unpaced')}
     source = E / 'agents/net004/emos-uart-rfc25-source/src'
     rom = E / 'agents/net004/emos-uart-rfc25-r02/ROM.bin'
     mapfile = rom.parent / 'mos.elf.map'
@@ -60,13 +66,15 @@ def prepare():
         m = re.search(r'0x([0-9a-f]+)\s+' + re.escape(name) + r'\s*$', mapping, re.M)
         assert m and int(m[1], 16) == address, name
     guest_sources = []
-    for mode in ('control','unpaced'):
-        root = P3 / 'build/hardware05/vdplet' / mode / 'source'
-        guest_sources += [p for p in root.iterdir() if p.suffix in ('.asm','.inc')]
-        trace = (root / 'loading_trace04.inc').read_text()
-        addresses = set(int(x, 16) for x in re.findall(r'\(0([0-9a-f]+)h\)', trace, re.I))
-        assert addresses <= set(symbols.values()), addresses - set(symbols.values())
-    binding = dict(passed=True, guest_rebuild_required=False, carrier='mainboard-route0-UART0',
+    for modes in guests.values():
+        for guest in modes.values():
+            root = Path(guest['source'])
+            guest_sources += [p for p in root.iterdir() if p.suffix in ('.asm','.inc')]
+            guest_sources += [Path(guest['listing']), Path(guest['guest'])]
+            trace = (root / 'loading_trace04.inc').read_text()
+            addresses = set(int(x, 16) for x in re.findall(r'\(0([0-9a-f]+)h\)', trace, re.I))
+            assert addresses <= set(symbols.values()), addresses - set(symbols.values())
+    binding = dict(passed=True, guest_rebuild_required=True, carrier='mainboard-route0-UART0',
         symbols={k:hex(v) for k,v in symbols.items()}, rom_sha256=sha(rom), map_sha256=sha(mapfile),
         provenance='Current retained UART source/map and installed full-ROM identity; actual grant/raw route0 admission still required.',
         findings=[
@@ -74,11 +82,11 @@ def prepare():
             'UART0 PUTCH checks enabled/CTS then waits for each byte accepted. Source-backed behavior, not a fresh wire or receiver-timing observation.',
             'mos_api.asm 40 clears selected existing flags;41 calls mos.c wait_VDP, polling same flag up to250000 iterations without query replay or clear.',
             'vdp_protocol.asm KEY requires completed ten-byte body and route0, exact P3DR or VDPL tag, callback-only; guest owns token/kind/sequence validation. Not a generic completion ABI.',
-            'Current map proves retained loading observer private reads, mode/callback and route SAVE addresses. Ordinary RAM reads only; guest literals remain byte-identical to physical54.',
+            'Current map proves retained loading observer private reads, mode/callback and route SAVE addresses. Ordinary RAM reads only; private observer literals remain identical; package byte/limit equates are explicitly bound per arm.',
             'Actual retained mode producer waits for matching136 reply then wp_settle_display240 MOS ticks before setup/loading. Invocation capture retains1second after final return before collection; entry0 only.',
             'No parallel networking API/carrier substitution, old54 bootstrap marker or firmware rollback permitted.'
         ])
-    composition = T / 'build/composition03/receipt.json'
+    composition = T / 'build/composition04/receipt.json'
     qualified = json.loads(composition.read_text())
     assert qualified['passed'] and qualified['inputs'][str(T/'hardware.py')] == sha(T/'hardware.py')
     service = E / 'agents/remote009/download-r01/source/projects/sdserve/src/service.c'
@@ -94,7 +102,7 @@ def prepare():
               E / '.venv/lib/python3.14/site-packages/esptool/reset.py', E / '.venv/lib/python3.14/site-packages/serial/serialposix.py']
     sources = [source / n for n in ('reset.asm','handlers.asm','serial.asm','mos_api.asm','mos.c','vdp_protocol.asm','emos.c')]
     files = list(stage.values()) + list(listings.values()) + list(modules.values()) + guest_sources + tools + sources
-    files += [T/'R02-BUILD.json',T/'R02-RESULT.md',rom,mapfile,restore,native_app,installed,native_b,release,B/'restore.bin',B/'install-b.bin',B/'source-binding.json',T/'HARDWARE-RUN-01.md',T/'PRE-CODE.md',T/'hardware.py',T/'bootstrap.py',T/'prepare_hardware.py',T/'test_hardware.py',T/'test_replacement.py',T/'run_composition.py',T/'build/composition03/receipt.json',P3/'hardware/physical09.py',P3/'hardware/trace04.py',P3/'hardware/host_interrupt08.py',P3/'analyze.py',T.parent/'WOLF-PERF-001/hardware/physical.py']
+    files += [T/'R02-BUILD.json',T/'R02-RESULT.md',rom,mapfile,restore,native_app,installed,native_b,release,B/'restore.bin',B/'install-b.bin',B/'source-binding.json',T/'HARDWARE-RUN-02.md',T/'AMENDMENT-01.md',T/'GUESTS02-RESULT.md',T/'build/guests02/bindings.json',T/'build/guests02/binding-result.json',T/'build/guests02/compile-receipt.json',T/'build/guests02/source-freeze.json',T/'PRE-CODE.md',T/'hardware.py',T/'bootstrap.py',T/'prepare_hardware.py',T/'test_hardware.py',T/'test_guest_binding.py',T/'guest_binding.py',T/'prepare_guests.py',T/'build_guests.py',T/'test_replacement.py',T/'run_composition.py',T/'build/composition04/receipt.json',P3/'hardware/physical09.py',P3/'hardware/trace04.py',P3/'hardware/host_interrupt08.py',P3/'analyze.py',T.parent/'WOLF-PERF-001/hardware/physical.py']
     listener_source = E / 'agents/remote009/download-r01/source'
     files += [listener_source/'projects/sdserve/src'/n for n in ('service.c','service.h','sd_wire.h')]
     files += [listener_source/'tests/test_sdserve.py',listener_source/'tests/sdserve_host/fs.c',listener_source/'tests/sdserve_host/agon/mos.h']
@@ -102,11 +110,11 @@ def prepare():
     assert sha(proof) == sha(restore)
     files += [proof,P4/'build/hardware03/evidence/flash-restore/receipt.json']
     inputs = {str(p):sha(p) for p in files}
-    request = json.loads((T / 'build/bench-request01.json').read_text())['request']
-    kit = dict(task='WOLF-PERF-005-hardware-r01',request=request,remote=remote,
-        incoming_components=components, incoming_release=str(release), incoming_generation=63,
+    request = json.loads((T / 'build/bench-request02.json').read_text())['request']
+    kit = dict(task='WOLF-PERF-005-hardware-r02',request=request,remote=remote,
+        incoming_components=components, incoming_release=str(release), incoming_generation=65,
         original_module_sha256=sha(modules['original']),candidate_module_sha256=sha(modules['candidate']),native_b_sha256=sha(native_b),
-        modules=modules,stage=stage,listings=listings,restore=str(B/'restore.bin'),install_b=str(B/'install-b.bin'),flash_span=len(data),
+        modules=modules,stage=stage,listings=listings,guests=guests,restore=str(B/'restore.bin'),install_b=str(B/'install-b.bin'),flash_span=len(data),
         source_binding=str(B/'source-binding.json'),source_binding_passed=True,boot_binding_passed=True,
         p4_boot_build='net-003-r02-b2026-11-06-09-03-07Z', inputs=inputs,
         restrictions='Fresh actual grant matching exact incoming tuple required. Candidate comparison only; no default adoption, P4/EMOS writes or carrier substitution.')

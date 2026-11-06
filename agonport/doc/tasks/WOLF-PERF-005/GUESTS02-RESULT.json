@@ -1,0 +1,486 @@
+{
+  "build": {
+    "passed": true,
+    "guards": [
+      {
+        "epoch": 1794008181.8834498,
+        "cpu_c": 49.05,
+        "available_kib": 6888656
+      },
+      {
+        "epoch": 1794008181.8840978,
+        "cpu_c": 49.05,
+        "available_kib": 6888656
+      },
+      {
+        "epoch": 1794008181.9844108,
+        "cpu_c": 50.15,
+        "available_kib": 6887728
+      },
+      {
+        "epoch": 1794008182.1921089,
+        "cpu_c": 50.15,
+        "available_kib": 6780784
+      },
+      {
+        "epoch": 1794008182.192807,
+        "cpu_c": 50.15,
+        "available_kib": 6781984
+      },
+      {
+        "epoch": 1794008182.2932632,
+        "cpu_c": 49.6,
+        "available_kib": 6788848
+      },
+      {
+        "epoch": 1794008182.469319,
+        "cpu_c": 49.6,
+        "available_kib": 6783200
+      },
+      {
+        "epoch": 1794008182.469861,
+        "cpu_c": 49.6,
+        "available_kib": 6783200
+      },
+      {
+        "epoch": 1794008182.5701363,
+        "cpu_c": 49.6,
+        "available_kib": 6783200
+      },
+      {
+        "epoch": 1794008182.7434099,
+        "cpu_c": 50.15,
+        "available_kib": 6787344
+      },
+      {
+        "epoch": 1794008182.743951,
+        "cpu_c": 50.15,
+        "available_kib": 6787344
+      },
+      {
+        "epoch": 1794008182.844232,
+        "cpu_c": 50.15,
+        "available_kib": 6788832
+      },
+      {
+        "epoch": 1794008183.018203,
+        "cpu_c": 50.15,
+        "available_kib": 6812400
+      },
+      {
+        "epoch": 1794008183.018735,
+        "cpu_c": 50.15,
+        "available_kib": 6812400
+      },
+      {
+        "epoch": 1794008183.1190262,
+        "cpu_c": 51.8,
+        "available_kib": 6796864
+      },
+      {
+        "epoch": 1794008183.2192903,
+        "cpu_c": 50.15,
+        "available_kib": 6796864
+      },
+      {
+        "epoch": 1794008183.319515,
+        "cpu_c": 50.7,
+        "available_kib": 6796864
+      },
+      {
+        "epoch": 1794008183.4197311,
+        "cpu_c": 50.15,
+        "available_kib": 6796864
+      },
+      {
+        "epoch": 1794008183.520009,
+        "cpu_c": 51.25,
+        "available_kib": 6795456
+      },
+      {
+        "epoch": 1794008183.6202915,
+        "cpu_c": 50.7,
+        "available_kib": 6795488
+      },
+      {
+        "epoch": 1794008183.7205198,
+        "cpu_c": 50.7,
+        "available_kib": 6795488
+      },
+      {
+        "epoch": 1794008183.820715,
+        "cpu_c": 50.7,
+        "available_kib": 6795488
+      },
+      {
+        "epoch": 1794008183.9209569,
+        "cpu_c": 50.15,
+        "available_kib": 6801168
+      },
+      {
+        "epoch": 1794008184.021198,
+        "cpu_c": 50.15,
+        "available_kib": 6801168
+      },
+      {
+        "epoch": 1794008184.1214156,
+        "cpu_c": 50.15,
+        "available_kib": 6801168
+      },
+      {
+        "epoch": 1794008184.2216249,
+        "cpu_c": 51.25,
+        "available_kib": 6801168
+      },
+      {
+        "epoch": 1794008184.3220162,
+        "cpu_c": 51.25,
+        "available_kib": 6801168
+      },
+      {
+        "epoch": 1794008184.4222534,
+        "cpu_c": 51.25,
+        "available_kib": 6801168
+      },
+      {
+        "epoch": 1794008184.5224137,
+        "cpu_c": 52.35,
+        "available_kib": 6801168
+      },
+      {
+        "epoch": 1794008184.6225727,
+        "cpu_c": 49.6,
+        "available_kib": 6801168
+      },
+      {
+        "epoch": 1794008184.7227669,
+        "cpu_c": 50.7,
+        "available_kib": 6801568
+      }
+    ],
+    "steps": [
+      {
+        "name": "asm-original-control",
+        "returncode": 0,
+        "seconds": 0.20127341098850593
+      },
+      {
+        "name": "asm-original-unpaced",
+        "returncode": 0,
+        "seconds": 0.2012774659669958
+      },
+      {
+        "name": "asm-candidate-control",
+        "returncode": 0,
+        "seconds": 0.20092770701739937
+      },
+      {
+        "name": "asm-candidate-unpaced",
+        "returncode": 0,
+        "seconds": 0.20095281902467832
+      },
+      {
+        "name": "producer-binding",
+        "returncode": 0,
+        "seconds": 1.8046876699663699
+      }
+    ],
+    "assembler_sha256": "784225e87305f35ffdff4b0a0a3a3030b69e9481fa8c6bc76ad57e4d3a506ec3",
+    "seconds": 3.028171084995847
+  },
+  "bindings": {
+    "passed": true,
+    "arms": {
+      "original": {
+        "control": {
+          "passed": true,
+          "package_bytes": 19876,
+          "guest_sha256": "6e4f77504b354749c3b49afafdc7742690fec52d6e715e48a03d4ee0017b8f03",
+          "listing_sha256": "2137667f7fc305aa7c5a0b3ac71b7fba1e0adff9b1b4ede90dad6fe973901f7a",
+          "operands": [
+            {
+              "address": 422779,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19876,
+              "encoded": "21a44d00"
+            },
+            {
+              "address": 422792,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19876,
+              "encoded": "21a44d00"
+            },
+            {
+              "address": 422796,
+              "register": "de",
+              "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+              "value": 19877,
+              "encoded": "11a54d00"
+            },
+            {
+              "address": 422813,
+              "register": "bc",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19876,
+              "encoded": "01a44d00"
+            },
+            {
+              "address": 422855,
+              "register": "de",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19876,
+              "encoded": "11a44d00"
+            },
+            {
+              "address": 423264,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19876,
+              "encoded": "21a44d00"
+            }
+          ],
+          "stack_labels": {
+            "wp_entry_sp": 551547,
+            "wp_exit_sp": 551550
+          }
+        },
+        "unpaced": {
+          "passed": true,
+          "package_bytes": 19876,
+          "guest_sha256": "1b87fe9790741d89fbddebbf6ffd93268f31a39cc97d10e6625857a8e38ad641",
+          "listing_sha256": "611f5f785fd28fbc89bf96268718257468f97c9c3387045d7f8e29fea1a3fafe",
+          "operands": [
+            {
+              "address": 422779,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19876,
+              "encoded": "21a44d00"
+            },
+            {
+              "address": 422792,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19876,
+              "encoded": "21a44d00"
+            },
+            {
+              "address": 422796,
+              "register": "de",
+              "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+              "value": 19877,
+              "encoded": "11a54d00"
+            },
+            {
+              "address": 422813,
+              "register": "bc",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19876,
+              "encoded": "01a44d00"
+            },
+            {
+              "address": 422855,
+              "register": "de",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19876,
+              "encoded": "11a44d00"
+            },
+            {
+              "address": 423264,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19876,
+              "encoded": "21a44d00"
+            }
+          ],
+          "stack_labels": {
+            "wp_entry_sp": 551622,
+            "wp_exit_sp": 551625
+          }
+        }
+      },
+      "candidate": {
+        "control": {
+          "passed": true,
+          "package_bytes": 19896,
+          "guest_sha256": "1e9e8991282fde1fac036aedde9cc69b74c60429a66e220bd9c01b6b8c063ab4",
+          "listing_sha256": "dd30bf00d8f2bea297eb40509e7bf5df453b03130fe54824a852ef807b9201ea",
+          "operands": [
+            {
+              "address": 422779,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19896,
+              "encoded": "21b84d00"
+            },
+            {
+              "address": 422792,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19896,
+              "encoded": "21b84d00"
+            },
+            {
+              "address": 422796,
+              "register": "de",
+              "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+              "value": 19897,
+              "encoded": "11b94d00"
+            },
+            {
+              "address": 422813,
+              "register": "bc",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19896,
+              "encoded": "01b84d00"
+            },
+            {
+              "address": 422855,
+              "register": "de",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19896,
+              "encoded": "11b84d00"
+            },
+            {
+              "address": 423264,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19896,
+              "encoded": "21b84d00"
+            }
+          ],
+          "stack_labels": {
+            "wp_entry_sp": 551547,
+            "wp_exit_sp": 551550
+          },
+          "changed_binary_offsets": [
+            160636,
+            160649,
+            160653,
+            160670,
+            160712,
+            161121
+          ],
+          "changed_source_files": [
+            "wolf3d_vdplet_client.inc",
+            "wolf3d_vdplet_package.inc"
+          ],
+          "stopped65_rejected": "Actual producer length/strict-limit differs from selected module"
+        },
+        "unpaced": {
+          "passed": true,
+          "package_bytes": 19896,
+          "guest_sha256": "670e7801a921786e003ec848968598d1f7433e0e38a4c329079adc1b1302b7a6",
+          "listing_sha256": "02009f58cc24cddb3d268dac83e6ef3caca0a67aab3beea77c4b7707a9be0b3c",
+          "operands": [
+            {
+              "address": 422779,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19896,
+              "encoded": "21b84d00"
+            },
+            {
+              "address": 422792,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19896,
+              "encoded": "21b84d00"
+            },
+            {
+              "address": 422796,
+              "register": "de",
+              "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+              "value": 19897,
+              "encoded": "11b94d00"
+            },
+            {
+              "address": 422813,
+              "register": "bc",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19896,
+              "encoded": "01b84d00"
+            },
+            {
+              "address": 422855,
+              "register": "de",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19896,
+              "encoded": "11b84d00"
+            },
+            {
+              "address": 423264,
+              "register": "hl",
+              "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+              "value": 19896,
+              "encoded": "21b84d00"
+            }
+          ],
+          "stack_labels": {
+            "wp_entry_sp": 551622,
+            "wp_exit_sp": 551625
+          },
+          "changed_binary_offsets": [
+            160636,
+            160649,
+            160653,
+            160670,
+            160712,
+            161121
+          ],
+          "changed_source_files": [
+            "wolf3d_vdplet_client.inc",
+            "wolf3d_vdplet_package.inc"
+          ],
+          "stopped65_rejected": "Actual producer length/strict-limit differs from selected module"
+        }
+      }
+    },
+    "limits": "Actual linked immediate operands/source/data path; not target execution, UART timing or live loader branch trace."
+  },
+  "release": {
+    "owner": "wolf3dorig",
+    "task": "WOLF-PERF-005-guests02",
+    "purpose": "Four serial actual benchmark producer assemblies and bounded exact package/source/listing/binary binding checks after stopped65",
+    "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-005/AMENDMENT-01.md",
+    "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "workload": "build",
+    "resources": "one serial eZ80 assembler, ordinary checks,80C guard,512MiB available RAM floor",
+    "duration": "expected under2min,10min horizon,120s perchild",
+    "cleanup": "join owned children; retain build logs and failure receipts; no hardware/emulator",
+    "request": "8725c342b1cc",
+    "requested": "2026-11-06T23:36:12.640710+00:00",
+    "policy": {
+      "revision": "author-2026-11-05-oryx-compiler-fallback",
+      "instructions": "/Agon/mystuff/agon-dev-env/cross-agent/pi5-workloads/README.md",
+      "builds": "Automatically granted FIFO, one compile job at a time; no manager approval or 10% CPU gate.",
+      "baseload": "Robocode/Tank Royale server, including active matches, needs no reservation or routine start/end/informational notification to Pi5 manager and does not occupy or block the shared slot or compilation. Separate substantial workloads and physical bench/test permissions remain unchanged; paused work is not resumed.",
+      "routing": "Reserve Oryx for emulator runs and Pi5 for compiler work. When the required build is not possible on Pi5, compiler work may use the existing Oryx self-service FIFO without another routing approval; record the concrete architecture/toolchain limitation, not merely queue congestion. Extender schedules live-serial hardware qualification/benchmark/debug bench access; Console8/manual or semi-automated runs remain at Author discretion.",
+      "heavy": "Pi emulator exceptions need specific new Author approval; CFD/solvers and other heavy Pi work retain explicit Author authorization, manager admission, and start/end chat notices to pi5-manager. Native services are separately classified.",
+      "build_cleanup": "After owned children stop, release using --work-stopped --cleanup-complete; no manager handback or host-wide quiet test.",
+      "authorization_limit": "A supplied record documents authorization; this same-account helper cannot authenticate human authorship."
+    },
+    "author_authorization": null,
+    "manager_start_end_notice_required": false,
+    "lease": "59b8593058b642d4a242ca6b57ee8175",
+    "generation": 274,
+    "granted": "2026-11-06T23:36:12.640710+00:00",
+    "boot_id": "b6519306-0d9f-48e3-98c4-c28ab10b75de",
+    "phase": "consumer",
+    "admission": "automatic-serial-build",
+    "entry_observation": null,
+    "released": "2026-11-06T23:37:17.501176+00:00",
+    "release_observation": {
+      "observer": "wolf3dorig",
+      "lease": "59b8593058b642d4a242ca6b57ee8175",
+      "owned_work_stopped": true,
+      "cleanup_complete": true,
+      "disposition": "Owner confirms all owned build children stopped and cleanup complete; no global quiet claim"
+    },
+    "next_request": null,
+    "automatic_build_grant": null
+  }
+}

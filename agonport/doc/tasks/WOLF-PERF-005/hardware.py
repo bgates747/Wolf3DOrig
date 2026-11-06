@@ -17,7 +17,7 @@ T = Path(__file__).resolve().parent
 sys.path.insert(0, str(T))
 P3 = T.parent / 'WOLF-PERF-003'
 sys.path.insert(0, str(P3 / 'hardware'))
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 spec = importlib.util.spec_from_file_location('wp005_physical54', P3 / 'hardware/physical09.py')
 h = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(h)
@@ -37,14 +37,14 @@ class BudgetStop(RuntimeError):
 
 
 def verify_kit(kit):
-    assert kit['task'] == 'WOLF-PERF-005-hardware-r01'
-    assert kit['remote'] == '/test/wolf/perf005/r01'
+    assert kit['task'] == 'WOLF-PERF-005-hardware-r02'
+    assert kit['remote'] == '/test/wolf/perf005/r02'
     assert kit['original_module_sha256'] == '54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055'
     assert kit['candidate_module_sha256'] == 'bf7f2bb038387698464fbb297a437ef98457638a28261dc7f9688044d9b6eb28'
     assert kit['native_b_sha256'] == '7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d'
     assert kit['source_binding_passed'] and kit['boot_binding_passed']
     binding = json.loads(Path(kit['source_binding']).read_text())
-    assert binding['passed'] and binding['guest_rebuild_required'] is False
+    assert binding['passed'] and binding['guest_rebuild_required'] is True
     assert binding['carrier'] == 'mainboard-route0-UART0'
     for name, digest in kit['inputs'].items():
         assert sha(name) == digest, name
@@ -60,6 +60,21 @@ def verify_kit(kit):
         for label in ('wp_entry_sp', 'wp_exit_sp'):
             match = re.search(r'^([0-9A-F]{6})[^\n]*\b' + label + r':', listing, re.M)
             assert match and 0x40000 <= int(match[1], 16) < 0xa0000
+    import guest_binding
+    for arm in ('original', 'candidate'):
+        for mode in ('control', 'unpaced'):
+            guest = kit['guests'][arm][mode]
+            assert guest['module_sha256'] == kit[arm + '_module_sha256']
+            assert guest['module'] == kit['modules'][arm]
+            assert guest['remote_name'] == f'b-{arm}-{mode}.bin'
+            assert kit['stage'][guest['remote_name']] == guest['guest']
+            for name in ('guest', 'listing'):
+                assert guest[name] in kit['inputs']
+            result = guest_binding.verify(guest)
+            # Existing post-run SP check uses original listing only after this
+            # proves the actual candidate addresses exactly match that listing.
+            original = guest_binding.verify(kit['guests']['original'][mode])
+            assert result['stack_labels'] == original['stack_labels']
     for key in ('install_b', 'restore'):
         p = Path(kit[key])
         assert str(p) in kit['inputs'] and p.stat().st_size == kit['flash_span']
@@ -116,6 +131,66 @@ class Bench(h.Bench):
     def probe(self, label):
         self.admit('resource probe ' + label, GUEST_BOUND)
         return super().probe(label)
+
+    def invoke(self, folder, filename, marker, control=False):
+        if filename in ('b-control.bin', 'b-unpaced.bin'):
+            arms = [a for a in ('original', 'candidate')
+                    if self.selected_module_sha256 == self.kit[a + '_module_sha256']]
+            assert len(arms) == 1, 'Unbound module selection'
+            mode = 'control' if filename == 'b-control.bin' else 'unpaced'
+            binding = self.kit['guests'][arms[0]][mode]
+            import guest_binding
+            guest_binding.verify(binding)
+            h.save(folder / 'guest-binding.json', dict(arm=arms[0], **binding))
+            filename = binding['remote_name']
+        return super().invoke(folder, filename, marker, control)
+
+    def capture(self, serial, raw, folder, predicate, bound):
+        def terminal_or_expected(data):
+            error_at = data.rfind(b'VDPlet startup/render failure:')
+            if error_at >= 0 and data.rfind(self.remote.encode() + b' *') > error_at:
+                raise h.SetupFailure('VDPlet startup failed; actual post-error MOS prompt observed')
+            return predicate(data)
+        return super().capture(serial, raw, folder, terminal_or_expected, bound)
+
+    def preserve_setup(self):
+        # A real returned failure can precede one/both normal diagnostic files.
+        # Preserve RAM first; missing optional output cannot block restoration.
+        p = self.folder('failure-collection')
+        self.cli(p, 'failure-confirm-cli')
+        self.service(p, 'listener')
+        self.raw_state(p, 'pre')
+        size = max(Path(self.kit['stage'][n]).stat().st_size for n in self.kit['stage']
+                   if n.startswith(('a-', 'b-')))
+        script = p / 'failure-save.txt'
+        script.write_bytes(('SAVE ' + self.remote + '/setup-ram.bin &40000 &' +
+            format(size, 'X') + '\r\nEMOS sdserve --fast /\r\n').encode())
+        self.upload(p, 'save-script', script, self.remote + '/failure-save.txt')
+        self.exit(p, 'save-exit')
+        self.line(p, 'save-ram', 'EXEC ' + self.remote + '/failure-save.txt')
+        self.wait_online(True)
+        self.transfer(p, 'ram', 'get', self.remote + '/setup-ram.bin', p / 'ram.bin')
+        assert (p / 'ram.bin').stat().st_size == size
+        h.save(p / 'ram-preserved.json', dict(passed=True, size=size,
+            sha256=sha(p / 'ram.bin'), before_any_load=True))
+        c = self.metadata(p, 'available-diagnostics')
+        try:
+            entries = list(c.entries(self.remote))
+        finally:
+            c.lock.close()
+        h.save(p / 'entries.json', entries)
+        for name, decoder in (('loading.bin', h.decode_loading), ('loading3.bin', h.decode_trace)):
+            if any(n.rsplit('/', 1)[-1] == name for n, _, _ in entries):
+                self.transfer(p, name, 'get', self.remote + '/' + name, p / name)
+                try:
+                    h.save(p / (name + '.decoded.json'), decoder((p / name).read_bytes()))
+                except Exception as error:
+                    h.save(p / (name + '.decode-error.json'), dict(error=repr(error), raw_preserved=True))
+            else:
+                h.save(p / (name + '.absent.json'), dict(absent=True, no_collector_or_replay=True))
+        self.exit(p, 'exit')
+        self.flash('restore', self.kit['restore'])
+        self.handback()
 
     def entry(self):
         p = self.folder('entry')

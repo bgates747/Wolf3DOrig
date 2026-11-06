@@ -7,7 +7,7 @@ import statistics
 import struct
 
 T = Path(__file__).resolve().parent
-OUT = T / 'build/hardware01/evidence'
+OUT = T / 'build/hardware02/evidence'
 ARMS = {'original': (3, 6), 'candidate': (4, 5)}
 EXPECTED = {'original':'54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055',
             'candidate':'bf7f2bb038387698464fbb297a437ef98457638a28261dc7f9688044d9b6eb28'}
@@ -49,6 +49,11 @@ def compare(root):
     root = Path(root)
     completed = json.loads((root/'complete.json').read_text())
     assert completed == dict(passed=True,guests=6,resource_probes=7,restored=True)
+    kit = json.loads((root.parent/'kit.json').read_text())
+    for i,arm,mode in ((1,'original','control'),(2,'candidate','control'),(3,'original','unpaced'),(4,'candidate','unpaced'),(5,'candidate','unpaced'),(6,'original','unpaced')):
+        saved = json.loads((root/f'{i:02d}-vdplet-{mode}'/'guest-binding.json').read_text())
+        assert saved == dict(arm=arm, **kit['guests'][arm][mode])
+        assert saved['module_sha256'] == EXPECTED[arm]
     assert json.loads((root/'flash-restore/receipt.json').read_text())['passed']
     assert all(json.loads(p.read_text())['passed'] for p in root.glob('probe-*/receipt.json'))
     assert len(list(root.glob('probe-*/receipt.json'))) == 7

@@ -1,7 +1,7 @@
 """Guard one serial actual-listener host compilation and finite build checks."""
 from pathlib import Path
 import argparse,hashlib,json,os,signal,subprocess,sys,time
-T=Path(__file__).resolve().parent; B=T/'build/composition03';D=Path('/Agon/mystuff/agon-dev-env')
+T=Path(__file__).resolve().parent; B=T/'build/composition04';D=Path('/Agon/mystuff/agon-dev-env')
 
 def main(lease):
     B.mkdir(exist_ok=False)
@@ -18,12 +18,13 @@ def main(lease):
         subprocess.run([str(D/'.venv/bin/python'),str(D/'cross-agent/pi5-workloads/pi5_lease.py'),'assert-owner','--owner','wolf3dorig','--lease',lease],check=True,stdout=subprocess.DEVNULL)
         guard()
         source=Path('/Agon/mystuff/agon-extender/agents/remote009/download-r01/source')
-        files=[T/n for n in ('hardware.py','bootstrap.py','test_replacement.py','run_composition.py','test_hardware.py')]
+        files=[T/n for n in ('hardware.py','bootstrap.py','test_replacement.py','run_composition.py','test_hardware.py','guest_binding.py','test_guest_binding.py')]
         files += [source/'projects/sdserve/src'/n for n in ('service.c','service.h','sd_wire.h')]
         files += [source/'tests/test_sdserve.py',source/'tests/sdserve_host/fs.c',source/'tests/sdserve_host/agon/mos.h']
         files += [T/'build/r02'/a/'module/wolf_perf.vdpl' for a in ('original','candidate')]
+        files += [T/'build/guests02'/n for n in ('bindings.json','binding-result.json','compile-receipt.json')]
         receipt['inputs']={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
-        for name in ('test_hardware.py','test_replacement.py'):
+        for name in ('test_hardware.py','test_replacement.py','test_guest_binding.py'):
             subprocess.run([str(D/'.venv/bin/python'),str(D/'cross-agent/pi5-workloads/pi5_lease.py'),'assert-owner','--owner','wolf3dorig','--lease',lease],check=True,stdout=subprocess.DEVNULL)
             guard();begin=time.monotonic()
             with (B/(name+'.log')).open('x') as log:

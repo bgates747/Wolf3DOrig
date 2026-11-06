@@ -20,12 +20,13 @@ released and54568 is the explicit control, with no default adoption.
   [r02 result](agonport/doc/tasks/WOLF-PERF-005/R02-RESULT.md): exact54568control,
   bf7f2bb0candidate,98727span/rectangle cases and600frames equal; native direct
   loop removes calls while keeping byte accesses/MEMW; compiler271 released.
-- [ ] WOLF-PERF-005-04 — Freeze current-context finite hardware kit before grant.
+- [x] WOLF-PERF-005-04 — Freeze current-context finite hardware kit before grant.
+  Corrected hardware02 pins277inputs and per-arm actual producers; new grant pending.
 - [ ] WOLF-PERF-005-05 — Execute matched completed-work/resource physical arms.
 - [ ] WOLF-PERF-005-06 — Exact restore/release/report and owner evidence return.
 - [x] WOLF-PERF-005-07 — Diagnose/preserve/restore stopped65 producer mismatch;
   [result](agonport/doc/tasks/WOLF-PERF-005/PHYSICAL65-RESULT.md), no timing claim.
-- [ ] WOLF-PERF-005-08 — Correct/qualify per-arm producer lengths and terminal
+- [x] WOLF-PERF-005-08 — Correct/qualify per-arm producer lengths and terminal
   startup-return recognition under [amendment01](agonport/doc/tasks/WOLF-PERF-005/AMENDMENT-01.md), then freeze a fresh kit.
 
 ## WOLF-PERF-004 — redundant background initialization candidate
