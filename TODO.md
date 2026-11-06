@@ -11,11 +11,16 @@ the current dated development log, then remove it from this file.
 [pre-code review](agonport/doc/tasks/WOLF-PERF-004/PRE-CODE.md). Smith selected
 practical Wolf work while Oryx is down; preserve the independent audit baseline.
 
-- [ ] WOLF-PERF-004-01 — Freeze task and target compatibility/intended-work review.
+- [x] WOLF-PERF-004-01 — Freeze task and target compatibility/intended-work review.
+  Published b9a7062 before candidate work; frozen text preserved.
 - [ ] WOLF-PERF-004-02 — Prepare the single clear-extent candidate and exact
   original/candidate pixel/state/page/lifetime correctness comparison.
 - [ ] WOLF-PERF-004-03 — Qualify host checks and safe Xtensa module/resource
   receipts under actual serial Pi compiler custody.
+  r01 original control stopped at negative signed-shift UBSan finding before
+  candidate execution; Pi259 released. [Failure](agonport/doc/tasks/WOLF-PERF-004/R01-RESULT.md)
+  and [separate prerequisite](agonport/doc/tasks/WOLF-PERF-004/AMENDMENT-01.md)
+  retained; no sanitizer suppression or changed physical control accepted.
 - [ ] WOLF-PERF-004-04 — Reconcile current Extender context and freeze the finite
   physical input/run/restoration package before actual fresh admission.
 - [ ] WOLF-PERF-004-05 — Execute original/candidate reversed-order600pose hardware
