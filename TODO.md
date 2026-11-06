@@ -430,19 +430,26 @@ E1L1 (34,36), 720-degree/20-second fixture on both backends.
   game source, assets, pose sequence and measurement contract.
   Safe-SDK1907ce17, quiet native7593b9cf and identical canonical assets;
   completed hidden/paced paths retained, original setup stalls unresolved.
-- [ ] WOLF-PERF-003-04 — Qualify scene/sequence parity, recorder integrity,
+- [x] WOLF-PERF-003-04 — Qualify scene/sequence parity, recorder integrity,
   failure paths and timer/vector restoration on the host.
   Host parity and timer controls pass, but old A runtime omitted map binding.
-  r06 fixes it and passes Fab visuals; corrected native runtime qualification
-  remains required before accepting the scene/timing cohort.
+  r06 fixes it and passes Fab visuals; actual54 now completes the corrected
+  14-guest/8-probe physical cohort, including full600-to-next-warmup recorder
+  lifetime and clean timer/stack return. No new optical pixel review claimed.
+  [Physical result](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R09-RESULT.md).
 - [ ] WOLF-PERF-003-05 — Build and qualify both backends headlessly on Oryx;
   collect the frozen reversed-order matched emulator cohort.
+  Earlier four-way functional completion passes remain separate from corrected
+  matched emulator timing. Physical54 comparison completed; this arm stays open.
 - [x] WOLF-PERF-003-06 — Prepare the matched physical package/restoration plan,
   coordinate firmware and obtain the actual Extender grant before execution.
-  Hardware01/02 packages admitted under actual40/41 and cleanly restored/released;
-  the measurement cohort remains incomplete after first-failure stops.
-- [ ] WOLF-PERF-003-07 — Report draw time, submission/completion costs,
+  Actual54 completed all14guests/8probes and exact app/tail restoration; released
+  2026-11-06 09:31:19UTC, scheduler/actual successor notified. Prior stops retained.
+- [x] WOLF-PERF-003-07 — Report draw time, submission/completion costs,
   throughput, pacing and concrete comparison limitations with raw evidence.
+  [Physical report](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R09-RESULT.md):
+  draw30.701/91.560ms, paced24.409/10.004frames/s A/B; raw CCOUNT/sample CSVs,
+  source-clock limits, scriptedCPU/serial accounting and aggregate-gap caveats.
 - [ ] WOLF-PERF-003-08 — Obtain Smith's acceptance and record each disposition
   in the dated development log under its immutable ID.
 - [x] WOLF-PERF-003-09 — Coordinate a less intrusive setup-stall diagnostic
@@ -499,8 +506,9 @@ E1L1 (34,36), 720-degree/20-second fixture on both backends.
   private map/source reconciliation passes. Actual44 four loading-only passes,
   zero timeouts; restored/released, but prior render-bearing failure unproven.
   [Loading-only result](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-LOADING-R04-RESULT.md).
-  Hardware05 keeps this observer across actual matched render history;8clients
-  assemble with unchanged timed/send code, fresh finite hardware admission pending.
+  Hardware09 retains this observer across actual matched render history:
+  all14loads470records/952fences/zero timeouts or recoveries pass under actual54.
+  Prior intermittent cause remains unresolved; successful loads are not a repair.
 
 - [x] WOLF-PERF-003-17 — Localize the missing FIRST native A warmup completion
   before selecting another hardware cohort. Hardware02 fourth guest completed
@@ -510,7 +518,8 @@ E1L1 (34,36), 720-degree/20-second fixture on both backends.
   Source identifies retained recorder pointer/count after buffer deletion;
   Exact native-control sanitizer regression reproduces refusal and passes six
   corrected lifecycles; hardware03 A CPU/unpaced pass after fresh admission.
-  Subsequent loading abort prevents physical full600-to-next-warmup qualification.
+  Subsequent loading abort originally prevented full600-to-next-warmup evidence;
+  actual54 now passes that physical transition twice in the complete cohort.
   [Partial result](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R02-RESULT.md).
 
 - [ ] WOLF-PERF-003-18 — Investigate bespoke wall-column scratch allocation,

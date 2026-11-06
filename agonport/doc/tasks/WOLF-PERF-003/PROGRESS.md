@@ -693,3 +693,33 @@ for existing esptool; interpreter/helper/reset sources pinned. Two bootstrap
 ordering/failure-stop test methods plus six controller and3signal child checks
 pass.1537pins verified; HARDWARE-RUN-09 concrete finite scope ready for fresh
 admission/currentrelease reconciliation, not a repair claim or replay of52.
+
+### Actual54 complete physical comparison and clean release
+
+Frozen9e191aa/1537inputs admitted under actual54. All fourteen guests and eight
+outside-timing B resource probes pass; four explicit clean preparation pairs
+remain outside measurement. Every asset load completes470records/952fences,
+zero timeouts/recoveries. Corrected native map/recorder lifecycle passes the
+full600-to-next-warmup transitions. Prior intermittent loading cause is still
+unresolved; no repair attribution. Minimum B stack headroom1956B remains above
+the512B guard. All record/angle/count/return/stack/timer checks pass.
+
+Unpaced pooled1200draws/backend: A30.700994ms, B91.560165ms at configured240MHz,
+ratio2.982319. Broader command return30.705259/92.143890ms; most of the gap is
+inside drawing. Unpaced whole-path30.270925/10.522255frames/s; paced two20s runs
+24.409115/10.004480frames/s,978/402completed of1200quanta. Scripted CPU-only
+active1.120833/2.163333ms; shared pose+pack1.116667/1.101667ms, B extra bucket
+serializer lifecycle work, not UART. Source clocks only; MOS crosscheck retained.
+RawPRID0xCDCD explicitly maps PRO/core0 in installed SDK xtensa_context.h; not an
+invalid numeric core index. No optical scanout or ordinary-game FPS claim.
+
+Original20029942/full1105920span5fbf independently restored/readback; current
+P4/EMOS/startup/listener retained. Final mode0/callback0/Legacy0/CLI/readEXIT/
+neutralofflineidle/freeUSB/joinedactors pass. Extra prompt-mirroring/journal
+host mistakes corrected without repeating SAVE/guest/measurement; all originals
+preserved. Actual54 released09:31:19UTC, scheduler/actual next Extender notified
+before offline analysis; Wolf no custody, SD mounted. HARDWARE-R09-RESULT.md and
+results/hardware09 retain curated samples/reports/rawhashes; build/hardware09
+retains private full evidence. No renderer optimization included.003-04/-06/-07
+complete; human acceptance003-08, corrected matched emulator timing003-05,
+historical loading cause003-16 and parked column investigation003-18 remain open.
