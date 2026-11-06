@@ -1,0 +1,8 @@
+{
+  "advice_document": "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-032/WOLF-REVIEW-001-ADVICE.md",
+  "sha256": "86a62b746c9a3851b9dab3582b1aa6dbbd36f88b2fdfe64704bf164cab35ba54",
+  "owner_provenance": "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-032/WOLF-REVIEW-001-PROVENANCE.json",
+  "owner_provenance_sha256": "367d662d8f663ff15b63a1673ba073524d77d173284b7ad278cf67a3431d8ec1",
+  "mail_id": "2026-11-06_13-52-29_vdplet_wolf-review001-four-advice-return-one",
+  "scope": "Advice received only; no new implementation, benchmark or adopted protocol"
+}

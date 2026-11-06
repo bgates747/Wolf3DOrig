@@ -24,7 +24,8 @@ self-review, examples and advice exchange with VDPlet, with tasks written first.
 - [x] WOLF-REVIEW-001-05 — Share findings/questions with VDPlet and report
   actual delivery and dispositions to Smith; preserve later advice separately.
   [Delivery](agonport/doc/tasks/WOLF-REVIEW-001/DELIVERY.md): substantive mail
-  and immediate chat steering accepted; advice response pending, no new workload.
+  and immediate chat steering accepted. All four substantive advice answers now
+  [retained](agonport/doc/tasks/WOLF-REVIEW-001/ADVICE-RETURN.md); no new workload.
 
 # Phase A — original Episode 1 shareware parity
 

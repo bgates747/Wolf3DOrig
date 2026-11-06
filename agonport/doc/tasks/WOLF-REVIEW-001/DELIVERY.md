@@ -17,7 +17,11 @@ CHAT-AUTH-001 original human source was also verified in this sending turn.
 No new peer implementation, protocol adoption, benchmark or machine work was
 requested. The central digest and VDPlet's task remain its owner's files.
 
-All five finite review subtasks have deliverable evidence. Substantive advice
-is pending and will be retained separately if returned; receipt of that advice
+All five finite review subtasks have deliverable evidence. At delivery,
+substantive advice was pending; receipt of that advice
 is not a condition for this review's delivery completion. No renderer changes
 or new performance claims were made.
+
+Subsequent substantive answers to all four questions arrived in the owner's
+13:52:29 EST mail. [ADVICE-RETURN.md](ADVICE-RETURN.md) records the response and
+exact source pins separately; no new work or adoption follows from receipt.
