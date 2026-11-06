@@ -677,3 +677,19 @@ callback0/Legacy0/CLI/files/inputneutral/offlineidle/freeUSB/actorsjoined passed
 Released52 at08:26:06UTC; nextVDPlet25f6e811c787 notified. Source-only bootstrap
 review requested from Extender before concrete continuation, no newrun selected.
 HARDWARE-R08-RESULT.md retains honest lack of newrender/assetmeasurements.
+
+
+### Source disposition and explicit clean-bootstrap preparation09
+
+Exact715/e14 supports reciprocal mainboard-reset prefix; readyfalse alone does
+not locate52's cause or prove a universal P4reset requirement. Owner source
+review and actual52 recovery permit deliberate clean current P4-init then Agon
+bootstrap outside timing after each selected native install, including restore.
+09 selects exactly4such pairs, no timeout stretching/repeated uncertain flash/
+reset/guest. Exactcurrent build/PAD+healthy display precedes Agon; neutralinput/
+currentconsole/actualCLI/files/rawstate precede any guest. Compiled inputs and
+frame timing unchanged; no compiler. Run via maintained Extender interpreter
+for existing esptool; interpreter/helper/reset sources pinned. Two bootstrap
+ordering/failure-stop test methods plus six controller and3signal child checks
+pass.1537pins verified; HARDWARE-RUN-09 concrete finite scope ready for fresh
+admission/currentrelease reconciliation, not a repair claim or replay of52.
