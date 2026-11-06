@@ -495,7 +495,8 @@ E1L1 (34,36), 720-degree/20-second fixture on both backends.
   [Diagnostic design](agonport/doc/tasks/WOLF-PERF-003/LOADING-DIAGNOSTIC-DESIGN.md)
   led to [loading04](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-LOADING-R04.md):
   assembly/layout and five host checks pass; FIFOc5c0fb2067e2 PREPARING, actual
-  incoming native/tail binding and fresh admission pending after MechAgon43.
+  incoming native/tail bound after actual MechAgon43 release; diagnostic8270
+  private map/source reconciliation passes. READY; fresh admission pending.
 
 - [x] WOLF-PERF-003-17 — Localize the missing FIRST native A warmup completion
   before selecting another hardware cohort. Hardware02 fourth guest completed

@@ -1,6 +1,6 @@
 # Hardware loading04 — bounded sender observation
 
-Status: PREPARING; no hardware grant. Smith renewed proceed after repository
+Status: READY after actual43 release/offline rebind; fresh hardware grant pending. Smith renewed proceed after repository
 checkpoint9e52f7f on2026-11-05. This addresses003-16; no wall optimization, new
 shared firmware repair or full comparison cohort is selected here.
 
@@ -97,3 +97,36 @@ pass. Retained EMOS maps/ROM/P4/nativeA were independently rehashed offline;
 private RAM addresses match map. Current incoming native/tail remains unbound,
 so candidate-kit.json is ready=false and physical04 refuses construction.
 No target call, emulator run or firmware write has occurred.
+
+## Actual43 handback overrides the earlier provisional incoming binding
+
+MechAgon43 released23:29:03EST Nov5 after exact native20029942 app1101408B and
+full1105920B touched span/tail restoration/readback, span SHA
+5fbf82c41d6a7fbee6a9f121b16f321db544c316ee286f634878d7763ce54f37.
+P4a967/startuped403/listener0566 retained. Current EMOS is EXPERIMENTAL diagnostic
+8270ecd709138fe5ae617a91d5d365eeede0738025d5043fc790541b19b8f281, source
+71552879cb7e60f656ecbbc5c964ddd0e40fa416; ordinary7d16 and formerb5a1 are NOT
+installed. Owner diagnostic ROM/maps under agon-extender/agents/net004/
+emos-control-tx-diag-r01 were independently rehashed against its manifest.
+The compiled private addresses all match this exact map. Five full source files
+(serial.asm, handlers.asm, vdp_protocol.asm, mos_api.asm, mos.c) are byte-identical
+to c9c8b6b; the UART1 control diagnostic does not replace our Legacy query path.
+No guest/native rebuild required; preserve original9c07 guest bytes/compile logs.
+The retained diagnostic ROM/P4 are preserved throughout this native-only tranche.
+
+kit04 accepts only the two explicitly pinned ROM/map selections and requires
+rebind43 evidence for this diagnostic ROM. Incoming43 context uses MechAgon's
+actual independently read-back app/tail span; no new device/fullflash read.
+Exact native A remains1090464B c5cf; composed new/restored span1105920B at0x10000,
+inside unchanged1310720B active OTA0. No P4/EMOS/NVS/startup/partition write.
+The central request remains c5c0fb2067e2; this READY state is not a token/grant.
+Extender must supply fresh entry/component equality and stopped handoff before
+any target call. The finite four-loading-only/first-failure/handback scope stands.
+
+Final host runner review: preserve the inherited fresh observation as
+donor-observation.json before writing the loading-only disposition with the
+exclusive-create receipt helper. This fixes an otherwise FileExistsError after
+restoration; no target-operation ordering, guest or timed code change. Actual
+suite tests cover four successes and first failure after two invocations, no
+successors, one restore and both retained observations. Three controller plus
+three decoder tests now pass. Final bound kit remains107 inputs.

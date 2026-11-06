@@ -553,3 +553,17 @@ FIFOc5c0fb2067e2 PREPARING; Extender substantive mail/steer delivered.
 Candidate-kit ready=false until actual MechAgon release/native/tail reconciliation;
 physical04 refuses unbound input. No grant/firmware/native write or new timing.
 Wall-column003-18 remains parked.
+
+
+### Actual43 release and loading04 offline binding
+
+MechAgon43 actually released23:29:03EST after incoming20029942 app/tail restored
+full1105920B span5fbf82c4 independently read back; startup/listener/input/CLI/
+mode0/callback0/idle/freeports pass. Extender confirmed Wolf first, not granted.
+New current diagnosticEMOS8270/source71552879 retained, ordinary7d16 not installed.
+Rehashed diagnostic ROM and maps; all loading04 private RAM addresses unchanged.
+Five complete Legacy sender/reply/handler/wait source files byte-identical to
+priorc9c8b6b. Existing9c07 guest unchanged; no compiler/emulator/device action.
+Bound rollback to actual owner app/tail readback instead of assumed historical
+state. kit04 now selects exact8270/map pins with rebind43 receipt; plan READY for
+fresh scheduler grant, same finite four loading-only runs/no timed renders.

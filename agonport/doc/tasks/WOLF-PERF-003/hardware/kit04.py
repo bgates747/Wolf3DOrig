@@ -7,9 +7,16 @@ p=argparse.ArgumentParser();p.add_argument('--incoming',type=Path);args=p.parse_
 check=json.loads((B/'source-layout-check.json').read_text());assert check['passed']
 for name,digest in json.loads((B/'source-freeze.json').read_text()).items():assert sha(B/name)==digest,name
 assert all(x['returncode']==0 for x in json.loads((B/'compile-receipt.json').read_text())['steps'])
-fixed={E/'agents/net004/emos-rfc25-r01/ROM.bin':'b5a1f4aa3b9f4527aafb5f48aa29445c3e30962c5b21382729c370944b043b02',E/'agents/net004/emos-rfc25-r01/mos.map':'c1da58e4491ab0a5d0fd4720457ce42ccdb955a67776efeac61fef08ee14cc10',E/'agents/net004/emos-rfc25-r01/mos.elf.map':'8580fd2676d1d41b314c9d19b8e88fd4d08a2ae2a9ddd87b7172140ad6ec4701',E/'agents/net004/p4-full-r02/build/agon_extender.bin':'a967fac2e1364e5c1d80964ed5e8183feee693e4f63c256a02654dc8482e6eee',T/'build/hardware03/native-a/.pio/build/esp32dev/firmware.bin':'c5cfaaed91a0d294bbe30811ca57ff36a585d070946f0813a469412f57d77fcc'}
+context=json.loads(args.incoming.read_text())if args.incoming else None
+selected_rom=context['components']['emos_rom_sha256']if context else'b5a1f4aa3b9f4527aafb5f48aa29445c3e30962c5b21382729c370944b043b02'
+versions={
+ 'b5a1f4aa3b9f4527aafb5f48aa29445c3e30962c5b21382729c370944b043b02':('emos-rfc25-r01','c1da58e4491ab0a5d0fd4720457ce42ccdb955a67776efeac61fef08ee14cc10','8580fd2676d1d41b314c9d19b8e88fd4d08a2ae2a9ddd87b7172140ad6ec4701'),
+ '8270ecd709138fe5ae617a91d5d365eeede0738025d5043fc790541b19b8f281':('emos-control-tx-diag-r01','c33d82f4e21f2166499b8b57077cffdcee7b7eac4dcfb1cb477034bfc77c3d1e','3b9c439d41b8543b05efe252e5f1e6a5ae3b1d7d7cc91e8e4c379f7051672519'),
+}
+folder,map_sha,elfmap_sha=versions[selected_rom];emos_dir=E/'agents/net004'/folder
+fixed={emos_dir/'ROM.bin':selected_rom,emos_dir/'mos.map':map_sha,emos_dir/'mos.elf.map':elfmap_sha,E/'agents/net004/p4-full-r02/build/agon_extender.bin':'a967fac2e1364e5c1d80964ed5e8183feee693e4f63c256a02654dc8482e6eee',T/'build/hardware03/native-a/.pio/build/esp32dev/firmware.bin':'c5cfaaed91a0d294bbe30811ca57ff36a585d070946f0813a469412f57d77fcc'}
 for path,digest in fixed.items():assert sha(path)==digest,path
-maps=(E/'agents/net004/emos-rfc25-r01/mos.map').read_text()
+maps=(emos_dir/'mos.map').read_text()
 for symbol,address in {'_sysvars':0xbc322,'_vpd_protocol_flags':0xbc326,'_serialFlags':0xbc35a,'_emosVduBackend':0xbcb25,'_vdp_protocol_state':0xbc378,'_user_kbvector':0xbc38e}.items():
  import re
  match=re.search(r'0x([0-9a-fA-F]+)\s+'+symbol+r'\s*$',maps,re.M);assert match and int(match[1],16)==address,symbol
@@ -31,7 +38,7 @@ for path in [T.parent/'WOLF-PERF-001/hardware/physical.py',E/'scripts/sdcard.py'
 kit=dict(schema='wolf-loading04-kit',ready=False,stage=stage,inputs=inputs,labels=check['labels'],candidate_sha256=check['binary_sha256'],native_a_sha256=fixed[T/'build/hardware03/native-a/.pio/build/esp32dev/firmware.bin'],incoming_components=None,flash_offset=65536)
 if args.incoming:
  context=json.loads(args.incoming.read_text());components=context['components'];assert set(components)=={'emos_rom_sha256','p4_app_sha256','native_vdp_sha256','startup_sha256','listener_sha256'}
- assert components['emos_rom_sha256']==fixed[E/'agents/net004/emos-rfc25-r01/ROM.bin']
+ assert components['emos_rom_sha256']==selected_rom
  assert components['p4_app_sha256']==fixed[E/'agents/net004/p4-full-r02/build/agon_extender.bin']
  assert components['startup_sha256']=='ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64'
  assert components['listener_sha256']=='0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2'
@@ -56,6 +63,8 @@ if args.incoming:
  assert old[0]==new[0]==0xe9 and old[2:4]==new[2:4]and struct.unpack_from('<H',new,12)[0]==0
  (B/'restore.bin').write_bytes(original);(B/'install-a.bin').write_bytes(new+original[len(new):])
  kit.update(ready=True,incoming_components=components,flash_span=span,rollback_source=str(backup),incoming_evidence=str(evidence))
+ if selected_rom.startswith('8270'):
+  rebind=B/'rebind43.json';r=json.loads(rebind.read_text());assert r['current_rom']==selected_rom and r['all_private_ram_bindings_unchanged'];kit['inputs'][str(rebind)]=sha(rebind)
  for f in (args.incoming,image,backup,evidence,B/'restore.bin',B/'install-a.bin'):kit['inputs'][str(f)]=sha(f)
 (B/('kit.json'if args.incoming else'candidate-kit.json')).write_text(json.dumps(kit,indent=2)+'\n')
 print('FROZEN',len(inputs),'candidate inputs; current incoming bound:',kit['ready'])

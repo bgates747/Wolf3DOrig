@@ -35,4 +35,25 @@ class Controller(unittest.TestCase):
    b=object.__new__(Fake);b.remote='/test/wolf/perf003/load04';b.port='NO-DEVICE';b.banner=b'WOLF-PERF-003 FAILED';b.serial=Serial()
    m.q.m.open_passive_serial=lambda *a,**k:b.serial
    with self.assertRaises(RuntimeError):b.invoke(Path(name),'a-loading04.bin','MARKER')
+class SuiteFake(m.Bench):
+ def entry(self):pass
+ def stage(self):pass
+ def flash(self,label,image):self.flashes.append(label)
+ def case(self,index):
+  self.calls.append(index)
+  if index==self.fail_at:raise m.LoadingFailure('retained failure')
+ def handback(self):
+  p=self.out/'handback';p.mkdir();m.save(p/'observation.json',dict(epoch=123,disposition='donor'))
+class Restoration(unittest.TestCase):
+ def test_actual_suite_restores_and_preserves_exclusive_observation(self):
+  for fail in (None,2):
+   with tempfile.TemporaryDirectory()as name:
+    b=object.__new__(SuiteFake);b.out=Path(name);b.calls=[];b.flashes=[];b.fail_at=fail
+    b.suite()
+    self.assertEqual(b.flashes,['a-loading','restore'])
+    self.assertEqual(b.calls,[1,2,3,4]if fail is None else[1,2])
+    import json
+    self.assertEqual(json.loads((b.out/'handback/donor-observation.json').read_text())['disposition'],'donor')
+    self.assertIn('loading-only',json.loads((b.out/'handback/observation.json').read_text())['disposition'])
+    self.assertEqual(json.loads((b.out/'stopped-restored.json').read_text())['all_four_pass'],fail is None)
 if __name__=='__main__':unittest.main()

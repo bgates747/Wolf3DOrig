@@ -108,7 +108,8 @@ class Bench(q.Bench):
     save(self.out/'loading-stop.json',dict(error=str(error),no_successors=True,performance_claim=False))
    self.restoring=True
    self.flash('restore',B/'restore.bin');self.handback()
-   p=self.out/'handback/observation.json';d=json.loads(p.read_text());d['disposition']='Finite loading-only diagnostic ended; incoming native application/tail restored/readback, CLI/mode0/callback0/input/idle/freeports checked, EMOS/P4/startup/listener unchanged; SD mounted. No performance/optical claim.';save(p,d)
+   p=self.out/'handback/observation.json';d=json.loads(p.read_text());p.rename(p.with_name('donor-observation.json'))
+   d['disposition']='Finite loading-only diagnostic ended; incoming native application/tail restored/readback, CLI/mode0/callback0/input/idle/freeports checked, EMOS/P4/startup/listener unchanged; SD mounted. No performance/optical claim.';save(p,d)
    save(self.out/'stopped-restored.json',dict(restored=True,performance_claim=False,all_four_pass=not(self.out/'loading-stop.json').exists()))
   except BaseException as error:
    save(self.out/'failure.json',dict(error=repr(error),epoch=time.time(),next_dispatch_stopped=True,custody_retained=True,no_automatic_reset_or_replay=True));raise
