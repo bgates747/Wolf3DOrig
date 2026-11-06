@@ -5,6 +5,22 @@ unfinished work. IDs are stable references and are not reused. When an item is
 accepted, rejected, or superseded, record its ID, evidence, and rationale in
 the current dated development log, then remove it from this file.
 
+## WOLF-PERF-005 — bytewise direct-span invariant hoisting
+
+[Plan](agonport/doc/tasks/WOLF-PERF-005/PLAN.md) and
+[pre-code support/work ledger](agonport/doc/tasks/WOLF-PERF-005/PRE-CODE.md).
+Separate successor under Smith's broad practical release; physical63 is cleanly
+released and54568 is the explicit control, with no default adoption.
+
+- [x] WOLF-PERF-005-01 — Freeze owned task and exact existing-row compatibility/
+  intended-work ledger before candidate code.
+- [ ] WOLF-PERF-005-02 — Prepare task-owned bytewise span candidate only.
+- [ ] WOLF-PERF-005-03 — Qualify exact control reproduction, host/oracle/lifecycle
+  and actual target byte-access/call/provider/package/stack gates under Pi FIFO.
+- [ ] WOLF-PERF-005-04 — Freeze current-context finite hardware kit before grant.
+- [ ] WOLF-PERF-005-05 — Execute matched completed-work/resource physical arms.
+- [ ] WOLF-PERF-005-06 — Exact restore/release/report and owner evidence return.
+
 ## WOLF-PERF-004 — redundant background initialization candidate
 
 [Plan](agonport/doc/tasks/WOLF-PERF-004/PLAN.md) and
