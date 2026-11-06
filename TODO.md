@@ -5,6 +5,24 @@ unfinished work. IDs are stable references and are not reused. When an item is
 accepted, rejected, or superseded, record its ID, evidence, and rationale in
 the current dated development log, then remove it from this file.
 
+## WOLF-PERF-004 — redundant background initialization candidate
+
+[Plan](agonport/doc/tasks/WOLF-PERF-004/PLAN.md) and
+[pre-code review](agonport/doc/tasks/WOLF-PERF-004/PRE-CODE.md). Smith selected
+practical Wolf work while Oryx is down; preserve the independent audit baseline.
+
+- [ ] WOLF-PERF-004-01 — Freeze task and target compatibility/intended-work review.
+- [ ] WOLF-PERF-004-02 — Prepare the single clear-extent candidate and exact
+  original/candidate pixel/state/page/lifetime correctness comparison.
+- [ ] WOLF-PERF-004-03 — Qualify host checks and safe Xtensa module/resource
+  receipts under actual serial Pi compiler custody.
+- [ ] WOLF-PERF-004-04 — Reconcile current Extender context and freeze the finite
+  physical input/run/restoration package before actual fresh admission.
+- [ ] WOLF-PERF-004-05 — Execute original/candidate reversed-order600pose hardware
+  arms with resource/counter/return checks and first-failure stop.
+- [ ] WOLF-PERF-004-06 — Restore/release, report raw comparison/limits and share
+  substantive results/gaps with owners; no default adoption in this tranche.
+
 ## WOLF-REVIEW-001 — bespoke-to-VDPlet conversion self-review
 
 [Task plan](agonport/doc/tasks/WOLF-REVIEW-001/PLAN.md). Smith requested a
