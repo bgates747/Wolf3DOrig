@@ -597,3 +597,19 @@ Pi215 assembled8/source/layout/decoder pass and released05:00:28UTC nextnull;
 actual-controller barrier/14case8probe/full-firstfailure tests pass. NativeA/B/
 module unchanged; full rollback span1105920 bound to actual44/Mech43 evidence.
 No hardware/renderer optimization; freeze normal package before fresh admission.
+
+
+### Actual47 host entry stop and corrected06 preparation
+
+Actual47 admitted frozen e6efa09 after46 clean pinwalk/restoration. Controller
+stopped on host Path-vs-bytes hash TypeError at entry startup GET; zero guest
+LOAD/RUN/stage/namespace/nativewrite/reset. Preserve original05 selection/code/
+logs. Normal files/state/CLI/readEXIT/neutralidle/freeports cleanup passed and
+actual47 released06:22:51UTC nextnull, scheduler notified immediately.
+HARDWARE-ENTRY-R05-RESULT.md records no benchmark measurements. New physical06
+fixes entry hash bytes and uses fresh host output; retained pair05 was not yet
+created. Actual entry success/corrupt-file/collision/SAVE-only checks pass with
+existing prompt/full14case8probe/first-failure checks. All8clients/assets/module/
+native images unchanged; no rebuild. Separately identified HARDWARE-RUN-06.md
+retains exact finite comparison scope; freeze before fresh admission.003-16
+and paired comparison remain open; no automatic replay or oldtoken use.
