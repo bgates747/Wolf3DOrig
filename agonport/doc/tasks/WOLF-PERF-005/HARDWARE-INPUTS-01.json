@@ -1,0 +1,28 @@
+{
+  "task": "WOLF-PERF-005-hardware-r01",
+  "request": "f20187d1f257",
+  "remote": "/test/wolf/perf005/r01",
+  "incoming_components": {
+    "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+    "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+    "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+    "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+    "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+  },
+  "original_module_sha256": "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055",
+  "candidate_module_sha256": "bf7f2bb038387698464fbb297a437ef98457638a28261dc7f9688044d9b6eb28",
+  "native_b_sha256": "7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d",
+  "flash_span": 1105920,
+  "p4_boot_build": "net-003-r02-b2026-11-06-09-03-07Z",
+  "kit_sha256": "ccb7730c10e5839924de376a97deb516eb2a98aad81afe08a8ab06816b349a65",
+  "source_binding_sha256": "8d9c6aa56a3a3f9d57701cbd4551cdf82ce1bee0766d91f64b5f8233d0fd1f8b",
+  "input_count": 169,
+  "stage_count": 16,
+  "restore_span_sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de",
+  "install_span_sha256": "493fd0a010bedcfc5916314353f93565f7b159ac163d9bc61e7c5078140669e8",
+  "tests": {
+    "runner": 13,
+    "actual_listener_composition": 6
+  },
+  "scope": "READY file/source only; exact actual predecessor/currenttuple/freshgrant required, no speed/defaultclaim"
+}
