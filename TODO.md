@@ -419,22 +419,158 @@ Episode 1 immutable.
 freeze/commit/push and implementation on 2026-11-05. Use the same enemy-free
 E1L1 (34,36), 720-degree/20-second fixture on both backends.
 
-- [ ] WOLF-PERF-003-01 — Inventory and freeze matched production sources,
+- [x] WOLF-PERF-003-01 — Inventory and freeze matched production sources,
   renderer/runtime identities, workload and timing boundaries.
-- [ ] WOLF-PERF-003-02 — Adapt the fixture to the standalone backend and add
+  Plan5599f43, r04 input/native manifests and q01 harness freeze retained.
+- [x] WOLF-PERF-003-02 — Adapt the fixture to the standalone backend and add
   bounded VDP draw/completion instrumentation without timed logging.
-- [ ] WOLF-PERF-003-03 — Prepare a matched quiet VDPlet control from the same
+  r04/r05 actual production command capture, native recorder and completed
+  CPU/unpaced/paced paths retained; reliability/paired qualification below.
+- [x] WOLF-PERF-003-03 — Prepare a matched quiet VDPlet control from the same
   game source, assets, pose sequence and measurement contract.
+  Safe-SDK1907ce17, quiet native7593b9cf and identical canonical assets;
+  completed hidden/paced paths retained, original setup stalls unresolved.
 - [ ] WOLF-PERF-003-04 — Qualify scene/sequence parity, recorder integrity,
   failure paths and timer/vector restoration on the host.
+  Host parity and timer controls pass, but old A runtime omitted map binding.
+  r06 fixes it and passes Fab visuals; corrected native runtime qualification
+  remains required before accepting the scene/timing cohort.
 - [ ] WOLF-PERF-003-05 — Build and qualify both backends headlessly on Oryx;
   collect the frozen reversed-order matched emulator cohort.
-- [ ] WOLF-PERF-003-06 — Prepare the matched physical package/restoration plan,
+- [x] WOLF-PERF-003-06 — Prepare the matched physical package/restoration plan,
   coordinate firmware and obtain the actual Extender grant before execution.
+  Hardware01/02 packages admitted under actual40/41 and cleanly restored/released;
+  the measurement cohort remains incomplete after first-failure stops.
 - [ ] WOLF-PERF-003-07 — Report draw time, submission/completion costs,
   throughput, pacing and concrete comparison limitations with raw evidence.
 - [ ] WOLF-PERF-003-08 — Obtain Smith's acceptance and record each disposition
   in the dated development log under its immutable ID.
+- [x] WOLF-PERF-003-09 — Coordinate a less intrusive setup-stall diagnostic
+  design with Flexe before selecting further qualification runs.
+  [Consumer requirements](agonport/doc/tasks/WOLF-PERF-003/STALL-DIAGNOSTIC-REQUIREMENTS.md);
+  FX153 source/57host checks/release/static audit and two-case runtime delivery
+  complete; original failures and zero-sample passes remain separate/unresolved.
+
+- [x] WOLF-PERF-003-10 — Run Smith-requested Fab asset-loading comparison on
+  reserved Oryx; same guest/assets reach fixture entry in24.846s.
+  [Result](agonport/doc/tasks/WOLF-PERF-003/FAB-LOADING-RESULT.md); one pass,
+  host and VDP implementation both differ; original stall unresolved.
+
+- [x] WOLF-PERF-003-11 — Add visible fixture-loading breadcrumbs using the
+  game's existing loading-progress mechanism. Per-asset or per transmitted
+  data-chunk progress is acceptable; make ongoing loading apparent before the
+  rotation starts. Keep breadcrumbs outside measured benchmark intervals and
+  identify the transition into the animated fixture. r07 reconstructs stage
+  text and decimal completed count on both pages from one state; Fab flip
+  captures match exactly and actual total matches all470container records.
+  [Result](agonport/doc/tasks/WOLF-PERF-003/R07-RESULT.md); old evidence preserved.
+
+- [x] WOLF-PERF-003-12 — Resolve Smith's human-review scene/location mismatch.
+  A warmup omitted INIT_LEVEL/map binding, causing the solid-wall fallback.
+  r06 binds the map, passes Fab room/rotation visuals, and invalidates old A
+  comparison timings. [Result](agonport/doc/tasks/WOLF-PERF-003/R06-RESULT.md).
+
+- [x] WOLF-PERF-003-13 — Build the fourth combination: task-owned Fab native
+  production-VDPlet source bridge, explicitly distinct from Xtensa execution.
+  Exact package checked; contract checks and full600-pose/two-warmup run pass,
+  with clean load/unload, zero errors/residual leases and captured room output.
+- [x] WOLF-PERF-003-14 — Test all four combinations headlessly. Per Flexe
+  backend: if first run passes, run at least five trials; if first run fails,
+  retry it and retain both results. Report results to Smith for an interactive
+  comparison if the issue persists; do not launch a GUI on his behalf.
+  All12pass: Fab1/1 each, Flexe5/5 each;338retrieval hashes and actual timed
+  wire/pose checks pass. [Result](agonport/doc/tasks/WOLF-PERF-003/FOUR-WAY-RESULT.md).
+- [x] WOLF-PERF-003-15 — At the end of this arc, remind Smith: if emulator
+  issues persist, hand them to Flexe and move Wolf to other useful work.
+  Hardware is the game's primary target; emulator debugging must not become
+  an indefinite diversion. This reminder does not itself select new Flexe work.
+- [ ] WOLF-PERF-003-16 — Resolve the physical breadcrumb-fence setup abort.
+  Hardware01 preserved HUD28/total409, callback-abort14 and loading-error1;
+  no timing ran. Preserve ordering on both pages, instrument bounded waits for
+  the same pending setup reply, qualify a changed candidate and recognize early
+  setup returns in the runner. [Failure](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R01-RESULT.md).
+  Hardware03 reproduces HUD37/418: ten timeout returns across294MOS ticks,
+  phase1 afterC3; stray0x86 in serial, saved170086query intact. Root layer open.
+  [New evidence](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R03-RESULT.md).
+  [Diagnostic design](agonport/doc/tasks/WOLF-PERF-003/LOADING-DIAGNOSTIC-DESIGN.md)
+  is source-only; fresh component binding/admission required after bench43 changes.
+
+- [x] WOLF-PERF-003-17 — Localize the missing FIRST native A warmup completion
+  before selecting another hardware cohort. Hardware02 fourth guest completed
+  loading470/timeout0 but captured no render completion, then held after its
+  existing240-MOS-tick timeout. No paced sample or B result. Preserve phase/
+  transport evidence; do not blindly replay or change measured wait semantics.
+  Source identifies retained recorder pointer/count after buffer deletion;
+  Exact native-control sanitizer regression reproduces refusal and passes six
+  corrected lifecycles; hardware03 A CPU/unpaced pass after fresh admission.
+  Subsequent loading abort prevents physical full600-to-next-warmup qualification.
+  [Partial result](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R02-RESULT.md).
+
+- [ ] WOLF-PERF-003-18 — Investigate bespoke wall-column scratch allocation,
+  texture-copy and completion-call costs. Source confirms up to256 allocation
+  lifecycles/frame; double-buffer drawing is synchronous and explicit flush is
+  not a vsync wait. VDPlet already uses direct rows. Preserve the matched baseline;
+  profile before attributing cost, then qualify separately identified candidates.
+  [Source findings and staged proposal](agonport/doc/tasks/WOLF-PERF-003/WALL-RENDER-INVESTIGATION.md).
+
+## WOLF-PERF-002 — missing benchmark rotation
+
+[Task plan](agonport/doc/tasks/WOLF-PERF-002/PLAN.md). Author initially observed no visible
+rotation; the unchanged visible-only repeat now passes both turns on hardware.
+Ordinary-game spin comparison remains pending.
+
+- [x] WOLF-PERF-002-01 — Trace camera, serialization, renderer and presentation.
+- [x] WOLF-PERF-002-02 — Reproduce paced output with Oryx framebuffer evidence.
+- [x] WOLF-PERF-002-03 — Disposed: no fixture correction required; unchanged
+  source rotates on Oryx and in the accepted native-VGA repeat.
+- [x] WOLF-PERF-002-04 — Qualify changing views, sequence and clean teardown.
+  Oryx captures and generation28 hardware repeat/normal handback pass.
+- [x] WOLF-PERF-002-05 — Report disposition and obtain Author visual acceptance.
+  Author confirms correct room and both native-VGA turns; live-game comparison
+  remains pending.
+- [x] WOLF-PERF-002-06 — Add and qualify the audio-only spoken start cue,
+  after setup and immediately before the visible rotation; no BBC BASIC.
+  Implemented;18 actual-C host checks, revised generic Oryx checks and
+  original integrated-cue Oryx check pass. Native player Olimex37 passes;
+  Smith confirms clear speech. Integrated rotation hardware cue was not run.
+- [ ] WOLF-PERF-002-07 — Qualify and document a reusable native WAV player
+  and hand off its adoption to Extender for other agents.
+  Extender closes R02 source-review findings; native hardware/clear-speech
+  proof and qualified package handed off. Shared adoption remains pending.
+
+## WOLF-PERF-001 — deterministic frame-performance baseline
+
+Requirements and evidence sources: [task plan](agonport/doc/tasks/WOLF-PERF-001/PLAN.md).
+The Author released implementation and headless Oryx testing on 2026-11-04.
+IDs below are immutable; physical and publication gates remain separate.
+
+- [x] WOLF-PERF-001-01 — Freeze E1L1 tile (34,36), centered stationary player,
+  no enemy spawns and a full 720-degree rotation over twenty seconds. Pin world
+  state, count and endpoint semantics. Historical fixture recovery is superseded
+  by the Author selection recorded in today's devlog.
+- [x] WOLF-PERF-001-02 — Inspect Rally's actual timer, recorder, completion and
+  diagnostic firmware code; freeze reusable boundaries, donor provenance and
+  matched-comparison limitations.
+- [x] WOLF-PERF-001-03 — Implement task-siloed deterministic CPU-capacity,
+  unpaced completed-frame and production-cadence modes using production owners.
+- [x] WOLF-PERF-001-04 — Adapt Rally timing and guest output; distinguish eZ80
+  compute/packing/submission/wait and ESP32 renderer/completion intervals;
+  validate clocks, instrumentation overhead and bounded sample storage.
+- [x] WOLF-PERF-001-05 — Qualify sequence/state, output integrity, failure
+  handling, timer restoration and finite emulator execution; preserve identities
+  and report emulator limitations separately.
+- [x] WOLF-PERF-001-06 — Prepare the physical package/runbook, then obtain the
+  applicable deployment/flash/run authority and collect real-hardware evidence.
+- [x] WOLF-PERF-001-07 — Report per-stage capacity, completed throughput,
+  production cadence distributions and a qualified Rally comparison with raw data.
+- [ ] WOLF-PERF-001-08 — Obtain Author acceptance, record disposition by ID in
+  the dated devlog, and close accepted work under the canonical TODO convention.
+
+R06 evidence and limits: [results](agonport/doc/tasks/WOLF-PERF-001/RESULTS.md).
+Physical evidence: [hardware results](agonport/doc/tasks/WOLF-PERF-001/HARDWARE-RESULTS.md).
+Checked IDs record completed implementation and authorized physical/headless
+qualification pending Author acceptance. External calibration and production
+FPS remain unresolved; no publication is authorized.
 
 [ ] 8. Replace the requirement for a dedicated Wolf3D VDP firmware with a
 loadable Wolf3D VDPlet running on the shared VDPlet runtime. The completed

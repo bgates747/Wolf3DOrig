@@ -1,0 +1,6 @@
+[  2115][E][esp32-hal-misc.c:143] disableCore1WDT(): Failed to remove Core 1 IDLE task from WDT
+Agon Platform MOS Version 3.0.2 Arthur
+
+PLAYWAV PLAY OK
+PLAYWAV OK bytes=90240 rate=16000
+/voice *

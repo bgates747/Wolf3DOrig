@@ -1,0 +1,9 @@
+VDU 2
+/ *VDU 87 79 76 70 65 85 68 73 79 13 10
+WOLFAUDIO
+/ *EXEC /test/wolf/audio01/audio/invoke.txt
+PLAYWAV PLAY OK
+PLAYWAV OK bytes=126336 rate=16000
+Fast transfer: no CRCs or whole-file verification.
+sdserve-v0.3.0-b2026-11-03-08-07-19Z (draft), root /
+Escape returns to MOS.

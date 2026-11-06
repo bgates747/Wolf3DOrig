@@ -1,0 +1,405 @@
+{
+  "success": true,
+  "scope": "headless emulator only",
+  "engine": "jit",
+  "captures": [
+    {
+      "file": "frame-000.ppm",
+      "host_seconds": 0.00038556798244826496
+    },
+    {
+      "file": "frame-001.ppm",
+      "host_seconds": 1.001778222998837
+    },
+    {
+      "file": "frame-002.ppm",
+      "host_seconds": 2.0034025859786198
+    },
+    {
+      "file": "frame-003.ppm",
+      "host_seconds": 3.00474976998521
+    },
+    {
+      "file": "frame-004.ppm",
+      "host_seconds": 4.005983644980006
+    },
+    {
+      "file": "frame-005.ppm",
+      "host_seconds": 5.007266879983945
+    },
+    {
+      "file": "frame-006.ppm",
+      "host_seconds": 6.008542694995413
+    },
+    {
+      "file": "frame-007.ppm",
+      "host_seconds": 7.009952478983905
+    },
+    {
+      "file": "frame-008.ppm",
+      "host_seconds": 8.011367802973837
+    },
+    {
+      "file": "frame-009.ppm",
+      "host_seconds": 9.012853875989094
+    },
+    {
+      "file": "frame-010.ppm",
+      "host_seconds": 10.014101060980465
+    },
+    {
+      "file": "frame-011.ppm",
+      "host_seconds": 11.015423754986841
+    },
+    {
+      "file": "frame-012.ppm",
+      "host_seconds": 12.016897798981518
+    },
+    {
+      "file": "frame-013.ppm",
+      "host_seconds": 13.018221463978989
+    },
+    {
+      "file": "frame-014.ppm",
+      "host_seconds": 14.01977936597541
+    },
+    {
+      "file": "frame-015.ppm",
+      "host_seconds": 15.02107952098595
+    },
+    {
+      "file": "frame-016.ppm",
+      "host_seconds": 16.02236629498657
+    },
+    {
+      "file": "frame-017.ppm",
+      "host_seconds": 17.023714699986158
+    },
+    {
+      "file": "frame-018.ppm",
+      "host_seconds": 18.025024093978573
+    },
+    {
+      "file": "frame-019.ppm",
+      "host_seconds": 19.026287707994925
+    },
+    {
+      "file": "frame-020.ppm",
+      "host_seconds": 20.027672332973452
+    },
+    {
+      "file": "frame-021.ppm",
+      "host_seconds": 21.029137205972802
+    },
+    {
+      "file": "frame-022.ppm",
+      "host_seconds": 22.030477349995635
+    },
+    {
+      "file": "frame-023.ppm",
+      "host_seconds": 23.031837823975366
+    },
+    {
+      "file": "frame-024.ppm",
+      "host_seconds": 24.03323813798488
+    },
+    {
+      "file": "frame-025.ppm",
+      "host_seconds": 25.03471815100056
+    },
+    {
+      "file": "frame-026.ppm",
+      "host_seconds": 26.036413483001525
+    },
+    {
+      "file": "frame-027.ppm",
+      "host_seconds": 27.038069214991992
+    },
+    {
+      "file": "frame-028.ppm",
+      "host_seconds": 28.039624317985727
+    },
+    {
+      "file": "frame-029.ppm",
+      "host_seconds": 29.041107130993623
+    },
+    {
+      "file": "frame-030.ppm",
+      "host_seconds": 30.042535803979263
+    },
+    {
+      "file": "frame-031.ppm",
+      "host_seconds": 31.043874627997866
+    },
+    {
+      "file": "frame-032.ppm",
+      "host_seconds": 32.045225791982375
+    },
+    {
+      "file": "frame-033.ppm",
+      "host_seconds": 33.0465350659797
+    },
+    {
+      "file": "frame-034.ppm",
+      "host_seconds": 34.04783582998789
+    },
+    {
+      "file": "frame-035.ppm",
+      "host_seconds": 35.049338252982125
+    },
+    {
+      "file": "frame-036.ppm",
+      "host_seconds": 36.05085250598495
+    },
+    {
+      "file": "frame-037.ppm",
+      "host_seconds": 37.0524910579843
+    },
+    {
+      "file": "frame-038.ppm",
+      "host_seconds": 38.05406588999904
+    },
+    {
+      "file": "frame-039.ppm",
+      "host_seconds": 39.05560579299345
+    },
+    {
+      "file": "frame-040.ppm",
+      "host_seconds": 40.05713810498128
+    },
+    {
+      "file": "frame-041.ppm",
+      "host_seconds": 41.058630357991206
+    },
+    {
+      "file": "frame-042.ppm",
+      "host_seconds": 42.06004276097519
+    },
+    {
+      "file": "frame-043.ppm",
+      "host_seconds": 43.06162577398936
+    },
+    {
+      "file": "frame-044.ppm",
+      "host_seconds": 44.06298549697385
+    },
+    {
+      "file": "frame-045.ppm",
+      "host_seconds": 45.06436376099009
+    },
+    {
+      "file": "frame-046.ppm",
+      "host_seconds": 46.06567940398236
+    },
+    {
+      "file": "frame-047.ppm",
+      "host_seconds": 47.067102576984325
+    },
+    {
+      "file": "frame-048.ppm",
+      "host_seconds": 48.06854786997428
+    },
+    {
+      "file": "frame-049.ppm",
+      "host_seconds": 49.06999748299131
+    },
+    {
+      "file": "frame-050.ppm",
+      "host_seconds": 50.07156863500131
+    },
+    {
+      "file": "frame-051.ppm",
+      "host_seconds": 51.073115296981996
+    },
+    {
+      "file": "frame-052.ppm",
+      "host_seconds": 52.07477118898532
+    },
+    {
+      "file": "frame-053.ppm",
+      "host_seconds": 53.076483890996315
+    },
+    {
+      "file": "frame-054.ppm",
+      "host_seconds": 54.07787577397539
+    },
+    {
+      "file": "frame-055.ppm",
+      "host_seconds": 55.07926183697418
+    },
+    {
+      "file": "frame-056.ppm",
+      "host_seconds": 56.080665469984524
+    },
+    {
+      "file": "frame-057.ppm",
+      "host_seconds": 57.082037872984074
+    },
+    {
+      "file": "frame-058.ppm",
+      "host_seconds": 58.08346650598105
+    }
+  ],
+  "guest": {
+    "schema": "wolf-perf-001-result-v1",
+    "mode": "paced",
+    "completed_records": 430,
+    "scripted_steps": 600,
+    "coalesced_poses": 170,
+    "prt_ticks": 22187,
+    "mos_ticks": 2406,
+    "prt_nominal_seconds": 22.187,
+    "mos_nominal_seconds": 20.05,
+    "nominal_prt_records_per_second": 19.38071843872538,
+    "nominal_mos_records_per_second": 21.44638403990025,
+    "clock_ratio_mos_seconds_to_prt_seconds": 0.9036823365033578,
+    "empty_600_loop_prt_ticks": 0,
+    "clock_qualification": "nominal only; emulator and no external physical calibration",
+    "tile": [
+      34,
+      36
+    ],
+    "enemies": 0,
+    "host_wall_seconds": "runner records entire process, not race window",
+    "stages_nominal_prt_ms": {
+      "pose_ms": {
+        "mean": 0.013953488372093023,
+        "median": 0.0,
+        "p95": 0,
+        "max": 1,
+        "count": 430
+      },
+      "pack_ms": {
+        "mean": 1.0813953488372092,
+        "median": 1.0,
+        "p95": 2,
+        "max": 2,
+        "count": 430
+      },
+      "submit_ms": {
+        "mean": 1.6488372093023256,
+        "median": 2.0,
+        "p95": 2,
+        "max": 2,
+        "count": 430
+      },
+      "wait_ms": {
+        "mean": 41.24883720930232,
+        "median": 41.0,
+        "p95": 43,
+        "max": 46,
+        "count": 430
+      },
+      "present_fence_ms": {
+        "mean": 7.423255813953489,
+        "median": 7.0,
+        "p95": 9,
+        "max": 10,
+        "count": 430
+      },
+      "active_ms": {
+        "mean": 51.41627906976744,
+        "median": 51.0,
+        "p95": 52,
+        "max": 53,
+        "count": 430
+      }
+    },
+    "revolutions": {
+      "1": {
+        "records": 215,
+        "active_ms": {
+          "mean": 51.40930232558139,
+          "median": 51,
+          "p95": 53,
+          "max": 53,
+          "count": 215
+        },
+        "render_ccount": {
+          "mean": 10056970.404651163,
+          "median": 10048028,
+          "p95": 10181796,
+          "max": 10208640,
+          "count": 215
+        }
+      },
+      "2": {
+        "records": 215,
+        "active_ms": {
+          "mean": 51.42325581395349,
+          "median": 51,
+          "p95": 52,
+          "max": 53,
+          "count": 215
+        },
+        "render_ccount": {
+          "mean": 10056077.227906976,
+          "median": 10052484,
+          "p95": 10172486,
+          "max": 10208361,
+          "count": 215
+        }
+      }
+    },
+    "cpu_mode_submit_bucket_note": "In CPU mode submit_ms is serializer lifecycle bookkeeping, with no UART submission.",
+    "active_over_33_333_ms": 430,
+    "vdp_core_id": 52685,
+    "native_ccount": {
+      "render_ccount": {
+        "mean": 10056523.81627907,
+        "median": 10050133.5,
+        "p95": 10177293,
+        "max": 10208640,
+        "count": 430
+      },
+      "scope_ccount": {
+        "mean": 10102970.132558139,
+        "median": 10095946.5,
+        "p95": 10222753,
+        "max": 10255713,
+        "count": 430
+      },
+      "module_ccount": {
+        "mean": 10106898.946511628,
+        "median": 10099774.5,
+        "p95": 10228401,
+        "max": 10259541,
+        "count": 430
+      }
+    },
+    "native_ccount_note": "Local raw CCOUNT intervals; includes preemption/service calls. Not calibrated physical milliseconds or exclusive CPU work.",
+    "presentation_intervals_nominal_prt_ms": {
+      "mean": 51.526806526806524,
+      "median": 52,
+      "p95": 53,
+      "max": 68,
+      "count": 429
+    },
+    "sha256": {
+      "timing.bin": "3b8f9f4df6e4ebf171750b88d8812605f5cb7b9316b8d14904dc0c2a3c7b04e9",
+      "native.bin": "58c04554c10e46fb455a145426d8cb0f27e24e35217ed47c45e4c904fa3ba9aa"
+    }
+  },
+  "stats": {
+    "engine": "jit",
+    "frames": 3359,
+    "cycles": 13940208596,
+    "retired": 7626339689,
+    "uart_rx": 2513194,
+    "uart_tx": 63371,
+    "uart_delivered": 63371,
+    "isync": 447,
+    "code_invalidations": 2,
+    "keys": 0,
+    "failed": false,
+    "unhandled": 0,
+    "unregistered": 0,
+    "unmapped": 0
+  },
+  "returncode": 0,
+  "results": [
+    "timing.bin",
+    "native.bin"
+  ],
+  "whole_process_seconds": 58.35114875200088
+}

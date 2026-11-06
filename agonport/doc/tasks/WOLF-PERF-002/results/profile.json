@@ -1,0 +1,15 @@
+{
+  "profile": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf-perf-002-r01/original",
+  "source_profile": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf-perf-001-r07/paced",
+  "selection": "isolated copy; previous output excluded; runtime checksum manifest regenerated; no guest source or payload changes",
+  "sha256": {
+    "sdcard/wolf3d/wolf3d.bin": "90eb73ee8e28d27a39bc374ad6d020024d483164aedfcc23e8b0e2169f7941fe",
+    "sdcard/wolf3d/wolf3d.vdpl": "27f3d39285a5b49fec8aeed35085b1916ef537154f1d1d53956b075e00174c82",
+    "esp32-firmware.bin": "a50eb23acf6b3edfb44d3c1bb44858a213be696d68c06a696da7767170ac6f9a",
+    "esp32-firmware.elf": "50e569cff77883e062603317441a30a90e7057e188a792005d2589f1a6c92785",
+    "flexe-vdp.so": "0866265bd6f3d73ad572f31dc1bb954f308ed9a5d857efa9414d37e1ade13374",
+    "flexe-agon-emulator.bin": "7e7d0e1bc89af72bde7ffbd6c06446aaefda4d1803f89eb1faf3167307ee1e01",
+    "mos_platform.bin": "d564243283972690933a4554296ad6202ca4ef54572279533a942960846bebae",
+    "flexe-agon-emulator": "f7951314959be72ab7757579a9daf2a42383ccdb5187dec9d9653b42ad8a477c"
+  }
+}

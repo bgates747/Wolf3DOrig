@@ -1,0 +1,167 @@
+{
+  "success": true,
+  "scope": "headless emulator only",
+  "engine": "jit",
+  "guest": {
+    "schema": "wolf-perf-001-result-v1",
+    "mode": "paced",
+    "completed_records": 429,
+    "scripted_steps": 600,
+    "coalesced_poses": 171,
+    "prt_ticks": 22121,
+    "mos_ticks": 2408,
+    "prt_nominal_seconds": 22.121,
+    "mos_nominal_seconds": 20.066666666666666,
+    "nominal_prt_records_per_second": 19.393336648433614,
+    "nominal_mos_records_per_second": 21.37873754152824,
+    "clock_ratio_mos_seconds_to_prt_seconds": 0.907131986197128,
+    "empty_600_loop_prt_ticks": 0,
+    "clock_qualification": "nominal only; emulator and no external physical calibration",
+    "tile": [
+      34,
+      36
+    ],
+    "enemies": 0,
+    "host_wall_seconds": "runner records entire process, not race window",
+    "stages_nominal_prt_ms": {
+      "pose_ms": {
+        "mean": 0.011655011655011656,
+        "median": 0,
+        "p95": 0,
+        "max": 1,
+        "count": 429
+      },
+      "pack_ms": {
+        "mean": 1.097902097902098,
+        "median": 1,
+        "p95": 2,
+        "max": 2,
+        "count": 429
+      },
+      "submit_ms": {
+        "mean": 1.6177156177156178,
+        "median": 2,
+        "p95": 2,
+        "max": 2,
+        "count": 429
+      },
+      "wait_ms": {
+        "mean": 41.35198135198135,
+        "median": 41,
+        "p95": 43,
+        "max": 44,
+        "count": 429
+      },
+      "present_fence_ms": {
+        "mean": 7.34965034965035,
+        "median": 7,
+        "p95": 9,
+        "max": 10,
+        "count": 429
+      },
+      "active_ms": {
+        "mean": 51.42890442890443,
+        "median": 51,
+        "p95": 52,
+        "max": 54,
+        "count": 429
+      }
+    },
+    "revolutions": {
+      "1": {
+        "records": 214,
+        "active_ms": {
+          "mean": 51.38317757009346,
+          "median": 51.0,
+          "p95": 52,
+          "max": 53,
+          "count": 214
+        },
+        "render_ccount": {
+          "mean": 10053991.257009346,
+          "median": 10036372.0,
+          "p95": 10174242,
+          "max": 10212995,
+          "count": 214
+        }
+      },
+      "2": {
+        "records": 215,
+        "active_ms": {
+          "mean": 51.47441860465116,
+          "median": 51,
+          "p95": 52,
+          "max": 54,
+          "count": 215
+        },
+        "render_ccount": {
+          "mean": 10052540.065116279,
+          "median": 10034780,
+          "p95": 10181151,
+          "max": 10208704,
+          "count": 215
+        }
+      }
+    },
+    "cpu_mode_submit_bucket_note": "In CPU mode submit_ms is serializer lifecycle bookkeeping, with no UART submission.",
+    "active_over_33_333_ms": 429,
+    "vdp_core_id": 52685,
+    "native_ccount": {
+      "render_ccount": {
+        "mean": 10053263.969696969,
+        "median": 10034780,
+        "p95": 10174242,
+        "max": 10212995,
+        "count": 429
+      },
+      "scope_ccount": {
+        "mean": 10099846.941724941,
+        "median": 10082265,
+        "p95": 10219519,
+        "max": 10258272,
+        "count": 429
+      },
+      "module_ccount": {
+        "mean": 10103732.519813519,
+        "median": 10086093,
+        "p95": 10223347,
+        "max": 10262254,
+        "count": 429
+      }
+    },
+    "native_ccount_note": "Local raw CCOUNT intervals; includes preemption/service calls. Not calibrated physical milliseconds or exclusive CPU work.",
+    "presentation_intervals_nominal_prt_ms": {
+      "mean": 51.5303738317757,
+      "median": 51.0,
+      "p95": 52,
+      "max": 68,
+      "count": 428
+    },
+    "sha256": {
+      "timing.bin": "d510a74e863fdd4bf55a25b07de033ae0b88ba212abb782d96618ddccaf501b2",
+      "native.bin": "12077aede0546731a1aeb87f3eeb71bba31ad6ff495a66722a20994a138f7820"
+    }
+  },
+  "stats": {
+    "engine": "jit",
+    "frames": 3249,
+    "cycles": 13482439623,
+    "retired": 7146227068,
+    "uart_rx": 2512943,
+    "uart_tx": 63227,
+    "uart_delivered": 63227,
+    "isync": 446,
+    "code_invalidations": 2,
+    "keys": 0,
+    "failed": false,
+    "unhandled": 0,
+    "unregistered": 0,
+    "unmapped": 0
+  },
+  "returncode": 0,
+  "results": [
+    "timing.bin",
+    "native.bin"
+  ],
+  "whole_process_seconds": 56.39498848700896
+}

@@ -1,0 +1,297 @@
+[
+  {
+    "frame": "frame-000.png",
+    "raw_sha256": "a6087ec5178c7619d8136de2aa159dde7161d56f9e4c3b899b7165935d0353d8",
+    "colors": 1
+  },
+  {
+    "frame": "frame-001.png",
+    "raw_sha256": "ddbde47215f6559a2da7d49aca8d97c51797dfe77741ab0037d30ee76dcde7d0",
+    "colors": 2
+  },
+  {
+    "frame": "frame-002.png",
+    "raw_sha256": "ddbde47215f6559a2da7d49aca8d97c51797dfe77741ab0037d30ee76dcde7d0",
+    "colors": 2
+  },
+  {
+    "frame": "frame-003.png",
+    "raw_sha256": "ddbde47215f6559a2da7d49aca8d97c51797dfe77741ab0037d30ee76dcde7d0",
+    "colors": 2
+  },
+  {
+    "frame": "frame-004.png",
+    "raw_sha256": "ddbde47215f6559a2da7d49aca8d97c51797dfe77741ab0037d30ee76dcde7d0",
+    "colors": 2
+  },
+  {
+    "frame": "frame-005.png",
+    "raw_sha256": "2ea58e43807b58966f7bbb21fc4af4979996beb7117e1ab26138b8dad0a4d8a9",
+    "colors": 2
+  },
+  {
+    "frame": "frame-006.png",
+    "raw_sha256": "2ea58e43807b58966f7bbb21fc4af4979996beb7117e1ab26138b8dad0a4d8a9",
+    "colors": 2
+  },
+  {
+    "frame": "frame-007.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-008.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-009.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-010.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-011.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-012.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-013.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-014.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-015.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-016.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-017.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-018.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-019.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-020.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-021.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-022.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-023.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-024.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-025.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-026.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-027.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-028.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-029.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-030.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-031.png",
+    "raw_sha256": "12c810bd25efe1a7484387cd3d5a8503ce7cc341d61768b99a85c39a0ecca884",
+    "colors": 1
+  },
+  {
+    "frame": "frame-032.png",
+    "raw_sha256": "e6188658156aa76616165ae95c91ddfae975b3022a93763802722925b2e2db1e",
+    "colors": 30
+  },
+  {
+    "frame": "frame-033.png",
+    "raw_sha256": "b6881e09ba56195e6d74a3c55a1f792df63380de90feceed613d0b05db4fce92",
+    "colors": 31
+  },
+  {
+    "frame": "frame-034.png",
+    "raw_sha256": "74831b6da9f16c2afd84821d3551ff96b2950e601e44b24d2186762974f12029",
+    "colors": 31
+  },
+  {
+    "frame": "frame-035.png",
+    "raw_sha256": "3b9412c0dde41cbc664c1d9629e80735d765e1aef48d30ae4e51b112791dc971",
+    "colors": 31
+  },
+  {
+    "frame": "frame-036.png",
+    "raw_sha256": "51bc5a3c6262de31ee3c2ab35ebb3f85307d41b66691275064fd28d5bd7939f6",
+    "colors": 29
+  },
+  {
+    "frame": "frame-037.png",
+    "raw_sha256": "ec5e84819b1f1b085a416f5f7746af48b0af0c29f66e1811d2b3059876f51e41",
+    "colors": 30
+  },
+  {
+    "frame": "frame-038.png",
+    "raw_sha256": "ac2461d16a084f88bda62b599bd735deb0fb03a01e8bdd6c34778d6cc4369d5a",
+    "colors": 28
+  },
+  {
+    "frame": "frame-039.png",
+    "raw_sha256": "1a9394ee10688de6cc537c1fd85a40b66bc0084d7e5291ef0d310fdb47565314",
+    "colors": 26
+  },
+  {
+    "frame": "frame-040.png",
+    "raw_sha256": "57c4184e0602841f663c668e49dff2c1ecb04da45b4814b6bcf7497d329d3b3c",
+    "colors": 26
+  },
+  {
+    "frame": "frame-041.png",
+    "raw_sha256": "e22ee1910190529812ef8f8e626a9b35ea168059f68828fb37c7195e2f0f568b",
+    "colors": 29
+  },
+  {
+    "frame": "frame-042.png",
+    "raw_sha256": "c89fc6584ec54be97c2b22042464159fa13b4651993e94b1d1a3f565d3ab6947",
+    "colors": 30
+  },
+  {
+    "frame": "frame-043.png",
+    "raw_sha256": "4fdc3e914f68a199b1bdcb640694896a98a625aa05054c90e702dd835cdd77da",
+    "colors": 30
+  },
+  {
+    "frame": "frame-044.png",
+    "raw_sha256": "b90a4fb26ea2715e0d2d37f6bdba28c8a04123a648a4449d9e49e08536c4f0ec",
+    "colors": 31
+  },
+  {
+    "frame": "frame-045.png",
+    "raw_sha256": "d644ee43163c52236e6177e2d387b0a68a0819db19b7db7f6135bb34b983277f",
+    "colors": 30
+  },
+  {
+    "frame": "frame-046.png",
+    "raw_sha256": "5a5e9c4065c110886b203ddbe9406725495905318ed1107c341332eeb095c6cc",
+    "colors": 31
+  },
+  {
+    "frame": "frame-047.png",
+    "raw_sha256": "36dc01af954da8924b277431ee8423834e352ad17f172931b8bf7c3c10db0186",
+    "colors": 29
+  },
+  {
+    "frame": "frame-048.png",
+    "raw_sha256": "6a25192c28a865c0e8852aa4b7baf67081538c4ded0e51ef88ce30e21e93dc7d",
+    "colors": 27
+  },
+  {
+    "frame": "frame-049.png",
+    "raw_sha256": "be7a82922cdbbf771e8ff21943edc053e269e2649cc07aafc1b1a0b51fd75ece",
+    "colors": 30
+  },
+  {
+    "frame": "frame-050.png",
+    "raw_sha256": "c858046bd84b5ea01407654a9da272feb7bbba23faca489fd5004134d3917a88",
+    "colors": 26
+  },
+  {
+    "frame": "frame-051.png",
+    "raw_sha256": "dc6961008ceae5c6f23185c2a705c98ec8a6a1acaa3d7f28b30ff2c2efd4765f",
+    "colors": 26
+  },
+  {
+    "frame": "frame-052.png",
+    "raw_sha256": "25391aca199ff1bf7d396ddbd274a6c4ae8f3f2eb6a40a1898720e026ee8f957",
+    "colors": 30
+  },
+  {
+    "frame": "frame-053.png",
+    "raw_sha256": "b68a176e2baef6aa965eec58a060204fcb735755ae30b42b3068e635f6f4835b",
+    "colors": 30
+  },
+  {
+    "frame": "frame-054.png",
+    "raw_sha256": "3965c16122fa30811c09e122552df4db64a8cb12b560ef764e67c9d1a28e4887",
+    "colors": 30
+  },
+  {
+    "frame": "frame-055.png",
+    "raw_sha256": "3965c16122fa30811c09e122552df4db64a8cb12b560ef764e67c9d1a28e4887",
+    "colors": 30
+  },
+  {
+    "frame": "frame-056.png",
+    "raw_sha256": "3965c16122fa30811c09e122552df4db64a8cb12b560ef764e67c9d1a28e4887",
+    "colors": 30
+  },
+  {
+    "frame": "frame-057.png",
+    "raw_sha256": "3965c16122fa30811c09e122552df4db64a8cb12b560ef764e67c9d1a28e4887",
+    "colors": 30
+  },
+  {
+    "frame": "frame-058.png",
+    "raw_sha256": "77b5f8f10d2d8c927b5070cdf099947e040f2dc6647fd29fc95478f308b66f5b",
+    "colors": 2
+  }
+]

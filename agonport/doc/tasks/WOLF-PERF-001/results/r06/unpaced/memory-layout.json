@@ -1,0 +1,8 @@
+{
+  "image_base": 262144,
+  "executable_and_data_end": 581197,
+  "package_scratch": 655360,
+  "package_scratch_bytes": 19124,
+  "image_end": 581197,
+  "stack_reserve_start": 720896
+}

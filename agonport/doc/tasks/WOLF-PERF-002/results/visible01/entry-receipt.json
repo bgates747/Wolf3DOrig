@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "actual_cli": true,
+  "mode": 0,
+  "route": "legacy",
+  "startup_listener_verified": true
+}

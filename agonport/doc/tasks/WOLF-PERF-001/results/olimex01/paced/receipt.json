@@ -1,0 +1,7 @@
+{
+  "passed": true,
+  "case": "paced",
+  "records": 201,
+  "physical_clocks_uncalibrated": true,
+  "installed_runtime_diagnostic_logging": true
+}

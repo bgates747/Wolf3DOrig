@@ -1,0 +1,5 @@
+WOLF-PERF-001 COMPLETE
+VDPL UNLOAD status=0
+
+Thanks for playing Wolf3DOrig!
+/wolf3d *

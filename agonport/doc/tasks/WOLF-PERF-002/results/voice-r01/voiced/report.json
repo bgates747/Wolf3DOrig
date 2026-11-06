@@ -1,0 +1,140 @@
+{
+  "schema": "wolf-perf-001-result-v1",
+  "mode": "paced",
+  "completed_records": 429,
+  "scripted_steps": 600,
+  "coalesced_poses": 171,
+  "prt_ticks": 22146,
+  "mos_ticks": 2406,
+  "prt_nominal_seconds": 22.146,
+  "mos_nominal_seconds": 20.05,
+  "nominal_prt_records_per_second": 19.37144405310214,
+  "nominal_mos_records_per_second": 21.39650872817955,
+  "clock_ratio_mos_seconds_to_prt_seconds": 0.9053553689153797,
+  "empty_600_loop_prt_ticks": 0,
+  "clock_qualification": "nominal only; emulator and no external physical calibration",
+  "tile": [
+    34,
+    36
+  ],
+  "enemies": 0,
+  "host_wall_seconds": "runner records entire process, not race window",
+  "stages_nominal_prt_ms": {
+    "pose_ms": {
+      "mean": 0.013986013986013986,
+      "median": 0,
+      "p95": 0,
+      "max": 1,
+      "count": 429
+    },
+    "pack_ms": {
+      "mean": 1.0885780885780887,
+      "median": 1,
+      "p95": 2,
+      "max": 2,
+      "count": 429
+    },
+    "submit_ms": {
+      "mean": 1.6107226107226107,
+      "median": 2,
+      "p95": 2,
+      "max": 2,
+      "count": 429
+    },
+    "wait_ms": {
+      "mean": 41.40559440559441,
+      "median": 41,
+      "p95": 43,
+      "max": 44,
+      "count": 429
+    },
+    "present_fence_ms": {
+      "mean": 7.344988344988345,
+      "median": 7,
+      "p95": 9,
+      "max": 16,
+      "count": 429
+    },
+    "active_ms": {
+      "mean": 51.463869463869464,
+      "median": 51,
+      "p95": 53,
+      "max": 60,
+      "count": 429
+    }
+  },
+  "revolutions": {
+    "1": {
+      "records": 215,
+      "active_ms": {
+        "mean": 51.46976744186046,
+        "median": 51,
+        "p95": 53,
+        "max": 60,
+        "count": 215
+      },
+      "render_ccount": {
+        "mean": 10055008.655813953,
+        "median": 10039190,
+        "p95": 10177102,
+        "max": 10213061,
+        "count": 215
+      }
+    },
+    "2": {
+      "records": 214,
+      "active_ms": {
+        "mean": 51.45794392523364,
+        "median": 51.0,
+        "p95": 52,
+        "max": 53,
+        "count": 214
+      },
+      "render_ccount": {
+        "mean": 10053011.827102805,
+        "median": 10037346.5,
+        "p95": 10170889,
+        "max": 10203480,
+        "count": 214
+      }
+    }
+  },
+  "cpu_mode_submit_bucket_note": "In CPU mode submit_ms is serializer lifecycle bookkeeping, with no UART submission.",
+  "active_over_33_333_ms": 429,
+  "vdp_core_id": 52685,
+  "native_ccount": {
+    "render_ccount": {
+      "mean": 10054012.56876457,
+      "median": 10038967,
+      "p95": 10174386,
+      "max": 10213061,
+      "count": 429
+    },
+    "scope_ccount": {
+      "mean": 10100516.682983683,
+      "median": 10084467,
+      "p95": 10219663,
+      "max": 10258338,
+      "count": 429
+    },
+    "module_ccount": {
+      "mean": 10104445.792540792,
+      "median": 10088295,
+      "p95": 10224914,
+      "max": 10262166,
+      "count": 429
+    }
+  },
+  "native_ccount_note": "Local raw CCOUNT intervals; includes preemption/service calls. Not calibrated physical milliseconds or exclusive CPU work.",
+  "presentation_intervals_nominal_prt_ms": {
+    "mean": 51.52803738317757,
+    "median": 51.0,
+    "p95": 53,
+    "max": 68,
+    "count": 428
+  },
+  "sha256": {
+    "timing.bin": "861cbfbc88d6d2076da67c458c496ccc4185e0f09c56131bc7a6b65e09e090c4",
+    "native.bin": "a56c019cdc0531563218a1b70db3445d9077868e497be2770583dccebb288093"
+  }
+}

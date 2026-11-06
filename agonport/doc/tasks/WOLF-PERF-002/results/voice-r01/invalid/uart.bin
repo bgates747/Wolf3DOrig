@@ -1,0 +1,9 @@
+[  2115][E][esp32-hal-misc.c:143] disableCore1WDT(): Failed to remove Core 1 IDLE task from WDT
+Agon Platform MOS Version 3.0.2 Arthur
+
+PLAYWAV ERROR format; audio untouched
+
+Error executing autoexec.txt at line 3
+
+SD card failure
+/voice *

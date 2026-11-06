@@ -1,0 +1,50 @@
+{
+  "compiler": "xtensa-esp32-elf-gcc (crosstool-NG esp-2021r2-patch5) 8.4.0",
+  "abi_header_sha256": "92a6bbc403ecc51e165c103cfd16fd071f3d644ad52f83a4a7cb4fe088a5a2d6",
+  "protocol_header_sha256": "0dc8ad31e249ce58ed39435f6a8a265a9175be417ea3bee8a2cc10cde9f94b2f",
+  "services_header_sha256": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f",
+  "pcm_sink_header_sha256": "e3bf5d900105ddd87e82f5cd38301fab02ffb7a7e38f81012db0bb2e13ba963c",
+  "module": {
+    "name": "wolf_perf",
+    "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-001/build/native-source/wolf3d_module.cpp",
+    "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+    "policy_sha256": "c69d6f3654b4b5dd4a8ae76e971818f4b13369d61dbded607b844e3268f66419",
+    "declared_limits": {
+      "text": 65536,
+      "data": 16384,
+      "stack": 2048,
+      "image": 131072
+    },
+    "build_id": "0x20261104",
+    "capabilities": 257,
+    "abi_major": 1,
+    "abi_minor": 6,
+    "envelope_bytes": 64,
+    "elf_bytes": 19060,
+    "package_bytes": 19124,
+    "sha256": "27f3d39285a5b49fec8aeed35085b1916ef537154f1d1d53956b075e00174c82",
+    "package": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-001/build/module/wolf_perf.vdpl",
+    "elf": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-001/build/module/wolf_perf.elf",
+    "entry_virtual": 13424,
+    "resident_text_bytes": 13572,
+    "resident_data_bytes": 9732,
+    "relative_relocations": 51,
+    "allocated_sections": {
+      ".text": {
+        "virtual_address": 828,
+        "bytes": 13570,
+        "type": 1
+      },
+      ".rodata": {
+        "virtual_address": 14400,
+        "bytes": 4236,
+        "type": 1
+      },
+      ".bss": {
+        "virtual_address": 23032,
+        "bytes": 5496,
+        "type": 8
+      }
+    }
+  }
+}

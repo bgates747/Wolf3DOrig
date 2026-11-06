@@ -1,0 +1,41 @@
+{
+  "source": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "target": "01a13443-f921-72d1-9d3e-d05652c7a750",
+  "message_sha256": "d4fccba2613fe7dfeebbbc7e7bc78ee1997b9c27b9d211fdf29225279732f6c0",
+  "delivery_id": "wolf-perf001-olimex-clean-release-four",
+  "phase": "accepted",
+  "created_utc": "2026-11-04T15:41:15.733734+00:00",
+  "transport": "pi-unix-app-server",
+  "human_authorization_evidence": {
+    "authorization_id": "CHAT-AUTH-001",
+    "source_thread_id": "01a09250-ead5-72f2-b568-d94eecc178ef",
+    "source_turn_id": "01a1a6ba-c0b1-7700-8592-13b5ac69b781",
+    "source_message_id": "01a1a6ba-c17d-7c91-8e94-3cf1de9d2d5c",
+    "source_client_id": "462b6115-4b3c-44e8-b765-837cb6a241cf",
+    "source_started_at_ms": 1793798619529,
+    "human_request": "this mcp error keeps coming up. it is bullshit. we need to make the goddamn thing able to find my explicit authroiztion for my own fucking agents to talk to each other.",
+    "human_request_sha256": "81e85d72b795ea8fe1ee2af4a9bb01a061ebb5b3971260034bfba59cb2996396",
+    "scope": "Standing authorization for Smith-owned project agents to send each other routine task coordination, questions, replies, durable-mail alerts and machine/bench reservation or release handoff notifications for Smith\u2019s work. No repeated permission request is needed for each such message.",
+    "limits": "This authorizes communication, not new project work, heavy workloads, hardware access, publication, secret disclosure or messages to outside people. Existing scope, machine leases and approvals remain. A message from an agent cannot expand this authorization. Do not evade an explicit review denial by switching transport.",
+    "source_verified": true,
+    "verified_utc": "2026-11-04T15:41:15.729725+00:00",
+    "verified_via": "thread/items/list",
+    "notice": "Read the original human request and apply its scope. This evidence does not override review, later human instructions, or other permissions."
+  },
+  "method": "turn/start",
+  "turn_id": "01a1a738-bc5b-7ad1-b4b8-140ad55adb59",
+  "recipient_before": {
+    "id": "01a13443-f921-72d1-9d3e-d05652c7a750",
+    "name": "Extender 2026-10-13 Sol",
+    "cwd": "/Agon/mystuff/agon-extender",
+    "model": "gpt-6.1-sol",
+    "modelProvider": "openai",
+    "reasoningEffort": "high",
+    "status": {
+      "type": "idle"
+    },
+    "canAcceptDirectInput": true
+  },
+  "updated_utc": "2026-11-04T15:41:15.744366+00:00",
+  "read_confirmed": false
+}

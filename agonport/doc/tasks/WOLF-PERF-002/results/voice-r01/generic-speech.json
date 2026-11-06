@@ -1,0 +1,15 @@
+{
+  "schema": "audio-notify-speech-v1",
+  "text": "The Wolf Agent notifies you that audio notifications are ready. This message is playing without BASIC.",
+  "engine": "gTTS2.5.4",
+  "language": "en",
+  "tld": "co.uk",
+  "rate": 16000,
+  "pcm_bytes": 126336,
+  "seconds": 7.896,
+  "converter_sha256": "f1085776b1e87e343204d9c2fc63a23972c5bef0ceed8df757946afbcf5cf545",
+  "sha256": {
+    "notification.wav": "7a5964f903d069ed715c121275d1464a0f0952a79d3cdff28eddcb763d904b12",
+    "notification.mp3": "79e7f8a53e6d8fb72e3d47d3297bdb90e2a1fb5694445acd7ae458250995afa3"
+  }
+}

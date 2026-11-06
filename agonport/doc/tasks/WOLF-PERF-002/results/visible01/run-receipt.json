@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "case": "paced",
+  "application_invocations": 1,
+  "host_whole_operation_seconds": 96.2444685990049,
+  "performance_denominator": false,
+  "identity": 256,
+  "capabilities": 287,
+  "normal_return": true,
+  "correctness_pending_retrieval": true
+}

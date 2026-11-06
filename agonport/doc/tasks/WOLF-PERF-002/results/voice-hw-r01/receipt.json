@@ -1,0 +1,25 @@
+{
+  "generation": 37,
+  "request": "7f60ca35b2f7",
+  "released_utc": "2026-11-05T17:30:12.506404Z",
+  "single_playback": true,
+  "sample_rate": 16000,
+  "pcm_bytes": 126336,
+  "clip_seconds": 7.896,
+  "player_sha256": "58445582632689a135e44f398626aa9c1101ba5459b25a94091867deb23b0245",
+  "human_hearing": "confirmed clear speech",
+  "handback_checks": {
+    "no_workload": true,
+    "no_transfer": true,
+    "no_serial_readers": true,
+    "no_reset_holders": true,
+    "cli_verified": true,
+    "input_ready_neutral": true,
+    "listener_offline": true,
+    "staged_job_idle": true,
+    "restoration_verified": true
+  },
+  "next_request": null,
+  "card_left_mounted": true,
+  "shared_installation": false
+}

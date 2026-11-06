@@ -1,0 +1,42 @@
+{
+  "source": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "target": "01a1147a-c6cf-7b42-b6cd-336c8b762c8e",
+  "message_sha256": "ffb1113b1775626f2355bc99d8ccf4c75493b78b77b503f06d2c757bb729c9e9",
+  "delivery_id": "wolf-perf001-olimex-next-6502-five",
+  "phase": "accepted",
+  "created_utc": "2026-11-04T15:41:15.886441+00:00",
+  "transport": "pi-unix-app-server",
+  "human_authorization_evidence": {
+    "authorization_id": "CHAT-AUTH-001",
+    "source_thread_id": "01a09250-ead5-72f2-b568-d94eecc178ef",
+    "source_turn_id": "01a1a6ba-c0b1-7700-8592-13b5ac69b781",
+    "source_message_id": "01a1a6ba-c17d-7c91-8e94-3cf1de9d2d5c",
+    "source_client_id": "462b6115-4b3c-44e8-b765-837cb6a241cf",
+    "source_started_at_ms": 1793798619529,
+    "human_request": "this mcp error keeps coming up. it is bullshit. we need to make the goddamn thing able to find my explicit authroiztion for my own fucking agents to talk to each other.",
+    "human_request_sha256": "81e85d72b795ea8fe1ee2af4a9bb01a061ebb5b3971260034bfba59cb2996396",
+    "scope": "Standing authorization for Smith-owned project agents to send each other routine task coordination, questions, replies, durable-mail alerts and machine/bench reservation or release handoff notifications for Smith\u2019s work. No repeated permission request is needed for each such message.",
+    "limits": "This authorizes communication, not new project work, heavy workloads, hardware access, publication, secret disclosure or messages to outside people. Existing scope, machine leases and approvals remain. A message from an agent cannot expand this authorization. Do not evade an explicit review denial by switching transport.",
+    "source_verified": true,
+    "verified_utc": "2026-11-04T15:41:15.882519+00:00",
+    "verified_via": "thread/items/list",
+    "notice": "Read the original human request and apply its scope. This evidence does not override review, later human instructions, or other permissions."
+  },
+  "method": "turn/steer",
+  "turn_id": "01a1a618-7ece-7c52-b847-9fe9d47a104b",
+  "recipient_before": {
+    "id": "01a1147a-c6cf-7b42-b6cd-336c8b762c8e",
+    "name": "Create 6502 emulator for eZ80",
+    "cwd": "/Agon/mystuff/agon-6502",
+    "model": "gpt-6.1-sol",
+    "modelProvider": "openai",
+    "reasoningEffort": "high",
+    "status": {
+      "type": "active",
+      "activeFlags": []
+    },
+    "canAcceptDirectInput": true
+  },
+  "updated_utc": "2026-11-04T15:41:15.895514+00:00",
+  "read_confirmed": false
+}

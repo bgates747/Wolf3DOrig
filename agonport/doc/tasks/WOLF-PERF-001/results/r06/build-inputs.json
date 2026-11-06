@@ -1,0 +1,305 @@
+{
+  "modes": [
+    {
+      "schema": "wolf-perf-001-inputs-v1",
+      "mode": "cpu",
+      "steps": 600,
+      "degrees": 720,
+      "nominal_seconds": 20,
+      "tile": [
+        34,
+        36
+      ],
+      "enemies": 0,
+      "files": {
+        "hud.agnb": {
+          "bytes": 269832,
+          "sha256": "6df6038f9e05bea7aa9159b2569bec6404984f5774ad972413afb5fa8b7747c8"
+        },
+        "level_00/sprites.agnb": {
+          "bytes": 559464,
+          "sha256": "7bf0f04a6fad56d5a83b26b30f5c0ea3bbafb4c8727a3c5f9d266c30c0e058f9"
+        },
+        "level_00/state_baby.w3l": {
+          "bytes": 13814,
+          "sha256": "2c4e2695aecdf19ea8c1d07930999fb23aaa7628f0364ff1140e7bf1ce4afbc9"
+        },
+        "level_00/state_easy.w3l": {
+          "bytes": 13814,
+          "sha256": "67743b36be7d4f7c086bad18a15e754030309a208319d74a6837574f8192bbd3"
+        },
+        "level_00/state_hard.w3l": {
+          "bytes": 13814,
+          "sha256": "c4d1d730d2b464bbdf72275dcf4d045b2cbd339b9e2b90eee7db3979e2854aa4"
+        },
+        "level_00/state_medium.w3l": {
+          "bytes": 13814,
+          "sha256": "575992260ea12f063bf400c890ed99f1599813a6845461716fbc82b70ff13f5a"
+        },
+        "level_00/tiles.agnb": {
+          "bytes": 66328,
+          "sha256": "6df797957e0d11788612509ace15022b2e579a862387f1c53a33036e4309f47b"
+        },
+        "sfx.agnb": {
+          "bytes": 261956,
+          "sha256": "9a7ded8e92d92307d2e1df904a44da0b2a8ab11d46c0548a857274358bdd6850"
+        },
+        "shell.agnb": {
+          "bytes": 1197704,
+          "sha256": "27eb4547d12bdea6a5c27ca8116900a332e2e3cbb1f8411e313991871e4ecc70"
+        },
+        "wolf3d.bin": {
+          "bytes": 318859,
+          "sha256": "534acd1e6c33b4f634059dc6655c293079006481078c7f642374e776dbb28aa3"
+        },
+        "wolf3d.cfg": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "wolf3d.vdpl": {
+          "bytes": 19124,
+          "sha256": "27f3d39285a5b49fec8aeed35085b1916ef537154f1d1d53956b075e00174c82"
+        }
+      }
+    },
+    {
+      "schema": "wolf-perf-001-inputs-v1",
+      "mode": "unpaced",
+      "steps": 600,
+      "degrees": 720,
+      "nominal_seconds": 20,
+      "tile": [
+        34,
+        36
+      ],
+      "enemies": 0,
+      "files": {
+        "hud.agnb": {
+          "bytes": 269832,
+          "sha256": "6df6038f9e05bea7aa9159b2569bec6404984f5774ad972413afb5fa8b7747c8"
+        },
+        "level_00/sprites.agnb": {
+          "bytes": 559464,
+          "sha256": "7bf0f04a6fad56d5a83b26b30f5c0ea3bbafb4c8727a3c5f9d266c30c0e058f9"
+        },
+        "level_00/state_baby.w3l": {
+          "bytes": 13814,
+          "sha256": "2c4e2695aecdf19ea8c1d07930999fb23aaa7628f0364ff1140e7bf1ce4afbc9"
+        },
+        "level_00/state_easy.w3l": {
+          "bytes": 13814,
+          "sha256": "67743b36be7d4f7c086bad18a15e754030309a208319d74a6837574f8192bbd3"
+        },
+        "level_00/state_hard.w3l": {
+          "bytes": 13814,
+          "sha256": "c4d1d730d2b464bbdf72275dcf4d045b2cbd339b9e2b90eee7db3979e2854aa4"
+        },
+        "level_00/state_medium.w3l": {
+          "bytes": 13814,
+          "sha256": "575992260ea12f063bf400c890ed99f1599813a6845461716fbc82b70ff13f5a"
+        },
+        "level_00/tiles.agnb": {
+          "bytes": 66328,
+          "sha256": "6df797957e0d11788612509ace15022b2e579a862387f1c53a33036e4309f47b"
+        },
+        "sfx.agnb": {
+          "bytes": 261956,
+          "sha256": "9a7ded8e92d92307d2e1df904a44da0b2a8ab11d46c0548a857274358bdd6850"
+        },
+        "shell.agnb": {
+          "bytes": 1197704,
+          "sha256": "27eb4547d12bdea6a5c27ca8116900a332e2e3cbb1f8411e313991871e4ecc70"
+        },
+        "wolf3d.bin": {
+          "bytes": 319053,
+          "sha256": "ffa4dfbcac720afa153eccc1050bc0ff40ac68a0da3668ed1019e61828a16758"
+        },
+        "wolf3d.cfg": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "wolf3d.vdpl": {
+          "bytes": 19124,
+          "sha256": "27f3d39285a5b49fec8aeed35085b1916ef537154f1d1d53956b075e00174c82"
+        }
+      }
+    },
+    {
+      "schema": "wolf-perf-001-inputs-v1",
+      "mode": "paced",
+      "steps": 600,
+      "degrees": 720,
+      "nominal_seconds": 20,
+      "tile": [
+        34,
+        36
+      ],
+      "enemies": 0,
+      "files": {
+        "hud.agnb": {
+          "bytes": 269832,
+          "sha256": "6df6038f9e05bea7aa9159b2569bec6404984f5774ad972413afb5fa8b7747c8"
+        },
+        "level_00/sprites.agnb": {
+          "bytes": 559464,
+          "sha256": "7bf0f04a6fad56d5a83b26b30f5c0ea3bbafb4c8727a3c5f9d266c30c0e058f9"
+        },
+        "level_00/state_baby.w3l": {
+          "bytes": 13814,
+          "sha256": "2c4e2695aecdf19ea8c1d07930999fb23aaa7628f0364ff1140e7bf1ce4afbc9"
+        },
+        "level_00/state_easy.w3l": {
+          "bytes": 13814,
+          "sha256": "67743b36be7d4f7c086bad18a15e754030309a208319d74a6837574f8192bbd3"
+        },
+        "level_00/state_hard.w3l": {
+          "bytes": 13814,
+          "sha256": "c4d1d730d2b464bbdf72275dcf4d045b2cbd339b9e2b90eee7db3979e2854aa4"
+        },
+        "level_00/state_medium.w3l": {
+          "bytes": 13814,
+          "sha256": "575992260ea12f063bf400c890ed99f1599813a6845461716fbc82b70ff13f5a"
+        },
+        "level_00/tiles.agnb": {
+          "bytes": 66328,
+          "sha256": "6df797957e0d11788612509ace15022b2e579a862387f1c53a33036e4309f47b"
+        },
+        "sfx.agnb": {
+          "bytes": 261956,
+          "sha256": "9a7ded8e92d92307d2e1df904a44da0b2a8ab11d46c0548a857274358bdd6850"
+        },
+        "shell.agnb": {
+          "bytes": 1197704,
+          "sha256": "27eb4547d12bdea6a5c27ca8116900a332e2e3cbb1f8411e313991871e4ecc70"
+        },
+        "wolf3d.bin": {
+          "bytes": 319107,
+          "sha256": "d5acb997d5183d5337ca0be69921d4c165129b1af969136459558429337a7820"
+        },
+        "wolf3d.cfg": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "wolf3d.vdpl": {
+          "bytes": 19124,
+          "sha256": "27f3d39285a5b49fec8aeed35085b1916ef537154f1d1d53956b075e00174c82"
+        }
+      }
+    },
+    {
+      "schema": "wolf-perf-001-inputs-v1",
+      "mode": "cpu-fail",
+      "steps": 600,
+      "degrees": 720,
+      "nominal_seconds": 20,
+      "tile": [
+        34,
+        36
+      ],
+      "enemies": 0,
+      "files": {
+        "hud.agnb": {
+          "bytes": 269832,
+          "sha256": "6df6038f9e05bea7aa9159b2569bec6404984f5774ad972413afb5fa8b7747c8"
+        },
+        "level_00/sprites.agnb": {
+          "bytes": 559464,
+          "sha256": "7bf0f04a6fad56d5a83b26b30f5c0ea3bbafb4c8727a3c5f9d266c30c0e058f9"
+        },
+        "level_00/state_baby.w3l": {
+          "bytes": 13814,
+          "sha256": "2c4e2695aecdf19ea8c1d07930999fb23aaa7628f0364ff1140e7bf1ce4afbc9"
+        },
+        "level_00/state_easy.w3l": {
+          "bytes": 13814,
+          "sha256": "67743b36be7d4f7c086bad18a15e754030309a208319d74a6837574f8192bbd3"
+        },
+        "level_00/state_hard.w3l": {
+          "bytes": 13814,
+          "sha256": "c4d1d730d2b464bbdf72275dcf4d045b2cbd339b9e2b90eee7db3979e2854aa4"
+        },
+        "level_00/state_medium.w3l": {
+          "bytes": 13814,
+          "sha256": "575992260ea12f063bf400c890ed99f1599813a6845461716fbc82b70ff13f5a"
+        },
+        "level_00/tiles.agnb": {
+          "bytes": 66328,
+          "sha256": "6df797957e0d11788612509ace15022b2e579a862387f1c53a33036e4309f47b"
+        },
+        "sfx.agnb": {
+          "bytes": 261956,
+          "sha256": "9a7ded8e92d92307d2e1df904a44da0b2a8ab11d46c0548a857274358bdd6850"
+        },
+        "shell.agnb": {
+          "bytes": 1197704,
+          "sha256": "27eb4547d12bdea6a5c27ca8116900a332e2e3cbb1f8411e313991871e4ecc70"
+        },
+        "wolf3d.bin": {
+          "bytes": 318863,
+          "sha256": "e77359cbe7bc67e33becc4686706eb71fc6dffa2562b17fd7658108aeeb2c405"
+        },
+        "wolf3d.cfg": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "wolf3d.vdpl": {
+          "bytes": 19124,
+          "sha256": "27f3d39285a5b49fec8aeed35085b1916ef537154f1d1d53956b075e00174c82"
+        }
+      }
+    }
+  ],
+  "production_sources": {
+    "src/asm/wolf3d/src/agnb_api.inc": "bd5882af03baa4f694916fab09ec217e807d04f42287c38fa3fac0b3e14f20d5",
+    "src/asm/wolf3d/src/agnb_dependencies.inc": "a9794ba365e7f1ffc386a9e3fd2f2e59968022b82cdfe9973df9c1f6dd2d965d",
+    "src/asm/wolf3d/src/wolf3d.asm": "2c18d984e6acd0519b62bc1792ee6ee04c0e1cd97d0f2f52cb7bbec9db5a9716",
+    "src/asm/wolf3d/src/wolf3d_actor_sim.inc": "1a3a91a57d5627f2f1324654bcaa105b3c0a16f183f752658c57ceacd5e57221",
+    "src/asm/wolf3d/src/wolf3d_actors.inc": "37344953e36911e829f27b57e536f924e047d3f92ae53d182042e281c39a5470",
+    "src/asm/wolf3d/src/wolf3d_areas.inc": "9f4a3f3ba5ef2056e57f91c35127a8d30e23e0c9dd6ba5d40d771dd400b9ca03",
+    "src/asm/wolf3d/src/wolf3d_audio.inc": "41121cbe7c6a6c9c982315dac8d7c7de17b949794dcace80e42e25810857c8e8",
+    "src/asm/wolf3d/src/wolf3d_audio_assets.inc": "427a54958505415c2eddd195394f341913ffac926c5b96aabd644e0509759256",
+    "src/asm/wolf3d/src/wolf3d_audio_spatial.inc": "5d23aec04b7ef876b80428ec073b958916d518fcd95f82b6bf73d2186b505992",
+    "src/asm/wolf3d/src/wolf3d_backend.inc": "78c4b87c411e7944a46b2cc3745767b6fde5ab2230007129744da40042844873",
+    "src/asm/wolf3d/src/wolf3d_config.inc": "0853ec113aa826f2f78a58db7e25c6549f7b76c3cc1cad41f177229fe81e6ed5",
+    "src/asm/wolf3d/src/wolf3d_death.inc": "24c3eda9895969f6fafa56a769b06f357737d95640d75f7904534d84968135e3",
+    "src/asm/wolf3d/src/wolf3d_demo.inc": "bafde8d1cae9d2de688156f7b9cf6e624195aebc1f78f87dbed5352aeabf9ba1",
+    "src/asm/wolf3d/src/wolf3d_demo_assets.inc": "e3b89a3df4f9151d01fbb687f1f8e40ea2722b62a8b0cbda21f94bf2c6dbb49a",
+    "src/asm/wolf3d/src/wolf3d_fixture.inc": "21348709ca1de3cb84d4689c102807fe0e8823bce5e9b588ef59e86e95026a26",
+    "src/asm/wolf3d/src/wolf3d_highscores.inc": "0c122f69b50201f05cae101de4b93e5ec93f28a157750ddc36a06fe9cabb5d80",
+    "src/asm/wolf3d/src/wolf3d_intermission.inc": "a9df6e5e90106456496674c5df048e5ec215f7f427f4801288dd71eca28ca96c",
+    "src/asm/wolf3d/src/wolf3d_level_loader.inc": "7a0730c0942d0a0ba9ebd21d46d9d309c6633e93f83e4bc7ab45f782e6bcb21a",
+    "src/asm/wolf3d/src/wolf3d_level_time.inc": "ba4fcc2ee80c1b95fba783e2a5ce9cec0ae4c4a933dcc38bc042710da89efcd7",
+    "src/asm/wolf3d/src/wolf3d_math.inc": "58d65b18b326c5ae5f96a02ce46cffa6d9e0ed6c73b4d2a30f47472758f92fbd",
+    "src/asm/wolf3d/src/wolf3d_motion.inc": "35580cfcdcfc6807ca9ca10a3c29a442d5ce59545a6bddd7af11b6bad9f67711",
+    "src/asm/wolf3d/src/wolf3d_motion_table.inc": "c5735d1a9b5761562055235fdbb2b389e77fb6fbc56ccfb7538624c6222661d5",
+    "src/asm/wolf3d/src/wolf3d_music.inc": "3e5df53afd18a58515a8aea90668ca3cac3d018447d9dfdfcaba5ea48c9fc0ec",
+    "src/asm/wolf3d/src/wolf3d_music_assets.inc": "9563fdd5c53c0209a2cc8b5e262521c53e9ebbffc297f60c0d1cca2de260262d",
+    "src/asm/wolf3d/src/wolf3d_panel_music.inc": "e3f696ee5cc0060d41ff00cc75a83236628fdf1a881f157d4d94d2d2214b5d60",
+    "src/asm/wolf3d/src/wolf3d_player_combat.inc": "7b5bd051f115fd0850bc4fc623f7fb8c784c24e4d14687ab3d245a43eb53c6d1",
+    "src/asm/wolf3d/src/wolf3d_pushwall.inc": "b9fd21f898f9ece8820a3776a53ac5ae84f93a330c9f689349c60c182b16ac93",
+    "src/asm/wolf3d/src/wolf3d_render_async.inc": "42d07b52478e8dcacf01e1d417005cb01066f35b944ede91dfea822d79e155cc",
+    "src/asm/wolf3d/src/wolf3d_save.inc": "0c0c0610b4ce830087ea4b41c1bb655ffafb9cf4bbf22390cdd1adf4104e5e07",
+    "src/asm/wolf3d/src/wolf3d_save_slots.inc": "44fa1ea616467923088ff239943b46af220cf1d470c70d228313ec2502c1ee1d",
+    "src/asm/wolf3d/src/wolf3d_shell.inc": "9a49e62e30bac3d80892acf9fa8c4467c1afc0f9395472722f8715fb8c804626",
+    "src/asm/wolf3d/src/wolf3d_shell_assets.inc": "bf05ef135b37114abb742a8361e0c3d6b1906f1217d07b24cb2bee0eb79f8ac7",
+    "src/asm/wolf3d/src/wolf3d_sight.inc": "1abc457e8aa67d6820a5cd58c4e8c7c393e2858f6519619904cc3783dd0fb751",
+    "src/asm/wolf3d/src/wolf3d_start.inc": "519121cfa2c5c7b97da8784f5c2aff4a0a63bfd820068445c96e0144a12386e3",
+    "src/asm/wolf3d/src/wolf3d_vdplet_backend.inc": "08357b8bee28f8506ef922b44420038c12005a3d5112d3b0fbfbe2feabda4ece",
+    "src/asm/wolf3d/src/wolf3d_vdplet_batch.inc": "cfe2ac5f1c2492149d443c10f02ee78e58fd093c0aee23aa2afd681772ecbe24",
+    "src/asm/wolf3d/src/wolf3d_vdplet_client.inc": "4a6e3d5584321c49286e6f81bce49dcd9a919ac8447ca24be81b4dfe8bae1649",
+    "src/asm/wolf3d/src/wolf3d_vdplet_contract.inc": "fac9a833b086a1440af1033b8f11c397b295954b687565312f1dad8573c08d0c",
+    "src/asm/wolf3d/src/wolf3d_vdplet_package.inc": "cf9ac84fa5bc0735410a4b48e354d72a668d9f7f2df9af216c471f398d5623b8",
+    "src/asm/wolf3d/src/wolf3d_version.inc": "14f32198852bfa19663cbdf26343b8cfd25e65d094f4a23c3cd056512a4cdd42",
+    "src/asm/wolf3d/src/wolf3d_victory.inc": "269e7793ce962cbb044204bd5171be3471660c5c836aa85fbba752cedccec033",
+    "src/asm/wolf3d/src/wolf3d_world.inc": "a531622f4997d91c01448ec0368e602e2cafce9ce736870e784432ce09aedc3b"
+  },
+  "module_sources": {
+    "agonport/vdplet/production/renderer_oracle.cpp": "39e796ebe3677503acfadc8a911c7b1fec401c291c04b8395f3a73b1309a38f6",
+    "agonport/vdplet/production/test_module.cpp": "4dd705f07ad9f48ef043d72b4a249f70208a4aac25c9c71268641c376bcd2819",
+    "agonport/vdplet/production/test_renderer.cpp": "79e78c22f5763e95c1b22a2361e6263e8cedb18c68efd5e1455e20933ab6e0a9",
+    "agonport/vdplet/production/test_world_mirror.cpp": "03b824fa0f14e03b254fac9d6c7406433cb509bb11c1c6ade3287e2f581fe161",
+    "agonport/vdplet/production/wolf3d_module.cpp": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243",
+    "agonport/vdplet/production/wolf3d_renderer.cpp": "aee6ed184b0d29e090b2f869559110d1c13fa801b735b1cbd5f36f53e43a3107",
+    "agonport/vdplet/production/wolf3d_world_mirror.cpp": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404"
+  }
+}

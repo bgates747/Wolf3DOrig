@@ -1,0 +1,6 @@
+Assembling wolf3d.asm
+Listing to wolf3d.lst
+Pass 1...
+Pass 2...
+Done in 0.15 seconds
+Voiced paced payload: /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-002/build/voiced/payload

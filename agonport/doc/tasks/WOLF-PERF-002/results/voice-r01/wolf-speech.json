@@ -1,0 +1,17 @@
+{
+  "text": "The Wolf Agent notifies you that an animated test fixture is starting now.",
+  "engine": "gTTS2.5.4",
+  "language": "en",
+  "tld": "co.uk",
+  "sample_rate": 16000,
+  "pcm_bytes": 90240,
+  "seconds": 5.64,
+  "wait_ticks": 737,
+  "buffer_id": 61696,
+  "files": {
+    "wolf-start.mp3": "a6c5f7a415b553112eedeb07c3877344a8493311b567e9448cfe5312dc2c5048",
+    "wolf-start.wav": "002f6c677df616bd9a5ed5ad207f0e8b565c05d683c08692e334e44338746265",
+    "voice.agnb": "a7e1496fd6f6e0f4f86c894f0885c65547b1b0cd29711fa92b800c252d60625d",
+    "voice_duration.inc": "a1bd06e4bb028809bbfb89ff4aa0568035bbfcd0dc4b7d01f180424ed79089e5"
+  }
+}

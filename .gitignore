@@ -40,3 +40,31 @@ agonport/release/
 # eZ80 assembly apps: tracked src/, ignored assembled tgt/ (mirrors
 # pingoasm's apps/<app>/{src,tgt} convention).
 src/asm/*/tgt/
+
+# Retained local benchmark RAM/custody evidence; preserve bytes, never publish.
+/agonport/doc/tasks/WOLF-PERF-001/hardware/freeze.json
+/agonport/doc/tasks/WOLF-PERF-001/hardware/oryx-release.json
+/agonport/doc/tasks/WOLF-PERF-001/results/olimex01/SHA256.json
+/agonport/doc/tasks/WOLF-PERF-001/results/olimex01/cpu/after.bin
+/agonport/doc/tasks/WOLF-PERF-001/results/olimex01/cpu/before.bin
+/agonport/doc/tasks/WOLF-PERF-001/results/olimex01/freeze.json
+/agonport/doc/tasks/WOLF-PERF-001/results/olimex01/handback-observation.json
+/agonport/doc/tasks/WOLF-PERF-001/results/olimex01/paced/after.bin
+/agonport/doc/tasks/WOLF-PERF-001/results/olimex01/paced/before.bin
+/agonport/doc/tasks/WOLF-PERF-001/results/olimex01/release.json
+/agonport/doc/tasks/WOLF-PERF-001/results/olimex01/unpaced/after.bin
+/agonport/doc/tasks/WOLF-PERF-001/results/olimex01/unpaced/before.bin
+/agonport/doc/tasks/WOLF-PERF-001/results/r06/release.json
+/agonport/doc/tasks/WOLF-PERF-002/results/SHA256.json
+/agonport/doc/tasks/WOLF-PERF-002/results/release.json
+/agonport/doc/tasks/WOLF-PERF-002/results/visible01/grant.json
+/agonport/doc/tasks/WOLF-PERF-002/results/visible01/handback-observation.json
+/agonport/doc/tasks/WOLF-PERF-002/results/visible01/paced/after.bin
+/agonport/doc/tasks/WOLF-PERF-002/results/visible01/paced/before.bin
+/agonport/doc/tasks/WOLF-PERF-002/results/visible01/release.json
+/agonport/doc/tasks/WOLF-PERF-002/results/voice-r01/inputs.json
+/agonport/doc/tasks/WOLF-PERF-002/results/voice-r01/oryx-release.json
+/agonport/doc/tasks/WOLF-PERF-002/results/voice-r01/pi-release.json
+/agonport/doc/tasks/WOLF-PERF-002/results/voice-r02/inputs.json
+/agonport/doc/tasks/WOLF-PERF-002/results/voice-r02/oryx-release.json
+/agonport/doc/tasks/WOLF-PERF-002/results/voice-r02/pi-release.json

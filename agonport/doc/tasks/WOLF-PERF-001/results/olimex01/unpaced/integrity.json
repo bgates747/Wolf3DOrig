@@ -1,0 +1,13 @@
+{
+  "audio_code_intact": true,
+  "entry_sp": 786183,
+  "exit_sp": 786183,
+  "retrieved_sha256": {
+    "timing.bin": "399b5938fcacfedab89ab3b9a845eee54d4425d85140fcb3df8c0072edaf2aa5",
+    "before.bin": "8b5f6d1fafcf8d87a4931079605f01458be3da4f9d436b49dab9aed5018944d5",
+    "after.bin": "137eda7f97de58248a2f088a768ac03bbc8d0dcf6b5c348e6f1b9812c949d284",
+    "stack.bin": "89ece2b66262259372cfd7094f15ec68b10b0d17c67044cfb1512889fa00efdd",
+    "post-mode.bin": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "native.bin": "74539f4b46853540ab0f61e20049127679a41d955d8dd3e370d4fe3807d3bdb5"
+  }
+}

@@ -1,0 +1,161 @@
+{
+  "success": true,
+  "scope": "headless emulator only",
+  "engine": "jit",
+  "guest": {
+    "schema": "wolf-perf-001-result-v1",
+    "mode": "unpaced",
+    "completed_records": 600,
+    "scripted_steps": 600,
+    "coalesced_poses": 0,
+    "prt_ticks": 26454,
+    "mos_ticks": 2868,
+    "prt_nominal_seconds": 26.454,
+    "mos_nominal_seconds": 23.9,
+    "nominal_prt_records_per_second": 22.680880018144705,
+    "nominal_mos_records_per_second": 25.10460251046025,
+    "clock_ratio_mos_seconds_to_prt_seconds": 0.9034550540560973,
+    "empty_600_loop_prt_ticks": 0,
+    "clock_qualification": "nominal only; emulator and no external physical calibration",
+    "tile": [
+      34,
+      36
+    ],
+    "enemies": 0,
+    "host_wall_seconds": "runner records entire process, not race window",
+    "stages_nominal_prt_ms": {
+      "pose_ms": {
+        "mean": 0.006666666666666667,
+        "median": 0.0,
+        "p95": 0,
+        "max": 1,
+        "count": 600
+      },
+      "pack_ms": {
+        "mean": 1.0966666666666667,
+        "median": 1.0,
+        "p95": 2,
+        "max": 2,
+        "count": 600
+      },
+      "submit_ms": {
+        "mean": 1.6333333333333333,
+        "median": 2.0,
+        "p95": 2,
+        "max": 2,
+        "count": 600
+      },
+      "wait_ms": {
+        "mean": 41.346666666666664,
+        "median": 41.0,
+        "p95": 43,
+        "max": 43,
+        "count": 600
+      },
+      "present_fence_ms": {
+        "mean": 0.0033333333333333335,
+        "median": 0.0,
+        "p95": 0,
+        "max": 1,
+        "count": 600
+      },
+      "active_ms": {
+        "mean": 44.086666666666666,
+        "median": 44.0,
+        "p95": 45,
+        "max": 46,
+        "count": 600
+      }
+    },
+    "revolutions": {
+      "1": {
+        "records": 300,
+        "active_ms": {
+          "mean": 44.07,
+          "median": 44.0,
+          "p95": 45,
+          "max": 46,
+          "count": 300
+        },
+        "render_ccount": {
+          "mean": 10053542.19,
+          "median": 10039952.0,
+          "p95": 10175838,
+          "max": 10207925,
+          "count": 300
+        }
+      },
+      "2": {
+        "records": 300,
+        "active_ms": {
+          "mean": 44.10333333333333,
+          "median": 44.0,
+          "p95": 45,
+          "max": 46,
+          "count": 300
+        },
+        "render_ccount": {
+          "mean": 10054381.63,
+          "median": 10040280.0,
+          "p95": 10174926,
+          "max": 10208119,
+          "count": 300
+        }
+      }
+    },
+    "cpu_mode_submit_bucket_note": "In CPU mode submit_ms is serializer lifecycle bookkeeping, with no UART submission.",
+    "active_over_33_333_ms": 600,
+    "vdp_core_id": 52685,
+    "native_ccount": {
+      "render_ccount": {
+        "mean": 10053961.91,
+        "median": 10040276.5,
+        "p95": 10175838,
+        "max": 10208119,
+        "count": 600
+      },
+      "scope_ccount": {
+        "mean": 10100396.293333333,
+        "median": 10085553.5,
+        "p95": 10221952,
+        "max": 10253396,
+        "count": 600
+      },
+      "module_ccount": {
+        "mean": 10104318.125,
+        "median": 10089381.5,
+        "p95": 10225780,
+        "max": 10257224,
+        "count": 600
+      }
+    },
+    "native_ccount_note": "Local raw CCOUNT intervals; includes preemption/service calls. Not calibrated physical milliseconds or exclusive CPU work.",
+    "presentation_intervals_nominal_prt_ms": null,
+    "sha256": {
+      "timing.bin": "67652ff078890121648ddbf1445d75c5997b9f5af2b83c6063ac8d8394d44f9b",
+      "native.bin": "ef8fda975a732052cf802b3777a6d5a9f8648fb627bd76ad4ef0be5d673ca0db"
+    }
+  },
+  "stats": {
+    "engine": "jit",
+    "frames": 3585,
+    "cycles": 14870136864,
+    "retired": 9274717027,
+    "uart_rx": 2546276,
+    "uart_tx": 80660,
+    "uart_delivered": 80660,
+    "isync": 617,
+    "code_invalidations": 2,
+    "keys": 0,
+    "failed": false,
+    "unhandled": 0,
+    "unregistered": 0,
+    "unmapped": 0
+  },
+  "returncode": 0,
+  "results": [
+    "timing.bin",
+    "native.bin"
+  ],
+  "whole_process_seconds": 62.15606404602295
+}

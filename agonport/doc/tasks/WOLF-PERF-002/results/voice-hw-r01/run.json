@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "one_invocation": true,
+  "play_command_acknowledged": true,
+  "cleanup_complete": true,
+  "normal_exec_continuation": true,
+  "host_operation_seconds": 16.26997584401397,
+  "human_hearing": "pending"
+}

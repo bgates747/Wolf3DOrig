@@ -1,0 +1,7 @@
+make: Entering directory '/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-002/voice/player'
+[compiling src/main.c]
+[Linking bin/playwav.noname.bin]
+[Start address 0x40000]
+[Setting name 'playwav.bin' in binary]
+[Done]
+make: Leaving directory '/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-002/voice/player'

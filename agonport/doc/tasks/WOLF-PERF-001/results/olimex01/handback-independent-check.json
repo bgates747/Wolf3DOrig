@@ -1,0 +1,19 @@
+{
+  "epoch": 1793806812.6658275,
+  "cwd_matches_entry": true,
+  "ports": [
+    {
+      "stable_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+      "resolved": "/dev/ttyUSB0",
+      "exists": true,
+      "no_open_reader": true
+    },
+    {
+      "stable_port": "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_E8:F6:0A:E2:E1:FE-if00",
+      "resolved": "/dev/ttyACM0",
+      "exists": true,
+      "no_open_reader": true
+    }
+  ],
+  "all_three_results_validated": true
+}

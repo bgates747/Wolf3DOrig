@@ -1,0 +1,29 @@
+{
+  "success": true,
+  "scope": "headless emulator only",
+  "engine": "jit",
+  "guest": {
+    "control": "intentional abort after PRT initialization",
+    "timer_restoration_verified": true,
+    "performance_result": false
+  },
+  "stats": {
+    "engine": "jit",
+    "frames": 1663,
+    "cycles": 6943792571,
+    "retired": 1099727136,
+    "uart_rx": 2391238,
+    "uart_tx": 1191,
+    "uart_delivered": 1191,
+    "isync": 13,
+    "code_invalidations": 2,
+    "keys": 0,
+    "failed": false,
+    "unhandled": 0,
+    "unregistered": 0,
+    "unmapped": 0
+  },
+  "returncode": 0,
+  "results": [],
+  "whole_process_seconds": 29.159842033986934
+}

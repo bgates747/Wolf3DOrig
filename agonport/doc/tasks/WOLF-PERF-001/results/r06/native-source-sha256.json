@@ -1,0 +1,14 @@
+{
+  "agonport/vdplet/production/test_world_mirror.cpp": "03b824fa0f14e03b254fac9d6c7406433cb509bb11c1c6ade3287e2f581fe161",
+  "agonport/vdplet/production/wolf3d_module.cpp": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243",
+  "agonport/vdplet/production/wolf3d_world_mirror.cpp": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+  "agonport/vdplet/production/test_renderer.cpp": "79e78c22f5763e95c1b22a2361e6263e8cedb18c68efd5e1455e20933ab6e0a9",
+  "agonport/vdplet/production/renderer_oracle.cpp": "39e796ebe3677503acfadc8a911c7b1fec401c291c04b8395f3a73b1309a38f6",
+  "agonport/vdplet/production/test_module.cpp": "4dd705f07ad9f48ef043d72b4a249f70208a4aac25c9c71268641c376bcd2819",
+  "agonport/vdplet/production/wolf3d_world_mirror.h": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115",
+  "agonport/vdplet/production/renderer_fixture.h": "c2939c346bcb0e2df84e558cc2f2453c0b4f89fef7d505670648f88d0818a59f",
+  "agonport/vdplet/production/wolf3d_production_contract.h": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+  "agonport/vdplet/production/wolf3d_renderer.h": "ca340f31a81fb3665f7bc3f8c9cd956e26254ab97ba6358d6c268c0585cb4c68",
+  "agonport/vdplet/production/wolf3d_renderer.cpp": "aee6ed184b0d29e090b2f869559110d1c13fa801b735b1cbd5f36f53e43a3107",
+  "agonport/vdplet/wolf3d_tables.inc": "6e3353cebd8d69849bbde39abd536018b1ee403f599ae45acc51fb8c64303e5d"
+}

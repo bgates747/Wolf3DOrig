@@ -1,0 +1,12 @@
+{
+  "case_order": [
+    "paced"
+  ],
+  "files": {
+    "agonport/doc/tasks/WOLF-PERF-002/physical_visible.py": "968e61ad7f58b4d4cbc4acd8dd1eba101082308576841480cfb8fa7ad1f7d051",
+    "agonport/doc/tasks/WOLF-PERF-002/HARDWARE-VISIBLE.md": "7de219d0c0d3e338a503759d9d4e5e8bd8ee79c99490a5a95ab097a54b7edc59",
+    "agonport/doc/tasks/WOLF-PERF-001/hardware/freeze.json": "a07f838c27c27e1d3b639d3664f0270fcdad4dc79851728eb337dddfc1f12944"
+  },
+  "no_audio_enhancement": true,
+  "no_firmware_operations": true
+}

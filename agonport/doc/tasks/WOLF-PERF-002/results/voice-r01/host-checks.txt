@@ -1,0 +1,14 @@
+PLAYWAV PLAY OK
+PLAYWAV OK bytes=400 rate=16000
+PLAYWAV ERROR format; audio untouched
+PLAYWAV ERROR format; audio untouched
+PLAYWAV ERROR format; audio untouched
+PLAYWAV ERROR format; audio untouched
+PLAYWAV ERROR format; audio untouched
+PLAYWAV PLAY OK
+PLAYWAV OK bytes=401 rate=16000
+PLAYWAV PLAY OK
+PLAYWAV OK bytes=400 rate=16000
+PLAYWAV ERROR format; audio untouched
+PLAYWAV ERROR stage=5
+10 actual-player parser/transport checks passed

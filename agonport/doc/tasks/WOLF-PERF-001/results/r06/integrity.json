@@ -1,0 +1,20 @@
+{
+  "cpu": {
+    "audio_code_intact_before_and_after": true,
+    "entry_sp": 786149,
+    "exit_sp": 786149,
+    "audio_code_sha256": "b3aba7d5580b656ecab5c7dd9ff5620c6ccda1d836731afba6dd420a1a06a727"
+  },
+  "unpaced": {
+    "audio_code_intact_before_and_after": true,
+    "entry_sp": 786149,
+    "exit_sp": 786149,
+    "audio_code_sha256": "b3aba7d5580b656ecab5c7dd9ff5620c6ccda1d836731afba6dd420a1a06a727"
+  },
+  "paced": {
+    "audio_code_intact_before_and_after": true,
+    "entry_sp": 786149,
+    "exit_sp": 786149,
+    "audio_code_sha256": "b3aba7d5580b656ecab5c7dd9ff5620c6ccda1d836731afba6dd420a1a06a727"
+  }
+}
