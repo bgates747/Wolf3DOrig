@@ -1,0 +1,233 @@
+"""Finite owned physical candidate comparison. Requires frozen kit/fresh grant.
+
+Reuse the physical54 producer/result/SDK paths; this module owns the new
+namespace, admission, module selection and six-case matrix. Import is passive.
+"""
+from pathlib import Path
+import argparse
+import hashlib
+import importlib.util
+import json
+import re
+import subprocess
+import sys
+import time
+
+T = Path(__file__).resolve().parent
+sys.path.insert(0, str(T))
+P3 = T.parent / 'WOLF-PERF-003'
+sys.path.insert(0, str(P3 / 'hardware'))
+B = T / 'build/hardware01'
+spec = importlib.util.spec_from_file_location('wp004_physical54', P3 / 'hardware/physical09.py')
+h = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(h)
+h.B = B
+sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+SEQUENCE = (
+    ('original', 'control'), ('candidate', 'control'),
+    ('original', 'unpaced'), ('candidate', 'unpaced'),
+    ('candidate', 'unpaced'), ('original', 'unpaced'),
+)
+
+
+def verify_kit(kit):
+    assert kit['task'] == 'WOLF-PERF-004-hardware-r01'
+    assert kit['remote'] == '/test/wolf/perf004/r01'
+    assert kit['original_module_sha256'] == '1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610'
+    assert kit['candidate_module_sha256'] == '54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055'
+    assert kit['native_b_sha256'] == '7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d'
+    assert kit['source_binding_passed'] and kit['boot_binding_passed']
+    binding = json.loads(Path(kit['source_binding']).read_text())
+    assert binding['passed'] and binding['guest_rebuild_required'] is False
+    assert binding['carrier'] == 'mainboard-route0-UART0'
+    for name, digest in kit['inputs'].items():
+        assert sha(name) == digest, name
+    for arm in ('original', 'candidate'):
+        p = kit['modules'][arm]
+        assert p in kit['inputs'] and sha(p) == kit[arm + '_module_sha256']
+    for name in kit['stage'].values():
+        assert name in kit['inputs']
+    assert set(kit['listings']) == {'vdplet-control', 'vdplet-unpaced'}
+    for name in kit['listings'].values():
+        assert name in kit['inputs']
+        listing = Path(name).read_text()
+        for label in ('wp_entry_sp', 'wp_exit_sp'):
+            match = re.search(r'^([0-9A-F]{6})[^\n]*\b' + label + r':', listing, re.M)
+            assert match and 0x40000 <= int(match[1], 16) < 0xa0000
+    for key in ('install_b', 'restore'):
+        p = Path(kit[key])
+        assert str(p) in kit['inputs'] and p.stat().st_size == kit['flash_span']
+
+
+class Bench(h.Bench):
+    def __init__(self, context):
+        self.c = json.loads(Path(context).read_text())
+        self.grant = json.loads(Path(self.c['grant']).read_text())
+        if 'active' in self.grant:
+            self.grant = self.grant['active']
+        self.kit = json.loads((B / 'kit.json').read_text())
+        verify_kit(self.kit)
+        assert self.grant['owner'] == 'wolf3dorig' and self.grant['task'] == self.kit['task']
+        assert self.grant['request'] == self.kit['request']
+        self.components = self.grant['entry_observation']['components']
+        assert self.components == self.kit['incoming_components']
+        self.lease = self.grant['lease']
+        self.url = self.c['url']
+        self.port = self.c['native_port']
+        self.remote = self.kit['remote']
+        self.out = B / 'evidence'
+        self.out.mkdir(exist_ok=False)
+
+    def entry(self):
+        p = self.folder('entry')
+        self.own()
+        raw = self.cli(p, 'entry')
+        cwd = re.search(rb'Directory: ([^\r\n]+)', raw)
+        assert cwd
+        assert cwd[1].strip() == b'/', 'Fresh root CLI required before namespace changes'
+        (p / 'cwd.txt').write_bytes(cwd[1])
+        self.service(p, 'listener')
+        for remote, name, key in (
+            ('/autoexec.txt', 'startup.bin', 'startup_sha256'),
+            ('/emos/sdserve.bin', 'listener.bin', 'listener_sha256'),
+        ):
+            self.transfer(p, name, 'get', remote, p / name)
+            assert sha(p / name) == self.components[key]
+        c = self.metadata(p, 'directories')
+        try:
+            c.make_directory('/test/wolf/perf004', parents=True)
+            assert not any(n.rstrip('/').lower() == self.remote.lower()
+                           for n, _, _ in c.entries('/test/wolf/perf004')), 'Fresh namespace collision'
+            c.make_directory(self.remote, parents=True)
+            c.make_directory(self.remote + '/level_00', parents=True)
+        finally:
+            c.lock.close()
+        for name in ('state.txt', 'route.txt'):
+            self.upload(p, name, self.kit['stage'][name], self.remote + '/' + name)
+        self.raw_state(p, 'entry-raw')
+        self.verify_route(p, 'entry-route')
+        h.save(p / 'receipt.json', dict(passed=True, fresh_namespace=True, mode0_callback0_route0=True))
+
+    def stage(self):
+        assert json.loads((self.out / 'entry/receipt.json').read_text())['passed']
+        p = self.folder('stage')
+        for i, (name, local) in enumerate(self.kit['stage'].items()):
+            if name in ('state.txt', 'route.txt'):
+                continue  # Already PUT/GET verified before the entry RAM reads.
+            assert time.monotonic() < self.deadline - 360
+            self.upload(p, f'file-{i:02d}', local, self.remote + '/' + name)
+            print('STAGED', name, flush=True)
+        self.exit(p, 'exit')
+        h.save(p / 'receipt.json', dict(passed=True, files=len(self.kit['stage']), put_get_verified=True))
+
+    def verify_route(self, folder, label):
+        c = self.metadata(folder, label + '-remove-old')
+        try:
+            for name, _, attr in list(c.entries(self.remote)):
+                if name.rsplit('/', 1)[-1] == 'route.bin':
+                    assert not attr & 16
+                    c.remove(name)
+        finally:
+            c.lock.close()
+        self.exit(folder, label + '-exit')
+        self.line(folder, label + '-save', 'EXEC ' + self.remote + '/route.txt')
+        self.wait_online(True)
+        self.transfer(folder, label + '-get', 'get', self.remote + '/route.bin', folder / (label + '.bin'))
+        assert (folder / (label + '.bin')).read_bytes() == b'\0'
+
+    def boot(self, folder, label):
+        # This operation must be concretely bound to the current owner procedure
+        # in the final kit; the historical P4/parallel literal is not reusable.
+        from bootstrap import boot_current
+        boot_current(self, folder, label)
+        self.cli(folder, label)
+        self.service(folder, label + '-listener')
+        self.raw_state(folder, label + '-raw')
+        self.verify_route(folder, label + '-route')
+        self.exit(folder, label + '-exit')
+
+    def ports_free(self):
+        self.own()
+        for port in self.c['ports']:
+            assert subprocess.run(['fuser', str(Path(port).resolve())], capture_output=True).returncode == 1
+
+    def install_module(self, arm, index):
+        assert arm in ('original', 'candidate')
+        p = self.folder(f'module-{index:02d}-{arm}')
+        if not self.get('/sd/status')['online']:
+            self.service(p, 'listener')
+        source = Path(self.kit['modules'][arm])
+        assert sha(source) == self.kit[arm + '_module_sha256']
+        self.upload(p, 'module', source, self.remote + '/wolf3d.vdpl')
+        self.verify_route(p, 'pre-guest-route')
+        h.save(p / 'receipt.json', dict(passed=True, arm=arm, sha256=sha(source), outside_timing=True))
+
+    def run_cases(self):
+        for index, (arm, mode) in enumerate(SEQUENCE, 1):
+            self.install_module(arm, index)
+            self.case(index, 'vdplet', mode)
+            p = self.out / f'{index:02d}-vdplet-{mode}'
+            h.save(p / 'arm.json', dict(arm=arm, module_sha256=self.kit[arm + '_module_sha256']))
+            self.probe(f'after-{index:02d}-{arm}')
+
+    def handback(self):
+        # Include the route check before the inherited final listener retirement.
+        p = self.folder('route-handback')
+        self.cli(p, 'route-check')
+        self.service(p, 'listener')
+        self.verify_route(p, 'final-route')
+        self.exit(p, 'exit')
+        super().handback()
+        p = self.folder('final-checks')
+        self.line(p, 'cwd', 'CD /')
+        raw = self.cli(p, 'root-cli')
+        assert re.search(rb'Directory: /\s*\r?\n', raw), 'Root cwd not restored'
+        self.line(p, 'mirror-off', 'VDU 3')
+        state = self.state()
+        h.save(p / 'state.json', state)
+        k = state['keyboard']
+        assert k['ready'] and k['physical_neutral'] and not k['held'] and not k['pending']
+        assert not state['sd']['online'] and not state['sd']['pending'] and state['worker']['phase'] == 0
+        for port in self.c['ports']:
+            assert subprocess.run(['fuser', str(Path(port).resolve())], capture_output=True).returncode == 1
+        checks = {n: True for n in ('no_workload', 'no_transfer', 'no_serial_readers', 'no_reset_holders',
+                  'cli_verified', 'input_ready_neutral', 'listener_offline', 'staged_job_idle', 'restoration_verified')}
+        h.save(p / 'observation.json', dict(schema='olimex-bench-observation-v1', bench='olimex',
+               epoch=time.time(), observer='wolf3dorig', lease=self.lease, checks=checks,
+               evidence=[str(p / 'state.json'), str(p / 'serial.bin'), str(self.out / 'route-handback/final-route.bin'),
+                         str(self.out / 'handback/observation.json'), str(self.out / 'flash-restore/receipt.json')],
+               components=self.components,
+               component_provenance={n: ('Fresh unchanged whole-file comparison in handback' if n in ('startup_sha256', 'listener_sha256')
+                   else 'Exact incoming application/touched-tail restoration and independent full-span readback' if n == 'native_vdp_sha256'
+                   else 'Retained unchanged fresh-grant identity; this suite never writes this component') for n in self.components},
+               disposition='New final rootCLI/input/idle/freeUSB observation; earlier same-custody route0/mode0/callback0 and exact app/tail restore/readback retained by original receipt, no intervening guest or route/mode change; startup/listener unchanged; SD mounted.'))
+
+    def suite(self):
+        try:
+            self.deadline = time.monotonic() + 3600
+            self.entry()
+            self.stage()
+            self.flash('b', self.kit['install_b'])
+            self.probe('entry')
+            self.run_cases()
+            self.flash('restore', self.kit['restore'])
+            self.handback()
+            h.save(self.out / 'complete.json', dict(passed=True, guests=6, resource_probes=7, restored=True))
+        except h.SetupFailure as error:
+            h.save(self.out / 'failure.json', dict(error=repr(error), next_dispatch_stopped=True, actual_mos_return=True, epoch=time.time()))
+            self.preserve_setup()
+            h.save(self.out / 'setup-stopped-restored.json', dict(restored=True, benchmark_claim=False))
+        except BaseException as error:
+            h.save(self.out / 'failure.json', dict(error=repr(error), next_dispatch_stopped=True, custody_retained=True, epoch=time.time()))
+            raise
+
+
+if __name__ == '__main__':
+    p = argparse.ArgumentParser()
+    p.add_argument('context')
+    args = p.parse_args()
+    interrupt_spec = importlib.util.spec_from_file_location('wp004_host_interrupt', P3 / 'hardware/host_interrupt08.py')
+    interrupt = importlib.util.module_from_spec(interrupt_spec)
+    interrupt_spec.loader.exec_module(interrupt)
+    interrupt.install(B / 'host-interruption')
+    Bench(args.context).suite()

@@ -64,3 +64,12 @@ VDPlet source advice supports the scaling proof and corrects the300-heading
 coverage label. It also confirms that a supported local correction does not
 retrospectively justify the original Canvas-to-per-pixel method replacement.
 The independent historical cold audit is not shown these candidate findings.
+
+The subsequent bounded milestone review is deliberately separate from that
+cold audit. It found no blocking source defect. Its precise coverage limits
+are retained: the scripted set covers300 distinct scene-heading pairs, rather
+than every heading in every scene; both modeled pages have sync/guard checks,
+but exported colour comparisons cover the selected page only. Provider/world/
+workspace are reconstructed per scripted frame; module update/retry/lifecycle
+checks form a separate exercised set. No additional hardware cases or claims
+follow from that review.
