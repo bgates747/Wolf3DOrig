@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "steps": [
+    {
+      "name": "test_hardware.py",
+      "returncode": 0,
+      "seconds": 0.25094441502005793
+    },
+    {
+      "name": "test_replacement.py",
+      "returncode": 0,
+      "seconds": 0.7516097979969345
+    }
+  ],
+  "seconds": 1.2968565069895703,
+  "inputs": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-004/hardware.py": "2713889c1996456cc0dff2606fcaae7552ead4a7a81bad0223f9662bfab1c412",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-004/bootstrap.py": "4ffd634eb183cf4ee8aa7dfc936241303ed68f5a3c0ab3ba95934c2c1fd4d3bc",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-004/test_replacement.py": "e7cf81fba8b2226b1240cd1d2618bfe6011ca69ddc7e7ad96cc39f3662e71c96",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-004/run_composition.py": "cfbd3d50e4ab484db8197702317b0257a77fd65e815a4ad5c06cbf2ffd157d44",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-004/test_hardware.py": "92b0294d7e598a9e69494f27303477a871913ef9e5ddb354bce98b423d7ad42d",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/service.c": "4a1f205e380ffad60e836726bdd810a36c3f28330b943e14a86b68decc0fcb50",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/service.h": "826762965cfe5ffa78f3a2ae4d28829bc43d5afc8586f1554d41e9b319fa32d9",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/sd_wire.h": "8b846f3e1ed9165ae93297231fc16a0378c4162b1e996ccff2935bc444510ee1",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/test_sdserve.py": "b519724059794e4c710cc893ac2bef501693627e12b95ad326613e9173b690c5",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/sdserve_host/fs.c": "19aa45a7b1650ef37ac2ec00abc2bd2518d00482737bad39808908fa79b59562",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/sdserve_host/agon/mos.h": "b12da862811cbc53ce2860185408b9ddf00a0d070d8cbf77c5e562b864362469",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-004/build/r03/original/module/wolf_perf.vdpl": "1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-004/build/r03/candidate/module/wolf_perf.vdpl": "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055"
+  },
+  "peak_cpu_c": 50.15
+}

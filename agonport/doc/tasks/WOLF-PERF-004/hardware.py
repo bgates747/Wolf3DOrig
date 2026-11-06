@@ -17,7 +17,7 @@ T = Path(__file__).resolve().parent
 sys.path.insert(0, str(T))
 P3 = T.parent / 'WOLF-PERF-003'
 sys.path.insert(0, str(P3 / 'hardware'))
-B = T / 'build/hardware02'
+B = T / 'build/hardware03'
 spec = importlib.util.spec_from_file_location('wp004_physical54', P3 / 'hardware/physical09.py')
 h = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(h)
@@ -37,8 +37,8 @@ class BudgetStop(RuntimeError):
 
 
 def verify_kit(kit):
-    assert kit['task'] == 'WOLF-PERF-004-hardware-r01'
-    assert kit['remote'] == '/test/wolf/perf004/r01'
+    assert kit['task'] == 'WOLF-PERF-004-hardware-r02'
+    assert kit['remote'] == '/test/wolf/perf004/r02'
     assert kit['original_module_sha256'] == '1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610'
     assert kit['candidate_module_sha256'] == '54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055'
     assert kit['native_b_sha256'] == '7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d'
@@ -84,6 +84,7 @@ class Bench(h.Bench):
         self.out = B / 'evidence'
         self.out.mkdir(exist_ok=False)
         self.cleaning = False
+        self.selected_module_sha256 = self.kit['original_module_sha256']
 
     def admit(self, operation, allowance=0):
         if self.cleaning:
@@ -195,11 +196,47 @@ class Bench(h.Bench):
         p = self.folder(f'module-{index:02d}-{arm}')
         if not self.get('/sd/status')['online']:
             self.service(p, 'listener')
+        target = self.remote + '/wolf3d.vdpl'
+        assert self.module_state(p, 'before-state') == b'\x01', 'Unknown module siblings; preserve and stop'
+        previous = p / 'previous-target.bin'
+        self.transfer(p, 'previous-target', 'get', target, previous)
+        assert sha(previous) == self.selected_module_sha256, 'Unexpected previous module; preserve and stop'
         source = Path(self.kit['modules'][arm])
         assert sha(source) == self.kit[arm + '_module_sha256']
-        self.upload(p, 'module', source, self.remote + '/wolf3d.vdpl')
+        self.upload(p, 'module', source, target)
+        assert self.module_state(p, 'after-put-state') == b'\x09', 'Ambiguous replacement; preserve and stop'
+        backup = p / 'previous-backup.bin'
+        self.transfer(p, 'previous-backup', 'get', target + '.p17bak', backup)
+        assert sha(backup) == sha(previous), 'Unexpected backup; preserve and stop'
+        # upload() already GET-verified the complete selected target. Retire only
+        # this known owned backup through the supported listener recovery API.
+        self.admit('explicit verified module backup retirement')
+        c = self.metadata(p, 'retire-owned-backup')
+        try:
+            self.own()
+            h.save(p / 'backup-retirement-issued.json', dict(operation='RECOVER3',
+                   path=target, previous_sha256=sha(previous), target_sha256=sha(source),
+                   backup_sha256=sha(backup), whole_target_get_verified=True))
+            state = c.rpc(10, b'\x03' + h.path_payload(target))
+            h.save(p / 'backup-retirement-result.json', dict(state=state.hex()))
+            assert state == b'\x01', 'Backup retirement incomplete; preserve and stop'
+        finally:
+            c.lock.close()
+        assert self.module_state(p, 'final-state') == b'\x01'
+        self.selected_module_sha256 = sha(source)
         self.verify_route(p, 'pre-guest-route')
-        h.save(p / 'receipt.json', dict(passed=True, arm=arm, sha256=sha(source), outside_timing=True))
+        h.save(p / 'receipt.json', dict(passed=True, arm=arm, sha256=sha(source), outside_timing=True,
+               previous_sha256=sha(previous), backup_retired=True, recovery_state=1))
+
+    def module_state(self, folder, label):
+        c = self.metadata(folder, label)
+        try:
+            self.own()
+            state = c.rpc(10, b'\0' + h.path_payload(self.remote + '/wolf3d.vdpl'))
+            h.save(folder / (label + '.json'), dict(state=state.hex(), inspect_only=True))
+            return state
+        finally:
+            c.lock.close()
 
     def run_cases(self):
         for index, (arm, mode) in enumerate(SEQUENCE, 1):

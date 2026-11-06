@@ -9,7 +9,7 @@ T = Path(__file__).resolve().parent
 P3 = T.parent / 'WOLF-PERF-003'
 E = Path('/Agon/mystuff/agon-extender')
 D = Path('/Agon/mystuff/agon-dev-env')
-B = T / 'build/hardware02'
+B = T / 'build/hardware03'
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def save(p, value):
@@ -19,9 +19,9 @@ def save(p, value):
 def prepare():
     B.mkdir(exist_ok=False)
     old = json.loads((P3 / 'build/hardware09/kit.json').read_text())
-    release = E / 'agents/parallel001/rfc25-physical-r01/released.json'
+    release = T / 'build/hardware02/release61.json'
     released = json.loads(release.read_text())
-    assert released['generation'] == 59 and released['released']
+    assert released['generation'] == 61 and released['released']
     components = released['release_observation']['components']
     assert components['native_vdp_sha256'] == '5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07'
     restore = Path('/Agon/mystuff/MechAgon/.runtime/render001/native-install-r01/candidate-sectors.bin')
@@ -37,7 +37,7 @@ def prepare():
     data = bytearray(restore.read_bytes()); data[:native_b.stat().st_size] = native_b.read_bytes()
     assert len(data) == 1105920
     (B / 'install-b.bin').write_bytes(data)
-    remote = '/test/wolf/perf004/r01'
+    remote = '/test/wolf/perf004/r02'
     (B / 'state.txt').write_bytes(('SAVE '+remote+'/post-mode.bin &BC349 &1\r\nSAVE '+remote+'/post-callback.bin &BC38E &3\r\nEMOS sdserve --fast /\r\n').encode())
     (B / 'route.txt').write_bytes(('SAVE '+remote+'/route.bin &BCB25 &1\r\nEMOS sdserve --fast /\r\n').encode())
     names = ['wolf3d.cfg','hud.agnb','sfx.agnb','shell.agnb'] + [n for n in old['stage'] if n.startswith('level_00/')] + ['b-unpaced.bin','b-control.bin','resource-probe.bin']
@@ -77,6 +77,14 @@ def prepare():
             'Actual retained mode producer waits for matching136 reply then wp_settle_display240 MOS ticks before setup/loading. Invocation capture retains1second after final return before collection; entry0 only.',
             'No parallel networking API/carrier substitution, old54 bootstrap marker or firmware rollback permitted.'
         ])
+    composition = T / 'build/composition01/receipt.json'
+    qualified = json.loads(composition.read_text())
+    assert qualified['passed'] and qualified['inputs'][str(T/'hardware.py')] == sha(T/'hardware.py')
+    service = E / 'agents/remote009/download-r01/source/projects/sdserve/src/service.c'
+    binding['transfer_lifecycle'] = dict(listener_app_sha256=components['listener_sha256'],
+        retained_service_sha256=sha(service), recovery_operation=10, inspect_action=0, backup_cleanup_action=3,
+        required_before_state=1, required_after_put_state=9, required_final_state=1,
+        host_composition_receipt_sha256=sha(composition), qualification='Actual consumer method plus retained real listener engine; POSIX/MOS host adapter, not physical FAT/UART qualification')
     save(B / 'source-binding.json', binding)
     tools = [E / 'scripts' / n for n in ('keyboard.py','sdcard.py','sdcard_staged.py','passive_serial.py','reset_agon_usb.py','reset_agon.py','p4_boot_guard.py')]
     tools += [E / 'agents/remote009/fast-transfer-pin-r01/sdcard_staged.py', E / 'agents/bench-reset/usb-reset.local.json', E / 'agents/net004/uart1-bootstrap-r01/bootstrap.py',
@@ -85,11 +93,17 @@ def prepare():
               E / '.venv/lib/python3.14/site-packages/esptool/reset.py', E / '.venv/lib/python3.14/site-packages/serial/serialposix.py']
     sources = [source / n for n in ('reset.asm','handlers.asm','serial.asm','mos_api.asm','mos.c','vdp_protocol.asm','emos.c')]
     files = list(stage.values()) + list(listings.values()) + list(modules.values()) + guest_sources + tools + sources
-    files += [rom,mapfile,restore,native_app,installed,native_b,release,B/'restore.bin',B/'install-b.bin',B/'source-binding.json',T/'HARDWARE-RUN-02.md',T/'hardware.py',T/'bootstrap.py',T/'prepare_hardware.py',T/'test_hardware.py',P3/'hardware/physical09.py',P3/'hardware/trace04.py',P3/'hardware/host_interrupt08.py',P3/'analyze.py',T.parent/'WOLF-PERF-001/hardware/physical.py']
+    files += [rom,mapfile,restore,native_app,installed,native_b,release,B/'restore.bin',B/'install-b.bin',B/'source-binding.json',T/'HARDWARE-RUN-03.md',T/'AMENDMENT-02.md',T/'hardware.py',T/'bootstrap.py',T/'prepare_hardware.py',T/'test_hardware.py',T/'test_replacement.py',T/'run_composition.py',T/'build/composition01/receipt.json',P3/'hardware/physical09.py',P3/'hardware/trace04.py',P3/'hardware/host_interrupt08.py',P3/'analyze.py',T.parent/'WOLF-PERF-001/hardware/physical.py']
+    listener_source = E / 'agents/remote009/download-r01/source'
+    files += [listener_source/'projects/sdserve/src'/n for n in ('service.c','service.h','sd_wire.h')]
+    files += [listener_source/'tests/test_sdserve.py',listener_source/'tests/sdserve_host/fs.c',listener_source/'tests/sdserve_host/agon/mos.h']
+    proof = T / 'build/hardware02/evidence/flash-restore/read.bin'
+    assert sha(proof) == sha(restore)
+    files += [proof,T/'build/hardware02/evidence/flash-restore/receipt.json']
     inputs = {str(p):sha(p) for p in files}
-    request = json.loads((T / 'build/bench-request02.json').read_text())['request']
-    kit = dict(task='WOLF-PERF-004-hardware-r01',request=request,remote=remote,
-        incoming_components=components, incoming_release=str(release), incoming_generation=59,
+    request = json.loads((T / 'build/bench-request03.json').read_text())['request']
+    kit = dict(task='WOLF-PERF-004-hardware-r02',request=request,remote=remote,
+        incoming_components=components, incoming_release=str(release), incoming_generation=61,
         original_module_sha256=sha(modules['original']),candidate_module_sha256=sha(modules['candidate']),native_b_sha256=sha(native_b),
         modules=modules,stage=stage,listings=listings,restore=str(B/'restore.bin'),install_b=str(B/'install-b.bin'),flash_span=len(data),
         source_binding=str(B/'source-binding.json'),source_binding_passed=True,boot_binding_passed=True,

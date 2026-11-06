@@ -33,6 +33,14 @@ practical Wolf work while Oryx is down; preserve the independent audit baseline.
   arms with resource/counter/return checks and first-failure stop.
 - [ ] WOLF-PERF-004-06 — Restore/release, report raw comparison/limits and share
   substantive results/gaps with owners; no default adoption in this tranche.
+  [Actual61 stopped](agonport/doc/tasks/WOLF-PERF-004/PHYSICAL61-RESULT.md) before
+  candidate execution; exact restoration/release complete, no measured comparison.
+- [x] WOLF-PERF-004-07 — Correct documented repeated-replacement backup lifecycle
+  under [Amendment02](agonport/doc/tasks/WOLF-PERF-004/AMENDMENT-02.md), qualify
+  actual-consumer/real-listener composition and freeze a fresh cohort package.
+  [Readiness03](agonport/doc/tasks/WOLF-PERF-004/HARDWARE-READINESS-03.md):13runner/
+  6real-engine checks PASS; compiler268 released,167pins/new namespace. Actual
+  next handback/current tuple and fresh physical grant remain required.
 
 ## WOLF-REVIEW-001 — bespoke-to-VDPlet conversion self-review
 
