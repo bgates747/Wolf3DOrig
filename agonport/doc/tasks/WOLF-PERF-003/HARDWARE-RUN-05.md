@@ -39,12 +39,15 @@ build complete before admission. No rendering optimization/audio/extra tests.
 Fresh /test/wolf/perf003/pair05 refuses existing namespace, staged independent
 readbacks, original normal startup/listener and unknown user files preserved.
 Four native app-only writes including exact incoming restore, common1105920B
-span@0x10000 (B1101904B crosses the269-sector boundary). Use retained actual44/
-MechAgon43 restoration evidence: incoming app20029942,1101408B; complete span
+span@0x10000 (B1101904B crosses the269-sector boundary). Use actual45 full-span restoration/readback evidence: incoming app20029942,1101408B; complete span
 5fbf82c41d6a7fbee6a9f121b16f321db544c316ee286f634878d7763ce54f37, original tail.
-Wolf44 restored first1101824B exactly and never touched the remaining4096B.
+Actual45 independently verified the entire1105920B; Wolf44 previously restored
+first1101824B exactly and never touched the remaining4096B.
 No new whole-device read; verify each selected new/restored written span.
-EMOS experimental8270/source71552879, P4a967, startuped403/listener0566 unchanged;
+EMOS experimental8270/source71552879 and startuped403/listener0566 unchanged.
+Actual45 retains experimental P4 diagnostic02addd54/sourcee14e0b8a: only cached
+VALID count appended to existing task-context failure log; same wire/API/CTS/
+deadlines/configuration, no Wolf transport repair or physical acceptance claim;
 all actual current identities/private RAM addresses must equal the next grant.
 If another owner changes them, reconcile again before readiness.
 
@@ -67,7 +70,10 @@ senders and loading hint retained. All observer/code ends fit below0xA0000.
 Actual controller tests cover normal/control/late setup return, complete14-case/
 8-probe A/B/B/A dispatch and first-failure stop before B. Renderer images/module
 are unchanged, verified hashes; no native rebuild/emulator/target operation.
-The frozen kit binds exact release44 components and source/map compatibility
-evidence, plus combined full rollback span checked against actual44 readback.
-Current native20029942 app/tail restored at44 release; a new grant must match
+The frozen kit binds exact release45 components and unchanged EMOS source/map
+compatibility evidence. New P4 image/build/install proofs are pinned; old a967
+inputs remain historical provenance. Actual45 full rollback span matches the
+old preserved original and actual44 prefix. Eight clients/native A/B/module/
+controller remain byte-identical to the pre45 selection; no rebuild selected.
+Current native20029942 app/tail restored at45 release; a new grant must match
 all identities. No actual hardware access is conferred by this preparation.
