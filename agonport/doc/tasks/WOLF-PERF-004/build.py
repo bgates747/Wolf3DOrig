@@ -18,7 +18,10 @@ TOOL = Path('/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin')
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
-def main(lease):
+def main(lease, revision):
+    global B
+    assert revision == 'r03', 'Preserve prior failed attempts'
+    B = T / 'build' / revision
     inputs = json.loads((B / 'inputs.json').read_text())
     for name, digest in inputs['inputs'].items():
         assert sha(name) == digest, name
@@ -67,7 +70,7 @@ def main(lease):
                 (B / 'build-receipt.json').write_text(json.dumps(receipt, indent=2) + '\n')
 
     try:
-        flags = ['g++', '-std=c++17', '-O1', '-g', '-Wall', '-Wextra', '-Werror', '-pedantic',
+        flags = ['g++', '-std=c++17', '-O1', '-g', '-Wall', '-Wextra', '-Werror', '-pedantic', '-I' + str(SDK / 'include'),
                  '-fsanitize=address,undefined', '-fno-sanitize-recover=all', '-fno-omit-frame-pointer']
         for arm in ('original', 'candidate'):
             a = B / arm
@@ -75,6 +78,8 @@ def main(lease):
             result = a / 'host-results'
             result.mkdir()
             core = [prod / 'wolf3d_world_mirror.cpp', prod / 'wolf3d_renderer.cpp']
+            run(arm + '-fixed-div-compile', flags + [prod / 'wolf3d_world_mirror.cpp', '-I' + str(prod), T / 'test_fixed_div.cpp', '-o', result / 'fixed-div'], prod)
+            run(arm + '-fixed-div-check', [result / 'fixed-div'], prod)
             run(arm + '-renderer-compile', flags + core + [prod / 'test_renderer.cpp', '-o', result / 'renderer'], prod)
             run(arm + '-renderer-check', [result / 'renderer', result / 'fixture-frame.bin', result / 'fixture-geometry.bin'], prod)
             run(arm + '-module-compile', flags + ['-DWOLF3D_HOST_TEST', prod / 'wolf3d_module.cpp', prod / 'test_module.cpp', '-o', result / 'module'], prod)
@@ -108,4 +113,6 @@ def main(lease):
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('--lease', required=True)
-    main(p.parse_args().lease)
+    p.add_argument('--revision', required=True)
+    args = p.parse_args()
+    main(args.lease, args.revision)

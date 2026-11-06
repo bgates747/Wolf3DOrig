@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
                       W3P_DIRECT_SPRITE_ARENA_OFFSET - W3P_DIRECT_WALL_HEIGHT_OFFSET);
             write_all(states, reinterpret_cast<const uint8_t *>(&stats), sizeof(stats));
         }
-        std::cout << "PASS 600 direct frames: alternating independent rows/pages, all-angle work, sync/guards/world/leases and transparent HUD\n";
+        std::cout << "PASS 600 direct frames / 300 scripted degree headings: alternating independent rows/pages, sync/guards/world/leases and transparent HUD\n";
     } catch (const std::exception &e) {
         std::cerr << e.what() << '\n';
         return 1;

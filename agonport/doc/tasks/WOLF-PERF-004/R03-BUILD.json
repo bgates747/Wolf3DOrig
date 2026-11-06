@@ -1,0 +1,169 @@
+{
+  "schema": "wolf-perf004-r03-host-build-v1",
+  "plan_commit": "b9a7062",
+  "amendment_commit": "aa0e77f",
+  "passed": true,
+  "build_seconds": 53.5169345389877,
+  "peak_cpu_c": 54.55,
+  "host_frames_per_arm": 600,
+  "distinct_scripted_degree_headings": 300,
+  "host_scope": "Synthetic six-scene producer/asset fixtures, alternating two modeled pages and independent rows; target helper and observer blocks excluded by host macro. Not physical timing or exhaustive arithmetic.",
+  "compared_outputs": {
+    "fixture-frame.bin": {
+      "bytes": 460800,
+      "sha256": "9d939640655e6317e37d85b9a446ad7984692cd480fea1efc3a8dab47a48f487"
+    },
+    "fixture-geometry.bin": {
+      "bytes": 10752,
+      "sha256": "4beb6013595a467ec0a5f659761a1164bdebccb2e1d83dbed7908e10dec22277"
+    },
+    "module-frame.bin": {
+      "bytes": 76800,
+      "sha256": "a20c0387435f480ff7b551896d4cc02c0539bac40a6af3753148252fb81fdaf6"
+    },
+    "frames600.bin": {
+      "bytes": 46080000,
+      "sha256": "0b24c3f33a6d1987f01eb20f6fc6797891feb2a74a330e155cae7b73cb8cdca9"
+    },
+    "states600.bin": {
+      "bytes": 1081200,
+      "sha256": "ad29477814170b757fbda58dfefa4338572cbcfc2da2ccc56f91a59da19fe44f"
+    }
+  },
+  "target_packages": {
+    "original": {
+      "sha256": "1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610",
+      "resident_text_bytes": 14324,
+      "resident_data_bytes": 9732,
+      "package_bytes": 19876,
+      "relative_relocations": 51,
+      "compiler_target": {
+        "psram_cache_workaround": true,
+        "flags": [
+          "-mfix-esp32-psram-cache-issue"
+        ]
+      }
+    },
+    "candidate": {
+      "sha256": "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055",
+      "resident_text_bytes": 14324,
+      "resident_data_bytes": 9732,
+      "package_bytes": 19876,
+      "relative_relocations": 51,
+      "compiler_target": {
+        "psram_cache_workaround": true,
+        "flags": [
+          "-mfix-esp32-psram-cache-issue"
+        ]
+      }
+    }
+  },
+  "source_stack": {
+    "original": {
+      "maximum_frame_bytes": 736,
+      "frames": {
+        "const vdplet_host_v1_6* vdplet_color_frame_host(const vdplet_host_v1*)": 32,
+        "uint32_t wolf3d_production::{anonymous}::load_u32(const uint8_t*)": 32,
+        "int32_t wolf3d_production::{anonymous}::sin_fine(int32_t)": 32,
+        "uint8_t wolf3d_production::{anonymous}::tile_at(const wolf3d_production::WorldMirror&, const uint8_t*, int, int)": 32,
+        "wolf3d_production::RenderDetail wolf3d_production::{anonymous}::release_asset(const wolf3d_production::AssetProvider&, uint32_t)": 32,
+        "bool wolf3d_production::{anonymous}::transform_point(int32_t, int32_t, const wolf3d_production::{anonymous}::ViewState&, int32_t&, int32_t&, int32_t&, uint32_t&)": 32,
+        "void wolf3d_production::{anonymous}::swap_sprites(wolf3d_production::{anonymous}::VisSprite&, wolf3d_production::{anonymous}::VisSprite&)": 48,
+        "void wolf3d_production::{anonymous}::sift_min(wolf3d_production::{anonymous}::VisSprite*, uint16_t, uint16_t)": 32,
+        "uint64_t divide_u64(uint64_t, uint64_t)": 48,
+        "void wolf3d_production::{anonymous}::clear_module()": 32,
+        "void wolf3d_production::{anonymous}::reset_fizzle()": 32,
+        "void wolf3d_production::{anonymous}::emit_fizzle(wolf3d_production::{anonymous}::ModuleState::FizzleCursor&, uint32_t, uint8_t*, uintptr_t*, uint32_t, uint32_t, uint8_t, uint8_t)": 32,
+        "wolf3d_production::RenderDetail wolf3d_production::{anonymous}::acquire_asset(void*, uint16_t, wolf3d_production::AssetSpan&)": 64,
+        "wolf3d_production::RenderDetail wolf3d_production::{anonymous}::release_asset(void*, uint32_t)": 32,
+        "void wolf3d_production::{anonymous}::preserve_first_error(int32_t&, int32_t)": 32,
+        "void wp_put32(unsigned char*, unsigned int)": 32,
+        "const vdplet_host_v1_3* vdplet_pixels_host(const vdplet_host_v1*)": 32,
+        "uint8_t* wolf3d_production::{anonymous}::target_pixel(const wolf3d_production::RenderTarget&, uint32_t, uint32_t)": 32,
+        "void wolf3d_production::{anonymous}::put_pixel(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint8_t)": 32,
+        "int32_t wolf3d_production::{anonymous}::require_published_frame(const vdplet_host_v1*, const vdplet_request_v1*)": 32,
+        "bool wolf3d_production::{anonymous}::append_hud_number(wolf3d_production::{anonymous}::HudDraw*, uint8_t&, int, int, int, uint32_t)": 32,
+        "void wolf3d_production::{anonymous}::fill_span(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint8_t)": 32,
+        "void wolf3d_production::{anonymous}::fill_rect(const wolf3d_production::RenderTarget&, int, int, int, int, uint8_t)": 32,
+        "wolf3d_production::BatchDetail wolf3d_production::{anonymous}::validate_batch(const wolf3d_production::WorldMirror&, const uint8_t*, size_t, wolf3d_production::{anonymous}::BatchHeader&)": 736,
+        "void wolf3d_production::initialize_world_mirror(wolf3d_production::WorldMirror&, uint16_t, uint16_t)": 32,
+        "wolf3d_production::BatchDetail wolf3d_production::validate_resource_descriptor(wolf3d_production::ResourceDescriptor&, const uint8_t*, size_t)": 32,
+        "int32_t wolf3d_production::{anonymous}::copy_descriptor(const vdplet_host_v1*, const vdplet_request_v1*, wolf3d_production::ResourceDescriptor&)": 80,
+        "int32_t wolf3d_production::{anonymous}::require_matching_descriptor(const vdplet_host_v1*, const vdplet_request_v1*)": 48,
+        "wolf3d_production::BatchDetail wolf3d_production::apply_update_batch(wolf3d_production::WorldMirror&, const uint8_t*, size_t)": 80,
+        "void wolf3d_production::mark_mirror_presented(wolf3d_production::WorldMirror&)": 32,
+        "const char* wolf3d_production::batch_detail_name(wolf3d_production::BatchDetail)": 32,
+        "wolf3d_production::RenderDetail wolf3d_production::render_world_to_target(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, wolf3d_production::RenderStats*)": 352,
+        "wolf3d_production::RenderDetail wolf3d_production::render_world(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, wolf3d_production::RenderStats*)": 80,
+        "wolf3d_production::RenderDetail wolf3d_production::render_world_direct(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, wolf3d_production::RenderStats*)": 48,
+        "const char* wolf3d_production::render_detail_name(wolf3d_production::RenderDetail)": 32,
+        "void* memcpy(void*, const void*, unsigned int)": 32,
+        "void* memset(void*, int, unsigned int)": 32,
+        "uint64_t __udivdi3(uint64_t, uint64_t)": 32,
+        "int64_t __divdi3(int64_t, int64_t)": 32,
+        "int32_t wp_production_entry(const vdplet_host_v1*, const vdplet_request_v1*)": 272,
+        "int32_t vdplet_entry(const vdplet_host_v1*, const vdplet_request_v1*)": 80
+      }
+    },
+    "candidate": {
+      "maximum_frame_bytes": 736,
+      "frames": {
+        "const vdplet_host_v1_6* vdplet_color_frame_host(const vdplet_host_v1*)": 32,
+        "uint32_t wolf3d_production::{anonymous}::load_u32(const uint8_t*)": 32,
+        "int32_t wolf3d_production::{anonymous}::sin_fine(int32_t)": 32,
+        "uint8_t wolf3d_production::{anonymous}::tile_at(const wolf3d_production::WorldMirror&, const uint8_t*, int, int)": 32,
+        "wolf3d_production::RenderDetail wolf3d_production::{anonymous}::release_asset(const wolf3d_production::AssetProvider&, uint32_t)": 32,
+        "bool wolf3d_production::{anonymous}::transform_point(int32_t, int32_t, const wolf3d_production::{anonymous}::ViewState&, int32_t&, int32_t&, int32_t&, uint32_t&)": 32,
+        "void wolf3d_production::{anonymous}::swap_sprites(wolf3d_production::{anonymous}::VisSprite&, wolf3d_production::{anonymous}::VisSprite&)": 48,
+        "void wolf3d_production::{anonymous}::sift_min(wolf3d_production::{anonymous}::VisSprite*, uint16_t, uint16_t)": 32,
+        "uint64_t divide_u64(uint64_t, uint64_t)": 48,
+        "void wolf3d_production::{anonymous}::clear_module()": 32,
+        "void wolf3d_production::{anonymous}::reset_fizzle()": 32,
+        "void wolf3d_production::{anonymous}::emit_fizzle(wolf3d_production::{anonymous}::ModuleState::FizzleCursor&, uint32_t, uint8_t*, uintptr_t*, uint32_t, uint32_t, uint8_t, uint8_t)": 32,
+        "wolf3d_production::RenderDetail wolf3d_production::{anonymous}::acquire_asset(void*, uint16_t, wolf3d_production::AssetSpan&)": 64,
+        "wolf3d_production::RenderDetail wolf3d_production::{anonymous}::release_asset(void*, uint32_t)": 32,
+        "void wolf3d_production::{anonymous}::preserve_first_error(int32_t&, int32_t)": 32,
+        "void wp_put32(unsigned char*, unsigned int)": 32,
+        "const vdplet_host_v1_3* vdplet_pixels_host(const vdplet_host_v1*)": 32,
+        "uint8_t* wolf3d_production::{anonymous}::target_pixel(const wolf3d_production::RenderTarget&, uint32_t, uint32_t)": 32,
+        "void wolf3d_production::{anonymous}::put_pixel(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint8_t)": 32,
+        "int32_t wolf3d_production::{anonymous}::require_published_frame(const vdplet_host_v1*, const vdplet_request_v1*)": 32,
+        "bool wolf3d_production::{anonymous}::append_hud_number(wolf3d_production::{anonymous}::HudDraw*, uint8_t&, int, int, int, uint32_t)": 32,
+        "void wolf3d_production::{anonymous}::fill_span(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint8_t)": 32,
+        "void wolf3d_production::{anonymous}::fill_rect(const wolf3d_production::RenderTarget&, int, int, int, int, uint8_t)": 32,
+        "wolf3d_production::BatchDetail wolf3d_production::{anonymous}::validate_batch(const wolf3d_production::WorldMirror&, const uint8_t*, size_t, wolf3d_production::{anonymous}::BatchHeader&)": 736,
+        "void wolf3d_production::initialize_world_mirror(wolf3d_production::WorldMirror&, uint16_t, uint16_t)": 32,
+        "wolf3d_production::BatchDetail wolf3d_production::validate_resource_descriptor(wolf3d_production::ResourceDescriptor&, const uint8_t*, size_t)": 32,
+        "int32_t wolf3d_production::{anonymous}::copy_descriptor(const vdplet_host_v1*, const vdplet_request_v1*, wolf3d_production::ResourceDescriptor&)": 80,
+        "int32_t wolf3d_production::{anonymous}::require_matching_descriptor(const vdplet_host_v1*, const vdplet_request_v1*)": 48,
+        "wolf3d_production::BatchDetail wolf3d_production::apply_update_batch(wolf3d_production::WorldMirror&, const uint8_t*, size_t)": 80,
+        "void wolf3d_production::mark_mirror_presented(wolf3d_production::WorldMirror&)": 32,
+        "const char* wolf3d_production::batch_detail_name(wolf3d_production::BatchDetail)": 32,
+        "wolf3d_production::RenderDetail wolf3d_production::render_world_to_target(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, wolf3d_production::RenderStats*)": 352,
+        "wolf3d_production::RenderDetail wolf3d_production::render_world(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, wolf3d_production::RenderStats*)": 80,
+        "wolf3d_production::RenderDetail wolf3d_production::render_world_direct(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, wolf3d_production::RenderStats*)": 48,
+        "const char* wolf3d_production::render_detail_name(wolf3d_production::RenderDetail)": 32,
+        "void* memcpy(void*, const void*, unsigned int)": 32,
+        "void* memset(void*, int, unsigned int)": 32,
+        "uint64_t __udivdi3(uint64_t, uint64_t)": 32,
+        "int64_t __divdi3(int64_t, int64_t)": 32,
+        "int32_t wp_production_entry(const vdplet_host_v1*, const vdplet_request_v1*)": 272,
+        "int32_t vdplet_entry(const vdplet_host_v1*, const vdplet_request_v1*)": 80
+      }
+    }
+  },
+  "package_differing_byte_offsets": [
+    6280,
+    6281,
+    6282,
+    6283,
+    6284,
+    6285,
+    6286,
+    6287,
+    6288,
+    6289,
+    6290
+  ],
+  "original_target_matches_physical54": true
+}
