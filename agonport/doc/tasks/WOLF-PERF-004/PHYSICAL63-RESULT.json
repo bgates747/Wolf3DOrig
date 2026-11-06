@@ -1,0 +1,482 @@
+{
+  "schema": "wolf-perf004-physical63-result-v1",
+  "comparison": {
+    "schema": "wolf-perf004-fill-comparison-v1",
+    "arms": {
+      "original": {
+        "module_sha256": "1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610",
+        "samples": 1200,
+        "raw_prid": 52685,
+        "counters": {
+          "draw_ccount": {
+            "count": 1200,
+            "mean": 21974105.359166667,
+            "median": 21935717.0,
+            "minimum": 21359871,
+            "maximum": 22291727,
+            "p95": 22251494
+          },
+          "scope_ccount": {
+            "count": 1200,
+            "mean": 22086209.676666666,
+            "median": 22044657.0,
+            "minimum": 21464571,
+            "maximum": 22402425,
+            "p95": 22359909
+          },
+          "command_ccount": {
+            "count": 1200,
+            "mean": 22113621.428333335,
+            "median": 22071064.0,
+            "minimum": 21489280,
+            "maximum": 22427398,
+            "p95": 22388719
+          }
+        },
+        "nominal_ms": {
+          "draw_ccount": 91.55877232986111,
+          "scope_ccount": 92.02587365277778,
+          "command_ccount": 92.14008928472222
+        },
+        "completed_fps_prt_nominal": 10.52299273913501,
+        "completed_fps_mos_nominal": 10.50328227571116,
+        "runs": [
+          {
+            "prt_ticks": 57043,
+            "mos_ticks": 6858,
+            "raw_prid": 52685,
+            "hashes": {
+              "timing.bin": "79145c15b72876e976676f4a0f07e838dd82e8c16c09fbe63c86f040c798721a",
+              "native.bin": "1593af1f45c9d1444db7c5e018555019ce5e5a460b0c8ad6a3d92ebca04b607e"
+            }
+          },
+          {
+            "prt_ticks": 56993,
+            "mos_ticks": 6852,
+            "raw_prid": 52685,
+            "hashes": {
+              "timing.bin": "6588220a51ce92ba45ad369362ec209fa261119a014c124e55008a3fec3a844c",
+              "native.bin": "efa12dc923a814a90cd367e8d9f095201c23854a5e0154056f584f79fd1e27f7"
+            }
+          }
+        ]
+      },
+      "candidate": {
+        "module_sha256": "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055",
+        "samples": 1200,
+        "raw_prid": 52685,
+        "counters": {
+          "draw_ccount": {
+            "count": 1200,
+            "mean": 16449581.64,
+            "median": 16415384.0,
+            "minimum": 16110540,
+            "maximum": 16821498,
+            "p95": 16756564
+          },
+          "scope_ccount": {
+            "count": 1200,
+            "mean": 16562583.920833332,
+            "median": 16525052.0,
+            "minimum": 16230675,
+            "maximum": 16948260,
+            "p95": 16865611
+          },
+          "command_ccount": {
+            "count": 1200,
+            "mean": 16592220.6625,
+            "median": 16555795.0,
+            "minimum": 16256623,
+            "maximum": 16973989,
+            "p95": 16894216
+          }
+        },
+        "nominal_ms": {
+          "draw_ccount": 68.5399235,
+          "scope_ccount": 69.01076633680555,
+          "command_ccount": 69.13425276041667
+        },
+        "completed_fps_prt_nominal": 13.882301222799367,
+        "completed_fps_mos_nominal": 13.856812933025404,
+        "runs": [
+          {
+            "prt_ticks": 43322,
+            "mos_ticks": 5208,
+            "raw_prid": 52685,
+            "hashes": {
+              "timing.bin": "1d97fdff43f6d7d4ca31af605d0414bacea2bcc121ab7c57c88310709fffdb16",
+              "native.bin": "9509311214a732dfb72371e08ff8d3e4aceaa525a11321233613455856556c41"
+            }
+          },
+          {
+            "prt_ticks": 43119,
+            "mos_ticks": 5184,
+            "raw_prid": 52685,
+            "hashes": {
+              "timing.bin": "94c8ddde371e78534fd84da1688ee38b239c33c957b667ac028af4ae374e8a79",
+              "native.bin": "51f5f00c437f5bce7f9302b8d1679594364ab655f7673cc24090ea70a5074e07"
+            }
+          }
+        ]
+      }
+    },
+    "paired": {
+      "1": {
+        "draw_ccount": {
+          "count": 600,
+          "mean": 5496779.755,
+          "median": 5497625.5,
+          "minimum": 5443569,
+          "maximum": 5555761,
+          "p95": 5528937
+        },
+        "scope_ccount": {
+          "count": 600,
+          "mean": 5488096.83,
+          "median": 5487032.5,
+          "minimum": 5434796,
+          "maximum": 5541355,
+          "p95": 5522085
+        },
+        "command_ccount": {
+          "count": 600,
+          "mean": 5486755.22,
+          "median": 5485804.5,
+          "minimum": 5427353,
+          "maximum": 5549502,
+          "p95": 5521980
+        }
+      },
+      "2": {
+        "draw_ccount": {
+          "count": 600,
+          "mean": 5552267.683333334,
+          "median": 5549943.0,
+          "minimum": 5081954,
+          "maximum": 5641443,
+          "p95": 5603144
+        },
+        "scope_ccount": {
+          "count": 600,
+          "mean": 5559154.681666667,
+          "median": 5558757.0,
+          "minimum": 5080945,
+          "maximum": 5636429,
+          "p95": 5609489
+        },
+        "command_ccount": {
+          "count": 600,
+          "mean": 5556046.3116666665,
+          "median": 5555281.5,
+          "minimum": 5057958,
+          "maximum": 5635770,
+          "p95": 5607363
+        }
+      }
+    },
+    "limits": "Completed frozen fixture only. Raw CCOUNT includes preemption/service waits;240MHz conversion and PRT/MOS rates nominal, no external clock/optical calibration. Repeated/scripted samples are correlated; no statistical independence or universal FPS claim. No default adoption.",
+    "mean_draw_reduction_percent": 25.141063214489726,
+    "mean_draw_saved_nominal_ms": 23.01884882986111
+  },
+  "probes": [
+    {
+      "name": "probe-after-01-original",
+      "minimum_stack_bytes": 1976,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        53944,
+        0,
+        31732,
+        0,
+        56080,
+        0,
+        25588,
+        0,
+        1976
+      ]
+    },
+    {
+      "name": "probe-after-02-candidate",
+      "minimum_stack_bytes": 1976,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        53944,
+        0,
+        32756,
+        0,
+        55976,
+        0,
+        25588,
+        0,
+        1976
+      ]
+    },
+    {
+      "name": "probe-after-03-original",
+      "minimum_stack_bytes": 1908,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        53944,
+        0,
+        31732,
+        0,
+        55888,
+        0,
+        19444,
+        0,
+        1908
+      ]
+    },
+    {
+      "name": "probe-after-04-candidate",
+      "minimum_stack_bytes": 1908,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        53944,
+        0,
+        32756,
+        0,
+        55800,
+        0,
+        25588,
+        0,
+        1908
+      ]
+    },
+    {
+      "name": "probe-after-05-candidate",
+      "minimum_stack_bytes": 1908,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        53944,
+        0,
+        31732,
+        0,
+        55692,
+        0,
+        25588,
+        0,
+        1908
+      ]
+    },
+    {
+      "name": "probe-after-06-original",
+      "minimum_stack_bytes": 1908,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        6,
+        53944,
+        0,
+        32756,
+        0,
+        55556,
+        0,
+        25588,
+        0,
+        1908
+      ]
+    },
+    {
+      "name": "probe-entry",
+      "minimum_stack_bytes": 2660,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        53944,
+        0,
+        32756,
+        0,
+        59384,
+        0,
+        36852,
+        0,
+        2660
+      ]
+    }
+  ],
+  "loading": [
+    {
+      "name": "01-vdplet-control",
+      "assets": 470,
+      "fences": 952,
+      "errors": 0,
+      "timeouts": 0,
+      "agnb_error": 0
+    },
+    {
+      "name": "02-vdplet-control",
+      "assets": 470,
+      "fences": 952,
+      "errors": 0,
+      "timeouts": 0,
+      "agnb_error": 0
+    },
+    {
+      "name": "03-vdplet-unpaced",
+      "assets": 470,
+      "fences": 952,
+      "errors": 0,
+      "timeouts": 0,
+      "agnb_error": 0
+    },
+    {
+      "name": "04-vdplet-unpaced",
+      "assets": 470,
+      "fences": 952,
+      "errors": 0,
+      "timeouts": 0,
+      "agnb_error": 0
+    },
+    {
+      "name": "05-vdplet-unpaced",
+      "assets": 470,
+      "fences": 952,
+      "errors": 0,
+      "timeouts": 0,
+      "agnb_error": 0
+    },
+    {
+      "name": "06-vdplet-unpaced",
+      "assets": 470,
+      "fences": 952,
+      "errors": 0,
+      "timeouts": 0,
+      "agnb_error": 0
+    }
+  ],
+  "module_selections": [
+    {
+      "name": "module-01-original",
+      "passed": true,
+      "arm": "original",
+      "sha256": "1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610",
+      "outside_timing": true,
+      "previous_sha256": "1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610",
+      "backup_retired": true,
+      "recovery_state": 1
+    },
+    {
+      "name": "module-02-candidate",
+      "passed": true,
+      "arm": "candidate",
+      "sha256": "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055",
+      "outside_timing": true,
+      "previous_sha256": "1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610",
+      "backup_retired": true,
+      "recovery_state": 1
+    },
+    {
+      "name": "module-03-original",
+      "passed": true,
+      "arm": "original",
+      "sha256": "1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610",
+      "outside_timing": true,
+      "previous_sha256": "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055",
+      "backup_retired": true,
+      "recovery_state": 1
+    },
+    {
+      "name": "module-04-candidate",
+      "passed": true,
+      "arm": "candidate",
+      "sha256": "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055",
+      "outside_timing": true,
+      "previous_sha256": "1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610",
+      "backup_retired": true,
+      "recovery_state": 1
+    },
+    {
+      "name": "module-05-candidate",
+      "passed": true,
+      "arm": "candidate",
+      "sha256": "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055",
+      "outside_timing": true,
+      "previous_sha256": "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055",
+      "backup_retired": true,
+      "recovery_state": 1
+    },
+    {
+      "name": "module-06-original",
+      "passed": true,
+      "arm": "original",
+      "sha256": "1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610",
+      "outside_timing": true,
+      "previous_sha256": "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055",
+      "backup_retired": true,
+      "recovery_state": 1
+    }
+  ],
+  "release": {
+    "generation": 63,
+    "released": "2026-11-06T22:44:20.019912+00:00",
+    "next_request": {
+      "owner": "linux-extender",
+      "task": "PARALLEL-001-REPEAT",
+      "purpose": "PREPARING one filtered176-record plain case then conditional176-record guardedRFC25 case, exact UART rollback; no preemption",
+      "plan": "/Agon/mystuff/agon-extender/docs/tasks/PARALLEL-001/REPEAT-PHYSICAL-R01.md",
+      "notify_thread": "01a13443-f921-72d1-9d3e-d05652c7a750",
+      "notify_host": "remote-ssh-discovered:raspberrypi",
+      "request": "98c414eaa6ce",
+      "requested": "2026-11-06T22:17:46.950053+00:00"
+    }
+  },
+  "binary_ledger_count": 158,
+  "binary_ledger_sha256": "ed0e86a884f8ee382c02c5a62306a352fc6c48b84c1ee66099b26d8b21e50846",
+  "whole_minimum_stack_bytes": 1908,
+  "complete_cohort": true,
+  "default_adoption": false
+}

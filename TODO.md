@@ -29,8 +29,11 @@ practical Wolf work while Oryx is down; preserve the independent audit baseline.
   Corrected [hardware02 readiness](agonport/doc/tasks/WOLF-PERF-004/HARDWARE-READINESS-02.md)
   frozen/pushed99b8385;155 input pins verify. Actual60 restored tuple matches
   frozen incoming identities. Fresh scheduler grant remains required.
-- [ ] WOLF-PERF-004-05 — Execute original/candidate reversed-order600pose hardware
+- [x] WOLF-PERF-004-05 — Execute original/candidate reversed-order600pose hardware
   arms with resource/counter/return checks and first-failure stop.
+  [Actual63 passes](agonport/doc/tasks/WOLF-PERF-004/PHYSICAL63-RESULT.md):6guests/
+  7probes,1200samples per arm; draw91.5588→68.5399ms, completed fixture
+  10.5230→13.8823FPS on nominal clocks. Exact restoration/release complete.
 - [ ] WOLF-PERF-004-06 — Restore/release, report raw comparison/limits and share
   substantive results/gaps with owners; no default adoption in this tranche.
   [Actual61 stopped](agonport/doc/tasks/WOLF-PERF-004/PHYSICAL61-RESULT.md) before
