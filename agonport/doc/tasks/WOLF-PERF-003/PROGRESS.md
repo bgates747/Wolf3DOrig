@@ -634,3 +634,17 @@ exercise entry/stage/all8backend-mode case codec+stack paths,512B resource
 threshold/handback, invocation and complete14/8/first-failure sequence. Synthetic
 render records only qualify host code, not target timing.1502inputpins including
 all listings verified. Same finite HARDWARE-RUN-07 scope needs fresh admission.
+
+
+### Actual51 terminated during verification; exact original GET reconciled
+
+Frozen090cfee entry passed,14retained files verified; host session72475 returned
+143 during b-cpuGET, no traceback/failurehandler. No guestLOAD/RUN/flash/reset.
+Cause/signal sender unestablished; ~178s interval does not itself prove tool
+limit. Actual originalGET192087320/boot164110695 resumed/delivered/matched and
+retired from samejournal, no resubmit or sequence continuation. Normalfiles/
+rawmode0/callback0/CLI/neutralofflineidle/freeUSB/actorsjoined cleanup passed;
+all firmware/app/tail/featureabsence retained unchanged, noflash needed.
+Released51 at07:58:18UTC nextnull; scheduler notified. Originalcode/frozenkit/
+log/journal retained; HARDWARE-R07-RESULT.md. Read-only Pi manager source/log
+consult requested; no new reservation/reproduction before host disposition.
