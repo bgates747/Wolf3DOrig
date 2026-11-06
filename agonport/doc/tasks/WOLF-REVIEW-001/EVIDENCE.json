@@ -1,0 +1,132 @@
+{
+  "schema": "wolf-review001-source-review-v1",
+  "task_freeze_commit": "316c262e4b273b8a0b33b10c483c995630fd5408",
+  "review_kind": "Read-only history/source/document review and bounded fill-request arithmetic; no compilation, renderer execution or new timing. Generated-code facts are explicitly attributed to retained VDPL-031 audit.",
+  "files": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/wolf3d-vdplet-migration.md": {
+      "bytes": 44690,
+      "sha256": "27640622a33982fe8409b0da5664fdceeac27d7a24363f9796172ef8529d4e22",
+      "git_blob_at_review_freeze": "e05684fbe9adca75c962e0bafd35afd9a04b0e8b"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/wolf3d-vdplet-color-rows-plan.md": {
+      "bytes": 6783,
+      "sha256": "83f844e9b174b18ec2d212383dd62cbc21b9033cd8c7ab60c5f505fb9c61d57d",
+      "git_blob_at_review_freeze": "952fb69c59f37c01a96934cc0c1f8ae29a1d31a9"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/wolf3d-vdplet-color-rows-target-plan.md": {
+      "bytes": 5327,
+      "sha256": "6e551213ece4090de3ff02cbbb2daa0c04727ad2de42a10e4a0a637261882bf1",
+      "git_blob_at_review_freeze": "243177b4469a6050f2d0cad146638955c4562502"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/devlog_20261030.md": {
+      "bytes": 33949,
+      "sha256": "9820d5f61fac971272decb23bf94acb7d551bc507279d95fe57d97af1c3d6012",
+      "git_blob_at_review_freeze": "7623de784cbdd9ebeefc6dc61d3ad04b8f4ea326"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/devlog_20261031.md": {
+      "bytes": 21755,
+      "sha256": "6c8801b198976325956c674dd9b9b38dfe6459fa2a88ee307e7098eac00a85fc",
+      "git_blob_at_review_freeze": "402f06a6818bdca97462cdd67ae99ad2a3e05168"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/devlog_20261101.md": {
+      "bytes": 39489,
+      "sha256": "a89290da97f1d21f598d9f78f4145b23c7f82119bfe3c09f24641c87b05e6e23",
+      "git_blob_at_review_freeze": "eaa4cc7d5e22a522d191149db070ce2a7c9639b9"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/README.md": {
+      "bytes": 12910,
+      "sha256": "ea613dfc63e50690532a1fe406922c5dcee20a4d4126f5ca0924c894f5ef5467",
+      "git_blob_at_review_freeze": "abd71a7f7f281289bf2b0190ba28cb573498b15d"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/wolf3d_scene.cpp": {
+      "bytes": 20500,
+      "sha256": "9624187304c62af3436937283402f1ceaad2f83968d1914f97b6d80c027aeb59",
+      "git_blob_at_review_freeze": "3373206e7b2cd86a1e1a62eaf0330c85dc528e10"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/wolf3d_scene_rows.cpp": {
+      "bytes": 22585,
+      "sha256": "101a3528ccae9f9ee194fd7f61496f21fc7df2bc091a6c3d0128bf4ae7b010d6",
+      "git_blob_at_review_freeze": "768a62f99cf024beaefe7a73eb55e25ebc10dbf8"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/production/wolf3d_renderer.cpp": {
+      "bytes": 41744,
+      "sha256": "aee6ed184b0d29e090b2f869559110d1c13fa801b735b1cbd5f36f53e43a3107",
+      "git_blob_at_review_freeze": "3e309faac44e61d182190bfb2043914a0204fc75"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/production/wolf3d_module.cpp": {
+      "bytes": 24285,
+      "sha256": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243",
+      "git_blob_at_review_freeze": "267abfb77fc323ae01932220921cb7cc214e9562"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/production/renderer_oracle.cpp": {
+      "bytes": 14664,
+      "sha256": "39e796ebe3677503acfadc8a911c7b1fec401c291c04b8395f3a73b1309a38f6",
+      "git_blob_at_review_freeze": "f1b3d6026ef120f30db5ccf3ead562ba1fe64391"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/production/build.py": {
+      "bytes": 9679,
+      "sha256": "e7f805d27c252beda2f195254bac8007462606cf496628ee47e79d1072470ccc",
+      "git_blob_at_review_freeze": "46fcbcb36d865c8d44622395398dcc426a6aec4a"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/R06-RESULT.md": {
+      "bytes": 3414,
+      "sha256": "252d25cef5495e730a6af810b2f803f8cb78bb6a9fa70dc0e9ddb16e253b1923",
+      "git_blob_at_review_freeze": "de091a31b0a611fa1c31ee59b0d6633fced31fae"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/R07-RESULT.md": {
+      "bytes": 3277,
+      "sha256": "e1ad674d7d7e2d43e230821b472ad76d21d07c2be57d76e2e14d369a04827555",
+      "git_blob_at_review_freeze": "66a3a3c77553a7c280ad7278a4452122ad87395b"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R02-RESULT.md": {
+      "bytes": 5431,
+      "sha256": "039f417a32dc5c5b1efa12949e1f2c262fd8530ace2e023d48b4cb89d02abada",
+      "git_blob_at_review_freeze": "ef7df3c8ad14054f308a77b06d1871319e3d05ad"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R09-RESULT.md": {
+      "bytes": 10342,
+      "sha256": "f5f4c4acb7b514fb83f7aa51779859741b12b095fb36fb0c884d743a2a1a0bc5",
+      "git_blob_at_review_freeze": "43cc2809b9e2d1013805ec7c8ae7423bc198c60e"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/vdplet/native-source/wolf3d_renderer.cpp": {
+      "bytes": 41744,
+      "sha256": "aee6ed184b0d29e090b2f869559110d1c13fa801b735b1cbd5f36f53e43a3107"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/vdplet/native-source/wolf3d_module.cpp": {
+      "bytes": 26135,
+      "sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed"
+    },
+    "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-031/FINDINGS.md": {
+      "bytes": 10075,
+      "sha256": "4653c21bdbe12daca134462f2688813e7d7c08c153487f41abb6101a4ff4dba5"
+    },
+    "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-031/ARTIFACT-REVIEW.json": {
+      "bytes": 14577,
+      "sha256": "bc33f1a63c9eafa9638ac04a1db0f07ca8fc18714a27197d2ce43b8b8cae3f30"
+    },
+    "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-031/NEXT-MEASUREMENTS.md": {
+      "bytes": 4621,
+      "sha256": "e114146b6c5c1b6dee1e190a289e90ebf1bea03926a47ab55a69819386000d93"
+    },
+    "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-032/TASK.md": {
+      "bytes": 2467,
+      "sha256": "9603faf0cf8b7c2f677e949f2ee528a1b7fada31fcdc91e23eb3a33b5f8d1876"
+    },
+    "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-032/BRAINSTORM.md": {
+      "bytes": 14164,
+      "sha256": "1bef4b3a9fd09cea5ce51c18551f7850f1592970b24eabd593ce038df2431ff7"
+    }
+  },
+  "source_derived_fill_requests": {
+    "bespoke_including_later_HUD_clear": 118600,
+    "vdplet_before_other_draws": 182600,
+    "extra": 64000,
+    "not_measured_cycles": true
+  },
+  "history": {
+    "bounded_proof": "42e9d82e2b3de9aa44cca0355e3186e5eed0d5e7",
+    "production_core": "dd906f92a8457635004b8de1edc6f6288a54cb24",
+    "production_wrapper": "4b8fb1f0f0d4419e6335a8dbafd5f77f5a0397b6",
+    "production_rows": "52ddd51f5d1c33ded6570281173a1cdfcfe32f55"
+  }
+}
