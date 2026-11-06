@@ -496,7 +496,11 @@ E1L1 (34,36), 720-degree/20-second fixture on both backends.
   led to [loading04](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-LOADING-R04.md):
   assembly/layout and five host checks pass; FIFOc5c0fb2067e2 PREPARING, actual
   incoming native/tail bound after actual MechAgon43 release; diagnostic8270
-  private map/source reconciliation passes. READY; fresh admission pending.
+  private map/source reconciliation passes. Actual44 four loading-only passes,
+  zero timeouts; restored/released, but prior render-bearing failure unproven.
+  [Loading-only result](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-LOADING-R04-RESULT.md).
+  Hardware05 keeps this observer across actual matched render history;8clients
+  assemble with unchanged timed/send code, fresh finite hardware admission pending.
 
 - [x] WOLF-PERF-003-17 — Localize the missing FIRST native A warmup completion
   before selecting another hardware cohort. Hardware02 fourth guest completed

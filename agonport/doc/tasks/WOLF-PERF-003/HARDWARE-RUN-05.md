@@ -1,0 +1,73 @@
+# Hardware05 — observed loading across the matched render sequence
+
+Status: READY, source/build/controller checks pass; fresh bench grant pending. Continues Smith's authorized matched
+benchmark and003-16 loading diagnosis after four loading-only passes in44.
+Those passes did not reproduce hardware03's failure after actual rendering.
+This selects a new identified observer-bearing sequence, not a blind replay.
+
+Copy hardware03's four corrected A clients and hardware02's four retained B
+clients. Add the same loading04 RAM observer/init/post-main save, preserving the
+original matched loading hint text and measured bench.inc/standalone instructions.
+Leave wp_run reachable after a successful ready fence; explicitly stop before
+wp_run if that final loading fence fails. No renderer, clocks, module, log
+overflow policy, pose, actor count, viewport, palette or timed wait change.
+New record/descriptor addresses are assembler-resolved; code+observer end must
+remain below0xA0000 module staging. Assets/world/600poses exactly unchanged.
+
+Native A retainedc5cfaaed recorder release fix; B quiet native7593b9cf/module1907ce17
+unchanged. A usesO2 Canvas scratch and B safeOs/PIC/direct rows; whole difference
+is not pure dispatch. Diagnostic renderer CCOUNT brackets remain exactly those
+previously selected; source240MHz/nominalPRT and MOS clocks, no external calibration.
+Per-frame same-core/wrap/independent<8000ms bound and native count/angle integrity
+still required. CPU arm excludes full populated-game simulation. Do not pool
+older invalid-map/lifetime-undefined results.
+
+Selected physical scope: same finite14 guests and8 B INFO0..17 resource probes
+as hardware03. A control/CPU600/unpaced600/paced; B control plus CPU/unpaced/paced
+twice; A CPU/unpaced/paced. All use720degrees/600quanta/E1L1(34,36), no enemies,
+22closed doors/121statics/retainedHUD and weapon, two warmups. Timed/presented
+records, token checks and final600 remain unchanged. B probes outside timing
+require whole-task minimum stack>=512B. No per-frame logging/SD in native timing.
+
+Each invoke300s; first unexpected stops all successors. Setup return saves RAM
+before any new LOAD and retrieves WPL2 plus WPQ3; no frame after a failed loading
+fence. Blocked/no-return or resource/schema failure retains custody/evidence for
+reviewed recovery, no automatic replay/reset.100min total new-dispatch envelope
+with at least6min reserved before starting new work for normal cleanup. Source/
+build complete before admission. No rendering optimization/audio/extra tests.
+
+Fresh /test/wolf/perf003/pair05 refuses existing namespace, staged independent
+readbacks, original normal startup/listener and unknown user files preserved.
+Four native app-only writes including exact incoming restore, common1105920B
+span@0x10000 (B1101904B crosses the269-sector boundary). Use retained actual44/
+MechAgon43 restoration evidence: incoming app20029942,1101408B; complete span
+5fbf82c41d6a7fbee6a9f121b16f321db544c316ee286f634878d7763ce54f37, original tail.
+Wolf44 restored first1101824B exactly and never touched the remaining4096B.
+No new whole-device read; verify each selected new/restored written span.
+EMOS experimental8270/source71552879, P4a967, startuped403/listener0566 unchanged;
+all actual current identities/private RAM addresses must equal the next grant.
+If another owner changes them, reconcile again before readiness.
+
+One Pi serial build job:8eZ80 assemblies plus layout/source/decoder/controller
+checks, no native build/emulator/physical execution. Assert actual FIFO token
+before every child;80C guard/512MiB available floor,120s child/600s build bound,
+join owned groups/release and notify actual successor. Freeze all client source,
+asset/module/native/input/driver hashes and exact plan before READY. New finite
+suite needs fresh Extender admission/token and sole stopped handoff; old44 is invalid.
+Finish with exact incoming app/tail, raw mode0/callback0/CLI, startup/listener full
+comparison, inputneutral/offlinelistener/idleworker/joined actors/freeports; leave
+SD mounted. Release before offline analysis and notify scheduler/actual successor.
+
+## Build and source qualification
+
+Actual Pi215 checkout/assert assembled all8 clients and ran source/layout/decoder
+checks, then released05:00:28UTC Nov6, nextnull. All8 preserve exact measured
+bench.inc and backend-specific standalone/batch code; original asset/audio/present
+senders and loading hint retained. All observer/code ends fit below0xA0000.
+Actual controller tests cover normal/control/late setup return, complete14-case/
+8-probe A/B/B/A dispatch and first-failure stop before B. Renderer images/module
+are unchanged, verified hashes; no native rebuild/emulator/target operation.
+The frozen kit binds exact release44 components and source/map compatibility
+evidence, plus combined full rollback span checked against actual44 readback.
+Current native20029942 app/tail restored at44 release; a new grant must match
+all identities. No actual hardware access is conferred by this preparation.

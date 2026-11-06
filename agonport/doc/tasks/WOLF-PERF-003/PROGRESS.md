@@ -567,3 +567,33 @@ priorc9c8b6b. Existing9c07 guest unchanged; no compiler/emulator/device action.
 Bound rollback to actual owner app/tail readback instead of assumed historical
 state. kit04 now selects exact8270/map pins with rebind43 receipt; plan READY for
 fresh scheduler grant, same finite four loading-only runs/no timed renders.
+
+
+### Loading04 hardware44 completed and released
+
+Actual44 granted/asserted after exact immutable107-pin reconciliation. All four
+loading-only cases pass:470assets/952fences, zero timeouts/recoveries, normal MOS
+return; RAM saved before successorLOAD and both diagnostics verified. Final32
+fences each retain MBASE0/backend0/serialFlags0x33, senderA0/BC0/HLquery+3; transmit
+deltas0rawMOS ticks are below resolution, not zero time. No stray0x86 serial.
+No render/warmup/PRT/performance run. Loading-only history/observer/newROM differ
+from prior failed render-bearing history;003-16 unresolved, no transport fix.
+
+NativeA write and exact incoming20029942 app/tail restoration/readback pass.
+Actual minimal selected span1101824B, not earlier prose1105920B retained Mech
+span; larger span's last4096B never touched. Keep original frozen evidence and
+post-release correction in HARDWARE-LOADING-R04-RESULT.md. Fresh mode0/callback0/
+CLI/startup/listener/input/idle/freeUSB and joinedactors pass. Released44 at
+23:51:00EST Nov5 (04:51:00UTC Nov6), queueempty; immediate Extender handback mail
+and steering delivered. No Wolf custody/targetactor remains; SD mounted.
+Next preparation: retain observer across actual benchmark/render history with
+measured loops unchanged, rather than replay without the missing evidence.
+
+
+Hardware05 preparation selects observed real benchmark/render history after44's
+loading-only non-reproduction.8clients preserve exact measured/backends/asset-send
+code and original loading text; add same setup observer/final-fence failclosed.
+Pi215 assembled8/source/layout/decoder pass and released05:00:28UTC nextnull;
+actual-controller barrier/14case8probe/full-firstfailure tests pass. NativeA/B/
+module unchanged; full rollback span1105920 bound to actual44/Mech43 evidence.
+No hardware/renderer optimization; freeze normal package before fresh admission.
