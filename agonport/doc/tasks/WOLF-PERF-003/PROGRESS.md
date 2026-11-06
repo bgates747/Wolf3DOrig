@@ -663,3 +663,17 @@ finally cleanup/no continuation. Six controller tests pass. No compiled/timed
 change. Fresh HARDWARE-RUN-08 identifies same14/8 finite suite with usefulhost
 interruption evidence if it recurs, not a repair claim; source disposition
 complete but originalcause remains unknown. Freeze before normal fresh grant.
+
+
+### Actual52 input-admission stop after verified A image; recovery/release pass
+
+All20retained inputs verified, A full written span readbackmatched, then45s
+boot inputready bound failed before any guest. No hostsignal interruption.
+Status P4alive/neutralreadyfalse/offlineidle and empty2s nativeUSB retained.
+One standing Agon-only reset failed; one P4currentbuild/PADrelease/display then
+Agon paired recovery passed actualCLI/files/rawstate. No replay or new tests.
+Original native20029942/full1105920span5fbf restored/readback, finalrawmode0/
+callback0/Legacy0/CLI/files/inputneutral/offlineidle/freeUSB/actorsjoined passed.
+Released52 at08:26:06UTC; nextVDPlet25f6e811c787 notified. Source-only bootstrap
+review requested from Extender before concrete continuation, no newrun selected.
+HARDWARE-R08-RESULT.md retains honest lack of newrender/assetmeasurements.
