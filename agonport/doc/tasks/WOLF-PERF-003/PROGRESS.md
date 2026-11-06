@@ -613,3 +613,24 @@ existing prompt/full14case8probe/first-failure checks. All8clients/assets/module
 native images unchanged; no rebuild. Separately identified HARDWARE-RUN-06.md
 retains exact finite comparison scope; freeze before fresh admission.003-16
 and paired comparison remain open; no automatic replay or oldtoken use.
+
+
+### Actual49 control/CPU return and host listing-path stop
+
+Control passed; CPU completed600poses/676nominalPRTms/80MOS ticks, alloutputs
+retrieved. Runtime listing lookup still assumed hardware06 adjacent source
+instead of reused hardware05 listing. Firstfailure stopped before unpaced/
+paced/B; no asset failure. Offline actual listing qualifies saved SP0xBFF71
+equal at entry/exit. Exact native/full1105920span restoration/readback and normal
+fullhandback passed; released49 at06:56:59UTC, nextVDPlet8452a3009de2 notified.
+Original06 code/kit/evidence preserved; no replay. See HARDWARE-R06-RESULT.md.
+
+Hardware07 explicitly maps/pins all8assembler listings and verifies runtime
+inputs before target operations. Reuses pair05 in place: known directory/level
+inventory, unchanged staged input GET comparisons; preserve generated config
+before normalization, reject unknown files/asset mismatch. Same assembled8apps/
+module/native images, no build. Six device-free actual-controller test methods
+exercise entry/stage/all8backend-mode case codec+stack paths,512B resource
+threshold/handback, invocation and complete14/8/first-failure sequence. Synthetic
+render records only qualify host code, not target timing.1502inputpins including
+all listings verified. Same finite HARDWARE-RUN-07 scope needs fresh admission.
