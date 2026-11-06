@@ -5,6 +5,21 @@ unfinished work. IDs are stable references and are not reused. When an item is
 accepted, rejected, or superseded, record its ID, evidence, and rationale in
 the current dated development log, then remove it from this file.
 
+## WOLF-REVIEW-001 — bespoke-to-VDPlet conversion self-review
+
+[Task plan](agonport/doc/tasks/WOLF-REVIEW-001/PLAN.md). Smith requested a
+self-review, examples and advice exchange with VDPlet, with tasks written first.
+
+- [ ] WOLF-REVIEW-001-01 — Freeze and publish the review plan before review work.
+- [ ] WOLF-REVIEW-001-02 — Trace conversion choices through retained plans,
+  history, production source and source/ELF evidence.
+- [ ] WOLF-REVIEW-001-03 — Assess qualification failures and which checks
+  preserved correctness but missed work or performance divergence.
+- [ ] WOLF-REVIEW-001-04 — Document pinned examples, detection methods,
+  separately testable corrections and focused SDK/runtime advice questions.
+- [ ] WOLF-REVIEW-001-05 — Share findings/questions with VDPlet and report
+  actual delivery and dispositions to Smith; preserve later advice separately.
+
 # Phase A — original Episode 1 shareware parity
 
 [ ] 11. Implement original pushwalls and secret discovery: preserve/count
