@@ -21,8 +21,10 @@ self-review, examples and advice exchange with VDPlet, with tasks written first.
   separately testable corrections and focused SDK/runtime advice questions.
   [Self-review](agonport/doc/tasks/WOLF-REVIEW-001/FINDINGS.md): six examples and
   four advice questions; source audit only, no implementation or new timings.
-- [ ] WOLF-REVIEW-001-05 — Share findings/questions with VDPlet and report
+- [x] WOLF-REVIEW-001-05 — Share findings/questions with VDPlet and report
   actual delivery and dispositions to Smith; preserve later advice separately.
+  [Delivery](agonport/doc/tasks/WOLF-REVIEW-001/DELIVERY.md): substantive mail
+  and immediate chat steering accepted; advice response pending, no new workload.
 
 # Phase A — original Episode 1 shareware parity
 
