@@ -14,9 +14,12 @@ released and54568 is the explicit control, with no default adoption.
 
 - [x] WOLF-PERF-005-01 — Freeze owned task and exact existing-row compatibility/
   intended-work ledger before candidate code.
-- [ ] WOLF-PERF-005-02 — Prepare task-owned bytewise span candidate only.
-- [ ] WOLF-PERF-005-03 — Qualify exact control reproduction, host/oracle/lifecycle
+- [x] WOLF-PERF-005-02 — Prepare task-owned bytewise span candidate only.
+- [x] WOLF-PERF-005-03 — Qualify exact control reproduction, host/oracle/lifecycle
   and actual target byte-access/call/provider/package/stack gates under Pi FIFO.
+  [r02 result](agonport/doc/tasks/WOLF-PERF-005/R02-RESULT.md): exact54568control,
+  bf7f2bb0candidate,98727span/rectangle cases and600frames equal; native direct
+  loop removes calls while keeping byte accesses/MEMW; compiler271 released.
 - [ ] WOLF-PERF-005-04 — Freeze current-context finite hardware kit before grant.
 - [ ] WOLF-PERF-005-05 — Execute matched completed-work/resource physical arms.
 - [ ] WOLF-PERF-005-06 — Exact restore/release/report and owner evidence return.
