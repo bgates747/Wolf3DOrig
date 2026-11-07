@@ -1,0 +1,1692 @@
+{
+  "task": "WOLF-PERF-007-hardware-r01",
+  "request": "f60e5f0fed70",
+  "kit_sha256": "a1f7a86772177b7be0be16e949db8d557f6881f976cc3b7e1c325d631e0d911e",
+  "input_files": 419,
+  "incoming_components": {
+    "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+    "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+    "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+    "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+    "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+  },
+  "baseline": "Historical actual69 restore; actual new matching grant and fresh own entry required. Extender70 remains sole operator, no target contact",
+  "files": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/wolf3d.cfg": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/hud.agnb": {
+      "sha256": "6df6038f9e05bea7aa9159b2569bec6404984f5774ad972413afb5fa8b7747c8",
+      "bytes": 269832
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/sfx.agnb": {
+      "sha256": "9a7ded8e92d92307d2e1df904a44da0b2a8ab11d46c0548a857274358bdd6850",
+      "bytes": 261956
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/shell.agnb": {
+      "sha256": "27eb4547d12bdea6a5c27ca8116900a332e2e3cbb1f8411e313991871e4ecc70",
+      "bytes": 1197704
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/level_00/tiles.agnb": {
+      "sha256": "6df797957e0d11788612509ace15022b2e579a862387f1c53a33036e4309f47b",
+      "bytes": 66328
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/level_00/state_easy.w3l": {
+      "sha256": "67743b36be7d4f7c086bad18a15e754030309a208319d74a6837574f8192bbd3",
+      "bytes": 13814
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/level_00/state_medium.w3l": {
+      "sha256": "575992260ea12f063bf400c890ed99f1599813a6845461716fbc82b70ff13f5a",
+      "bytes": 13814
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/level_00/sprites.agnb": {
+      "sha256": "7bf0f04a6fad56d5a83b26b30f5c0ea3bbafb4c8727a3c5f9d266c30c0e058f9",
+      "bytes": 559464
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/level_00/state_baby.w3l": {
+      "sha256": "2c4e2695aecdf19ea8c1d07930999fb23aaa7628f0364ff1140e7bf1ce4afbc9",
+      "bytes": 13814
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/level_00/state_hard.w3l": {
+      "sha256": "c4d1d730d2b464bbdf72275dcf4d045b2cbd339b9e2b90eee7db3979e2854aa4",
+      "bytes": 13814
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/resource.bin": {
+      "sha256": "e3a22ba837c4e1a9c585b1a0a0ef075cf010bcaa64a8fb40fd0300c15ad58b78",
+      "bytes": 563
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d.bin": {
+      "sha256": "b6441afdc424e4e0bdc2eeed343f709e76b98b65a1b78b803ed2fcbd8d1b7626",
+      "bytes": 325225
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d.bin": {
+      "sha256": "9a7e699eb0a3425bd6ee43e8e80d79f939247f2801f59a5706161b5d3f4887a8",
+      "bytes": 325300
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d.bin": {
+      "sha256": "c0076d6fda8bddbeb51e03d4f77986df2d6b52c4a0b8947cef147983d5a36b35",
+      "bytes": 325225
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d.bin": {
+      "sha256": "5fc4dbb27aa0251eb41024a1a20d50391af6d76e2908f9931d0d6a9da786c244",
+      "bytes": 325300
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.vdpl": {
+      "sha256": "cd429e2fd642ab784d024cb7d6eb48f38b00eec132285ea78222b0e77e373ceb",
+      "bytes": 20928
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware01/state.txt": {
+      "sha256": "88a9204e642d40ab8c789aa7198e5a2aa1bb43faeda2242bb53f35561abd1dcc",
+      "bytes": 133
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware01/route.txt": {
+      "sha256": "542f0a13e46e926166ea1b26ee601e5a5a209cb271e042d39b9c46c475f174a6",
+      "bytes": 72
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d.lst": {
+      "sha256": "0908a1af95c863fb6d31342da866690f5e89b0bead18e04f0076c38159484827",
+      "bytes": 5046526
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d.lst": {
+      "sha256": "e9abecb7bd0c5a87199cbeb5987050028545ae043b48f2280f5ed428b4adb782",
+      "bytes": 5047729
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.vdpl": {
+      "sha256": "c8f99354bef6495e76f15201e64bdd010da6369a0b91d2fed37c0a3eb27f997d",
+      "bytes": 24276
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/emos-uart-rfc25-r02/ROM.bin": {
+      "sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+      "bytes": 131072
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/emos-uart-rfc25-r02/mos.elf.map": {
+      "sha256": "55b830f8978dd7269cf2c900c33bc2a0b24a7c24be543f3194d3d62f6ff68430",
+      "bytes": 93469
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/p4-uart1-r01/build/agon_extender.bin": {
+      "sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+      "bytes": 1760160
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-005/build/hardware02/install-b.bin": {
+      "sha256": "493fd0a010bedcfc5916314353f93565f7b159ac163d9bc61e7c5078140669e8",
+      "bytes": 1105920
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-005/build/hardware02/restore.bin": {
+      "sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de",
+      "bytes": 1105920
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-005/build/hardware02/source-binding.json": {
+      "sha256": "11a96c73d737ed905566ebe9e99f16160f186e8f4e42c988e7f49d2aad739c18",
+      "bytes": 2641
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-005/bootstrap.py": {
+      "sha256": "4ffd634eb183cf4ee8aa7dfc936241303ed68f5a3c0ab3ba95934c2c1fd4d3bc",
+      "bytes": 1737
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/uart1-bootstrap-r01/bootstrap.py": {
+      "sha256": "d04f18ee229b4eca6c7134f8ba1efaa91edc5aebccc6b183b6ab4656c526ea83",
+      "bytes": 4773
+    },
+    "/Agon/mystuff/agon-extender/scripts/keyboard.py": {
+      "sha256": "2bd907921d80315f9d83761213e8125527a07f849ff488e128188b0f114c6525",
+      "bytes": 8822
+    },
+    "/Agon/mystuff/agon-extender/scripts/sdcard.py": {
+      "sha256": "f1cbf3e07be4b1218691a99d06df7bcf5d512d44eff2c62dc24473bb072050fa",
+      "bytes": 19583
+    },
+    "/Agon/mystuff/agon-extender/scripts/sdcard_staged.py": {
+      "sha256": "f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef",
+      "bytes": 12231
+    },
+    "/Agon/mystuff/agon-extender/scripts/passive_serial.py": {
+      "sha256": "b665826da471b786582bb4dd24214f7c4bc925fe7018d07106e661fc5e4a3543",
+      "bytes": 2069
+    },
+    "/Agon/mystuff/agon-extender/scripts/reset_agon_usb.py": {
+      "sha256": "19fd4577cdca0e1dc8000ba3a1904f21f544cc597becd96e2592671c7f72406f",
+      "bytes": 3632
+    },
+    "/Agon/mystuff/agon-extender/scripts/reset_agon.py": {
+      "sha256": "a34a104a8f0cc06f381b243c57f70715631ab2edb63f879b6f5da0faa5685a77",
+      "bytes": 2825
+    },
+    "/Agon/mystuff/agon-extender/scripts/p4_boot_guard.py": {
+      "sha256": "8c8efb4c825029adb64758b35f6424b04b952af46233cf888dab5cc2fe3e90a5",
+      "bytes": 891
+    },
+    "/Agon/mystuff/agon-extender/agents/bench-reset/usb-reset.local.json": {
+      "sha256": "9917c14b8ea439e5db10c747ea53017b3041afe14af582b042e040e25b8aa5ca",
+      "bytes": 193
+    },
+    "/Agon/mystuff/agon-dev-env/.local/mig001-arm64/cpython-3.14.6-linux-aarch64-gnu/bin/python3.14": {
+      "sha256": "65091c84baa22dee105ca695c284df14acfd9a307373ccf7a0b19078b67c7b65",
+      "bytes": 23154416
+    },
+    "/Agon/mystuff/agon-extender/agents/remote009/fast-transfer-pin-r01/sdcard_staged.py": {
+      "sha256": "f7aa43bd05d62cc1bdc051d8ae569128766cb9ec95076bd1bb951063997683ef",
+      "bytes": 12231
+    },
+    "/Agon/mystuff/agon-dev-env/cross-agent/olimex-bench/bench_lease.py": {
+      "sha256": "ee24b2b8fabd5fd325c2b54cf784bee60a754a80dea9f4183e1211c907890043",
+      "bytes": 12143
+    },
+    "/Agon/mystuff/agon-dev-env/cross-agent/olimex-bench/README.md": {
+      "sha256": "baa7619b4feb1aa4c152f0a65c3d43f55133e7af766b38af680c195041d73808",
+      "bytes": 13265
+    },
+    "/Agon/mystuff/agon-extender/.venv/lib/python3.14/site-packages/esptool/reset.py": {
+      "sha256": "f3013406801ba3279714a0c70f40bb4b869c4d9bd8527cfe12bb9c7a0c4a4fa6",
+      "bytes": 6909
+    },
+    "/Agon/mystuff/agon-extender/.venv/lib/python3.14/site-packages/serial/serialposix.py": {
+      "sha256": "5d56f98513391e1766a1847a04e2e1202ced4172a152803ba1c823a149a9b6f9",
+      "bytes": 35127
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/emos-uart-rfc25-source/src/reset.asm": {
+      "sha256": "13e94a24a63a7a86e838d70af267fa2701a1116df7a6dd097f0e3cd85b916e34",
+      "bytes": 4918
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/emos-uart-rfc25-source/src/handlers.asm": {
+      "sha256": "a77000a6c1d6643f704caec74c6e96bf74182a11503f4c9095f7315cadcc934c",
+      "bytes": 1334
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/emos-uart-rfc25-source/src/serial.asm": {
+      "sha256": "8abb42bf67350df6d0fe767ba7c8e6aae53a058fb39ba22cb7d8d752b212686a",
+      "bytes": 13530
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/emos-uart-rfc25-source/src/mos_api.asm": {
+      "sha256": "55072055a411265bf7cc211579f42762199ad798d531518215e9e95a73642389",
+      "bytes": 66094
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/emos-uart-rfc25-source/src/mos.c": {
+      "sha256": "464e71815342ec0a815416ea03adac41743182d5abf2719512106ce56e9cf945",
+      "bytes": 97116
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/emos-uart-rfc25-source/src/vdp_protocol.asm": {
+      "sha256": "d22f3cf12e27b8604bd2030b92a17c3a630f01339e7cad92731af71a07b5f7bb",
+      "bytes": 13365
+    },
+    "/Agon/mystuff/agon-extender/agents/net004/emos-uart-rfc25-source/src/emos.c": {
+      "sha256": "0c28ed031a791df4a78d189f40a071d6b6e8370f36d3b5c763fafcea9cd1d4ed",
+      "bytes": 26322
+    },
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/service.c": {
+      "sha256": "4a1f205e380ffad60e836726bdd810a36c3f28330b943e14a86b68decc0fcb50",
+      "bytes": 20172
+    },
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/service.h": {
+      "sha256": "826762965cfe5ffa78f3a2ae4d28829bc43d5afc8586f1554d41e9b319fa32d9",
+      "bytes": 516
+    },
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/sd_wire.h": {
+      "sha256": "8b846f3e1ed9165ae93297231fc16a0378c4162b1e996ccff2935bc444510ee1",
+      "bytes": 3083
+    },
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/test_sdserve.py": {
+      "sha256": "b519724059794e4c710cc893ac2bef501693627e12b95ad326613e9173b690c5",
+      "bytes": 21138
+    },
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/sdserve_host/fs.c": {
+      "sha256": "19aa45a7b1650ef37ac2ec00abc2bd2518d00482737bad39808908fa79b59562",
+      "bytes": 4054
+    },
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/sdserve_host/agon/mos.h": {
+      "sha256": "b12da862811cbc53ce2860185408b9ddf00a0d070d8cbf77c5e562b864362469",
+      "bytes": 1117
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/generate_tables.py": {
+      "sha256": "89d6946db29dd47fc606d0707107cf7b3bf8cafc8e8125352bba6c57cf6c0438",
+      "bytes": 1241
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/guest_binding.py": {
+      "sha256": "78ca4d4854cb4e72e1867c439ea20dcb7e5cf8748f156a1d46cf0e6698a75304",
+      "bytes": 5281
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/bootstrap.py": {
+      "sha256": "4ffd634eb183cf4ee8aa7dfc936241303ed68f5a3c0ab3ba95934c2c1fd4d3bc",
+      "bytes": 1737
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/prepare.py": {
+      "sha256": "d4088961967dab4f7904448c26ad857e18d14f68dcf228a86cc0d0e71fe4750d",
+      "bytes": 2754
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_replacement.py": {
+      "sha256": "9989db28f09c86ab3528cbf2e8765d24cf99d5d02c4d01c5df916986d8a727c9",
+      "bytes": 6703
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/analyze_visual.py": {
+      "sha256": "e4827b71129c45580445b5652020fc14486b77bfc2aa562460f271016e9b0c40",
+      "bytes": 2345
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/visual_guests.py": {
+      "sha256": "1ecc7ce46e786a41c1f3824035391ce1c41077c95150c07993651edfb7195d7c",
+      "bytes": 2783
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/hardware.py": {
+      "sha256": "e6dfa93d9d00c21a116e3d69258378082b59c3dcd625a5bf76d837e6cd45bc39",
+      "bytes": 23313
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build_guests.py": {
+      "sha256": "c777637d77ee0bb76a6618325352e92387ba529d3f5c593a1ee36a4c71c1b283",
+      "bytes": 2829
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/prepare_guests.py": {
+      "sha256": "226d7201ee68f308af3dd51635fe75f6d6a8f428b3e9aa574b280049fcf4cc4f",
+      "bytes": 2264
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/run_composition.py": {
+      "sha256": "281a04266433637008077d56be9017f9b09922f20554a1119bef02d26acc401b",
+      "bytes": 3331
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_hardware.py": {
+      "sha256": "dd15a94d272c22fe346cf9ff85b53ac58dd37c15b878dee9f78bbd75e7c05f36",
+      "bytes": 14650
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/target_compile.py": {
+      "sha256": "cdd0377bc1bb546c9b82bb78f0e5b1da6e5f65d6cca4401741b30086044be303",
+      "bytes": 1690
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build.py": {
+      "sha256": "9b69fa976afbd7812aca5fb4c68337e03a25c9752d9606dc4a92afa6e0ebfe53",
+      "bytes": 7321
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_guest_binding.py": {
+      "sha256": "fcfec8743589246fbead6e62f18b5d4b4694ce02b22c24374a1d76f4795d5159",
+      "bytes": 4844
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/visual_binding.py": {
+      "sha256": "8a019d8a3befb482aec2f4d7b562724f0ae0ed00a13404831e8e86c6a7838b82",
+      "bytes": 1853
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/code_check.py": {
+      "sha256": "a765031a1e97edab3d5c74eed9bbbc4159b70048883139a1b89007e8d3d2ab07",
+      "bytes": 3476
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/prepare_visual.py": {
+      "sha256": "b8ec9ffa1490ab48fea7f1e0afc5bbf4fdafb56e4227d6325ab06c1f01841fc7",
+      "bytes": 3606
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/visual_build.py": {
+      "sha256": "89a497c0380411863e5a560db01bead4ce0ed20547ce220de4eed0b3d34e5d83",
+      "bytes": 3530
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/prepare_hardware.py": {
+      "sha256": "397fa703b99e8f0c31d5ce2693765621a36bdc2fdc0b3ac4eec7f2cc66babf6d",
+      "bytes": 6618
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/visual_run.py": {
+      "sha256": "f3721b99d22a8e0a21da30e021b0deb97f65d71353013244a1f5b9dc48caa62f",
+      "bytes": 3481
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/HARDWARE-RUN-01.md": {
+      "sha256": "fad4ce0626cc323873afa67523516c54686eb3d3db6ef57f1715073c1d41d62a",
+      "bytes": 3820
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/QUALIFICATION-02.md": {
+      "sha256": "21917d5f7c9254e13c19c678091b13f749cceeb8c053d0c4da11cb95d7edd900",
+      "bytes": 1069
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/BUILD-FREEZE-01.md": {
+      "sha256": "e04de43551fd964f177905165907b9262f13c4ee9c0732da3fb6d2a354da1301",
+      "bytes": 2685
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/PLAN.md": {
+      "sha256": "deb87f5b5343c5c0a9ca3947cfcb5f8544ad1edf21f93cd528e47219c883b72d",
+      "bytes": 3368
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/DESIGN-01.md": {
+      "sha256": "b4122337f30a2ecdd7321d2889158953ca02a7c31cc62c92f0f72541715b3d87",
+      "bytes": 5717
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/VISUAL-RESULT.md": {
+      "sha256": "6206ad678dc9357ff32b3008957d4dd2f98233975579d5e437a4b6efeb2ec799",
+      "bytes": 2682
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/VISUAL-01.md": {
+      "sha256": "8dc5074b51328fa770a74a4ba660d2bd2b0fa04a6f5f3070b50689e1b7c804af",
+      "bytes": 4431
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/BUILD-RESULT.md": {
+      "sha256": "8f33daa46afe8d015ffcf021b33dfed3da22e8f6afb63a07f804f149a090a800",
+      "bytes": 3289
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/PRODUCER-RESULT.md": {
+      "sha256": "12d466d19b8ca5b48496e436bfbd585b3e04a4e4406599a08f07d337cd26556f",
+      "bytes": 1969
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/PRE-CODE.md": {
+      "sha256": "a06cf305dce7bcd3dc9e7db4d2c558700224abe796a33e3245c0001148c290b6",
+      "bytes": 5201
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/SOURCE-PINS.json": {
+      "sha256": "ff653cbeeca4daa8c685bee06b9b15578b1758737827f1a00ff8eaa6e127e73d",
+      "bytes": 1994
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/COMPOSITION-FREEZE.json": {
+      "sha256": "7f23d33a9134a79f1ada0d0b0bb953c50e9a400f3788915143881c12bd674b46",
+      "bytes": 37950
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/BUILD-RESULT.json": {
+      "sha256": "5927f0769b7f84ff4625e20acce840aa1a34db540107b54a4466be6fec978ff1",
+      "bytes": 98584
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/VISUAL-RESULT.json": {
+      "sha256": "0909856e34466152c3a68f42a39815f8ab756f2b331b5599e04ef0bdc54f62a2",
+      "bytes": 35315
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/binding-result.json": {
+      "sha256": "794eceefb7f36028c7b0aaaba723d4807e154c95093ba38a1887464aea8fd1b1",
+      "bytes": 7537
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/asm-original-control.log": {
+      "sha256": "32a26aff76a7eb2195c6316da53f6c055d0e33bc417158fb6f71b4578a4cf57a",
+      "bytes": 85
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/bindings.json": {
+      "sha256": "3a24d640708524184d1e9bb966b8531a7bbdc2613921124eb5dcfba75c5968a2",
+      "bytes": 3994
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/source-freeze.json": {
+      "sha256": "ad2e5186a7e8d63289bdaaf25cd54d64d7fe265ae2c0b6350b83ca25f23b656b",
+      "bytes": 22073
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/asm-candidate-unpaced.log": {
+      "sha256": "32a26aff76a7eb2195c6316da53f6c055d0e33bc417158fb6f71b4578a4cf57a",
+      "bytes": 85
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/compile-receipt.json": {
+      "sha256": "f693315e7315ea35aa2dd8102f62103b3933953fe2a6d8ee87471c34c5ba2972",
+      "bytes": 3832
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/asm-original-unpaced.log": {
+      "sha256": "32a26aff76a7eb2195c6316da53f6c055d0e33bc417158fb6f71b4578a4cf57a",
+      "bytes": 85
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/producer-binding.log": {
+      "sha256": "794eceefb7f36028c7b0aaaba723d4807e154c95093ba38a1887464aea8fd1b1",
+      "bytes": 7537
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/asm-candidate-control.log": {
+      "sha256": "32a26aff76a7eb2195c6316da53f6c055d0e33bc417158fb6f71b4578a4cf57a",
+      "bytes": 85
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_areas.inc": {
+      "sha256": "9f4a3f3ba5ef2056e57f91c35127a8d30e23e0c9dd6ba5d40d771dd400b9ca03",
+      "bytes": 7750
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_highscores.inc": {
+      "sha256": "0c122f69b50201f05cae101de4b93e5ec93f28a157750ddc36a06fe9cabb5d80",
+      "bytes": 23098
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_start.inc": {
+      "sha256": "519121cfa2c5c7b97da8784f5c2aff4a0a63bfd820068445c96e0144a12386e3",
+      "bytes": 253
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_render_async.inc": {
+      "sha256": "42d07b52478e8dcacf01e1d417005cb01066f35b944ede91dfea822d79e155cc",
+      "bytes": 19765
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/agnb_dependencies.inc": {
+      "sha256": "a9794ba365e7f1ffc386a9e3fd2f2e59968022b82cdfe9973df9c1f6dd2d965d",
+      "bytes": 3200
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_music_assets.inc": {
+      "sha256": "9563fdd5c53c0209a2cc8b5e262521c53e9ebbffc297f60c0d1cca2de260262d",
+      "bytes": 633704
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_sight.inc": {
+      "sha256": "1abc457e8aa67d6820a5cd58c4e8c7c393e2858f6519619904cc3783dd0fb751",
+      "bytes": 14817
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_vdplet_contract.inc": {
+      "sha256": "fac9a833b086a1440af1033b8f11c397b295954b687565312f1dad8573c08d0c",
+      "bytes": 8920
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_version.inc": {
+      "sha256": "14f32198852bfa19663cbdf26343b8cfd25e65d094f4a23c3cd056512a4cdd42",
+      "bytes": 6318
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_save_slots.inc": {
+      "sha256": "44fa1ea616467923088ff239943b46af220cf1d470c70d228313ec2502c1ee1d",
+      "bytes": 5686
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/loading_pages.inc": {
+      "sha256": "60c717613514e9524d401dbae9446008fb1b100449361e532d828a9036b2838f",
+      "bytes": 3715
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_math.inc": {
+      "sha256": "58d65b18b326c5ae5f96a02ce46cffa6d9e0ed6c73b4d2a30f47472758f92fbd",
+      "bytes": 2905
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_panel_music.inc": {
+      "sha256": "e3f696ee5cc0060d41ff00cc75a83236628fdf1a881f157d4d94d2d2214b5d60",
+      "bytes": 3527
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_death.inc": {
+      "sha256": "24c3eda9895969f6fafa56a769b06f357737d95640d75f7904534d84968135e3",
+      "bytes": 32669
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_level_loader.inc": {
+      "sha256": "7a0730c0942d0a0ba9ebd21d46d9d309c6633e93f83e4bc7ab45f782e6bcb21a",
+      "bytes": 16183
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_level_time.inc": {
+      "sha256": "ba4fcc2ee80c1b95fba783e2a5ce9cec0ae4c4a933dcc38bc042710da89efcd7",
+      "bytes": 1474
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_pushwall.inc": {
+      "sha256": "b9fd21f898f9ece8820a3776a53ac5ae84f93a330c9f689349c60c182b16ac93",
+      "bytes": 11711
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_world.inc": {
+      "sha256": "a531622f4997d91c01448ec0368e602e2cafce9ce736870e784432ce09aedc3b",
+      "bytes": 17692
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_config.inc": {
+      "sha256": "0853ec113aa826f2f78a58db7e25c6549f7b76c3cc1cad41f177229fe81e6ed5",
+      "bytes": 5627
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d.asm": {
+      "sha256": "801a36a073523667b88ca77ccbe2041fe285726129def6d2ebff3609e6560797",
+      "bytes": 50086
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_vdplet_client.inc": {
+      "sha256": "9ed8d870158eb7c433b904e76a0158edae052aed04a3baa199726b137aa8a5e0",
+      "bytes": 22835
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/agnb_api.inc": {
+      "sha256": "bd5882af03baa4f694916fab09ec217e807d04f42287c38fa3fac0b3e14f20d5",
+      "bytes": 43392
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/loading_wait.inc": {
+      "sha256": "3cdb500f0ffd400857495f420afaead0a5ab1da98e2e8d3d374db2698c861bcb",
+      "bytes": 3582
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_shell_assets.inc": {
+      "sha256": "bf05ef135b37114abb742a8361e0c3d6b1906f1217d07b24cb2bee0eb79f8ac7",
+      "bytes": 17609
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_motion.inc": {
+      "sha256": "35580cfcdcfc6807ca9ca10a3c29a442d5ce59545a6bddd7af11b6bad9f67711",
+      "bytes": 91282
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/bench.inc": {
+      "sha256": "3857f24482b4de77843388ca86a9e7507e34cc6e07a7106ac996ff5ba72acac2",
+      "bytes": 9343
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/angles.inc": {
+      "sha256": "5c441e3e5ebf498d12340f6ad3cd7aec33826d6f3a990bb8217be64a0126bdb5",
+      "bytes": 6414
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_fixture.inc": {
+      "sha256": "21348709ca1de3cb84d4689c102807fe0e8823bce5e9b588ef59e86e95026a26",
+      "bytes": 57235
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_motion_table.inc": {
+      "sha256": "c5735d1a9b5761562055235fdbb2b389e77fb6fbc56ccfb7538624c6222661d5",
+      "bytes": 20480
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_player_combat.inc": {
+      "sha256": "7b5bd051f115fd0850bc4fc623f7fb8c784c24e4d14687ab3d245a43eb53c6d1",
+      "bytes": 20149
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_actor_sim.inc": {
+      "sha256": "1a3a91a57d5627f2f1324654bcaa105b3c0a16f183f752658c57ceacd5e57221",
+      "bytes": 84993
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_demo_assets.inc": {
+      "sha256": "e3b89a3df4f9151d01fbb687f1f8e40ea2722b62a8b0cbda21f94bf2c6dbb49a",
+      "bytes": 61742
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_actors.inc": {
+      "sha256": "37344953e36911e829f27b57e536f924e047d3f92ae53d182042e281c39a5470",
+      "bytes": 44052
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_victory.inc": {
+      "sha256": "269e7793ce962cbb044204bd5171be3471660c5c836aa85fbba752cedccec033",
+      "bytes": 8442
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_audio.inc": {
+      "sha256": "41121cbe7c6a6c9c982315dac8d7c7de17b949794dcace80e42e25810857c8e8",
+      "bytes": 24854
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_intermission.inc": {
+      "sha256": "a9df6e5e90106456496674c5df048e5ec215f7f427f4801288dd71eca28ca96c",
+      "bytes": 55510
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_demo.inc": {
+      "sha256": "bafde8d1cae9d2de688156f7b9cf6e624195aebc1f78f87dbed5352aeabf9ba1",
+      "bytes": 10317
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_vdplet_backend.inc": {
+      "sha256": "08357b8bee28f8506ef922b44420038c12005a3d5112d3b0fbfbe2feabda4ece",
+      "bytes": 8205
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_backend.inc": {
+      "sha256": "dde2a1b59a3ee4d2e91b9e227b4fe205b21763c6031ae18a9faaba6dddcdec67",
+      "bytes": 3511
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_save.inc": {
+      "sha256": "0c0c0610b4ce830087ea4b41c1bb655ffafb9cf4bbf22390cdd1adf4104e5e07",
+      "bytes": 32370
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_vdplet_package.inc": {
+      "sha256": "2eadcc16288bc6a7815f1d0467b02e90053abc9b56588e34c9e2a0fa11ef4cf9",
+      "bytes": 229
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_music.inc": {
+      "sha256": "3e5df53afd18a58515a8aea90668ca3cac3d018447d9dfdfcaba5ea48c9fc0ec",
+      "bytes": 18605
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_vdplet_batch.inc": {
+      "sha256": "cfe2ac5f1c2492149d443c10f02ee78e58fd093c0aee23aa2afd681772ecbe24",
+      "bytes": 21392
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_shell.inc": {
+      "sha256": "9a49e62e30bac3d80892acf9fa8c4467c1afc0f9395472722f8715fb8c804626",
+      "bytes": 58527
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_audio_assets.inc": {
+      "sha256": "427a54958505415c2eddd195394f341913ffac926c5b96aabd644e0509759256",
+      "bytes": 12981
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/wolf3d_audio_spatial.inc": {
+      "sha256": "5d23aec04b7ef876b80428ec073b958916d518fcd95f82b6bf73d2186b505992",
+      "bytes": 6033
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/control/source/loading_trace04.inc": {
+      "sha256": "0753181544c7b9aebe98b23619cb70cf462bc532d6df44fd3309ea39cf575854",
+      "bytes": 7055
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_areas.inc": {
+      "sha256": "9f4a3f3ba5ef2056e57f91c35127a8d30e23e0c9dd6ba5d40d771dd400b9ca03",
+      "bytes": 7750
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_highscores.inc": {
+      "sha256": "0c122f69b50201f05cae101de4b93e5ec93f28a157750ddc36a06fe9cabb5d80",
+      "bytes": 23098
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_start.inc": {
+      "sha256": "519121cfa2c5c7b97da8784f5c2aff4a0a63bfd820068445c96e0144a12386e3",
+      "bytes": 253
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_render_async.inc": {
+      "sha256": "42d07b52478e8dcacf01e1d417005cb01066f35b944ede91dfea822d79e155cc",
+      "bytes": 19765
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/agnb_dependencies.inc": {
+      "sha256": "a9794ba365e7f1ffc386a9e3fd2f2e59968022b82cdfe9973df9c1f6dd2d965d",
+      "bytes": 3200
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_music_assets.inc": {
+      "sha256": "9563fdd5c53c0209a2cc8b5e262521c53e9ebbffc297f60c0d1cca2de260262d",
+      "bytes": 633704
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_sight.inc": {
+      "sha256": "1abc457e8aa67d6820a5cd58c4e8c7c393e2858f6519619904cc3783dd0fb751",
+      "bytes": 14817
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_vdplet_contract.inc": {
+      "sha256": "fac9a833b086a1440af1033b8f11c397b295954b687565312f1dad8573c08d0c",
+      "bytes": 8920
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_version.inc": {
+      "sha256": "14f32198852bfa19663cbdf26343b8cfd25e65d094f4a23c3cd056512a4cdd42",
+      "bytes": 6318
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_save_slots.inc": {
+      "sha256": "44fa1ea616467923088ff239943b46af220cf1d470c70d228313ec2502c1ee1d",
+      "bytes": 5686
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/loading_pages.inc": {
+      "sha256": "60c717613514e9524d401dbae9446008fb1b100449361e532d828a9036b2838f",
+      "bytes": 3715
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_math.inc": {
+      "sha256": "58d65b18b326c5ae5f96a02ce46cffa6d9e0ed6c73b4d2a30f47472758f92fbd",
+      "bytes": 2905
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_panel_music.inc": {
+      "sha256": "e3f696ee5cc0060d41ff00cc75a83236628fdf1a881f157d4d94d2d2214b5d60",
+      "bytes": 3527
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_death.inc": {
+      "sha256": "24c3eda9895969f6fafa56a769b06f357737d95640d75f7904534d84968135e3",
+      "bytes": 32669
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_level_loader.inc": {
+      "sha256": "7a0730c0942d0a0ba9ebd21d46d9d309c6633e93f83e4bc7ab45f782e6bcb21a",
+      "bytes": 16183
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_level_time.inc": {
+      "sha256": "ba4fcc2ee80c1b95fba783e2a5ce9cec0ae4c4a933dcc38bc042710da89efcd7",
+      "bytes": 1474
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_pushwall.inc": {
+      "sha256": "b9fd21f898f9ece8820a3776a53ac5ae84f93a330c9f689349c60c182b16ac93",
+      "bytes": 11711
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_world.inc": {
+      "sha256": "a531622f4997d91c01448ec0368e602e2cafce9ce736870e784432ce09aedc3b",
+      "bytes": 17692
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_config.inc": {
+      "sha256": "0853ec113aa826f2f78a58db7e25c6549f7b76c3cc1cad41f177229fe81e6ed5",
+      "bytes": 5627
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d.asm": {
+      "sha256": "fb608c1b3109c57bb4a51de306e0e0ffe0b4d31002a2a0ed3162da8c029340bc",
+      "bytes": 50086
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_vdplet_client.inc": {
+      "sha256": "9ed8d870158eb7c433b904e76a0158edae052aed04a3baa199726b137aa8a5e0",
+      "bytes": 22835
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/agnb_api.inc": {
+      "sha256": "bd5882af03baa4f694916fab09ec217e807d04f42287c38fa3fac0b3e14f20d5",
+      "bytes": 43392
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/loading_wait.inc": {
+      "sha256": "3cdb500f0ffd400857495f420afaead0a5ab1da98e2e8d3d374db2698c861bcb",
+      "bytes": 3582
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_shell_assets.inc": {
+      "sha256": "bf05ef135b37114abb742a8361e0c3d6b1906f1217d07b24cb2bee0eb79f8ac7",
+      "bytes": 17609
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_motion.inc": {
+      "sha256": "35580cfcdcfc6807ca9ca10a3c29a442d5ce59545a6bddd7af11b6bad9f67711",
+      "bytes": 91282
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/bench.inc": {
+      "sha256": "adffaf510afb1d746293bb9df8f9593061f797f4cf0b8e51fae199cb8cab0547",
+      "bytes": 9785
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/angles.inc": {
+      "sha256": "5c441e3e5ebf498d12340f6ad3cd7aec33826d6f3a990bb8217be64a0126bdb5",
+      "bytes": 6414
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_fixture.inc": {
+      "sha256": "21348709ca1de3cb84d4689c102807fe0e8823bce5e9b588ef59e86e95026a26",
+      "bytes": 57235
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_motion_table.inc": {
+      "sha256": "c5735d1a9b5761562055235fdbb2b389e77fb6fbc56ccfb7538624c6222661d5",
+      "bytes": 20480
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_player_combat.inc": {
+      "sha256": "7b5bd051f115fd0850bc4fc623f7fb8c784c24e4d14687ab3d245a43eb53c6d1",
+      "bytes": 20149
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_actor_sim.inc": {
+      "sha256": "1a3a91a57d5627f2f1324654bcaa105b3c0a16f183f752658c57ceacd5e57221",
+      "bytes": 84993
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_demo_assets.inc": {
+      "sha256": "e3b89a3df4f9151d01fbb687f1f8e40ea2722b62a8b0cbda21f94bf2c6dbb49a",
+      "bytes": 61742
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_actors.inc": {
+      "sha256": "37344953e36911e829f27b57e536f924e047d3f92ae53d182042e281c39a5470",
+      "bytes": 44052
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_victory.inc": {
+      "sha256": "269e7793ce962cbb044204bd5171be3471660c5c836aa85fbba752cedccec033",
+      "bytes": 8442
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_audio.inc": {
+      "sha256": "41121cbe7c6a6c9c982315dac8d7c7de17b949794dcace80e42e25810857c8e8",
+      "bytes": 24854
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_intermission.inc": {
+      "sha256": "a9df6e5e90106456496674c5df048e5ec215f7f427f4801288dd71eca28ca96c",
+      "bytes": 55510
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_demo.inc": {
+      "sha256": "bafde8d1cae9d2de688156f7b9cf6e624195aebc1f78f87dbed5352aeabf9ba1",
+      "bytes": 10317
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_vdplet_backend.inc": {
+      "sha256": "08357b8bee28f8506ef922b44420038c12005a3d5112d3b0fbfbe2feabda4ece",
+      "bytes": 8205
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_backend.inc": {
+      "sha256": "dde2a1b59a3ee4d2e91b9e227b4fe205b21763c6031ae18a9faaba6dddcdec67",
+      "bytes": 3511
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_save.inc": {
+      "sha256": "0c0c0610b4ce830087ea4b41c1bb655ffafb9cf4bbf22390cdd1adf4104e5e07",
+      "bytes": 32370
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_vdplet_package.inc": {
+      "sha256": "2eadcc16288bc6a7815f1d0467b02e90053abc9b56588e34c9e2a0fa11ef4cf9",
+      "bytes": 229
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_music.inc": {
+      "sha256": "3e5df53afd18a58515a8aea90668ca3cac3d018447d9dfdfcaba5ea48c9fc0ec",
+      "bytes": 18605
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_vdplet_batch.inc": {
+      "sha256": "cfe2ac5f1c2492149d443c10f02ee78e58fd093c0aee23aa2afd681772ecbe24",
+      "bytes": 21392
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_shell.inc": {
+      "sha256": "9a49e62e30bac3d80892acf9fa8c4467c1afc0f9395472722f8715fb8c804626",
+      "bytes": 58527
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_audio_assets.inc": {
+      "sha256": "427a54958505415c2eddd195394f341913ffac926c5b96aabd644e0509759256",
+      "bytes": 12981
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/wolf3d_audio_spatial.inc": {
+      "sha256": "5d23aec04b7ef876b80428ec073b958916d518fcd95f82b6bf73d2186b505992",
+      "bytes": 6033
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/original/unpaced/source/loading_trace04.inc": {
+      "sha256": "0753181544c7b9aebe98b23619cb70cf462bc532d6df44fd3309ea39cf575854",
+      "bytes": 7055
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_areas.inc": {
+      "sha256": "9f4a3f3ba5ef2056e57f91c35127a8d30e23e0c9dd6ba5d40d771dd400b9ca03",
+      "bytes": 7750
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_highscores.inc": {
+      "sha256": "0c122f69b50201f05cae101de4b93e5ec93f28a157750ddc36a06fe9cabb5d80",
+      "bytes": 23098
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_start.inc": {
+      "sha256": "519121cfa2c5c7b97da8784f5c2aff4a0a63bfd820068445c96e0144a12386e3",
+      "bytes": 253
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_render_async.inc": {
+      "sha256": "42d07b52478e8dcacf01e1d417005cb01066f35b944ede91dfea822d79e155cc",
+      "bytes": 19765
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/agnb_dependencies.inc": {
+      "sha256": "a9794ba365e7f1ffc386a9e3fd2f2e59968022b82cdfe9973df9c1f6dd2d965d",
+      "bytes": 3200
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_music_assets.inc": {
+      "sha256": "9563fdd5c53c0209a2cc8b5e262521c53e9ebbffc297f60c0d1cca2de260262d",
+      "bytes": 633704
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_sight.inc": {
+      "sha256": "1abc457e8aa67d6820a5cd58c4e8c7c393e2858f6519619904cc3783dd0fb751",
+      "bytes": 14817
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_vdplet_contract.inc": {
+      "sha256": "fac9a833b086a1440af1033b8f11c397b295954b687565312f1dad8573c08d0c",
+      "bytes": 8920
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_version.inc": {
+      "sha256": "14f32198852bfa19663cbdf26343b8cfd25e65d094f4a23c3cd056512a4cdd42",
+      "bytes": 6318
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_save_slots.inc": {
+      "sha256": "44fa1ea616467923088ff239943b46af220cf1d470c70d228313ec2502c1ee1d",
+      "bytes": 5686
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/loading_pages.inc": {
+      "sha256": "60c717613514e9524d401dbae9446008fb1b100449361e532d828a9036b2838f",
+      "bytes": 3715
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_math.inc": {
+      "sha256": "58d65b18b326c5ae5f96a02ce46cffa6d9e0ed6c73b4d2a30f47472758f92fbd",
+      "bytes": 2905
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_panel_music.inc": {
+      "sha256": "e3f696ee5cc0060d41ff00cc75a83236628fdf1a881f157d4d94d2d2214b5d60",
+      "bytes": 3527
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_death.inc": {
+      "sha256": "24c3eda9895969f6fafa56a769b06f357737d95640d75f7904534d84968135e3",
+      "bytes": 32669
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_level_loader.inc": {
+      "sha256": "7a0730c0942d0a0ba9ebd21d46d9d309c6633e93f83e4bc7ab45f782e6bcb21a",
+      "bytes": 16183
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_level_time.inc": {
+      "sha256": "ba4fcc2ee80c1b95fba783e2a5ce9cec0ae4c4a933dcc38bc042710da89efcd7",
+      "bytes": 1474
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d.lst": {
+      "sha256": "faaa647d3ea675e40112843658e3dfdd2d9a490db6ba417a6d54c926308e1ce0",
+      "bytes": 5046526
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_pushwall.inc": {
+      "sha256": "b9fd21f898f9ece8820a3776a53ac5ae84f93a330c9f689349c60c182b16ac93",
+      "bytes": 11711
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_world.inc": {
+      "sha256": "a531622f4997d91c01448ec0368e602e2cafce9ce736870e784432ce09aedc3b",
+      "bytes": 17692
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_config.inc": {
+      "sha256": "0853ec113aa826f2f78a58db7e25c6549f7b76c3cc1cad41f177229fe81e6ed5",
+      "bytes": 5627
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d.asm": {
+      "sha256": "801a36a073523667b88ca77ccbe2041fe285726129def6d2ebff3609e6560797",
+      "bytes": 50086
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_vdplet_client.inc": {
+      "sha256": "10becd68b1b048e06ca155f136e72bce77c430769d612c67f887da91841b1c3a",
+      "bytes": 22835
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/agnb_api.inc": {
+      "sha256": "bd5882af03baa4f694916fab09ec217e807d04f42287c38fa3fac0b3e14f20d5",
+      "bytes": 43392
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/loading_wait.inc": {
+      "sha256": "3cdb500f0ffd400857495f420afaead0a5ab1da98e2e8d3d374db2698c861bcb",
+      "bytes": 3582
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_shell_assets.inc": {
+      "sha256": "bf05ef135b37114abb742a8361e0c3d6b1906f1217d07b24cb2bee0eb79f8ac7",
+      "bytes": 17609
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_motion.inc": {
+      "sha256": "35580cfcdcfc6807ca9ca10a3c29a442d5ce59545a6bddd7af11b6bad9f67711",
+      "bytes": 91282
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/bench.inc": {
+      "sha256": "3857f24482b4de77843388ca86a9e7507e34cc6e07a7106ac996ff5ba72acac2",
+      "bytes": 9343
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/angles.inc": {
+      "sha256": "5c441e3e5ebf498d12340f6ad3cd7aec33826d6f3a990bb8217be64a0126bdb5",
+      "bytes": 6414
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_fixture.inc": {
+      "sha256": "21348709ca1de3cb84d4689c102807fe0e8823bce5e9b588ef59e86e95026a26",
+      "bytes": 57235
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_motion_table.inc": {
+      "sha256": "c5735d1a9b5761562055235fdbb2b389e77fb6fbc56ccfb7538624c6222661d5",
+      "bytes": 20480
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_player_combat.inc": {
+      "sha256": "7b5bd051f115fd0850bc4fc623f7fb8c784c24e4d14687ab3d245a43eb53c6d1",
+      "bytes": 20149
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_actor_sim.inc": {
+      "sha256": "1a3a91a57d5627f2f1324654bcaa105b3c0a16f183f752658c57ceacd5e57221",
+      "bytes": 84993
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_demo_assets.inc": {
+      "sha256": "e3b89a3df4f9151d01fbb687f1f8e40ea2722b62a8b0cbda21f94bf2c6dbb49a",
+      "bytes": 61742
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_actors.inc": {
+      "sha256": "37344953e36911e829f27b57e536f924e047d3f92ae53d182042e281c39a5470",
+      "bytes": 44052
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_victory.inc": {
+      "sha256": "269e7793ce962cbb044204bd5171be3471660c5c836aa85fbba752cedccec033",
+      "bytes": 8442
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_audio.inc": {
+      "sha256": "41121cbe7c6a6c9c982315dac8d7c7de17b949794dcace80e42e25810857c8e8",
+      "bytes": 24854
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_intermission.inc": {
+      "sha256": "a9df6e5e90106456496674c5df048e5ec215f7f427f4801288dd71eca28ca96c",
+      "bytes": 55510
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_demo.inc": {
+      "sha256": "bafde8d1cae9d2de688156f7b9cf6e624195aebc1f78f87dbed5352aeabf9ba1",
+      "bytes": 10317
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_vdplet_backend.inc": {
+      "sha256": "08357b8bee28f8506ef922b44420038c12005a3d5112d3b0fbfbe2feabda4ece",
+      "bytes": 8205
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_backend.inc": {
+      "sha256": "dde2a1b59a3ee4d2e91b9e227b4fe205b21763c6031ae18a9faaba6dddcdec67",
+      "bytes": 3511
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_save.inc": {
+      "sha256": "0c0c0610b4ce830087ea4b41c1bb655ffafb9cf4bbf22390cdd1adf4104e5e07",
+      "bytes": 32370
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_vdplet_package.inc": {
+      "sha256": "425165cc78bb510f5cf37d274a1f8ca5227b4bb6969d7f34ff17821b0132ed97",
+      "bytes": 229
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_music.inc": {
+      "sha256": "3e5df53afd18a58515a8aea90668ca3cac3d018447d9dfdfcaba5ea48c9fc0ec",
+      "bytes": 18605
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_vdplet_batch.inc": {
+      "sha256": "cfe2ac5f1c2492149d443c10f02ee78e58fd093c0aee23aa2afd681772ecbe24",
+      "bytes": 21392
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_shell.inc": {
+      "sha256": "9a49e62e30bac3d80892acf9fa8c4467c1afc0f9395472722f8715fb8c804626",
+      "bytes": 58527
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_audio_assets.inc": {
+      "sha256": "427a54958505415c2eddd195394f341913ffac926c5b96aabd644e0509759256",
+      "bytes": 12981
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/wolf3d_audio_spatial.inc": {
+      "sha256": "5d23aec04b7ef876b80428ec073b958916d518fcd95f82b6bf73d2186b505992",
+      "bytes": 6033
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/control/source/loading_trace04.inc": {
+      "sha256": "0753181544c7b9aebe98b23619cb70cf462bc532d6df44fd3309ea39cf575854",
+      "bytes": 7055
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_areas.inc": {
+      "sha256": "9f4a3f3ba5ef2056e57f91c35127a8d30e23e0c9dd6ba5d40d771dd400b9ca03",
+      "bytes": 7750
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_highscores.inc": {
+      "sha256": "0c122f69b50201f05cae101de4b93e5ec93f28a157750ddc36a06fe9cabb5d80",
+      "bytes": 23098
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_start.inc": {
+      "sha256": "519121cfa2c5c7b97da8784f5c2aff4a0a63bfd820068445c96e0144a12386e3",
+      "bytes": 253
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_render_async.inc": {
+      "sha256": "42d07b52478e8dcacf01e1d417005cb01066f35b944ede91dfea822d79e155cc",
+      "bytes": 19765
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/agnb_dependencies.inc": {
+      "sha256": "a9794ba365e7f1ffc386a9e3fd2f2e59968022b82cdfe9973df9c1f6dd2d965d",
+      "bytes": 3200
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_music_assets.inc": {
+      "sha256": "9563fdd5c53c0209a2cc8b5e262521c53e9ebbffc297f60c0d1cca2de260262d",
+      "bytes": 633704
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_sight.inc": {
+      "sha256": "1abc457e8aa67d6820a5cd58c4e8c7c393e2858f6519619904cc3783dd0fb751",
+      "bytes": 14817
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_vdplet_contract.inc": {
+      "sha256": "fac9a833b086a1440af1033b8f11c397b295954b687565312f1dad8573c08d0c",
+      "bytes": 8920
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_version.inc": {
+      "sha256": "14f32198852bfa19663cbdf26343b8cfd25e65d094f4a23c3cd056512a4cdd42",
+      "bytes": 6318
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_save_slots.inc": {
+      "sha256": "44fa1ea616467923088ff239943b46af220cf1d470c70d228313ec2502c1ee1d",
+      "bytes": 5686
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/loading_pages.inc": {
+      "sha256": "60c717613514e9524d401dbae9446008fb1b100449361e532d828a9036b2838f",
+      "bytes": 3715
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_math.inc": {
+      "sha256": "58d65b18b326c5ae5f96a02ce46cffa6d9e0ed6c73b4d2a30f47472758f92fbd",
+      "bytes": 2905
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_panel_music.inc": {
+      "sha256": "e3f696ee5cc0060d41ff00cc75a83236628fdf1a881f157d4d94d2d2214b5d60",
+      "bytes": 3527
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_death.inc": {
+      "sha256": "24c3eda9895969f6fafa56a769b06f357737d95640d75f7904534d84968135e3",
+      "bytes": 32669
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_level_loader.inc": {
+      "sha256": "7a0730c0942d0a0ba9ebd21d46d9d309c6633e93f83e4bc7ab45f782e6bcb21a",
+      "bytes": 16183
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_level_time.inc": {
+      "sha256": "ba4fcc2ee80c1b95fba783e2a5ce9cec0ae4c4a933dcc38bc042710da89efcd7",
+      "bytes": 1474
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d.lst": {
+      "sha256": "fb6daf90d01815538ae10d8ad4fd0ae6c5a13576e54383639a8ab42b6ccc541b",
+      "bytes": 5047729
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_pushwall.inc": {
+      "sha256": "b9fd21f898f9ece8820a3776a53ac5ae84f93a330c9f689349c60c182b16ac93",
+      "bytes": 11711
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_world.inc": {
+      "sha256": "a531622f4997d91c01448ec0368e602e2cafce9ce736870e784432ce09aedc3b",
+      "bytes": 17692
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_config.inc": {
+      "sha256": "0853ec113aa826f2f78a58db7e25c6549f7b76c3cc1cad41f177229fe81e6ed5",
+      "bytes": 5627
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d.asm": {
+      "sha256": "fb608c1b3109c57bb4a51de306e0e0ffe0b4d31002a2a0ed3162da8c029340bc",
+      "bytes": 50086
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_vdplet_client.inc": {
+      "sha256": "10becd68b1b048e06ca155f136e72bce77c430769d612c67f887da91841b1c3a",
+      "bytes": 22835
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/agnb_api.inc": {
+      "sha256": "bd5882af03baa4f694916fab09ec217e807d04f42287c38fa3fac0b3e14f20d5",
+      "bytes": 43392
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/loading_wait.inc": {
+      "sha256": "3cdb500f0ffd400857495f420afaead0a5ab1da98e2e8d3d374db2698c861bcb",
+      "bytes": 3582
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_shell_assets.inc": {
+      "sha256": "bf05ef135b37114abb742a8361e0c3d6b1906f1217d07b24cb2bee0eb79f8ac7",
+      "bytes": 17609
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_motion.inc": {
+      "sha256": "35580cfcdcfc6807ca9ca10a3c29a442d5ce59545a6bddd7af11b6bad9f67711",
+      "bytes": 91282
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/bench.inc": {
+      "sha256": "adffaf510afb1d746293bb9df8f9593061f797f4cf0b8e51fae199cb8cab0547",
+      "bytes": 9785
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/angles.inc": {
+      "sha256": "5c441e3e5ebf498d12340f6ad3cd7aec33826d6f3a990bb8217be64a0126bdb5",
+      "bytes": 6414
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_fixture.inc": {
+      "sha256": "21348709ca1de3cb84d4689c102807fe0e8823bce5e9b588ef59e86e95026a26",
+      "bytes": 57235
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_motion_table.inc": {
+      "sha256": "c5735d1a9b5761562055235fdbb2b389e77fb6fbc56ccfb7538624c6222661d5",
+      "bytes": 20480
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_player_combat.inc": {
+      "sha256": "7b5bd051f115fd0850bc4fc623f7fb8c784c24e4d14687ab3d245a43eb53c6d1",
+      "bytes": 20149
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_actor_sim.inc": {
+      "sha256": "1a3a91a57d5627f2f1324654bcaa105b3c0a16f183f752658c57ceacd5e57221",
+      "bytes": 84993
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_demo_assets.inc": {
+      "sha256": "e3b89a3df4f9151d01fbb687f1f8e40ea2722b62a8b0cbda21f94bf2c6dbb49a",
+      "bytes": 61742
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_actors.inc": {
+      "sha256": "37344953e36911e829f27b57e536f924e047d3f92ae53d182042e281c39a5470",
+      "bytes": 44052
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_victory.inc": {
+      "sha256": "269e7793ce962cbb044204bd5171be3471660c5c836aa85fbba752cedccec033",
+      "bytes": 8442
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_audio.inc": {
+      "sha256": "41121cbe7c6a6c9c982315dac8d7c7de17b949794dcace80e42e25810857c8e8",
+      "bytes": 24854
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_intermission.inc": {
+      "sha256": "a9df6e5e90106456496674c5df048e5ec215f7f427f4801288dd71eca28ca96c",
+      "bytes": 55510
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_demo.inc": {
+      "sha256": "bafde8d1cae9d2de688156f7b9cf6e624195aebc1f78f87dbed5352aeabf9ba1",
+      "bytes": 10317
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_vdplet_backend.inc": {
+      "sha256": "08357b8bee28f8506ef922b44420038c12005a3d5112d3b0fbfbe2feabda4ece",
+      "bytes": 8205
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_backend.inc": {
+      "sha256": "dde2a1b59a3ee4d2e91b9e227b4fe205b21763c6031ae18a9faaba6dddcdec67",
+      "bytes": 3511
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_save.inc": {
+      "sha256": "0c0c0610b4ce830087ea4b41c1bb655ffafb9cf4bbf22390cdd1adf4104e5e07",
+      "bytes": 32370
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_vdplet_package.inc": {
+      "sha256": "425165cc78bb510f5cf37d274a1f8ca5227b4bb6969d7f34ff17821b0132ed97",
+      "bytes": 229
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_music.inc": {
+      "sha256": "3e5df53afd18a58515a8aea90668ca3cac3d018447d9dfdfcaba5ea48c9fc0ec",
+      "bytes": 18605
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_vdplet_batch.inc": {
+      "sha256": "cfe2ac5f1c2492149d443c10f02ee78e58fd093c0aee23aa2afd681772ecbe24",
+      "bytes": 21392
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_shell.inc": {
+      "sha256": "9a49e62e30bac3d80892acf9fa8c4467c1afc0f9395472722f8715fb8c804626",
+      "bytes": 58527
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_audio_assets.inc": {
+      "sha256": "427a54958505415c2eddd195394f341913ffac926c5b96aabd644e0509759256",
+      "bytes": 12981
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/wolf3d_audio_spatial.inc": {
+      "sha256": "5d23aec04b7ef876b80428ec073b958916d518fcd95f82b6bf73d2186b505992",
+      "bytes": 6033
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/guests01/candidate/unpaced/source/loading_trace04.inc": {
+      "sha256": "0753181544c7b9aebe98b23619cb70cf462bc532d6df44fd3309ea39cf575854",
+      "bytes": 7055
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-module-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-renderer-check.log": {
+      "sha256": "715484ccd2816135a8baf2ddbcd2fdff4ce53f2926d4a7f5f5b55e417cf6ad06",
+      "bytes": 60
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-renderer-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-spans-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-spans-check.log": {
+      "sha256": "024c18fbc6193fbc652c1dd3d339a365f5d2851e4cdb8f77b2cfbf18dedc7d7d",
+      "bytes": 124
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/table-generation.json": {
+      "sha256": "077a837fdc880ab8d87ec2b67cf5b30f284e22ddbef4348fd41499653780514e",
+      "bytes": 174
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/code-resource-qualification.log": {
+      "sha256": "a059bd90da7bfaba6f82b0cf3cb7b95d73ed97010d81aba10bfd2d67afd3ff3a",
+      "bytes": 76
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-symbols.log": {
+      "sha256": "4a33c7848598e1172d95fee57a1b0d29de442fd243145826460f20f72e81cb02",
+      "bytes": 2668
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-target-package.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/inputs.json": {
+      "sha256": "2ed0db83ee215ca1394c16d1a11d1ce0e004deacd1e2e6d2027e1b647a59598d",
+      "bytes": 17330
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-equivalence-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/build-receipt.json": {
+      "sha256": "34ddc04cd46a3204fd49e22cb6b34b938f01217aed82591102ea83c82f689e6c",
+      "bytes": 57050
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-spans-check.log": {
+      "sha256": "024c18fbc6193fbc652c1dd3d339a365f5d2851e4cdb8f77b2cfbf18dedc7d7d",
+      "bytes": 124
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-equivalence-check.log": {
+      "sha256": "dcc888321f7d0d6b4173d85db818af8bd56d405c39fd8760969f725cbfed800c",
+      "bytes": 136
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-disassembly.log": {
+      "sha256": "cbefcd19dd747d7069a90b3d1d33ba97bc599bd35f6007f646391e9195de5086",
+      "bytes": 408546
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-renderer-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-disassembly.log": {
+      "sha256": "4c5dc35f2082e07a23e83c5cfc1188e01e89d02cf16efd80b0d62b428d819f7c",
+      "bytes": 412095
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-module-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-raywalk-check.log": {
+      "sha256": "c1e9a9d282b043d8c563e0d85f173f38e5437688ace204fb8b2f0197e2636a32",
+      "bytes": 176
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-module-check.log": {
+      "sha256": "8ac64bad92a13094476335f97db9e1294403f6f72058e26a9683f66d224bd7d0",
+      "bytes": 85
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original_tangents.inc": {
+      "sha256": "f602ee6862cd3ccb006321907508b66158078c8a51d56c62a17a134928db2238",
+      "bytes": 7228
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-spans-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-equivalence-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-module-check.log": {
+      "sha256": "8ac64bad92a13094476335f97db9e1294403f6f72058e26a9683f66d224bd7d0",
+      "bytes": 85
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-raywalk-compile.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-renderer-check.log": {
+      "sha256": "715484ccd2816135a8baf2ddbcd2fdff4ce53f2926d4a7f5f5b55e417cf6ad06",
+      "bytes": 60
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-equivalence-check.log": {
+      "sha256": "dcc888321f7d0d6b4173d85db818af8bd56d405c39fd8760969f725cbfed800c",
+      "bytes": 136
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/code-result.json": {
+      "sha256": "3db7b7ed6cd763aa92be757613995fbae3b540b657902f692c910d9813303613",
+      "bytes": 26225
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original-target-package.log": {
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate-symbols.log": {
+      "sha256": "4beb87188b7611ab464eb9965c7c48a6b9460ca9d8610f449049fa409ec28930",
+      "bytes": 2711
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/wolf3d_tables.inc": {
+      "sha256": "6e3353cebd8d69849bbde39abd536018b1ee403f599ae45acc51fb8c64303e5d",
+      "bytes": 8355
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/wolf3d_tables.inc": {
+      "sha256": "6e3353cebd8d69849bbde39abd536018b1ee403f599ae45acc51fb8c64303e5d",
+      "bytes": 8355
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/qualification/vdplet_host_shim.h": {
+      "sha256": "2f4efd57e6a6d4d4b0cefb8a21cc5e3e190367ff16d23c4de7168bc7ac1a9a1f",
+      "bytes": 3883
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/test_world_mirror.cpp": {
+      "sha256": "03b824fa0f14e03b254fac9d6c7406433cb509bb11c1c6ade3287e2f581fe161",
+      "bytes": 19108
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_module.cpp": {
+      "sha256": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243",
+      "bytes": 24285
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_world_mirror.cpp": {
+      "sha256": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+      "bytes": 21827
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/test_renderer.cpp": {
+      "sha256": "79e78c22f5763e95c1b22a2361e6263e8cedb18c68efd5e1455e20933ab6e0a9",
+      "bytes": 14799
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/renderer_oracle.cpp": {
+      "sha256": "39e796ebe3677503acfadc8a911c7b1fec401c291c04b8395f3a73b1309a38f6",
+      "bytes": 14664
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/test_module.cpp": {
+      "sha256": "4dd705f07ad9f48ef043d72b4a249f70208a4aac25c9c71268641c376bcd2819",
+      "bytes": 28858
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_world_mirror.h": {
+      "sha256": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115",
+      "bytes": 4063
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/renderer_fixture.h": {
+      "sha256": "c2939c346bcb0e2df84e558cc2f2453c0b4f89fef7d505670648f88d0818a59f",
+      "bytes": 8504
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_production_contract.h": {
+      "sha256": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+      "bytes": 9485
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_renderer.h": {
+      "sha256": "ca340f31a81fb3665f7bc3f8c9cd956e26254ab97ba6358d6c268c0585cb4c68",
+      "bytes": 3136
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_renderer.cpp": {
+      "sha256": "d606254df009bc02cb499a520a23e73bb4da31bb0b3ea00d280e9c3f99f67420",
+      "bytes": 42197
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/test_world_mirror.cpp": {
+      "sha256": "03b824fa0f14e03b254fac9d6c7406433cb509bb11c1c6ade3287e2f581fe161",
+      "bytes": 19108
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/wolf3d_module.cpp": {
+      "sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+      "bytes": 26135
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/wolf3d_world_mirror.cpp": {
+      "sha256": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+      "bytes": 21827
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/test_renderer.cpp": {
+      "sha256": "79e78c22f5763e95c1b22a2361e6263e8cedb18c68efd5e1455e20933ab6e0a9",
+      "bytes": 14799
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/renderer_oracle.cpp": {
+      "sha256": "39e796ebe3677503acfadc8a911c7b1fec401c291c04b8395f3a73b1309a38f6",
+      "bytes": 14664
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/test_module.cpp": {
+      "sha256": "4dd705f07ad9f48ef043d72b4a249f70208a4aac25c9c71268641c376bcd2819",
+      "bytes": 28858
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/wolf3d_world_mirror.h": {
+      "sha256": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115",
+      "bytes": 4063
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/renderer_fixture.h": {
+      "sha256": "c2939c346bcb0e2df84e558cc2f2453c0b4f89fef7d505670648f88d0818a59f",
+      "bytes": 8504
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/wolf3d_production_contract.h": {
+      "sha256": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+      "bytes": 9485
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/wolf3d_renderer.h": {
+      "sha256": "ca340f31a81fb3665f7bc3f8c9cd956e26254ab97ba6358d6c268c0585cb4c68",
+      "bytes": 3136
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/wolf3d_renderer.cpp": {
+      "sha256": "d606254df009bc02cb499a520a23e73bb4da31bb0b3ea00d280e9c3f99f67420",
+      "bytes": 42197
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.readelf.txt": {
+      "sha256": "be7608fe203f958c19447ea546eacaa2220bd54df0310f97b8fab88ede44db5d",
+      "bytes": 4261
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.json": {
+      "sha256": "d0e1aad90644846c1998927f25b7fbfc4f39cbffe6a25e6670d159a19339bd93",
+      "bytes": 2203
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.su": {
+      "sha256": "ddce45d14f44ab96b36dc843ffbc6c157ae2b4fccb3a6b81124987267e37b54b",
+      "bytes": 4851
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.elf": {
+      "sha256": "99315b1e25c421ecc9a80790560bdd72c717441cb8fb232626b475f0fbbb8005",
+      "bytes": 32624
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.disassembly.txt": {
+      "sha256": "69a2a6a45d4ef167e64e3e49784499c3892475fca52e5d26febfd9a79b0a5912",
+      "bytes": 433794
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.map": {
+      "sha256": "f5c367175353a37fbb035ffa661544b3c8b80f9d17ca14b85d473e4baed9562d",
+      "bytes": 26269
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/tool-commands.json": {
+      "sha256": "e68450b0784ca71283c23a903837b94bdd665a08e107eef4143448fe8db694c7",
+      "bytes": 2612
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.upload.elf": {
+      "sha256": "c5858cc10013a5af732b4564a77118deebf0b76ea1f8dd0057d85caba3c141b4",
+      "bytes": 20864
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/tools/build_module.py": {
+      "sha256": "0fc904e2be92096e2d139d15a2cfb101544d9ad929bbbcb003c2e287c6bab0ac",
+      "bytes": 14887
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/tools/module.exports": {
+      "sha256": "9fd0e3d42b2162d4d65e43592c78e5c0ba5663a937b1474c76312654c1dce1a9",
+      "bytes": 45
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/src/vdplet_policy.h": {
+      "sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+      "bytes": 758
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include/vdplet_pcm_sink.h": {
+      "sha256": "e3bf5d900105ddd87e82f5cd38301fab02ffb7a7e38f81012db0bb2e13ba963c",
+      "bytes": 1267
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include/vdplet_protocol.h": {
+      "sha256": "0dc8ad31e249ce58ed39435f6a8a265a9175be417ea3bee8a2cc10cde9f94b2f",
+      "bytes": 2163
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include/vdp_pcm_sink_wire.h": {
+      "sha256": "5555235b73a68c7ee5648c7fe67f1e99014c707c1fe024b2dec5225edd9feb4e",
+      "bytes": 2017
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include/vdp_audio_queue.h": {
+      "sha256": "4f7363364712301529d5c7bbc9ebd1496a7103aaae717880e4ddb3375520b85e",
+      "bytes": 1409
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include/vdplet_services.h": {
+      "sha256": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f",
+      "bytes": 2253
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include/vdplet.h": {
+      "sha256": "92a6bbc403ecc51e165c103cfd16fd071f3d644ad52f83a4a7cb4fe088a5a2d6",
+      "bytes": 8053
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/target-fixture/assets.txt": {
+      "sha256": "14b6d5748f4e655a86fc641c30127cbb67f0a4a6377d83eb12aa9dfcfafd5ac3",
+      "bytes": 662
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/qualification/vdplet_host_shim.h": {
+      "sha256": "2f4efd57e6a6d4d4b0cefb8a21cc5e3e190367ff16d23c4de7168bc7ac1a9a1f",
+      "bytes": 3883
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/test_world_mirror.cpp": {
+      "sha256": "03b824fa0f14e03b254fac9d6c7406433cb509bb11c1c6ade3287e2f581fe161",
+      "bytes": 19108
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_module.cpp": {
+      "sha256": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243",
+      "bytes": 24285
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_world_mirror.cpp": {
+      "sha256": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+      "bytes": 21827
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/test_renderer.cpp": {
+      "sha256": "79e78c22f5763e95c1b22a2361e6263e8cedb18c68efd5e1455e20933ab6e0a9",
+      "bytes": 14799
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/renderer_oracle.cpp": {
+      "sha256": "39e796ebe3677503acfadc8a911c7b1fec401c291c04b8395f3a73b1309a38f6",
+      "bytes": 14664
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/original_tangents.inc": {
+      "sha256": "f602ee6862cd3ccb006321907508b66158078c8a51d56c62a17a134928db2238",
+      "bytes": 7228
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/test_module.cpp": {
+      "sha256": "4dd705f07ad9f48ef043d72b4a249f70208a4aac25c9c71268641c376bcd2819",
+      "bytes": 28858
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_world_mirror.h": {
+      "sha256": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115",
+      "bytes": 4063
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/renderer_fixture.h": {
+      "sha256": "c2939c346bcb0e2df84e558cc2f2453c0b4f89fef7d505670648f88d0818a59f",
+      "bytes": 8504
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/original_raywalk.h": {
+      "sha256": "72b1a70eb08fd211dde089e7f7b9379494daeb307fe34a06adb9a198291b66c7",
+      "bytes": 6415
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_production_contract.h": {
+      "sha256": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+      "bytes": 9485
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_renderer.h": {
+      "sha256": "ca340f31a81fb3665f7bc3f8c9cd956e26254ab97ba6358d6c268c0585cb4c68",
+      "bytes": 3136
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_renderer.cpp": {
+      "sha256": "eff71d568de4d58b08135a579ddd73f774b9db251561b59d07f20ee563a033df",
+      "bytes": 34168
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/test_world_mirror.cpp": {
+      "sha256": "03b824fa0f14e03b254fac9d6c7406433cb509bb11c1c6ade3287e2f581fe161",
+      "bytes": 19108
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/wolf3d_module.cpp": {
+      "sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+      "bytes": 26135
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/wolf3d_world_mirror.cpp": {
+      "sha256": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+      "bytes": 21827
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/test_renderer.cpp": {
+      "sha256": "79e78c22f5763e95c1b22a2361e6263e8cedb18c68efd5e1455e20933ab6e0a9",
+      "bytes": 14799
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/renderer_oracle.cpp": {
+      "sha256": "39e796ebe3677503acfadc8a911c7b1fec401c291c04b8395f3a73b1309a38f6",
+      "bytes": 14664
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/original_tangents.inc": {
+      "sha256": "f602ee6862cd3ccb006321907508b66158078c8a51d56c62a17a134928db2238",
+      "bytes": 7228
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/test_module.cpp": {
+      "sha256": "4dd705f07ad9f48ef043d72b4a249f70208a4aac25c9c71268641c376bcd2819",
+      "bytes": 28858
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/wolf3d_world_mirror.h": {
+      "sha256": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115",
+      "bytes": 4063
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/renderer_fixture.h": {
+      "sha256": "c2939c346bcb0e2df84e558cc2f2453c0b4f89fef7d505670648f88d0818a59f",
+      "bytes": 8504
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/original_raywalk.h": {
+      "sha256": "72b1a70eb08fd211dde089e7f7b9379494daeb307fe34a06adb9a198291b66c7",
+      "bytes": 6415
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/wolf3d_production_contract.h": {
+      "sha256": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+      "bytes": 9485
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/wolf3d_renderer.h": {
+      "sha256": "ca340f31a81fb3665f7bc3f8c9cd956e26254ab97ba6358d6c268c0585cb4c68",
+      "bytes": 3136
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/wolf3d_renderer.cpp": {
+      "sha256": "eff71d568de4d58b08135a579ddd73f774b9db251561b59d07f20ee563a033df",
+      "bytes": 34168
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.readelf.txt": {
+      "sha256": "3c25d94fd8b3941180be006626468d8ed6814b06aab658a226562bdb38af3bce",
+      "bytes": 4481
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.json": {
+      "sha256": "edde06d89c9d58725082436e47455efd17ac8e8600f818bd35b45190bbc9dd97",
+      "bytes": 2208
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.su": {
+      "sha256": "ca7e2999c73364615594ba885fb72e353aa30cc5e751854c0a7ea0b03c5090eb",
+      "bytes": 4849
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.elf": {
+      "sha256": "b57433f6a2c8c094646c3bd22e9b8f85706fab1d1b9299636ad5d76cc4a08a32",
+      "bytes": 37080
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.disassembly.txt": {
+      "sha256": "dbf4662ea3dac38a9e6dcfc2abe3bfce2a023e7a23b11a21ab81015b2126c4d0",
+      "bytes": 447274
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.map": {
+      "sha256": "f82f111519607838ccfcda3959461104ad55fa29ee783abeca4c9803ae29c94b",
+      "bytes": 26644
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/tool-commands.json": {
+      "sha256": "4b90225eb9fa8d11d5c2d386237b7d0dae6d651fb9cc25c48e3065dc13f0c918",
+      "bytes": 2623
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.upload.elf": {
+      "sha256": "382972a28b35f023e5740fb8fc5fbb2390b3450c603a55db501f63a0cb23cf50",
+      "bytes": 24212
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/tools/build_module.py": {
+      "sha256": "0fc904e2be92096e2d139d15a2cfb101544d9ad929bbbcb003c2e287c6bab0ac",
+      "bytes": 14887
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/tools/module.exports": {
+      "sha256": "9fd0e3d42b2162d4d65e43592c78e5c0ba5663a937b1474c76312654c1dce1a9",
+      "bytes": 45
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/src/vdplet_policy.h": {
+      "sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+      "bytes": 758
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/include/vdplet_pcm_sink.h": {
+      "sha256": "e3bf5d900105ddd87e82f5cd38301fab02ffb7a7e38f81012db0bb2e13ba963c",
+      "bytes": 1267
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/include/vdplet_protocol.h": {
+      "sha256": "0dc8ad31e249ce58ed39435f6a8a265a9175be417ea3bee8a2cc10cde9f94b2f",
+      "bytes": 2163
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/include/vdp_pcm_sink_wire.h": {
+      "sha256": "5555235b73a68c7ee5648c7fe67f1e99014c707c1fe024b2dec5225edd9feb4e",
+      "bytes": 2017
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/include/vdp_audio_queue.h": {
+      "sha256": "4f7363364712301529d5c7bbc9ebd1496a7103aaae717880e4ddb3375520b85e",
+      "bytes": 1409
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/include/vdplet_services.h": {
+      "sha256": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f",
+      "bytes": 2253
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/include/vdplet.h": {
+      "sha256": "92a6bbc403ecc51e165c103cfd16fd071f3d644ad52f83a4a7cb4fe088a5a2d6",
+      "bytes": 8053
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/target-fixture/assets.txt": {
+      "sha256": "14b6d5748f4e655a86fc641c30127cbb67f0a4a6377d83eb12aa9dfcfafd5ac3",
+      "bytes": 662
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware01/restore.bin": {
+      "sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de",
+      "bytes": 1105920
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware01/install-b.bin": {
+      "sha256": "493fd0a010bedcfc5916314353f93565f7b159ac163d9bc61e7c5078140669e8",
+      "bytes": 1105920
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware01/source-binding.json": {
+      "sha256": "dd1d8cc76f6c58f45f571b9e86377891fb6521c7db2bd0bbccf806d6ef685ac0",
+      "bytes": 2743
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware-preparation01/expected-context.json": {
+      "sha256": "0727b904e979a97720bf52938b3aba7ae15040dea6c77a8702cdead768cfed26",
+      "bytes": 8565
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/composition01/receipt.json": {
+      "sha256": "f2bdd271eebdc9b9b32b1c693a550e82f41f80477dc1e954d5686e9307f5e04d",
+      "bytes": 5546
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/hardware02/kit.json": {
+      "sha256": "a64720822aad229565e69012a868e7190af84a7768120d53573c19d959670e69",
+      "bytes": 68448
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/hardware/physical09.py": {
+      "sha256": "fefdf0deaa5ead2c30c9cc5807577bc97280ebb06555c981e24393889d7fd49d",
+      "bytes": 19651
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/hardware/trace04.py": {
+      "sha256": "db308126668fd67ab59a5375ea9a952a94f497cb9e7f480f42e76711879ba9d7",
+      "bytes": 3829
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/hardware/host_interrupt08.py": {
+      "sha256": "633e8da200a4586eb558bf25d904f0220f0733fa3a067bee7084f09e18c8e26e",
+      "bytes": 1289
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/analyze.py": {
+      "sha256": "615465b7ee0613e7545d65c836afe3c782b24bc8439560f52440bae09626834f",
+      "bytes": 5328
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-001/hardware/physical.py": {
+      "sha256": "825d808c5a05a107bab36eec367499a03b669ff33a9f54917c3b1d77e210322d",
+      "bytes": 14880
+    }
+  }
+}
