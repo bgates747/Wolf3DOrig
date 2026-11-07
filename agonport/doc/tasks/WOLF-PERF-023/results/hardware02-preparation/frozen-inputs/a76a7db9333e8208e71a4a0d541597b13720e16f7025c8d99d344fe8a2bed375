@@ -1,0 +1,1594 @@
+{
+  "passed": true,
+  "schema": "wolf-independent-uncapped-comparison-v1",
+  "bench_generation": 95,
+  "synthetic_pacing": false,
+  "human_optical_confirmation": false,
+  "frames": 3600,
+  "cases": [
+    {
+      "index": 1,
+      "arm": "original",
+      "scene": "room",
+      "module_sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+      "producer": {
+        "passed": true,
+        "package_bytes": 24420,
+        "guest_sha256": "c43e7fe74148517c30cf9bf83854cf0cf297aeaf8c4684a4624c93849b46df58",
+        "listing_sha256": "f61b421e8c7722a7851e273de8a92a5004c647e42e59e5dd88fe176c7c145f4d",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24421,
+            "encoded": "11655f00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "01645f00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "11645f00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        }
+      },
+      "balanced_stack": [
+        786289,
+        786289
+      ],
+      "presentation_calls": [
+        {
+          "address": 551038,
+          "encoded": "CD 1A 6F 06",
+          "target": "w3d_vdu_present"
+        },
+        {
+          "address": 551042,
+          "encoded": "CD 16 26 06",
+          "target": "w3d_audio_wait_for_vdp_ingress"
+        }
+      ],
+      "frames": 600,
+      "seconds_nominal": 19.958,
+      "fps_nominal": 30.06313257841467,
+      "steady_fps_nominal": 30.058209554395823,
+      "interval_ms": {
+        "mean": 33.26878130217028,
+        "median": 33,
+        "p95": 34,
+        "max": 34,
+        "count": 599
+      },
+      "render_cycles_mean": 5939233.253333333,
+      "render_cycles_median": 5938659.5,
+      "render_ms_at_configured240MHz": 24.74680522222222,
+      "native": {
+        "render_ccount": {
+          "mean": 5939233.253333333,
+          "median": 5938659.5,
+          "p95": 6184403,
+          "max": 6226410,
+          "count": 600
+        },
+        "scope_ccount": {
+          "mean": 6046110,
+          "median": 6038837.0,
+          "p95": 6291351,
+          "max": 6332745,
+          "count": 600
+        },
+        "dispatch_ccount": {
+          "mean": 6074927.455,
+          "median": 6072511.0,
+          "p95": 6323140,
+          "max": 6360430,
+          "count": 600
+        }
+      },
+      "stages": {
+        "pose_ms": {
+          "mean": 0.01,
+          "median": 0.0,
+          "p95": 0,
+          "max": 1,
+          "count": 600
+        },
+        "pack_ms": {
+          "mean": 1.12,
+          "median": 1.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "submit_ms": {
+          "mean": 1.625,
+          "median": 2.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "wait_ms": {
+          "mean": 25.341666666666665,
+          "median": 25.0,
+          "p95": 27,
+          "max": 27,
+          "count": 600
+        },
+        "present_fence_ms": {
+          "mean": 5.16,
+          "median": 5.0,
+          "p95": 7,
+          "max": 7,
+          "count": 600
+        },
+        "active_ms": {
+          "mean": 33.25666666666667,
+          "median": 33.0,
+          "p95": 34,
+          "max": 34,
+          "count": 600
+        }
+      },
+      "raw_files": {
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/serial.bin": {
+          "bytes": 120578,
+          "sha256": "62bb6106d48fc7a45f20bb3021a2c4f4f9ad28e962c1a115e227910bc51f54d3"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/loading3.bin": {
+          "bytes": 4288,
+          "sha256": "0ba0439ed50362f65ae0573a6a7194296d0c6f59e22acde9b84b9e29fd571e25"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/before.bin": {
+          "bytes": 305873,
+          "sha256": "63d4a110b655d5ec711745908544580907e59d9fc99b87b5a74416d55dbaac26"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/config-generated.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/after.bin": {
+          "bytes": 305873,
+          "sha256": "db4912756ed58f415228a9e4af8d5a8fa73bd422e782c8780c95d40c94ebde2f"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/timing.bin": {
+          "bytes": 16233,
+          "sha256": "a55e62652641a3e13b68b5320e882f0319e7fa8618bfd7baa9633c174b4b8d5c"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/native.bin": {
+          "bytes": 12016,
+          "sha256": "ea63a670c8a7c2869f73e2e6c50c200a8c6d24ed2199463f47cf57babab5129e"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/loading.bin": {
+          "bytes": 48,
+          "sha256": "173fcab3d2e18c3a47d50414e09a7b268c23909806a43cee9920f0c5b5103fb9"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/post-mode.bin": {
+          "bytes": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/stack.bin": {
+          "bytes": 256,
+          "sha256": "e2f4d9419705cff8fc1730d196892bbf11f3f049a2092e98bcdc72654a13adc5"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/post-callback.bin": {
+          "bytes": 3,
+          "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/01-vdplet-room/config-empty-read.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "index": 2,
+      "arm": "cyan",
+      "scene": "room",
+      "module_sha256": "22ef84a767951ec03ea138b048db4cfe613d1edf02e8cbb34ee824ba535d24a1",
+      "producer": {
+        "passed": true,
+        "package_bytes": 24504,
+        "guest_sha256": "3efae0d6a52a6d8bf38a056715e9c38cec0a524b87fc4c4019265e33e7802ccc",
+        "listing_sha256": "74077ec9a6dbf81089b35119b8bf5453f6166f3c39988828cbe58cf003daadca",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24504,
+            "encoded": "21b85f00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24504,
+            "encoded": "21b85f00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24505,
+            "encoded": "11b95f00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24504,
+            "encoded": "01b85f00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24504,
+            "encoded": "11b85f00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24504,
+            "encoded": "21b85f00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        }
+      },
+      "balanced_stack": [
+        786289,
+        786289
+      ],
+      "presentation_calls": [
+        {
+          "address": 551038,
+          "encoded": "CD 1A 6F 06",
+          "target": "w3d_vdu_present"
+        },
+        {
+          "address": 551042,
+          "encoded": "CD 16 26 06",
+          "target": "w3d_audio_wait_for_vdp_ingress"
+        }
+      ],
+      "frames": 600,
+      "seconds_nominal": 19.958,
+      "fps_nominal": 30.06313257841467,
+      "steady_fps_nominal": 30.058209554395823,
+      "interval_ms": {
+        "mean": 33.26878130217028,
+        "median": 33,
+        "p95": 34,
+        "max": 34,
+        "count": 599
+      },
+      "render_cycles_mean": 5213113.95,
+      "render_cycles_median": 5201380.5,
+      "render_ms_at_configured240MHz": 21.721308125,
+      "native": {
+        "render_ccount": {
+          "mean": 5213113.95,
+          "median": 5201380.5,
+          "p95": 5440880,
+          "max": 5474805,
+          "count": 600
+        },
+        "scope_ccount": {
+          "mean": 5334143.01,
+          "median": 5323697.5,
+          "p95": 5558532,
+          "max": 5613493,
+          "count": 600
+        },
+        "dispatch_ccount": {
+          "mean": 5364118.051666667,
+          "median": 5356243.0,
+          "p95": 5589499,
+          "max": 5639482,
+          "count": 600
+        }
+      },
+      "stages": {
+        "pose_ms": {
+          "mean": 0.006666666666666667,
+          "median": 0.0,
+          "p95": 0,
+          "max": 1,
+          "count": 600
+        },
+        "pack_ms": {
+          "mean": 1.1083333333333334,
+          "median": 1.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "submit_ms": {
+          "mean": 1.5916666666666666,
+          "median": 2.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "wait_ms": {
+          "mean": 22.55666666666667,
+          "median": 23.0,
+          "p95": 24,
+          "max": 24,
+          "count": 600
+        },
+        "present_fence_ms": {
+          "mean": 7.995,
+          "median": 8.0,
+          "p95": 9,
+          "max": 10,
+          "count": 600
+        },
+        "active_ms": {
+          "mean": 33.25833333333333,
+          "median": 33.0,
+          "p95": 34,
+          "max": 34,
+          "count": 600
+        }
+      },
+      "raw_files": {
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/serial.bin": {
+          "bytes": 120574,
+          "sha256": "a9eaa6b192966fcc8bea8261b69b944c12a01d9b7f9ce7235b45b5285f2bc606"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/loading3.bin": {
+          "bytes": 4288,
+          "sha256": "e424d3e452f939cfde14f817528c21faf2b327593b5d2316e65d5e3e351f081e"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/before.bin": {
+          "bytes": 305873,
+          "sha256": "1426ce426b3358696d78ffde7fc52610129ca6822d5eb4a111da36b6ec81901b"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/config-generated.bin": {
+          "bytes": 16,
+          "sha256": "f202a9beee3a75718c69a11c63af845f66d0707472ff1ef045a6d836b59fd948"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/after.bin": {
+          "bytes": 305873,
+          "sha256": "f5c214746df9f41b7992297ac61331289f338503a7b40ffa3afff105397b8e35"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/timing.bin": {
+          "bytes": 16233,
+          "sha256": "02ef36f5735a519f31a453c82dae9d0b39cc49152248c835904880d034618cec"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/native.bin": {
+          "bytes": 12016,
+          "sha256": "c9bdbcdab4a969cd28cb4d50d3ea76be9e7807e6d658db7e946faa1285d294ed"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/loading.bin": {
+          "bytes": 48,
+          "sha256": "173fcab3d2e18c3a47d50414e09a7b268c23909806a43cee9920f0c5b5103fb9"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/post-mode.bin": {
+          "bytes": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/stack.bin": {
+          "bytes": 256,
+          "sha256": "e5533ad63755f1a3e605747d14f08b30c48416ca545bf7c6b81a053ff12977a6"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/post-callback.bin": {
+          "bytes": 3,
+          "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/02-vdplet-room/config-empty-read.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "index": 3,
+      "arm": "combined",
+      "scene": "room",
+      "module_sha256": "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b",
+      "producer": {
+        "passed": true,
+        "package_bytes": 22572,
+        "guest_sha256": "6180358376c1b8cec3554176271075c50d89e8b69e03fb1dbbf56e023d8754d1",
+        "listing_sha256": "5c1c8d30f740abaf81507ef952433810b7e02783701725ef7a838e37ee2c8975",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 22572,
+            "encoded": "212c5800"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 22572,
+            "encoded": "212c5800"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 22573,
+            "encoded": "112d5800"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 22572,
+            "encoded": "012c5800"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 22572,
+            "encoded": "112c5800"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 22572,
+            "encoded": "212c5800"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        }
+      },
+      "balanced_stack": [
+        786289,
+        786289
+      ],
+      "presentation_calls": [
+        {
+          "address": 551038,
+          "encoded": "CD 1A 6F 06",
+          "target": "w3d_vdu_present"
+        },
+        {
+          "address": 551042,
+          "encoded": "CD 16 26 06",
+          "target": "w3d_audio_wait_for_vdp_ingress"
+        }
+      ],
+      "frames": 600,
+      "seconds_nominal": 19.959,
+      "fps_nominal": 30.06162633398467,
+      "steady_fps_nominal": 30.056701289578,
+      "interval_ms": {
+        "mean": 33.270450751252085,
+        "median": 33,
+        "p95": 34,
+        "max": 34,
+        "count": 599
+      },
+      "render_cycles_mean": 4982932.031666666,
+      "render_cycles_median": 4976950.5,
+      "render_ms_at_configured240MHz": 20.76221679861111,
+      "native": {
+        "render_ccount": {
+          "mean": 4982932.031666666,
+          "median": 4976950.5,
+          "p95": 5118118,
+          "max": 5153522,
+          "count": 600
+        },
+        "scope_ccount": {
+          "mean": 5089100.91,
+          "median": 5081361.5,
+          "p95": 5225823,
+          "max": 5252327,
+          "count": 600
+        },
+        "dispatch_ccount": {
+          "mean": 5119146.251666667,
+          "median": 5114746.0,
+          "p95": 5254966,
+          "max": 5280634,
+          "count": 600
+        }
+      },
+      "stages": {
+        "pose_ms": {
+          "mean": 0.008333333333333333,
+          "median": 0.0,
+          "p95": 0,
+          "max": 1,
+          "count": 600
+        },
+        "pack_ms": {
+          "mean": 1.12,
+          "median": 1.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "submit_ms": {
+          "mean": 1.635,
+          "median": 2.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "wait_ms": {
+          "mean": 21.421666666666667,
+          "median": 21.0,
+          "p95": 22,
+          "max": 23,
+          "count": 600
+        },
+        "present_fence_ms": {
+          "mean": 9.076666666666666,
+          "median": 9.0,
+          "p95": 10,
+          "max": 10,
+          "count": 600
+        },
+        "active_ms": {
+          "mean": 33.26166666666666,
+          "median": 33.0,
+          "p95": 34,
+          "max": 34,
+          "count": 600
+        }
+      },
+      "raw_files": {
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/serial.bin": {
+          "bytes": 120578,
+          "sha256": "ae421d5a12a3d582d26e9aa0d2a85df1ac1a10238cf1964c1ba8a2806c9ca03f"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/loading3.bin": {
+          "bytes": 4288,
+          "sha256": "38177e56e37dd0972f3ac5ec7edfa537ec012ba9b794608d3a98eaa2f0db5557"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/before.bin": {
+          "bytes": 305873,
+          "sha256": "129491179202d082329061a276d585c08e05b3d0ff1a55ff0b07d91e97c4c2b1"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/config-generated.bin": {
+          "bytes": 16,
+          "sha256": "f202a9beee3a75718c69a11c63af845f66d0707472ff1ef045a6d836b59fd948"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/after.bin": {
+          "bytes": 305873,
+          "sha256": "83e96dc64fe938fe843034a0072e2bf9d95cc1aed8dc2953bd70f5bc1d841116"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/timing.bin": {
+          "bytes": 16233,
+          "sha256": "c7bd133645379e352d6b37b82d240ad6a07928dc5ce354a92181c3bf1006f65b"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/native.bin": {
+          "bytes": 12016,
+          "sha256": "e6c5eb8599742c2fffdade7c0476f790186396b25f17de34d03d496fa69355f3"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/loading.bin": {
+          "bytes": 48,
+          "sha256": "173fcab3d2e18c3a47d50414e09a7b268c23909806a43cee9920f0c5b5103fb9"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/post-mode.bin": {
+          "bytes": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/stack.bin": {
+          "bytes": 256,
+          "sha256": "7dbca1b748f3a0ee1210729b40cb25619e64292ed8aba9ef90d4c2113e54cdf1"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/post-callback.bin": {
+          "bytes": 3,
+          "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/03-vdplet-room/config-empty-read.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "index": 4,
+      "arm": "combined",
+      "scene": "room",
+      "module_sha256": "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b",
+      "producer": {
+        "passed": true,
+        "package_bytes": 22572,
+        "guest_sha256": "6180358376c1b8cec3554176271075c50d89e8b69e03fb1dbbf56e023d8754d1",
+        "listing_sha256": "5c1c8d30f740abaf81507ef952433810b7e02783701725ef7a838e37ee2c8975",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 22572,
+            "encoded": "212c5800"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 22572,
+            "encoded": "212c5800"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 22573,
+            "encoded": "112d5800"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 22572,
+            "encoded": "012c5800"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 22572,
+            "encoded": "112c5800"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 22572,
+            "encoded": "212c5800"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        }
+      },
+      "balanced_stack": [
+        786289,
+        786289
+      ],
+      "presentation_calls": [
+        {
+          "address": 551038,
+          "encoded": "CD 1A 6F 06",
+          "target": "w3d_vdu_present"
+        },
+        {
+          "address": 551042,
+          "encoded": "CD 16 26 06",
+          "target": "w3d_audio_wait_for_vdp_ingress"
+        }
+      ],
+      "frames": 600,
+      "seconds_nominal": 19.958,
+      "fps_nominal": 30.06313257841467,
+      "steady_fps_nominal": 30.056701289578,
+      "interval_ms": {
+        "mean": 33.270450751252085,
+        "median": 33,
+        "p95": 34,
+        "max": 34,
+        "count": 599
+      },
+      "render_cycles_mean": 5050275.26,
+      "render_cycles_median": 5045842.0,
+      "render_ms_at_configured240MHz": 21.04281358333333,
+      "native": {
+        "render_ccount": {
+          "mean": 5050275.26,
+          "median": 5045842.0,
+          "p95": 5195433,
+          "max": 5235919,
+          "count": 600
+        },
+        "scope_ccount": {
+          "mean": 5163931.49,
+          "median": 5158423.0,
+          "p95": 5310792,
+          "max": 5336861,
+          "count": 600
+        },
+        "dispatch_ccount": {
+          "mean": 5194209.981666666,
+          "median": 5188028.5,
+          "p95": 5341219,
+          "max": 5363881,
+          "count": 600
+        }
+      },
+      "stages": {
+        "pose_ms": {
+          "mean": 0.006666666666666667,
+          "median": 0.0,
+          "p95": 0,
+          "max": 1,
+          "count": 600
+        },
+        "pack_ms": {
+          "mean": 1.1083333333333334,
+          "median": 1.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "submit_ms": {
+          "mean": 1.6566666666666667,
+          "median": 2.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "wait_ms": {
+          "mean": 21.765,
+          "median": 22.0,
+          "p95": 23,
+          "max": 23,
+          "count": 600
+        },
+        "present_fence_ms": {
+          "mean": 8.72,
+          "median": 9.0,
+          "p95": 10,
+          "max": 10,
+          "count": 600
+        },
+        "active_ms": {
+          "mean": 33.25666666666667,
+          "median": 33.0,
+          "p95": 34,
+          "max": 34,
+          "count": 600
+        }
+      },
+      "raw_files": {
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/serial.bin": {
+          "bytes": 120578,
+          "sha256": "83d83359d84eaee1bda57ee8cf9790d3a551f3a2936fa4cc1af4e93e6cbaab48"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/loading3.bin": {
+          "bytes": 4288,
+          "sha256": "38146e86ddc423b25f3d0af613ef23fd24d6c9daf0b67a37e8c10dcea075e1ee"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/before.bin": {
+          "bytes": 305873,
+          "sha256": "1cbf27c205871238aaf329caa2120bd3a09fd947d63edfd16456dcfb68d44aa6"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/config-generated.bin": {
+          "bytes": 16,
+          "sha256": "f202a9beee3a75718c69a11c63af845f66d0707472ff1ef045a6d836b59fd948"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/after.bin": {
+          "bytes": 305873,
+          "sha256": "d0c76245d648cf48dcbd8b5c5d41ac367dfbe347589f0e2cda08066bb454b11a"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/timing.bin": {
+          "bytes": 16233,
+          "sha256": "74c1c59b7c2a65ed511900544d3685fd59defaca4483ef911c38c2d79e12b55f"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/native.bin": {
+          "bytes": 12016,
+          "sha256": "93c0270cc2daeebd12b3c2d4eb3df6772114909acab39e4a95360020b2e83225"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/loading.bin": {
+          "bytes": 48,
+          "sha256": "173fcab3d2e18c3a47d50414e09a7b268c23909806a43cee9920f0c5b5103fb9"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/post-mode.bin": {
+          "bytes": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/stack.bin": {
+          "bytes": 256,
+          "sha256": "7034ee0052f7d32154bca0b658c7be51ef084012bafd4872b4743d4ae5d31ad7"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/post-callback.bin": {
+          "bytes": 3,
+          "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/04-vdplet-room/config-empty-read.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "index": 5,
+      "arm": "cyan",
+      "scene": "room",
+      "module_sha256": "22ef84a767951ec03ea138b048db4cfe613d1edf02e8cbb34ee824ba535d24a1",
+      "producer": {
+        "passed": true,
+        "package_bytes": 24504,
+        "guest_sha256": "3efae0d6a52a6d8bf38a056715e9c38cec0a524b87fc4c4019265e33e7802ccc",
+        "listing_sha256": "74077ec9a6dbf81089b35119b8bf5453f6166f3c39988828cbe58cf003daadca",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24504,
+            "encoded": "21b85f00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24504,
+            "encoded": "21b85f00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24505,
+            "encoded": "11b95f00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24504,
+            "encoded": "01b85f00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24504,
+            "encoded": "11b85f00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24504,
+            "encoded": "21b85f00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        }
+      },
+      "balanced_stack": [
+        786289,
+        786289
+      ],
+      "presentation_calls": [
+        {
+          "address": 551038,
+          "encoded": "CD 1A 6F 06",
+          "target": "w3d_vdu_present"
+        },
+        {
+          "address": 551042,
+          "encoded": "CD 16 26 06",
+          "target": "w3d_audio_wait_for_vdp_ingress"
+        }
+      ],
+      "frames": 600,
+      "seconds_nominal": 19.958,
+      "fps_nominal": 30.06313257841467,
+      "steady_fps_nominal": 30.056701289578,
+      "interval_ms": {
+        "mean": 33.270450751252085,
+        "median": 33,
+        "p95": 34,
+        "max": 34,
+        "count": 599
+      },
+      "render_cycles_mean": 5209890.6883333335,
+      "render_cycles_median": 5196927.0,
+      "render_ms_at_configured240MHz": 21.707877868055554,
+      "native": {
+        "render_ccount": {
+          "mean": 5209890.6883333335,
+          "median": 5196927.0,
+          "p95": 5436665,
+          "max": 5465534,
+          "count": 600
+        },
+        "scope_ccount": {
+          "mean": 5320914.808333334,
+          "median": 5312082.0,
+          "p95": 5545467,
+          "max": 5580573,
+          "count": 600
+        },
+        "dispatch_ccount": {
+          "mean": 5349708.82,
+          "median": 5339812.0,
+          "p95": 5572219,
+          "max": 5615413,
+          "count": 600
+        }
+      },
+      "stages": {
+        "pose_ms": {
+          "mean": 0.013333333333333334,
+          "median": 0.0,
+          "p95": 0,
+          "max": 1,
+          "count": 600
+        },
+        "pack_ms": {
+          "mean": 1.11,
+          "median": 1.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "submit_ms": {
+          "mean": 1.6416666666666666,
+          "median": 2.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "wait_ms": {
+          "mean": 22.405,
+          "median": 22.0,
+          "p95": 24,
+          "max": 24,
+          "count": 600
+        },
+        "present_fence_ms": {
+          "mean": 8.09,
+          "median": 8.0,
+          "p95": 9,
+          "max": 10,
+          "count": 600
+        },
+        "active_ms": {
+          "mean": 33.26,
+          "median": 33.0,
+          "p95": 34,
+          "max": 34,
+          "count": 600
+        }
+      },
+      "raw_files": {
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/serial.bin": {
+          "bytes": 120574,
+          "sha256": "d6fe314f58ffce67893e3e98d645db6148946bd115d49b3e792ceb80419611ec"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/loading3.bin": {
+          "bytes": 4288,
+          "sha256": "b4e3a08ed3a2c107eca35a3ec392e6dd2e22835001d3ee743fb9127b86cd00cf"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/before.bin": {
+          "bytes": 305873,
+          "sha256": "7232868898015947935d1c3ee3caaebbb4365cd798699b88ef09940a44074bd3"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/config-generated.bin": {
+          "bytes": 16,
+          "sha256": "f202a9beee3a75718c69a11c63af845f66d0707472ff1ef045a6d836b59fd948"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/after.bin": {
+          "bytes": 305873,
+          "sha256": "28a7fab859344bdb335232cc02c1e0a53605dfe2001d3036609717e7318da649"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/timing.bin": {
+          "bytes": 16233,
+          "sha256": "9cf780d864ca73248f0567e2c053eba5e56a303fcf9d8e82b161d9dd82baa445"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/native.bin": {
+          "bytes": 12016,
+          "sha256": "8a96f20eb65d64a000c1b7f85ec61772b77b00520a7c1b92f7377d3d9cf9c4b4"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/loading.bin": {
+          "bytes": 48,
+          "sha256": "173fcab3d2e18c3a47d50414e09a7b268c23909806a43cee9920f0c5b5103fb9"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/post-mode.bin": {
+          "bytes": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/stack.bin": {
+          "bytes": 256,
+          "sha256": "67d191de0018c524947b5095330429c29dbf22392bc3d62c876cf7378d2a91a5"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/post-callback.bin": {
+          "bytes": 3,
+          "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/05-vdplet-room/config-empty-read.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "index": 6,
+      "arm": "original",
+      "scene": "room",
+      "module_sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+      "producer": {
+        "passed": true,
+        "package_bytes": 24420,
+        "guest_sha256": "c43e7fe74148517c30cf9bf83854cf0cf297aeaf8c4684a4624c93849b46df58",
+        "listing_sha256": "f61b421e8c7722a7851e273de8a92a5004c647e42e59e5dd88fe176c7c145f4d",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24421,
+            "encoded": "11655f00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "01645f00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "11645f00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        }
+      },
+      "balanced_stack": [
+        786289,
+        786289
+      ],
+      "presentation_calls": [
+        {
+          "address": 551038,
+          "encoded": "CD 1A 6F 06",
+          "target": "w3d_vdu_present"
+        },
+        {
+          "address": 551042,
+          "encoded": "CD 16 26 06",
+          "target": "w3d_audio_wait_for_vdp_ingress"
+        }
+      ],
+      "frames": 600,
+      "seconds_nominal": 19.959,
+      "fps_nominal": 30.06162633398467,
+      "steady_fps_nominal": 30.056701289578,
+      "interval_ms": {
+        "mean": 33.270450751252085,
+        "median": 33,
+        "p95": 34,
+        "max": 34,
+        "count": 599
+      },
+      "render_cycles_mean": 6039416.64,
+      "render_cycles_median": 6026989.0,
+      "render_ms_at_configured240MHz": 25.164236,
+      "native": {
+        "render_ccount": {
+          "mean": 6039416.64,
+          "median": 6026989.0,
+          "p95": 6250037,
+          "max": 6291690,
+          "count": 600
+        },
+        "scope_ccount": {
+          "mean": 6158115.608333333,
+          "median": 6148349.5,
+          "p95": 6370117,
+          "max": 6408289,
+          "count": 600
+        },
+        "dispatch_ccount": {
+          "mean": 6184583.206666667,
+          "median": 6172513.0,
+          "p95": 6397897,
+          "max": 6430462,
+          "count": 600
+        }
+      },
+      "stages": {
+        "pose_ms": {
+          "mean": 0.005,
+          "median": 0.0,
+          "p95": 0,
+          "max": 1,
+          "count": 600
+        },
+        "pack_ms": {
+          "mean": 1.0983333333333334,
+          "median": 1.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "submit_ms": {
+          "mean": 1.64,
+          "median": 2.0,
+          "p95": 2,
+          "max": 2,
+          "count": 600
+        },
+        "wait_ms": {
+          "mean": 25.876666666666665,
+          "median": 26.0,
+          "p95": 27,
+          "max": 27,
+          "count": 600
+        },
+        "present_fence_ms": {
+          "mean": 4.638333333333334,
+          "median": 5.0,
+          "p95": 6,
+          "max": 6,
+          "count": 600
+        },
+        "active_ms": {
+          "mean": 33.25833333333333,
+          "median": 33.0,
+          "p95": 34,
+          "max": 34,
+          "count": 600
+        }
+      },
+      "raw_files": {
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/serial.bin": {
+          "bytes": 120578,
+          "sha256": "b3dea159079f24e1b59475219d17c6423d6ebea9382e90852166b51459d3a6bf"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/loading3.bin": {
+          "bytes": 4288,
+          "sha256": "904d17ef7b3c08b31ec9c077d47fe2a0f1066ac18e85407bfc65a825c19efe89"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/before.bin": {
+          "bytes": 305873,
+          "sha256": "47dfca1d799faee647d82f18bcd6a5eb5af380bf2733c3fdc96d69449cdbe176"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/config-generated.bin": {
+          "bytes": 16,
+          "sha256": "f202a9beee3a75718c69a11c63af845f66d0707472ff1ef045a6d836b59fd948"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/after.bin": {
+          "bytes": 305873,
+          "sha256": "51e300225c11df5324943272e83ab49b884199bc90d26a08c51a33f23883555d"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/timing.bin": {
+          "bytes": 16233,
+          "sha256": "517505feeee4ea3d8a91d36f57ef9756768b7946a278313c8fbfc615937a3912"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/native.bin": {
+          "bytes": 12016,
+          "sha256": "7b6c627d98ccbb0afb8e9f2c3ca90dcf21b19db5c3d54abda6c72fc94491d765"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/loading.bin": {
+          "bytes": 48,
+          "sha256": "173fcab3d2e18c3a47d50414e09a7b268c23909806a43cee9920f0c5b5103fb9"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/post-mode.bin": {
+          "bytes": 1,
+          "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/stack.bin": {
+          "bytes": 256,
+          "sha256": "f2feaae2d336c0e81f45e13a597db02d57b110dec65fbadf0e2c63dcddfd250a"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/post-callback.bin": {
+          "bytes": 3,
+          "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+        },
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/06-vdplet-room/config-empty-read.bin": {
+          "bytes": 0,
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "comparisons": {
+    "cyan": {
+      "original_runs": [
+        1,
+        6
+      ],
+      "candidate_runs": [
+        2,
+        5
+      ],
+      "original_render_cycles": 5989324.946666666,
+      "candidate_render_cycles": 5211502.319166667,
+      "original_render_ms_at_configured240MHz": 24.95552061111111,
+      "candidate_render_ms_at_configured240MHz": 21.714592996527777,
+      "render_reduction_percent": 12.98681628441104,
+      "original_presented_fps": 30.062379437332464,
+      "candidate_presented_fps": 30.063132578414674,
+      "presented_fps_change_percent": 0.0025052610482134696,
+      "original_run_spread_percent": 1.6868067373922324,
+      "scope": "Two runs per arm; all candidates share the same two bracketing controls. No separate independent ABBA claim."
+    },
+    "combined": {
+      "original_runs": [
+        1,
+        6
+      ],
+      "candidate_runs": [
+        3,
+        4
+      ],
+      "original_render_cycles": 5989324.946666666,
+      "candidate_render_cycles": 5016603.645833333,
+      "original_render_ms_at_configured240MHz": 24.95552061111111,
+      "candidate_render_ms_at_configured240MHz": 20.90251519097222,
+      "render_reduction_percent": 16.240917123301134,
+      "original_presented_fps": 30.062379437332464,
+      "candidate_presented_fps": 30.062379437332464,
+      "presented_fps_change_percent": 0.0,
+      "original_run_spread_percent": 1.6868067373922324,
+      "scope": "Two runs per arm; all candidates share the same two bracketing controls. No separate independent ABBA claim."
+    }
+  },
+  "resource_probes": {
+    "probe-after-01-original": {
+      "passed": true,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        1,
+        53944,
+        0,
+        31732,
+        0,
+        56080,
+        0,
+        25588,
+        0,
+        2020
+      ],
+      "minimum_stack_bytes": 2020,
+      "whole_seconds": 10.559413767012302,
+      "cumulative": true,
+      "non_atomic_memory_halves": true
+    },
+    "probe-after-03-combined": {
+      "passed": true,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        3,
+        53944,
+        0,
+        31732,
+        0,
+        55888,
+        0,
+        19444,
+        0,
+        1748
+      ],
+      "minimum_stack_bytes": 1748,
+      "whole_seconds": 10.552893637970556,
+      "cumulative": true,
+      "non_atomic_memory_halves": true
+    },
+    "probe-after-02-cyan": {
+      "passed": true,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        2,
+        53944,
+        0,
+        32756,
+        0,
+        55976,
+        0,
+        25588,
+        0,
+        2020
+      ],
+      "minimum_stack_bytes": 2020,
+      "whole_seconds": 10.53176668897504,
+      "cumulative": true,
+      "non_atomic_memory_halves": true
+    },
+    "probe-entry": {
+      "passed": true,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        53944,
+        0,
+        32756,
+        0,
+        59384,
+        0,
+        36852,
+        0,
+        2744
+      ],
+      "minimum_stack_bytes": 2744,
+      "whole_seconds": 10.501336749992333,
+      "cumulative": true,
+      "non_atomic_memory_halves": true
+    },
+    "probe-after-06-original": {
+      "passed": true,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        6,
+        53944,
+        0,
+        32756,
+        0,
+        55556,
+        0,
+        25588,
+        0,
+        1748
+      ],
+      "minimum_stack_bytes": 1748,
+      "whole_seconds": 11.172841057996266,
+      "cumulative": true,
+      "non_atomic_memory_halves": true
+    },
+    "probe-after-05-cyan": {
+      "passed": true,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        5,
+        53944,
+        0,
+        31732,
+        0,
+        55692,
+        0,
+        25588,
+        0,
+        1748
+      ],
+      "minimum_stack_bytes": 1748,
+      "whole_seconds": 11.148963655985426,
+      "cumulative": true,
+      "non_atomic_memory_halves": true
+    },
+    "probe-after-04-combined": {
+      "passed": true,
+      "values": [
+        256,
+        415,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        53944,
+        0,
+        32756,
+        0,
+        55800,
+        0,
+        25588,
+        0,
+        1748
+      ],
+      "minimum_stack_bytes": 1748,
+      "whole_seconds": 10.590346863958985,
+      "cumulative": true,
+      "non_atomic_memory_halves": true
+    }
+  },
+  "original_native_restored": true,
+  "restore_sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de",
+  "final_observation": {
+    "schema": "olimex-bench-observation-v1",
+    "bench": "olimex",
+    "epoch": 1794072452.9476209,
+    "observer": "wolf3dorig",
+    "lease": "5dc88dc00f734d9dbd9790a9ba5cd514",
+    "checks": {
+      "no_workload": true,
+      "no_transfer": true,
+      "no_serial_readers": true,
+      "no_reset_holders": true,
+      "cli_verified": true,
+      "input_ready_neutral": true,
+      "listener_offline": true,
+      "staged_job_idle": true,
+      "restoration_verified": true
+    },
+    "evidence": [
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/final-checks/state.json",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/final-checks/serial.bin",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/route-handback/final-route.bin",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/handback/observation.json",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/flash-restore/receipt.json"
+    ],
+    "components": {
+      "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+      "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+      "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+      "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+      "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+    },
+    "component_provenance": {
+      "p4_app_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+      "emos_rom_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+      "native_vdp_sha256": "Exact incoming application/touched-tail restoration and independent full-span readback",
+      "startup_sha256": "Fresh unchanged whole-file comparison in handback",
+      "listener_sha256": "Fresh unchanged whole-file comparison in handback"
+    },
+    "disposition": "New final rootCLI/input/idle/freeUSB observation; earlier same-custody route0/mode0/callback0 and exact app/tail restore/readback retained by original receipt, no intervening guest or route/mode change; startup/listener unchanged; SD mounted."
+  },
+  "qualification": "Physical per-frame ordered completion timestamps and inclusive nativeCCOUNT; nominal PRT/MOS/configured240MHz, no external oscillator/optical scanout calibration or exclusiveCPU attribution. Source/host equivalence separate; no human visual claim. Matched ordinary room only; shared bracketing control drift and run order remain limits; other scenes unmeasured. Five supported local units combined. Independent019 chain/trig timing remains unmeasured after its failed pre-guest startup; this new comparison does not replace those individual measurements.",
+  "bench_released": true,
+  "release_receipt": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/released.json",
+  "decision": "Retain the exact measured candidate and control; evaluate draw time, presentation cadence and resource cost separately. Unchanged FPS alone is not a rejection criterion; no silent default adoption.",
+  "input_snapshots": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/frozen-inputs/index.json",
+  "combined_vs_cyan": {
+    "cyan_runs": [
+      2,
+      5
+    ],
+    "combined_runs": [
+      3,
+      4
+    ],
+    "cyan_render_ms_at_configured240MHz": 21.714592996527777,
+    "combined_render_ms_at_configured240MHz": 20.90251519097222,
+    "draw_reduction_percent": 3.739779077072325,
+    "cyan_presented_fps": 30.063132578414674,
+    "combined_presented_fps": 30.062379437332464,
+    "presented_fps_change_percent": -0.002505198286462118,
+    "scope": "Two runs per arm in one symmetric six-case comparison. Shared original controls expose drift; no individual contribution or causal additive timing attribution."
+  },
+  "host_observer": {
+    "exact_kit_and_lease": true,
+    "positive_handshake": true,
+    "controller_identity": {
+      "pid": 1451306,
+      "start": 32977541,
+      "ppid": 1750,
+      "pgid": 1451306,
+      "uid": 1000,
+      "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+    },
+    "observer_identity": {
+      "pid": 1451478,
+      "start": 32978736,
+      "ppid": 1750,
+      "pgid": 1451478,
+      "uid": 1000,
+      "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+    },
+    "tracer_identity": {
+      "pid": 1451480,
+      "start": 32978763,
+      "ppid": 1451478,
+      "pgid": 1451480,
+      "uid": 1000,
+      "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+    },
+    "original_foreground_handles": {
+      "controller": {
+        "original_session_id": 14965,
+        "original_tool_receipt": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/controller-tool-terminal.json"
+      },
+      "observer": {
+        "original_session_id": 27507,
+        "original_tool_receipt": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/observer-tool-terminal.json"
+      }
+    },
+    "original_handles_terminal": true,
+    "owned_tracer_joined": true,
+    "SIGTERM_observed": false,
+    "simultaneous_cancellation_qualified": false,
+    "trace_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "limits": "Prospective exact-controller host diagnostic; historical interruptions remain unexplained. Same observer for every arm; host setup/collection can be perturbed, not an exclusive CPU/optical profile."
+  },
+  "default_adopted": false
+}

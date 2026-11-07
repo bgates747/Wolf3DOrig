@@ -59,7 +59,7 @@ def main():
     stage.update({'wolf3d.vdpl':modules['original'],'state.txt':str(B/'state.txt'),'route.txt':str(B/'route.txt')})
     for n in ('PLAN.md','HARDWARE-PLAN.md','HARDWARE-PLAN02.md','prepare_hardware.py','hardware02.py','launch02.py',
         'host_observer.py','observe.py','OBSERVER-PREFLIGHT.json','LAUNCH-PREFLIGHT.json',
-        'bootstrap.py','test_bootstrap_closure.py','AMENDMENT-02.md','guest_binding.py','analyze.py','HARDWARE-GUESTS.json','snapshot_inputs.py',
+        'bootstrap.py','test_bootstrap_closure.py','AMENDMENT-02.md','guest_binding.py','analyze.py','HARDWARE-GUESTS.json','snapshot_inputs.py','archive_preparation.py',
         'test_hardware02.py','test_replacement02.py','test_observer_controller.py','run_composition.py',
         'HOST-REUSE.json','controller-source-delta.patch','CONTROLLER-RESULT.md','CONTROLLER-RESULT03.md','report_physical.py','record_actors.py'):
         files.append(T/n)

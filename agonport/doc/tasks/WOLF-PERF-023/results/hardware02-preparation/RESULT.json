@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "target_access": false,
+  "request": "0d70a117969f",
+  "kit_sha256": "bafa9e767684710a8bef275d98da74d0ee6e872d177a25dec0a15b8e5cdc53d6",
+  "inputs": 683,
+  "distinct_bytes": 427,
+  "stage_files": 16,
+  "explicit_bootstrap_closure": {
+    "/Agon/mystuff/agon-extender/agents/net004/uart1-bootstrap-r01/bootstrap.py": "d04f18ee229b4eca6c7134f8ba1efaa91edc5aebccc6b183b6ab4656c526ea83",
+    "/Agon/mystuff/agon-extender/scripts/reset_agon_usb.py": "19fd4577cdca0e1dc8000ba3a1904f21f544cc597becd96e2592671c7f72406f",
+    "/Agon/mystuff/agon-extender/agents/bench-reset/usb-reset.local.json": "9917c14b8ea439e5db10c747ea53017b3041afe14af582b042e040e25b8aa5ca",
+    "/Agon/mystuff/agon-extender/scripts/reset_agon.py": "a34a104a8f0cc06f381b243c57f70715631ab2edb63f879b6f5da0faa5685a77",
+    "/Agon/mystuff/agon-extender/scripts/passive_serial.py": "b665826da471b786582bb4dd24214f7c4bc925fe7018d07106e661fc5e4a3543",
+    "/Agon/mystuff/agon-extender/scripts/p4_boot_guard.py": "8c8efb4c825029adb64758b35f6424b04b952af46233cf888dab5cc2fe3e90a5"
+  },
+  "original_failed97_kit_unchanged": true,
+  "limits": "Frozen preparation only; no grant, target execution or physical performance result."
+}

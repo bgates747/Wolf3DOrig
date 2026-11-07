@@ -1,0 +1,54 @@
+{
+  "epoch": 1794076437.22165,
+  "keyboard": {
+    "protocol": 1,
+    "boot": 1684637929,
+    "session": 4033735618,
+    "sequence": 24,
+    "emitted": 52,
+    "accepted": 52,
+    "discarded": 0,
+    "pending": 0,
+    "held": 0,
+    "locale": 1,
+    "ready": true,
+    "physical_neutral": true,
+    "caps": false,
+    "reason": 1
+  },
+  "sd": {
+    "protocol": 2,
+    "online": false,
+    "pending": false,
+    "boot": 389904461
+  },
+  "worker": {
+    "protocol": 1,
+    "boot": 1323396727,
+    "id": 0,
+    "phase": 0,
+    "bytes": 0,
+    "size": 0,
+    "records": 0,
+    "error": 0,
+    "remote_status": 0,
+    "filesystem": 0,
+    "stage_us": 0,
+    "mainboard_us": 0,
+    "parallel_prepare_us": 0,
+    "parallel_active_ms": 0,
+    "parallel_handover_ms": 0,
+    "parallel_phase": 0,
+    "parallel_outcome": 0,
+    "parallel_clock_count": -1,
+    "parallel_valid_count": -1
+  },
+  "ports": {
+    "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0": {
+      "ownerless": true
+    },
+    "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_E8:F6:0A:E2:E1:FE-if00": {
+      "ownerless": true
+    }
+  }
+}

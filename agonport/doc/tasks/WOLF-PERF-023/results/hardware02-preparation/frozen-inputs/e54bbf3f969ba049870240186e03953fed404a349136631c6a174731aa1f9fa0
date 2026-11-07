@@ -1,0 +1,228 @@
+{
+  "passed": true,
+  "original": {
+    "address": "00003f60",
+    "name": "wolf3d_production::(anonymous namespace)::fill_span(wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned char)",
+    "loops": [
+      [
+        {
+          "address": 16244,
+          "opcode": "s8i",
+          "operands": "a6, a8, 0"
+        },
+        {
+          "address": 16247,
+          "opcode": "memw",
+          "operands": ""
+        },
+        {
+          "address": 16250,
+          "opcode": "addi.n",
+          "operands": "a8, a8, 1"
+        },
+        {
+          "address": 16252,
+          "opcode": "addi.n",
+          "operands": "a5, a5, -1"
+        },
+        {
+          "address": 16254,
+          "opcode": "bnez",
+          "operands": "a5, 3f74 <wolf3d_production::(anonymous namespace)::fill_span(wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned char)+0x14>"
+        }
+      ],
+      [
+        {
+          "address": 16288,
+          "opcode": "xor",
+          "operands": "a9, a4, a11"
+        },
+        {
+          "address": 16291,
+          "opcode": "add.n",
+          "operands": "a9, a6, a9"
+        },
+        {
+          "address": 16293,
+          "opcode": "addi.n",
+          "operands": "a11, a11, 1"
+        },
+        {
+          "address": 16295,
+          "opcode": "l8ui",
+          "operands": "a8, a9, 0"
+        },
+        {
+          "address": 16298,
+          "opcode": "and",
+          "operands": "a8, a2, a8"
+        },
+        {
+          "address": 16301,
+          "opcode": "or",
+          "operands": "a8, a10, a8"
+        },
+        {
+          "address": 16304,
+          "opcode": "s8i",
+          "operands": "a8, a9, 0"
+        },
+        {
+          "address": 16307,
+          "opcode": "memw",
+          "operands": ""
+        },
+        {
+          "address": 16310,
+          "opcode": "addi.n",
+          "operands": "a5, a5, -1"
+        },
+        {
+          "address": 16312,
+          "opcode": "bnez",
+          "operands": "a5, 3fa0 <wolf3d_production::(anonymous namespace)::fill_span(wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned char)+0x40>"
+        }
+      ]
+    ],
+    "individual_frame_bytes": 32,
+    "disassembly_sha256": "ff98d721db6e325bbdaeb06d306d747dae6dee9d19946e5b1c1c84956771db0c"
+  },
+  "candidate": {
+    "address": "00003f5c",
+    "name": "wolf3d_production::(anonymous namespace)::fill_span(wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned char)",
+    "loops": [
+      [
+        {
+          "address": 16240,
+          "opcode": "s8i",
+          "operands": "a6, a8, 0"
+        },
+        {
+          "address": 16243,
+          "opcode": "memw",
+          "operands": ""
+        },
+        {
+          "address": 16246,
+          "opcode": "addi.n",
+          "operands": "a8, a8, 1"
+        },
+        {
+          "address": 16248,
+          "opcode": "addi.n",
+          "operands": "a5, a5, -1"
+        },
+        {
+          "address": 16250,
+          "opcode": "bnez",
+          "operands": "a5, 3f70 <wolf3d_production::(anonymous namespace)::fill_span(wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned char)+0x14>"
+        }
+      ],
+      [
+        {
+          "address": 16305,
+          "opcode": "l8ui",
+          "operands": "a3, a10, 0"
+        },
+        {
+          "address": 16308,
+          "opcode": "and",
+          "operands": "a3, a2, a3"
+        },
+        {
+          "address": 16311,
+          "opcode": "or",
+          "operands": "a3, a6, a3"
+        },
+        {
+          "address": 16314,
+          "opcode": "s8i",
+          "operands": "a3, a10, 0"
+        },
+        {
+          "address": 16317,
+          "opcode": "memw",
+          "operands": ""
+        },
+        {
+          "address": 16320,
+          "opcode": "addi.n",
+          "operands": "a10, a10, 1"
+        },
+        {
+          "address": 16322,
+          "opcode": "addi.n",
+          "operands": "a5, a5, -1"
+        },
+        {
+          "address": 16324,
+          "opcode": "bnez",
+          "operands": "a5, 3fb1 <wolf3d_production::(anonymous namespace)::fill_span(wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned char)+0x55>"
+        }
+      ],
+      [
+        {
+          "address": 16333,
+          "opcode": "xor",
+          "operands": "a9, a3, a10"
+        },
+        {
+          "address": 16336,
+          "opcode": "add.n",
+          "operands": "a9, a11, a9"
+        },
+        {
+          "address": 16338,
+          "opcode": "l8ui",
+          "operands": "a8, a9, 0"
+        },
+        {
+          "address": 16341,
+          "opcode": "addi.n",
+          "operands": "a10, a10, 1"
+        },
+        {
+          "address": 16343,
+          "opcode": "and",
+          "operands": "a8, a2, a8"
+        },
+        {
+          "address": 16346,
+          "opcode": "or",
+          "operands": "a8, a6, a8"
+        },
+        {
+          "address": 16349,
+          "opcode": "s8i",
+          "operands": "a8, a9, 0"
+        },
+        {
+          "address": 16352,
+          "opcode": "memw",
+          "operands": ""
+        },
+        {
+          "address": 16355,
+          "opcode": "addi.n",
+          "operands": "a5, a5, -1"
+        },
+        {
+          "address": 16357,
+          "opcode": "bnez",
+          "operands": "a5, 3fcd <wolf3d_production::(anonymous namespace)::fill_span(wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned char)+0x71>"
+        }
+      ]
+    ],
+    "individual_frame_bytes": 32,
+    "disassembly_sha256": "2806f678e7015486446a7089df6f1566264381812b5bbe1f0a12c9288577c7ca"
+  },
+  "admitted_pixel_loop_instructions": {
+    "original": 10,
+    "candidate": 8
+  },
+  "byte_read_store_and_poststore_memw_retained": true,
+  "unchanged_linear_and_scalar_fallback_opcode_counts": true,
+  "no_calls_in_actual_span": true,
+  "no_wider_fast_path_access": true,
+  "limits": "Static emitted instruction accounting, not executed cycles or physical eligibility/hitcount. Private target calls are positive-count; source count0 early return is separately tested on host, not claimed as an executed zero-call Xtensa path. Valid original row storage and exclusive lease remain required."
+}

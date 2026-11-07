@@ -1,0 +1,8 @@
+{
+  "stable_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+  "udev": {
+    "ID_VENDOR_ID": "1a86",
+    "ID_MODEL_ID": "7523",
+    "ID_PATH": "platform-xhci-hcd.1-usb-0:2:1.0"
+  }
+}
