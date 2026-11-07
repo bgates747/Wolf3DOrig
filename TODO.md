@@ -22,7 +22,9 @@ released and54568 is the explicit control, with no default adoption.
   loop removes calls while keeping byte accesses/MEMW; compiler271 released.
 - [x] WOLF-PERF-005-04 — Freeze current-context finite hardware kit before grant.
   Corrected hardware02 pins277inputs and per-arm actual producers; new grant pending.
-- [ ] WOLF-PERF-005-05 — Execute matched completed-work/resource physical arms.
+- [x] WOLF-PERF-005-05 — Execute matched completed-work/resource physical arms.
+  [Actual67](agonport/doc/tasks/WOLF-PERF-005/PHYSICAL67-RESULT.md): all6guests/7probes,
+  draw68.3236→37.0105ms (-45.83%), completed13.9274→24.6949FPS; no default adoption.
 - [ ] WOLF-PERF-005-06 — Exact restore/release/report and owner evidence return.
 - [x] WOLF-PERF-005-07 — Diagnose/preserve/restore stopped65 producer mismatch;
   [result](agonport/doc/tasks/WOLF-PERF-005/PHYSICAL65-RESULT.md), no timing claim.
