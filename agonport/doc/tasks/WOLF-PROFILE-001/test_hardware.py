@@ -10,7 +10,7 @@ import qualify_guest as q
 
 class HardwareChecks(unittest.TestCase):
     def test_actual_producer_operands_and_no_mock(self):
-        binding = json.loads((h.T / 'build/hardware-guest01/receipt.json').read_text())
+        binding = json.loads((h.T / 'build/hardware-guest02/receipt.json').read_text())
         binding['source'] = str(Path(binding['guest']).parent)
         result = q.verify(binding)
         self.assertEqual(result['package_bytes'], 22572)
@@ -24,6 +24,20 @@ class HardwareChecks(unittest.TestCase):
         b.observer_folder = None
         b.observer_record = {}
         return b
+
+    def test_wrong_info_opcode_rejected_in_actual_binary(self):
+        binding = json.loads((h.T / 'build/hardware-guest02/receipt.json').read_text())
+        binding['source'] = str(Path(binding['guest']).parent)
+        raw = bytearray(Path(binding['guest']).read_bytes())
+        at = q.address(binding, 'wp_hw_stack_packet')
+        self.assertEqual(raw[at+6], 4)
+        raw[at+6] = 0
+        with tempfile.TemporaryDirectory() as directory:
+            bad = Path(directory) / 'wrong-opcode.bin'
+            bad.write_bytes(raw)
+            changed = dict(binding, guest=str(bad))
+            with self.assertRaisesRegex(AssertionError, 'Actual INFO17 request encoding'):
+                q.verify(changed)
 
     def test_run_cannot_begin_inside_660_second_reserve(self):
         b = self.boundary()
@@ -57,7 +71,7 @@ class HardwareChecks(unittest.TestCase):
             self.assertTrue(json.loads((b.out / 'failure.json').read_text())['no_automatic_replay'])
 
     def test_result_requires_real_count_stack_timer_and_identical_resident_report(self):
-        binding = json.loads((h.T / 'build/hardware-guest01/receipt.json').read_text())
+        binding = json.loads((h.T / 'build/hardware-guest02/receipt.json').read_text())
         binding['source'] = str(Path(binding['guest']).parent)
         ram = bytearray(Path(binding['guest']).read_bytes())
         done = bytearray(32)

@@ -23,11 +23,11 @@ def verify(binding):
     listing=Path(binding['listing']).read_text();binary=Path(binding['guest']).read_bytes();operands=[]
     pattern=r'^([0-9A-F]{6}) ((?:[0-9A-F]{2} ){0,5}[0-9A-F]{2})\s+\d+\*?\s+ld (hl|bc|de),(W3D_VDPLET_PACKAGE_BYTES|W3D_VDPLET_PACKAGE_LIMIT)\b'
     for match in re.finditer(pattern,listing,re.M):
-        address=int(match[1],16);value=limit if match[4].endswith('LIMIT') else length
+        instruction_address=int(match[1],16);value=limit if match[4].endswith('LIMIT') else length
         encoded=bytes([{'hl':0x21,'bc':0x01,'de':0x11}[match[3]]])+value.to_bytes(3,'little')
         assert bytes.fromhex(match[2])==encoded
-        assert binary[address-0x40000:address-0x40000+4]==encoded
-        operands.append(dict(address=address,register=match[3],symbol=match[4],value=value,encoded=encoded.hex()))
+        assert binary[instruction_address-0x40000:instruction_address-0x40000+4]==encoded
+        operands.append(dict(address=instruction_address,register=match[3],symbol=match[4],value=value,encoded=encoded.hex()))
     assert len(operands)==6 and sum(x['symbol'].endswith('LIMIT') for x in operands)==1
     assert sorted(x['register'] for x in operands)==['bc','de','de','hl','hl','hl']
     stack={}
@@ -40,6 +40,11 @@ def verify(binding):
     assert equ(asm,'WPT_FULL_GAME')==1 and equ(asm,'WPT_NATIVE_MOCK')==0
     assert equ(asm,'WPT_FRAMES')==250
     assert asm.count('call wp_hw_stack')==2
+    # Check emitted VDU header, INFO operation, reply flag and field17.
+    # Package operands and query-call counts alone missed operation0 in r01.
+    packet=address(binding,'wp_hw_stack_packet')
+    expected=bytes.fromhex('1700d808000104000001001100')
+    assert binary[packet:packet+len(expected)]==expected, 'Actual INFO17 request encoding'
     assert 'call wp_test_hold' not in asm
     profile=(source/'wolf3d_profile.inc').read_text()
     assert 'call wp_test_hold' not in profile and 'wp_test_read16' not in profile

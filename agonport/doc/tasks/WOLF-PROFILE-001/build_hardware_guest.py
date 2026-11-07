@@ -1,5 +1,6 @@
 """Build ONE actual native full-game profiling guest; no target contact."""
 from pathlib import Path
+import argparse
 import importlib.util
 import json
 import shutil
@@ -17,8 +18,9 @@ def once(text, old, new):
     return text.replace(old, new)
 
 
-def main():
-    out = T / "build/hardware-guest01"
+def main(revision="hardware-guest01"):
+    assert revision in ("hardware-guest01", "hardware-guest02")
+    out = T / "build" / revision
     src = out / "source"
     assert not out.exists(), "Preserve the frozen guest; select a new revision"
     shutil.copytree(b.SOURCE, src)
@@ -46,11 +48,11 @@ wp_hw_stack:
     or a
     ret nz
     ld a,W3D_VDPL_REPLY_VALUE
-    ld hl,@token
+    ld hl,wp_hw_stack_token
     call w3d_vdplet_arm_request
     jp c,wp_protocol_failed
-    ld hl,@packet
-    ld bc,@end-@packet
+    ld hl,wp_hw_stack_packet
+    ld bc,wp_hw_stack_packet_end-wp_hw_stack_packet
     rst.lil 18h
     call w3d_vdplet_wait_reply
     jp c,wp_protocol_failed
@@ -70,14 +72,14 @@ wp_hw_stack:
     sbc hl,de
     jp c,wp_protocol_failed
     ret
-@packet:
+wp_hw_stack_packet:
     db 23,0,W3D_VDPL_SELECTOR
     dw 8
-    db 1,0
-@token: dw 0
+    db W3D_VDPL_PROTOCOL,W3D_VDPL_OP_INFO
+wp_hw_stack_token: dw 0
     db 1,0
     dw 17
-@end:
+wp_hw_stack_packet_end:
 wp_hw_destination: dl 0
 '''
     p.write_text(s)
@@ -93,11 +95,13 @@ wp_hw_destination: dl 0
                "listing_sha256": b.sha256(listing), "module": str(module),
                "module_sha256": b.sha256(module), "package_bytes": module.stat().st_size,
                "package_limit": 0x20000, "frames": 250,
-               "native_mock": False, "extra_cue_hold": False, "info17": 2,
+               "native_mock": False, "extra_cue_hold": False, "info17": 2, "info_operation": 4,
                "inputs": {str(p.resolve()): b.sha256(p) for p in src.iterdir() if p.suffix in (".inc", ".asm")}}
     (out / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
     print(json.dumps({k: v for k, v in receipt.items() if k != "inputs"}, indent=2))
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--revision', default='hardware-guest01')
+    main(parser.parse_args().revision)
