@@ -1,0 +1,16 @@
+{
+  "protocol": 1,
+  "boot": 1264934178,
+  "session": 382700053,
+  "sequence": 6,
+  "emitted": 12,
+  "accepted": 12,
+  "discarded": 0,
+  "pending": 0,
+  "held": 0,
+  "locale": 1,
+  "ready": true,
+  "physical_neutral": true,
+  "caps": false,
+  "reason": 3
+}

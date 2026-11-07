@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 1731986136,
+    "boot": 249849251,
+    "operation": "get",
+    "remote": "/test/wolf/goal001/r02/route.bin",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-GOAL-001/build/hardware02/evidence/route-handback/final-route.bin",
+    "started": 1794055437.1710994,
+    "result": {
+      "protocol": 1,
+      "boot": 249849251,
+      "id": 1731986136,
+      "phase": 4,
+      "bytes": 1,
+      "size": 1,
+      "records": 3,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 13553,
+      "mainboard_us": 97492,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.011913254973478615,
+      "host_elapsed_s": 0.3145625591278076,
+      "http_upload_s": 0.03705148695735261
+    },
+    "delivered": true,
+    "http_upload_s": 0.03705148695735261,
+    "partial_owned": true,
+    "finished": 1794055437.485662
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "passed_preservation_restoration_release": true,
+  "benchmark_complete": false,
+  "room_loads": 0,
+  "room_runs": 0,
+  "room_frames": 0,
+  "info_queries_completed": 1,
+  "info_cumulative_stack_bytes": 2644,
+  "generation": 84,
+  "original_signal": 15,
+  "cause": "UNKNOWN",
+  "released": "2026-11-07T12:44:35.689347+00:00",
+  "release_observation_age_seconds": 9.750720024108887,
+  "source_inputs_preserved": 516,
+  "remaining_physical_cache_trig_measurement": true,
+  "escape_evidence_limit": "Live bounded Escape/new-prompt predicate passed and receipt retained; later CLI reused serial.bin and replaced its Escape capture. Original interrupted serial and subsequent independent CLI proofs are retained; no retrospective raw Escape replay proof claimed."
+}

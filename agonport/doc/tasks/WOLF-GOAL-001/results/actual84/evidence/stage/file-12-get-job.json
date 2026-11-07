@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 2454399973,
+    "boot": 3587360281,
+    "operation": "get",
+    "remote": "/test/wolf/goal001/r02/b-cache-room.bin",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-GOAL-001/build/hardware02/evidence/stage/file-12-read.bin",
+    "started": 1794054461.9391098,
+    "result": {
+      "protocol": 1,
+      "boot": 3587360281,
+      "id": 2454399973,
+      "phase": 4,
+      "bytes": 325309,
+      "size": 325309,
+      "records": 1509,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 13906,
+      "mainboard_us": 12701511,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.3875633290153928,
+      "host_elapsed_s": 13.229070901870728,
+      "http_upload_s": 0.03766722104046494
+    },
+    "delivered": true,
+    "http_upload_s": 0.03766722104046494,
+    "partial_owned": true,
+    "finished": 1794054475.1681807
+  }
+}

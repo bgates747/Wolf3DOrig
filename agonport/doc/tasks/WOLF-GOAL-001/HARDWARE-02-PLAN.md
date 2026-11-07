@@ -22,15 +22,15 @@ existing INFO-only resource query: seven in total, minimum512B cumulative
 watermark. Both candidate comparisons use the same bracketing A runs; state
 this shared-control design and drift limits instead of claiming separate ABBA.
 
-- [ ] WOLF-GOAL-001-H02-01 — Reserve behind first-priority MechAgon, freeze
+- [x] WOLF-GOAL-001-H02-01 — Reserve behind first-priority MechAgon, freeze
   actual candidates/producers, matrix, source/resource/host closure and guards.
-- [ ] WOLF-GOAL-001-H02-02 — Qualify actual three-arm controller/real listener
+- [x] WOLF-GOAL-001-H02-02 — Qualify actual three-arm controller/real listener
   replacement lifecycle and current incoming/rollback bindings; publish kit.
-- [ ] WOLF-GOAL-001-H02-03 — Obtain actual fresh grant/stopped handoff, assert
+- [x] WOLF-GOAL-001-H02-03 — Obtain actual fresh grant/stopped handoff, assert
   token, launch once and notify actual PID/context; execute finite matrix.
-- [ ] WOLF-GOAL-001-H02-04 — Stop first unexpected result, preserve RAM before
+- [x] WOLF-GOAL-001-H02-04 — Stop first unexpected result, preserve RAM before
   LOAD; exact restoration/readback/fullcleanup/normal release/next-owner notice.
-- [ ] WOLF-GOAL-001-H02-05 — Publish/share complete actual results and limits;
+- [x] WOLF-GOAL-001-H02-05 — Publish/share complete actual results and limits;
   dispose corresponding014/015 physical IDs only when proved.
 
 Expected25–30minutes; absolute4200s including360s cleanup reserve. Each guest
@@ -55,3 +55,8 @@ calls to resident RAM;600 consecutive poses/native records/clock bounds and
 resource lifecycle to raw output. Report inclusive native draw, per-frame
 presented rate and package/stack/data costs separately. No exclusive CPU,
 external oscillator or optical scanout claim; no FPS-only rejection criterion.
+
+Actual84 disposition:01/02 qualified and frozen;03 disposed interrupted before
+first room LOAD/RUN, not executed matrix;04 cleanup/restore/release complete;
+05 stopped evidence published,014/015 physical measurements remain open.
+See [RESULT84.md](RESULT84.md). No replay selected.

@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 4128216109,
+    "boot": 3587360281,
+    "operation": "put",
+    "remote": "/test/wolf/goal001/r02/wolf3d.cfg",
+    "activate": true,
+    "size": 0,
+    "destination": null,
+    "started": 1794054208.3795176,
+    "result": {
+      "protocol": 1,
+      "boot": 3587360281,
+      "id": 4128216109,
+      "phase": 4,
+      "bytes": 0,
+      "size": 0,
+      "records": 4,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 13502,
+      "mainboard_us": 598968,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 0.8138675689697266,
+      "http_upload_s": 0.03689766797469929
+    },
+    "delivered": true,
+    "http_upload_s": 0.03689766797469929,
+    "finished": 1794054209.1933851
+  }
+}

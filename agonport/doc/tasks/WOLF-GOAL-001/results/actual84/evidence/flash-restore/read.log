@@ -1,0 +1,20 @@
+esptool v5.1.0
+Serial port /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0:
+Connecting....
+Connected to ESP32 on /dev/serial/by-id/usb-1a86_USB_Serial-if00-port0:
+Chip type:          ESP32-PICO-D4 (revision v1.1)
+Features:           Wi-Fi, BT, Dual Core + LP Core, 240MHz, Embedded Flash, Vref calibration in eFuse, Coding Scheme None
+Crystal frequency:  40MHz
+MAC:                10:06:1c:0b:46:e0
+
+Uploading stub flasher...
+Running stub flasher...
+Stub flasher running.
+Changing baud rate to 460800...
+Changed.
+
+Configuring flash size...
+Auto-detected flash size: 4MB
+Read 1105920 bytes from 0x00010000 in 27.4 seconds (323.1 kbit/s) to '/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-GOAL-001/build/hardware02/evidence/flash-restore/read.bin'.
+
+Hard resetting via RTS pin...

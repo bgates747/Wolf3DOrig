@@ -1,0 +1,5 @@
+{
+  "command": "EXEC /test/wolf/goal001/r02/route.txt",
+  "once": true,
+  "epoch": 1794055434.2867482
+}

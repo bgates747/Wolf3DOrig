@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "bytes": 65536,
+  "sha256": "12a3005c071e21f75c3ebbee5749fb67d3979960de49713c4ae7d908cb8b80b5",
+  "address": 262144,
+  "before_any_cleanup_load_or_reset": true,
+  "no_room_guest_dispatched": true
+}

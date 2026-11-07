@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 2866657194,
+    "boot": 4025856557,
+    "operation": "get",
+    "remote": "/test/wolf/goal001/r02/save84.txt",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-GOAL-001/build/hardware02/evidence/cleanup84/save-script-read.bin",
+    "started": 1794055326.0327287,
+    "result": {
+      "protocol": 1,
+      "boot": 4025856557,
+      "id": 2866657194,
+      "phase": 4,
+      "bytes": 81,
+      "size": 81,
+      "records": 3,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 13536,
+      "mainboard_us": 108637,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.01225875603267923,
+      "host_elapsed_s": 0.31471943855285645,
+      "http_upload_s": 0.03741117398021743
+    },
+    "delivered": true,
+    "http_upload_s": 0.03741117398021743,
+    "partial_owned": true,
+    "finished": 1794055326.347448
+  }
+}

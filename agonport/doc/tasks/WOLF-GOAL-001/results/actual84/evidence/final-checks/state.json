@@ -1,0 +1,59 @@
+{
+  "keyboard": {
+    "protocol": 1,
+    "boot": 2420150046,
+    "session": 1096182157,
+    "sequence": 8,
+    "emitted": 18,
+    "accepted": 18,
+    "discarded": 0,
+    "pending": 0,
+    "held": 0,
+    "locale": 1,
+    "ready": true,
+    "physical_neutral": true,
+    "caps": false,
+    "reason": 1
+  },
+  "sd": {
+    "protocol": 2,
+    "online": false,
+    "pending": false,
+    "boot": 389890111
+  },
+  "worker": {
+    "protocol": 1,
+    "boot": 249849251,
+    "id": 0,
+    "phase": 0,
+    "bytes": 0,
+    "size": 0,
+    "records": 0,
+    "error": 0,
+    "remote_status": 0,
+    "filesystem": 0,
+    "stage_us": 0,
+    "mainboard_us": 0,
+    "parallel_prepare_us": 0,
+    "parallel_active_ms": 0,
+    "parallel_handover_ms": 0,
+    "parallel_phase": 0,
+    "parallel_outcome": 0,
+    "parallel_clock_count": -1,
+    "parallel_valid_count": -1
+  },
+  "display": {
+    "available": true,
+    "mode": 0,
+    "width": 640,
+    "height": 480,
+    "colors": 16,
+    "refresh_hz": 60,
+    "double_buffered": false,
+    "output": "hdmi",
+    "output_width": 1280,
+    "output_height": 720,
+    "output_nominal_refresh_hz": 60,
+    "frame_clock": "dma-frame-complete"
+  }
+}

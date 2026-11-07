@@ -1,0 +1,7 @@
+{
+  "epoch": 1794054204.901999,
+  "generation": 84,
+  "session_id": 52093,
+  "actual_process": "1344196    1750 Sat Nov  7 07:22:58 2026 /Agon/mystuff/agon-extender/.venv/bin/python /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-GOAL-001/launch_h02.py --context /Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-goal001-h02/context.json",
+  "single_launch": true
+}

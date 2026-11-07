@@ -1,0 +1,12 @@
+VDU 2
+/test/wolf/goal001/r02 *VDU 87 80 51 45 99 108 101 97 110 117 112 56 52 45 99 108 105 13 10
+WP3-cleanup84-cli
+/test/wolf/goal001/r02 *DIR
+Volume: AGONEX
+Directory: /test/wolf/goal001/r02
+
+level_00            b-cache-room.bin    b-original-room.bin b-trig-room.bin    
+hud.agnb            post-callback.bin   post-mode.bin       resource-probe.bin 
+route.bin           route.txt           sfx.agnb            shell.agnb         
+state.txt           wolf3d.cfg          wolf3d.vdpl         
+/test/wolf/goal001/r02 *

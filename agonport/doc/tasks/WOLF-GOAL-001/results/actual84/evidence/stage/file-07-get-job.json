@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 1856504694,
+    "boot": 3587360281,
+    "operation": "get",
+    "remote": "/test/wolf/goal001/r02/level_00/sprites.agnb",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-GOAL-001/build/hardware02/evidence/stage/file-07-read.bin",
+    "started": 1794054388.7671196,
+    "result": {
+      "protocol": 1,
+      "boot": 3587360281,
+      "id": 1856504694,
+      "phase": 4,
+      "bytes": 559464,
+      "size": 559464,
+      "records": 2593,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 13623,
+      "mainboard_us": 22036628,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.6611712810117751,
+      "host_elapsed_s": 22.97020196914673,
+      "http_upload_s": 0.0371379810385406
+    },
+    "delivered": true,
+    "http_upload_s": 0.0371379810385406,
+    "partial_owned": true,
+    "finished": 1794054411.7373216
+  }
+}
