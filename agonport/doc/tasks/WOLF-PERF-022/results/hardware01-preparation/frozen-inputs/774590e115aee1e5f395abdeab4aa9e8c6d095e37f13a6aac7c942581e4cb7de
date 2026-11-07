@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "units": {
+    "original/numeric": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/original/native-source/wolf3d_module.cpp",
+      "body_sha256": "0e1f1b84899d733ad38fc9d4b1987e07970ae3d5bb7891b7b35a88647e713d44",
+      "equal_qualified17_body": true
+    },
+    "production/background": {
+      "original_sha256": "a46f28a5649e19fee53eefae68fe4e1e4844a9f472c2c093cef6c57eca7acc98",
+      "composed_sha256": "bfc643e73439212610c8561edffa958f74a44ac3bf3647dd09502e91fa05d85b"
+    },
+    "production/view": {
+      "original_sha256": "fff8ddb6aa71599bcccfaeaa4b67b319c5e924de673c3cf72376c062fb78756d",
+      "composed_sha256": "5fe23cca3c870d9c2bc444d797b6349fcbcd078fa19d83524a8af310aa668227"
+    },
+    "production/walls": {
+      "original_sha256": "f3826984aac9751a1c8b8602d4fb8edeecadf35391aede6940e5e21f77ce5bc5",
+      "composed_sha256": "1c58f4ad55923f544ccd7876b5c6c7b4ab3d2a6edf3a0ee514d556bb19bea2cd"
+    },
+    "native-source/background": {
+      "original_sha256": "a46f28a5649e19fee53eefae68fe4e1e4844a9f472c2c093cef6c57eca7acc98",
+      "composed_sha256": "bfc643e73439212610c8561edffa958f74a44ac3bf3647dd09502e91fa05d85b"
+    },
+    "native-source/view": {
+      "original_sha256": "fff8ddb6aa71599bcccfaeaa4b67b319c5e924de673c3cf72376c062fb78756d",
+      "composed_sha256": "5fe23cca3c870d9c2bc444d797b6349fcbcd078fa19d83524a8af310aa668227"
+    },
+    "native-source/walls": {
+      "original_sha256": "f3826984aac9751a1c8b8602d4fb8edeecadf35391aede6940e5e21f77ce5bc5",
+      "composed_sha256": "1c58f4ad55923f544ccd7876b5c6c7b4ab3d2a6edf3a0ee514d556bb19bea2cd"
+    },
+    "candidate/numeric": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/native-source/wolf3d_module.cpp",
+      "body_sha256": "f6a52d2e1f5e91d5042d37bbba3529a829c20b6f92da18002fb89ea30ad72de7",
+      "equal_qualified17_body": true
+    }
+  },
+  "unselected_renderer_bytes_equal": true,
+  "only_numeric17_module_change": true,
+  "only_degree15_table_change": true
+}

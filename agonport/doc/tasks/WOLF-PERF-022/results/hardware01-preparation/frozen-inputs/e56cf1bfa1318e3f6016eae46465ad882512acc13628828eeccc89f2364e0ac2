@@ -1,0 +1,477 @@
+
+Discarded input sections
+
+ .literal._ZN17wolf3d_production12_GLOBAL__N_114validate_batchERKNS_11WorldMirrorEPKhjRNS0_11BatchHeaderE
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12_GLOBAL__N_18sin_fineEi
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12_GLOBAL__N_17tile_atERKNS_11WorldMirrorEPKhii
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12_GLOBAL__N_115transform_pointEiiRKNS0_9ViewStateERiS4_S4_Rj
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12_GLOBAL__N_18sift_minEPNS0_9VisSpriteEtt
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12_GLOBAL__N_111emit_fizzleERNS0_11ModuleState12FizzleCursorEjPhPjjjhh
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12_GLOBAL__N_19fill_rectERKNS_12RenderTargetEiiiih
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12_GLOBAL__N_123require_published_frameEPK14vdplet_host_v1PK17vdplet_request_v1$part$12
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12_GLOBAL__N_117append_hud_numberEPNS0_7HudDrawERhiiij$constprop$15
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production23initialize_world_mirrorERNS_11WorldMirrorEtt
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production28validate_resource_descriptorERNS_18ResourceDescriptorEPKhj
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12_GLOBAL__N_115copy_descriptorEPK14vdplet_host_v1PK17vdplet_request_v1RNS_18ResourceDescriptorE$isra$10$part$11
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12_GLOBAL__N_127require_matching_descriptorEPK14vdplet_host_v1PK17vdplet_request_v1
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production18apply_update_batchERNS_11WorldMirrorEPKhj
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production17batch_detail_nameENS_11BatchDetailE
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production22render_world_to_targetERKNS_11WorldMirrorERKNS_15RenderResourcesERKNS_12RenderTargetEjjjjjjPNS_11RenderStatsE
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production12render_worldERKNS_11WorldMirrorERKNS_15RenderResourcesEPNS_11RenderStatsE
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production19render_world_directERKNS_11WorldMirrorERKNS_15RenderResourcesERKNS_12RenderTargetEPNS_11RenderStatsE
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal._ZN17wolf3d_production18render_detail_nameENS_12RenderDetailE
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal.memset
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal.__udivdi3
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal.__divdi3
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal.wp_production_entry
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .literal.vdplet_entry
+                0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .text          0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .data          0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .bss           0x0000000000000000        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .text._ZN17wolf3d_production23initialize_world_mirrorERNS_11WorldMirrorEtt
+                0x0000000000000000       0x6a /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .text._ZN17wolf3d_production21mark_mirror_presentedERNS_11WorldMirrorE
+                0x0000000000000000       0x1d /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .rodata._ZN17wolf3d_production17batch_detail_nameENS_11BatchDetailE.str1.4
+                0x0000000000000000       0x51 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .text._ZN17wolf3d_production17batch_detail_nameENS_11BatchDetailE
+                0x0000000000000000       0x97 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .text._ZN17wolf3d_production19render_world_directERKNS_11WorldMirrorERKNS_15RenderResourcesERKNS_12RenderTargetEPNS_11RenderStatsE
+                0x0000000000000000       0x44 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .rodata._ZN17wolf3d_production18render_detail_nameENS_12RenderDetailE.str1.4
+                0x0000000000000000       0x18 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .text._ZN17wolf3d_production18render_detail_nameENS_12RenderDetailE
+                0x0000000000000000       0x7b /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .text.__udivdi3
+                0x0000000000000000       0x1b /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+*default*        0x0000000000000000 0xffffffffffffffff
+
+Linker script and memory map
+
+LOAD /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                0x0000000000000094                . = (0x0 + SIZEOF_HEADERS)
+
+.note.gnu.build-id
+ *(.note.gnu.build-id)
+
+.hash           0x0000000000000094       0x14
+ *(.hash)
+ .hash          0x0000000000000094       0x14 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.gnu.hash
+ *(.gnu.hash)
+
+.dynsym         0x00000000000000a8       0x20
+ *(.dynsym)
+ .dynsym        0x00000000000000a8       0x20 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.dynstr         0x00000000000000c8        0xe
+ *(.dynstr)
+ .dynstr        0x00000000000000c8        0xe /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.gnu.version    0x00000000000000d6        0x0
+ *(.gnu.version)
+ .gnu.version   0x00000000000000d6        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.gnu.version_d  0x00000000000000d8        0x0
+ *(.gnu.version_d)
+ .gnu.version_d
+                0x00000000000000d8        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.gnu.version_r  0x00000000000000d8        0x0
+ *(.gnu.version_r)
+ .gnu.version_r
+                0x00000000000000d8        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.rela.dyn       0x00000000000000d8      0x1f8
+ *(.rela.init)
+ *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
+ *(.rela.fini)
+ *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
+ *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
+ *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
+ *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
+ *(.rela.ctors)
+ *(.rela.dtors)
+ *(.rela.got)
+ .rela.got      0x00000000000000d8      0x1f8 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
+
+.rela.plt       0x00000000000002d0        0x0
+ *(.rela.plt)
+ .rela.plt      0x00000000000002d0        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.text           0x00000000000002d0     0x3c51
+ *(.got.plt* .plt*)
+ .got.plt       0x00000000000002d0        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                0x00000000000002d0                _GLOBAL_OFFSET_TABLE_
+ .plt           0x00000000000002d0        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *(.init.literal)
+ *(SORT_NONE(.init))
+ *(.literal .text .stub .literal.* .text.* .gnu.linkonce.literal.* .gnu.linkonce.t.*.literal .gnu.linkonce.t.*)
+ .text._ZN17wolf3d_production12_GLOBAL__N_114validate_batchERKNS_11WorldMirrorEPKhjRNS0_11BatchHeaderE
+                0x00000000000002d0      0xa52 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x0000000000000d22        0x2 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_18sin_fineEi
+                0x0000000000000d24       0x71 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x0000000000000d95        0x3 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_17tile_atERKNS_11WorldMirrorEPKhii
+                0x0000000000000d98      0x108 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                        0x10c (size before relaxing)
+ .text._ZN17wolf3d_production12_GLOBAL__N_115transform_pointEiiRKNS0_9ViewStateERiS4_S4_Rj
+                0x0000000000000ea0       0xc5 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x0000000000000f65        0x3 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_18sift_minEPNS0_9VisSpriteEtt
+                0x0000000000000f68       0x56 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x0000000000000fbe        0x2 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_111emit_fizzleERNS0_11ModuleState12FizzleCursorEjPhPjjjhh
+                0x0000000000000fc0       0x7e /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x000000000000103e        0x2 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_19fill_rectERKNS_12RenderTargetEiiiih
+                0x0000000000001040       0x26 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                         0x2e (size before relaxing)
+ *fill*         0x0000000000001066        0x2 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_123require_published_frameEPK14vdplet_host_v1PK17vdplet_request_v1$part$12
+                0x0000000000001068       0x24 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .text._ZN17wolf3d_production12_GLOBAL__N_117append_hud_numberEPNS0_7HudDrawERhiiij$constprop$15
+                0x000000000000108c       0xb0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                         0xb4 (size before relaxing)
+ .text._ZN17wolf3d_production28validate_resource_descriptorERNS_18ResourceDescriptorEPKhj
+                0x000000000000113c      0x170 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                        0x174 (size before relaxing)
+                0x000000000000114c                _ZN17wolf3d_production28validate_resource_descriptorERNS_18ResourceDescriptorEPKhj
+ .text._ZN17wolf3d_production12_GLOBAL__N_115copy_descriptorEPK14vdplet_host_v1PK17vdplet_request_v1RNS_18ResourceDescriptorE$isra$10$part$11
+                0x00000000000012ac       0x94 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .text._ZN17wolf3d_production12_GLOBAL__N_127require_matching_descriptorEPK14vdplet_host_v1PK17vdplet_request_v1
+                0x0000000000001340       0x92 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                         0x96 (size before relaxing)
+ *fill*         0x00000000000013d2        0x2 00000000
+ .text._ZN17wolf3d_production18apply_update_batchERNS_11WorldMirrorEPKhj
+                0x00000000000013d4      0x3c7 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                        0x3cb (size before relaxing)
+                0x00000000000013f0                _ZN17wolf3d_production18apply_update_batchERNS_11WorldMirrorEPKhj
+ *fill*         0x000000000000179b        0x1 00000000
+ .text._ZN17wolf3d_production22render_world_to_targetERKNS_11WorldMirrorERKNS_15RenderResourcesERKNS_12RenderTargetEjjjjjjPNS_11RenderStatsE
+                0x000000000000179c     0x160c /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                       0x1644 (size before relaxing)
+                0x0000000000001820                _ZN17wolf3d_production22render_world_to_targetERKNS_11WorldMirrorERKNS_15RenderResourcesERKNS_12RenderTargetEjjjjjjPNS_11RenderStatsE
+ .text._ZN17wolf3d_production12render_worldERKNS_11WorldMirrorERKNS_15RenderResourcesEPNS_11RenderStatsE
+                0x0000000000002da8       0x64 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                0x0000000000002dc4                _ZN17wolf3d_production12render_worldERKNS_11WorldMirrorERKNS_15RenderResourcesEPNS_11RenderStatsE
+ .text.__divdi3
+                0x0000000000002e0c       0x9a /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                0x0000000000002e10                __divdi3
+ *fill*         0x0000000000002ea6        0x2 00000000
+ .text.wp_production_entry
+                0x0000000000002ea8      0xbf4 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                        0xc14 (size before relaxing)
+                0x0000000000002f10                wp_production_entry
+ .text.vdplet_entry
+                0x0000000000003a9c      0x220 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                        0x22c (size before relaxing)
+                0x0000000000003ab8                vdplet_entry
+ *fill*         0x0000000000003cbc        0x0 00000000
+ *fill*         0x0000000000003cbc        0x0 00000000
+ *fill*         0x0000000000003cbc        0x0 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_112swap_spritesERNS0_9VisSpriteES2_
+                0x0000000000003cbc       0x28 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x0000000000003ce4        0x0 00000000
+ .text._ZL10divide_u64yy
+                0x0000000000003ce4       0xca /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x0000000000003dae        0x0 00000000
+ *fill*         0x0000000000003dae        0x2 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_113acquire_assetEPvtRNS_9AssetSpanE
+                0x0000000000003db0       0x4d /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x0000000000003dfd        0x3 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_113release_assetEPvj
+                0x0000000000003e00       0x23 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x0000000000003e23        0x1 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_19put_pixelERKNS_12RenderTargetEjjh
+                0x0000000000003e24       0x51 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x0000000000003e75        0x3 00000000
+ .text._ZN17wolf3d_production12_GLOBAL__N_19fill_spanERKNS_12RenderTargetEjjjh
+                0x0000000000003e78       0x60 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *fill*         0x0000000000003ed8        0x0 00000000
+ *fill*         0x0000000000003ed8        0x0 00000000
+ *fill*         0x0000000000003ed8        0x0 00000000
+ .text.memcpy   0x0000000000003ed8       0x25 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                0x0000000000003ed8                memcpy
+ *fill*         0x0000000000003efd        0x3 00000000
+ .text.memset   0x0000000000003f00       0x21 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                0x0000000000003f00                memset
+ *fill*         0x0000000000003f21        0x0 00000000
+ *fill*         0x0000000000003f21        0x0 00000000
+ *(.gnu.warning)
+ *(.fini.literal)
+ *(SORT_NONE(.fini))
+                [!provide]                        PROVIDE (__etext = .)
+                [!provide]                        PROVIDE (_etext = .)
+                [!provide]                        PROVIDE (etext = .)
+
+.rodata         0x0000000000003f24     0x1eac
+ *(.rodata .rodata.* .gnu.linkonce.r.*)
+ .rodata        0x0000000000003f24       0x70 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .rodata.CSWTCH$223
+                0x0000000000003f94       0x18 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .rodata._ZL19kWolfPixelAngleFine
+                0x0000000000003fac      0x200 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .rodata._ZL15kWolfSinQuarter
+                0x00000000000041ac      0xe14 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .rodata._ZL16kWolfFineTangent
+                0x0000000000004fc0      0xe10 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.rodata1
+ *(.rodata1)
+
+.got.loc        0x0000000000005dd0       0x80
+ *(.got.loc)
+ .got.loc       0x0000000000005dd0       0x80 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.xt_except_table
+ *(.xt_except_table .xt_except_table.* .gnu.linkonce.e.*)
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame
+ *(.eh_frame)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+                0x0000000000005e50                . = (ALIGN (CONSTANT (MAXPAGESIZE)) - ((CONSTANT (MAXPAGESIZE) - .) & (CONSTANT (MAXPAGESIZE) - 0x1)))
+                0x0000000000006000                . = DATA_SEGMENT_ALIGN (CONSTANT (MAXPAGESIZE), CONSTANT (COMMONPAGESIZE))
+
+.eh_frame
+ *(.eh_frame)
+
+.gcc_except_table
+ *(.gcc_except_table .gcc_except_table.*)
+
+.tdata
+ *(.tdata .tdata.* .gnu.linkonce.td.*)
+
+.tbss
+ *(.tbss .tbss.* .gnu.linkonce.tb.*)
+ *(.tcommon)
+
+.preinit_array
+ *(.preinit_array)
+
+.init_array
+ *(SORT_BY_NAME(.init_array.*))
+ *(.init_array)
+
+.fini_array
+ *(SORT_BY_NAME(.fini_array.*))
+ *(.fini_array)
+
+.ctors
+ *crtbegin.o(.ctors)
+ *crtbegin?.o(.ctors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .ctors)
+ *(SORT_BY_NAME(.ctors.*))
+ *(.ctors)
+
+.dtors
+ *crtbegin.o(.dtors)
+ *crtbegin?.o(.dtors)
+ *(EXCLUDE_FILE(*crtend?.o *crtend.o) .dtors)
+ *(SORT_BY_NAME(.dtors.*))
+ *(.dtors)
+
+.jcr
+ *(.jcr)
+
+.data.rel.ro
+ *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*)
+ *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*)
+
+.xt_except_table
+ *(.xt_except_table .xt_except_table.* .gnu.linkonce.e.*)
+
+.dynamic        0x0000000000006000       0x88
+ *(.dynamic)
+ .dynamic       0x0000000000006000       0x88 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                0x0000000000006000                _DYNAMIC
+                0x0000000000006088                . = DATA_SEGMENT_RELRO_END (., 0x0)
+
+.got            0x0000000000006088        0x4
+ *(.got)
+ .got           0x0000000000006088        0x4 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.data
+ *(.data .data.* .gnu.linkonce.d.*)
+
+.data1
+ *(.data1)
+
+.xt_except_desc
+ *(.xt_except_desc .xt_except_desc.* .gnu.linkonce.h.*)
+ *(.xt_except_desc_end)
+
+.lit4           0x000000000000608c        0x0
+                [!provide]                        PROVIDE (_lit4_start = .)
+ *(.lit4 .lit4.* .gnu.linkonce.lit4.*)
+                [!provide]                        PROVIDE (_lit4_end = .)
+                0x000000000000608c                _edata = .
+                [!provide]                        PROVIDE (edata = .)
+                0x000000000000608c                __bss_start = .
+
+.bss            0x000000000000608c     0x1578
+ *(.dynbss)
+ *(.bss .bss.* .gnu.linkonce.b.*)
+ .bss._ZN17wolf3d_production12_GLOBAL__N_1L8g_moduleE
+                0x000000000000608c     0x156c /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .bss._ZL12wp_log_count
+                0x00000000000075f8        0x4 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .bss._ZL15wp_scope_cycles
+                0x00000000000075fc        0x4 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ .bss._ZL16wp_render_cycles
+                0x0000000000007600        0x4 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+ *(COMMON)
+                0x0000000000007604                . = ALIGN ((. != 0x0)?0x4:0x1)
+                0x0000000000007604                . = ALIGN (0x4)
+                0x0000000000007604                . = ALIGN (0x4)
+                0x0000000000007604                _end = .
+                [!provide]                        PROVIDE (end = .)
+                0x0000000000007604                . = DATA_SEGMENT_END (.)
+
+.stab
+ *(.stab)
+
+.stabstr
+ *(.stabstr)
+
+.stab.excl
+ *(.stab.excl)
+
+.stab.exclstr
+ *(.stab.exclstr)
+
+.stab.index
+ *(.stab.index)
+
+.stab.indexstr
+ *(.stab.indexstr)
+
+.comment        0x0000000000000000       0x2c
+ *(.comment)
+ .comment       0x0000000000000000       0x2c /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                         0x2d (size before relaxing)
+
+.xtensa.info    0x0000000000000000       0x38
+ .xtensa.info   0x0000000000000000       0x38 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.debug
+ *(.debug)
+
+.line
+ *(.line)
+
+.debug_srcinfo
+ *(.debug_srcinfo)
+
+.debug_sfnames
+ *(.debug_sfnames)
+
+.debug_aranges
+ *(.debug_aranges)
+
+.debug_pubnames
+ *(.debug_pubnames)
+
+.debug_info
+ *(.debug_info .gnu.linkonce.wi.*)
+
+.debug_abbrev
+ *(.debug_abbrev)
+
+.debug_line
+ *(.debug_line .debug_line.* .debug_line_end)
+
+.debug_frame
+ *(.debug_frame)
+
+.debug_str
+ *(.debug_str)
+
+.debug_loc
+ *(.debug_loc)
+
+.debug_macinfo
+ *(.debug_macinfo)
+
+.debug_weaknames
+ *(.debug_weaknames)
+
+.debug_funcnames
+ *(.debug_funcnames)
+
+.debug_typenames
+ *(.debug_typenames)
+
+.debug_varnames
+ *(.debug_varnames)
+
+.debug_pubtypes
+ *(.debug_pubtypes)
+
+.debug_ranges
+ *(.debug_ranges)
+
+.debug_macro
+ *(.debug_macro)
+
+.debug_addr
+ *(.debug_addr)
+
+.gnu.attributes
+ *(.gnu.attributes)
+
+.xt.lit         0x0000000000000000       0x80
+ *(.xt.lit .xt.lit.* .gnu.linkonce.p.*)
+ .xt.lit        0x0000000000000000       0x80 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                         0xb8 (size before relaxing)
+ .xt.lit.plt    0x0000000000000080        0x0 /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+
+.xt.insn
+ *(.xt.insn .gnu.linkonce.x.*)
+
+.xt.prop        0x0000000000000000     0x210c
+ *(.xt.prop .xt.prop.* .gnu.linkonce.prop.*)
+ .xt.prop       0x0000000000000000     0x210c /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.o
+                                       0x23e8 (size before relaxing)
+
+/DISCARD/
+ *(.note.GNU-stack)
+ *(.gnu_debuglink)
+ *(.gnu.lto_*)
+OUTPUT(/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.elf elf32-xtensa-le)

@@ -1,0 +1,46 @@
+{
+  "schema": "olimex-bench-observation-v1",
+  "bench": "olimex",
+  "epoch": 1794066443.969841,
+  "observer": "mechagon",
+  "lease": "dc6136edcfb7493dbcdc79e2760d51fe",
+  "checks": {
+    "no_workload": true,
+    "no_transfer": true,
+    "no_serial_readers": true,
+    "no_reset_holders": true,
+    "cli_verified": true,
+    "input_ready_neutral": true,
+    "listener_offline": true,
+    "staged_job_idle": true,
+    "restoration_verified": true
+  },
+  "evidence": [
+    "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-goal001-r07/final/fresh.json",
+    "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-goal001-r07/owner-install/verify-rollback/receipt.json",
+    "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-goal001-r07/consumer-stopped-handoff.json",
+    "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-goal001-r07/owner-recovery/preserve/receipt.json",
+    "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-goal001-r07/owner-feature/receipt.json",
+    "/Agon/mystuff/MechAgon/.runtime/render001/goal001/consumer-r07/phase-live.log",
+    "/Agon/mystuff/MechAgon/.runtime/render001/goal001/consumer-r07/run-native-r01/serial.bin",
+    "/Agon/mystuff/MechAgon/.runtime/render001/goal001/consumer-r07/run-native-r01/renderer-run-issued.json",
+    "/Agon/mystuff/MechAgon/.runtime/render001/goal001/consumer-r07/host-match-r01/status.json"
+  ],
+  "components": {
+    "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+    "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+    "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+    "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+    "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+  },
+  "component_provenance": {
+    "p4_app_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+    "emos_rom_sha256": "New independent full131072B rollback readback equals retained incominga25f",
+    "native_vdp_sha256": "Exact incoming application/touched-tail restoration and independent full-span readback",
+    "startup_sha256": "Fresh final wholefile compare",
+    "listener_sha256": "Fresh final canonical listener compare"
+  },
+  "disposition": "Original observed IRQ diagnostic R07 stopped return with original bounded raw evidence and evidence retained under this actual reservation; no result beyond the consumer evidence is inferred by owner cleanup. Failure preservation beforeLOAD is governed by the matching stopped return. Exact incominga25f fullROM rollback and independent131072B comparison PASS. Fresh rootCLI/cursor/files/inputneutral/offlineidle/worker0/freeUSB and joined actors; same-custody postreboot rawmode0/callback0/route0 from new rollbackreceipt, no intervening mode/route/application change. One standing Agon-only recovery established actualCLI after original150s/noCLI. Full64KiB RAM retained as post-reset before anyLOAD; originalSD status and optional128B IRQ product preserved. Only then the existing getter proved featureABSENT/orderedrelease/callbackrestoration. No P4reset/replay/newcase/P4/native/startup/listener write. SDmounted.",
+  "physical_observer": "linux-extender",
+  "physical_observer_role": "Delegated sole owner-restore operator under matching stopped return"
+}

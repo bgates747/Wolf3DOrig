@@ -1,0 +1,1 @@
+PASS 5376 actual scaling-cache cases (repeated/split/extreme heights and row/source aliases): pixels/guards, every encoded tile, doors/invalid IDs, nonpositive heights, ascending leases, refused/null/short/release-error paths, stats/null stats and native/linear rows
