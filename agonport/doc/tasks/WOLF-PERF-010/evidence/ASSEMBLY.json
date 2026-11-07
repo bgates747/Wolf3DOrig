@@ -1,0 +1,328 @@
+{
+  "passed": true,
+  "steps": [
+    {
+      "arm": "original",
+      "mode": "control",
+      "returncode": 0,
+      "seconds": 0.20121149200713262
+    },
+    {
+      "arm": "original",
+      "mode": "unpaced",
+      "returncode": 0,
+      "seconds": 0.20108910300768912
+    },
+    {
+      "arm": "candidate",
+      "mode": "control",
+      "returncode": 0,
+      "seconds": 0.20105688099283725
+    },
+    {
+      "arm": "candidate",
+      "mode": "unpaced",
+      "returncode": 0,
+      "seconds": 0.2010374540113844
+    }
+  ],
+  "guards": [
+    {
+      "epoch": 1794036164.3972824,
+      "cpu_c": 48.5,
+      "available_kib": 6869600
+    },
+    {
+      "epoch": 1794036164.398013,
+      "cpu_c": 48.5,
+      "available_kib": 6869600
+    },
+    {
+      "epoch": 1794036164.4983728,
+      "cpu_c": 46.85,
+      "available_kib": 6871392
+    },
+    {
+      "epoch": 1794036165.101365,
+      "cpu_c": 49.05,
+      "available_kib": 6846880
+    },
+    {
+      "epoch": 1794036165.102049,
+      "cpu_c": 48.5,
+      "available_kib": 6846880
+    },
+    {
+      "epoch": 1794036165.2023323,
+      "cpu_c": 48.5,
+      "available_kib": 6847680
+    },
+    {
+      "epoch": 1794036165.803572,
+      "cpu_c": 50.15,
+      "available_kib": 6845248
+    },
+    {
+      "epoch": 1794036165.8042674,
+      "cpu_c": 50.15,
+      "available_kib": 6845248
+    },
+    {
+      "epoch": 1794036165.9045267,
+      "cpu_c": 50.15,
+      "available_kib": 6847344
+    },
+    {
+      "epoch": 1794036166.50348,
+      "cpu_c": 50.15,
+      "available_kib": 6843488
+    },
+    {
+      "epoch": 1794036166.5041425,
+      "cpu_c": 50.15,
+      "available_kib": 6843488
+    },
+    {
+      "epoch": 1794036166.6044173,
+      "cpu_c": 49.05,
+      "available_kib": 6841296
+    }
+  ],
+  "bindings": {
+    "original": {
+      "control": {
+        "passed": true,
+        "package_bytes": 24276,
+        "guest_sha256": "ccac1ed61e795da399edab3cb1b8c445367c2b9a259fc92aa713548913f00035",
+        "listing_sha256": "6818a4db4229dff2fc473453e4044c88d7095b0c1d002bea5a6600b9735cd6e7",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "21d45e00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "21d45e00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24277,
+            "encoded": "11d55e00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "01d45e00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "11d45e00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "21d45e00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551551,
+          "wp_exit_sp": 551554
+        }
+      },
+      "unpaced": {
+        "passed": true,
+        "package_bytes": 24276,
+        "guest_sha256": "5fc4dbb27aa0251eb41024a1a20d50391af6d76e2908f9931d0d6a9da786c244",
+        "listing_sha256": "c01a549c9c02ec57bb877be278cee7b232915d88bd10454fa1daf80bd579c40f",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "21d45e00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "21d45e00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24277,
+            "encoded": "11d55e00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "01d45e00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "11d45e00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "21d45e00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        }
+      }
+    },
+    "candidate": {
+      "control": {
+        "passed": true,
+        "package_bytes": 24420,
+        "guest_sha256": "2bc3242ed757f52706480d041be55f09aec41fc09c5e88dfba599d4bc0ab6529",
+        "listing_sha256": "76fd11297bd690768872b50539670540362fe9a1b1f0e11ab59f074f67e05a42",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24421,
+            "encoded": "11655f00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "01645f00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "11645f00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551551,
+          "wp_exit_sp": 551554
+        }
+      },
+      "unpaced": {
+        "passed": true,
+        "package_bytes": 24420,
+        "guest_sha256": "87df77de176201b64df1ef0886b1cecff66d5ee3dd6700b88957d8dc40a9fa30",
+        "listing_sha256": "e2c7cb0b50b512a25edb9917d7e6eed932521f81482af4fb60a3dc6e36016355",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24421,
+            "encoded": "11655f00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "01645f00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "11645f00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        }
+      }
+    }
+  },
+  "unchanged_timed": {
+    "original": "5fc4dbb27aa0251eb41024a1a20d50391af6d76e2908f9931d0d6a9da786c244",
+    "candidate": "87df77de176201b64df1ef0886b1cecff66d5ee3dd6700b88957d8dc40a9fa30"
+  },
+  "caption": {
+    "text": "STATIC TIMER TESTING ONLY",
+    "width": 298,
+    "height": 14,
+    "x": 11,
+    "y": 183,
+    "buffer_id": 61872,
+    "bytes": 4172,
+    "sha256": "242b73aa81ec89836aeb149adcd449c72e66a727dc510b614d847be2dea41fb5"
+  },
+  "seconds": 2.8112126989872195
+}

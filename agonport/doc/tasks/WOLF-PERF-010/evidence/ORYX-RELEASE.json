@@ -1,0 +1,13 @@
+{
+  "source": "Successful oryx_lease.py release tool response, recorded after release",
+  "generation": 341,
+  "request": "ecbde068aa93",
+  "owner": "wolf3dorig",
+  "released": "2026-11-07T07:38:15.632486+00:00",
+  "next_request": null,
+  "release_observation": {
+    "machine": "oryx-linuxlite",
+    "epoch": 1794037093.3284473,
+    "emulators": []
+  }
+}

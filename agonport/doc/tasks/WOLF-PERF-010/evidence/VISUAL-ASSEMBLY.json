@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "guest_sha256": "77f6afad3f4672a38ec67aabb756d649f8a43f9fc8a6a7b29aa1a97b5cb71acb",
+  "seconds": 0.22578186698956415,
+  "guards": [
+    {
+      "cpu_c": 49.05,
+      "available_kib": 6859088
+    },
+    {
+      "cpu_c": 49.05,
+      "available_kib": 6856304
+    }
+  ]
+}

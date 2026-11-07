@@ -1,0 +1,2944 @@
+{
+  "passed": false,
+  "scope": "Static timer caption Fab source-bridge pixels only; no Xtensa/timing proof",
+  "error": "RuntimeError('Unexpected frontend exit')",
+  "seconds": 219.84854578700106,
+  "returncode": 0,
+  "captures": [
+    {
+      "file": "frame-0000.ppm",
+      "seconds": 0.0007445850023941603
+    },
+    {
+      "file": "frame-0001.ppm",
+      "seconds": 0.30273306400340516
+    },
+    {
+      "file": "frame-0002.ppm",
+      "seconds": 0.6044760940021661
+    },
+    {
+      "file": "frame-0003.ppm",
+      "seconds": 0.9053659290002543
+    },
+    {
+      "file": "frame-0004.ppm",
+      "seconds": 1.206758730000729
+    },
+    {
+      "file": "frame-0005.ppm",
+      "seconds": 1.5074441760007176
+    },
+    {
+      "file": "frame-0006.ppm",
+      "seconds": 1.8081369010033086
+    },
+    {
+      "file": "frame-0007.ppm",
+      "seconds": 2.1097421910017147
+    },
+    {
+      "file": "frame-0008.ppm",
+      "seconds": 2.4103787560015917
+    },
+    {
+      "file": "frame-0009.ppm",
+      "seconds": 2.711021751001681
+    },
+    {
+      "file": "frame-0010.ppm",
+      "seconds": 3.0117406950012082
+    },
+    {
+      "file": "frame-0011.ppm",
+      "seconds": 3.313009426001372
+    },
+    {
+      "file": "frame-0012.ppm",
+      "seconds": 3.6135866210024687
+    },
+    {
+      "file": "frame-0013.ppm",
+      "seconds": 3.914070516002539
+    },
+    {
+      "file": "frame-0014.ppm",
+      "seconds": 4.215463256001385
+    },
+    {
+      "file": "frame-0015.ppm",
+      "seconds": 4.515950591001456
+    },
+    {
+      "file": "frame-0016.ppm",
+      "seconds": 4.816717384001095
+    },
+    {
+      "file": "frame-0017.ppm",
+      "seconds": 5.118255032000889
+    },
+    {
+      "file": "frame-0018.ppm",
+      "seconds": 5.418709147001209
+    },
+    {
+      "file": "frame-0019.ppm",
+      "seconds": 5.7192538710005465
+    },
+    {
+      "file": "frame-0020.ppm",
+      "seconds": 6.019867274000717
+    },
+    {
+      "file": "frame-0021.ppm",
+      "seconds": 6.321210233003512
+    },
+    {
+      "file": "frame-0022.ppm",
+      "seconds": 6.621977975002665
+    },
+    {
+      "file": "frame-0023.ppm",
+      "seconds": 6.922688917002233
+    },
+    {
+      "file": "frame-0024.ppm",
+      "seconds": 7.224043585003528
+    },
+    {
+      "file": "frame-0025.ppm",
+      "seconds": 7.524745917002292
+    },
+    {
+      "file": "frame-0026.ppm",
+      "seconds": 7.825473259003047
+    },
+    {
+      "file": "frame-0027.ppm",
+      "seconds": 8.126907586000016
+    },
+    {
+      "file": "frame-0028.ppm",
+      "seconds": 8.427647657001216
+    },
+    {
+      "file": "frame-0029.ppm",
+      "seconds": 8.72829608900065
+    },
+    {
+      "file": "frame-0030.ppm",
+      "seconds": 9.029082979002851
+    },
+    {
+      "file": "frame-0031.ppm",
+      "seconds": 9.330845224001678
+    },
+    {
+      "file": "frame-0032.ppm",
+      "seconds": 9.631318276002276
+    },
+    {
+      "file": "frame-0033.ppm",
+      "seconds": 9.931920347000414
+    },
+    {
+      "file": "frame-0034.ppm",
+      "seconds": 10.233184354001423
+    },
+    {
+      "file": "frame-0035.ppm",
+      "seconds": 10.534010454000963
+    },
+    {
+      "file": "frame-0036.ppm",
+      "seconds": 10.834717754001758
+    },
+    {
+      "file": "frame-0037.ppm",
+      "seconds": 11.136140570000862
+    },
+    {
+      "file": "frame-0038.ppm",
+      "seconds": 11.436901939003292
+    },
+    {
+      "file": "frame-0039.ppm",
+      "seconds": 11.737682748000225
+    },
+    {
+      "file": "frame-0040.ppm",
+      "seconds": 12.038345217002643
+    },
+    {
+      "file": "frame-0041.ppm",
+      "seconds": 12.33972474300026
+    },
+    {
+      "file": "frame-0042.ppm",
+      "seconds": 12.640272523000021
+    },
+    {
+      "file": "frame-0043.ppm",
+      "seconds": 12.940830122002808
+    },
+    {
+      "file": "frame-0044.ppm",
+      "seconds": 13.242260957002145
+    },
+    {
+      "file": "frame-0045.ppm",
+      "seconds": 13.542890116001217
+    },
+    {
+      "file": "frame-0046.ppm",
+      "seconds": 13.843519154001115
+    },
+    {
+      "file": "frame-0047.ppm",
+      "seconds": 14.144890989002306
+    },
+    {
+      "file": "frame-0048.ppm",
+      "seconds": 14.445318608002708
+    },
+    {
+      "file": "frame-0049.ppm",
+      "seconds": 14.745755978001398
+    },
+    {
+      "file": "frame-0050.ppm",
+      "seconds": 15.046229206000135
+    },
+    {
+      "file": "frame-0051.ppm",
+      "seconds": 15.347333232002711
+    },
+    {
+      "file": "frame-0052.ppm",
+      "seconds": 15.647665951000818
+    },
+    {
+      "file": "frame-0053.ppm",
+      "seconds": 15.948116680003295
+    },
+    {
+      "file": "frame-0054.ppm",
+      "seconds": 16.24933888400119
+    },
+    {
+      "file": "frame-0055.ppm",
+      "seconds": 16.549791572000686
+    },
+    {
+      "file": "frame-0056.ppm",
+      "seconds": 16.850370399002713
+    },
+    {
+      "file": "frame-0057.ppm",
+      "seconds": 17.151831031002075
+    },
+    {
+      "file": "frame-0058.ppm",
+      "seconds": 17.45236544799991
+    },
+    {
+      "file": "frame-0059.ppm",
+      "seconds": 17.75292307500058
+    },
+    {
+      "file": "frame-0060.ppm",
+      "seconds": 18.053665511000872
+    },
+    {
+      "file": "frame-0061.ppm",
+      "seconds": 18.354854484001407
+    },
+    {
+      "file": "frame-0062.ppm",
+      "seconds": 18.655358391002665
+    },
+    {
+      "file": "frame-0063.ppm",
+      "seconds": 18.955776438000612
+    },
+    {
+      "file": "frame-0064.ppm",
+      "seconds": 19.257014140002866
+    },
+    {
+      "file": "frame-0065.ppm",
+      "seconds": 19.557440907003183
+    },
+    {
+      "file": "frame-0066.ppm",
+      "seconds": 19.85788308300107
+    },
+    {
+      "file": "frame-0067.ppm",
+      "seconds": 20.15935720300331
+    },
+    {
+      "file": "frame-0068.ppm",
+      "seconds": 20.45980134000274
+    },
+    {
+      "file": "frame-0069.ppm",
+      "seconds": 20.760241685002256
+    },
+    {
+      "file": "frame-0070.ppm",
+      "seconds": 21.0608452100023
+    },
+    {
+      "file": "frame-0071.ppm",
+      "seconds": 21.362382369999978
+    },
+    {
+      "file": "frame-0072.ppm",
+      "seconds": 21.66298779400313
+    },
+    {
+      "file": "frame-0073.ppm",
+      "seconds": 21.963629538000532
+    },
+    {
+      "file": "frame-0074.ppm",
+      "seconds": 22.265089347001776
+    },
+    {
+      "file": "frame-0075.ppm",
+      "seconds": 22.56569188100184
+    },
+    {
+      "file": "frame-0076.ppm",
+      "seconds": 22.86624294500143
+    },
+    {
+      "file": "frame-0077.ppm",
+      "seconds": 23.16768800400314
+    },
+    {
+      "file": "frame-0078.ppm",
+      "seconds": 23.468071899002098
+    },
+    {
+      "file": "frame-0079.ppm",
+      "seconds": 23.76861558300152
+    },
+    {
+      "file": "frame-0080.ppm",
+      "seconds": 24.069396894999954
+    },
+    {
+      "file": "frame-0081.ppm",
+      "seconds": 24.370803513000283
+    },
+    {
+      "file": "frame-0082.ppm",
+      "seconds": 24.6716414850016
+    },
+    {
+      "file": "frame-0083.ppm",
+      "seconds": 24.97261321500264
+    },
+    {
+      "file": "frame-0084.ppm",
+      "seconds": 25.274829788002535
+    },
+    {
+      "file": "frame-0085.ppm",
+      "seconds": 25.57592836800177
+    },
+    {
+      "file": "frame-0086.ppm",
+      "seconds": 25.87672997900154
+    },
+    {
+      "file": "frame-0087.ppm",
+      "seconds": 26.178490464000788
+    },
+    {
+      "file": "frame-0088.ppm",
+      "seconds": 26.479298835001828
+    },
+    {
+      "file": "frame-0089.ppm",
+      "seconds": 26.77996047600027
+    },
+    {
+      "file": "frame-0090.ppm",
+      "seconds": 27.080676007000875
+    },
+    {
+      "file": "frame-0091.ppm",
+      "seconds": 27.382111494000128
+    },
+    {
+      "file": "frame-0092.ppm",
+      "seconds": 27.682854474001942
+    },
+    {
+      "file": "frame-0093.ppm",
+      "seconds": 27.983703733003495
+    },
+    {
+      "file": "frame-0094.ppm",
+      "seconds": 28.285404998001468
+    },
+    {
+      "file": "frame-0095.ppm",
+      "seconds": 28.586002609001298
+    },
+    {
+      "file": "frame-0096.ppm",
+      "seconds": 28.886619179000263
+    },
+    {
+      "file": "frame-0097.ppm",
+      "seconds": 29.188046505001694
+    },
+    {
+      "file": "frame-0098.ppm",
+      "seconds": 29.488820704002137
+    },
+    {
+      "file": "frame-0099.ppm",
+      "seconds": 29.78949197300244
+    },
+    {
+      "file": "frame-0100.ppm",
+      "seconds": 30.09015533300044
+    },
+    {
+      "file": "frame-0101.ppm",
+      "seconds": 30.391494978000992
+    },
+    {
+      "file": "frame-0102.ppm",
+      "seconds": 30.692221657001937
+    },
+    {
+      "file": "frame-0103.ppm",
+      "seconds": 30.992787016002694
+    },
+    {
+      "file": "frame-0104.ppm",
+      "seconds": 31.29428567100331
+    },
+    {
+      "file": "frame-0105.ppm",
+      "seconds": 31.59482415000093
+    },
+    {
+      "file": "frame-0106.ppm",
+      "seconds": 31.895640167000238
+    },
+    {
+      "file": "frame-0107.ppm",
+      "seconds": 32.19725295000171
+    },
+    {
+      "file": "frame-0108.ppm",
+      "seconds": 32.497910208003304
+    },
+    {
+      "file": "frame-0109.ppm",
+      "seconds": 32.79835401800301
+    },
+    {
+      "file": "frame-0110.ppm",
+      "seconds": 33.0993192140013
+    },
+    {
+      "file": "frame-0111.ppm",
+      "seconds": 33.40105323500029
+    },
+    {
+      "file": "frame-0112.ppm",
+      "seconds": 33.70183155199993
+    },
+    {
+      "file": "frame-0113.ppm",
+      "seconds": 34.00280500700319
+    },
+    {
+      "file": "frame-0114.ppm",
+      "seconds": 34.30449769900224
+    },
+    {
+      "file": "frame-0115.ppm",
+      "seconds": 34.605028577003395
+    },
+    {
+      "file": "frame-0116.ppm",
+      "seconds": 34.905721213002835
+    },
+    {
+      "file": "frame-0117.ppm",
+      "seconds": 35.20829719900212
+    },
+    {
+      "file": "frame-0118.ppm",
+      "seconds": 35.50885783600097
+    },
+    {
+      "file": "frame-0119.ppm",
+      "seconds": 35.80943346300046
+    },
+    {
+      "file": "frame-0120.ppm",
+      "seconds": 36.11012003900032
+    },
+    {
+      "file": "frame-0121.ppm",
+      "seconds": 36.411499030000414
+    },
+    {
+      "file": "frame-0122.ppm",
+      "seconds": 36.71257813400007
+    },
+    {
+      "file": "frame-0123.ppm",
+      "seconds": 37.013671107000846
+    },
+    {
+      "file": "frame-0124.ppm",
+      "seconds": 37.316313331000856
+    },
+    {
+      "file": "frame-0125.ppm",
+      "seconds": 37.617186225001205
+    },
+    {
+      "file": "frame-0126.ppm",
+      "seconds": 37.917642562002584
+    },
+    {
+      "file": "frame-0127.ppm",
+      "seconds": 38.21939345999999
+    },
+    {
+      "file": "frame-0128.ppm",
+      "seconds": 38.52017931500086
+    },
+    {
+      "file": "frame-0129.ppm",
+      "seconds": 38.82106473800013
+    },
+    {
+      "file": "frame-0130.ppm",
+      "seconds": 39.12191786100084
+    },
+    {
+      "file": "frame-0131.ppm",
+      "seconds": 39.42334051100261
+    },
+    {
+      "file": "frame-0132.ppm",
+      "seconds": 39.72430101400096
+    },
+    {
+      "file": "frame-0133.ppm",
+      "seconds": 40.025100357001065
+    },
+    {
+      "file": "frame-0134.ppm",
+      "seconds": 40.326557476000744
+    },
+    {
+      "file": "frame-0135.ppm",
+      "seconds": 40.62734157900195
+    },
+    {
+      "file": "frame-0136.ppm",
+      "seconds": 40.92830386100104
+    },
+    {
+      "file": "frame-0137.ppm",
+      "seconds": 41.22961234000104
+    },
+    {
+      "file": "frame-0138.ppm",
+      "seconds": 41.53010495500348
+    },
+    {
+      "file": "frame-0139.ppm",
+      "seconds": 41.83064871800161
+    },
+    {
+      "file": "frame-0140.ppm",
+      "seconds": 42.131294511000306
+    },
+    {
+      "file": "frame-0141.ppm",
+      "seconds": 42.43261457000335
+    },
+    {
+      "file": "frame-0142.ppm",
+      "seconds": 42.733483651001734
+    },
+    {
+      "file": "frame-0143.ppm",
+      "seconds": 43.03438360200016
+    },
+    {
+      "file": "frame-0144.ppm",
+      "seconds": 43.33609700800298
+    },
+    {
+      "file": "frame-0145.ppm",
+      "seconds": 43.63675024100303
+    },
+    {
+      "file": "frame-0146.ppm",
+      "seconds": 43.937260543003504
+    },
+    {
+      "file": "frame-0147.ppm",
+      "seconds": 44.23845941200125
+    },
+    {
+      "file": "frame-0148.ppm",
+      "seconds": 44.53895442400244
+    },
+    {
+      "file": "frame-0149.ppm",
+      "seconds": 44.8397970440019
+    },
+    {
+      "file": "frame-0150.ppm",
+      "seconds": 45.140368726002635
+    },
+    {
+      "file": "frame-0151.ppm",
+      "seconds": 45.44159416399998
+    },
+    {
+      "file": "frame-0152.ppm",
+      "seconds": 45.742142285002046
+    },
+    {
+      "file": "frame-0153.ppm",
+      "seconds": 46.04281472600269
+    },
+    {
+      "file": "frame-0154.ppm",
+      "seconds": 46.344310632001
+    },
+    {
+      "file": "frame-0155.ppm",
+      "seconds": 46.64505365200239
+    },
+    {
+      "file": "frame-0156.ppm",
+      "seconds": 46.94545899300283
+    },
+    {
+      "file": "frame-0157.ppm",
+      "seconds": 47.24712956700023
+    },
+    {
+      "file": "frame-0158.ppm",
+      "seconds": 47.547555069002556
+    },
+    {
+      "file": "frame-0159.ppm",
+      "seconds": 47.84830037800202
+    },
+    {
+      "file": "frame-0160.ppm",
+      "seconds": 48.14931511500254
+    },
+    {
+      "file": "frame-0161.ppm",
+      "seconds": 48.45092718900196
+    },
+    {
+      "file": "frame-0162.ppm",
+      "seconds": 48.751792897000996
+    },
+    {
+      "file": "frame-0163.ppm",
+      "seconds": 49.05272441500347
+    },
+    {
+      "file": "frame-0164.ppm",
+      "seconds": 49.35428688899992
+    },
+    {
+      "file": "frame-0165.ppm",
+      "seconds": 49.65508704700187
+    },
+    {
+      "file": "frame-0166.ppm",
+      "seconds": 49.955922454002575
+    },
+    {
+      "file": "frame-0167.ppm",
+      "seconds": 50.25742834800258
+    },
+    {
+      "file": "frame-0168.ppm",
+      "seconds": 50.558282375001
+    },
+    {
+      "file": "frame-0169.ppm",
+      "seconds": 50.85918861100072
+    },
+    {
+      "file": "frame-0170.ppm",
+      "seconds": 51.160049268000876
+    },
+    {
+      "file": "frame-0171.ppm",
+      "seconds": 51.46169301000191
+    },
+    {
+      "file": "frame-0172.ppm",
+      "seconds": 51.762605546002305
+    },
+    {
+      "file": "frame-0173.ppm",
+      "seconds": 52.06356331200004
+    },
+    {
+      "file": "frame-0174.ppm",
+      "seconds": 52.365355233003356
+    },
+    {
+      "file": "frame-0175.ppm",
+      "seconds": 52.66631474800306
+    },
+    {
+      "file": "frame-0176.ppm",
+      "seconds": 52.96708116400259
+    },
+    {
+      "file": "frame-0177.ppm",
+      "seconds": 53.268507827000576
+    },
+    {
+      "file": "frame-0178.ppm",
+      "seconds": 53.56942965200142
+    },
+    {
+      "file": "frame-0179.ppm",
+      "seconds": 53.87019933800184
+    },
+    {
+      "file": "frame-0180.ppm",
+      "seconds": 54.17099197300195
+    },
+    {
+      "file": "frame-0181.ppm",
+      "seconds": 54.472673374002625
+    },
+    {
+      "file": "frame-0182.ppm",
+      "seconds": 54.773451039000065
+    },
+    {
+      "file": "frame-0183.ppm",
+      "seconds": 55.07438582300165
+    },
+    {
+      "file": "frame-0184.ppm",
+      "seconds": 55.376494940002885
+    },
+    {
+      "file": "frame-0185.ppm",
+      "seconds": 55.67729320500075
+    },
+    {
+      "file": "frame-0186.ppm",
+      "seconds": 55.97804071000064
+    },
+    {
+      "file": "frame-0187.ppm",
+      "seconds": 56.27945969000211
+    },
+    {
+      "file": "frame-0188.ppm",
+      "seconds": 56.580329794000136
+    },
+    {
+      "file": "frame-0189.ppm",
+      "seconds": 56.8811189980006
+    },
+    {
+      "file": "frame-0190.ppm",
+      "seconds": 57.18174518300293
+    },
+    {
+      "file": "frame-0191.ppm",
+      "seconds": 57.483350122001866
+    },
+    {
+      "file": "frame-0192.ppm",
+      "seconds": 57.78412095600288
+    },
+    {
+      "file": "frame-0193.ppm",
+      "seconds": 58.08498194900312
+    },
+    {
+      "file": "frame-0194.ppm",
+      "seconds": 58.386430288002884
+    },
+    {
+      "file": "frame-0195.ppm",
+      "seconds": 58.68701853300081
+    },
+    {
+      "file": "frame-0196.ppm",
+      "seconds": 58.9875969570021
+    },
+    {
+      "file": "frame-0197.ppm",
+      "seconds": 59.28873569700227
+    },
+    {
+      "file": "frame-0198.ppm",
+      "seconds": 59.58952516000136
+    },
+    {
+      "file": "frame-0199.ppm",
+      "seconds": 59.890437062000274
+    },
+    {
+      "file": "frame-0200.ppm",
+      "seconds": 60.190861886003404
+    },
+    {
+      "file": "frame-0201.ppm",
+      "seconds": 60.49210793600287
+    },
+    {
+      "file": "frame-0202.ppm",
+      "seconds": 60.79265175900218
+    },
+    {
+      "file": "frame-0203.ppm",
+      "seconds": 61.093214772001375
+    },
+    {
+      "file": "frame-0204.ppm",
+      "seconds": 61.39457947000119
+    },
+    {
+      "file": "frame-0205.ppm",
+      "seconds": 61.695343062001484
+    },
+    {
+      "file": "frame-0206.ppm",
+      "seconds": 61.99604356400232
+    },
+    {
+      "file": "frame-0207.ppm",
+      "seconds": 62.29745703100343
+    },
+    {
+      "file": "frame-0208.ppm",
+      "seconds": 62.598211343
+    },
+    {
+      "file": "frame-0209.ppm",
+      "seconds": 62.898988753000594
+    },
+    {
+      "file": "frame-0210.ppm",
+      "seconds": 63.199786924000364
+    },
+    {
+      "file": "frame-0211.ppm",
+      "seconds": 63.501181691000966
+    },
+    {
+      "file": "frame-0212.ppm",
+      "seconds": 63.80176377300086
+    },
+    {
+      "file": "frame-0213.ppm",
+      "seconds": 64.10257864200321
+    },
+    {
+      "file": "frame-0214.ppm",
+      "seconds": 64.40517100200304
+    },
+    {
+      "file": "frame-0215.ppm",
+      "seconds": 64.7063487100022
+    },
+    {
+      "file": "frame-0216.ppm",
+      "seconds": 65.00700880000295
+    },
+    {
+      "file": "frame-0217.ppm",
+      "seconds": 65.3092757710001
+    },
+    {
+      "file": "frame-0218.ppm",
+      "seconds": 65.60982839200005
+    },
+    {
+      "file": "frame-0219.ppm",
+      "seconds": 65.91039017300136
+    },
+    {
+      "file": "frame-0220.ppm",
+      "seconds": 66.21097837300113
+    },
+    {
+      "file": "frame-0221.ppm",
+      "seconds": 66.51283411600161
+    },
+    {
+      "file": "frame-0222.ppm",
+      "seconds": 66.81388222300302
+    },
+    {
+      "file": "frame-0223.ppm",
+      "seconds": 67.11480851000306
+    },
+    {
+      "file": "frame-0224.ppm",
+      "seconds": 67.41657124300036
+    },
+    {
+      "file": "frame-0225.ppm",
+      "seconds": 67.71757737000007
+    },
+    {
+      "file": "frame-0226.ppm",
+      "seconds": 68.01832861799994
+    },
+    {
+      "file": "frame-0227.ppm",
+      "seconds": 68.32032284900197
+    },
+    {
+      "file": "frame-0228.ppm",
+      "seconds": 68.62083938900105
+    },
+    {
+      "file": "frame-0229.ppm",
+      "seconds": 68.92149122699993
+    },
+    {
+      "file": "frame-0230.ppm",
+      "seconds": 69.22237391400267
+    },
+    {
+      "file": "frame-0231.ppm",
+      "seconds": 69.52383088800343
+    },
+    {
+      "file": "frame-0232.ppm",
+      "seconds": 69.8250456220012
+    },
+    {
+      "file": "frame-0233.ppm",
+      "seconds": 70.1258517790011
+    },
+    {
+      "file": "frame-0234.ppm",
+      "seconds": 70.42730970200137
+    },
+    {
+      "file": "frame-0235.ppm",
+      "seconds": 70.72791317000156
+    },
+    {
+      "file": "frame-0236.ppm",
+      "seconds": 71.02847061700231
+    },
+    {
+      "file": "frame-0237.ppm",
+      "seconds": 71.33014335900225
+    },
+    {
+      "file": "frame-0238.ppm",
+      "seconds": 71.63100804400165
+    },
+    {
+      "file": "frame-0239.ppm",
+      "seconds": 71.93192513900067
+    },
+    {
+      "file": "frame-0240.ppm",
+      "seconds": 72.23268986500261
+    },
+    {
+      "file": "frame-0241.ppm",
+      "seconds": 72.53412400800153
+    },
+    {
+      "file": "frame-0242.ppm",
+      "seconds": 72.83523775100184
+    },
+    {
+      "file": "frame-0243.ppm",
+      "seconds": 73.13596015700023
+    },
+    {
+      "file": "frame-0244.ppm",
+      "seconds": 73.4374461280022
+    },
+    {
+      "file": "frame-0245.ppm",
+      "seconds": 73.73829025300074
+    },
+    {
+      "file": "frame-0246.ppm",
+      "seconds": 74.03894706800202
+    },
+    {
+      "file": "frame-0247.ppm",
+      "seconds": 74.34099085600246
+    },
+    {
+      "file": "frame-0248.ppm",
+      "seconds": 74.641859880001
+    },
+    {
+      "file": "frame-0249.ppm",
+      "seconds": 74.94241800500095
+    },
+    {
+      "file": "frame-0250.ppm",
+      "seconds": 75.242948471001
+    },
+    {
+      "file": "frame-0251.ppm",
+      "seconds": 75.54432020200329
+    },
+    {
+      "file": "frame-0252.ppm",
+      "seconds": 75.84512786600317
+    },
+    {
+      "file": "frame-0253.ppm",
+      "seconds": 76.14565579100235
+    },
+    {
+      "file": "frame-0254.ppm",
+      "seconds": 76.44725714000015
+    },
+    {
+      "file": "frame-0255.ppm",
+      "seconds": 76.74788454400186
+    },
+    {
+      "file": "frame-0256.ppm",
+      "seconds": 77.04868410700146
+    },
+    {
+      "file": "frame-0257.ppm",
+      "seconds": 77.3502488660015
+    },
+    {
+      "file": "frame-0258.ppm",
+      "seconds": 77.65115364900339
+    },
+    {
+      "file": "frame-0259.ppm",
+      "seconds": 77.95181776200116
+    },
+    {
+      "file": "frame-0260.ppm",
+      "seconds": 78.25270740400083
+    },
+    {
+      "file": "frame-0261.ppm",
+      "seconds": 78.55457839000155
+    },
+    {
+      "file": "frame-0262.ppm",
+      "seconds": 78.85570185100005
+    },
+    {
+      "file": "frame-0263.ppm",
+      "seconds": 79.15664501200081
+    },
+    {
+      "file": "frame-0264.ppm",
+      "seconds": 79.45849861800161
+    },
+    {
+      "file": "frame-0265.ppm",
+      "seconds": 79.75965288700172
+    },
+    {
+      "file": "frame-0266.ppm",
+      "seconds": 80.06090805600252
+    },
+    {
+      "file": "frame-0267.ppm",
+      "seconds": 80.36322882900276
+    },
+    {
+      "file": "frame-0268.ppm",
+      "seconds": 80.66449331800322
+    },
+    {
+      "file": "frame-0269.ppm",
+      "seconds": 80.96535806800239
+    },
+    {
+      "file": "frame-0270.ppm",
+      "seconds": 81.26612749000196
+    },
+    {
+      "file": "frame-0271.ppm",
+      "seconds": 81.56740627800173
+    },
+    {
+      "file": "frame-0272.ppm",
+      "seconds": 81.86802807900312
+    },
+    {
+      "file": "frame-0273.ppm",
+      "seconds": 82.16863925100188
+    },
+    {
+      "file": "frame-0274.ppm",
+      "seconds": 82.47022415700121
+    },
+    {
+      "file": "frame-0275.ppm",
+      "seconds": 82.77107129700016
+    },
+    {
+      "file": "frame-0276.ppm",
+      "seconds": 83.07162228800007
+    },
+    {
+      "file": "frame-0277.ppm",
+      "seconds": 83.37283429600211
+    },
+    {
+      "file": "frame-0278.ppm",
+      "seconds": 83.67375511499995
+    },
+    {
+      "file": "frame-0279.ppm",
+      "seconds": 83.97559129799993
+    },
+    {
+      "file": "frame-0280.ppm",
+      "seconds": 84.27670956600195
+    },
+    {
+      "file": "frame-0281.ppm",
+      "seconds": 84.57833784000104
+    },
+    {
+      "file": "frame-0282.ppm",
+      "seconds": 84.87919563900141
+    },
+    {
+      "file": "frame-0283.ppm",
+      "seconds": 85.18017314700046
+    },
+    {
+      "file": "frame-0284.ppm",
+      "seconds": 85.4821015890011
+    },
+    {
+      "file": "frame-0285.ppm",
+      "seconds": 85.78320529600023
+    },
+    {
+      "file": "frame-0286.ppm",
+      "seconds": 86.08437259200218
+    },
+    {
+      "file": "frame-0287.ppm",
+      "seconds": 86.38580051700046
+    },
+    {
+      "file": "frame-0288.ppm",
+      "seconds": 86.68649950600229
+    },
+    {
+      "file": "frame-0289.ppm",
+      "seconds": 86.98722301400267
+    },
+    {
+      "file": "frame-0290.ppm",
+      "seconds": 87.28779831300199
+    },
+    {
+      "file": "frame-0291.ppm",
+      "seconds": 87.58918098800132
+    },
+    {
+      "file": "frame-0292.ppm",
+      "seconds": 87.88980544600054
+    },
+    {
+      "file": "frame-0293.ppm",
+      "seconds": 88.19057375300326
+    },
+    {
+      "file": "frame-0294.ppm",
+      "seconds": 88.49220468600106
+    },
+    {
+      "file": "frame-0295.ppm",
+      "seconds": 88.79275900400171
+    },
+    {
+      "file": "frame-0296.ppm",
+      "seconds": 89.09381158000178
+    },
+    {
+      "file": "frame-0297.ppm",
+      "seconds": 89.39552367100259
+    },
+    {
+      "file": "frame-0298.ppm",
+      "seconds": 89.69640538700332
+    },
+    {
+      "file": "frame-0299.ppm",
+      "seconds": 89.99724274300024
+    },
+    {
+      "file": "frame-0300.ppm",
+      "seconds": 90.29807545900258
+    },
+    {
+      "file": "frame-0301.ppm",
+      "seconds": 90.59969715100306
+    },
+    {
+      "file": "frame-0302.ppm",
+      "seconds": 90.90050905600219
+    },
+    {
+      "file": "frame-0303.ppm",
+      "seconds": 91.20131426200169
+    },
+    {
+      "file": "frame-0304.ppm",
+      "seconds": 91.50303467300182
+    },
+    {
+      "file": "frame-0305.ppm",
+      "seconds": 91.80391412700192
+    },
+    {
+      "file": "frame-0306.ppm",
+      "seconds": 92.10455908400036
+    },
+    {
+      "file": "frame-0307.ppm",
+      "seconds": 92.40641359300207
+    },
+    {
+      "file": "frame-0308.ppm",
+      "seconds": 92.70734675700078
+    },
+    {
+      "file": "frame-0309.ppm",
+      "seconds": 93.00808031199995
+    },
+    {
+      "file": "frame-0310.ppm",
+      "seconds": 93.30895818600038
+    },
+    {
+      "file": "frame-0311.ppm",
+      "seconds": 93.61093021400302
+    },
+    {
+      "file": "frame-0312.ppm",
+      "seconds": 93.9117914280032
+    },
+    {
+      "file": "frame-0313.ppm",
+      "seconds": 94.21258606200354
+    },
+    {
+      "file": "frame-0314.ppm",
+      "seconds": 94.51436871100304
+    },
+    {
+      "file": "frame-0315.ppm",
+      "seconds": 94.81491443600316
+    },
+    {
+      "file": "frame-0316.ppm",
+      "seconds": 95.11554804000116
+    },
+    {
+      "file": "frame-0317.ppm",
+      "seconds": 95.41721954900277
+    },
+    {
+      "file": "frame-0318.ppm",
+      "seconds": 95.71780263400069
+    },
+    {
+      "file": "frame-0319.ppm",
+      "seconds": 96.01836902800278
+    },
+    {
+      "file": "frame-0320.ppm",
+      "seconds": 96.31908852200286
+    },
+    {
+      "file": "frame-0321.ppm",
+      "seconds": 96.62139588600257
+    },
+    {
+      "file": "frame-0322.ppm",
+      "seconds": 96.92230568800005
+    },
+    {
+      "file": "frame-0323.ppm",
+      "seconds": 97.22357899800045
+    },
+    {
+      "file": "frame-0324.ppm",
+      "seconds": 97.52491815800022
+    },
+    {
+      "file": "frame-0325.ppm",
+      "seconds": 97.82556101100272
+    },
+    {
+      "file": "frame-0326.ppm",
+      "seconds": 98.1264301020019
+    },
+    {
+      "file": "frame-0327.ppm",
+      "seconds": 98.42833697800233
+    },
+    {
+      "file": "frame-0328.ppm",
+      "seconds": 98.72891790100039
+    },
+    {
+      "file": "frame-0329.ppm",
+      "seconds": 99.02965853300338
+    },
+    {
+      "file": "frame-0330.ppm",
+      "seconds": 99.33037954500105
+    },
+    {
+      "file": "frame-0331.ppm",
+      "seconds": 99.63230770000155
+    },
+    {
+      "file": "frame-0332.ppm",
+      "seconds": 99.93351282900039
+    },
+    {
+      "file": "frame-0333.ppm",
+      "seconds": 100.23504763600067
+    },
+    {
+      "file": "frame-0334.ppm",
+      "seconds": 100.53759726600038
+    },
+    {
+      "file": "frame-0335.ppm",
+      "seconds": 100.83823897800175
+    },
+    {
+      "file": "frame-0336.ppm",
+      "seconds": 101.13880913000321
+    },
+    {
+      "file": "frame-0337.ppm",
+      "seconds": 101.44084836300317
+    },
+    {
+      "file": "frame-0338.ppm",
+      "seconds": 101.74122365600124
+    },
+    {
+      "file": "frame-0339.ppm",
+      "seconds": 102.04163239800255
+    },
+    {
+      "file": "frame-0340.ppm",
+      "seconds": 102.3421605600015
+    },
+    {
+      "file": "frame-0341.ppm",
+      "seconds": 102.64357349600323
+    },
+    {
+      "file": "frame-0342.ppm",
+      "seconds": 102.9441804570015
+    },
+    {
+      "file": "frame-0343.ppm",
+      "seconds": 103.24485755700152
+    },
+    {
+      "file": "frame-0344.ppm",
+      "seconds": 103.54618131300231
+    },
+    {
+      "file": "frame-0345.ppm",
+      "seconds": 103.84668159400098
+    },
+    {
+      "file": "frame-0346.ppm",
+      "seconds": 104.1472291750033
+    },
+    {
+      "file": "frame-0347.ppm",
+      "seconds": 104.44873941000333
+    },
+    {
+      "file": "frame-0348.ppm",
+      "seconds": 104.74909832100093
+    },
+    {
+      "file": "frame-0349.ppm",
+      "seconds": 105.04973414000051
+    },
+    {
+      "file": "frame-0350.ppm",
+      "seconds": 105.35018063100142
+    },
+    {
+      "file": "frame-0351.ppm",
+      "seconds": 105.65167583500079
+    },
+    {
+      "file": "frame-0352.ppm",
+      "seconds": 105.95223149400044
+    },
+    {
+      "file": "frame-0353.ppm",
+      "seconds": 106.25265730500178
+    },
+    {
+      "file": "frame-0354.ppm",
+      "seconds": 106.55395974000203
+    },
+    {
+      "file": "frame-0355.ppm",
+      "seconds": 106.85461330800172
+    },
+    {
+      "file": "frame-0356.ppm",
+      "seconds": 107.15517911700226
+    },
+    {
+      "file": "frame-0357.ppm",
+      "seconds": 107.45634471200174
+    },
+    {
+      "file": "frame-0358.ppm",
+      "seconds": 107.75691761100097
+    },
+    {
+      "file": "frame-0359.ppm",
+      "seconds": 108.057560448
+    },
+    {
+      "file": "frame-0360.ppm",
+      "seconds": 108.35806216700075
+    },
+    {
+      "file": "frame-0361.ppm",
+      "seconds": 108.65942662000089
+    },
+    {
+      "file": "frame-0362.ppm",
+      "seconds": 108.95997475800323
+    },
+    {
+      "file": "frame-0363.ppm",
+      "seconds": 109.26055859600092
+    },
+    {
+      "file": "frame-0364.ppm",
+      "seconds": 109.56182613000055
+    },
+    {
+      "file": "frame-0365.ppm",
+      "seconds": 109.86245700700238
+    },
+    {
+      "file": "frame-0366.ppm",
+      "seconds": 110.16305630400166
+    },
+    {
+      "file": "frame-0367.ppm",
+      "seconds": 110.46482021400152
+    },
+    {
+      "file": "frame-0368.ppm",
+      "seconds": 110.76529070200195
+    },
+    {
+      "file": "frame-0369.ppm",
+      "seconds": 111.06598579700221
+    },
+    {
+      "file": "frame-0370.ppm",
+      "seconds": 111.36640823500056
+    },
+    {
+      "file": "frame-0371.ppm",
+      "seconds": 111.66743430900169
+    },
+    {
+      "file": "frame-0372.ppm",
+      "seconds": 111.9679036660018
+    },
+    {
+      "file": "frame-0373.ppm",
+      "seconds": 112.26845094200326
+    },
+    {
+      "file": "frame-0374.ppm",
+      "seconds": 112.57061928900293
+    },
+    {
+      "file": "frame-0375.ppm",
+      "seconds": 112.8713627540019
+    },
+    {
+      "file": "frame-0376.ppm",
+      "seconds": 113.17186176000178
+    },
+    {
+      "file": "frame-0377.ppm",
+      "seconds": 113.47347015000196
+    },
+    {
+      "file": "frame-0378.ppm",
+      "seconds": 113.77390417600327
+    },
+    {
+      "file": "frame-0379.ppm",
+      "seconds": 114.07430320200001
+    },
+    {
+      "file": "frame-0380.ppm",
+      "seconds": 114.37502588600182
+    },
+    {
+      "file": "frame-0381.ppm",
+      "seconds": 114.67638356700263
+    },
+    {
+      "file": "frame-0382.ppm",
+      "seconds": 114.97695535100138
+    },
+    {
+      "file": "frame-0383.ppm",
+      "seconds": 115.2776370850006
+    },
+    {
+      "file": "frame-0384.ppm",
+      "seconds": 115.57937371300068
+    },
+    {
+      "file": "frame-0385.ppm",
+      "seconds": 115.88025615600054
+    },
+    {
+      "file": "frame-0386.ppm",
+      "seconds": 116.18112821800241
+    },
+    {
+      "file": "frame-0387.ppm",
+      "seconds": 116.48364211100125
+    },
+    {
+      "file": "frame-0388.ppm",
+      "seconds": 116.78474173200084
+    },
+    {
+      "file": "frame-0389.ppm",
+      "seconds": 117.0857106930016
+    },
+    {
+      "file": "frame-0390.ppm",
+      "seconds": 117.38645702600115
+    },
+    {
+      "file": "frame-0391.ppm",
+      "seconds": 117.6878597740033
+    },
+    {
+      "file": "frame-0392.ppm",
+      "seconds": 117.9890850740012
+    },
+    {
+      "file": "frame-0393.ppm",
+      "seconds": 118.29004421400168
+    },
+    {
+      "file": "frame-0394.ppm",
+      "seconds": 118.59162011200169
+    },
+    {
+      "file": "frame-0395.ppm",
+      "seconds": 118.89363450600285
+    },
+    {
+      "file": "frame-0396.ppm",
+      "seconds": 119.1950440340006
+    },
+    {
+      "file": "frame-0397.ppm",
+      "seconds": 119.49755139500121
+    },
+    {
+      "file": "frame-0398.ppm",
+      "seconds": 119.7991575010019
+    },
+    {
+      "file": "frame-0399.ppm",
+      "seconds": 120.10024826000154
+    },
+    {
+      "file": "frame-0400.ppm",
+      "seconds": 120.40152684800341
+    },
+    {
+      "file": "frame-0401.ppm",
+      "seconds": 120.70364755100309
+    },
+    {
+      "file": "frame-0402.ppm",
+      "seconds": 121.00492089900217
+    },
+    {
+      "file": "frame-0403.ppm",
+      "seconds": 121.3061876560023
+    },
+    {
+      "file": "frame-0404.ppm",
+      "seconds": 121.60802187100126
+    },
+    {
+      "file": "frame-0405.ppm",
+      "seconds": 121.90869660099997
+    },
+    {
+      "file": "frame-0406.ppm",
+      "seconds": 122.2094913510009
+    },
+    {
+      "file": "frame-0407.ppm",
+      "seconds": 122.51123810500212
+    },
+    {
+      "file": "frame-0408.ppm",
+      "seconds": 122.81176002600114
+    },
+    {
+      "file": "frame-0409.ppm",
+      "seconds": 123.11270544500076
+    },
+    {
+      "file": "frame-0410.ppm",
+      "seconds": 123.41361089300335
+    },
+    {
+      "file": "frame-0411.ppm",
+      "seconds": 123.7153041370002
+    },
+    {
+      "file": "frame-0412.ppm",
+      "seconds": 124.01606971600268
+    },
+    {
+      "file": "frame-0413.ppm",
+      "seconds": 124.31681084500087
+    },
+    {
+      "file": "frame-0414.ppm",
+      "seconds": 124.61874210700262
+    },
+    {
+      "file": "frame-0415.ppm",
+      "seconds": 124.91959838500043
+    },
+    {
+      "file": "frame-0416.ppm",
+      "seconds": 125.22043366300204
+    },
+    {
+      "file": "frame-0417.ppm",
+      "seconds": 125.52190687800248
+    },
+    {
+      "file": "frame-0418.ppm",
+      "seconds": 125.82270440600041
+    },
+    {
+      "file": "frame-0419.ppm",
+      "seconds": 126.12366266200115
+    },
+    {
+      "file": "frame-0420.ppm",
+      "seconds": 126.42435971100349
+    },
+    {
+      "file": "frame-0421.ppm",
+      "seconds": 126.72616469200148
+    },
+    {
+      "file": "frame-0422.ppm",
+      "seconds": 127.0270804790016
+    },
+    {
+      "file": "frame-0423.ppm",
+      "seconds": 127.32794054600163
+    },
+    {
+      "file": "frame-0424.ppm",
+      "seconds": 127.62922735000029
+    },
+    {
+      "file": "frame-0425.ppm",
+      "seconds": 127.92974848900121
+    },
+    {
+      "file": "frame-0426.ppm",
+      "seconds": 128.23030547700182
+    },
+    {
+      "file": "frame-0427.ppm",
+      "seconds": 128.53178096000192
+    },
+    {
+      "file": "frame-0428.ppm",
+      "seconds": 128.83228508800312
+    },
+    {
+      "file": "frame-0429.ppm",
+      "seconds": 129.13287340500028
+    },
+    {
+      "file": "frame-0430.ppm",
+      "seconds": 129.4341102590006
+    },
+    {
+      "file": "frame-0431.ppm",
+      "seconds": 129.7366443150022
+    },
+    {
+      "file": "frame-0432.ppm",
+      "seconds": 130.03721053200206
+    },
+    {
+      "file": "frame-0433.ppm",
+      "seconds": 130.3378612780034
+    },
+    {
+      "file": "frame-0434.ppm",
+      "seconds": 130.64004372600175
+    },
+    {
+      "file": "frame-0435.ppm",
+      "seconds": 130.94065667200266
+    },
+    {
+      "file": "frame-0436.ppm",
+      "seconds": 131.2410722900022
+    },
+    {
+      "file": "frame-0437.ppm",
+      "seconds": 131.54228375300227
+    },
+    {
+      "file": "frame-0438.ppm",
+      "seconds": 131.84263620000274
+    },
+    {
+      "file": "frame-0439.ppm",
+      "seconds": 132.1431486060028
+    },
+    {
+      "file": "frame-0440.ppm",
+      "seconds": 132.4437340220029
+    },
+    {
+      "file": "frame-0441.ppm",
+      "seconds": 132.74505277400021
+    },
+    {
+      "file": "frame-0442.ppm",
+      "seconds": 133.0455416900004
+    },
+    {
+      "file": "frame-0443.ppm",
+      "seconds": 133.3460021460014
+    },
+    {
+      "file": "frame-0444.ppm",
+      "seconds": 133.64732796700264
+    },
+    {
+      "file": "frame-0445.ppm",
+      "seconds": 133.94861464800124
+    },
+    {
+      "file": "frame-0446.ppm",
+      "seconds": 134.24910331400315
+    },
+    {
+      "file": "frame-0447.ppm",
+      "seconds": 134.5509231410033
+    },
+    {
+      "file": "frame-0448.ppm",
+      "seconds": 134.8515555060003
+    },
+    {
+      "file": "frame-0449.ppm",
+      "seconds": 135.15208969000014
+    },
+    {
+      "file": "frame-0450.ppm",
+      "seconds": 135.45268211500297
+    },
+    {
+      "file": "frame-0451.ppm",
+      "seconds": 135.75393268500193
+    },
+    {
+      "file": "frame-0452.ppm",
+      "seconds": 136.0546432780029
+    },
+    {
+      "file": "frame-0453.ppm",
+      "seconds": 136.35540742100056
+    },
+    {
+      "file": "frame-0454.ppm",
+      "seconds": 136.6570083890001
+    },
+    {
+      "file": "frame-0455.ppm",
+      "seconds": 136.95776980200026
+    },
+    {
+      "file": "frame-0456.ppm",
+      "seconds": 137.25833157500165
+    },
+    {
+      "file": "frame-0457.ppm",
+      "seconds": 137.5599674820005
+    },
+    {
+      "file": "frame-0458.ppm",
+      "seconds": 137.8608345740031
+    },
+    {
+      "file": "frame-0459.ppm",
+      "seconds": 138.16155278600127
+    },
+    {
+      "file": "frame-0460.ppm",
+      "seconds": 138.4623754480017
+    },
+    {
+      "file": "frame-0461.ppm",
+      "seconds": 138.76395176500228
+    },
+    {
+      "file": "frame-0462.ppm",
+      "seconds": 139.0646433360016
+    },
+    {
+      "file": "frame-0463.ppm",
+      "seconds": 139.3652448590001
+    },
+    {
+      "file": "frame-0464.ppm",
+      "seconds": 139.6666127870012
+    },
+    {
+      "file": "frame-0465.ppm",
+      "seconds": 139.96749285700207
+    },
+    {
+      "file": "frame-0466.ppm",
+      "seconds": 140.26855894600158
+    },
+    {
+      "file": "frame-0467.ppm",
+      "seconds": 140.57166558300014
+    },
+    {
+      "file": "frame-0468.ppm",
+      "seconds": 140.8729808800017
+    },
+    {
+      "file": "frame-0469.ppm",
+      "seconds": 141.17498917400007
+    },
+    {
+      "file": "frame-0470.ppm",
+      "seconds": 141.4760566920013
+    },
+    {
+      "file": "frame-0471.ppm",
+      "seconds": 141.77785088600285
+    },
+    {
+      "file": "frame-0472.ppm",
+      "seconds": 142.07878551500107
+    },
+    {
+      "file": "frame-0473.ppm",
+      "seconds": 142.37968957400153
+    },
+    {
+      "file": "frame-0474.ppm",
+      "seconds": 142.68137633900187
+    },
+    {
+      "file": "frame-0475.ppm",
+      "seconds": 142.9821503680032
+    },
+    {
+      "file": "frame-0476.ppm",
+      "seconds": 143.28296090700314
+    },
+    {
+      "file": "frame-0477.ppm",
+      "seconds": 143.58447428300133
+    },
+    {
+      "file": "frame-0478.ppm",
+      "seconds": 143.88540540100075
+    },
+    {
+      "file": "frame-0479.ppm",
+      "seconds": 144.18635965800058
+    },
+    {
+      "file": "frame-0480.ppm",
+      "seconds": 144.48722806700243
+    },
+    {
+      "file": "frame-0481.ppm",
+      "seconds": 144.78880203100198
+    },
+    {
+      "file": "frame-0482.ppm",
+      "seconds": 145.0897569080007
+    },
+    {
+      "file": "frame-0483.ppm",
+      "seconds": 145.39051950600333
+    },
+    {
+      "file": "frame-0484.ppm",
+      "seconds": 145.69198103000235
+    },
+    {
+      "file": "frame-0485.ppm",
+      "seconds": 145.99269010900025
+    },
+    {
+      "file": "frame-0486.ppm",
+      "seconds": 146.2935714160012
+    },
+    {
+      "file": "frame-0487.ppm",
+      "seconds": 146.59593784500248
+    },
+    {
+      "file": "frame-0488.ppm",
+      "seconds": 146.89679940200222
+    },
+    {
+      "file": "frame-0489.ppm",
+      "seconds": 147.19741027000055
+    },
+    {
+      "file": "frame-0490.ppm",
+      "seconds": 147.49794469900007
+    },
+    {
+      "file": "frame-0491.ppm",
+      "seconds": 147.7991974630022
+    },
+    {
+      "file": "frame-0492.ppm",
+      "seconds": 148.09992968000006
+    },
+    {
+      "file": "frame-0493.ppm",
+      "seconds": 148.40083641599995
+    },
+    {
+      "file": "frame-0494.ppm",
+      "seconds": 148.7036122510035
+    },
+    {
+      "file": "frame-0495.ppm",
+      "seconds": 149.00430170800246
+    },
+    {
+      "file": "frame-0496.ppm",
+      "seconds": 149.30533221299993
+    },
+    {
+      "file": "frame-0497.ppm",
+      "seconds": 149.60758095100027
+    },
+    {
+      "file": "frame-0498.ppm",
+      "seconds": 149.908463906002
+    },
+    {
+      "file": "frame-0499.ppm",
+      "seconds": 150.209022043
+    },
+    {
+      "file": "frame-0500.ppm",
+      "seconds": 150.50964698000098
+    },
+    {
+      "file": "frame-0501.ppm",
+      "seconds": 150.8110683220002
+    },
+    {
+      "file": "frame-0502.ppm",
+      "seconds": 151.11165000800247
+    },
+    {
+      "file": "frame-0503.ppm",
+      "seconds": 151.41228977500214
+    },
+    {
+      "file": "frame-0504.ppm",
+      "seconds": 151.71373858600055
+    },
+    {
+      "file": "frame-0505.ppm",
+      "seconds": 152.014338762001
+    },
+    {
+      "file": "frame-0506.ppm",
+      "seconds": 152.3148772280001
+    },
+    {
+      "file": "frame-0507.ppm",
+      "seconds": 152.61617564000335
+    },
+    {
+      "file": "frame-0508.ppm",
+      "seconds": 152.91676097500022
+    },
+    {
+      "file": "frame-0509.ppm",
+      "seconds": 153.2172583620013
+    },
+    {
+      "file": "frame-0510.ppm",
+      "seconds": 153.51791072700144
+    },
+    {
+      "file": "frame-0511.ppm",
+      "seconds": 153.81940290700004
+    },
+    {
+      "file": "frame-0512.ppm",
+      "seconds": 154.11984800200298
+    },
+    {
+      "file": "frame-0513.ppm",
+      "seconds": 154.42048671700104
+    },
+    {
+      "file": "frame-0514.ppm",
+      "seconds": 154.722141956001
+    },
+    {
+      "file": "frame-0515.ppm",
+      "seconds": 155.02268144100162
+    },
+    {
+      "file": "frame-0516.ppm",
+      "seconds": 155.32329030500114
+    },
+    {
+      "file": "frame-0517.ppm",
+      "seconds": 155.62492135300272
+    },
+    {
+      "file": "frame-0518.ppm",
+      "seconds": 155.92544833800275
+    },
+    {
+      "file": "frame-0519.ppm",
+      "seconds": 156.2259188120006
+    },
+    {
+      "file": "frame-0520.ppm",
+      "seconds": 156.5266783060033
+    },
+    {
+      "file": "frame-0521.ppm",
+      "seconds": 156.82811954400313
+    },
+    {
+      "file": "frame-0522.ppm",
+      "seconds": 157.12871959800032
+    },
+    {
+      "file": "frame-0523.ppm",
+      "seconds": 157.4293915110029
+    },
+    {
+      "file": "frame-0524.ppm",
+      "seconds": 157.73099714800264
+    },
+    {
+      "file": "frame-0525.ppm",
+      "seconds": 158.03164676100278
+    },
+    {
+      "file": "frame-0526.ppm",
+      "seconds": 158.33221883400256
+    },
+    {
+      "file": "frame-0527.ppm",
+      "seconds": 158.63397284000166
+    },
+    {
+      "file": "frame-0528.ppm",
+      "seconds": 158.9348377410024
+    },
+    {
+      "file": "frame-0529.ppm",
+      "seconds": 159.23575657200126
+    },
+    {
+      "file": "frame-0530.ppm",
+      "seconds": 159.53718818000198
+    },
+    {
+      "file": "frame-0531.ppm",
+      "seconds": 159.83912970400343
+    },
+    {
+      "file": "frame-0532.ppm",
+      "seconds": 160.14058606100298
+    },
+    {
+      "file": "frame-0533.ppm",
+      "seconds": 160.441771359001
+    },
+    {
+      "file": "frame-0534.ppm",
+      "seconds": 160.74349278500085
+    },
+    {
+      "file": "frame-0535.ppm",
+      "seconds": 161.04481191200102
+    },
+    {
+      "file": "frame-0536.ppm",
+      "seconds": 161.3454019230012
+    },
+    {
+      "file": "frame-0537.ppm",
+      "seconds": 161.6468739200027
+    },
+    {
+      "file": "frame-0538.ppm",
+      "seconds": 161.9474085810034
+    },
+    {
+      "file": "frame-0539.ppm",
+      "seconds": 162.24793421300274
+    },
+    {
+      "file": "frame-0540.ppm",
+      "seconds": 162.54849095400277
+    },
+    {
+      "file": "frame-0541.ppm",
+      "seconds": 162.84971408100319
+    },
+    {
+      "file": "frame-0542.ppm",
+      "seconds": 163.15036961100122
+    },
+    {
+      "file": "frame-0543.ppm",
+      "seconds": 163.45098074199996
+    },
+    {
+      "file": "frame-0544.ppm",
+      "seconds": 163.75216528900273
+    },
+    {
+      "file": "frame-0545.ppm",
+      "seconds": 164.0526943290024
+    },
+    {
+      "file": "frame-0546.ppm",
+      "seconds": 164.35321367000142
+    },
+    {
+      "file": "frame-0547.ppm",
+      "seconds": 164.654802234003
+    },
+    {
+      "file": "frame-0548.ppm",
+      "seconds": 164.95551567300208
+    },
+    {
+      "file": "frame-0549.ppm",
+      "seconds": 165.25640389100226
+    },
+    {
+      "file": "frame-0550.ppm",
+      "seconds": 165.55722698900354
+    },
+    {
+      "file": "frame-0551.ppm",
+      "seconds": 165.85885876200336
+    },
+    {
+      "file": "frame-0552.ppm",
+      "seconds": 166.159468621001
+    },
+    {
+      "file": "frame-0553.ppm",
+      "seconds": 166.45997031100342
+    },
+    {
+      "file": "frame-0554.ppm",
+      "seconds": 166.76154920400222
+    },
+    {
+      "file": "frame-0555.ppm",
+      "seconds": 167.062398191003
+    },
+    {
+      "file": "frame-0556.ppm",
+      "seconds": 167.36291938000068
+    },
+    {
+      "file": "frame-0557.ppm",
+      "seconds": 167.66439645300125
+    },
+    {
+      "file": "frame-0558.ppm",
+      "seconds": 167.96498106200306
+    },
+    {
+      "file": "frame-0559.ppm",
+      "seconds": 168.2656287500031
+    },
+    {
+      "file": "frame-0560.ppm",
+      "seconds": 168.5668707040022
+    },
+    {
+      "file": "frame-0561.ppm",
+      "seconds": 168.86887522300094
+    },
+    {
+      "file": "frame-0562.ppm",
+      "seconds": 169.16966088000117
+    },
+    {
+      "file": "frame-0563.ppm",
+      "seconds": 169.47105818300042
+    },
+    {
+      "file": "frame-0564.ppm",
+      "seconds": 169.77326880100009
+    },
+    {
+      "file": "frame-0565.ppm",
+      "seconds": 170.07441569500224
+    },
+    {
+      "file": "frame-0566.ppm",
+      "seconds": 170.37504836200242
+    },
+    {
+      "file": "frame-0567.ppm",
+      "seconds": 170.6773655390025
+    },
+    {
+      "file": "frame-0568.ppm",
+      "seconds": 170.9779861850002
+    },
+    {
+      "file": "frame-0569.ppm",
+      "seconds": 171.27869750100217
+    },
+    {
+      "file": "frame-0570.ppm",
+      "seconds": 171.57938441700026
+    },
+    {
+      "file": "frame-0571.ppm",
+      "seconds": 171.88070890900053
+    },
+    {
+      "file": "frame-0572.ppm",
+      "seconds": 172.1812108660015
+    },
+    {
+      "file": "frame-0573.ppm",
+      "seconds": 172.48176257300292
+    },
+    {
+      "file": "frame-0574.ppm",
+      "seconds": 172.78321434400277
+    },
+    {
+      "file": "frame-0575.ppm",
+      "seconds": 173.083915919
+    },
+    {
+      "file": "frame-0576.ppm",
+      "seconds": 173.3846251440009
+    },
+    {
+      "file": "frame-0577.ppm",
+      "seconds": 173.68617739399997
+    },
+    {
+      "file": "frame-0578.ppm",
+      "seconds": 173.98705377700026
+    },
+    {
+      "file": "frame-0579.ppm",
+      "seconds": 174.28792241100018
+    },
+    {
+      "file": "frame-0580.ppm",
+      "seconds": 174.58873596500052
+    },
+    {
+      "file": "frame-0581.ppm",
+      "seconds": 174.89041719300076
+    },
+    {
+      "file": "frame-0582.ppm",
+      "seconds": 175.19108605800284
+    },
+    {
+      "file": "frame-0583.ppm",
+      "seconds": 175.49189120100345
+    },
+    {
+      "file": "frame-0584.ppm",
+      "seconds": 175.79375670800073
+    },
+    {
+      "file": "frame-0585.ppm",
+      "seconds": 176.09483094000097
+    },
+    {
+      "file": "frame-0586.ppm",
+      "seconds": 176.39569113200196
+    },
+    {
+      "file": "frame-0587.ppm",
+      "seconds": 176.69728974100144
+    },
+    {
+      "file": "frame-0588.ppm",
+      "seconds": 176.99806025400176
+    },
+    {
+      "file": "frame-0589.ppm",
+      "seconds": 177.29851515800328
+    },
+    {
+      "file": "frame-0590.ppm",
+      "seconds": 177.5994178300025
+    },
+    {
+      "file": "frame-0591.ppm",
+      "seconds": 177.90136767600052
+    },
+    {
+      "file": "frame-0592.ppm",
+      "seconds": 178.20223814700148
+    },
+    {
+      "file": "frame-0593.ppm",
+      "seconds": 178.50309231900246
+    },
+    {
+      "file": "frame-0594.ppm",
+      "seconds": 178.80565545000354
+    },
+    {
+      "file": "frame-0595.ppm",
+      "seconds": 179.1061727840024
+    },
+    {
+      "file": "frame-0596.ppm",
+      "seconds": 179.40673825700287
+    },
+    {
+      "file": "frame-0597.ppm",
+      "seconds": 179.70825627400336
+    },
+    {
+      "file": "frame-0598.ppm",
+      "seconds": 180.00953307300006
+    },
+    {
+      "file": "frame-0599.ppm",
+      "seconds": 180.31040198300252
+    },
+    {
+      "file": "frame-0600.ppm",
+      "seconds": 180.61143522300335
+    },
+    {
+      "file": "frame-0601.ppm",
+      "seconds": 180.91263436100053
+    },
+    {
+      "file": "frame-0602.ppm",
+      "seconds": 181.21318424400306
+    },
+    {
+      "file": "frame-0603.ppm",
+      "seconds": 181.51372652600185
+    },
+    {
+      "file": "frame-0604.ppm",
+      "seconds": 181.81516272200315
+    },
+    {
+      "file": "frame-0605.ppm",
+      "seconds": 182.1156245150014
+    },
+    {
+      "file": "frame-0606.ppm",
+      "seconds": 182.4160646670025
+    },
+    {
+      "file": "frame-0607.ppm",
+      "seconds": 182.71735855400038
+    },
+    {
+      "file": "frame-0608.ppm",
+      "seconds": 183.01788879500236
+    },
+    {
+      "file": "frame-0609.ppm",
+      "seconds": 183.31839748700077
+    },
+    {
+      "file": "frame-0610.ppm",
+      "seconds": 183.6187954290035
+    },
+    {
+      "file": "frame-0611.ppm",
+      "seconds": 183.92018312500295
+    },
+    {
+      "file": "frame-0612.ppm",
+      "seconds": 184.22086866500103
+    },
+    {
+      "file": "frame-0613.ppm",
+      "seconds": 184.52158277400304
+    },
+    {
+      "file": "frame-0614.ppm",
+      "seconds": 184.8231223890034
+    },
+    {
+      "file": "frame-0615.ppm",
+      "seconds": 185.1237186790022
+    },
+    {
+      "file": "frame-0616.ppm",
+      "seconds": 185.42446393800128
+    },
+    {
+      "file": "frame-0617.ppm",
+      "seconds": 185.72600716200031
+    },
+    {
+      "file": "frame-0618.ppm",
+      "seconds": 186.0268577900024
+    },
+    {
+      "file": "frame-0619.ppm",
+      "seconds": 186.3277338980006
+    },
+    {
+      "file": "frame-0620.ppm",
+      "seconds": 186.62873479500195
+    },
+    {
+      "file": "frame-0621.ppm",
+      "seconds": 186.9303235180014
+    },
+    {
+      "file": "frame-0622.ppm",
+      "seconds": 187.23089927800174
+    },
+    {
+      "file": "frame-0623.ppm",
+      "seconds": 187.53176610500304
+    },
+    {
+      "file": "frame-0624.ppm",
+      "seconds": 187.8338426650007
+    },
+    {
+      "file": "frame-0625.ppm",
+      "seconds": 188.1349624200011
+    },
+    {
+      "file": "frame-0626.ppm",
+      "seconds": 188.43695157100228
+    },
+    {
+      "file": "frame-0627.ppm",
+      "seconds": 188.7403287030029
+    },
+    {
+      "file": "frame-0628.ppm",
+      "seconds": 189.0417318960026
+    },
+    {
+      "file": "frame-0629.ppm",
+      "seconds": 189.3426074420022
+    },
+    {
+      "file": "frame-0630.ppm",
+      "seconds": 189.64339888900213
+    },
+    {
+      "file": "frame-0631.ppm",
+      "seconds": 189.94506412100236
+    },
+    {
+      "file": "frame-0632.ppm",
+      "seconds": 190.24570440800017
+    },
+    {
+      "file": "frame-0633.ppm",
+      "seconds": 190.54659085400272
+    },
+    {
+      "file": "frame-0634.ppm",
+      "seconds": 190.84812173500177
+    },
+    {
+      "file": "frame-0635.ppm",
+      "seconds": 191.14881827200225
+    },
+    {
+      "file": "frame-0636.ppm",
+      "seconds": 191.44958002800195
+    },
+    {
+      "file": "frame-0637.ppm",
+      "seconds": 191.7511330890011
+    },
+    {
+      "file": "frame-0638.ppm",
+      "seconds": 192.05191704500248
+    },
+    {
+      "file": "frame-0639.ppm",
+      "seconds": 192.35263630100235
+    },
+    {
+      "file": "frame-0640.ppm",
+      "seconds": 192.6534733360022
+    },
+    {
+      "file": "frame-0641.ppm",
+      "seconds": 192.95512048599994
+    },
+    {
+      "file": "frame-0642.ppm",
+      "seconds": 193.25600181000118
+    },
+    {
+      "file": "frame-0643.ppm",
+      "seconds": 193.5569325050019
+    },
+    {
+      "file": "frame-0644.ppm",
+      "seconds": 193.85854057500183
+    },
+    {
+      "file": "frame-0645.ppm",
+      "seconds": 194.15953219800213
+    },
+    {
+      "file": "frame-0646.ppm",
+      "seconds": 194.46036751200154
+    },
+    {
+      "file": "frame-0647.ppm",
+      "seconds": 194.76187800200205
+    },
+    {
+      "file": "frame-0648.ppm",
+      "seconds": 195.0628271650021
+    },
+    {
+      "file": "frame-0649.ppm",
+      "seconds": 195.363446061001
+    },
+    {
+      "file": "frame-0650.ppm",
+      "seconds": 195.6644475830035
+    },
+    {
+      "file": "frame-0651.ppm",
+      "seconds": 195.9660517620032
+    },
+    {
+      "file": "frame-0652.ppm",
+      "seconds": 196.2667582460017
+    },
+    {
+      "file": "frame-0653.ppm",
+      "seconds": 196.5682588460004
+    },
+    {
+      "file": "frame-0654.ppm",
+      "seconds": 196.87079245900168
+    },
+    {
+      "file": "frame-0655.ppm",
+      "seconds": 197.17179798000143
+    },
+    {
+      "file": "frame-0656.ppm",
+      "seconds": 197.4724764040002
+    },
+    {
+      "file": "frame-0657.ppm",
+      "seconds": 197.77377731400338
+    },
+    {
+      "file": "frame-0658.ppm",
+      "seconds": 198.07489131500188
+    },
+    {
+      "file": "frame-0659.ppm",
+      "seconds": 198.37593096600176
+    },
+    {
+      "file": "frame-0660.ppm",
+      "seconds": 198.67657613900155
+    },
+    {
+      "file": "frame-0661.ppm",
+      "seconds": 198.9785278950003
+    },
+    {
+      "file": "frame-0662.ppm",
+      "seconds": 199.27912282800025
+    },
+    {
+      "file": "frame-0663.ppm",
+      "seconds": 199.57964319200255
+    },
+    {
+      "file": "frame-0664.ppm",
+      "seconds": 199.88092606100327
+    },
+    {
+      "file": "frame-0665.ppm",
+      "seconds": 200.18158678300097
+    },
+    {
+      "file": "frame-0666.ppm",
+      "seconds": 200.4823409950004
+    },
+    {
+      "file": "frame-0667.ppm",
+      "seconds": 200.783827123003
+    },
+    {
+      "file": "frame-0668.ppm",
+      "seconds": 201.0846092640022
+    },
+    {
+      "file": "frame-0669.ppm",
+      "seconds": 201.38544886500313
+    },
+    {
+      "file": "frame-0670.ppm",
+      "seconds": 201.68628257599994
+    },
+    {
+      "file": "frame-0671.ppm",
+      "seconds": 201.98760018300163
+    },
+    {
+      "file": "frame-0672.ppm",
+      "seconds": 202.28832726500332
+    },
+    {
+      "file": "frame-0673.ppm",
+      "seconds": 202.58911818600245
+    },
+    {
+      "file": "frame-0674.ppm",
+      "seconds": 202.89120032800201
+    },
+    {
+      "file": "frame-0675.ppm",
+      "seconds": 203.1919186490013
+    },
+    {
+      "file": "frame-0676.ppm",
+      "seconds": 203.49278849900293
+    },
+    {
+      "file": "frame-0677.ppm",
+      "seconds": 203.79452318300173
+    },
+    {
+      "file": "frame-0678.ppm",
+      "seconds": 204.09528371300257
+    },
+    {
+      "file": "frame-0679.ppm",
+      "seconds": 204.39629656200123
+    },
+    {
+      "file": "frame-0680.ppm",
+      "seconds": 204.6971300610021
+    },
+    {
+      "file": "frame-0681.ppm",
+      "seconds": 204.998549447002
+    },
+    {
+      "file": "frame-0682.ppm",
+      "seconds": 205.2993310460006
+    },
+    {
+      "file": "frame-0683.ppm",
+      "seconds": 205.6001555460025
+    },
+    {
+      "file": "frame-0684.ppm",
+      "seconds": 205.9019178790004
+    },
+    {
+      "file": "frame-0685.ppm",
+      "seconds": 206.2027128180016
+    },
+    {
+      "file": "frame-0686.ppm",
+      "seconds": 206.50370980500156
+    },
+    {
+      "file": "frame-0687.ppm",
+      "seconds": 206.80582013599997
+    },
+    {
+      "file": "frame-0688.ppm",
+      "seconds": 207.10685219300285
+    },
+    {
+      "file": "frame-0689.ppm",
+      "seconds": 207.40792676000274
+    },
+    {
+      "file": "frame-0690.ppm",
+      "seconds": 207.70939670400185
+    },
+    {
+      "file": "frame-0691.ppm",
+      "seconds": 208.0111460670014
+    },
+    {
+      "file": "frame-0692.ppm",
+      "seconds": 208.31188646500232
+    },
+    {
+      "file": "frame-0693.ppm",
+      "seconds": 208.6125332440024
+    },
+    {
+      "file": "frame-0694.ppm",
+      "seconds": 208.9139034180007
+    },
+    {
+      "file": "frame-0695.ppm",
+      "seconds": 209.21466603500085
+    },
+    {
+      "file": "frame-0696.ppm",
+      "seconds": 209.51544334300343
+    },
+    {
+      "file": "frame-0697.ppm",
+      "seconds": 209.81683046700346
+    },
+    {
+      "file": "frame-0698.ppm",
+      "seconds": 210.11766376300147
+    },
+    {
+      "file": "frame-0699.ppm",
+      "seconds": 210.4185907300016
+    },
+    {
+      "file": "frame-0700.ppm",
+      "seconds": 210.71934150700326
+    },
+    {
+      "file": "frame-0701.ppm",
+      "seconds": 211.02081694900335
+    },
+    {
+      "file": "frame-0702.ppm",
+      "seconds": 211.32154304600044
+    },
+    {
+      "file": "frame-0703.ppm",
+      "seconds": 211.62226580300194
+    },
+    {
+      "file": "frame-0704.ppm",
+      "seconds": 211.9235557360007
+    },
+    {
+      "file": "frame-0705.ppm",
+      "seconds": 212.22402459500154
+    },
+    {
+      "file": "frame-0706.ppm",
+      "seconds": 212.52454508200026
+    },
+    {
+      "file": "frame-0707.ppm",
+      "seconds": 212.82581931500317
+    },
+    {
+      "file": "frame-0708.ppm",
+      "seconds": 213.1264580120005
+    },
+    {
+      "file": "frame-0709.ppm",
+      "seconds": 213.4275095760022
+    },
+    {
+      "file": "frame-0710.ppm",
+      "seconds": 213.7280273230026
+    },
+    {
+      "file": "frame-0711.ppm",
+      "seconds": 214.02927022600124
+    },
+    {
+      "file": "frame-0712.ppm",
+      "seconds": 214.33011672000066
+    },
+    {
+      "file": "frame-0713.ppm",
+      "seconds": 214.63088427600087
+    },
+    {
+      "file": "frame-0714.ppm",
+      "seconds": 214.93213585800186
+    },
+    {
+      "file": "frame-0715.ppm",
+      "seconds": 215.2327147040014
+    },
+    {
+      "file": "frame-0716.ppm",
+      "seconds": 215.53344234900214
+    },
+    {
+      "file": "frame-0717.ppm",
+      "seconds": 215.83491675900223
+    },
+    {
+      "file": "frame-0718.ppm",
+      "seconds": 216.1353079160035
+    },
+    {
+      "file": "frame-0719.ppm",
+      "seconds": 216.43580148200272
+    },
+    {
+      "file": "frame-0720.ppm",
+      "seconds": 216.7366400960018
+    },
+    {
+      "file": "frame-0721.ppm",
+      "seconds": 217.03821702500136
+    },
+    {
+      "file": "frame-0722.ppm",
+      "seconds": 217.3389825990016
+    },
+    {
+      "file": "frame-0723.ppm",
+      "seconds": 217.6398338320032
+    },
+    {
+      "file": "frame-0724.ppm",
+      "seconds": 217.9413603910034
+    },
+    {
+      "file": "frame-0725.ppm",
+      "seconds": 218.24215162500332
+    },
+    {
+      "file": "frame-0726.ppm",
+      "seconds": 218.54302233800263
+    },
+    {
+      "file": "frame-0727.ppm",
+      "seconds": 218.84476533500128
+    },
+    {
+      "file": "frame-0728.ppm",
+      "seconds": 219.14552439800173
+    },
+    {
+      "file": "frame-0729.ppm",
+      "seconds": 219.44630379100272
+    },
+    {
+      "file": "frame-0730.ppm",
+      "seconds": 219.74723429300138
+    }
+  ],
+  "bridge": {
+    "adapter": "native-production-source;not-Xtensa",
+    "loads": 1,
+    "unloads": 1,
+    "renders": 0,
+    "errors": 0,
+    "residual_cleanup": 0,
+    "loaded": false,
+    "busy": false,
+    "frame": false
+  }
+}

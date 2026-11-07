@@ -1,0 +1,5 @@
+{
+  "epoch": 1794036901.943544,
+  "reason": "Existing captured frame0300 shows Thanks for playing and MOS prompt. Static abort does not create loading3.bin; stop completed visual session normally, preserve completion-oracle failure separately. No replay.",
+  "normal_guest_return_visually_observed": true
+}

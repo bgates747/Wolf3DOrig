@@ -1,0 +1,18 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-PERF-010-caption-visual01",
+  "purpose": "One headless Fab visual check of static timer caption on two held pages;300s bound,no performance measurement",
+  "profile": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf-perf010-caption01",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "ecbde068aa93",
+  "requested": "2026-11-07T07:29:03.620716+00:00",
+  "lease": "afdbc1ee48f94aca944617a63d24e2ef",
+  "generation": 341,
+  "checked_out": "2026-11-07T07:31:12.443874+00:00",
+  "idle_observation": {
+    "machine": "oryx-linuxlite",
+    "epoch": 1794036672.3829284,
+    "emulators": []
+  }
+}
