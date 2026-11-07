@@ -1,0 +1,37 @@
+{
+  "epoch": 1794056968.1999576,
+  "p4_resets": 1,
+  "agon_resets": 1,
+  "build": "net-003-r02-b2026-11-06-09-03-07Z",
+  "keyboard": {
+    "protocol": 1,
+    "boot": 4254203351,
+    "session": 0,
+    "sequence": 0,
+    "emitted": 0,
+    "accepted": 0,
+    "discarded": 0,
+    "pending": 0,
+    "held": 0,
+    "locale": 1,
+    "ready": true,
+    "physical_neutral": true,
+    "caps": false,
+    "reason": 0
+  },
+  "display": {
+    "available": true,
+    "mode": 0,
+    "width": 640,
+    "height": 480,
+    "colors": 16,
+    "refresh_hz": 60,
+    "double_buffered": false,
+    "output": "hdmi",
+    "output_width": 1280,
+    "output_height": 720,
+    "output_nominal_refresh_hz": 60,
+    "frame_clock": "dma-frame-complete"
+  },
+  "no_replay": true
+}

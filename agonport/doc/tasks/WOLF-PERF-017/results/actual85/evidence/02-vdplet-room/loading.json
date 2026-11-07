@@ -1,0 +1,18 @@
+{
+  "count": 470,
+  "total": 470,
+  "fences": 952,
+  "timeouts": 0,
+  "recovered": 0,
+  "max_ticks": 2,
+  "last_ticks": 0,
+  "first_timeout_total": 0,
+  "first_timeout_ticks": 0,
+  "error": 0,
+  "phase": 2,
+  "status": 0,
+  "first_timeout_phase": 0,
+  "first_status": 0,
+  "last_passes": 1,
+  "agnb_error": 0
+}

@@ -1,0 +1,19 @@
+{
+  "epoch": 1794056955.7608325,
+  "build": "net-003-r02-b2026-11-06-09-03-07Z",
+  "pad_once": true,
+  "display": {
+    "available": true,
+    "mode": 0,
+    "width": 640,
+    "height": 480,
+    "colors": 16,
+    "refresh_hz": 60,
+    "double_buffered": false,
+    "output": "hdmi",
+    "output_width": 1280,
+    "output_height": 720,
+    "output_nominal_refresh_hz": 60,
+    "frame_clock": "dma-frame-complete"
+  }
+}

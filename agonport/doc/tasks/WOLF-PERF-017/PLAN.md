@@ -12,13 +12,13 @@ Never change active81/016 inputs or re-run its cases for this arm.
 - [x] WOLF-PERF-017-03 — Independently qualify actual extracted native bodies,
   mathematical/old-body/boundary/seeded tests, unchanged renderer outputs and
   actual target lowering/providers/sections/call nesting/resource/real producers.
-- [ ] WOLF-PERF-017-04 — Establish actual projection-input/path coverage and
+- [x] WOLF-PERF-017-04 — Establish actual projection-input/path coverage and
   freeze a useful finite uncapped matched physical contract/current bindings.
   Native arithmetic execution evidence must be distinguished from host tests;
   select any separate numeric probe explicitly before compiling or dispatching.
-- [ ] WOLF-PERF-017-05 — Normal grant, first-fault stop/RAM beforeLOAD, exact
+- [x] WOLF-PERF-017-05 — Normal grant, first-fault stop/RAM beforeLOAD, exact
   restoration/readback/fullcleanup/release and actual-next handoff.
-- [ ] WOLF-PERF-017-06 — Publish raw gain/zero/regression, fast/fallback coverage
+- [x] WOLF-PERF-017-06 — Publish raw gain/zero/regression, fast/fallback coverage
   and actual clock/resource limits; no automatic default or library adoption.
 
 ## Pre-code support boundary
@@ -66,3 +66,8 @@ minimum-distance guard. Preserve widening. Earlier512ray-division counts became
 obsolete after original tangent-ray restoration. Measure actual static/actor
 inputs, fast/fallback hits, extra branch and call work; no assumed dominant cost
 or cycle count. Keep any observer separate from the timed uninstrumented arm.
+
+Actual85 completed and released; see [RESULT85.md](RESULT85.md). Pooled draw
+change2.125% with3.111% control drift, no demonstrated presented-rate gain.
+Qualified local candidate retained; generic libgcc gate and default adoption
+remain separate.

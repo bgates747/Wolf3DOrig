@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "values": [
+    256,
+    415,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    2,
+    53944,
+    0,
+    32756,
+    0,
+    55976,
+    0,
+    25588,
+    0,
+    2020
+  ],
+  "minimum_stack_bytes": 2020,
+  "whole_seconds": 10.412970681034494,
+  "cumulative": true,
+  "non_atomic_memory_halves": true
+}

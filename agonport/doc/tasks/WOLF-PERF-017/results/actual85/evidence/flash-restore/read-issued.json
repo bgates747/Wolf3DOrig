@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/Agon/mystuff/agon-extender/.venv/bin/python",
+    "-m",
+    "esptool",
+    "--chip",
+    "esp32",
+    "--port",
+    "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "--baud",
+    "460800",
+    "--after",
+    "hard-reset",
+    "read-flash",
+    "--flash-size",
+    "detect",
+    "--no-progress",
+    "0x10000",
+    "1105920",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/build/hardware01/evidence/flash-restore/read.bin"
+  ],
+  "epoch": 1794056914.6875381,
+  "once": true
+}

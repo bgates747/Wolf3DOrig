@@ -1,0 +1,27 @@
+{
+  "result": {
+    "protocol": 1,
+    "boot": 2145612179,
+    "id": 54828150,
+    "phase": 4,
+    "bytes": 4288,
+    "size": 4288,
+    "records": 22,
+    "error": 0,
+    "remote_status": 0,
+    "filesystem": 0,
+    "stage_us": 13473,
+    "mainboard_us": 273482,
+    "parallel_prepare_us": 0,
+    "parallel_active_ms": 0,
+    "parallel_handover_ms": 0,
+    "parallel_phase": 0,
+    "parallel_outcome": 0,
+    "parallel_clock_count": -1,
+    "parallel_valid_count": -1,
+    "http_download_s": 0.014995308010838926,
+    "host_elapsed_s": 0.5709846019744873,
+    "http_upload_s": 0.03652965003857389
+  },
+  "seconds": 0.6035149829695001
+}

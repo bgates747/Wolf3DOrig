@@ -1,0 +1,14 @@
+{
+  "epoch": 1794056140.9794884,
+  "once": true,
+  "argv": [
+    "/Agon/mystuff/agon-extender/.venv/bin/python",
+    "/Agon/mystuff/agon-extender/scripts/reset_agon_usb.py",
+    "--config",
+    "/Agon/mystuff/agon-extender/agents/bench-reset/usb-reset.local.json",
+    "--verify-url",
+    "http://192.168.0.20",
+    "--verify-timeout",
+    "60"
+  ]
+}

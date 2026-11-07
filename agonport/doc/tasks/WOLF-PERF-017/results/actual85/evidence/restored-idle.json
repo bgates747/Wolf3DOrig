@@ -1,0 +1,7 @@
+{
+  "restored": true,
+  "target_actors_stopped": true,
+  "lease": "b08c1cf3a9a94314ae743badc705346c",
+  "reason": "Ready for normal fresh release after driver and all owned children have exited; no further probing.",
+  "epoch": 1794057029.8850818
+}

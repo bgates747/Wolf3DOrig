@@ -48,14 +48,11 @@ disposed;014/015 physical measurements remain open. No replay selected.
 - [ ] WOLF-PERF-015-05 — Normal finite run/restore/cleanup/release.
 - [ ] WOLF-PERF-015-06 — Publish/share footprint and measured timing, including zero gain.
 
-## WOLF-PERF-017 — Existing local divider narrow fast subset (later)
+## WOLF-PERF-017 — Local divider comparison complete
 
-[Pre-code contract](agonport/doc/tasks/WOLF-PERF-017/PLAN.md). Generic PERF008
-provider admission remains blocked; ordinary native integer support is separate.
-
-- [ ] WOLF-PERF-017-04 — Input/path coverage and useful finite native-use freeze.
-- [ ] WOLF-PERF-017-05 — Matched test, exact restore/cleanup/release/handoff.
-- [ ] WOLF-PERF-017-06 — Publish actual gains, coverage and limits.
+[Actual85](agonport/doc/tasks/WOLF-PERF-017/RESULT85.md):2400poses/5INFO passed,
+2.125% lower pooled draw time with3.111% control drift; ~30.06fps unchanged.
++4B candidate retained, exact restoration/normal release complete.
 
 ## WOLF-PERF-006 — gap priorities and O2 arm
 

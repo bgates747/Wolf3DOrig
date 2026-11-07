@@ -1,0 +1,5738 @@
+VDU 2
+/test/wolf/perf017/r01 *VDU 87 80 51 45 48 51 45 118 100 112 108 101 116 45 114 111 111 109 13 10
+WP3-03-vdplet-room
+/test/wolf/perf017/r01 *CD /test/wolf/perf017/r01
+/test/wolf/perf017/r01 *LOAD b-candidate-room.bin
+/test/wolf/perf017/r01 *RUN .
+Wolf3DOrig App 0.1.0 Alpha 1
+Loading original Wolf3D application shell (shell.agnb)
+Wolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00000
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00000
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00001
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00001
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00002
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00002
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00003
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00003
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00004
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00004
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00005
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00005
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00006
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00006
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00007
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00007
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00008
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00008
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00009
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00009
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00010
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00010
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00011
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00011
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00012
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00012
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00013
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00013
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00014
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00014
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00015
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00015
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00016
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00016
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00017
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00017
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00018
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00018
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00019
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00019
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00020
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00020
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00021
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00021
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00022
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00022
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00023
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00023
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00024
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00024
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00025
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00025
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00026
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00026
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00027
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00027
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00028
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00028
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00029
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00029
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00030
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00030
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00031
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00031
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00032
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00032
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00033
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00033
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00034
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00034
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00035
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00035
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00036
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00036
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00037
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00037
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00038
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00038
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00039
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00039
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00040
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00040
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00041
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00041
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00042
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00042
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00043
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00043
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00044
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00044
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00045
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00045
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00046
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00046
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00047
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00047
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00048
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00048
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00049
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00049
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00050
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00050
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00051
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00051
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00052
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00052
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00053
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00053
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00054
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00054
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00055
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00055
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00056
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00056
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00057
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00057
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00058
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00058
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00059
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00059
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00060
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00060
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00061
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00061
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00062
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00062
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00063
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00063
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00064
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00064
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00065
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00065
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00066
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00066
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00067
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00067
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00068
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00068
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00069
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00069
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00070
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00070
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00071
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00071
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00072
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00072
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00073
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00073
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00074
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00074
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00075
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00075
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00076
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00076
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00077
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00077
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00078
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00078
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00079
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00079
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00080
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00080
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00081
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00081
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00082
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00082
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00083
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00083
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00084
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00084
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00085
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00085
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00086
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00086
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00087
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00087
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00088
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00088
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00089
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00089
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00090
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00090
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00091
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00091
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00092
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00092
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00093
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00093
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00094
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00094
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00095
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00095
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00096
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00096
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00097
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00097
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00098
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00098
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00099
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00099
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00100
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00100
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00101
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00101
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00102
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00102
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00103
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00103
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00104
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00104
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00105
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00105
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00106
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00106
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00107
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00107
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00108
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00108
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00109
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00109
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00110
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00110
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00111
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00111
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00112
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00112
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00113
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00113
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00114
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00114
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00115
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00115
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00116
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00116
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00117
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00117
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00118
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00118
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00119
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00119
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00120
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00120
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00121
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00121
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00122
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00122
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00123
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00123
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00124
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00124
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00125
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00125
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00126
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00126
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00127
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00127
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00128
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00128
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00129
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00129
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00130
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00130
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00131
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00131
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00132
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00132
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00133
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00133
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00134
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00134
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00135
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00135
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00136
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00136
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00137
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00137
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00138
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00138
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00139
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00139
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00140
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00140
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00141
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00141
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00142
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00142
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00143
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00143
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00144
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00144
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00145
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00145
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00146
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00146
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00147
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00147
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00148
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00148
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00149
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00149
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00150
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00150
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00151
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00151
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00152
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00152
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00153
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00153
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00154
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00154
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00155
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00155
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00156
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00156
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00157
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00157
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00158
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00158
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00159
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00159
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00160
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00160
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00161
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00161
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00162
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00162
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00163
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00163
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00164
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00164
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00165
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00165
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00166
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00166
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00167
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00167
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00168
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00168
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00169
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00169
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00170
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00170
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00171
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00171
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00172
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00172
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00173
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00173
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00174
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00174
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00175
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00175
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00176
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00176
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00177
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00177
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00178
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00178
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00179
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00179
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00180
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Shell graphics (shell.agnb)
+
+Completed assets: 00180
+
+UNCAPPED ROTATION - NO FRAME RATE LIMIT
+Loading native-rate Wolf3D sound effects (sfx.agnb)
+Wolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00000
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00000
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00001
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00001
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00002
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00002
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00003
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00003
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00004
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00004
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00005
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00005
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00006
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00006
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00007
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00007
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00008
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00008
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00009
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00009
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00010
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00010
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00011
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00011
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00012
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00012
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00013
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00013
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00014
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00014
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00015
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00015
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00016
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00016
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00017
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00017
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00018
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00018
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00019
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00019
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00020
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00020
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00021
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00021
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00022
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00022
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00023
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00023
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00024
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00024
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00025
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00025
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00026
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00026
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00027
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00027
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00028
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00028
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00029
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00029
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00030
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00030
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00031
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00031
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00032
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00032
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00033
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00033
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00034
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00034
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00035
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00035
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00036
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00036
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00037
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00037
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00038
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00038
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00039
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00039
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00040
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00040
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00041
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00041
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00042
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00042
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00043
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00043
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00044
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00044
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00045
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00045
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00046
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00046
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00047
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00047
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00048
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00048
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00049
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00049
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00050
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Sound samples (sfx.agnb)
+
+Completed assets: 00050
+
+UNCAPPED ROTATION - NO FRAME RATE LIMIT
+Loading floor wall/door textures (tiles.agnb)
+Wolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00000
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00000
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00001
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00001
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00002
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00002
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00003
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00003
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00004
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00004
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00005
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00005
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00006
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00006
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00007
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00007
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00008
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00008
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00009
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00009
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00010
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00010
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00011
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00011
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00012
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00012
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00013
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00013
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00014
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00014
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00015
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00015
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00016
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Wall/door textures (tiles.agnb)
+
+Completed assets: 00016
+
+UNCAPPED ROTATION - NO FRAME RATE LIMIT
+Loading floor static sprite art (sprites.agnb)
+Wolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00000
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00000
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00001
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00001
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00002
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00002
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00003
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00003
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00004
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00004
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00005
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00005
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00006
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00006
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00007
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00007
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00008
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00008
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00009
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00009
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00010
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00010
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00011
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00011
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00012
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00012
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00013
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00013
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00014
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00014
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00015
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00015
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00016
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00016
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00017
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00017
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00018
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00018
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00019
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00019
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00020
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00020
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00021
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00021
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00022
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00022
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00023
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00023
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00024
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00024
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00025
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00025
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00026
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00026
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00027
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00027
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00028
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00028
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00029
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00029
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00030
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00030
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00031
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00031
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00032
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00032
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00033
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00033
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00034
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00034
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00035
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00035
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00036
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00036
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00037
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00037
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00038
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00038
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00039
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00039
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00040
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00040
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00041
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00041
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00042
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00042
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00043
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00043
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00044
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00044
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00045
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00045
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00046
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00046
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00047
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00047
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00048
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00048
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00049
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00049
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00050
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00050
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00051
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00051
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00052
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00052
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00053
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00053
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00054
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00054
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00055
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00055
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00056
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00056
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00057
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00057
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00058
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00058
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00059
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00059
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00060
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00060
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00061
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00061
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00062
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00062
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00063
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00063
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00064
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00064
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00065
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00065
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00066
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00066
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00067
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00067
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00068
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00068
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00069
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00069
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00070
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00070
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00071
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00071
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00072
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00072
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00073
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00073
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00074
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00074
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00075
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00075
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00076
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00076
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00077
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00077
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00078
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00078
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00079
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00079
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00080
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00080
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00081
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00081
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00082
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00082
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00083
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00083
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00084
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00084
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00085
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00085
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00086
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00086
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00087
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00087
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00088
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00088
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00089
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00089
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00090
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00090
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00091
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00091
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00092
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00092
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00093
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00093
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00094
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00094
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00095
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00095
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00096
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00096
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00097
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00097
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00098
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00098
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00099
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00099
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00100
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00100
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00101
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00101
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00102
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00102
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00103
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00103
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00104
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00104
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00105
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00105
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00106
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00106
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00107
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00107
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00108
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00108
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00109
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00109
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00110
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00110
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00111
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00111
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00112
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00112
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00113
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00113
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00114
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00114
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00115
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00115
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00116
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00116
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00117
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00117
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00118
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00118
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00119
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00119
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00120
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00120
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00121
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00121
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00122
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00122
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00123
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00123
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00124
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00124
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00125
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00125
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00126
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00126
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00127
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00127
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00128
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00128
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00129
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00129
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00130
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00130
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00131
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00131
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00132
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00132
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00133
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00133
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00134
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00134
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00135
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Static sprites (sprites.agnb)
+
+Completed assets: 00135
+
+UNCAPPED ROTATION - NO FRAME RATE LIMIT
+Loading original in-game status panel (hud.agnb)
+Wolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00000
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00000
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00001
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00001
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00002
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00002
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00003
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00003
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00004
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00004
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00005
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00005
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00006
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00006
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00007
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00007
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00008
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00008
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00009
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00009
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00010
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00010
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00011
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00011
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00012
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00012
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00013
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00013
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00014
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00014
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00015
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00015
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00016
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00016
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00017
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00017
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00018
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00018
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00019
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00019
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00020
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00020
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00021
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00021
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00022
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00022
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00023
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00023
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00024
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00024
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00025
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00025
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00026
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00026
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00027
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00027
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00028
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00028
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00029
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00029
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00030
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00030
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00031
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00031
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00032
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00032
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00033
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00033
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00034
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00034
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00035
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00035
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00036
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00036
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00037
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00037
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00038
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00038
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00039
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00039
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00040
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00040
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00041
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00041
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00042
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00042
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00043
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00043
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00044
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00044
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00045
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00045
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00046
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00046
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00047
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00047
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00048
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00048
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00049
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00049
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00050
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00050
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00051
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00051
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00052
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00052
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00053
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00053
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00054
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00054
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00055
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00055
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00056
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00056
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00057
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00057
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00058
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00058
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00059
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00059
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00060
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00060
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00061
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00061
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00062
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00062
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00063
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00063
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00064
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00064
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00065
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00065
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00066
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00066
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00067
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00067
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00068
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00068
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00069
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00069
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00070
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00070
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00071
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00071
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00072
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00072
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00073
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00073
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00074
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00074
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00075
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00075
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00076
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00076
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00077
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00077
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00078
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00078
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00079
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00079
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00080
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00080
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00081
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00081
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00082
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00082
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00083
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00083
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00084
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00084
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00085
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00085
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00086
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00086
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00087
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00087
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00088
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00088
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00089
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Status panel (hud.agnb)
+
+Completed assets: 00089
+
+UNCAPPED ROTATION - NO FRAME RATE LIMIT
+Uploading tilemap and rendering initial floor view
+VDPL ALLOC exec=1 bytes=15364 result=40098358
+VDPL ALLOC exec=0 bytes=13348 result=3ffd9984
+VDPL INIT entry=4009bae4 text=40098358/15364 data=3ffd9984/13348
+VDPL LOAD handle=3 build=20261104 entry=4009bae4 text=40098358/15364 data=3ffd9984/13348 relocs=42
+Wolf3D fixture - loading
+
+Assets ready - room (34,36)
+
+Completed assets: 00470
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWolf3D fixture - loading
+
+Assets ready - room (34,36)
+
+Completed assets: 00470
+
+UNCAPPED ROTATION - NO FRAME RATE LIMITWOLF-PERF-003 COMPLETE
+VDPL UNLOAD status=0
+Thanks for playing Wolf3DOrig!
+/test/wolf/perf017/r01 *

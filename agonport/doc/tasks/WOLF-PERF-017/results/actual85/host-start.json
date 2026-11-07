@@ -1,0 +1,16 @@
+{
+  "schema": "wolf-host-launch-v1",
+  "epoch": 1794055786.9094682,
+  "pid": 1363229,
+  "ppid": 1750,
+  "signals": [
+    "SIGTERM",
+    "SIGINT",
+    "SIGHUP"
+  ],
+  "target_action": false,
+  "detached": false,
+  "session": 69056,
+  "launch": "mandatory Extender interpreter launch02 --context wolf-perf017-r01/context.json",
+  "generation": 85
+}
