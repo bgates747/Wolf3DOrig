@@ -1,6 +1,8 @@
 # Overnight optimization status
 
-Current reference is the a926 original-ray renderer,24420B. All listed physical
+Comparison baseline is the a926 original-ray renderer,24420B. The strongest
+measured ordinary-room arm is combined8d3d:22572B and20.903ms draw in actual95.
+All listed physical
 comparisons use the canonical room, maximum uncapped presentation, configured
 240MHz inclusive draw timing and nominal guest clocks. Draw cost and completed
 presentation rate are separate measurements. No production default is silently
@@ -52,9 +54,20 @@ Extender notices completed before analysis. Minimum native INFO remaining1748B.
 Control spread1.687%; other scenes, optical calibration, unit attribution and
 historical host-signal cause remain unestablished. No hardware lease is retained.
 
-[PERF023](../WOLF-PERF-023/PLAN.md) separately freezes one supported complete-quad
-constant-span byte-address specialization against exact combined8d3d. Source
-census covers98.918% of current constant-fill bytes; no speed claim. Isolated
-host/target qualification is selected under ordinary serial Pi compilation;
-new producer bindings and a separate finite physical freeze/fresh admission
-remain required. No Oryx work, wider stores, helper/provider or default change.
+[PERF023](../WOLF-PERF-023/READINESS01.md) is qualified, frozen and pushed at
+8ee2c00. The supported complete-quad constant-span specialization reduces the
+eligible actual target loop from10 to8 instructions while retaining one masked
+byte read/store and MEMW; no cycles or speed inferred. Package22620B (+48B), data
+11184B and selected stack bounds unchanged. Both74755-case independent span
+oracles,1176 ordered-background cases per arm, all600 host-fixture frames/state/
+geometry, target flags/providers/byte-loop checks and real eZ80 operands pass.
+The27 controller/listener/observer checks pass after the preserved namespace-
+parent prelaunch failure. All compiler children/leases are released.
+
+Request098fa3fae20d is READY for normal fresh admission after actual96 clean
+restoration/release. Kit1b4d2dd9 pins664 inputs/418 distinct archived byte sets;
+four uncapped original/candidate/candidate/original rooms and five INFO queries.
+Same positive exact-PID foreground observer,4200s/360s/300s/660s guards,7593 native
+app-only install and full85f9 restoration/normal release. Mech-first, no hardware
+access before actual new token/stopped handoff, no provider/carrier/default or
+sprite013 adoption. Physical candidate speed remains unmeasured.
