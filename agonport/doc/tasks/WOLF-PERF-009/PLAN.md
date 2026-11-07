@@ -16,14 +16,14 @@ This selects the next independent priority PERF006-P03 from exact c8f99354.
   renderer/module/lifecycle tests and600-pose whole-frame/geometry equivalence.
   Check target symbols/disassembly/flags/sections/resources/static stack. Preserve
   first failure and any corrected attempt separately; no weakened oracle.
-- [ ] WOLF-PERF-009-04 — Freeze qualified actual producers and finite physical
+- [x] WOLF-PERF-009-04 — Freeze qualified actual producers and finite physical
   matrix only if output/resource gates pass. Reconcile unresolved73 collection
   Protocol3 with Extender and current component/rollback tuple before selecting
   a new cohort. Normal FIFO/fresh grant/sole handoff; no released-token access.
-- [ ] WOLF-PERF-009-05 — Run selected comparison only after admission, stop first
+- [x] WOLF-PERF-009-05 — Run selected comparison only after admission, stop first
   unexpected, preserve required RAM before LOAD, exact incoming native/tail
   restoration/readback/full handback and normal release. No automatic replay.
-- [ ] WOLF-PERF-009-06 — Publish source/work and actual measured results/limits,
+- [x] WOLF-PERF-009-06 — Publish source/work and actual measured results/limits,
   share with VDPlet; leave production adoption and human optical approval explicit.
 
 Build: normal Pi compiler FIFO, actual assert before each serial child,900s total,
@@ -33,3 +33,14 @@ new service/helper, unaligned/wide store, borrowed-row escape, texture caching o
 lease-order change. Emulator, if needed, uses Oryx with fresh checkout/boost off.
 Bench readiness is conditional on a later concrete immutable qualified kit,
 source-bound transfer behavior/current tuple and Extender admission.
+
+PRESENTATION-CORRECTION.md records actual75 stopped/disposed, source-confirmed
+hidden final-only presentation, withdrawn visible-rotation/FPS claims, exact
+restoration and normal release. 009-05 disposition is not a full comparison pass.
+Raw partial result publication remains009-06; no current lease or replay.
+
+STOPPED75-RESULT.json/report75.py independently join469saved input snapshots,
+1800rawtimed poses,5collection receipts/6resource probes/6verified replacement
+chains and actual restoration/release. No balanced/visible-FPS verdict. Future
+performance work must explicitly name hidden draw capacity versus presented
+rotation before choosing its fixture.
