@@ -1,0 +1,11 @@
+{
+  "baseline": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+  "files": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/build/r01/candidate/production/wolf3d_module.cpp": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/build/r01/candidate/native-source/wolf3d_module.cpp": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/build/r01/candidate/native-source/wolf3d_renderer.cpp": "167930e49e0f9e59651aae112bc402d2c96c24d37bc76a7caa5c87851b86061c",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/build/r01/candidate/module/wolf_perf.vdpl": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+    "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-034/WOLF-NARROW-DIVISION-ADVICE-2026-11-07.md": "1977e8859e9d93f1e32d2533e7ac81f491038c733d92e6d2825ca834701b2009",
+    "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-034/WOLF-NARROW-DIVISION-SOURCE-PINS-2026-11-07.json": "3bf4a557d577e30cb5f274c92571ae77973df7a6567a9faf221c4fe1c8f1b813"
+  }
+}
