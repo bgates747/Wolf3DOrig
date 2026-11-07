@@ -35,3 +35,9 @@ Useful entry points: [PERF021 readiness](../WOLF-PERF-021/HARDWARE-READINESS.md)
 [post census](../WOLF-PERF-020/CENSUS-RESULT.md),
 [presentation source](PRESENTATION-SOURCE.md),
 [same-guest-clock budget](PREPRESENT-BUDGET.json).
+
+Host-signal dependency: [WOLF-HOST-001](../WOLF-HOST-001/RESULT03.md) qualifies
+separate foreground attach in controlled normal/direct/group/observer-cancel
+cases. It can record prospective PID/UID without changing target parenting or
+swallowing SIGTERM. Historical sender/cause is still unknown; no controller or
+hardware adoption/replay is selected from those disposable-child checks.

@@ -7,19 +7,19 @@ its original-only SD data retained. Retrospective host review did not identify
 a sender. No new hardware comparison, alternate transport or lifecycle remedy
 is selected here. Oryx remains unavailable; MechAgon keeps first bench priority.
 
-- [ ] WOLF-HOST-001-01 — Retain exact84/91 signal sources, current native runtime
+- [x] WOLF-HOST-001-01 — Retain exact84/91 signal sources, current native runtime
   and existing strace identity/local documentation, separating capabilities from
   any unsupported causal inference.
-- [ ] WOLF-HOST-001-02 — Under normal serial Pi build-check custody, qualify
+- [x] WOLF-HOST-001-02 — Under normal serial Pi build-check custody, qualify
   existing strace against three disposable owned children: ordinary exit (no
   false SIGTERM), one known-parent direct SIGTERM, and one known-parent owned
   process-group SIGTERM. Keep normal signal delivery/termination; record actual
   sender PID/UID only when the trace establishes it. A missing group trace is
   an explicit limitation, never inferred attribution or a weakened pass.
-- [ ] WOLF-HOST-001-03 — Stop/join only owned children, release and notify actual
+- [x] WOLF-HOST-001-03 — Stop/join only owned children, release and notify actual
   next compiler owner. Publish source/commands/raw traces/result and practical
   coverage. Preserve negative/partial results without retry or installation.
-- [ ] WOLF-HOST-001-04 — Use that outcome to design any later observation as a
+- [x] WOLF-HOST-001-04 — Use that outcome to design any later observation as a
   separate concrete frozen change. No future hardware dispatch or runtime
   adoption follows automatically from the host qualification.
 
@@ -50,3 +50,10 @@ than assumed.
 References: [actual91](../WOLF-PERF-021/RESULT91.md),
 [actual84](../WOLF-GOAL-001/RESULT84.md),
 [OpenAI App Server documentation](https://learn.chatgpt.com/docs/app-server).
+
+Outcome: initial388 capability failure retained; r02/389 direct-only observation
+and r03/391 separate-group four-case qualification published. The selected host
+qualification is complete. No real controller/hardware adoption is selected;
+[RESULT03.md](RESULT03.md) states the concrete future integration requirements
+and remaining custom-handler/actual-host limits. Root optimization goal remains
+active and combined performance remains unmeasured.

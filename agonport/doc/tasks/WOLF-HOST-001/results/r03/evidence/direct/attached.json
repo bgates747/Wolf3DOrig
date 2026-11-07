@@ -1,0 +1,37 @@
+{
+  "case": "direct",
+  "sender_pid": 1436455,
+  "sender_uid": 1000,
+  "child": {
+    "pid": 1436462,
+    "ppid": 1436455,
+    "pgid": 1436462,
+    "uid": 1000,
+    "case": "direct",
+    "epoch": 1794066874.1749465
+  },
+  "child_argv": [
+    "/Agon/mystuff/agon-extender/.venv/bin/python",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/attach_child.py",
+    "--ready",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r03/direct/ready.json",
+    "--case",
+    "direct"
+  ],
+  "observer_pid": 1436463,
+  "observer_argv": [
+    "/usr/bin/strace",
+    "--interruptible=1",
+    "-qq",
+    "-ttt",
+    "-e",
+    "trace=none",
+    "-e",
+    "signal=SIGTERM",
+    "-o",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r03/direct/trace.log",
+    "-p",
+    "1436462"
+  ],
+  "attached_before_signal": true
+}

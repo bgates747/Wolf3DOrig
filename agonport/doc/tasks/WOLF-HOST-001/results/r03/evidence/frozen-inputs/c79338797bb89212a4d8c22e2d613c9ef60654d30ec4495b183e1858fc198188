@@ -1,0 +1,211 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "normal",
+      "argv": [
+        "/usr/bin/strace",
+        "--interruptible=1",
+        "-f",
+        "-qq",
+        "-ttt",
+        "-e",
+        "trace=none",
+        "-e",
+        "signal=SIGTERM",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r02/normal/trace.log",
+        "/Agon/mystuff/agon-extender/.venv/bin/python",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/child.py",
+        "--ready",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r02/normal/ready.json",
+        "--case",
+        "normal"
+      ],
+      "tracer_pid": 1434920,
+      "sender_pid": 1434918,
+      "sender_uid": 1000,
+      "child": {
+        "pid": 1434923,
+        "ppid": 1434920,
+        "pgid": 1434920,
+        "uid": 1000,
+        "case": "normal",
+        "epoch": 1794066352.6092877,
+        "default_signal_disposition": true
+      },
+      "returncode": 0,
+      "SIGTERM_records": [],
+      "sender_observed": false,
+      "seconds": 0.10202709096483886
+    },
+    {
+      "case": "direct",
+      "argv": [
+        "/usr/bin/strace",
+        "--interruptible=1",
+        "-f",
+        "-qq",
+        "-ttt",
+        "-e",
+        "trace=none",
+        "-e",
+        "signal=SIGTERM",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r02/direct/trace.log",
+        "/Agon/mystuff/agon-extender/.venv/bin/python",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/child.py",
+        "--ready",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r02/direct/ready.json",
+        "--case",
+        "direct"
+      ],
+      "tracer_pid": 1434925,
+      "sender_pid": 1434918,
+      "sender_uid": 1000,
+      "child": {
+        "pid": 1434928,
+        "ppid": 1434925,
+        "pgid": 1434925,
+        "uid": 1000,
+        "case": "direct",
+        "epoch": 1794066352.7909503,
+        "default_signal_disposition": true
+      },
+      "signal_issued": {
+        "epoch": 1794066352.8272557,
+        "signal": 15,
+        "target": "owned-child-PID"
+      },
+      "returncode": -15,
+      "tracee_exit_observed_by_pidfd": true,
+      "SIGTERM_records": [
+        "si_signo=SIGTERM, si_code=SI_USER, si_pid=1434918, si_uid=1000"
+      ],
+      "sender_observed": true,
+      "seconds": 0.1521903409739025
+    },
+    {
+      "case": "group",
+      "argv": [
+        "/usr/bin/strace",
+        "--interruptible=1",
+        "-f",
+        "-qq",
+        "-ttt",
+        "-e",
+        "trace=none",
+        "-e",
+        "signal=SIGTERM",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r02/group/trace.log",
+        "/Agon/mystuff/agon-extender/.venv/bin/python",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/child.py",
+        "--ready",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r02/group/ready.json",
+        "--case",
+        "group"
+      ],
+      "tracer_pid": 1434930,
+      "sender_pid": 1434918,
+      "sender_uid": 1000,
+      "child": {
+        "pid": 1434933,
+        "ppid": 1434930,
+        "pgid": 1434930,
+        "uid": 1000,
+        "case": "group",
+        "epoch": 1794066353.0161417,
+        "default_signal_disposition": true
+      },
+      "signal_issued": {
+        "epoch": 1794066353.0549774,
+        "signal": 15,
+        "target": "owned-new-process-group"
+      },
+      "returncode": -15,
+      "tracee_exit_observed_by_pidfd": true,
+      "SIGTERM_records": [],
+      "sender_observed": false,
+      "seconds": 0.15199500700691715
+    }
+  ],
+  "guards": [
+    {
+      "epoch": 1794066352.545562,
+      "cpu_c": 49.05,
+      "available_kib": 6003296
+    },
+    {
+      "epoch": 1794066352.54636,
+      "cpu_c": 49.05,
+      "available_kib": 6003296
+    },
+    {
+      "epoch": 1794066352.596949,
+      "cpu_c": 49.05,
+      "available_kib": 6001840
+    },
+    {
+      "epoch": 1794066352.6473541,
+      "cpu_c": 49.6,
+      "available_kib": 6007312
+    },
+    {
+      "epoch": 1794066352.7256172,
+      "cpu_c": 48.5,
+      "available_kib": 6004272
+    },
+    {
+      "epoch": 1794066352.7263572,
+      "cpu_c": 48.5,
+      "available_kib": 6004272
+    },
+    {
+      "epoch": 1794066352.7767549,
+      "cpu_c": 49.6,
+      "available_kib": 6004272
+    },
+    {
+      "epoch": 1794066352.8271275,
+      "cpu_c": 49.6,
+      "available_kib": 6003632
+    },
+    {
+      "epoch": 1794066352.8275828,
+      "cpu_c": 49.6,
+      "available_kib": 6003632
+    },
+    {
+      "epoch": 1794066352.9533494,
+      "cpu_c": 49.6,
+      "available_kib": 6010432
+    },
+    {
+      "epoch": 1794066352.9540734,
+      "cpu_c": 49.6,
+      "available_kib": 6010432
+    },
+    {
+      "epoch": 1794066353.0045228,
+      "cpu_c": 50.7,
+      "available_kib": 6009760
+    },
+    {
+      "epoch": 1794066353.0548744,
+      "cpu_c": 49.6,
+      "available_kib": 6009296
+    },
+    {
+      "epoch": 1794066353.0552738,
+      "cpu_c": 49.6,
+      "available_kib": 6009696
+    }
+  ],
+  "no_device_or_other_process_attach": true,
+  "direct_sender_attribution_qualified": true,
+  "group_sender_attribution_qualified": false,
+  "scope": "Controlled prospective cases only; actual84/91 signal cause remains UNKNOWN. Missing group attribution limits adoption; no hidden signal blocking, lifetime change, service change, detach, reproduction or hardware trial.",
+  "seconds": 0.636506290989928,
+  "owned_children_joined": true
+}

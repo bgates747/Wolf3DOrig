@@ -1,0 +1,590 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "normal",
+      "sender_pid": 1436455,
+      "sender_uid": 1000,
+      "child": {
+        "pid": 1436457,
+        "ppid": 1436455,
+        "pgid": 1436457,
+        "uid": 1000,
+        "case": "normal",
+        "epoch": 1794066873.0111208
+      },
+      "child_argv": [
+        "/Agon/mystuff/agon-extender/.venv/bin/python",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/attach_child.py",
+        "--ready",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r03/normal/ready.json",
+        "--case",
+        "normal"
+      ],
+      "observer_pid": 1436458,
+      "observer_argv": [
+        "/usr/bin/strace",
+        "--interruptible=1",
+        "-qq",
+        "-ttt",
+        "-e",
+        "trace=none",
+        "-e",
+        "signal=SIGTERM",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r03/normal/trace.log",
+        "-p",
+        "1436457"
+      ],
+      "attached_before_signal": true,
+      "child_returncode": 0,
+      "observer_returncode": 0,
+      "SIGTERM_records": [],
+      "sender_observed": false,
+      "seconds": 1.0912420990061946
+    },
+    {
+      "case": "direct",
+      "sender_pid": 1436455,
+      "sender_uid": 1000,
+      "child": {
+        "pid": 1436462,
+        "ppid": 1436455,
+        "pgid": 1436462,
+        "uid": 1000,
+        "case": "direct",
+        "epoch": 1794066874.1749465
+      },
+      "child_argv": [
+        "/Agon/mystuff/agon-extender/.venv/bin/python",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/attach_child.py",
+        "--ready",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r03/direct/ready.json",
+        "--case",
+        "direct"
+      ],
+      "observer_pid": 1436463,
+      "observer_argv": [
+        "/usr/bin/strace",
+        "--interruptible=1",
+        "-qq",
+        "-ttt",
+        "-e",
+        "trace=none",
+        "-e",
+        "signal=SIGTERM",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r03/direct/trace.log",
+        "-p",
+        "1436462"
+      ],
+      "attached_before_signal": true,
+      "signal_issued": {
+        "epoch": 1794066874.2093978,
+        "number": 15,
+        "target": "direct"
+      },
+      "child_returncode": -15,
+      "observer_returncode": 0,
+      "SIGTERM_records": [
+        "si_signo=SIGTERM, si_code=SI_USER, si_pid=1436455, si_uid=1000"
+      ],
+      "sender_observed": true,
+      "seconds": 0.10282895097043365
+    },
+    {
+      "case": "group",
+      "sender_pid": 1436455,
+      "sender_uid": 1000,
+      "child": {
+        "pid": 1436467,
+        "ppid": 1436455,
+        "pgid": 1436467,
+        "uid": 1000,
+        "case": "group",
+        "epoch": 1794066874.3547466
+      },
+      "child_argv": [
+        "/Agon/mystuff/agon-extender/.venv/bin/python",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/attach_child.py",
+        "--ready",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r03/group/ready.json",
+        "--case",
+        "group"
+      ],
+      "observer_pid": 1436468,
+      "observer_argv": [
+        "/usr/bin/strace",
+        "--interruptible=1",
+        "-qq",
+        "-ttt",
+        "-e",
+        "trace=none",
+        "-e",
+        "signal=SIGTERM",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r03/group/trace.log",
+        "-p",
+        "1436467"
+      ],
+      "attached_before_signal": true,
+      "signal_issued": {
+        "epoch": 1794066874.3888638,
+        "number": 15,
+        "target": "group"
+      },
+      "child_returncode": -15,
+      "observer_returncode": 0,
+      "SIGTERM_records": [
+        "si_signo=SIGTERM, si_code=SI_USER, si_pid=1436455, si_uid=1000"
+      ],
+      "sender_observed": true,
+      "seconds": 0.10274656204273924
+    },
+    {
+      "case": "observer",
+      "sender_pid": 1436455,
+      "sender_uid": 1000,
+      "child": {
+        "pid": 1436472,
+        "ppid": 1436455,
+        "pgid": 1436472,
+        "uid": 1000,
+        "case": "observer",
+        "epoch": 1794066874.5310843
+      },
+      "child_argv": [
+        "/Agon/mystuff/agon-extender/.venv/bin/python",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/attach_child.py",
+        "--ready",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r03/observer/ready.json",
+        "--case",
+        "observer"
+      ],
+      "observer_pid": 1436473,
+      "observer_argv": [
+        "/usr/bin/strace",
+        "--interruptible=1",
+        "-qq",
+        "-ttt",
+        "-e",
+        "trace=none",
+        "-e",
+        "signal=SIGTERM",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r03/observer/trace.log",
+        "-p",
+        "1436472"
+      ],
+      "attached_before_signal": true,
+      "signal_issued": {
+        "epoch": 1794066874.565381,
+        "number": 15,
+        "target": "observer"
+      },
+      "observer_cancel_detaches_without_killing_child": true,
+      "explicit_owned_child_cleanup_after_detach": true,
+      "child_returncode": -15,
+      "observer_returncode": -15,
+      "SIGTERM_records": [],
+      "sender_observed": false,
+      "seconds": 0.12292450299719349
+    }
+  ],
+  "guards": [
+    {
+      "epoch": 1794066872.958151,
+      "cpu_c": 47.95,
+      "available_kib": 6043408
+    },
+    {
+      "epoch": 1794066872.9590015,
+      "cpu_c": 47.95,
+      "available_kib": 6043408
+    },
+    {
+      "epoch": 1794066872.9794135,
+      "cpu_c": 48.5,
+      "available_kib": 6038208
+    },
+    {
+      "epoch": 1794066872.9997618,
+      "cpu_c": 48.5,
+      "available_kib": 6035648
+    },
+    {
+      "epoch": 1794066873.0200524,
+      "cpu_c": 47.95,
+      "available_kib": 6034608
+    },
+    {
+      "epoch": 1794066873.0206718,
+      "cpu_c": 47.95,
+      "available_kib": 6034608
+    },
+    {
+      "epoch": 1794066873.0411327,
+      "cpu_c": 48.5,
+      "available_kib": 6033664
+    },
+    {
+      "epoch": 1794066873.0612671,
+      "cpu_c": 47.95,
+      "available_kib": 6033824
+    },
+    {
+      "epoch": 1794066873.0816126,
+      "cpu_c": 49.6,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.1019182,
+      "cpu_c": 48.5,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.1221056,
+      "cpu_c": 48.5,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.1422477,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.1623785,
+      "cpu_c": 49.05,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.1825352,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.202667,
+      "cpu_c": 48.5,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.2229342,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.243067,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.263194,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.2833495,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.3034825,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.3236513,
+      "cpu_c": 49.6,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.3437815,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.3639061,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.3840575,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.4042082,
+      "cpu_c": 49.05,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.4243555,
+      "cpu_c": 48.5,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.4444885,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.464613,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.484766,
+      "cpu_c": 49.05,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.5048943,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.5250497,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.545186,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.565314,
+      "cpu_c": 46.85,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.5854678,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.6055982,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.6257482,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.645876,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.6659992,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.6861582,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.7062871,
+      "cpu_c": 46.3,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.7264364,
+      "cpu_c": 47.4,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.746563,
+      "cpu_c": 48.5,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.7666888,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.7868385,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.8069947,
+      "cpu_c": 46.85,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.8271432,
+      "cpu_c": 48.5,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.8472717,
+      "cpu_c": 47.95,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.867396,
+      "cpu_c": 46.85,
+      "available_kib": 6033168
+    },
+    {
+      "epoch": 1794066873.887542,
+      "cpu_c": 47.4,
+      "available_kib": 6034192
+    },
+    {
+      "epoch": 1794066873.9076865,
+      "cpu_c": 48.5,
+      "available_kib": 6034192
+    },
+    {
+      "epoch": 1794066873.9278316,
+      "cpu_c": 47.4,
+      "available_kib": 6034880
+    },
+    {
+      "epoch": 1794066873.9479704,
+      "cpu_c": 47.4,
+      "available_kib": 6034880
+    },
+    {
+      "epoch": 1794066873.9683537,
+      "cpu_c": 48.5,
+      "available_kib": 6040880
+    },
+    {
+      "epoch": 1794066873.9886732,
+      "cpu_c": 49.05,
+      "available_kib": 6040880
+    },
+    {
+      "epoch": 1794066874.0088384,
+      "cpu_c": 47.95,
+      "available_kib": 6040400
+    },
+    {
+      "epoch": 1794066874.0291483,
+      "cpu_c": 48.5,
+      "available_kib": 6041120
+    },
+    {
+      "epoch": 1794066874.1270041,
+      "cpu_c": 47.95,
+      "available_kib": 6043616
+    },
+    {
+      "epoch": 1794066874.1276941,
+      "cpu_c": 47.95,
+      "available_kib": 6043616
+    },
+    {
+      "epoch": 1794066874.1480174,
+      "cpu_c": 48.5,
+      "available_kib": 6041712
+    },
+    {
+      "epoch": 1794066874.1682851,
+      "cpu_c": 48.5,
+      "available_kib": 6040912
+    },
+    {
+      "epoch": 1794066874.1885335,
+      "cpu_c": 48.5,
+      "available_kib": 6040912
+    },
+    {
+      "epoch": 1794066874.1890972,
+      "cpu_c": 48.5,
+      "available_kib": 6040912
+    },
+    {
+      "epoch": 1794066874.2095933,
+      "cpu_c": 48.5,
+      "available_kib": 6042512
+    },
+    {
+      "epoch": 1794066874.3064182,
+      "cpu_c": 48.5,
+      "available_kib": 6043536
+    },
+    {
+      "epoch": 1794066874.3070984,
+      "cpu_c": 46.85,
+      "available_kib": 6043536
+    },
+    {
+      "epoch": 1794066874.3274171,
+      "cpu_c": 49.05,
+      "available_kib": 6040752
+    },
+    {
+      "epoch": 1794066874.3476982,
+      "cpu_c": 49.05,
+      "available_kib": 6039152
+    },
+    {
+      "epoch": 1794066874.3679442,
+      "cpu_c": 49.6,
+      "available_kib": 6038752
+    },
+    {
+      "epoch": 1794066874.368531,
+      "cpu_c": 49.6,
+      "available_kib": 6038752
+    },
+    {
+      "epoch": 1794066874.3890698,
+      "cpu_c": 49.05,
+      "available_kib": 6037600
+    },
+    {
+      "epoch": 1794066874.4829168,
+      "cpu_c": 48.5,
+      "available_kib": 6039648
+    },
+    {
+      "epoch": 1794066874.4835978,
+      "cpu_c": 48.5,
+      "available_kib": 6039648
+    },
+    {
+      "epoch": 1794066874.5039434,
+      "cpu_c": 47.95,
+      "available_kib": 6038128
+    },
+    {
+      "epoch": 1794066874.524212,
+      "cpu_c": 49.6,
+      "available_kib": 6036912
+    },
+    {
+      "epoch": 1794066874.5444398,
+      "cpu_c": 49.6,
+      "available_kib": 6035968
+    },
+    {
+      "epoch": 1794066874.5450113,
+      "cpu_c": 49.6,
+      "available_kib": 6035968
+    },
+    {
+      "epoch": 1794066874.5655806,
+      "cpu_c": 49.6,
+      "available_kib": 6035968
+    },
+    {
+      "epoch": 1794066874.5858073,
+      "cpu_c": 47.95,
+      "available_kib": 6036368
+    }
+  ],
+  "no_target_or_appserver_attach": true,
+  "coverage": "Controlled normal/direct/target-group/observer-cancel cases only. Separate-group attach qualifies prospective signal sender without changing target parent/group or blocking SIGTERM. Actual84/91 cause remains UNKNOWN; no hardware/controller adoption selected.",
+  "seconds": 1.7233108800137416,
+  "owned_children_joined": true
+}
