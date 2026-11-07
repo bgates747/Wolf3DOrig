@@ -4,7 +4,8 @@ Qualified native candidate c8f99354 intentionally differs from cd429 geometry
 and texture orientation. Select ONE control and ONE candidate real E1L1 fixture
 run using the existing qualified Fab1.2.5 native production-source bridge.
 Keep tile34,36/noenemies/720degrees/600poses/two warmups and real staged assets.
-Use unpaced complete poses for functional captures, not physical speed claims.
+Use the retained paced20-second Fab fixture, requiring all600completed poses
+and602renders as in its previous qualification; no physical speed claim.
 No Flexe run, gameplay default adoption or human visual approval is inferred.
 
 Prepare private bridge copies from retained PERF003 fabbridge01 source/cache
@@ -40,3 +41,25 @@ release/notify actual next. No Olimex contact or old69 token. Report native
 source execution explicitly: not Xtensa runtime/provider/PIC/cache/timing or
 physical framebuffer qualification. A failed visual/source boundary must be
 resolved before physical timing is claimed.
+
+Preparation amendment before any new build/run: the first file-only copy into
+build/visual01 stopped at a Pi-local shim path that exists only on Oryx. Preserve
+that partial directory and preparation-error.json. Corrected preparation uses
+build/visual02 and the unchanged retained input shim7d9f52a7 retrieved read-only
+from Oryx. The reserved profile name remains wolf-perf007-visual01, with separate
+original/candidate subprofiles. This is not an emulator retry; no child started.
+The retained Fab bench loop is mode3/paced20seconds, not an unpaced loop selected
+merely by relabeling its WP_MODE constant. Source remains byte-identical except
+for the two per-arm module length/strict-limit constants.
+
+Compile these two eZ80 producers serially on Pi under actual compiler custody:
+visual_guests.py,600seconds total/120seconds per child,80C/512MiB guard. Use the
+retained actual-binary/listing verifier for12 immediate operands and stack labels;
+check the candidate guest differs only in those encoded length constants.
+visual_binding.py copies verified real assets and makes new payload manifests.
+visual_run.py then uses the retained Fab run/cleanup controller with fresh private
+profiles. All selected source/cache/script/runtime/payload inputs are hashed in
+build/visual02/dispatch-inputs.json before any Oryx build/emulator child. Each
+bridge build and each frontend launch asserts the actual Oryx token sequentially.
+The fixed two-bridge/two-run tranche is bounded by600s per bridge and300s per
+frontend plus owned cleanup; stop successors on the first unexpected result.
