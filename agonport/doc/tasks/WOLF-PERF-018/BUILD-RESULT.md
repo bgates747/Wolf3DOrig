@@ -35,8 +35,21 @@ Existing six-scenario host parity metadata contains153600 valid wall columns.
 119190 setups could be reused (**77.60%**), leaving34410 evaluations;151–249
 reuses per frame. This count is from host parity scenes, not the physical E1L1
 room, and is neither native hit instrumentation nor a speed measurement.
-A separate source-bound canonical-room census is queued before selecting any
-hardware fixture. No test is added to active PERF017/actual85.
+A separate source-bound canonical-room census now passes: exact E1L1 W3L map,
+door seed and camera(34,36),600 scripted poses through the unchanged original
+cast_walls. It finds113434 eligible reuses of153600 wall columns (**73.85%**),
+leaving40166 setup evaluations;153–236 reuses per frame. This is host opportunity
+classification, not native hit instrumentation or timing. Compiler359 completed
+in4.062s, children joined, normal release13:06:58.156903UTC. No test was added to
+active PERF017/actual85. [Raw census receipt](results/room-count01/receipt.json).
+
+Both actual uncapped eZ80 room guests also assemble and independently qualify.
+Original reproduces exact accepted c43e7; candidate differs only in the bytes
+of six actual linked package-size/strict-limit operands, matching24480/24481.
+SP label addresses and presentation calls remain unchanged. Compiler361 children
+joined; normal release13:09:36.929585UTC, no next. This producer check does not
+stand in for resident RAM verification after a future actual hardware run.
+[Producer receipt](results/guests01/receipt.json).
 
 Actual serial compiler354 completed in105.765s; all children exited and normal
 release completed2026-11-07T12:57:52.262887UTC, with no next request.99 selected

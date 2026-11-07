@@ -1,0 +1,217 @@
+{
+  "passed": true,
+  "inputs": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/count_room.cpp": "59e309795153b105edc455f90c5354d9784cf6687b2c2657a0a9ea43b5d195e4",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/count_room.py": "e22aebf1dfba3c2054783ba7b4419a39eeaf3430a0055fda48e861ae4193c7cc",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/PLAN.md": "a1e34722d7a078e23c04cefa8c3ec17ee56b3ed0b7e3f1c887ebdb270f269fab",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/hardware01/bespoke/cpu/payload/level_00/state_easy.w3l": "67743b36be7d4f7c086bad18a15e754030309a208319d74a6837574f8192bbd3",
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/src/wolf3d_world.inc": "a531622f4997d91c01448ec0368e602e2cafce9ce736870e784432ce09aedc3b",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/test_world_mirror.cpp": "03b824fa0f14e03b254fac9d6c7406433cb509bb11c1c6ade3287e2f581fe161",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/wolf3d_module.cpp": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/wolf3d_world_mirror.cpp": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/test_renderer.cpp": "79e78c22f5763e95c1b22a2361e6263e8cedb18c68efd5e1455e20933ab6e0a9",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/renderer_oracle.cpp": "39e796ebe3677503acfadc8a911c7b1fec401c291c04b8395f3a73b1309a38f6",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/original_tangents.inc": "f602ee6862cd3ccb006321907508b66158078c8a51d56c62a17a134928db2238",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/test_module.cpp": "4dd705f07ad9f48ef043d72b4a249f70208a4aac25c9c71268641c376bcd2819",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/wolf3d_world_mirror.h": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/stage_target_oryx.py": "296b13d14e65b3533b1b609b23103d7e2f636dee6bf1442f34185acd50f4c95b",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/renderer_fixture.h": "c2939c346bcb0e2df84e558cc2f2453c0b4f89fef7d505670648f88d0818a59f",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/qualify.py": "5da5a26808e177ba3bc9c24acdb5ee640b71e032a3d69761f553b594cf9b926d",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/.gitignore": "181314065df2f2fdaf920b1a8b5311daa216a2d6489a06ada5b49cc514d89417",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/original_raywalk.h": "72b1a70eb08fd211dde089e7f7b9379494daeb307fe34a06adb9a198291b66c7",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/wolf3d_production_contract.h": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/build.py": "e7f805d27c252beda2f195254bac8007462606cf496628ee47e79d1072470ccc",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/wolf3d_renderer.h": "ca340f31a81fb3665f7bc3f8c9cd956e26254ab97ba6358d6c268c0585cb4c68",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/contract.py": "f36128cd1f82be477cd781eb5a906e50e0191df7858dd9299d377cb69a1f3f75",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/wolf3d_renderer.cpp": "167930e49e0f9e59651aae112bc402d2c96c24d37bc76a7caa5c87851b86061c",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/wolf3d_tables.inc": "6e3353cebd8d69849bbde39abd536018b1ee403f599ae45acc51fb8c64303e5d"
+  },
+  "steps": [
+    {
+      "name": "compile",
+      "returncode": 0,
+      "seconds": 3.812958112976048
+    },
+    {
+      "name": "census",
+      "returncode": 0,
+      "seconds": 0.10073690698482096
+    }
+  ],
+  "guards": [
+    {
+      "cpu_c": 47.95,
+      "available_kib": 6370880
+    },
+    {
+      "cpu_c": 47.95,
+      "available_kib": 6370880
+    },
+    {
+      "cpu_c": 49.05,
+      "available_kib": 6361840
+    },
+    {
+      "cpu_c": 49.05,
+      "available_kib": 6334640
+    },
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6315904
+    },
+    {
+      "cpu_c": 49.05,
+      "available_kib": 6312304
+    },
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6300304
+    },
+    {
+      "cpu_c": 48.5,
+      "available_kib": 6295904
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6294496
+    },
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6292896
+    },
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6291312
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6289552
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6288512
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6285312
+    },
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6282352
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6279552
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6274352
+    },
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6263952
+    },
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6263712
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6265312
+    },
+    {
+      "cpu_c": 48.5,
+      "available_kib": 6263728
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6262528
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6260368
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6260368
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6254368
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6253968
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6251968
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6247568
+    },
+    {
+      "cpu_c": 51.25,
+      "available_kib": 6239440
+    },
+    {
+      "cpu_c": 51.8,
+      "available_kib": 6240528
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6240624
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6238224
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6237328
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6233728
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6232128
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6232128
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6223328
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6273104
+    },
+    {
+      "cpu_c": 51.25,
+      "available_kib": 6268560
+    },
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6283472
+    },
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6283472
+    }
+  ],
+  "counts": {
+    "poses": 600,
+    "valid_columns": 153600,
+    "eligible_reuses": 113434,
+    "remaining_setup_evaluations": 40166,
+    "minimum_reuses_per_frame": 153,
+    "maximum_reuses_per_frame": 236
+  },
+  "limits": "Unchanged control raycast on canonical W3L map/door/player inputs and exact600angle script; host opportunity census, not native hit counts or timing.",
+  "seconds": 4.061687387002166
+}
