@@ -1,0 +1,13 @@
+{
+  "kit": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-011/build/hardware02/kit.json",
+  "kit_sha256": "5f77b86af94f5fca78a5f695be0685f3fb413e75065c4d1b98fbbcf863d20225",
+  "inputs": 163,
+  "guest_sha256": "74ad08b4163bf094db6ebc5f142b391a911f165c8adc5026eed67b7992855e09",
+  "module_sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+  "manual_start_test": "PASS actual load-only method with mocked transport; four RUN spellings refused before keyboard seam",
+  "actual_launcher_preflight": "PASS exact Extender interpreter/import closure",
+  "compiler_generation": 310,
+  "compiler_released": "2026-11-07T07:52:59.409300+00:00",
+  "target_access": false,
+  "automatic_run": false
+}
