@@ -22,17 +22,28 @@ provider tuning. It is not permission to change every rendering subsystem.
   code/ABI/PSRAM/whole sections/stack and actual per-arm producer lengths. Rebuild
   cd429 control exactly. Record expected original-versus-port numerical deltas;
   do not weaken an old oracle merely to obtain a pass.
-- [ ] WOLF-PERF-007-05 — Freeze a finite matched hardware kit only after offline
+  Offline/source/Fab/producer gates pass; actual73 records1800timed poses.
+  Physical coverage/full-cohort confirmation remains incomplete after result
+  collection failed, as recorded in PARTIAL73-RESULT.md.
+- [x] WOLF-PERF-007-05 — Freeze a finite matched hardware kit only after offline
   qualification; reserve normal Olimex FIFO and reconcile current components/
   source/rollback/real grant. Extender owns the currently requested bench use;
   no old69 token, preemption or implied test access.
-- [ ] WOLF-PERF-007-06 — Run the selected same fixture/matrix under actual new
+- [x] WOLF-PERF-007-06 — Run the selected same fixture/matrix under actual new
   custody, stop first unexpected, preserve RAM before LOAD where applicable,
   exact restore/readback/full handback and normal release. Smith's old HOLD
   concerned actual69 and was superseded; do not invent a new hold or reuse it.
-- [ ] WOLF-PERF-007-07 — Publish exact original-method coverage, numerical/image
+  Disposed by first-unexpected stop: actual72 host-import failure and actual73
+  repeat collection Protocol3 stop preserved separately. Both exact restorations,
+  full cleanup and normal releases pass; no final73 baseline or replay.
+- [x] WOLF-PERF-007-07 — Publish exact original-method coverage, numerical/image
   changes, raw matched performance and limitations; share findings/advice gaps
   with VDPlet. Default/gameplay adoption and optical acceptance stay explicit.
+  PARTIAL73-RESULT records the collected observations and incomplete confirmation;
+  this publication does not mark the balanced physical comparison complete.
+- [ ] WOLF-PERF-007-08 — Retain collection failure with Extender and obtain its
+  concrete source/diagnostic disposition before selecting any separate target
+  confirmation. No blind retry, continuation of73 or default adoption inferred.
 
 The fixed view/projection scale87, pixel-angle table, world wire format, renderer
 publication/row ownership/masks, span/background improvements, HUD/weapon/sprite

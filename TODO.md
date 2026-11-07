@@ -45,9 +45,10 @@ Smith selected original-method restoration ahead of division-provider tuning.
   exact O2 control reproduced, original-method candidate c8f99354 packaged.
   Deliberate geometry/image differences retained; no speed/default claim yet.
 - [ ] WOLF-PERF-007-04 — Qualify original geometry, target code/resources/producers.
-- [ ] WOLF-PERF-007-05 — Freeze finite kit; normal fresh bench admission.
-- [ ] WOLF-PERF-007-06 — Matched run, exact restoration and clean release.
-- [ ] WOLF-PERF-007-07 — Publish/share results and original-method limitations.
+- [x] WOLF-PERF-007-05 — Freeze finite kit; normal fresh bench admission.
+- [x] WOLF-PERF-007-06 — Dispose stopped cohorts with exact restoration/release.
+- [x] WOLF-PERF-007-07 — Publish/share collected results and incomplete limits.
+- [ ] WOLF-PERF-007-08 — Resolve collection dependency before further confirmation.
 
   [Fab visual check](agonport/doc/tasks/WOLF-PERF-007/VISUAL-RESULT.md) and
   [physical producer/controller checks](agonport/doc/tasks/WOLF-PERF-007/PRODUCER-RESULT.md)
@@ -56,9 +57,13 @@ Smith selected original-method restoration ahead of division-provider tuning.
   [Stopped result](agonport/doc/tasks/WOLF-PERF-007/HARDWARE72-STOPPED.md) and
   [separate launch correction](agonport/doc/tasks/WOLF-PERF-007/AMENDMENT-02.md)
   preserve that failure. New kit5eb6d84/0528ed13 has486 verified inputs and actual
-  dependency preflight; reservation a9367f3c73e6 is ready for fresh normal grant.
-  Oryx340/compiler294/bench72 released; Wolf holds no machine/bench lease.
-  Physical timing/whole-task stack and default adoption remain unestablished.
+  dependency preflight. Actual73 records baseline32.24ms versus candidate26.97/
+  26.67ms draw; [partial result](agonport/doc/tasks/WOLF-PERF-007/PARTIAL73-RESULT.md).
+  A failed after.bin GET stops the full matrix before final baseline06;1800raw
+  records preserved, no complete matched-cohort verdict. Exact85f9 restoration/
+  fullcleanup and normalrelease73 pass; MechAgon actualnext notified.
+  Oryx340/compiler294/bench73 released; Wolf holds no machine/bench lease.
+  Full physical confirmation/whole-call peak attribution/default adoption remain.
 
 ## WOLF-PERF-005 — bytewise direct-span invariant hoisting
 
