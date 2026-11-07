@@ -1,0 +1,11 @@
+{
+  "scope": "Source sequence and nominal refresh support only; no new target execution or optical phase claim",
+  "files": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/build/guests01/original/room/source/bench.inc": "3477a40774d34af7a955ebe840eb3f9634b22cc065241ab4cee7dda193def6e1",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/guest01/source/bench.inc": "3477a40774d34af7a955ebe840eb3f9634b22cc065241ab4cee7dda193def6e1",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/deps/vdp-gl/src/displaycontroller.cpp": "f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/deps/vdp-gl/src/dispdrivers/vgabasecontroller.cpp": "443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/agon_screen.h": "648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/vdu_sys.h": "35fff838a0942826fd8b63a69bbde9bae17a0d428e6a9289dd03607b225817ef"
+  }
+}

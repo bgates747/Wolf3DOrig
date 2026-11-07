@@ -72,6 +72,47 @@ The599-interval steady rate differs slightly from the whole600-frame duration
 reported for actual81 because the initial phase is excluded here. The original
 actual81 result remains unchanged.
 
+## Sequential frame budget before the presentation call
+
+Existing actual81 and85 timestamps provide a stronger limit than correlation
+alone. The submitted guest waits for the render reply and records reply_end
+before calling C3. For each of599 steady intervals per run, subtract the
+preceding completed presentation/fence stamp from the current reply_end, using
+only that same nominal guest clock. This includes inter-frame loop overhead
+and the current pose/pack/submit/reply path; no native clock is subtracted.
+
+| Cohort / run | Mean before presentation ms | Minimum ms |
+|---|---:|---:|
+|81 A first|28.129|26|
+|81 cyan correction first|25.234|23|
+|81 cyan correction second|25.107|23|
+|81 A last|28.997|27|
+|85 A first|28.145|26|
+|85 divider first|28.125|27|
+|85 divider second|28.033|27|
+|85 A last|29.008|27|
+
+None of4792 examined intervals reaches its render reply within the nominal
+16.667ms budget of a60Hz refresh, before the subsequent presentation/fence
+cost is added. Thus the current sequential fixture cannot produce a completed
+new frame every nominal60Hz refresh at these observed costs. Optimizing drawing
+while still exceeding that threshold can leave the presented rate near30Hz;
+a hidden30Hz software cap or unconditional extra VBlank is not needed to explain
+that observation. The nominal60Hz mode, queued swap/executor notification and
+source primitive task's vertical-sync wait remain consistent with the observed
+33/34ms cadence. This is not a measured optical refresh-phase attribution.
+
+These reply-phase times include transport and scheduling waits, not exclusive
+CPU, and they are not an unavoidable lower bound after a future pipeline change.
+There is no proposal here to remove or reorder C3, the ingress fence or current
+ownership boundaries. External oscillator calibration and a separate measurement
+of swap versus serial/query work remain absent. The useful immediate target is
+lower total time before presentation; small independent improvements can provide
+headroom even before the next refresh boundary is reached.
+
+[Exact timestamp analysis](analyze_prepresent_budget.py) and
+[input pins/results](PREPRESENT-BUDGET.json) retain all cases and limitations.
+
 [Source pins and existing raw-report joins](PRESENTATION-SOURCE-PINS.json),
 [owner advice](/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-034/WOLF-ADVICE-2026-11-07.md),
 [reopened sprite discussion](../WOLF-PERF-013/REVISIT.md).

@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "generation": 81,
+      "case": "01-vdplet-room",
+      "intervals": 599,
+      "before_present_ms_mean": 28.128547579298832,
+      "before_present_ms_min": 26,
+      "before_present_ms_max": 30,
+      "within_nominal_60hz_single_refresh": 0,
+      "completed_interval_ms_mean": 33.270450751252085
+    },
+    {
+      "generation": 81,
+      "case": "02-vdplet-room",
+      "intervals": 599,
+      "before_present_ms_mean": 25.23372287145242,
+      "before_present_ms_min": 23,
+      "before_present_ms_max": 27,
+      "within_nominal_60hz_single_refresh": 0,
+      "completed_interval_ms_mean": 33.270450751252085
+    },
+    {
+      "generation": 81,
+      "case": "03-vdplet-room",
+      "intervals": 599,
+      "before_present_ms_mean": 25.106844741235392,
+      "before_present_ms_min": 23,
+      "before_present_ms_max": 27,
+      "within_nominal_60hz_single_refresh": 0,
+      "completed_interval_ms_mean": 33.26878130217028
+    },
+    {
+      "generation": 81,
+      "case": "04-vdplet-room",
+      "intervals": 599,
+      "before_present_ms_mean": 28.996661101836395,
+      "before_present_ms_min": 27,
+      "before_present_ms_max": 30,
+      "within_nominal_60hz_single_refresh": 0,
+      "completed_interval_ms_mean": 33.270450751252085
+    },
+    {
+      "generation": 85,
+      "case": "01-vdplet-room",
+      "intervals": 599,
+      "before_present_ms_mean": 28.14524207011686,
+      "before_present_ms_min": 26,
+      "before_present_ms_max": 30,
+      "within_nominal_60hz_single_refresh": 0,
+      "completed_interval_ms_mean": 33.270450751252085
+    },
+    {
+      "generation": 85,
+      "case": "02-vdplet-room",
+      "intervals": 599,
+      "before_present_ms_mean": 28.125208681135227,
+      "before_present_ms_min": 27,
+      "before_present_ms_max": 29,
+      "within_nominal_60hz_single_refresh": 0,
+      "completed_interval_ms_mean": 33.26878130217028
+    },
+    {
+      "generation": 85,
+      "case": "03-vdplet-room",
+      "intervals": 599,
+      "before_present_ms_mean": 28.03338898163606,
+      "before_present_ms_min": 27,
+      "before_present_ms_max": 29,
+      "within_nominal_60hz_single_refresh": 0,
+      "completed_interval_ms_mean": 33.270450751252085
+    },
+    {
+      "generation": 85,
+      "case": "04-vdplet-room",
+      "intervals": 599,
+      "before_present_ms_mean": 29.008347245409016,
+      "before_present_ms_min": 27,
+      "before_present_ms_max": 30,
+      "within_nominal_60hz_single_refresh": 0,
+      "completed_interval_ms_mean": 33.270450751252085
+    }
+  ],
+  "inputs": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/results/actual81/01-vdplet-room/samples.csv": "6ab436dbc02dd6d5f5d37b99d2fca572c74529d809219c61e43025be12938849",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/results/actual81/02-vdplet-room/samples.csv": "3462059816878dec128ade152f4bcad61a17052c54184a9501db547362466d74",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/results/actual81/03-vdplet-room/samples.csv": "b6ae844695300f9d6fb7badf12ade1c742faab2891dac6e3b7ae40104e973c58",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/results/actual81/04-vdplet-room/samples.csv": "aecfbb83efccbae6bd5ab527fbc65e7d53015c8040d0199622207a4d1898bb75",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/results/actual85/evidence/01-vdplet-room/samples.csv": "40ce11e0a41ce4d1450cbfc882e4ab7ed6cc88aabb5a581ba60c34fbe106e0d2",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/results/actual85/evidence/02-vdplet-room/samples.csv": "77cdb908d7590c1d59f68ea0d80c52d7b3be50b0f27a85ae39e9ac45a28ae3d8",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/results/actual85/evidence/03-vdplet-room/samples.csv": "93cd86cb998d009633975ed8baf719b9dccad7c8b277ff3d45dcd6d1621bf6e6",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/results/actual85/evidence/04-vdplet-room/samples.csv": "20429502f64ebb2bb939b9ed808dcfeec4bd0cfa64d2db18522f5d74ae02ba7d"
+  },
+  "scope": "Existing sequential guest-clock reply/presentation stamps only. Nominal 60Hz source budget, no externally calibrated oscillator or optical scanout claim.",
+  "limits": "Reply phase includes renderer/transport/scheduling waits; not exclusive CPU or unavoidable cost after a future pipeline redesign. Does not isolate C3/fence timing or establish a hidden cap/extra VSYNC. No target run, removal, reordering or new observer selected."
+}
