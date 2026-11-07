@@ -28,6 +28,12 @@ BACKENDS = {
     "standalone": "W3D_RENDER_BACKEND_STANDALONE",
     "vdplet-direct": "W3D_RENDER_BACKEND_VDPLET_DIRECT",
 }
+PROFILE_NATIVE_MODULES = {
+    # WPN1/20-byte records, F000/12056 bytes, finite reset RUN100.
+    # Fully measured combined021; producer size must match this exact image.
+    "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b":
+        "combined021-actual95",
+}
 
 
 def sha256(path: Path) -> str:
@@ -184,6 +190,17 @@ def select_startup_trace(path: Path, enabled: bool) -> None:
     path.write_text("\n".join(lines) + "\n")
 
 
+def select_profile(path: Path, enabled: bool, native: bool) -> None:
+    lines = path.read_text().splitlines()
+    for selector, value in (("W3D_PROFILE:", enabled),
+                            ("W3D_PROFILE_NATIVE:", native)):
+        matches = [i for i, line in enumerate(lines) if line.startswith(selector)]
+        if len(matches) != 1:
+            raise SystemExit(f"profiling selector changed: {selector}")
+        lines[matches[0]] = f"{selector} equ {int(value)}"
+    path.write_text("\n".join(lines) + "\n")
+
+
 def build(
     assembler: Path,
     backend: str,
@@ -194,7 +211,11 @@ def build(
     start_health: int | None = None,
     start_lives: int | None = None,
     startup_trace: bool = False,
+    profile: bool = False,
+    profile_native: bool = False,
 ) -> dict[str, object]:
+    if profile_native and (not profile or backend != "vdplet-direct"):
+        raise SystemExit("--profile-native requires --profile --backend vdplet-direct")
     if backend == "vdplet-direct":
         if module is None:
             raise SystemExit(
@@ -207,6 +228,9 @@ def build(
             raise SystemExit("VDPlet package must be 1..131071 bytes")
     elif module is not None:
         raise SystemExit("--module is valid only with --backend vdplet-direct")
+    if profile_native and sha256(module) not in PROFILE_NATIVE_MODULES:
+        raise SystemExit("--profile-native requires a qualified WPN1 timing module; "
+                         "unknown module refused before assembly")
 
     TARGET.mkdir(parents=True, exist_ok=True)
     if not 0 <= initial_level <= 9:
@@ -217,6 +241,8 @@ def build(
     suffix = "" if initial_level == 0 else f"-l{initial_level:02d}"
     if startup_trace:
         suffix += "-t"
+    if profile:
+        suffix += "-pn" if profile_native else "-p"
     output_name = f"{base_name}{suffix}.bin"
     output = TARGET / output_name
     with tempfile.TemporaryDirectory(prefix="w3b") as name:
@@ -231,6 +257,7 @@ def build(
             source / "wolf3d_backend.inc", start_health, start_lives
         )
         select_startup_trace(source / "wolf3d_backend.inc", startup_trace)
+        select_profile(source / "wolf3d_backend.inc", profile, profile_native)
         if module is not None:
             select_package(source / "wolf3d_vdplet_package.inc", module.stat().st_size)
         temporary_output = temporary / output_name
@@ -240,7 +267,9 @@ def build(
             check=True,
         )
         shutil.copyfile(temporary_output, output)
-        listing = temporary_output.with_suffix(".lst")
+        # ez80asm writes the listing beside the source, regardless of the
+        # explicitly supplied binary destination.
+        listing = source / "wolf3d.lst"
         if listing.is_file():
             shutil.copyfile(listing, output.with_suffix(".lst"))
 
@@ -252,6 +281,11 @@ def build(
         "diagnostic_start_health": start_health,
         "diagnostic_start_lives": start_lives,
         "diagnostic_startup_trace": startup_trace,
+        "profile": profile,
+        "profile_native": profile_native,
+        "profile_native_reference": (
+            PROFILE_NATIVE_MODULES[sha256(module)] if profile_native else None
+        ),
         "assembler": str(assembler),
         "output": str(output.relative_to(PROJECT.parents[2])),
         "bytes": output.stat().st_size,
@@ -281,6 +315,10 @@ def main() -> None:
     parser.add_argument("--assembler", type=Path)
     parser.add_argument("--module", type=Path)
     parser.add_argument("--initial-level", type=int, default=0)
+    parser.add_argument("--profile", action="store_true",
+                        help="buffer full-game timings and periodically write WOLFPROF.BIN")
+    parser.add_argument("--profile-native", action="store_true",
+                        help="also collect the qualified module's WPN1 native drawing log")
     parser.add_argument(
         "--invulnerable", action="store_true",
         help="acceptance-only build: record attacks but suppress player damage",
@@ -312,6 +350,8 @@ def main() -> None:
         args.diagnostic_start_health,
         args.diagnostic_start_lives,
         args.diagnostic_startup_trace,
+        args.profile,
+        args.profile_native,
     )
     print(json.dumps(receipt, indent=2))
 

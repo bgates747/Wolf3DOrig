@@ -30,6 +30,20 @@ W3D_DIAGNOSTIC_START_LIVES:    equ 0ffh
 ; on its USB debug serial stream and sends no reply to the eZ80.
 W3D_DIAGNOSTIC_STARTUP_TRACE:  equ 0
 
+; Permanent optional full-game profiler. The builder selects these in its
+; disposable source tree; ordinary binaries contain no profiling calls/data.
+W3D_PROFILE:                 equ 0
+W3D_PROFILE_NATIVE:          equ 0
+    .if W3D_PROFILE
+    MACRO W3D_PROFILE_CALL target
+        call target
+    ENDMACRO
+    .else
+    MACRO W3D_PROFILE_CALL target
+@disabled:
+    ENDMACRO
+    .endif
+
     .if W3D_DIAGNOSTIC_STARTUP_TRACE
     MACRO W3D_STARTUP_TRACE marker
         push af

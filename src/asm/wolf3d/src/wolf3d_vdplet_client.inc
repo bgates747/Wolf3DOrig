@@ -105,6 +105,7 @@ w3d_vdplet_try_capture_packet:
     ld (w3d_vdplet_callback_error),a
     jr @neutralize
 @copy:
+    W3D_PROFILE_CALL w3d_profile_callback
     push ix
     pop hl
     ld de,w3d_vdplet_mailbox

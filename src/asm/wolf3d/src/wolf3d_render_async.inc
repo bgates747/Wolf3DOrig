@@ -263,7 +263,9 @@ w3d_consume_render_completion:
     ei
 ; Mode 8+128 is double buffered: present exactly once, only after the VDP has
 ; completed the hidden surface associated with this validated sequence.
+    W3D_PROFILE_CALL w3d_profile_before_present
     call w3d_vdu_present
+    W3D_PROFILE_CALL w3d_profile_after_present
     ld a,(w3d_render_in_flight_purpose)
     ld (w3d_completed_render_purpose),a
     ld a,1
@@ -291,7 +293,9 @@ w3d_publish_render_completion:
     ei
 ; Mode 8+128 is double buffered: present exactly once, only after the VDP has
 ; completed the hidden surface associated with this validated sequence.
+    W3D_PROFILE_CALL w3d_profile_before_present
     call w3d_vdu_present
+    W3D_PROFILE_CALL w3d_profile_after_present
     ld a,(w3d_render_in_flight_purpose)
     ld (w3d_completed_render_purpose),a
     ld a,1
@@ -596,6 +600,7 @@ w3d_render_packet_callback:
     cp W3D_RENDER_EVENT_FIZZLE_COMPLETE
     ld a,1
     jr z,@fizzle_ready
+    W3D_PROFILE_CALL w3d_profile_callback
     ld (w3d_completion_ready),a
     jp @done
 @fizzle_ready:

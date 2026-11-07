@@ -161,6 +161,7 @@ w3d_vdplet_submit_dirty_world_render:
     call w3d_vdplet_send_run
     jr c,@cancel
     call w3d_vdplet_batch_mark_submitted
+    W3D_PROFILE_CALL w3d_profile_submitted
     ret
 @cancel:
     push af

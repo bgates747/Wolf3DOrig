@@ -96,6 +96,9 @@ fa_create_always:               equ 08h
     include "wolf3d_level_loader.inc"
     include "wolf3d_save.inc"
     include "wolf3d_save_slots.inc"
+    .if W3D_PROFILE
+    include "wolf3d_profile.inc"
+    .endif
 
 start:
     push af
@@ -103,7 +106,9 @@ start:
     push de
     push ix
     push iy
+    W3D_PROFILE_CALL w3d_profile_initialize
     call main
+    W3D_PROFILE_CALL w3d_profile_finish
 
 exit:
     pop iy
@@ -1155,6 +1160,13 @@ w3d_run_gameplay_session:
     .endif
     call w3d_music_start_current_floor
 
+    W3D_PROFILE_CALL w3d_profile_game_open
+    .if W3D_PROFILE
+    ld a,(w3d_callback_error)
+    or a
+    jp nz,w3d_gameplay_fatal_shutdown
+    .endif
+
 ; The initial world snapshot is complete. Use the same generic init/full-replay
 ; path as a later floor transition; the generated fixture command stream is no
 ; longer the application's runtime-level authority.
@@ -1216,7 +1228,11 @@ mainloop:
     jr nc,@transition_ready
     call w3d_shell_query_exit_request
     jp nz,w3d_gameplay_exit_shutdown
+    .if W3D_PROFILE
+    jp @fatal_shutdown
+    .else
     jr @fatal_shutdown
+    .endif
 @transition_ready:
     jp mainloop
 
@@ -1243,10 +1259,12 @@ mainloop:
 @simulate:
 ; Input and simulation run at an exact 30 Hz fixed step (four 120 Hz MOS
 ; ticks), independently of render completion.
+    W3D_PROFILE_CALL w3d_profile_input_begin
     call w3d_poll_keys
     call w3d_tick_control_clock
     call w3d_accumulate_simulation_time
     call w3d_run_simulation_batch
+    W3D_PROFILE_CALL w3d_profile_input_end
 
 ; A max-step catch-up pass may still leave complete 30-Hz quanta queued. Keep
 ; only its newest pending requests and emit nothing stale; the next simulated
@@ -1500,6 +1518,7 @@ w3d_gameplay_fatal_shutdown:
 w3d_gameplay_shutdown:
     W3D_STARTUP_TRACE 070h
     ld (w3d_gameplay_result),a
+    W3D_PROFILE_CALL w3d_profile_game_close
     call w3d_audio_stop_channels
     call w3d_disable_render_notifications
     .if W3D_RENDER_BACKEND
