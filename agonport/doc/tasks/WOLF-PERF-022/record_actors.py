@@ -36,7 +36,8 @@ def main(controller_tool, observer_tool):
         except session.ObserverUnavailable:
             observations[role] = dict(original_process_terminal=True)
         else:
-            assert current != original, role + ' is still live; do not release'
+            incarnation = ('pid', 'start', 'boot')
+            assert any(current[k] != original[k] for k in incarnation), role + ' is still live; do not release'
             # PID reuse is never attributed to the old process or signalled.
             observations[role] = dict(original_identity_absent=True, current_identity=current)
     session.write_once(B / 'host-actors-terminal.json', dict(**actual, handles=handles,
