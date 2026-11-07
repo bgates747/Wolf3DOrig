@@ -7,9 +7,9 @@ cohort/restoration/release normally before any023 physical selection. Oryx is
 unavailable; no emulator diversion. No new goal, peer/reviewer assignment,
 firmware/service/provider/carrier/default or viewport change is selected.
 
-- [ ] WOLF-PERF-023-01 — Freeze this pre-code support/work/order gate; source
+- [x] WOLF-PERF-023-01 — Freeze this pre-code support/work/order gate; source
   advice resolves any concrete ABI/byte-order gap before the affected code.
-- [ ] WOLF-PERF-023-02 — Count eligible actual constant-colour spans using the
+- [x] WOLF-PERF-023-02 — Count eligible actual constant-colour spans using the
   real combined renderer/600 existing poses, with original geometry and no
   mutated target/timing fixture. Establish a useful opportunity or dispose it.
 - [ ] WOLF-PERF-023-03 — Isolated exact8d3d19bb combined control/candidate copies;

@@ -1,0 +1,225 @@
+{
+  "passed": true,
+  "inputs": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/PLAN.md": "e0695d73e73c8dd21846e8077cf7841f038f6dad94250c9c66390741f2223aa7",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/PRE-CODE-PINS.json": "ca8909999daf2e7ef9300b67a825c8638917cd383b9e8f1a99fc874ff657526a",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/count_spans.cpp": "063ac20b3b2ec5dd1244fdda782c607c3aad4d0aa59386be236cf842a3070dd4",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/run_census.py": "e2f20fa6baa91cfd4549d4b648c0d772bebef9007ff20ab0d729630cdfe5d621",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/wolf3d_tables.inc": "f372e12b48d7e0f6ff4e572e27672fb801e7e39a3ddd507e88f98711ab9c089e",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/wolf3d_tables.inc": "f372e12b48d7e0f6ff4e572e27672fb801e7e39a3ddd507e88f98711ab9c089e",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/production/wolf3d_world_mirror.cpp": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/production/original_tangents.inc": "f602ee6862cd3ccb006321907508b66158078c8a51d56c62a17a134928db2238",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/production/wolf3d_world_mirror.h": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/production/renderer_fixture.h": "c2939c346bcb0e2df84e558cc2f2453c0b4f89fef7d505670648f88d0818a59f",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/production/original_raywalk.h": "72b1a70eb08fd211dde089e7f7b9379494daeb307fe34a06adb9a198291b66c7",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/production/wolf3d_production_contract.h": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/production/wolf3d_renderer.h": "ca340f31a81fb3665f7bc3f8c9cd956e26254ab97ba6358d6c268c0585cb4c68",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/production/wolf3d_renderer.cpp": "7fde7eec5520b1e6457c78e29e47361b7784e6cbadcda070d5a96be82420fb3e",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/production/wolf3d_world_mirror.cpp": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/production/original_tangents.inc": "f602ee6862cd3ccb006321907508b66158078c8a51d56c62a17a134928db2238",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/production/wolf3d_world_mirror.h": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/production/renderer_fixture.h": "c2939c346bcb0e2df84e558cc2f2453c0b4f89fef7d505670648f88d0818a59f",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/production/original_raywalk.h": "72b1a70eb08fd211dde089e7f7b9379494daeb307fe34a06adb9a198291b66c7",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/production/wolf3d_production_contract.h": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/production/wolf3d_renderer.h": "ca340f31a81fb3665f7bc3f8c9cd956e26254ab97ba6358d6c268c0585cb4c68",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/production/wolf3d_renderer.cpp": "35cfded0149f60ed0e85c8392ea24d25e18a95ddc2b03443576ff82d661b40e9",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/count_spans.cpp": "063ac20b3b2ec5dd1244fdda782c607c3aad4d0aa59386be236cf842a3070dd4",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/sdk/include/vdplet_pcm_sink.h": "e3bf5d900105ddd87e82f5cd38301fab02ffb7a7e38f81012db0bb2e13ba963c",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/sdk/include/vdplet_protocol.h": "0dc8ad31e249ce58ed39435f6a8a265a9175be417ea3bee8a2cc10cde9f94b2f",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/sdk/include/vdp_pcm_sink_wire.h": "5555235b73a68c7ee5648c7fe67f1e99014c707c1fe024b2dec5225edd9feb4e",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/sdk/include/vdp_audio_queue.h": "4f7363364712301529d5c7bbc9ebd1496a7103aaae717880e4ddb3375520b85e",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/sdk/include/vdplet_services.h": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/sdk/include/vdplet.h": "92a6bbc403ecc51e165c103cfd16fd071f3d644ad52f83a4a7cb4fe088a5a2d6"
+  },
+  "steps": [
+    {
+      "name": "compile",
+      "argv": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/sdk/include",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/count_spans.cpp",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/production/wolf3d_world_mirror.cpp",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/census"
+      ],
+      "returncode": 0,
+      "seconds": 6.009876700991299
+    },
+    {
+      "name": "count",
+      "argv": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/census",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census02/poses.csv"
+      ],
+      "returncode": 0,
+      "seconds": 0.5013084150268696
+    }
+  ],
+  "guards": [
+    {
+      "epoch": 1794070225.8489873,
+      "cpu_c": 50.15,
+      "available_kib": 5669792
+    },
+    {
+      "epoch": 1794070225.84969,
+      "cpu_c": 50.15,
+      "available_kib": 5669792
+    },
+    {
+      "epoch": 1794070226.1000757,
+      "cpu_c": 50.7,
+      "available_kib": 5698672
+    },
+    {
+      "epoch": 1794070226.3504386,
+      "cpu_c": 50.7,
+      "available_kib": 5675680
+    },
+    {
+      "epoch": 1794070226.600822,
+      "cpu_c": 50.15,
+      "available_kib": 5666720
+    },
+    {
+      "epoch": 1794070226.8511565,
+      "cpu_c": 50.7,
+      "available_kib": 5665728
+    },
+    {
+      "epoch": 1794070227.101604,
+      "cpu_c": 51.8,
+      "available_kib": 5659392
+    },
+    {
+      "epoch": 1794070227.3519545,
+      "cpu_c": 50.7,
+      "available_kib": 5655264
+    },
+    {
+      "epoch": 1794070227.602357,
+      "cpu_c": 52.35,
+      "available_kib": 5635392
+    },
+    {
+      "epoch": 1794070227.8527033,
+      "cpu_c": 51.25,
+      "available_kib": 5633616
+    },
+    {
+      "epoch": 1794070228.103073,
+      "cpu_c": 50.7,
+      "available_kib": 5630032
+    },
+    {
+      "epoch": 1794070228.353464,
+      "cpu_c": 51.25,
+      "available_kib": 5625632
+    },
+    {
+      "epoch": 1794070228.6037993,
+      "cpu_c": 51.25,
+      "available_kib": 5617968
+    },
+    {
+      "epoch": 1794070228.8542747,
+      "cpu_c": 51.25,
+      "available_kib": 5613984
+    },
+    {
+      "epoch": 1794070229.1046343,
+      "cpu_c": 51.8,
+      "available_kib": 5598896
+    },
+    {
+      "epoch": 1794070229.3549652,
+      "cpu_c": 51.25,
+      "available_kib": 5591536
+    },
+    {
+      "epoch": 1794070229.6053112,
+      "cpu_c": 51.8,
+      "available_kib": 5589648
+    },
+    {
+      "epoch": 1794070229.8557432,
+      "cpu_c": 50.15,
+      "available_kib": 5628240
+    },
+    {
+      "epoch": 1794070230.1061316,
+      "cpu_c": 51.25,
+      "available_kib": 5626048
+    },
+    {
+      "epoch": 1794070230.3566005,
+      "cpu_c": 51.8,
+      "available_kib": 5620480
+    },
+    {
+      "epoch": 1794070230.6069307,
+      "cpu_c": 52.35,
+      "available_kib": 5622000
+    },
+    {
+      "epoch": 1794070230.857403,
+      "cpu_c": 51.8,
+      "available_kib": 5619984
+    },
+    {
+      "epoch": 1794070231.107844,
+      "cpu_c": 51.8,
+      "available_kib": 5614224
+    },
+    {
+      "epoch": 1794070231.358188,
+      "cpu_c": 51.8,
+      "available_kib": 5545536
+    },
+    {
+      "epoch": 1794070231.608702,
+      "cpu_c": 52.35,
+      "available_kib": 5619840
+    },
+    {
+      "epoch": 1794070231.9406266,
+      "cpu_c": 54.0,
+      "available_kib": 5622160
+    },
+    {
+      "epoch": 1794070231.94119,
+      "cpu_c": 54.0,
+      "available_kib": 5622160
+    },
+    {
+      "epoch": 1794070232.1917565,
+      "cpu_c": 51.25,
+      "available_kib": 5509072
+    }
+  ],
+  "source_callgraph_exhaustive": true,
+  "renderer_reversed_exactly": true,
+  "candidate_implemented": false,
+  "target_io": false,
+  "counts": {
+    "background_calls": 600,
+    "span_calls": 531600,
+    "span_bytes": 46584000,
+    "eligible_calls": 336000,
+    "eligible_bytes": 46080000,
+    "full_scene_executed": false,
+    "candidate_executed": false
+  },
+  "owned_children_joined": true,
+  "seconds": 6.673169689020142
+}
