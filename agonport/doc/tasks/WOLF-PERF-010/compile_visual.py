@@ -1,7 +1,7 @@
 """One actual static Fab visual derivative assembly; normal Pi build custody."""
 from pathlib import Path
 import argparse,json,hashlib,os,signal,subprocess,time
-T=Path(__file__).resolve().parent;B=T/'build/visual01';D=Path('/Agon/mystuff/agon-dev-env');ASM=T.parents[3]/'src/asm/wolf3d/tgt/.tools/ez80asm'
+T=Path(__file__).resolve().parent;B=T/'build/visual02';D=Path('/Agon/mystuff/agon-dev-env');ASM=T.parents[3]/'src/asm/wolf3d/tgt/.tools/ez80asm'
 def main(lease):
     for n,d in json.loads((B/'inputs.json').read_text()).items():assert hashlib.sha256(Path(n).read_bytes()).hexdigest()==d,n
     subprocess.run([str(D/'.venv/bin/python'),str(D/'cross-agent/pi5-workloads/pi5_lease.py'),'assert-owner','--owner','wolf3dorig','--lease',lease],check=True,stdout=subprocess.DEVNULL)

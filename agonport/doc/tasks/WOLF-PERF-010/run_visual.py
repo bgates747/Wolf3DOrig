@@ -1,7 +1,7 @@
 """One owned headless Fab run; no build, target timing or hardware access."""
 from pathlib import Path
 import argparse,hashlib,importlib.util,json,os,shutil,signal,subprocess,time
-ROOT=Path.home()/'Agon/mystuff/Wolf3dOrig';T=ROOT/'agonport/doc/tasks/WOLF-PERF-010';B=T/'build/visual01';PROFILE=ROOT/'.emulator/wolf-perf010-caption01'
+ROOT=Path.home()/'Agon/mystuff/Wolf3dOrig';T=ROOT/'agonport/doc/tasks/WOLF-PERF-010';B=T/'build/visual02';PROFILE=ROOT/'.emulator/wolf-perf010-caption01'
 sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 def main(lease):
     for n,d in json.loads((B/'dispatch.json').read_text()).items():assert sha(B/n)==d,n
