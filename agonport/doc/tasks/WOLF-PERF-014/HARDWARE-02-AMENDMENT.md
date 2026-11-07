@@ -1,0 +1,3 @@
+# Shared physical comparison selected before controller work
+
+The remaining physical steps use [WOLF-GOAL-001 hardware02](../WOLF-GOAL-001/HARDWARE-02-PLAN.md): six uncapped A/B/C/C/B/A room runs and seven INFO queries, comparing exact independent a926, cache8c126c and trig2844. Share staging/install/restore overhead, preserve both candidates and real producers unchanged. The bracketing control is shared between comparisons, not a claim of independent ABBA cohorts. No source combination, new renderer axis, provider/carrier change or default adoption. Normal Mech-first scheduling/fresh grant/first-fault/restore/release rules apply. Existing immutable014/015 physical IDs remain the completion references.
