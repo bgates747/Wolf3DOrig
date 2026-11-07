@@ -36,9 +36,11 @@ def prepare():
     payload = json.loads((BASE / 'inputs/payload.json').read_text())
     for name, digest in payload['files'].items():
         assert sha(BASE / 'inputs' / name) == digest, name
-    guest_hash = ('9777b1a8718a4501622d28f2764e08f6e7d6e6adc968acbae76d3784446755e0'
-        if BASE.name.endswith('02') else
-        'fda77dfd4f13e8d824f10fa371759ec5ad7f6e81bd1786161b5607b22579ea22')
+    guest_hash = {
+        '01': 'fda77dfd4f13e8d824f10fa371759ec5ad7f6e81bd1786161b5607b22579ea22',
+        '02': '9777b1a8718a4501622d28f2764e08f6e7d6e6adc968acbae76d3784446755e0',
+        '03': '49c9355f570e58d0b2665df24a161155db3827cea8057740db9ac5781c5a2a6c',
+    }[BASE.name[-2:]]
     assert payload['guest_sha256'] == guest_hash
     assert payload['module_sha256'] == '8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b'
     game = BASE / 'sdcard/wolf3d'
@@ -192,7 +194,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('action', choices=('prepare', 'run'))
     parser.add_argument('--lease')
-    parser.add_argument('--revision', choices=('01', '02'), default='01')
+    parser.add_argument('--revision', choices=('01', '02', '03'), default='01')
     args = parser.parse_args()
     BASE = BASE.with_name('wolf-profile001-alexe' + args.revision)
     if args.action == 'prepare':
