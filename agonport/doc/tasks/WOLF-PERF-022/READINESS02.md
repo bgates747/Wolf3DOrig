@@ -6,7 +6,7 @@ Original ungranted dfe8 was cancelled normally to honor Smith's Mech-first
 instruction; original72526a9/kit a07df733 remains preserved and withdrawn.
 
 New kit **db7760ef688a12b085d9c1aa68fd0fbb0134c309ebc76cb0bbb4e91552ed7a98**:
-**822 pins/471 archived byte sets/17 stage files**. Only reservation/task/evidence
+**822 pins/472 archived byte sets/17 stage files**. Only reservation/task/evidence
 namespace and matching observer binding/preflight changed. Same exact renderer
 packages, all actual producer binaries/listings and complete original/cyan/
 combined/combined/cyan/original600-pose uncapped rooms/seven INFO queries.

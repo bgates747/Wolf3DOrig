@@ -474,6 +474,7 @@
   "frozen-inputs/index.json": "39112393b326e73c997fd8d502233a6365905a7229360fa3fbada3518ccd4002",
   "guest-qualification.json": "3e4922f1a86e58db259b625f22f605c4d387453d50e8689c1a805fc711b6b832",
   "kit.json": "db7760ef688a12b085d9c1aa68fd0fbb0134c309ebc76cb0bbb4e91552ed7a98",
+  "reservation-source-delta.patch": "1a15f775b7b17696202b09364df457daf1cc31478ea50ebba273e970650ab295",
   "route.txt": "3f53d484e3b76999a56165d7af36b7cf8f90617d5f1e7701d8c7654fa988006f",
   "source-binding.json": "15f6851b27a12bbecff7adabc76224c78a77d7ad833a2763e65b0d9a72e7f66a",
   "state.txt": "eb2f3e941eb5b46cb2c84edf0453e028ae99c138ba324c7205729ddd62f06322"
