@@ -1,0 +1,1377 @@
+{
+  "passed": true,
+  "scope": "Native production-source bridge, not Xtensa/runtime/PIC/cache/performance",
+  "inputs_manifest_sha256": "991ec8682866bed271b4df56054d7599336d3a0d4f670baf159e82e9b9c8b47d",
+  "retrieval_files": 11137,
+  "retrieval_manifest_sha256": "12b96b260c5c20d36482b9a7c23e0573660bd363f798162564c0a5e05198b4e4",
+  "arms": {
+    "original": {
+      "actual_poses": 600,
+      "distinct_headings": 300,
+      "distinct_captures": 52,
+      "captured_frames": 55,
+      "bridge": {
+        "adapter": "native-production-source;not-Xtensa",
+        "loads": 1,
+        "unloads": 1,
+        "renders": 602,
+        "errors": 0,
+        "residual_cleanup": 0,
+        "loaded": false,
+        "busy": false,
+        "frame": false
+      },
+      "run": {
+        "success": true,
+        "scope": "Fab visual correction check; native CCOUNT collection disabled; no performance claim",
+        "timeout_seconds": 300,
+        "boost": 0,
+        "completed_poses": 600,
+        "seconds_to_boundary": 54.92339866200018,
+        "before_bytes": 16233,
+        "before_sha256": "e934c542a7222a872c9c980f7a1fb420309255884f110077ad25cfce14d7b323",
+        "bridge": {
+          "adapter": "native-production-source;not-Xtensa",
+          "loads": 1,
+          "unloads": 1,
+          "renders": 602,
+          "errors": 0,
+          "residual_cleanup": 0,
+          "loaded": false,
+          "busy": false,
+          "frame": false
+        },
+        "captures": [
+          {
+            "file": "frame-000.ppm",
+            "seconds": 0.002413133001027745
+          },
+          {
+            "file": "frame-001.ppm",
+            "seconds": 1.0046980890001578
+          },
+          {
+            "file": "frame-002.ppm",
+            "seconds": 2.00715029300045
+          },
+          {
+            "file": "frame-003.ppm",
+            "seconds": 3.0100724340009037
+          },
+          {
+            "file": "frame-004.ppm",
+            "seconds": 4.013056433001111
+          },
+          {
+            "file": "frame-005.ppm",
+            "seconds": 5.01518423699963
+          },
+          {
+            "file": "frame-006.ppm",
+            "seconds": 6.017237850999663
+          },
+          {
+            "file": "frame-007.ppm",
+            "seconds": 7.0195247330011625
+          },
+          {
+            "file": "frame-008.ppm",
+            "seconds": 8.02162278600008
+          },
+          {
+            "file": "frame-009.ppm",
+            "seconds": 9.023925155999677
+          },
+          {
+            "file": "frame-010.ppm",
+            "seconds": 10.026150966999921
+          },
+          {
+            "file": "frame-011.ppm",
+            "seconds": 11.028421736000382
+          },
+          {
+            "file": "frame-012.ppm",
+            "seconds": 12.030382496999664
+          },
+          {
+            "file": "frame-013.ppm",
+            "seconds": 13.032389746000263
+          },
+          {
+            "file": "frame-014.ppm",
+            "seconds": 14.034437244999936
+          },
+          {
+            "file": "frame-015.ppm",
+            "seconds": 15.036683002001155
+          },
+          {
+            "file": "frame-016.ppm",
+            "seconds": 16.038264652999715
+          },
+          {
+            "file": "frame-017.ppm",
+            "seconds": 17.0398092129999
+          },
+          {
+            "file": "frame-018.ppm",
+            "seconds": 18.041271313000834
+          },
+          {
+            "file": "frame-019.ppm",
+            "seconds": 19.043118170000525
+          },
+          {
+            "file": "frame-020.ppm",
+            "seconds": 20.04545740300091
+          },
+          {
+            "file": "frame-021.ppm",
+            "seconds": 21.047039400000358
+          },
+          {
+            "file": "frame-022.ppm",
+            "seconds": 22.04875391600035
+          },
+          {
+            "file": "frame-023.ppm",
+            "seconds": 23.050891218001198
+          },
+          {
+            "file": "frame-024.ppm",
+            "seconds": 24.052616602000853
+          },
+          {
+            "file": "frame-025.ppm",
+            "seconds": 25.05502103100116
+          },
+          {
+            "file": "frame-026.ppm",
+            "seconds": 26.057138281001244
+          },
+          {
+            "file": "frame-027.ppm",
+            "seconds": 27.05928649999987
+          },
+          {
+            "file": "frame-028.ppm",
+            "seconds": 28.06121248999989
+          },
+          {
+            "file": "frame-029.ppm",
+            "seconds": 29.06345263700132
+          },
+          {
+            "file": "frame-030.ppm",
+            "seconds": 30.065894373001356
+          },
+          {
+            "file": "frame-031.ppm",
+            "seconds": 31.0682647370013
+          },
+          {
+            "file": "frame-032.ppm",
+            "seconds": 32.070339154000976
+          },
+          {
+            "file": "frame-033.ppm",
+            "seconds": 33.07255832900046
+          },
+          {
+            "file": "frame-034.ppm",
+            "seconds": 34.07474916300089
+          },
+          {
+            "file": "frame-035.ppm",
+            "seconds": 35.07752958200035
+          },
+          {
+            "file": "frame-036.ppm",
+            "seconds": 36.079890294000506
+          },
+          {
+            "file": "frame-037.ppm",
+            "seconds": 37.082134666001366
+          },
+          {
+            "file": "frame-038.ppm",
+            "seconds": 38.084394637000514
+          },
+          {
+            "file": "frame-039.ppm",
+            "seconds": 39.086975215001075
+          },
+          {
+            "file": "frame-040.ppm",
+            "seconds": 40.08942739300073
+          },
+          {
+            "file": "frame-041.ppm",
+            "seconds": 41.091749660999994
+          },
+          {
+            "file": "frame-042.ppm",
+            "seconds": 42.09399106000092
+          },
+          {
+            "file": "frame-043.ppm",
+            "seconds": 43.095965299000454
+          },
+          {
+            "file": "frame-044.ppm",
+            "seconds": 44.098159606999616
+          },
+          {
+            "file": "frame-045.ppm",
+            "seconds": 45.10057447200052
+          },
+          {
+            "file": "frame-046.ppm",
+            "seconds": 46.102809628000614
+          },
+          {
+            "file": "frame-047.ppm",
+            "seconds": 47.10499625299963
+          },
+          {
+            "file": "frame-048.ppm",
+            "seconds": 48.107212748000165
+          },
+          {
+            "file": "frame-049.ppm",
+            "seconds": 49.110638893000214
+          },
+          {
+            "file": "frame-050.ppm",
+            "seconds": 50.11294027599979
+          },
+          {
+            "file": "frame-051.ppm",
+            "seconds": 51.11550329600141
+          },
+          {
+            "file": "frame-052.ppm",
+            "seconds": 52.11781836699993
+          },
+          {
+            "file": "frame-053.ppm",
+            "seconds": 53.11985282900059
+          },
+          {
+            "file": "frame-054.ppm",
+            "seconds": 54.12226418800128
+          }
+        ],
+        "whole_seconds": 55.73842249900008,
+        "returncode": 0
+      },
+      "build": {
+        "passed": true,
+        "steps": [
+          {
+            "argv": [
+              "g++",
+              "-DUSERSPACE",
+              "-std=c++17",
+              "-O2",
+              "-g",
+              "-fPIC",
+              "-Wall",
+              "-Werror=return-type",
+              "-Ifab/src",
+              "-Ifab/src/vdp",
+              "-Ivideo",
+              "-Isdk",
+              "-Ifab/src/vdp/userspace-vdp-gl/src",
+              "-Ifab/src/vdp/userspace-vdp-gl/src/comdrivers",
+              "-Ifab/src/vdp/userspace-vdp-gl/src/dispdrivers",
+              "-Ifab/src/vdp/userspace-vdp-gl/src/userspace-platform",
+              "-Ifab/src/vdp/userspace-vdp-gl/src/userspace-platform/matrix",
+              "-Ideps/CRC/src",
+              "-Ideps/ESP32Time",
+              "-c",
+              "adapter.cpp",
+              "-o",
+              "adapter.o"
+            ],
+            "returncode": 0,
+            "seconds": 20.045141025999328
+          },
+          {
+            "argv": [
+              "g++",
+              "-shared",
+              "-Wl,-z,defs",
+              "adapter.o",
+              "cache/rust_glue.o",
+              "cache/CRC16.o",
+              "cache/CRC32.o",
+              "cache/CrcFastReverse.o",
+              "cache/libvdp-gl.a",
+              "-pthread",
+              "-o",
+              "vdp_wolf_fab.so"
+            ],
+            "returncode": 0,
+            "seconds": 0.5013548580009228
+          },
+          {
+            "argv": [
+              "g++",
+              "-std=c++17",
+              "-O2",
+              "selftest.cpp",
+              "-ldl",
+              "-o",
+              "selftest"
+            ],
+            "returncode": 0,
+            "seconds": 0.5015080659995874
+          },
+          {
+            "argv": [
+              "./selftest",
+              "/home/smith/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/visual02/original/bridge/vdp_wolf_fab.so"
+            ],
+            "returncode": 0,
+            "seconds": 0.5014194659997884
+          }
+        ],
+        "guards": [
+          {
+            "seconds": 0.4241941800009954,
+            "cpu_c": [
+              54.25
+            ],
+            "available_kib": 24081300
+          },
+          {
+            "seconds": 0.4276242860014463,
+            "cpu_c": [
+              54.25
+            ],
+            "available_kib": 24081300
+          },
+          {
+            "seconds": 0.9284722340016742,
+            "cpu_c": [
+              55.25
+            ],
+            "available_kib": 23981036
+          },
+          {
+            "seconds": 1.429352192000806,
+            "cpu_c": [
+              55.25
+            ],
+            "available_kib": 24086036
+          },
+          {
+            "seconds": 1.9302123790002952,
+            "cpu_c": [
+              56.625
+            ],
+            "available_kib": 24008120
+          },
+          {
+            "seconds": 2.431093826000506,
+            "cpu_c": [
+              56.625
+            ],
+            "available_kib": 23969572
+          },
+          {
+            "seconds": 2.931967683000039,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23926136
+          },
+          {
+            "seconds": 3.4330282190003345,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23911852
+          },
+          {
+            "seconds": 3.9341144940008235,
+            "cpu_c": [
+              56.0
+            ],
+            "available_kib": 23907064
+          },
+          {
+            "seconds": 4.435431468000388,
+            "cpu_c": [
+              55.75
+            ],
+            "available_kib": 23898908
+          },
+          {
+            "seconds": 4.936308554000789,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23885972
+          },
+          {
+            "seconds": 5.437174541000786,
+            "cpu_c": [
+              56.875
+            ],
+            "available_kib": 23876868
+          },
+          {
+            "seconds": 5.938044867001736,
+            "cpu_c": [
+              56.75
+            ],
+            "available_kib": 23869500
+          },
+          {
+            "seconds": 6.439143311001317,
+            "cpu_c": [
+              57.0
+            ],
+            "available_kib": 23861744
+          },
+          {
+            "seconds": 6.940215005000937,
+            "cpu_c": [
+              56.375
+            ],
+            "available_kib": 23855832
+          },
+          {
+            "seconds": 7.441097151000577,
+            "cpu_c": [
+              56.625
+            ],
+            "available_kib": 23848180
+          },
+          {
+            "seconds": 7.942229074000352,
+            "cpu_c": [
+              57.625
+            ],
+            "available_kib": 23841088
+          },
+          {
+            "seconds": 8.443352748001416,
+            "cpu_c": [
+              57.375
+            ],
+            "available_kib": 23837432
+          },
+          {
+            "seconds": 8.944545411000945,
+            "cpu_c": [
+              57.25
+            ],
+            "available_kib": 23809708
+          },
+          {
+            "seconds": 9.44582333300059,
+            "cpu_c": [
+              58.5
+            ],
+            "available_kib": 23795616
+          },
+          {
+            "seconds": 9.947141194001233,
+            "cpu_c": [
+              59.125
+            ],
+            "available_kib": 23789404
+          },
+          {
+            "seconds": 10.449728747000336,
+            "cpu_c": [
+              58.5
+            ],
+            "available_kib": 23788968
+          },
+          {
+            "seconds": 10.951077878000433,
+            "cpu_c": [
+              58.0
+            ],
+            "available_kib": 23775060
+          },
+          {
+            "seconds": 11.452007602001686,
+            "cpu_c": [
+              57.5
+            ],
+            "available_kib": 23781724
+          },
+          {
+            "seconds": 11.953338722001718,
+            "cpu_c": [
+              57.0
+            ],
+            "available_kib": 23791048
+          },
+          {
+            "seconds": 12.454522104000716,
+            "cpu_c": [
+              56.625
+            ],
+            "available_kib": 23795128
+          },
+          {
+            "seconds": 12.95541662800133,
+            "cpu_c": [
+              56.375
+            ],
+            "available_kib": 23797336
+          },
+          {
+            "seconds": 13.456275671000185,
+            "cpu_c": [
+              56.125
+            ],
+            "available_kib": 23796672
+          },
+          {
+            "seconds": 13.957156545000544,
+            "cpu_c": [
+              56.0
+            ],
+            "available_kib": 23795656
+          },
+          {
+            "seconds": 14.458508314000937,
+            "cpu_c": [
+              56.125
+            ],
+            "available_kib": 23800260
+          },
+          {
+            "seconds": 14.959549756000342,
+            "cpu_c": [
+              56.375
+            ],
+            "available_kib": 23800140
+          },
+          {
+            "seconds": 15.460611358001188,
+            "cpu_c": [
+              56.625
+            ],
+            "available_kib": 23801036
+          },
+          {
+            "seconds": 15.961495780000405,
+            "cpu_c": [
+              56.75
+            ],
+            "available_kib": 23803464
+          },
+          {
+            "seconds": 16.462623031000476,
+            "cpu_c": [
+              56.875
+            ],
+            "available_kib": 23806268
+          },
+          {
+            "seconds": 16.963437254000382,
+            "cpu_c": [
+              56.75
+            ],
+            "available_kib": 23798776
+          },
+          {
+            "seconds": 17.46452763400157,
+            "cpu_c": [
+              56.75
+            ],
+            "available_kib": 23800256
+          },
+          {
+            "seconds": 17.96542911600045,
+            "cpu_c": [
+              56.75
+            ],
+            "available_kib": 23792700
+          },
+          {
+            "seconds": 18.46628290800072,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23735760
+          },
+          {
+            "seconds": 18.967200979001063,
+            "cpu_c": [
+              56.375
+            ],
+            "available_kib": 24174000
+          },
+          {
+            "seconds": 19.468268509001064,
+            "cpu_c": [
+              56.375
+            ],
+            "available_kib": 24085684
+          },
+          {
+            "seconds": 19.96914816000026,
+            "cpu_c": [
+              56.25
+            ],
+            "available_kib": 24044736
+          },
+          {
+            "seconds": 20.735402348000207,
+            "cpu_c": [
+              55.75
+            ],
+            "available_kib": 24240160
+          },
+          {
+            "seconds": 20.7365894400009,
+            "cpu_c": [
+              55.75
+            ],
+            "available_kib": 24240160
+          },
+          {
+            "seconds": 21.453969087000587,
+            "cpu_c": [
+              55.375
+            ],
+            "available_kib": 24235356
+          },
+          {
+            "seconds": 21.455309017001127,
+            "cpu_c": [
+              55.375
+            ],
+            "available_kib": 24235356
+          },
+          {
+            "seconds": 22.170853107001676,
+            "cpu_c": [
+              55.0
+            ],
+            "available_kib": 24227664
+          },
+          {
+            "seconds": 22.17208264800138,
+            "cpu_c": [
+              55.0
+            ],
+            "available_kib": 24227664
+          }
+        ],
+        "seconds": 22.672320593001132,
+        "outputs": {
+          "vdp_wolf_fab.so": "8e9da3833a5cabf7991094975ee9e886fdedf225399b8d49a32e137be1c3fcbd",
+          "selftest": "70912d35a5a3ce44c3e22c91c6ec947dcab6c3b27a71e4df657262c6ed6d185a"
+        }
+      },
+      "guest_sp": {
+        "wp_entry_sp": 786149,
+        "wp_exit_sp": 786149
+      }
+    },
+    "candidate": {
+      "actual_poses": 600,
+      "distinct_headings": 300,
+      "distinct_captures": 52,
+      "captured_frames": 55,
+      "bridge": {
+        "adapter": "native-production-source;not-Xtensa",
+        "loads": 1,
+        "unloads": 1,
+        "renders": 602,
+        "errors": 0,
+        "residual_cleanup": 0,
+        "loaded": false,
+        "busy": false,
+        "frame": false
+      },
+      "run": {
+        "success": true,
+        "scope": "Fab visual correction check; native CCOUNT collection disabled; no performance claim",
+        "timeout_seconds": 300,
+        "boost": 0,
+        "completed_poses": 600,
+        "seconds_to_boundary": 54.92229408999992,
+        "before_bytes": 16233,
+        "before_sha256": "34e539c12a2a1b5399f74f1cc50dd049f991c346910b3f4d9a9be8b7a166e1b3",
+        "bridge": {
+          "adapter": "native-production-source;not-Xtensa",
+          "loads": 1,
+          "unloads": 1,
+          "renders": 602,
+          "errors": 0,
+          "residual_cleanup": 0,
+          "loaded": false,
+          "busy": false,
+          "frame": false
+        },
+        "captures": [
+          {
+            "file": "frame-000.ppm",
+            "seconds": 0.0017440479987271829
+          },
+          {
+            "file": "frame-001.ppm",
+            "seconds": 1.0053342020000855
+          },
+          {
+            "file": "frame-002.ppm",
+            "seconds": 2.0074762149997696
+          },
+          {
+            "file": "frame-003.ppm",
+            "seconds": 3.0099508249986684
+          },
+          {
+            "file": "frame-004.ppm",
+            "seconds": 4.0123441249997995
+          },
+          {
+            "file": "frame-005.ppm",
+            "seconds": 5.014824693998889
+          },
+          {
+            "file": "frame-006.ppm",
+            "seconds": 6.0173212319987215
+          },
+          {
+            "file": "frame-007.ppm",
+            "seconds": 7.019285772999865
+          },
+          {
+            "file": "frame-008.ppm",
+            "seconds": 8.021495820999917
+          },
+          {
+            "file": "frame-009.ppm",
+            "seconds": 9.023902527998871
+          },
+          {
+            "file": "frame-010.ppm",
+            "seconds": 10.02625208399877
+          },
+          {
+            "file": "frame-011.ppm",
+            "seconds": 11.028492460000052
+          },
+          {
+            "file": "frame-012.ppm",
+            "seconds": 12.030688125998495
+          },
+          {
+            "file": "frame-013.ppm",
+            "seconds": 13.032984751000185
+          },
+          {
+            "file": "frame-014.ppm",
+            "seconds": 14.034963226999025
+          },
+          {
+            "file": "frame-015.ppm",
+            "seconds": 15.037415139999212
+          },
+          {
+            "file": "frame-016.ppm",
+            "seconds": 16.03960137299873
+          },
+          {
+            "file": "frame-017.ppm",
+            "seconds": 17.0417657959988
+          },
+          {
+            "file": "frame-018.ppm",
+            "seconds": 18.043840418999025
+          },
+          {
+            "file": "frame-019.ppm",
+            "seconds": 19.04597732000002
+          },
+          {
+            "file": "frame-020.ppm",
+            "seconds": 20.049060934999943
+          },
+          {
+            "file": "frame-021.ppm",
+            "seconds": 21.051388933999988
+          },
+          {
+            "file": "frame-022.ppm",
+            "seconds": 22.053925260999677
+          },
+          {
+            "file": "frame-023.ppm",
+            "seconds": 23.05603074999999
+          },
+          {
+            "file": "frame-024.ppm",
+            "seconds": 24.058363666999867
+          },
+          {
+            "file": "frame-025.ppm",
+            "seconds": 25.06024620700009
+          },
+          {
+            "file": "frame-026.ppm",
+            "seconds": 26.062426762999166
+          },
+          {
+            "file": "frame-027.ppm",
+            "seconds": 27.064688168999055
+          },
+          {
+            "file": "frame-028.ppm",
+            "seconds": 28.066846613999587
+          },
+          {
+            "file": "frame-029.ppm",
+            "seconds": 29.06920099799936
+          },
+          {
+            "file": "frame-030.ppm",
+            "seconds": 30.071353471999828
+          },
+          {
+            "file": "frame-031.ppm",
+            "seconds": 31.073666554999363
+          },
+          {
+            "file": "frame-032.ppm",
+            "seconds": 32.075718598000094
+          },
+          {
+            "file": "frame-033.ppm",
+            "seconds": 33.0778302309991
+          },
+          {
+            "file": "frame-034.ppm",
+            "seconds": 34.07966997499898
+          },
+          {
+            "file": "frame-035.ppm",
+            "seconds": 35.08230671199999
+          },
+          {
+            "file": "frame-036.ppm",
+            "seconds": 36.08431675399879
+          },
+          {
+            "file": "frame-037.ppm",
+            "seconds": 37.08733069699883
+          },
+          {
+            "file": "frame-038.ppm",
+            "seconds": 38.08933183699992
+          },
+          {
+            "file": "frame-039.ppm",
+            "seconds": 39.09117573799995
+          },
+          {
+            "file": "frame-040.ppm",
+            "seconds": 40.092896557998756
+          },
+          {
+            "file": "frame-041.ppm",
+            "seconds": 41.094580278999274
+          },
+          {
+            "file": "frame-042.ppm",
+            "seconds": 42.09644861699962
+          },
+          {
+            "file": "frame-043.ppm",
+            "seconds": 43.09832569399987
+          },
+          {
+            "file": "frame-044.ppm",
+            "seconds": 44.10021152099944
+          },
+          {
+            "file": "frame-045.ppm",
+            "seconds": 45.102901631998975
+          },
+          {
+            "file": "frame-046.ppm",
+            "seconds": 46.10489912699995
+          },
+          {
+            "file": "frame-047.ppm",
+            "seconds": 47.10720280799978
+          },
+          {
+            "file": "frame-048.ppm",
+            "seconds": 48.10964104899904
+          },
+          {
+            "file": "frame-049.ppm",
+            "seconds": 49.1111921039992
+          },
+          {
+            "file": "frame-050.ppm",
+            "seconds": 50.11342207499911
+          },
+          {
+            "file": "frame-051.ppm",
+            "seconds": 51.11536621699997
+          },
+          {
+            "file": "frame-052.ppm",
+            "seconds": 52.117274217998784
+          },
+          {
+            "file": "frame-053.ppm",
+            "seconds": 53.11982150399854
+          },
+          {
+            "file": "frame-054.ppm",
+            "seconds": 54.12171091399978
+          }
+        ],
+        "whole_seconds": 55.73696623700016,
+        "returncode": 0
+      },
+      "build": {
+        "passed": true,
+        "steps": [
+          {
+            "argv": [
+              "g++",
+              "-DUSERSPACE",
+              "-std=c++17",
+              "-O2",
+              "-g",
+              "-fPIC",
+              "-Wall",
+              "-Werror=return-type",
+              "-Ifab/src",
+              "-Ifab/src/vdp",
+              "-Ivideo",
+              "-Isdk",
+              "-Ifab/src/vdp/userspace-vdp-gl/src",
+              "-Ifab/src/vdp/userspace-vdp-gl/src/comdrivers",
+              "-Ifab/src/vdp/userspace-vdp-gl/src/dispdrivers",
+              "-Ifab/src/vdp/userspace-vdp-gl/src/userspace-platform",
+              "-Ifab/src/vdp/userspace-vdp-gl/src/userspace-platform/matrix",
+              "-Ideps/CRC/src",
+              "-Ideps/ESP32Time",
+              "-c",
+              "adapter.cpp",
+              "-o",
+              "adapter.o"
+            ],
+            "returncode": 0,
+            "seconds": 19.540015376000156
+          },
+          {
+            "argv": [
+              "g++",
+              "-shared",
+              "-Wl,-z,defs",
+              "adapter.o",
+              "cache/rust_glue.o",
+              "cache/CRC16.o",
+              "cache/CRC32.o",
+              "cache/CrcFastReverse.o",
+              "cache/libvdp-gl.a",
+              "-pthread",
+              "-o",
+              "vdp_wolf_fab.so"
+            ],
+            "returncode": 0,
+            "seconds": 0.501428309999028
+          },
+          {
+            "argv": [
+              "g++",
+              "-std=c++17",
+              "-O2",
+              "selftest.cpp",
+              "-ldl",
+              "-o",
+              "selftest"
+            ],
+            "returncode": 0,
+            "seconds": 0.5013623800005007
+          },
+          {
+            "argv": [
+              "./selftest",
+              "/home/smith/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/visual02/candidate/bridge/vdp_wolf_fab.so"
+            ],
+            "returncode": 0,
+            "seconds": 0.5015358189994004
+          }
+        ],
+        "guards": [
+          {
+            "seconds": 0.4211580880000838,
+            "cpu_c": [
+              55.5
+            ],
+            "available_kib": 24346988
+          },
+          {
+            "seconds": 0.42241809900042426,
+            "cpu_c": [
+              55.5
+            ],
+            "available_kib": 24346988
+          },
+          {
+            "seconds": 0.9236390880014369,
+            "cpu_c": [
+              56.25
+            ],
+            "available_kib": 24226792
+          },
+          {
+            "seconds": 1.424747537001167,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 24131752
+          },
+          {
+            "seconds": 1.9256390770005964,
+            "cpu_c": [
+              56.75
+            ],
+            "available_kib": 24067200
+          },
+          {
+            "seconds": 2.4267063360002794,
+            "cpu_c": [
+              56.875
+            ],
+            "available_kib": 24036744
+          },
+          {
+            "seconds": 2.927793645001657,
+            "cpu_c": [
+              56.875
+            ],
+            "available_kib": 23988000
+          },
+          {
+            "seconds": 3.4286782550007047,
+            "cpu_c": [
+              57.0
+            ],
+            "available_kib": 23986740
+          },
+          {
+            "seconds": 3.9295779740004946,
+            "cpu_c": [
+              57.0
+            ],
+            "available_kib": 23977628
+          },
+          {
+            "seconds": 4.430452634000176,
+            "cpu_c": [
+              57.0
+            ],
+            "available_kib": 23968016
+          },
+          {
+            "seconds": 4.93129981400125,
+            "cpu_c": [
+              57.0
+            ],
+            "available_kib": 23949128
+          },
+          {
+            "seconds": 5.432378981000511,
+            "cpu_c": [
+              57.125
+            ],
+            "available_kib": 23944028
+          },
+          {
+            "seconds": 5.933463739000217,
+            "cpu_c": [
+              56.875
+            ],
+            "available_kib": 23931528
+          },
+          {
+            "seconds": 6.434471077000126,
+            "cpu_c": [
+              56.625
+            ],
+            "available_kib": 23900496
+          },
+          {
+            "seconds": 6.9355571450014395,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23894704
+          },
+          {
+            "seconds": 7.436749121001412,
+            "cpu_c": [
+              56.375
+            ],
+            "available_kib": 23887280
+          },
+          {
+            "seconds": 7.93782808800097,
+            "cpu_c": [
+              56.375
+            ],
+            "available_kib": 23879528
+          },
+          {
+            "seconds": 8.438901774999977,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23874944
+          },
+          {
+            "seconds": 8.94035871900087,
+            "cpu_c": [
+              56.625
+            ],
+            "available_kib": 23866832
+          },
+          {
+            "seconds": 9.442008241001531,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23860952
+          },
+          {
+            "seconds": 9.942908239001554,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23847356
+          },
+          {
+            "seconds": 10.443993675000456,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23847996
+          },
+          {
+            "seconds": 10.944912282000587,
+            "cpu_c": [
+              56.375
+            ],
+            "available_kib": 23834896
+          },
+          {
+            "seconds": 11.44578785000158,
+            "cpu_c": [
+              56.25
+            ],
+            "available_kib": 23837208
+          },
+          {
+            "seconds": 11.946698307001498,
+            "cpu_c": [
+              56.375
+            ],
+            "available_kib": 23833028
+          },
+          {
+            "seconds": 12.447576573000333,
+            "cpu_c": [
+              56.375
+            ],
+            "available_kib": 23833264
+          },
+          {
+            "seconds": 12.948437620001641,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23832660
+          },
+          {
+            "seconds": 13.449275557000874,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23837848
+          },
+          {
+            "seconds": 13.95012594400032,
+            "cpu_c": [
+              56.625
+            ],
+            "available_kib": 23844392
+          },
+          {
+            "seconds": 14.451300028000333,
+            "cpu_c": [
+              56.625
+            ],
+            "available_kib": 23844868
+          },
+          {
+            "seconds": 14.95216805400014,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 23841524
+          },
+          {
+            "seconds": 15.453041740000117,
+            "cpu_c": [
+              56.625
+            ],
+            "available_kib": 23844864
+          },
+          {
+            "seconds": 15.954156344001603,
+            "cpu_c": [
+              57.125
+            ],
+            "available_kib": 23845136
+          },
+          {
+            "seconds": 16.455060769001648,
+            "cpu_c": [
+              57.125
+            ],
+            "available_kib": 23844784
+          },
+          {
+            "seconds": 16.956223093000517,
+            "cpu_c": [
+              57.0
+            ],
+            "available_kib": 23840064
+          },
+          {
+            "seconds": 17.45714310800031,
+            "cpu_c": [
+              57.375
+            ],
+            "available_kib": 23815432
+          },
+          {
+            "seconds": 17.9582360910008,
+            "cpu_c": [
+              57.375
+            ],
+            "available_kib": 23804764
+          },
+          {
+            "seconds": 18.459151096001733,
+            "cpu_c": [
+              57.25
+            ],
+            "available_kib": 23777940
+          },
+          {
+            "seconds": 18.96003912100059,
+            "cpu_c": [
+              57.375
+            ],
+            "available_kib": 24137616
+          },
+          {
+            "seconds": 19.460968125000363,
+            "cpu_c": [
+              57.375
+            ],
+            "available_kib": 24083748
+          },
+          {
+            "seconds": 20.2270432230016,
+            "cpu_c": [
+              56.875
+            ],
+            "available_kib": 24224504
+          },
+          {
+            "seconds": 20.228321324000717,
+            "cpu_c": [
+              56.875
+            ],
+            "available_kib": 24224504
+          },
+          {
+            "seconds": 20.94501523800136,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 24195948
+          },
+          {
+            "seconds": 20.94621981900127,
+            "cpu_c": [
+              56.5
+            ],
+            "available_kib": 24195948
+          },
+          {
+            "seconds": 21.66221164700073,
+            "cpu_c": [
+              56.0
+            ],
+            "available_kib": 24190364
+          },
+          {
+            "seconds": 21.663577678000365,
+            "cpu_c": [
+              56.0
+            ],
+            "available_kib": 24190364
+          }
+        ],
+        "seconds": 22.16378435600018,
+        "outputs": {
+          "vdp_wolf_fab.so": "1fa323630e621bd57721e9f8f2d7724bbee980022873b9514310a34ad0a14d2f",
+          "selftest": "70912d35a5a3ce44c3e22c91c6ec947dcab6c3b27a71e4df657262c6ed6d185a"
+        }
+      },
+      "guest_sp": {
+        "wp_entry_sp": 786149,
+        "wp_exit_sp": 786149
+      }
+    }
+  },
+  "oryx_release": {
+    "owner": "wolf3dorig",
+    "task": "WOLF-PERF-007-fab-visual01",
+    "purpose": "One private x86 Fab source-bridge build per arm and two headless real-asset original-ray visual fixtures; source correctness only, no timing claim",
+    "profile": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf-perf007-visual01",
+    "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "request": "16d39f38af18",
+    "requested": "2026-11-07T04:42:17.121322+00:00",
+    "lease": "02efd2f91d184dcfb70d697dd9d42f4f",
+    "generation": 340,
+    "checked_out": "2026-11-07T04:51:44.485383+00:00",
+    "idle_observation": {
+      "machine": "oryx-linuxlite",
+      "epoch": 1794027104.4031048,
+      "emulators": []
+    },
+    "released": "2026-11-07T04:55:42.650215+00:00",
+    "release_observation": {
+      "machine": "oryx-linuxlite",
+      "epoch": 1794027342.5721176,
+      "emulators": []
+    },
+    "next_request": null
+  }
+}
