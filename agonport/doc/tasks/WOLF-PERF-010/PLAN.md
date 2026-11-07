@@ -12,7 +12,7 @@ must not silently begin with this abort test.
   guests. Display STATIC TIMER TESTING ONLY in large capitals within y180–199,
   plus NO ROTATION EXPECTED in loading text. Repaint both pages using the existing
   authoritative loading-UI reconstruction. Replace the false rotation hint.
-- [ ] WOLF-PERF-010-03 — Compile the banner path only into WP_MODE0 controls.
+- [ ] WOLF-PERF-010-03 — Compile the banner path only into WP_MODE1 controls.
   Verify unchanged unpaced binaries and unchanged timer-abort/restore semantics.
   Use existing public buffer/bitmap operations, an owned private caption buffer,
   bounded byte payload, and explicit fenced resource retirement. No VDPlet, timer,
