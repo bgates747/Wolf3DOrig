@@ -71,3 +71,4 @@ src/asm/*/tgt/
 
 # Task-owned compiler/fixture/hardware evidence stays local.
 /agonport/doc/tasks/WOLF-PERF-006/build/
+/agonport/doc/tasks/WOLF-PERF-007/build/

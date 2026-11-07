@@ -32,6 +32,20 @@ Only priorityP01 selected now; P02–P07 deferred discussion backlog.
   af4d780 result delivered to Extender/VDPlet; all P01 work complete.
   P01 production adoption remains separate. No hardware lease now held.
 
+## WOLF-PERF-007 — original table-driven ray walk
+
+Smith selected original-method restoration ahead of division-provider tuning.
+[Plan](agonport/doc/tasks/WOLF-PERF-007/PLAN.md) and
+[pre-code inventory](agonport/doc/tasks/WOLF-PERF-007/PRE-CODE.md).
+
+- [x] WOLF-PERF-007-01 — Pin original/O2 sources and original-method inventory.
+- [ ] WOLF-PERF-007-02 — Close method/state/numerical compatibility gates.
+- [ ] WOLF-PERF-007-03 — Freeze then implement original tangent/intercept path.
+- [ ] WOLF-PERF-007-04 — Qualify original geometry, target code/resources/producers.
+- [ ] WOLF-PERF-007-05 — Freeze finite kit; normal fresh bench admission.
+- [ ] WOLF-PERF-007-06 — Matched run, exact restoration and clean release.
+- [ ] WOLF-PERF-007-07 — Publish/share results and original-method limitations.
+
 ## WOLF-PERF-005 — bytewise direct-span invariant hoisting
 
 [Plan](agonport/doc/tasks/WOLF-PERF-005/PLAN.md) and

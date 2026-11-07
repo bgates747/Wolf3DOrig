@@ -1,0 +1,17 @@
+{
+  "baseline_module_sha256": "cd429e2fd642ab784d024cb7d6eb48f38b00eec132285ea78222b0e77e373ceb",
+  "files": {
+    "/Agon/mystuff/Wolf3dOrig/orig/src/WOLFSRC/WL_DR_A.ASM": "c417570e2cbd56c25731d8eae6684997dee432a698c31a2f64ccb74448d0a13e",
+    "/Agon/mystuff/Wolf3dOrig/orig/src/WOLFSRC/WL_DRAW.C": "669af4d388fb7f1b46ef6ab5689d1c6e2d3b17d2aaf964a87fdf54b388b453fb",
+    "/Agon/mystuff/Wolf3dOrig/orig/src/WOLFSRC/WL_MAIN.C": "73a69d37497976c70031326b0ead1748a4bec330b427899393830260bdde0a00",
+    "/Agon/mystuff/Wolf3dOrig/orig/src/WOLFSRC/WL_DEF.H": "2540f10aa19962b0016bf5afbcba432e46fc543be459af6e3f597dcff03a581c",
+    "/Agon/mystuff/Wolf3dOrig/orig/src/WOLFSRC/WL_ACT1.C": "0f0cee8d0025002c46671c49c7752f33b932e8501a31996c0727532761887a75",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/production/wolf3d_renderer.cpp": "d606254df009bc02cb499a520a23e73bb4da31bb0b3ea00d280e9c3f99f67420",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/production/wolf3d_renderer.h": "ca340f31a81fb3665f7bc3f8c9cd956e26254ab97ba6358d6c268c0585cb4c68",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/production/wolf3d_world_mirror.h": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/production/wolf3d_world_mirror.cpp": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/wolf3d_tables.inc": "6e3353cebd8d69849bbde39abd536018b1ee403f599ae45acc51fb8c64303e5d",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/module/wolf_perf.vdpl": "cd429e2fd642ab784d024cb7d6eb48f38b00eec132285ea78222b0e77e373ceb",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/PHYSICAL69-RESULT.json": "5c04e3cb7b01132513a5c1263893f539e2eb2d2f76102cdb16ebc79b271b127f"
+  }
+}
