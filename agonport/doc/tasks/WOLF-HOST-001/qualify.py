@@ -1,15 +1,17 @@
 """Finite owned-child prospective trace checks, no device or app-server attach."""
 from pathlib import Path
-import argparse, hashlib, json, os, re, select, signal, subprocess, time
+import argparse, hashlib, json, os, re, select, signal, subprocess, sys, time
 
 T = Path(__file__).resolve().parent
-B = T / 'build/r01'
+B = T / 'build/r02'
 D = Path('/Agon/mystuff/agon-dev-env')
 E = Path('/Agon/mystuff/agon-extender')
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
 def main(lease):
+    assert Path(sys.executable) == Path('/usr/bin/python3')
+    assert hasattr(os, 'pidfd_open'), 'Qualification parent requires installed native pidfd API before any child'
     inputs = json.loads((B / 'inputs.json').read_text())
     for name, digest in inputs.items():
         assert sha(name) == digest, name

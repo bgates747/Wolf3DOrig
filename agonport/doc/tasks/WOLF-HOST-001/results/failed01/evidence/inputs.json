@@ -1,0 +1,10 @@
+{
+  "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/PLAN.md": "4bb0a5b694ef9990735bfe87cb81d9020d6582baedcaef340da72d6f782f7d8f",
+  "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/child.py": "ea84d13a4a98dc02770780c1df048820d288883c78829d3862ec79ede52c0eac",
+  "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/qualify.py": "377a6e7368b0de65a4ee08e7e28ea34ce38411204e21d6e22d1042e1f5580eb3",
+  "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r01/source.json": "518093ed74a4f75c1f09bfacc6976de8bf324b3751ffa13608eda73d09d96319",
+  "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r01/strace-manual-excerpts.txt": "47e36ad9f1717dca7c7aa06dca703cdeb48372f26064a83a2c4fbae059905a79",
+  "/usr/bin/strace": "e4f0c42a07574df2fc6b353f5bc24423099d8c896cee72c605671d878fedeb5a",
+  "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-GOAL-001/build/hardware02/host-interruption/host-interruption.json": "6c352cddccdf8a2769cfb664a7bd9033e353b322f96d41a06d88353a7a0a59d8",
+  "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/host-interruption/host-interruption.json": "e75e7d1eb69d4895a62df74c2e7102b47e6956654712e0107f35872b338bc9ef"
+}
