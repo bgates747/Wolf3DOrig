@@ -16,7 +16,7 @@ priority direction ends Wolf's idle HOLD77 once normal clean release is proved.
 - [x] WOLF-GOAL-001-01 — Start actual goal, publish this contract and communicate
   exact priorities/unattended authority to MechAgon and Extender immediately.
   Fresh normal release77; preserve accepted paced/uncapped results and all data.
-- [ ] WOLF-GOAL-001-02 — Review current optimized source and actual timing. Select
+- [x] WOLF-GOAL-001-02 — Review current optimized source and actual timing. Select
   and freeze one narrow candidate at a time, ordered by effort/payoff. First
   inspect sprite-column clipping/occlusion hoisting and repeated texture-group
   wall scans. Preserve original control and independent pixel/state oracles.

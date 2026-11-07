@@ -11,7 +11,6 @@ the current dated development log, then remove it from this file.
 unattended/non-visible testing; MechAgon has first bench priority, Wolf second.
 Oryx is down. Performance runs measure maximum uncapped presentation rate.
 
-- [ ] WOLF-GOAL-001-02 — Source/timing review and narrow candidate selection.
 - [ ] WOLF-GOAL-001-03 — Sprite-column invariant/occlusion hoisting.
 - [ ] WOLF-GOAL-001-04 — Repeated texture-group scan reduction.
 - [ ] WOLF-GOAL-001-05 — Supported faster division-provider dependency.

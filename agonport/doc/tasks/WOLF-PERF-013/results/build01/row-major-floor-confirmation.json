@@ -1,0 +1,56 @@
+{
+  "passed": true,
+  "level_sha256": "67743b36be7d4f7c086bad18a15e754030309a208319d74a6837574f8192bbd3",
+  "renderer_index": "y*64+x",
+  "points": [
+    {
+      "x": 33,
+      "y": 36,
+      "row_major_offset": 12051,
+      "value": 0
+    },
+    {
+      "x": 35,
+      "y": 36,
+      "row_major_offset": 12053,
+      "value": 0
+    },
+    {
+      "x": 34,
+      "y": 35,
+      "row_major_offset": 11988,
+      "value": 0
+    },
+    {
+      "x": 34,
+      "y": 37,
+      "row_major_offset": 12116,
+      "value": 0
+    },
+    {
+      "x": 33,
+      "y": 35,
+      "row_major_offset": 11987,
+      "value": 0
+    },
+    {
+      "x": 35,
+      "y": 35,
+      "row_major_offset": 11989,
+      "value": 0
+    },
+    {
+      "x": 33,
+      "y": 37,
+      "row_major_offset": 12115,
+      "value": 0
+    },
+    {
+      "x": 35,
+      "y": 37,
+      "row_major_offset": 12117,
+      "value": 0
+    }
+  ],
+  "disposition": "Prepare helper initially checked transposed coordinates. Correct actual renderer row-major lookup independently confirms all same selected eight tiles are floor; no fixture/module/guest/kit change. Fix preparation-only witness after active78 release; do not rewrite frozen inputs."
+}
