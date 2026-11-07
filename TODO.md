@@ -30,7 +30,19 @@ Oryx is down. Performance runs measure maximum uncapped presentation rate.
 - [ ] WOLF-PERF-013-05 — Finite matched uncapped cases, exact restore/release.
 - [ ] WOLF-PERF-013-06 — Publish/share actual result and limits.
 
-## WOLF-PERF-014 — Wall texture-ID cache (next goal arm)
+## WOLF-PERF-016 — Covered cyan-fill removal (next goal arm)
+
+[Pre-code contract](agonport/doc/tasks/WOLF-PERF-016/PLAN.md). Higher concrete
+work reduction moves this before PERF014/015; current PERF013 stays immutable.
+
+- [ ] WOLF-PERF-016-01 — Pin exact predecessor and compatibility/work ledger.
+- [ ] WOLF-PERF-016-02 — Exterior cyan rectangles with exact overlap-mask fallback.
+- [ ] WOLF-PERF-016-03 — Independent pixels/guards/masks plus full target/producer gates.
+- [ ] WOLF-PERF-016-04 — Current finite uncapped kit and normal fresh admission.
+- [ ] WOLF-PERF-016-05 — Matched test, RAM preservation, exact restore/cleanup/release.
+- [ ] WOLF-PERF-016-06 — Publish/share timing and actual limits.
+
+## WOLF-PERF-014 — Wall texture-ID cache (later goal arm)
 
 [Pre-code contract](agonport/doc/tasks/WOLF-PERF-014/PLAN.md).
 
