@@ -21,10 +21,10 @@ def main():
     spec = importlib.util.spec_from_file_location('qualified021_exact_producers', P / 'qualify_hardware_guests.py')
     module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
     qualified = module.qualify()
-    old = json.loads((P / 'build/hardware02/kit.json').read_text())
+    old = json.loads((P / 'build/hardware01/kit.json').read_text())
     # Rejoin every original pin. The disposed historical plan is retained by
     # its original immutable bytes; it is not silently rehashed as new history.
-    index = json.loads((P / 'build/hardware02/frozen-inputs/index.json').read_text())
+    index = json.loads((P / 'build/hardware01/frozen-inputs/index.json').read_text())
     files = []
     for name, digest in old['inputs'].items():
         selected = Path(name)
