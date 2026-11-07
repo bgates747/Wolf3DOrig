@@ -51,10 +51,13 @@ Smith selected original-method restoration ahead of division-provider tuning.
 
   [Fab visual check](agonport/doc/tasks/WOLF-PERF-007/VISUAL-RESULT.md) and
   [physical producer/controller checks](agonport/doc/tasks/WOLF-PERF-007/PRODUCER-RESULT.md)
-  pass. Frozen hardware kit c0bc2e5/a1f7a867 has419 verified inputs;
-  reservation f60e5f0fed70 is prepared behind actual MechAgon71. Source/current
-  tuple matches actual70 restoration, but a fresh matching grant is required.
-  Oryx340/compiler293 released cleanly; Wolf holds no machine/bench lease.
+  pass. Actual72 stopped before any probe/guest at a host interpreter import;
+  exact incoming restoration/readback/fullcleanup and normal release passed.
+  [Stopped result](agonport/doc/tasks/WOLF-PERF-007/HARDWARE72-STOPPED.md) and
+  [separate launch correction](agonport/doc/tasks/WOLF-PERF-007/AMENDMENT-02.md)
+  preserve that failure. New kit5eb6d84/0528ed13 has486 verified inputs and actual
+  dependency preflight; reservation a9367f3c73e6 is ready for fresh normal grant.
+  Oryx340/compiler294/bench72 released; Wolf holds no machine/bench lease.
   Physical timing/whole-task stack and default adoption remain unestablished.
 
 ## WOLF-PERF-005 — bytewise direct-span invariant hoisting
