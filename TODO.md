@@ -39,9 +39,6 @@ work reduction moves this before PERF014/015; current PERF013 stays immutable.
 
 [Pre-code contract](agonport/doc/tasks/WOLF-PERF-014/PLAN.md).
 
-- [ ] WOLF-PERF-014-01 — Pin predecessor after PERF013 disposition.
-- [ ] WOLF-PERF-014-02 — Implement bounded per-column ID cache only.
-- [ ] WOLF-PERF-014-03 — Output/code/resource/producer qualification.
 - [ ] WOLF-PERF-014-04 — Freeze current finite uncapped hardware kit/admission.
 - [ ] WOLF-PERF-014-05 — Matched test, exact restoration/fullcleanup/release.
 - [ ] WOLF-PERF-014-06 — Publish/share actual findings and limits.

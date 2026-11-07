@@ -1,0 +1,51 @@
+--- original/production/wolf3d_renderer.cpp
++++ candidate/production/wolf3d_renderer.cpp
+@@ -381,10 +381,13 @@
+                         const uint8_t *tiles, const uint8_t *tex_u,
+                         RenderStats *stats) {
+     bool needed[128];
++    uint8_t texture_ids[kViewWidth];
+     clear_bytes(needed, 0, sizeof(needed));
+     for (int col = 0; col < kViewWidth; ++col) {
++        texture_ids[col] = 0;
+         if (heights[col] <= 0) continue;
+         const uint8_t id = wall_texture_id(world, tiles[col]);
++        texture_ids[col] = id;
+         if (id >= 1 && id <= W3P_MAX_WALL_TEXTURE) needed[id] = true;
+     }
+     for (uint16_t id = 1; id <= W3P_MAX_WALL_TEXTURE; ++id) {
+@@ -400,7 +403,7 @@
+             return released == RenderDetail::ok ? RenderDetail::bounds : released;
+         }
+         for (int col = 0; col < kViewWidth; ++col) {
+-            if (heights[col] <= 0 || wall_texture_id(world, tiles[col]) != id)
++            if (texture_ids[col] != id)
+                 continue;
+             const int full_height = heights[col];
+             const int top = kCenterY - full_height / 2;
+
+--- original/native-source/wolf3d_renderer.cpp
++++ candidate/native-source/wolf3d_renderer.cpp
+@@ -381,10 +381,13 @@
+                         const uint8_t *tiles, const uint8_t *tex_u,
+                         RenderStats *stats) {
+     bool needed[128];
++    uint8_t texture_ids[kViewWidth];
+     clear_bytes(needed, 0, sizeof(needed));
+     for (int col = 0; col < kViewWidth; ++col) {
++        texture_ids[col] = 0;
+         if (heights[col] <= 0) continue;
+         const uint8_t id = wall_texture_id(world, tiles[col]);
++        texture_ids[col] = id;
+         if (id >= 1 && id <= W3P_MAX_WALL_TEXTURE) needed[id] = true;
+     }
+     for (uint16_t id = 1; id <= W3P_MAX_WALL_TEXTURE; ++id) {
+@@ -400,7 +403,7 @@
+             return released == RenderDetail::ok ? RenderDetail::bounds : released;
+         }
+         for (int col = 0; col < kViewWidth; ++col) {
+-            if (heights[col] <= 0 || wall_texture_id(world, tiles[col]) != id)
++            if (texture_ids[col] != id)
+                 continue;
+             const int full_height = heights[col];
+             const int top = kCenterY - full_height / 2;

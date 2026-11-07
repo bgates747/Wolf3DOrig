@@ -4,10 +4,10 @@ Next local candidate under WOLF-GOAL-001. This contract precedes implementation;
 PERF013 actual78 remains immutable and must finish restoration/release first.
 MechAgon first/Wolf second, Oryx down; Pi serial builds and actual Olimex grants.
 
-- [ ] WOLF-PERF-014-01 — Select/pin exact output-qualified baseline after the
+- [x] WOLF-PERF-014-01 — Select/pin exact output-qualified baseline after the
   PERF013 physical disposition; freeze its actual package/source/provider pins.
-- [ ] WOLF-PERF-014-02 — Implement one bounded per-column texture-ID cache only.
-- [ ] WOLF-PERF-014-03 — Qualify actual kernel pixels/order/refusal/release,
+- [x] WOLF-PERF-014-02 — Implement one bounded per-column texture-ID cache only.
+- [x] WOLF-PERF-014-03 — Qualify actual kernel pixels/order/refusal/release,
   existing renderer/module/600pose equivalence, exact target control and
   compiler/provider/sections/nested-stack/resource/producer identities.
 - [ ] WOLF-PERF-014-04 — Freeze finite uncapped matched run with current owner
