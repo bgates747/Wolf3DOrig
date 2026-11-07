@@ -1,0 +1,2880 @@
+{
+  "steps": [
+    {
+      "label": "original-renderer-compile",
+      "args": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/sdk/include",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/production/wolf3d_world_mirror.cpp",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/production/wolf3d_renderer.cpp",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/production/test_renderer.cpp",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/renderer"
+      ],
+      "returncode": 0,
+      "seconds": 7.010552519990597
+    },
+    {
+      "label": "original-renderer-check",
+      "args": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/renderer",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/fixture-frame.bin",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/fixture-geometry.bin"
+      ],
+      "returncode": 0,
+      "seconds": 0.25076269899727777
+    },
+    {
+      "label": "original-module-compile",
+      "args": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/sdk/include",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "-DWOLF3D_HOST_TEST",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/production/wolf3d_module.cpp",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/production/test_module.cpp",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/module"
+      ],
+      "returncode": 0,
+      "seconds": 15.271419728000183
+    },
+    {
+      "label": "original-module-check",
+      "args": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/module",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/module-frame.bin",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/target-fixture"
+      ],
+      "returncode": 0,
+      "seconds": 0.2507526049739681
+    },
+    {
+      "label": "original-equivalence-compile",
+      "args": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/sdk/include",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/production/wolf3d_world_mirror.cpp",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/production/wolf3d_renderer.cpp",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/production",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_equivalence.cpp",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/equivalence"
+      ],
+      "returncode": 0,
+      "seconds": 8.764058791974094
+    },
+    {
+      "label": "original-equivalence-check",
+      "args": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/equivalence",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/frames600.bin",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/states600.bin"
+      ],
+      "returncode": 0,
+      "seconds": 1.7528288540197536
+    },
+    {
+      "label": "original-spans-compile",
+      "args": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/sdk/include",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/production/wolf3d_world_mirror.cpp",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/production",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_spans.cpp",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/spans"
+      ],
+      "returncode": 0,
+      "seconds": 5.257916275993921
+    },
+    {
+      "label": "original-spans-check",
+      "args": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/spans",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/host-results/spans.bin"
+      ],
+      "returncode": 0,
+      "seconds": 0.7515464369789697
+    },
+    {
+      "label": "original-target-package",
+      "args": [
+        "/Agon/mystuff/agon-dev-env/.venv/bin/python",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/target_compile.py",
+        "--arm",
+        "original"
+      ],
+      "returncode": 0,
+      "seconds": 1.0017105030128732
+    },
+    {
+      "label": "candidate-renderer-compile",
+      "args": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/sdk/include",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production/wolf3d_world_mirror.cpp",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production/wolf3d_renderer.cpp",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production/test_renderer.cpp",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/renderer"
+      ],
+      "returncode": 0,
+      "seconds": 6.759951200976502
+    },
+    {
+      "label": "candidate-renderer-check",
+      "args": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/renderer",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/fixture-frame.bin",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/fixture-geometry.bin"
+      ],
+      "returncode": 0,
+      "seconds": 0.25090045301476493
+    },
+    {
+      "label": "candidate-module-compile",
+      "args": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/sdk/include",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "-DWOLF3D_HOST_TEST",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production/wolf3d_module.cpp",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production/test_module.cpp",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/module"
+      ],
+      "returncode": 0,
+      "seconds": 15.272124163981061
+    },
+    {
+      "label": "candidate-module-check",
+      "args": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/module",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/module-frame.bin",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/target-fixture"
+      ],
+      "returncode": 0,
+      "seconds": 0.2508567289914936
+    },
+    {
+      "label": "candidate-equivalence-compile",
+      "args": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/sdk/include",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production/wolf3d_world_mirror.cpp",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production/wolf3d_renderer.cpp",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_equivalence.cpp",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/equivalence"
+      ],
+      "returncode": 0,
+      "seconds": 8.516350020014215
+    },
+    {
+      "label": "candidate-equivalence-check",
+      "args": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/equivalence",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/frames600.bin",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/states600.bin"
+      ],
+      "returncode": 0,
+      "seconds": 1.7529636909603141
+    },
+    {
+      "label": "candidate-spans-compile",
+      "args": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/sdk/include",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production/wolf3d_world_mirror.cpp",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_spans.cpp",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/spans"
+      ],
+      "returncode": 0,
+      "seconds": 5.258663118991535
+    },
+    {
+      "label": "candidate-spans-check",
+      "args": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/spans",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/host-results/spans.bin"
+      ],
+      "returncode": 0,
+      "seconds": 0.7514120899722911
+    },
+    {
+      "label": "candidate-target-package",
+      "args": [
+        "/Agon/mystuff/agon-dev-env/.venv/bin/python",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/target_compile.py",
+        "--arm",
+        "candidate"
+      ],
+      "returncode": 0,
+      "seconds": 1.0018177619786002
+    },
+    {
+      "label": "sprites-compile",
+      "args": [
+        "g++",
+        "-std=c++17",
+        "-O2",
+        "-g",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-pedantic",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/sdk/include",
+        "-fsanitize=address,undefined",
+        "-fno-sanitize-recover=all",
+        "-fno-omit-frame-pointer",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production/wolf3d_world_mirror.cpp",
+        "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/production",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/test_sprites.cpp",
+        "-o",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/sprites-test"
+      ],
+      "returncode": 0,
+      "seconds": 5.257876158051658
+    },
+    {
+      "label": "sprites-check",
+      "args": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/sprites-test"
+      ],
+      "returncode": 0,
+      "seconds": 24.038013220997527
+    },
+    {
+      "label": "original-symbols",
+      "args": [
+        "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-nm",
+        "-S",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/module/wolf_perf.elf"
+      ],
+      "returncode": 0,
+      "seconds": 0.2516530370339751
+    },
+    {
+      "label": "original-disassembly",
+      "args": [
+        "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-objdump",
+        "-drC",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/module/wolf_perf.elf"
+      ],
+      "returncode": 0,
+      "seconds": 0.250687351974193
+    },
+    {
+      "label": "candidate-symbols",
+      "args": [
+        "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-nm",
+        "-S",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/module/wolf_perf.elf"
+      ],
+      "returncode": 0,
+      "seconds": 0.2506665380205959
+    },
+    {
+      "label": "candidate-disassembly",
+      "args": [
+        "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-objdump",
+        "-drC",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/module/wolf_perf.elf"
+      ],
+      "returncode": 0,
+      "seconds": 0.2506652600131929
+    },
+    {
+      "label": "code-resource-qualification",
+      "args": [
+        "/Agon/mystuff/agon-dev-env/.venv/bin/python",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/code_check.py"
+      ],
+      "returncode": 0,
+      "seconds": 0.25066764798248187
+    }
+  ],
+  "guards": [
+    {
+      "epoch": 1794044512.7141209,
+      "cpu_c": 44.65,
+      "available_kib": 6714944
+    },
+    {
+      "epoch": 1794044512.7149906,
+      "cpu_c": 46.85,
+      "available_kib": 6714944
+    },
+    {
+      "epoch": 1794044512.965378,
+      "cpu_c": 46.3,
+      "available_kib": 6697744
+    },
+    {
+      "epoch": 1794044513.2156856,
+      "cpu_c": 47.95,
+      "available_kib": 6696560
+    },
+    {
+      "epoch": 1794044513.4660323,
+      "cpu_c": 47.4,
+      "available_kib": 6694560
+    },
+    {
+      "epoch": 1794044513.716381,
+      "cpu_c": 48.5,
+      "available_kib": 6687760
+    },
+    {
+      "epoch": 1794044513.9667673,
+      "cpu_c": 48.5,
+      "available_kib": 6679168
+    },
+    {
+      "epoch": 1794044514.2171516,
+      "cpu_c": 48.5,
+      "available_kib": 6709568
+    },
+    {
+      "epoch": 1794044514.4674702,
+      "cpu_c": 47.95,
+      "available_kib": 6689616
+    },
+    {
+      "epoch": 1794044514.717789,
+      "cpu_c": 48.5,
+      "available_kib": 6684016
+    },
+    {
+      "epoch": 1794044514.9680886,
+      "cpu_c": 48.5,
+      "available_kib": 6675392
+    },
+    {
+      "epoch": 1794044515.2184281,
+      "cpu_c": 49.05,
+      "available_kib": 6663552
+    },
+    {
+      "epoch": 1794044515.468732,
+      "cpu_c": 47.95,
+      "available_kib": 6662752
+    },
+    {
+      "epoch": 1794044515.7190676,
+      "cpu_c": 47.95,
+      "available_kib": 6664128
+    },
+    {
+      "epoch": 1794044515.969382,
+      "cpu_c": 48.5,
+      "available_kib": 6658912
+    },
+    {
+      "epoch": 1794044516.2197435,
+      "cpu_c": 49.05,
+      "available_kib": 6656848
+    },
+    {
+      "epoch": 1794044516.470055,
+      "cpu_c": 49.6,
+      "available_kib": 6656048
+    },
+    {
+      "epoch": 1794044516.720372,
+      "cpu_c": 50.15,
+      "available_kib": 6658832
+    },
+    {
+      "epoch": 1794044516.9706988,
+      "cpu_c": 49.6,
+      "available_kib": 6609968
+    },
+    {
+      "epoch": 1794044517.2210345,
+      "cpu_c": 49.05,
+      "available_kib": 6603184
+    },
+    {
+      "epoch": 1794044517.4713576,
+      "cpu_c": 49.05,
+      "available_kib": 6594384
+    },
+    {
+      "epoch": 1794044517.7216692,
+      "cpu_c": 49.6,
+      "available_kib": 6589184
+    },
+    {
+      "epoch": 1794044517.971972,
+      "cpu_c": 51.25,
+      "available_kib": 6585840
+    },
+    {
+      "epoch": 1794044518.222345,
+      "cpu_c": 51.25,
+      "available_kib": 6575664
+    },
+    {
+      "epoch": 1794044518.4726808,
+      "cpu_c": 49.6,
+      "available_kib": 6568064
+    },
+    {
+      "epoch": 1794044518.723047,
+      "cpu_c": 50.15,
+      "available_kib": 6554256
+    },
+    {
+      "epoch": 1794044518.9734392,
+      "cpu_c": 50.15,
+      "available_kib": 6560512
+    },
+    {
+      "epoch": 1794044519.2241461,
+      "cpu_c": 50.7,
+      "available_kib": 6558544
+    },
+    {
+      "epoch": 1794044519.474516,
+      "cpu_c": 50.15,
+      "available_kib": 6620416
+    },
+    {
+      "epoch": 1794044519.8194485,
+      "cpu_c": 51.25,
+      "available_kib": 6597568
+    },
+    {
+      "epoch": 1794044519.820078,
+      "cpu_c": 51.25,
+      "available_kib": 6597568
+    },
+    {
+      "epoch": 1794044520.144353,
+      "cpu_c": 51.25,
+      "available_kib": 6600912
+    },
+    {
+      "epoch": 1794044520.145106,
+      "cpu_c": 51.25,
+      "available_kib": 6600912
+    },
+    {
+      "epoch": 1794044520.3954334,
+      "cpu_c": 50.7,
+      "available_kib": 6586656
+    },
+    {
+      "epoch": 1794044520.6457274,
+      "cpu_c": 51.25,
+      "available_kib": 6583056
+    },
+    {
+      "epoch": 1794044520.896062,
+      "cpu_c": 50.15,
+      "available_kib": 6570208
+    },
+    {
+      "epoch": 1794044521.146433,
+      "cpu_c": 52.9,
+      "available_kib": 6571872
+    },
+    {
+      "epoch": 1794044521.396795,
+      "cpu_c": 51.25,
+      "available_kib": 6566688
+    },
+    {
+      "epoch": 1794044521.647115,
+      "cpu_c": 51.25,
+      "available_kib": 6565568
+    },
+    {
+      "epoch": 1794044521.8974369,
+      "cpu_c": 51.25,
+      "available_kib": 6579760
+    },
+    {
+      "epoch": 1794044522.147775,
+      "cpu_c": 51.25,
+      "available_kib": 6576528
+    },
+    {
+      "epoch": 1794044522.3980927,
+      "cpu_c": 51.25,
+      "available_kib": 6568928
+    },
+    {
+      "epoch": 1794044522.6484458,
+      "cpu_c": 50.7,
+      "available_kib": 6553728
+    },
+    {
+      "epoch": 1794044522.8988028,
+      "cpu_c": 51.25,
+      "available_kib": 6565392
+    },
+    {
+      "epoch": 1794044523.149162,
+      "cpu_c": 52.35,
+      "available_kib": 6575280
+    },
+    {
+      "epoch": 1794044523.3995914,
+      "cpu_c": 51.25,
+      "available_kib": 6574480
+    },
+    {
+      "epoch": 1794044523.6499174,
+      "cpu_c": 51.8,
+      "available_kib": 6566080
+    },
+    {
+      "epoch": 1794044523.9002557,
+      "cpu_c": 51.8,
+      "available_kib": 6572720
+    },
+    {
+      "epoch": 1794044524.150566,
+      "cpu_c": 51.8,
+      "available_kib": 6571616
+    },
+    {
+      "epoch": 1794044524.4009006,
+      "cpu_c": 51.8,
+      "available_kib": 6567376
+    },
+    {
+      "epoch": 1794044524.6512637,
+      "cpu_c": 52.35,
+      "available_kib": 6562976
+    },
+    {
+      "epoch": 1794044524.9016843,
+      "cpu_c": 50.7,
+      "available_kib": 6601104
+    },
+    {
+      "epoch": 1794044525.1520145,
+      "cpu_c": 51.25,
+      "available_kib": 6604560
+    },
+    {
+      "epoch": 1794044525.4023535,
+      "cpu_c": 51.25,
+      "available_kib": 6589360
+    },
+    {
+      "epoch": 1794044525.6526697,
+      "cpu_c": 51.25,
+      "available_kib": 6548688
+    },
+    {
+      "epoch": 1794044525.9030173,
+      "cpu_c": 52.9,
+      "available_kib": 6520128
+    },
+    {
+      "epoch": 1794044526.1533556,
+      "cpu_c": 52.35,
+      "available_kib": 6508080
+    },
+    {
+      "epoch": 1794044526.4036758,
+      "cpu_c": 51.25,
+      "available_kib": 6504352
+    },
+    {
+      "epoch": 1794044526.6540644,
+      "cpu_c": 52.35,
+      "available_kib": 6513616
+    },
+    {
+      "epoch": 1794044526.904408,
+      "cpu_c": 51.8,
+      "available_kib": 6506944
+    },
+    {
+      "epoch": 1794044527.1547067,
+      "cpu_c": 52.35,
+      "available_kib": 6505296
+    },
+    {
+      "epoch": 1794044527.4050379,
+      "cpu_c": 50.7,
+      "available_kib": 6502400
+    },
+    {
+      "epoch": 1794044527.6553762,
+      "cpu_c": 51.8,
+      "available_kib": 6494976
+    },
+    {
+      "epoch": 1794044527.9057238,
+      "cpu_c": 50.7,
+      "available_kib": 6499328
+    },
+    {
+      "epoch": 1794044528.1560755,
+      "cpu_c": 52.35,
+      "available_kib": 6494896
+    },
+    {
+      "epoch": 1794044528.4064057,
+      "cpu_c": 54.0,
+      "available_kib": 6483056
+    },
+    {
+      "epoch": 1794044528.656762,
+      "cpu_c": 51.8,
+      "available_kib": 6476336
+    },
+    {
+      "epoch": 1794044528.9071114,
+      "cpu_c": 51.8,
+      "available_kib": 6473376
+    },
+    {
+      "epoch": 1794044529.1574323,
+      "cpu_c": 52.9,
+      "available_kib": 6473024
+    },
+    {
+      "epoch": 1794044529.4077735,
+      "cpu_c": 51.25,
+      "available_kib": 6485408
+    },
+    {
+      "epoch": 1794044529.6580987,
+      "cpu_c": 51.8,
+      "available_kib": 6492336
+    },
+    {
+      "epoch": 1794044529.9084537,
+      "cpu_c": 52.35,
+      "available_kib": 6489888
+    },
+    {
+      "epoch": 1794044530.1587832,
+      "cpu_c": 51.8,
+      "available_kib": 6481888
+    },
+    {
+      "epoch": 1794044530.409147,
+      "cpu_c": 52.35,
+      "available_kib": 6474528
+    },
+    {
+      "epoch": 1794044530.659476,
+      "cpu_c": 52.9,
+      "available_kib": 6468656
+    },
+    {
+      "epoch": 1794044530.9098284,
+      "cpu_c": 52.9,
+      "available_kib": 6472432
+    },
+    {
+      "epoch": 1794044531.1601605,
+      "cpu_c": 51.8,
+      "available_kib": 6470336
+    },
+    {
+      "epoch": 1794044531.4104996,
+      "cpu_c": 52.35,
+      "available_kib": 6466192
+    },
+    {
+      "epoch": 1794044531.660828,
+      "cpu_c": 51.25,
+      "available_kib": 6442992
+    },
+    {
+      "epoch": 1794044531.911174,
+      "cpu_c": 51.8,
+      "available_kib": 6441744
+    },
+    {
+      "epoch": 1794044532.1615672,
+      "cpu_c": 51.25,
+      "available_kib": 6440752
+    },
+    {
+      "epoch": 1794044532.4119415,
+      "cpu_c": 51.8,
+      "available_kib": 6430144
+    },
+    {
+      "epoch": 1794044532.6622524,
+      "cpu_c": 52.9,
+      "available_kib": 6430864
+    },
+    {
+      "epoch": 1794044532.912579,
+      "cpu_c": 52.35,
+      "available_kib": 6430080
+    },
+    {
+      "epoch": 1794044533.1628993,
+      "cpu_c": 53.45,
+      "available_kib": 6433232
+    },
+    {
+      "epoch": 1794044533.4132757,
+      "cpu_c": 52.9,
+      "available_kib": 6433632
+    },
+    {
+      "epoch": 1794044533.6636195,
+      "cpu_c": 51.8,
+      "available_kib": 6431808
+    },
+    {
+      "epoch": 1794044533.9139628,
+      "cpu_c": 51.8,
+      "available_kib": 6436784
+    },
+    {
+      "epoch": 1794044534.1642995,
+      "cpu_c": 51.8,
+      "available_kib": 6437456
+    },
+    {
+      "epoch": 1794044534.4146423,
+      "cpu_c": 52.35,
+      "available_kib": 6438928
+    },
+    {
+      "epoch": 1794044534.6649592,
+      "cpu_c": 51.8,
+      "available_kib": 6439760
+    },
+    {
+      "epoch": 1794044534.91531,
+      "cpu_c": 51.25,
+      "available_kib": 6664720
+    },
+    {
+      "epoch": 1794044535.1656542,
+      "cpu_c": 51.25,
+      "available_kib": 6618320
+    },
+    {
+      "epoch": 1794044535.4896944,
+      "cpu_c": 51.25,
+      "available_kib": 6657280
+    },
+    {
+      "epoch": 1794044535.4903286,
+      "cpu_c": 51.25,
+      "available_kib": 6657280
+    },
+    {
+      "epoch": 1794044535.8262658,
+      "cpu_c": 51.25,
+      "available_kib": 6647776
+    },
+    {
+      "epoch": 1794044535.8273208,
+      "cpu_c": 52.35,
+      "available_kib": 6647776
+    },
+    {
+      "epoch": 1794044536.0776887,
+      "cpu_c": 51.8,
+      "available_kib": 6648864
+    },
+    {
+      "epoch": 1794044536.3280537,
+      "cpu_c": 51.8,
+      "available_kib": 6648064
+    },
+    {
+      "epoch": 1794044536.5783973,
+      "cpu_c": 51.8,
+      "available_kib": 6646864
+    },
+    {
+      "epoch": 1794044536.8287373,
+      "cpu_c": 51.25,
+      "available_kib": 6644064
+    },
+    {
+      "epoch": 1794044537.0791137,
+      "cpu_c": 52.35,
+      "available_kib": 6648160
+    },
+    {
+      "epoch": 1794044537.3294432,
+      "cpu_c": 50.7,
+      "available_kib": 6645968
+    },
+    {
+      "epoch": 1794044537.5797799,
+      "cpu_c": 51.8,
+      "available_kib": 6651552
+    },
+    {
+      "epoch": 1794044537.8301158,
+      "cpu_c": 52.9,
+      "available_kib": 6648752
+    },
+    {
+      "epoch": 1794044538.0804713,
+      "cpu_c": 53.45,
+      "available_kib": 6652784
+    },
+    {
+      "epoch": 1794044538.3308928,
+      "cpu_c": 52.9,
+      "available_kib": 6647440
+    },
+    {
+      "epoch": 1794044538.581276,
+      "cpu_c": 52.9,
+      "available_kib": 6647792
+    },
+    {
+      "epoch": 1794044538.8316293,
+      "cpu_c": 52.35,
+      "available_kib": 6646496
+    },
+    {
+      "epoch": 1794044539.0819612,
+      "cpu_c": 51.25,
+      "available_kib": 6653936
+    },
+    {
+      "epoch": 1794044539.3322875,
+      "cpu_c": 52.35,
+      "available_kib": 6649936
+    },
+    {
+      "epoch": 1794044539.582638,
+      "cpu_c": 52.9,
+      "available_kib": 6650736
+    },
+    {
+      "epoch": 1794044539.8338845,
+      "cpu_c": 52.9,
+      "available_kib": 6680208
+    },
+    {
+      "epoch": 1794044540.0842474,
+      "cpu_c": 51.25,
+      "available_kib": 6653840
+    },
+    {
+      "epoch": 1794044540.3345752,
+      "cpu_c": 51.25,
+      "available_kib": 6608400
+    },
+    {
+      "epoch": 1794044540.584918,
+      "cpu_c": 51.8,
+      "available_kib": 6593200
+    },
+    {
+      "epoch": 1794044540.8352075,
+      "cpu_c": 52.35,
+      "available_kib": 6592000
+    },
+    {
+      "epoch": 1794044541.0855114,
+      "cpu_c": 51.25,
+      "available_kib": 6603264
+    },
+    {
+      "epoch": 1794044541.3358145,
+      "cpu_c": 50.7,
+      "available_kib": 6600464
+    },
+    {
+      "epoch": 1794044541.5861292,
+      "cpu_c": 51.25,
+      "available_kib": 6591488
+    },
+    {
+      "epoch": 1794044541.8364708,
+      "cpu_c": 51.25,
+      "available_kib": 6583888
+    },
+    {
+      "epoch": 1794044542.0867796,
+      "cpu_c": 50.7,
+      "available_kib": 6566656
+    },
+    {
+      "epoch": 1794044542.3370676,
+      "cpu_c": 51.25,
+      "available_kib": 6563056
+    },
+    {
+      "epoch": 1794044542.5873613,
+      "cpu_c": 51.8,
+      "available_kib": 6572832
+    },
+    {
+      "epoch": 1794044542.8377225,
+      "cpu_c": 51.25,
+      "available_kib": 6584768
+    },
+    {
+      "epoch": 1794044543.0880203,
+      "cpu_c": 51.25,
+      "available_kib": 6582592
+    },
+    {
+      "epoch": 1794044543.3383324,
+      "cpu_c": 51.8,
+      "available_kib": 6582192
+    },
+    {
+      "epoch": 1794044543.5886557,
+      "cpu_c": 52.35,
+      "available_kib": 6584512
+    },
+    {
+      "epoch": 1794044543.8389754,
+      "cpu_c": 51.25,
+      "available_kib": 6582512
+    },
+    {
+      "epoch": 1794044544.0893097,
+      "cpu_c": 51.25,
+      "available_kib": 6583008
+    },
+    {
+      "epoch": 1794044544.34021,
+      "cpu_c": 52.35,
+      "available_kib": 6672320
+    },
+    {
+      "epoch": 1794044544.6667557,
+      "cpu_c": 51.25,
+      "available_kib": 6679424
+    },
+    {
+      "epoch": 1794044544.6674116,
+      "cpu_c": 51.25,
+      "available_kib": 6679424
+    },
+    {
+      "epoch": 1794044544.9177449,
+      "cpu_c": 52.35,
+      "available_kib": 6685680
+    },
+    {
+      "epoch": 1794044545.1680853,
+      "cpu_c": 51.8,
+      "available_kib": 6689856
+    },
+    {
+      "epoch": 1794044545.4184325,
+      "cpu_c": 52.35,
+      "available_kib": 6690144
+    },
+    {
+      "epoch": 1794044545.6687717,
+      "cpu_c": 52.35,
+      "available_kib": 6691120
+    },
+    {
+      "epoch": 1794044545.9191084,
+      "cpu_c": 52.35,
+      "available_kib": 6684608
+    },
+    {
+      "epoch": 1794044546.1694555,
+      "cpu_c": 51.8,
+      "available_kib": 6685552
+    },
+    {
+      "epoch": 1794044546.495382,
+      "cpu_c": 50.7,
+      "available_kib": 6688096
+    },
+    {
+      "epoch": 1794044546.4961035,
+      "cpu_c": 50.7,
+      "available_kib": 6688096
+    },
+    {
+      "epoch": 1794044546.7464526,
+      "cpu_c": 51.8,
+      "available_kib": 6676960
+    },
+    {
+      "epoch": 1794044546.996782,
+      "cpu_c": 51.25,
+      "available_kib": 6674000
+    },
+    {
+      "epoch": 1794044547.2470953,
+      "cpu_c": 51.25,
+      "available_kib": 6672400
+    },
+    {
+      "epoch": 1794044547.4974353,
+      "cpu_c": 51.25,
+      "available_kib": 6668256
+    },
+    {
+      "epoch": 1794044547.7477498,
+      "cpu_c": 51.8,
+      "available_kib": 6659456
+    },
+    {
+      "epoch": 1794044547.99815,
+      "cpu_c": 51.25,
+      "available_kib": 6696192
+    },
+    {
+      "epoch": 1794044548.24848,
+      "cpu_c": 52.35,
+      "available_kib": 6659104
+    },
+    {
+      "epoch": 1794044548.498817,
+      "cpu_c": 51.25,
+      "available_kib": 6631296
+    },
+    {
+      "epoch": 1794044548.74916,
+      "cpu_c": 51.8,
+      "available_kib": 6608528
+    },
+    {
+      "epoch": 1794044548.9995232,
+      "cpu_c": 51.8,
+      "available_kib": 6612416
+    },
+    {
+      "epoch": 1794044549.249863,
+      "cpu_c": 51.8,
+      "available_kib": 6613600
+    },
+    {
+      "epoch": 1794044549.5001838,
+      "cpu_c": 51.8,
+      "available_kib": 6606000
+    },
+    {
+      "epoch": 1794044549.7505164,
+      "cpu_c": 51.8,
+      "available_kib": 6596000
+    },
+    {
+      "epoch": 1794044550.0008342,
+      "cpu_c": 51.8,
+      "available_kib": 6600976
+    },
+    {
+      "epoch": 1794044550.2511783,
+      "cpu_c": 52.35,
+      "available_kib": 6603424
+    },
+    {
+      "epoch": 1794044550.5015054,
+      "cpu_c": 51.8,
+      "available_kib": 6601024
+    },
+    {
+      "epoch": 1794044550.7518413,
+      "cpu_c": 51.25,
+      "available_kib": 6595424
+    },
+    {
+      "epoch": 1794044551.00217,
+      "cpu_c": 51.8,
+      "available_kib": 6602032
+    },
+    {
+      "epoch": 1794044551.2525241,
+      "cpu_c": 51.25,
+      "available_kib": 6599632
+    },
+    {
+      "epoch": 1794044551.5031738,
+      "cpu_c": 50.15,
+      "available_kib": 6659056
+    },
+    {
+      "epoch": 1794044551.8309112,
+      "cpu_c": 50.7,
+      "available_kib": 6657264
+    },
+    {
+      "epoch": 1794044551.8315446,
+      "cpu_c": 50.7,
+      "available_kib": 6657264
+    },
+    {
+      "epoch": 1794044552.0819774,
+      "cpu_c": 52.9,
+      "available_kib": 6680704
+    },
+    {
+      "epoch": 1794044552.3323312,
+      "cpu_c": 52.35,
+      "available_kib": 6692624
+    },
+    {
+      "epoch": 1794044552.6586866,
+      "cpu_c": 50.7,
+      "available_kib": 6703856
+    },
+    {
+      "epoch": 1794044552.659292,
+      "cpu_c": 50.7,
+      "available_kib": 6703856
+    },
+    {
+      "epoch": 1794044552.9096038,
+      "cpu_c": 52.35,
+      "available_kib": 6707712
+    },
+    {
+      "epoch": 1794044553.1599488,
+      "cpu_c": 52.9,
+      "available_kib": 6699312
+    },
+    {
+      "epoch": 1794044553.4102743,
+      "cpu_c": 52.9,
+      "available_kib": 6695712
+    },
+    {
+      "epoch": 1794044553.7343833,
+      "cpu_c": 51.25,
+      "available_kib": 6697808
+    },
+    {
+      "epoch": 1794044553.735086,
+      "cpu_c": 51.25,
+      "available_kib": 6697808
+    },
+    {
+      "epoch": 1794044553.9854565,
+      "cpu_c": 52.9,
+      "available_kib": 6695296
+    },
+    {
+      "epoch": 1794044554.235781,
+      "cpu_c": 52.9,
+      "available_kib": 6698016
+    },
+    {
+      "epoch": 1794044554.4861214,
+      "cpu_c": 53.45,
+      "available_kib": 6697456
+    },
+    {
+      "epoch": 1794044554.736479,
+      "cpu_c": 52.9,
+      "available_kib": 6695456
+    },
+    {
+      "epoch": 1794044554.986799,
+      "cpu_c": 52.9,
+      "available_kib": 6687760
+    },
+    {
+      "epoch": 1794044555.237208,
+      "cpu_c": 52.9,
+      "available_kib": 6705824
+    },
+    {
+      "epoch": 1794044555.4875455,
+      "cpu_c": 52.35,
+      "available_kib": 6694768
+    },
+    {
+      "epoch": 1794044555.7379916,
+      "cpu_c": 52.35,
+      "available_kib": 6694256
+    },
+    {
+      "epoch": 1794044555.9883194,
+      "cpu_c": 52.35,
+      "available_kib": 6699488
+    },
+    {
+      "epoch": 1794044556.2386713,
+      "cpu_c": 53.45,
+      "available_kib": 6693120
+    },
+    {
+      "epoch": 1794044556.4890134,
+      "cpu_c": 52.9,
+      "available_kib": 6692800
+    },
+    {
+      "epoch": 1794044556.7393885,
+      "cpu_c": 51.25,
+      "available_kib": 6691600
+    },
+    {
+      "epoch": 1794044556.9897304,
+      "cpu_c": 52.35,
+      "available_kib": 6697616
+    },
+    {
+      "epoch": 1794044557.240062,
+      "cpu_c": 52.35,
+      "available_kib": 6690576
+    },
+    {
+      "epoch": 1794044557.490408,
+      "cpu_c": 52.35,
+      "available_kib": 6717472
+    },
+    {
+      "epoch": 1794044557.7407649,
+      "cpu_c": 51.25,
+      "available_kib": 6684208
+    },
+    {
+      "epoch": 1794044557.9911807,
+      "cpu_c": 51.8,
+      "available_kib": 6650096
+    },
+    {
+      "epoch": 1794044558.2415178,
+      "cpu_c": 51.25,
+      "available_kib": 6652864
+    },
+    {
+      "epoch": 1794044558.4918425,
+      "cpu_c": 51.25,
+      "available_kib": 6650864
+    },
+    {
+      "epoch": 1794044558.7421546,
+      "cpu_c": 51.8,
+      "available_kib": 6649472
+    },
+    {
+      "epoch": 1794044558.992513,
+      "cpu_c": 51.8,
+      "available_kib": 6644896
+    },
+    {
+      "epoch": 1794044559.2428863,
+      "cpu_c": 51.8,
+      "available_kib": 6626000
+    },
+    {
+      "epoch": 1794044559.4932337,
+      "cpu_c": 51.8,
+      "available_kib": 6610576
+    },
+    {
+      "epoch": 1794044559.7435699,
+      "cpu_c": 51.25,
+      "available_kib": 6610576
+    },
+    {
+      "epoch": 1794044559.9938896,
+      "cpu_c": 51.25,
+      "available_kib": 6614064
+    },
+    {
+      "epoch": 1794044560.2442145,
+      "cpu_c": 51.8,
+      "available_kib": 6618272
+    },
+    {
+      "epoch": 1794044560.5690498,
+      "cpu_c": 51.8,
+      "available_kib": 6674240
+    },
+    {
+      "epoch": 1794044560.5698268,
+      "cpu_c": 51.8,
+      "available_kib": 6674240
+    },
+    {
+      "epoch": 1794044560.89449,
+      "cpu_c": 51.25,
+      "available_kib": 6678080
+    },
+    {
+      "epoch": 1794044560.895297,
+      "cpu_c": 51.25,
+      "available_kib": 6678080
+    },
+    {
+      "epoch": 1794044561.1456234,
+      "cpu_c": 51.8,
+      "available_kib": 6672816
+    },
+    {
+      "epoch": 1794044561.3959506,
+      "cpu_c": 51.25,
+      "available_kib": 6672816
+    },
+    {
+      "epoch": 1794044561.646278,
+      "cpu_c": 51.8,
+      "available_kib": 6668192
+    },
+    {
+      "epoch": 1794044561.896592,
+      "cpu_c": 51.8,
+      "available_kib": 6650896
+    },
+    {
+      "epoch": 1794044562.1469274,
+      "cpu_c": 51.8,
+      "available_kib": 6661040
+    },
+    {
+      "epoch": 1794044562.397307,
+      "cpu_c": 50.7,
+      "available_kib": 6659280
+    },
+    {
+      "epoch": 1794044562.6476388,
+      "cpu_c": 50.15,
+      "available_kib": 6654256
+    },
+    {
+      "epoch": 1794044562.8979888,
+      "cpu_c": 52.9,
+      "available_kib": 6647856
+    },
+    {
+      "epoch": 1794044563.1483457,
+      "cpu_c": 52.35,
+      "available_kib": 6651024
+    },
+    {
+      "epoch": 1794044563.3987174,
+      "cpu_c": 51.25,
+      "available_kib": 6642192
+    },
+    {
+      "epoch": 1794044563.6490958,
+      "cpu_c": 51.8,
+      "available_kib": 6642192
+    },
+    {
+      "epoch": 1794044563.899421,
+      "cpu_c": 51.25,
+      "available_kib": 6618704
+    },
+    {
+      "epoch": 1794044564.1497705,
+      "cpu_c": 51.8,
+      "available_kib": 6627056
+    },
+    {
+      "epoch": 1794044564.4001546,
+      "cpu_c": 51.8,
+      "available_kib": 6626256
+    },
+    {
+      "epoch": 1794044564.6504846,
+      "cpu_c": 51.8,
+      "available_kib": 6626256
+    },
+    {
+      "epoch": 1794044564.900834,
+      "cpu_c": 52.35,
+      "available_kib": 6631184
+    },
+    {
+      "epoch": 1794044565.15121,
+      "cpu_c": 51.8,
+      "available_kib": 6637616
+    },
+    {
+      "epoch": 1794044565.4015486,
+      "cpu_c": 51.25,
+      "available_kib": 6636592
+    },
+    {
+      "epoch": 1794044565.6519036,
+      "cpu_c": 52.35,
+      "available_kib": 6696256
+    },
+    {
+      "epoch": 1794044565.902253,
+      "cpu_c": 51.25,
+      "available_kib": 6679120
+    },
+    {
+      "epoch": 1794044566.1526282,
+      "cpu_c": 51.8,
+      "available_kib": 6651808
+    },
+    {
+      "epoch": 1794044566.402983,
+      "cpu_c": 52.35,
+      "available_kib": 6627008
+    },
+    {
+      "epoch": 1794044566.6533337,
+      "cpu_c": 52.35,
+      "available_kib": 6588384
+    },
+    {
+      "epoch": 1794044566.9037883,
+      "cpu_c": 51.8,
+      "available_kib": 6588480
+    },
+    {
+      "epoch": 1794044567.15411,
+      "cpu_c": 51.8,
+      "available_kib": 6581120
+    },
+    {
+      "epoch": 1794044567.4044428,
+      "cpu_c": 52.9,
+      "available_kib": 6580608
+    },
+    {
+      "epoch": 1794044567.6547074,
+      "cpu_c": 51.25,
+      "available_kib": 6574608
+    },
+    {
+      "epoch": 1794044567.905004,
+      "cpu_c": 51.25,
+      "available_kib": 6573168
+    },
+    {
+      "epoch": 1794044568.1553445,
+      "cpu_c": 51.8,
+      "available_kib": 6576656
+    },
+    {
+      "epoch": 1794044568.4056745,
+      "cpu_c": 52.35,
+      "available_kib": 6571856
+    },
+    {
+      "epoch": 1794044568.6561484,
+      "cpu_c": 52.35,
+      "available_kib": 6578432
+    },
+    {
+      "epoch": 1794044568.9065006,
+      "cpu_c": 53.45,
+      "available_kib": 6557536
+    },
+    {
+      "epoch": 1794044569.156848,
+      "cpu_c": 51.8,
+      "available_kib": 6538000
+    },
+    {
+      "epoch": 1794044569.407228,
+      "cpu_c": 51.25,
+      "available_kib": 6527472
+    },
+    {
+      "epoch": 1794044569.6575947,
+      "cpu_c": 50.7,
+      "available_kib": 6527248
+    },
+    {
+      "epoch": 1794044569.9079955,
+      "cpu_c": 52.35,
+      "available_kib": 6523280
+    },
+    {
+      "epoch": 1794044570.1583319,
+      "cpu_c": 50.15,
+      "available_kib": 6517280
+    },
+    {
+      "epoch": 1794044570.4086637,
+      "cpu_c": 51.8,
+      "available_kib": 6515440
+    },
+    {
+      "epoch": 1794044570.6590097,
+      "cpu_c": 52.9,
+      "available_kib": 6513216
+    },
+    {
+      "epoch": 1794044570.9093516,
+      "cpu_c": 52.9,
+      "available_kib": 6502112
+    },
+    {
+      "epoch": 1794044571.1596897,
+      "cpu_c": 52.35,
+      "available_kib": 6503568
+    },
+    {
+      "epoch": 1794044571.4100423,
+      "cpu_c": 52.9,
+      "available_kib": 6483504
+    },
+    {
+      "epoch": 1794044571.6603866,
+      "cpu_c": 52.35,
+      "available_kib": 6483504
+    },
+    {
+      "epoch": 1794044571.9107292,
+      "cpu_c": 51.8,
+      "available_kib": 6487168
+    },
+    {
+      "epoch": 1794044572.1611001,
+      "cpu_c": 52.9,
+      "available_kib": 6488928
+    },
+    {
+      "epoch": 1794044572.4114892,
+      "cpu_c": 52.35,
+      "available_kib": 6488672
+    },
+    {
+      "epoch": 1794044572.6618094,
+      "cpu_c": 53.45,
+      "available_kib": 6476272
+    },
+    {
+      "epoch": 1794044572.912207,
+      "cpu_c": 52.35,
+      "available_kib": 6472288
+    },
+    {
+      "epoch": 1794044573.1625845,
+      "cpu_c": 52.35,
+      "available_kib": 6472528
+    },
+    {
+      "epoch": 1794044573.412932,
+      "cpu_c": 54.0,
+      "available_kib": 6472288
+    },
+    {
+      "epoch": 1794044573.6632795,
+      "cpu_c": 51.25,
+      "available_kib": 6471088
+    },
+    {
+      "epoch": 1794044573.9136024,
+      "cpu_c": 52.35,
+      "available_kib": 6472272
+    },
+    {
+      "epoch": 1794044574.1639438,
+      "cpu_c": 51.25,
+      "available_kib": 6471344
+    },
+    {
+      "epoch": 1794044574.4143057,
+      "cpu_c": 52.9,
+      "available_kib": 6470224
+    },
+    {
+      "epoch": 1794044574.6646743,
+      "cpu_c": 52.35,
+      "available_kib": 6398384
+    },
+    {
+      "epoch": 1794044574.915044,
+      "cpu_c": 51.8,
+      "available_kib": 6461088
+    },
+    {
+      "epoch": 1794044575.1653848,
+      "cpu_c": 52.35,
+      "available_kib": 6462592
+    },
+    {
+      "epoch": 1794044575.4157476,
+      "cpu_c": 51.8,
+      "available_kib": 6705264
+    },
+    {
+      "epoch": 1794044575.6661134,
+      "cpu_c": 51.8,
+      "available_kib": 6660864
+    },
+    {
+      "epoch": 1794044575.9164984,
+      "cpu_c": 51.8,
+      "available_kib": 6645552
+    },
+    {
+      "epoch": 1794044576.2429397,
+      "cpu_c": 52.35,
+      "available_kib": 6662496
+    },
+    {
+      "epoch": 1794044576.2436664,
+      "cpu_c": 52.35,
+      "available_kib": 6662496
+    },
+    {
+      "epoch": 1794044576.5689328,
+      "cpu_c": 51.25,
+      "available_kib": 6670128
+    },
+    {
+      "epoch": 1794044576.5698357,
+      "cpu_c": 51.25,
+      "available_kib": 6670128
+    },
+    {
+      "epoch": 1794044576.8202293,
+      "cpu_c": 52.9,
+      "available_kib": 6655216
+    },
+    {
+      "epoch": 1794044577.0705562,
+      "cpu_c": 52.9,
+      "available_kib": 6651440
+    },
+    {
+      "epoch": 1794044577.3209095,
+      "cpu_c": 52.35,
+      "available_kib": 6650800
+    },
+    {
+      "epoch": 1794044577.5712512,
+      "cpu_c": 52.9,
+      "available_kib": 6657872
+    },
+    {
+      "epoch": 1794044577.821655,
+      "cpu_c": 52.9,
+      "available_kib": 6650272
+    },
+    {
+      "epoch": 1794044578.072014,
+      "cpu_c": 52.35,
+      "available_kib": 6670976
+    },
+    {
+      "epoch": 1794044578.3223515,
+      "cpu_c": 52.9,
+      "available_kib": 6662400
+    },
+    {
+      "epoch": 1794044578.5727599,
+      "cpu_c": 54.0,
+      "available_kib": 6657200
+    },
+    {
+      "epoch": 1794044578.823224,
+      "cpu_c": 52.9,
+      "available_kib": 6653840
+    },
+    {
+      "epoch": 1794044579.0735888,
+      "cpu_c": 52.9,
+      "available_kib": 6657808
+    },
+    {
+      "epoch": 1794044579.32398,
+      "cpu_c": 52.9,
+      "available_kib": 6657536
+    },
+    {
+      "epoch": 1794044579.5743232,
+      "cpu_c": 54.0,
+      "available_kib": 6653776
+    },
+    {
+      "epoch": 1794044579.8247135,
+      "cpu_c": 54.0,
+      "available_kib": 6656736
+    },
+    {
+      "epoch": 1794044580.0751004,
+      "cpu_c": 52.9,
+      "available_kib": 6662928
+    },
+    {
+      "epoch": 1794044580.3254313,
+      "cpu_c": 53.45,
+      "available_kib": 6660928
+    },
+    {
+      "epoch": 1794044580.5757751,
+      "cpu_c": 54.0,
+      "available_kib": 6688032
+    },
+    {
+      "epoch": 1794044580.8261232,
+      "cpu_c": 53.45,
+      "available_kib": 6661632
+    },
+    {
+      "epoch": 1794044581.076503,
+      "cpu_c": 53.45,
+      "available_kib": 6638864
+    },
+    {
+      "epoch": 1794044581.3268573,
+      "cpu_c": 52.35,
+      "available_kib": 6639104
+    },
+    {
+      "epoch": 1794044581.5772078,
+      "cpu_c": 52.9,
+      "available_kib": 6639104
+    },
+    {
+      "epoch": 1794044581.8275332,
+      "cpu_c": 53.45,
+      "available_kib": 6637600
+    },
+    {
+      "epoch": 1794044582.0778956,
+      "cpu_c": 54.0,
+      "available_kib": 6640512
+    },
+    {
+      "epoch": 1794044582.328243,
+      "cpu_c": 52.9,
+      "available_kib": 6616912
+    },
+    {
+      "epoch": 1794044582.57858,
+      "cpu_c": 53.45,
+      "available_kib": 6616912
+    },
+    {
+      "epoch": 1794044582.8289042,
+      "cpu_c": 53.45,
+      "available_kib": 6594112
+    },
+    {
+      "epoch": 1794044583.0792382,
+      "cpu_c": 52.9,
+      "available_kib": 6600928
+    },
+    {
+      "epoch": 1794044583.3295813,
+      "cpu_c": 52.9,
+      "available_kib": 6599328
+    },
+    {
+      "epoch": 1794044583.5803413,
+      "cpu_c": 52.35,
+      "available_kib": 6599104
+    },
+    {
+      "epoch": 1794044583.8306923,
+      "cpu_c": 54.0,
+      "available_kib": 6599360
+    },
+    {
+      "epoch": 1794044584.083966,
+      "cpu_c": 51.8,
+      "available_kib": 6596112
+    },
+    {
+      "epoch": 1794044584.3343232,
+      "cpu_c": 52.9,
+      "available_kib": 6609168
+    },
+    {
+      "epoch": 1794044584.584726,
+      "cpu_c": 52.9,
+      "available_kib": 6609168
+    },
+    {
+      "epoch": 1794044584.835161,
+      "cpu_c": 50.7,
+      "available_kib": 6690272
+    },
+    {
+      "epoch": 1794044585.1598141,
+      "cpu_c": 52.35,
+      "available_kib": 6696176
+    },
+    {
+      "epoch": 1794044585.1605015,
+      "cpu_c": 52.9,
+      "available_kib": 6696176
+    },
+    {
+      "epoch": 1794044585.4109657,
+      "cpu_c": 54.0,
+      "available_kib": 6698944
+    },
+    {
+      "epoch": 1794044585.6613421,
+      "cpu_c": 53.45,
+      "available_kib": 6698688
+    },
+    {
+      "epoch": 1794044585.9117234,
+      "cpu_c": 51.8,
+      "available_kib": 6694192
+    },
+    {
+      "epoch": 1794044586.162076,
+      "cpu_c": 51.25,
+      "available_kib": 6693600
+    },
+    {
+      "epoch": 1794044586.4123948,
+      "cpu_c": 51.25,
+      "available_kib": 6689056
+    },
+    {
+      "epoch": 1794044586.6626515,
+      "cpu_c": 51.25,
+      "available_kib": 6680832
+    },
+    {
+      "epoch": 1794044586.9872892,
+      "cpu_c": 52.35,
+      "available_kib": 6708192
+    },
+    {
+      "epoch": 1794044586.987958,
+      "cpu_c": 52.35,
+      "available_kib": 6708192
+    },
+    {
+      "epoch": 1794044587.2383187,
+      "cpu_c": 51.25,
+      "available_kib": 6684096
+    },
+    {
+      "epoch": 1794044587.4886405,
+      "cpu_c": 51.8,
+      "available_kib": 6682096
+    },
+    {
+      "epoch": 1794044587.73899,
+      "cpu_c": 51.25,
+      "available_kib": 6680096
+    },
+    {
+      "epoch": 1794044587.9893506,
+      "cpu_c": 51.8,
+      "available_kib": 6688864
+    },
+    {
+      "epoch": 1794044588.2396863,
+      "cpu_c": 52.35,
+      "available_kib": 6684464
+    },
+    {
+      "epoch": 1794044588.490046,
+      "cpu_c": 51.8,
+      "available_kib": 6712464
+    },
+    {
+      "epoch": 1794044588.7403953,
+      "cpu_c": 51.8,
+      "available_kib": 6671168
+    },
+    {
+      "epoch": 1794044588.9907303,
+      "cpu_c": 51.8,
+      "available_kib": 6659904
+    },
+    {
+      "epoch": 1794044589.2410867,
+      "cpu_c": 52.35,
+      "available_kib": 6648304
+    },
+    {
+      "epoch": 1794044589.4914315,
+      "cpu_c": 53.45,
+      "available_kib": 6638496
+    },
+    {
+      "epoch": 1794044589.7417912,
+      "cpu_c": 53.45,
+      "available_kib": 6642944
+    },
+    {
+      "epoch": 1794044589.992132,
+      "cpu_c": 51.8,
+      "available_kib": 6644208
+    },
+    {
+      "epoch": 1794044590.2424557,
+      "cpu_c": 51.25,
+      "available_kib": 6629808
+    },
+    {
+      "epoch": 1794044590.4932735,
+      "cpu_c": 52.9,
+      "available_kib": 6628608
+    },
+    {
+      "epoch": 1794044590.743614,
+      "cpu_c": 51.8,
+      "available_kib": 6625488
+    },
+    {
+      "epoch": 1794044590.99394,
+      "cpu_c": 52.35,
+      "available_kib": 6628704
+    },
+    {
+      "epoch": 1794044591.2443178,
+      "cpu_c": 52.35,
+      "available_kib": 6623680
+    },
+    {
+      "epoch": 1794044591.4946647,
+      "cpu_c": 52.9,
+      "available_kib": 6623680
+    },
+    {
+      "epoch": 1794044591.7450023,
+      "cpu_c": 51.8,
+      "available_kib": 6618880
+    },
+    {
+      "epoch": 1794044591.995825,
+      "cpu_c": 52.35,
+      "available_kib": 6673504
+    },
+    {
+      "epoch": 1794044592.3207662,
+      "cpu_c": 51.8,
+      "available_kib": 6692736
+    },
+    {
+      "epoch": 1794044592.3213654,
+      "cpu_c": 51.8,
+      "available_kib": 6692736
+    },
+    {
+      "epoch": 1794044592.571711,
+      "cpu_c": 52.9,
+      "available_kib": 6696256
+    },
+    {
+      "epoch": 1794044592.8220499,
+      "cpu_c": 52.35,
+      "available_kib": 6691456
+    },
+    {
+      "epoch": 1794044593.14684,
+      "cpu_c": 51.8,
+      "available_kib": 6707904
+    },
+    {
+      "epoch": 1794044593.1475148,
+      "cpu_c": 51.25,
+      "available_kib": 6707904
+    },
+    {
+      "epoch": 1794044593.3978689,
+      "cpu_c": 52.9,
+      "available_kib": 6699488
+    },
+    {
+      "epoch": 1794044593.648204,
+      "cpu_c": 51.8,
+      "available_kib": 6695488
+    },
+    {
+      "epoch": 1794044593.89853,
+      "cpu_c": 51.25,
+      "available_kib": 6691280
+    },
+    {
+      "epoch": 1794044594.2240944,
+      "cpu_c": 51.8,
+      "available_kib": 6708160
+    },
+    {
+      "epoch": 1794044594.2247417,
+      "cpu_c": 51.8,
+      "available_kib": 6708160
+    },
+    {
+      "epoch": 1794044594.4750988,
+      "cpu_c": 51.8,
+      "available_kib": 6700816
+    },
+    {
+      "epoch": 1794044594.7254307,
+      "cpu_c": 51.8,
+      "available_kib": 6698816
+    },
+    {
+      "epoch": 1794044594.9757783,
+      "cpu_c": 51.8,
+      "available_kib": 6700128
+    },
+    {
+      "epoch": 1794044595.2261345,
+      "cpu_c": 51.8,
+      "available_kib": 6698672
+    },
+    {
+      "epoch": 1794044595.4764688,
+      "cpu_c": 53.45,
+      "available_kib": 6690528
+    },
+    {
+      "epoch": 1794044595.7267923,
+      "cpu_c": 52.35,
+      "available_kib": 6702528
+    },
+    {
+      "epoch": 1794044595.9771454,
+      "cpu_c": 52.9,
+      "available_kib": 6692400
+    },
+    {
+      "epoch": 1794044596.2274597,
+      "cpu_c": 52.35,
+      "available_kib": 6648000
+    },
+    {
+      "epoch": 1794044596.477754,
+      "cpu_c": 51.8,
+      "available_kib": 6640800
+    },
+    {
+      "epoch": 1794044596.728122,
+      "cpu_c": 52.35,
+      "available_kib": 6641552
+    },
+    {
+      "epoch": 1794044596.9784577,
+      "cpu_c": 51.8,
+      "available_kib": 6639776
+    },
+    {
+      "epoch": 1794044597.2287946,
+      "cpu_c": 51.8,
+      "available_kib": 6627408
+    },
+    {
+      "epoch": 1794044597.4791634,
+      "cpu_c": 51.8,
+      "available_kib": 6627408
+    },
+    {
+      "epoch": 1794044597.7294972,
+      "cpu_c": 51.8,
+      "available_kib": 6625856
+    },
+    {
+      "epoch": 1794044597.9799297,
+      "cpu_c": 51.8,
+      "available_kib": 6630112
+    },
+    {
+      "epoch": 1794044598.2302992,
+      "cpu_c": 51.8,
+      "available_kib": 6624944
+    },
+    {
+      "epoch": 1794044598.4807863,
+      "cpu_c": 51.8,
+      "available_kib": 6624560
+    },
+    {
+      "epoch": 1794044598.7311785,
+      "cpu_c": 51.25,
+      "available_kib": 6618176
+    },
+    {
+      "epoch": 1794044598.9815223,
+      "cpu_c": 51.8,
+      "available_kib": 6624784
+    },
+    {
+      "epoch": 1794044599.2318501,
+      "cpu_c": 51.8,
+      "available_kib": 6618576
+    },
+    {
+      "epoch": 1794044599.5569386,
+      "cpu_c": 52.35,
+      "available_kib": 6667280
+    },
+    {
+      "epoch": 1794044599.5576248,
+      "cpu_c": 52.35,
+      "available_kib": 6667280
+    },
+    {
+      "epoch": 1794044599.808038,
+      "cpu_c": 52.35,
+      "available_kib": 6570432
+    },
+    {
+      "epoch": 1794044600.0585072,
+      "cpu_c": 52.35,
+      "available_kib": 6444096
+    },
+    {
+      "epoch": 1794044600.308873,
+      "cpu_c": 51.8,
+      "available_kib": 6463584
+    },
+    {
+      "epoch": 1794044600.5592546,
+      "cpu_c": 51.8,
+      "available_kib": 6463920
+    },
+    {
+      "epoch": 1794044600.809613,
+      "cpu_c": 52.9,
+      "available_kib": 6463824
+    },
+    {
+      "epoch": 1794044601.0599866,
+      "cpu_c": 53.45,
+      "available_kib": 6466992
+    },
+    {
+      "epoch": 1794044601.3103871,
+      "cpu_c": 52.35,
+      "available_kib": 6467088
+    },
+    {
+      "epoch": 1794044601.560715,
+      "cpu_c": 51.8,
+      "available_kib": 6470480
+    },
+    {
+      "epoch": 1794044601.8110952,
+      "cpu_c": 52.9,
+      "available_kib": 6469696
+    },
+    {
+      "epoch": 1794044602.0614755,
+      "cpu_c": 52.35,
+      "available_kib": 6469808
+    },
+    {
+      "epoch": 1794044602.3118656,
+      "cpu_c": 52.35,
+      "available_kib": 6469824
+    },
+    {
+      "epoch": 1794044602.562286,
+      "cpu_c": 52.35,
+      "available_kib": 6469824
+    },
+    {
+      "epoch": 1794044602.8126748,
+      "cpu_c": 51.8,
+      "available_kib": 6469824
+    },
+    {
+      "epoch": 1794044603.0630558,
+      "cpu_c": 52.35,
+      "available_kib": 6470400
+    },
+    {
+      "epoch": 1794044603.3134227,
+      "cpu_c": 52.35,
+      "available_kib": 6478640
+    },
+    {
+      "epoch": 1794044603.5637841,
+      "cpu_c": 52.35,
+      "available_kib": 6478640
+    },
+    {
+      "epoch": 1794044603.8141375,
+      "cpu_c": 52.35,
+      "available_kib": 6478640
+    },
+    {
+      "epoch": 1794044604.0645273,
+      "cpu_c": 52.35,
+      "available_kib": 6479360
+    },
+    {
+      "epoch": 1794044604.315111,
+      "cpu_c": 51.8,
+      "available_kib": 6479360
+    },
+    {
+      "epoch": 1794044604.565499,
+      "cpu_c": 52.35,
+      "available_kib": 6479360
+    },
+    {
+      "epoch": 1794044604.8158753,
+      "cpu_c": 53.45,
+      "available_kib": 6479360
+    },
+    {
+      "epoch": 1794044605.0662527,
+      "cpu_c": 52.35,
+      "available_kib": 6481232
+    },
+    {
+      "epoch": 1794044605.3166523,
+      "cpu_c": 51.8,
+      "available_kib": 6481232
+    },
+    {
+      "epoch": 1794044605.567035,
+      "cpu_c": 51.8,
+      "available_kib": 6481232
+    },
+    {
+      "epoch": 1794044605.817442,
+      "cpu_c": 52.35,
+      "available_kib": 6481232
+    },
+    {
+      "epoch": 1794044606.0678282,
+      "cpu_c": 52.9,
+      "available_kib": 6485344
+    },
+    {
+      "epoch": 1794044606.3182418,
+      "cpu_c": 52.35,
+      "available_kib": 6485344
+    },
+    {
+      "epoch": 1794044606.568618,
+      "cpu_c": 52.9,
+      "available_kib": 6485344
+    },
+    {
+      "epoch": 1794044606.8189967,
+      "cpu_c": 52.35,
+      "available_kib": 6485552
+    },
+    {
+      "epoch": 1794044607.0694015,
+      "cpu_c": 53.45,
+      "available_kib": 6488400
+    },
+    {
+      "epoch": 1794044607.3197691,
+      "cpu_c": 51.8,
+      "available_kib": 6488528
+    },
+    {
+      "epoch": 1794044607.570135,
+      "cpu_c": 51.8,
+      "available_kib": 6488288
+    },
+    {
+      "epoch": 1794044607.8208594,
+      "cpu_c": 52.9,
+      "available_kib": 6488288
+    },
+    {
+      "epoch": 1794044608.0712364,
+      "cpu_c": 51.8,
+      "available_kib": 6492576
+    },
+    {
+      "epoch": 1794044608.3216994,
+      "cpu_c": 54.0,
+      "available_kib": 6484528
+    },
+    {
+      "epoch": 1794044608.5721023,
+      "cpu_c": 52.9,
+      "available_kib": 6482704
+    },
+    {
+      "epoch": 1794044608.8224633,
+      "cpu_c": 52.9,
+      "available_kib": 6482704
+    },
+    {
+      "epoch": 1794044609.0728369,
+      "cpu_c": 51.8,
+      "available_kib": 6483648
+    },
+    {
+      "epoch": 1794044609.3231971,
+      "cpu_c": 52.35,
+      "available_kib": 6483648
+    },
+    {
+      "epoch": 1794044609.5735893,
+      "cpu_c": 52.9,
+      "available_kib": 6483632
+    },
+    {
+      "epoch": 1794044609.8239615,
+      "cpu_c": 51.8,
+      "available_kib": 6483632
+    },
+    {
+      "epoch": 1794044610.0744398,
+      "cpu_c": 53.45,
+      "available_kib": 6479312
+    },
+    {
+      "epoch": 1794044610.324982,
+      "cpu_c": 53.45,
+      "available_kib": 6482160
+    },
+    {
+      "epoch": 1794044610.5753658,
+      "cpu_c": 54.0,
+      "available_kib": 6483104
+    },
+    {
+      "epoch": 1794044610.8257258,
+      "cpu_c": 54.0,
+      "available_kib": 6483104
+    },
+    {
+      "epoch": 1794044611.076048,
+      "cpu_c": 54.0,
+      "available_kib": 6482688
+    },
+    {
+      "epoch": 1794044611.3263578,
+      "cpu_c": 53.45,
+      "available_kib": 6482224
+    },
+    {
+      "epoch": 1794044611.5766664,
+      "cpu_c": 53.45,
+      "available_kib": 6482464
+    },
+    {
+      "epoch": 1794044611.826965,
+      "cpu_c": 54.0,
+      "available_kib": 6482464
+    },
+    {
+      "epoch": 1794044612.0773282,
+      "cpu_c": 54.0,
+      "available_kib": 6485056
+    },
+    {
+      "epoch": 1794044612.327663,
+      "cpu_c": 54.0,
+      "available_kib": 6485056
+    },
+    {
+      "epoch": 1794044612.5780249,
+      "cpu_c": 53.45,
+      "available_kib": 6485056
+    },
+    {
+      "epoch": 1794044612.8283772,
+      "cpu_c": 53.45,
+      "available_kib": 6485056
+    },
+    {
+      "epoch": 1794044613.078725,
+      "cpu_c": 53.45,
+      "available_kib": 6425024
+    },
+    {
+      "epoch": 1794044613.3290863,
+      "cpu_c": 53.45,
+      "available_kib": 6425024
+    },
+    {
+      "epoch": 1794044613.579448,
+      "cpu_c": 53.45,
+      "available_kib": 6425872
+    },
+    {
+      "epoch": 1794044613.8298478,
+      "cpu_c": 53.45,
+      "available_kib": 6425872
+    },
+    {
+      "epoch": 1794044614.0801923,
+      "cpu_c": 53.45,
+      "available_kib": 6430608
+    },
+    {
+      "epoch": 1794044614.3305476,
+      "cpu_c": 53.45,
+      "available_kib": 6430608
+    },
+    {
+      "epoch": 1794044614.5809324,
+      "cpu_c": 54.0,
+      "available_kib": 6427456
+    },
+    {
+      "epoch": 1794044614.831312,
+      "cpu_c": 54.0,
+      "available_kib": 6361056
+    },
+    {
+      "epoch": 1794044615.0816855,
+      "cpu_c": 54.55,
+      "available_kib": 6361120
+    },
+    {
+      "epoch": 1794044615.3320465,
+      "cpu_c": 53.45,
+      "available_kib": 6361120
+    },
+    {
+      "epoch": 1794044615.5824118,
+      "cpu_c": 54.0,
+      "available_kib": 6361120
+    },
+    {
+      "epoch": 1794044615.8328102,
+      "cpu_c": 54.55,
+      "available_kib": 6361120
+    },
+    {
+      "epoch": 1794044616.083171,
+      "cpu_c": 54.0,
+      "available_kib": 6364800
+    },
+    {
+      "epoch": 1794044616.3335483,
+      "cpu_c": 54.0,
+      "available_kib": 6364800
+    },
+    {
+      "epoch": 1794044616.5843556,
+      "cpu_c": 53.45,
+      "available_kib": 6364800
+    },
+    {
+      "epoch": 1794044616.834718,
+      "cpu_c": 55.1,
+      "available_kib": 6364800
+    },
+    {
+      "epoch": 1794044617.0850933,
+      "cpu_c": 54.0,
+      "available_kib": 6368064
+    },
+    {
+      "epoch": 1794044617.335465,
+      "cpu_c": 54.0,
+      "available_kib": 6368064
+    },
+    {
+      "epoch": 1794044617.5858212,
+      "cpu_c": 53.45,
+      "available_kib": 6369264
+    },
+    {
+      "epoch": 1794044617.8361607,
+      "cpu_c": 55.1,
+      "available_kib": 6369024
+    },
+    {
+      "epoch": 1794044618.0865357,
+      "cpu_c": 54.0,
+      "available_kib": 6374096
+    },
+    {
+      "epoch": 1794044618.33692,
+      "cpu_c": 53.45,
+      "available_kib": 6373968
+    },
+    {
+      "epoch": 1794044618.5872602,
+      "cpu_c": 53.45,
+      "available_kib": 6373968
+    },
+    {
+      "epoch": 1794044618.8376303,
+      "cpu_c": 54.55,
+      "available_kib": 6375264
+    },
+    {
+      "epoch": 1794044619.088,
+      "cpu_c": 52.9,
+      "available_kib": 6379216
+    },
+    {
+      "epoch": 1794044619.338364,
+      "cpu_c": 52.35,
+      "available_kib": 6379472
+    },
+    {
+      "epoch": 1794044619.5887237,
+      "cpu_c": 54.0,
+      "available_kib": 6379472
+    },
+    {
+      "epoch": 1794044619.8395755,
+      "cpu_c": 54.0,
+      "available_kib": 6379472
+    },
+    {
+      "epoch": 1794044620.0899482,
+      "cpu_c": 53.45,
+      "available_kib": 6381440
+    },
+    {
+      "epoch": 1794044620.34033,
+      "cpu_c": 54.55,
+      "available_kib": 6378832
+    },
+    {
+      "epoch": 1794044620.5906901,
+      "cpu_c": 54.0,
+      "available_kib": 6377792
+    },
+    {
+      "epoch": 1794044620.8410304,
+      "cpu_c": 53.45,
+      "available_kib": 6377792
+    },
+    {
+      "epoch": 1794044621.0913541,
+      "cpu_c": 54.0,
+      "available_kib": 6378464
+    },
+    {
+      "epoch": 1794044621.3417237,
+      "cpu_c": 54.0,
+      "available_kib": 6378464
+    },
+    {
+      "epoch": 1794044621.5920682,
+      "cpu_c": 54.55,
+      "available_kib": 6378464
+    },
+    {
+      "epoch": 1794044621.8424053,
+      "cpu_c": 53.45,
+      "available_kib": 6378464
+    },
+    {
+      "epoch": 1794044622.0927896,
+      "cpu_c": 53.45,
+      "available_kib": 6380224
+    },
+    {
+      "epoch": 1794044622.3431509,
+      "cpu_c": 54.0,
+      "available_kib": 6380224
+    },
+    {
+      "epoch": 1794044622.5937483,
+      "cpu_c": 54.0,
+      "available_kib": 6379600
+    },
+    {
+      "epoch": 1794044622.844105,
+      "cpu_c": 54.0,
+      "available_kib": 6379600
+    },
+    {
+      "epoch": 1794044623.0944767,
+      "cpu_c": 54.0,
+      "available_kib": 6383376
+    },
+    {
+      "epoch": 1794044623.3448331,
+      "cpu_c": 53.45,
+      "available_kib": 6383376
+    },
+    {
+      "epoch": 1794044630.7825167,
+      "cpu_c": 53.45,
+      "available_kib": 6544720
+    },
+    {
+      "epoch": 1794044630.7840712,
+      "cpu_c": 53.45,
+      "available_kib": 6544320
+    },
+    {
+      "epoch": 1794044631.1130288,
+      "cpu_c": 53.45,
+      "available_kib": 6544096
+    },
+    {
+      "epoch": 1794044631.113618,
+      "cpu_c": 53.45,
+      "available_kib": 6544096
+    },
+    {
+      "epoch": 1794044631.4416826,
+      "cpu_c": 51.8,
+      "available_kib": 6544608
+    },
+    {
+      "epoch": 1794044631.4422548,
+      "cpu_c": 51.8,
+      "available_kib": 6544608
+    },
+    {
+      "epoch": 1794044631.7694244,
+      "cpu_c": 51.8,
+      "available_kib": 6542864
+    },
+    {
+      "epoch": 1794044631.769988,
+      "cpu_c": 51.8,
+      "available_kib": 6542864
+    },
+    {
+      "epoch": 1794044632.0972764,
+      "cpu_c": 51.8,
+      "available_kib": 6548496
+    },
+    {
+      "epoch": 1794044632.097837,
+      "cpu_c": 51.8,
+      "available_kib": 6548496
+    }
+  ],
+  "passed": true,
+  "output_deltas": {
+    "fixture-frame.bin": {
+      "bytes": 460800,
+      "changed_bytes": 0,
+      "original_sha256": "3c2f2deac2a29851080ddc6164a987c6ef669fa7e268895305132dbed1d10a5b",
+      "candidate_sha256": "3c2f2deac2a29851080ddc6164a987c6ef669fa7e268895305132dbed1d10a5b"
+    },
+    "fixture-geometry.bin": {
+      "bytes": 10752,
+      "changed_bytes": 0,
+      "original_sha256": "3ce0603befa242be5f026d6090cae02caad72394c9733254f7c622ae251faec9",
+      "candidate_sha256": "3ce0603befa242be5f026d6090cae02caad72394c9733254f7c622ae251faec9"
+    },
+    "module-frame.bin": {
+      "bytes": 76800,
+      "changed_bytes": 0,
+      "original_sha256": "be81eb7d2b7bd2754a2b887aed08ed22de9fbd634e5ef867ff645ddf5c8571cd",
+      "candidate_sha256": "be81eb7d2b7bd2754a2b887aed08ed22de9fbd634e5ef867ff645ddf5c8571cd"
+    },
+    "frames600.bin": {
+      "bytes": 46080000,
+      "changed_bytes": 0,
+      "original_sha256": "8f6c99ac8ba1c67c5139df9544a6b11cfe5d7f047d5206e274c93dcaf2c66c20",
+      "candidate_sha256": "8f6c99ac8ba1c67c5139df9544a6b11cfe5d7f047d5206e274c93dcaf2c66c20"
+    },
+    "states600.bin": {
+      "bytes": 1081200,
+      "changed_bytes": 0,
+      "original_sha256": "06f58af5c06a2ec718a3b6e9345eadbc5c276a97324229ab4492a645b887be86",
+      "candidate_sha256": "06f58af5c06a2ec718a3b6e9345eadbc5c276a97324229ab4492a645b887be86"
+    },
+    "spans.bin": {
+      "bytes": 51971104,
+      "changed_bytes": 0,
+      "original_sha256": "90899efa5dc93d5344bab43bbd7e48050de2f8673eeaea421e1a80bed79eabb8",
+      "candidate_sha256": "90899efa5dc93d5344bab43bbd7e48050de2f8673eeaea421e1a80bed79eabb8"
+    }
+  },
+  "packages": {
+    "original": {
+      "compiler": "xtensa-esp32-elf-gcc (crosstool-NG esp-2021r2-patch5) 8.4.0",
+      "abi_header_sha256": "92a6bbc403ecc51e165c103cfd16fd071f3d644ad52f83a4a7cb4fe088a5a2d6",
+      "protocol_header_sha256": "0dc8ad31e249ce58ed39435f6a8a265a9175be417ea3bee8a2cc10cde9f94b2f",
+      "services_header_sha256": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f",
+      "pcm_sink_header_sha256": "e3bf5d900105ddd87e82f5cd38301fab02ffb7a7e38f81012db0bb2e13ba963c",
+      "module": {
+        "compiler_target": {
+          "psram_cache_workaround": true,
+          "flags": [
+            "-mfix-esp32-psram-cache-issue"
+          ]
+        },
+        "link_map": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/module/wolf_perf.map",
+        "name": "wolf_perf",
+        "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/native-source/wolf3d_module.cpp",
+        "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+        "policy_sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+        "declared_limits": {
+          "text": 65536,
+          "data": 16384,
+          "stack": 2048,
+          "image": 131072
+        },
+        "text_policy": {
+          "profile": "standard",
+          "maximum": 65536
+        },
+        "build_id": "0x20261104",
+        "capabilities": 257,
+        "abi_major": 1,
+        "abi_minor": 6,
+        "envelope_bytes": 64,
+        "elf_bytes": 24356,
+        "package_bytes": 24420,
+        "sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+        "package": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/module/wolf_perf.vdpl",
+        "elf": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/original/module/wolf_perf.elf",
+        "entry_virtual": 14948,
+        "resident_text_bytes": 15360,
+        "resident_data_bytes": 13348,
+        "relative_relocations": 42,
+        "allocated_sections": {
+          ".text": {
+            "virtual_address": 720,
+            "bytes": 15357,
+            "type": 1
+          },
+          ".rodata": {
+            "virtual_address": 16080,
+            "bytes": 7852,
+            "type": 1
+          },
+          ".bss": {
+            "virtual_address": 24716,
+            "bytes": 5496,
+            "type": 8
+          }
+        }
+      }
+    },
+    "candidate": {
+      "compiler": "xtensa-esp32-elf-gcc (crosstool-NG esp-2021r2-patch5) 8.4.0",
+      "abi_header_sha256": "92a6bbc403ecc51e165c103cfd16fd071f3d644ad52f83a4a7cb4fe088a5a2d6",
+      "protocol_header_sha256": "0dc8ad31e249ce58ed39435f6a8a265a9175be417ea3bee8a2cc10cde9f94b2f",
+      "services_header_sha256": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f",
+      "pcm_sink_header_sha256": "e3bf5d900105ddd87e82f5cd38301fab02ffb7a7e38f81012db0bb2e13ba963c",
+      "module": {
+        "compiler_target": {
+          "psram_cache_workaround": true,
+          "flags": [
+            "-mfix-esp32-psram-cache-issue"
+          ]
+        },
+        "link_map": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/module/wolf_perf.map",
+        "name": "wolf_perf",
+        "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/native-source/wolf3d_module.cpp",
+        "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+        "policy_sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+        "declared_limits": {
+          "text": 65536,
+          "data": 16384,
+          "stack": 2048,
+          "image": 131072
+        },
+        "text_policy": {
+          "profile": "standard",
+          "maximum": 65536
+        },
+        "build_id": "0x20261104",
+        "capabilities": 257,
+        "abi_major": 1,
+        "abi_minor": 6,
+        "envelope_bytes": 64,
+        "elf_bytes": 24556,
+        "package_bytes": 24620,
+        "sha256": "972f359742bbc92668f64fd547b85d5e55f846d4c9b089fd023769130fb67ced",
+        "package": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/module/wolf_perf.vdpl",
+        "elf": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/module/wolf_perf.elf",
+        "entry_virtual": 15148,
+        "resident_text_bytes": 15548,
+        "resident_data_bytes": 13348,
+        "relative_relocations": 43,
+        "allocated_sections": {
+          ".text": {
+            "virtual_address": 732,
+            "bytes": 15545,
+            "type": 1
+          },
+          ".rodata": {
+            "virtual_address": 16280,
+            "bytes": 7852,
+            "type": 1
+          },
+          ".bss": {
+            "virtual_address": 24716,
+            "bytes": 5496,
+            "type": 8
+          }
+        }
+      }
+    }
+  },
+  "total_seconds": 119.71195936400909
+}

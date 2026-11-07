@@ -4,9 +4,9 @@ Selected under WOLF-GOAL-001, Smith’s unattended overnight optimization releas
 MechAgon first, Wolf second; normal serial Pi compilation and actual Extender
 Olimex checkout only. Oryx is down. No default adoption in this arm.
 
-- [ ] WOLF-PERF-013-01 — Freeze pre-code support/work and exact a926 control.
-- [ ] WOLF-PERF-013-02 — Prepare sprite-column source/occlusion lookup only.
-- [ ] WOLF-PERF-013-03 — Qualify independent sprite output, leases/failures,
+- [x] WOLF-PERF-013-01 — Freeze pre-code support/work and exact a926 control.
+- [x] WOLF-PERF-013-02 — Prepare sprite-column source/occlusion lookup only.
+- [x] WOLF-PERF-013-03 — Qualify independent sprite output, leases/failures,
   masks/clipping/painter ties, whole-frame/state equivalence, exact target control
   reproduction, compiler/providers/sections and complete stack/resource limits.
 - [ ] WOLF-PERF-013-04 — Bind actual per-arm producer sizes/operands; freeze a

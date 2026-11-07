@@ -1,0 +1,418 @@
+{
+  "passed": true,
+  "guards": [
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6790224
+    },
+    {
+      "cpu_c": 49.05,
+      "available_kib": 6787424
+    },
+    {
+      "cpu_c": 49.05,
+      "available_kib": 6785504
+    },
+    {
+      "cpu_c": 49.6,
+      "available_kib": 6779312
+    },
+    {
+      "cpu_c": 50.15,
+      "available_kib": 6776752
+    },
+    {
+      "cpu_c": 51.8,
+      "available_kib": 6774288
+    },
+    {
+      "cpu_c": 51.25,
+      "available_kib": 6759104
+    },
+    {
+      "cpu_c": 51.25,
+      "available_kib": 6752512
+    },
+    {
+      "cpu_c": 51.25,
+      "available_kib": 6745200
+    },
+    {
+      "cpu_c": 50.7,
+      "available_kib": 6749760
+    },
+    {
+      "cpu_c": 51.8,
+      "available_kib": 6754096
+    },
+    {
+      "cpu_c": 51.25,
+      "available_kib": 6754576
+    }
+  ],
+  "steps": [
+    {
+      "arm": "original",
+      "scene": "room",
+      "returncode": 0,
+      "seconds": 0.20133596402592957
+    },
+    {
+      "arm": "original",
+      "scene": "sprites",
+      "returncode": 0,
+      "seconds": 0.20117442699847743
+    },
+    {
+      "arm": "candidate",
+      "scene": "room",
+      "returncode": 0,
+      "seconds": 0.20157366700004786
+    },
+    {
+      "arm": "candidate",
+      "scene": "sprites",
+      "returncode": 0,
+      "seconds": 0.20116785197751597
+    }
+  ],
+  "arms": {
+    "original": {
+      "room": {
+        "passed": true,
+        "package_bytes": 24420,
+        "guest_sha256": "c43e7fe74148517c30cf9bf83854cf0cf297aeaf8c4684a4624c93849b46df58",
+        "listing_sha256": "f61b421e8c7722a7851e273de8a92a5004c647e42e59e5dd88fe176c7c145f4d",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24421,
+            "encoded": "11655f00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "01645f00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "11645f00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        },
+        "presentation_calls": [
+          {
+            "address": 551038,
+            "target": "w3d_vdu_present"
+          },
+          {
+            "address": 551042,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          },
+          {
+            "address": 551258,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          },
+          {
+            "address": 551368,
+            "target": "w3d_vdu_present"
+          },
+          {
+            "address": 551372,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          }
+        ]
+      },
+      "sprites": {
+        "passed": true,
+        "package_bytes": 24420,
+        "guest_sha256": "5752c93b7510ccbb52e5125cd119e23f0260346c79dd2af3b9a6ddb372593614",
+        "listing_sha256": "2cb981ac82653fd6d11e94ab0be74ba42f1d9572c08ba9005d6361621d22bc95",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24421,
+            "encoded": "11655f00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "01645f00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "11645f00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24420,
+            "encoded": "21645f00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551647,
+          "wp_exit_sp": 551650
+        },
+        "presentation_calls": [
+          {
+            "address": 551063,
+            "target": "w3d_vdu_present"
+          },
+          {
+            "address": 551067,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          },
+          {
+            "address": 551283,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          },
+          {
+            "address": 551393,
+            "target": "w3d_vdu_present"
+          },
+          {
+            "address": 551397,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          }
+        ]
+      }
+    },
+    "candidate": {
+      "room": {
+        "passed": true,
+        "package_bytes": 24620,
+        "guest_sha256": "115d75a8bd64050c0343c6b847b374ebc2bee4a8b7baeef68bc6d36a9a8e182e",
+        "listing_sha256": "f7b17e88ebbafb363db49c97aea69a15b2c92e2f69189384d555bd93df37b58a",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24620,
+            "encoded": "212c6000"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24620,
+            "encoded": "212c6000"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24621,
+            "encoded": "112d6000"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24620,
+            "encoded": "012c6000"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24620,
+            "encoded": "112c6000"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24620,
+            "encoded": "212c6000"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        },
+        "presentation_calls": [
+          {
+            "address": 551038,
+            "target": "w3d_vdu_present"
+          },
+          {
+            "address": 551042,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          },
+          {
+            "address": 551258,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          },
+          {
+            "address": 551368,
+            "target": "w3d_vdu_present"
+          },
+          {
+            "address": 551372,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          }
+        ],
+        "changed_offsets": [
+          160636,
+          160637,
+          160649,
+          160650,
+          160653,
+          160654,
+          160670,
+          160671,
+          160712,
+          160713,
+          161121,
+          161122
+        ]
+      },
+      "sprites": {
+        "passed": true,
+        "package_bytes": 24620,
+        "guest_sha256": "6827e17a16277c93c5bd6b6ad8bd73b7625d00bbe36c2ee3ed3406a8a3cb85fa",
+        "listing_sha256": "f5c57e93a1b10a666e67c990a016104d8274dd321c9e96205dadfed302f030cb",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24620,
+            "encoded": "212c6000"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24620,
+            "encoded": "212c6000"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24621,
+            "encoded": "112d6000"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24620,
+            "encoded": "012c6000"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24620,
+            "encoded": "112c6000"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24620,
+            "encoded": "212c6000"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551647,
+          "wp_exit_sp": 551650
+        },
+        "presentation_calls": [
+          {
+            "address": 551063,
+            "target": "w3d_vdu_present"
+          },
+          {
+            "address": 551067,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          },
+          {
+            "address": 551283,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          },
+          {
+            "address": 551393,
+            "target": "w3d_vdu_present"
+          },
+          {
+            "address": 551397,
+            "target": "w3d_audio_wait_for_vdp_ingress"
+          }
+        ],
+        "changed_offsets": [
+          160636,
+          160637,
+          160649,
+          160650,
+          160653,
+          160654,
+          160670,
+          160671,
+          160712,
+          160713,
+          161121,
+          161122
+        ]
+      }
+    }
+  },
+  "seconds": 4.896937537007034
+}

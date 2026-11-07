@@ -1,0 +1,81 @@
+--- original/native-source/wolf3d_renderer.cpp
++++ candidate/native-source/wolf3d_renderer.cpp
+@@ -546,16 +546,25 @@
+         if (width > 0 && height > 0) {
+             const int32_t x_step = (kTextureSize << 16) / size;
+             const int32_t y_step = (kTextureSize << 16) / size;
++            // Geometry/occlusion depend on destination column, not row.
++            // Keep row-major texture/output order and all metadata untouched.
++            uint8_t columns[kViewWidth];
++            int32_t x_fraction = (clipped_left - left) * x_step;
++            for (int x = 0; x < width; ++x) {
++                int source_x = x_fraction >> 16;
++                if (source_x >= kTextureSize) source_x = kTextureSize - 1;
++                columns[x] = wall_heights[clipped_left + x] < size
++                    ? static_cast<uint8_t>(source_x) : 0xffu;
++                x_fraction += x_step;
++            }
+             int32_t y_fraction = (clipped_top - top) * y_step;
+             for (int y = 0; y < height; ++y) {
+                 int source_y = y_fraction >> 16;
+                 if (source_y >= kTextureSize) source_y = kTextureSize - 1;
+-                int32_t x_fraction = (clipped_left - left) * x_step;
+                 for (int x = 0; x < width; ++x) {
+                     const int screen_x = clipped_left + x;
+-                    int source_x = x_fraction >> 16;
+-                    if (source_x >= kTextureSize) source_x = kTextureSize - 1;
+-                    if (wall_heights[screen_x] < size) {
++                    const uint8_t source_x = columns[x];
++                    if (source_x != 0xffu) {
+                         const uint8_t pixel =
+                             span.bytes[source_y * kTextureSize + source_x];
+                         if ((pixel & 0xc0u) != 0) {
+@@ -565,7 +574,6 @@
+                                 pixel & 63u);
+                         }
+                     }
+-                    x_fraction += x_step;
+                 }
+                 y_fraction += y_step;
+             }
+
+--- original/production/wolf3d_renderer.cpp
++++ candidate/production/wolf3d_renderer.cpp
+@@ -546,16 +546,25 @@
+         if (width > 0 && height > 0) {
+             const int32_t x_step = (kTextureSize << 16) / size;
+             const int32_t y_step = (kTextureSize << 16) / size;
++            // Geometry/occlusion depend on destination column, not row.
++            // Keep row-major texture/output order and all metadata untouched.
++            uint8_t columns[kViewWidth];
++            int32_t x_fraction = (clipped_left - left) * x_step;
++            for (int x = 0; x < width; ++x) {
++                int source_x = x_fraction >> 16;
++                if (source_x >= kTextureSize) source_x = kTextureSize - 1;
++                columns[x] = wall_heights[clipped_left + x] < size
++                    ? static_cast<uint8_t>(source_x) : 0xffu;
++                x_fraction += x_step;
++            }
+             int32_t y_fraction = (clipped_top - top) * y_step;
+             for (int y = 0; y < height; ++y) {
+                 int source_y = y_fraction >> 16;
+                 if (source_y >= kTextureSize) source_y = kTextureSize - 1;
+-                int32_t x_fraction = (clipped_left - left) * x_step;
+                 for (int x = 0; x < width; ++x) {
+                     const int screen_x = clipped_left + x;
+-                    int source_x = x_fraction >> 16;
+-                    if (source_x >= kTextureSize) source_x = kTextureSize - 1;
+-                    if (wall_heights[screen_x] < size) {
++                    const uint8_t source_x = columns[x];
++                    if (source_x != 0xffu) {
+                         const uint8_t pixel =
+                             span.bytes[source_y * kTextureSize + source_x];
+                         if ((pixel & 0xc0u) != 0) {
+@@ -565,7 +574,6 @@
+                                 pixel & 63u);
+                         }
+                     }
+-                    x_fraction += x_step;
+                 }
+                 y_fraction += y_step;
+             }

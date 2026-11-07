@@ -22,6 +22,15 @@ Oryx is down. Performance runs measure maximum uncapped presentation rate.
 - [ ] WOLF-GOAL-001-10 — Exact restoration, cleanup, release and handoffs.
 - [ ] WOLF-GOAL-001-11 — Publish/share final results and actual limits.
 
+## WOLF-PERF-013 — Sprite-column invariant hoisting
+
+[Plan](agonport/doc/tasks/WOLF-PERF-013/PLAN.md) and
+[build result](agonport/doc/tasks/WOLF-PERF-013/BUILD-RESULT.md).
+
+- [ ] WOLF-PERF-013-04 — Final current hardware kit, producer and readiness freeze.
+- [ ] WOLF-PERF-013-05 — Finite matched uncapped cases, exact restore/release.
+- [ ] WOLF-PERF-013-06 — Publish/share actual result and limits.
+
 ## WOLF-PERF-006 — gap priorities and O2 arm
 
 [Plan](agonport/doc/tasks/WOLF-PERF-006/PLAN.md),
