@@ -47,9 +47,6 @@ work reduction moves this before PERF014/015; current PERF013 stays immutable.
 
 [Pre-code contract](agonport/doc/tasks/WOLF-PERF-015/PLAN.md).
 
-- [ ] WOLF-PERF-015-01 — Pin predecessor and complete actual trig caller/domain audit.
-- [ ] WOLF-PERF-015-02 — Generate/use exact360degree samples from retained quarter table.
-- [ ] WOLF-PERF-015-03 — All uint16 angles/full output and actual unused-table proof.
 - [ ] WOLF-PERF-015-04 — Target resource/producer and useful finite uncapped freeze.
 - [ ] WOLF-PERF-015-05 — Normal finite run/restore/cleanup/release.
 - [ ] WOLF-PERF-015-06 — Publish/share footprint and measured timing, including zero gain.

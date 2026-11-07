@@ -1,0 +1,80 @@
+{
+  "scope": "Source-only match to actual selected7593 plus read-only phase aggregation of existing78; no new target/clock/profile claim",
+  "matched_files": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/agon_screen.h": "648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/vdu_sys.h": "35fff838a0942826fd8b63a69bbde9bae17a0d428e6a9289dd03607b225817ef",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/deps/vdp-gl/src/canvas.cpp": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/deps/vdp-gl/src/displaycontroller.cpp": "f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/deps/vdp-gl/src/dispdrivers/vgabasecontroller.cpp": "443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/deps/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp": "5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/.pio/build/esp32dev/firmware.bin": "7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d"
+  },
+  "cases": [
+    {
+      "case": "01-vdplet-room",
+      "arm": "original",
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/results/actual78/01-vdplet-room/report.json",
+      "source_sha256": "5dcddf7ed52d452e717a460f72b0e3b1e1f219b749ae0b4d60df95fd398a9f65",
+      "native_render_cycles": 5940626.193333333,
+      "wait_ms": 25.378333333333334,
+      "present_fence_ms": 5.115,
+      "active_ms": 33.25833333333333,
+      "presentation_interval_ms": 33.270450751252085
+    },
+    {
+      "case": "02-vdplet-room",
+      "arm": "candidate",
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/results/actual78/02-vdplet-room/report.json",
+      "source_sha256": "6df3f707dc2db4dadce4c0ce514ea4cbefb916a09489a161b46d453c6dfab479",
+      "native_render_cycles": 6062672.336666667,
+      "wait_ms": 26.065,
+      "present_fence_ms": 4.48,
+      "active_ms": 33.26,
+      "presentation_interval_ms": 33.270450751252085
+    },
+    {
+      "case": "03-vdplet-sprites",
+      "arm": "original",
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/results/actual78/03-vdplet-sprites/report.json",
+      "source_sha256": "7f4127594e19bea4345f9c865db520ba41f53f90ec3026539cd24808b7431b1a",
+      "native_render_cycles": 6579502.308333334,
+      "wait_ms": 28.08,
+      "present_fence_ms": 2.9066666666666667,
+      "active_ms": 33.285,
+      "presentation_interval_ms": 33.270450751252085
+    },
+    {
+      "case": "04-vdplet-sprites",
+      "arm": "candidate",
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/results/actual78/04-vdplet-sprites/report.json",
+      "source_sha256": "aa00929417d9c602f8e213896d704d9e5dd066922571d82dabe80c44a6239109",
+      "native_render_cycles": 6542446.648333333,
+      "wait_ms": 27.941666666666666,
+      "present_fence_ms": 3.0283333333333333,
+      "active_ms": 33.285,
+      "presentation_interval_ms": 33.270450751252085
+    },
+    {
+      "case": "05-vdplet-sprites",
+      "arm": "candidate",
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/results/actual78/05-vdplet-sprites/report.json",
+      "source_sha256": "5bd0edb7556df94fc39a5f1cb4b53255b2eda8c5f99c826906568586dfb224a8",
+      "native_render_cycles": 6487591.291666667,
+      "wait_ms": 27.74,
+      "present_fence_ms": 3.285,
+      "active_ms": 33.278333333333336,
+      "presentation_interval_ms": 33.26878130217028
+    },
+    {
+      "case": "06-vdplet-sprites",
+      "arm": "original",
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/results/actual78/06-vdplet-sprites/report.json",
+      "source_sha256": "f8de5295eeff356558e2e5d44d882752cbc80b8e6cc6aa79c3bc7ed2fe2f5144",
+      "native_render_cycles": 6555554.863333333,
+      "wait_ms": 28.02166666666667,
+      "present_fence_ms": 3.01,
+      "active_ms": 33.285,
+      "presentation_interval_ms": 33.270450751252085
+    }
+  ]
+}

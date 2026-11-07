@@ -4,11 +4,11 @@ Lower-priority follow-up under WOLF-GOAL-001, after easier sprite/grouping arms.
 Contract before code; no change to the active PERF013/78 cohort. Oryx down,
 MechAgon first/Wolf second, normal Pi compiler and actual Olimex checkout.
 
-- [ ] WOLF-PERF-015-01 — Pin the selected predecessor after its disposition;
+- [x] WOLF-PERF-015-01 — Pin the selected predecessor after its disposition;
   verify every sine/cosine caller and angle domain before representation change.
-- [ ] WOLF-PERF-015-02 — Generate360 exact degree samples from the existing
+- [x] WOLF-PERF-015-02 — Generate360 exact degree samples from the existing
  901-entry int32 quarter table; use them only for setup_view’s degree domain.
-- [ ] WOLF-PERF-015-03 — Prove exact view results across all65536uint16 player
+- [x] WOLF-PERF-015-03 — Prove exact view results across all65536uint16 player
   angles and full renderer/module/600pose output/state equality. Preserve original
   fine-angle table reference/oracle independently; actual ELF must establish that
   unused original quarter storage is absent before claiming footprint savings.
