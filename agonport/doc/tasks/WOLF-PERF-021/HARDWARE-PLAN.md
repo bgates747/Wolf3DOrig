@@ -79,3 +79,15 @@ Report3600 ordered raw samples and native CCOUNT joins, seven INFO results,
 replacement/owned-backup retirement and complete restoration. Configured240MHz
 inclusive CCOUNT, nominal PRT/MOS clocks and completed presentations remain
 separate; no exclusive CPU, calibrated clock or optical scanout claim.
+
+## Frozen startup source disposition
+
+Extender source/log reply wolf019-boot-admission-source-limits-return confirms
+no separately qualified alternate route. Retain ONE current d9b P4 initialization/
+pad-release then commissioned Agon reset after verified installation, unchanged
+from the maintained procedure. No added passive boot reader or reset fallback
+is selected. Original89 cause stays unknown; a later failure stops its leaf,
+then only exact selected restoration and necessary supported cleanup. Aligned
+eZ80 startup output remains a diagnostic gap, not a fabricated success receipt.
+Owner reply is retained in build/hardware-preparation01/boot-source-advice.json;
+this is a new combined experiment, never a retry/relabel of the stopped019 suite.
