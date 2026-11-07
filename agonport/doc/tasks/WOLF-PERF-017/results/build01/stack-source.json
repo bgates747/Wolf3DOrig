@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "all_retained_static_frames_equal": true,
+  "native_files": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/.pio/build/esp32dev/firmware.elf": "092bacc3bb965dc3347625e892f19006e54fbada15561b54b3689ade39d7bdb4",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/.pio/build/esp32dev/firmware.bin": "7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/vdplet_runtime.h": "84653521a9b5a647f62ad6b7e94e75e88d1925a0d2a153c20d8ed8b1c725a05e",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/video.ino": "0743e76728397c56e963baebe98c2746540195732d658d9dad2edf2e768ada27",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/buffer_stream.h": "6b57aedf9e7fee1b8fdb84660e4eaade788c185ec540f94b00f965f2024c418d"
+  },
+  "projector_module_path_bytes": 944,
+  "native_prefix_bytes": 384,
+  "projector_task_path_bytes": 1328,
+  "module_budget": 2048,
+  "task_stack_bytes": 4096,
+  "limits": "Selected synchronous projection/divider branch, not a universal exception/ISR/task peak or whole64domain target execution. Current512B runtime gate retained; no new allocation."
+}

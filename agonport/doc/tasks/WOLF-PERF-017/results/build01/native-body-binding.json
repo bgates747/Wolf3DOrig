@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "units": {
+    "original": {
+      "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+      "body_sha256": "0e1f1b84899d733ad38fc9d4b1987e07970ae3d5bb7891b7b35a88647e713d44",
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/build/r01/original/native-source/wolf3d_module.cpp"
+    },
+    "candidate": {
+      "source_sha256": "f1a514999ed2fb249500c1b4f180d714adbaf8be785ca555b33e73abf741f9ac",
+      "body_sha256": "f6a52d2e1f5e91d5042d37bbba3529a829c20b6f92da18002fb89ea30ad72de7",
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/build/r01/candidate/native-source/wolf3d_module.cpp"
+    }
+  },
+  "fallback_and_signed_wrapper_equal": true,
+  "only_renamed_abi_symbols_for_host": true
+}

@@ -5,11 +5,11 @@ qualified metadata/trig arms. Source design/compatibility before code. Oryx down
 MechAgon first, ordinary Pi serial builds and normal fresh Olimex admission.
 Never change active81/016 inputs or re-run its cases for this arm.
 
-- [ ] WOLF-PERF-017-01 — Freeze exact baseline/source/native ISA and owner
+- [x] WOLF-PERF-017-01 — Freeze exact baseline/source/native ISA and owner
   advice, compatibility/numeric/resource/work ledger before implementation.
-- [ ] WOLF-PERF-017-02 — Add only a guarded unsigned32 subset after the
+- [x] WOLF-PERF-017-02 — Add only a guarded unsigned32 subset after the
   existing denominator-zero guard; preserve signed wrapper and exact64 fallback.
-- [ ] WOLF-PERF-017-03 — Independently qualify actual extracted native bodies,
+- [x] WOLF-PERF-017-03 — Independently qualify actual extracted native bodies,
   mathematical/old-body/boundary/seeded tests, unchanged renderer outputs and
   actual target lowering/providers/sections/call nesting/resource/real producers.
 - [ ] WOLF-PERF-017-04 — Establish actual projection-input/path coverage and

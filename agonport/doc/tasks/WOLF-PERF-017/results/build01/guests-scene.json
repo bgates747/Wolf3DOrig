@@ -1,0 +1,41 @@
+{
+  "points": [
+    [
+      33,
+      36
+    ],
+    [
+      35,
+      36
+    ],
+    [
+      34,
+      35
+    ],
+    [
+      34,
+      37
+    ],
+    [
+      33,
+      35
+    ],
+    [
+      35,
+      35
+    ],
+    [
+      33,
+      37
+    ],
+    [
+      35,
+      37
+    ]
+  ],
+  "shape": 14,
+  "actors": 0,
+  "stage_level_sha256": "67743b36be7d4f7c086bad18a15e754030309a208319d74a6837574f8192bbd3",
+  "floor_witness_offset": 9714,
+  "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/guest01/source"
+}

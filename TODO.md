@@ -26,18 +26,6 @@ Oryx is down. Performance runs measure maximum uncapped presentation rate.
   after Smith has slept, even without an FPS gain. Candidate/results retained;
   weigh draw intervals, stack/code cost and concurrent-resource limits as well.
 
-## WOLF-PERF-017 — Existing local divider narrow fast subset (later)
-
-[Pre-code contract](agonport/doc/tasks/WOLF-PERF-017/PLAN.md). Generic PERF008
-provider admission remains blocked; ordinary native integer support is separate.
-
-- [ ] WOLF-PERF-017-01 — Exact support/source/ISA/numeric/work freeze.
-- [ ] WOLF-PERF-017-02 — Guarded unsigned32 path, exact zero/wide/signed behavior.
-- [ ] WOLF-PERF-017-03 — Actual body oracles and target/provider/producer gates.
-- [ ] WOLF-PERF-017-04 — Input/path coverage and useful finite native-use freeze.
-- [ ] WOLF-PERF-017-05 — Matched test, exact restore/cleanup/release/handoff.
-- [ ] WOLF-PERF-017-06 — Publish actual gains, coverage and limits.
-
 ## WOLF-PERF-014 — Wall texture-ID cache (later goal arm)
 
 [Pre-code contract](agonport/doc/tasks/WOLF-PERF-014/PLAN.md).
@@ -53,6 +41,15 @@ provider admission remains blocked; ordinary native integer support is separate.
 - [ ] WOLF-PERF-015-04 — Target resource/producer and useful finite uncapped freeze.
 - [ ] WOLF-PERF-015-05 — Normal finite run/restore/cleanup/release.
 - [ ] WOLF-PERF-015-06 — Publish/share footprint and measured timing, including zero gain.
+
+## WOLF-PERF-017 — Existing local divider narrow fast subset (later)
+
+[Pre-code contract](agonport/doc/tasks/WOLF-PERF-017/PLAN.md). Generic PERF008
+provider admission remains blocked; ordinary native integer support is separate.
+
+- [ ] WOLF-PERF-017-04 — Input/path coverage and useful finite native-use freeze.
+- [ ] WOLF-PERF-017-05 — Matched test, exact restore/cleanup/release/handoff.
+- [ ] WOLF-PERF-017-06 — Publish actual gains, coverage and limits.
 
 ## WOLF-PERF-006 — gap priorities and O2 arm
 
