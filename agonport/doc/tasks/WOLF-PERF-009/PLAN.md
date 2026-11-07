@@ -4,14 +4,14 @@ Smith selected continued optimizations on2026-11-07. PERF008's supported library
 route is blocked by final .eh_frame admission, and remains preserved separately.
 This selects the next independent priority PERF006-P03 from exact c8f99354.
 
-- [ ] WOLF-PERF-009-01 — Freeze original/current/support/work ledger and exact
+- [x] WOLF-PERF-009-01 — Freeze original/current/support/work ledger and exact
   c8f source/package pins before coding. All prior failure/partial evidence stays
   intact. No provider/SDK/default/geometry/viewport change.
-- [ ] WOLF-PERF-009-02 — Prepare isolated original/candidate copies. Factor the
+- [x] WOLF-PERF-009-02 — Prepare isolated original/candidate copies. Factor the
   existing wall-column sampling loop into a private local template; choose linear
   versus native rows once per column, hoist mapped x, texture column and masks.
   Keep row lookup per destination y and bytewise read-mask-write publication.
-- [ ] WOLF-PERF-009-03 — Serial guarded Pi build: exact c8f control reproduction,
+- [x] WOLF-PERF-009-03 — Serial guarded Pi build: exact c8f control reproduction,
   scalar textured-column oracle for clipping/sampling/masks/mapping/guards, actual
   renderer/module/lifecycle tests and600-pose whole-frame/geometry equivalence.
   Check target symbols/disassembly/flags/sections/resources/static stack. Preserve
