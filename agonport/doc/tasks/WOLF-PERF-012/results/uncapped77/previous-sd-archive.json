@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "moved": [
+    {
+      "source": "/test/wolf/perf011/r01/before.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/before.bin",
+      "size": 305927
+    },
+    {
+      "source": "/test/wolf/perf011/r01/after.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/after.bin",
+      "size": 305927
+    },
+    {
+      "source": "/test/wolf/perf011/r01/timing.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/timing.bin",
+      "size": 16233
+    },
+    {
+      "source": "/test/wolf/perf011/r01/native.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/native.bin",
+      "size": 12016
+    },
+    {
+      "source": "/test/wolf/perf011/r01/stack.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/stack.bin",
+      "size": 256
+    },
+    {
+      "source": "/test/wolf/perf011/r01/loading.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/loading.bin",
+      "size": 48
+    },
+    {
+      "source": "/test/wolf/perf011/r01/loading3.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/loading3.bin",
+      "size": 4288
+    },
+    {
+      "source": "/test/wolf/perf011/r01/completed-ram.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/completed-ram.bin",
+      "size": 325366
+    },
+    {
+      "source": "/test/wolf/perf011/r01/preserve.txt",
+      "destination": "/test/wolf/perf011/r01/paced77-results/preserve.txt",
+      "size": 84
+    },
+    {
+      "source": "/test/wolf/perf011/r01/wolf3d.cfg",
+      "destination": "/test/wolf/perf011/r01/paced77-results/wolf3d.cfg",
+      "size": 16
+    },
+    {
+      "source": "/test/wolf/perf011/r01/post-mode.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/post-mode.bin",
+      "size": 1
+    },
+    {
+      "source": "/test/wolf/perf011/r01/post-callback.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/post-callback.bin",
+      "size": 3
+    },
+    {
+      "source": "/test/wolf/perf011/r01/route.bin",
+      "destination": "/test/wolf/perf011/r01/paced77-results/route.bin",
+      "size": 1
+    }
+  ],
+  "old_host_raw_preserved": true
+}

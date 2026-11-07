@@ -1,0 +1,655 @@
+{
+  "schema": "wolf-perf012-uncapped-visible-actual77",
+  "human_started": true,
+  "human_confirmed_both_turns": true,
+  "agent_run_commands": 0,
+  "synthetic_pacing": false,
+  "renderer_sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+  "guest": {
+    "passed": true,
+    "package_bytes": 24420,
+    "guest_sha256": "c43e7fe74148517c30cf9bf83854cf0cf297aeaf8c4684a4624c93849b46df58",
+    "listing_sha256": "f61b421e8c7722a7851e273de8a92a5004c647e42e59e5dd88fe176c7c145f4d",
+    "operands": [
+      {
+        "address": 422779,
+        "register": "hl",
+        "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+        "value": 24420,
+        "encoded": "21645f00"
+      },
+      {
+        "address": 422792,
+        "register": "hl",
+        "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+        "value": 24420,
+        "encoded": "21645f00"
+      },
+      {
+        "address": 422796,
+        "register": "de",
+        "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+        "value": 24421,
+        "encoded": "11655f00"
+      },
+      {
+        "address": 422813,
+        "register": "bc",
+        "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+        "value": 24420,
+        "encoded": "01645f00"
+      },
+      {
+        "address": 422855,
+        "register": "de",
+        "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+        "value": 24420,
+        "encoded": "11645f00"
+      },
+      {
+        "address": 423264,
+        "register": "hl",
+        "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+        "value": 24420,
+        "encoded": "21645f00"
+      }
+    ],
+    "stack_labels": {
+      "wp_entry_sp": 551622,
+      "wp_exit_sp": 551625
+    }
+  },
+  "frames": 600,
+  "prt_nominal_seconds": 19.958,
+  "mos_nominal_seconds": 19.983333333333334,
+  "nominal_presented_fps": 30.06313257841467,
+  "steady_interval_updates_per_second": 30.058209554395823,
+  "presentation_interval_nominal_ms": {
+    "mean": 33.26878130217028,
+    "median": 33,
+    "p95": 34,
+    "max": 34,
+    "count": 599
+  },
+  "native_ccount": {
+    "render_ccount": {
+      "mean": 5939913.826666667,
+      "median": 5938165.5,
+      "p95": 6185081,
+      "max": 6220620,
+      "count": 600
+    },
+    "scope_ccount": {
+      "mean": 6046633.198333333,
+      "median": 6040021.5,
+      "p95": 6287679,
+      "max": 6326534,
+      "count": 600
+    },
+    "dispatch_ccount": {
+      "mean": 6075427.281666666,
+      "median": 6072289.0,
+      "p95": 6321475,
+      "max": 6357055,
+      "count": 600
+    }
+  },
+  "stage_nominal_ms": {
+    "pose_ms": {
+      "mean": 0.01,
+      "median": 0.0,
+      "p95": 0,
+      "max": 1,
+      "count": 600
+    },
+    "pack_ms": {
+      "mean": 1.0933333333333333,
+      "median": 1.0,
+      "p95": 2,
+      "max": 2,
+      "count": 600
+    },
+    "submit_ms": {
+      "mean": 1.5933333333333333,
+      "median": 2.0,
+      "p95": 2,
+      "max": 2,
+      "count": 600
+    },
+    "wait_ms": {
+      "mean": 25.393333333333334,
+      "median": 25.0,
+      "p95": 27,
+      "max": 27,
+      "count": 600
+    },
+    "present_fence_ms": {
+      "mean": 5.163333333333333,
+      "median": 5.0,
+      "p95": 7,
+      "max": 7,
+      "count": 600
+    },
+    "active_ms": {
+      "mean": 33.25333333333333,
+      "median": 33.0,
+      "p95": 34,
+      "max": 34,
+      "count": 600
+    }
+  },
+  "previous_paced": {
+    "nominal_presented_fps": 30.012004801920767,
+    "prt_nominal_seconds": 19.992,
+    "steady_interval_updates_per_second": 30.056701289578,
+    "intervals": {
+      "mean": 33.270450751252085,
+      "median": 33,
+      "p95": 34,
+      "max": 34,
+      "count": 599
+    }
+  },
+  "comparison": "Uncapped visible cadence is effectively unchanged. Whole-run difference is approximately one initial paced frame interval; steady means differ by one nominal tick over599 intervals. No meaningful speedup from removing the cap.",
+  "qualification": "Physical presented-update timestamps, nominal PRT/MOS clocks, human confirmed rotation. No external oscillator or frame-by-frame optical calibration; not every gameplay scene or a pure renderer-throughput measure.",
+  "actual_present_calls": [
+    {
+      "address": 551038,
+      "encoded": "CD 1A 6F 06",
+      "target": "w3d_vdu_present"
+    },
+    {
+      "address": 551042,
+      "encoded": "CD 16 26 06",
+      "target": "w3d_audio_wait_for_vdp_ingress"
+    }
+  ],
+  "old_sd_outputs_preserved": {
+    "passed": true,
+    "moved": [
+      {
+        "source": "/test/wolf/perf011/r01/before.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/before.bin",
+        "size": 305927
+      },
+      {
+        "source": "/test/wolf/perf011/r01/after.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/after.bin",
+        "size": 305927
+      },
+      {
+        "source": "/test/wolf/perf011/r01/timing.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/timing.bin",
+        "size": 16233
+      },
+      {
+        "source": "/test/wolf/perf011/r01/native.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/native.bin",
+        "size": 12016
+      },
+      {
+        "source": "/test/wolf/perf011/r01/stack.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/stack.bin",
+        "size": 256
+      },
+      {
+        "source": "/test/wolf/perf011/r01/loading.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/loading.bin",
+        "size": 48
+      },
+      {
+        "source": "/test/wolf/perf011/r01/loading3.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/loading3.bin",
+        "size": 4288
+      },
+      {
+        "source": "/test/wolf/perf011/r01/completed-ram.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/completed-ram.bin",
+        "size": 325366
+      },
+      {
+        "source": "/test/wolf/perf011/r01/preserve.txt",
+        "destination": "/test/wolf/perf011/r01/paced77-results/preserve.txt",
+        "size": 84
+      },
+      {
+        "source": "/test/wolf/perf011/r01/wolf3d.cfg",
+        "destination": "/test/wolf/perf011/r01/paced77-results/wolf3d.cfg",
+        "size": 16
+      },
+      {
+        "source": "/test/wolf/perf011/r01/post-mode.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/post-mode.bin",
+        "size": 1
+      },
+      {
+        "source": "/test/wolf/perf011/r01/post-callback.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/post-callback.bin",
+        "size": 3
+      },
+      {
+        "source": "/test/wolf/perf011/r01/route.bin",
+        "destination": "/test/wolf/perf011/r01/paced77-results/route.bin",
+        "size": 1
+      }
+    ],
+    "old_host_raw_preserved": true
+  },
+  "original_native_restored": true,
+  "restore_sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de",
+  "final_observation": {
+    "schema": "olimex-bench-observation-v1",
+    "bench": "olimex",
+    "epoch": 1794043087.5462477,
+    "observer": "wolf3dorig",
+    "lease": "b0b9fc25fe0c44ff95a3db3a035ce712",
+    "checks": {
+      "no_workload": true,
+      "no_transfer": true,
+      "no_serial_readers": true,
+      "no_reset_holders": true,
+      "cli_verified": true,
+      "input_ready_neutral": true,
+      "listener_offline": true,
+      "staged_job_idle": true,
+      "restoration_verified": true
+    },
+    "evidence": [
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/final-checks/state.json",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/final-checks/serial.bin",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/route-handback/final-route.bin",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/observation.json",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/receipt.json"
+    ],
+    "components": {
+      "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+      "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+      "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+      "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+      "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+    },
+    "component_provenance": {
+      "p4_app_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+      "emos_rom_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+      "native_vdp_sha256": "Exact incoming application/touched-tail restoration and independent full-span readback",
+      "startup_sha256": "Fresh unchanged whole-file comparison in handback",
+      "listener_sha256": "Fresh unchanged whole-file comparison in handback"
+    },
+    "disposition": "New final rootCLI/input/idle/freeUSB observation; earlier same-custody route0/mode0/callback0 and exact app/tail restore/readback retained by original receipt, no intervening guest or route/mode change; startup/listener unchanged; SD mounted."
+  },
+  "bench_generation": 77,
+  "bench_released": false,
+  "custody": "Original native restored and full idle handback passed; retain actual77 for Smith, no further test or automatic release.",
+  "raw_files": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/serial.bin": {
+      "bytes": 548,
+      "sha256": "2a6e4a35f431df771a724ae46c26645428642f1667ecb1dc75ff02cf94300d93"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/restore-route.bin": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/restore-raw-mode.bin": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/read.bin": {
+      "bytes": 1105920,
+      "sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/restore-raw-callback.bin": {
+      "bytes": 3,
+      "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/route-handback/serial.bin": {
+      "bytes": 573,
+      "sha256": "da9b9df27d67239fb1175a2a87ad3f0c2499cd4aa0d8af42ac59e312a3dce65c"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/route-handback/final-route.bin": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/listener.bin": {
+      "bytes": 24753,
+      "sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/final-mode.bin": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/serial.bin": {
+      "bytes": 563,
+      "sha256": "61c2d78dc6865b3f9e2799608b8db90224c6a96d320fac1800033e0dd9459972"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/startup.bin": {
+      "bytes": 45,
+      "sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/final-callback.bin": {
+      "bytes": 3,
+      "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/listener.bin": {
+      "bytes": 24753,
+      "sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/new-guest-read.bin": {
+      "bytes": 325309,
+      "sha256": "c43e7fe74148517c30cf9bf83854cf0cf297aeaf8c4684a4624c93849b46df58"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/serial.bin": {
+      "bytes": 538,
+      "sha256": "1b3eb18462bdb4855d2ed049eb8d526b696df83b230877c50db3512a6c3ddc5f"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/empty-config-read.bin": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/fresh-route.bin": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/module.bin": {
+      "bytes": 24420,
+      "sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/startup.bin": {
+      "bytes": 45,
+      "sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/fresh-raw-callback.bin": {
+      "bytes": 3,
+      "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/fresh-raw-mode.bin": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/serial.bin": {
+      "bytes": 517,
+      "sha256": "8a5df0cbfe33278f243f1137977ab3199bc8fae628bb33fd05e38d8a29c212fc"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/b-raw-mode.bin": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/b-route.bin": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/b-raw-callback.bin": {
+      "bytes": 3,
+      "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/read.bin": {
+      "bytes": 1105920,
+      "sha256": "493fd0a010bedcfc5916314353f93565f7b159ac163d9bc61e7c5078140669e8"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/final-checks/serial.bin": {
+      "bytes": 551,
+      "sha256": "dd352506b2d260ac18af1543e2ca624c174df5135043762cc97c4d6b094775b8"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/load-only/serial.bin": {
+      "bytes": 303,
+      "sha256": "17a826c12b01a09bd2ad8d1e2db209213ae9612bbc6f3f761590ce582fe5ce28"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/serial.bin": {
+      "bytes": 616,
+      "sha256": "b242a4fca302e43cb23d73cd326416eb0993ac06f008627c661f32d80f9f59c9"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/loading3.bin": {
+      "bytes": 4288,
+      "sha256": "7c0d8ea3badf51c7ad5e37698deb833e6d867ba406ac0fa42f3c14acf4f4ddd5"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/before.bin": {
+      "bytes": 305873,
+      "sha256": "f6e7661941cd4623d5e5a4b2a28450afe3f15be67459003b5aa7bd5eeda1559b"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/after.bin": {
+      "bytes": 305873,
+      "sha256": "045ee3d4045664472ccfbc49c5758eb23dd8f7866993f95538ec3f2e3b535c94"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/completed-ram.bin": {
+      "bytes": 325309,
+      "sha256": "7b48727ea1c0a6f64e748b4d5901b08bc812af4b4a7a13a51af759827df8bced"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/timing.bin": {
+      "bytes": 16233,
+      "sha256": "0473e7c6c388dad0883e9c2fe55486ae409cbf549687019038bc2006f33b2ee2"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/native.bin": {
+      "bytes": 12016,
+      "sha256": "120e2a6530345e2e1a42d4d836b8c8fc732a3ffb5bbf7f68c6f0718b5dea6f52"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/loading.bin": {
+      "bytes": 48,
+      "sha256": "aefc21e24c3775f7b8e6e4f8994ebd154dd16556a9c37480809d14de069a491b"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/post-mode.bin": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/stack.bin": {
+      "bytes": 256,
+      "sha256": "7b05aa50b40430dcf5d7e9694e3773d925c7d51a12751457c5e74b4989b289b9"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/post-callback.bin": {
+      "bytes": 3,
+      "sha256": "709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/save-script-read.bin": {
+      "bytes": 84,
+      "sha256": "4575dd1752df51aeb07abcecb4bfd78d50a1168a3cb65fdaf41437867fe376ec"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/clean-bootstrap/p4-boot.bin": {
+      "bytes": 9515,
+      "sha256": "70a33d943d7403c4b543f8d4fc664cfc2d462dbbff6ac8a63f659e208dbb30df"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/clean-bootstrap/p4-boot.bin": {
+      "bytes": 9517,
+      "sha256": "04bc5ae7d1503efde7a31814421f761f4d11ec223afef544ada9ec88db86fc0e"
+    }
+  },
+  "command_receipts": [
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/restore-listener-issued.json",
+      "command": "EMOS sdserve --fast /"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/restore-dir-issued.json",
+      "command": "DIR"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/restore-route-save-issued.json",
+      "command": "EXEC /test/wolf/perf011/r01/route.txt"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/restore-sentinel-issued.json",
+      "command": "VDU 87 80 51 45 114 101 115 116 111 114 101 13 10"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/restore-mirror-issued.json",
+      "command": "VDU 2"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-restore/restore-raw-save-issued.json",
+      "command": "EXEC /test/wolf/perf011/r01/state.txt"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/route-handback/route-check-sentinel-issued.json",
+      "command": "VDU 87 80 51 45 114 111 117 116 101 45 99 104 101 99 107 13 10"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/route-handback/final-route-save-issued.json",
+      "command": "EXEC /test/wolf/perf011/r01/route.txt"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/route-handback/listener-issued.json",
+      "command": "EMOS sdserve --fast /"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/route-handback/route-check-dir-issued.json",
+      "command": "DIR"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/route-handback/route-check-mirror-issued.json",
+      "command": "VDU 2"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/mirror-off-issued.json",
+      "command": "VDU 3"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/final-save-issued.json",
+      "command": "EXEC /test/wolf/perf011/r01/state.txt"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/final-cli-sentinel-issued.json",
+      "command": "VDU 87 80 51 45 102 105 110 97 108 45 99 108 105 13 10"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/handback-mirror-issued.json",
+      "command": "VDU 2"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/handback-sentinel-issued.json",
+      "command": "VDU 87 80 51 45 104 97 110 100 98 97 99 107 13 10"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/listener-issued.json",
+      "command": "EMOS sdserve --fast /"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/final-cli-mirror-issued.json",
+      "command": "VDU 2"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/cursor-issued.json",
+      "command": "VDU 4 23 1 1 23 1 3"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/handback-dir-issued.json",
+      "command": "DIR"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/handback/final-cli-dir-issued.json",
+      "command": "DIR"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/mirror-off-issued.json",
+      "command": "VDU 3"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/fresh-raw-save-issued.json",
+      "command": "EXEC /test/wolf/perf011/r01/state.txt"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/listener-issued.json",
+      "command": "EMOS sdserve --fast /"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/fresh-route-save-issued.json",
+      "command": "EXEC /test/wolf/perf011/r01/route.txt"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/entry-mirror-issued.json",
+      "command": "VDU 2"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/entry-sentinel-issued.json",
+      "command": "VDU 87 80 51 45 101 110 116 114 121 13 10"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/entry/entry-dir-issued.json",
+      "command": "DIR"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/b-mirror-issued.json",
+      "command": "VDU 2"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/b-raw-save-issued.json",
+      "command": "EXEC /test/wolf/perf011/r01/state.txt"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/b-listener-issued.json",
+      "command": "EMOS sdserve --fast /"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/b-sentinel-issued.json",
+      "command": "VDU 87 80 51 45 98 13 10"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/b-route-save-issued.json",
+      "command": "EXEC /test/wolf/perf011/r01/route.txt"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/flash-b/b-dir-issued.json",
+      "command": "DIR"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/final-checks/root-cli-sentinel-issued.json",
+      "command": "VDU 87 80 51 45 114 111 111 116 45 99 108 105 13 10"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/final-checks/mirror-off-issued.json",
+      "command": "VDU 3"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/final-checks/cwd-issued.json",
+      "command": "CD /"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/final-checks/root-cli-mirror-issued.json",
+      "command": "VDU 2"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/final-checks/root-cli-dir-issued.json",
+      "command": "DIR"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/load-only/ready-message-issued.json",
+      "command": "VDU 82 69 65 68 89 58 32 84 89 80 69 32 82 85 78 32 46 32 70 79 82 32 85 78 67 65 80 80 69 68 32 82 79 84 65 84 73 79 78 13 10"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/load-only/cd-issued.json",
+      "command": "CD /test/wolf/perf011/r01"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/load-only/mirror-off-issued.json",
+      "command": "VDU 3"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/load-only/mirror-issued.json",
+      "command": "VDU 2"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/load-only/load-issued.json",
+      "command": "LOAD rotate-max.bin"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/actual-return-dir-issued.json",
+      "command": "DIR"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/actual-return-mirror-issued.json",
+      "command": "VDU 2"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/actual-return-sentinel-issued.json",
+      "command": "VDU 87 80 51 45 97 99 116 117 97 108 45 114 101 116 117 114 110 13 10"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/save-resident-issued.json",
+      "command": "EXEC /test/wolf/perf011/r01/preserve.txt"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/listener-issued.json",
+      "command": "EMOS sdserve --fast /"
+    },
+    {
+      "file": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-012/build/hardware01/evidence/human-run-collection/post-save-issued.json",
+      "command": "EXEC /test/wolf/perf011/r01/state.txt"
+    }
+  ]
+}
