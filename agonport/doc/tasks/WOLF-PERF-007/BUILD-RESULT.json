@@ -1,0 +1,3083 @@
+{
+  "schema": "wolf-perf007-build-result-v1",
+  "passed": true,
+  "freeze": "c283759",
+  "inputs_sha256": "2ed0db83ee215ca1394c16d1a11d1ce0e004deacd1e2e6d2027e1b647a59598d",
+  "compiler_generation": 290,
+  "compiler_release": {
+    "owner": "wolf3dorig",
+    "task": "WOLF-PERF-007-original-ray-build01",
+    "purpose": "Finite original tangent/intercept ray candidate host geometry/arithmetic/module checks and actual Xtensa packaging against exact O2 control",
+    "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/BUILD-FREEZE-01.md",
+    "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "workload": "build",
+    "resources": "One serial compiler/check child, 80C guard and 512MiB floor",
+    "duration": "Expected 2 minutes; 900s overall, 180s compiler and 240s check bounds",
+    "cleanup": "Join all owned compiler/check children, preserve receipt and release Pi slot; no hardware contact",
+    "request": "e986f6dfe6a4",
+    "requested": "2026-11-07T04:30:29.298436+00:00",
+    "policy": {
+      "revision": "author-2026-11-05-oryx-compiler-fallback",
+      "instructions": "/Agon/mystuff/agon-dev-env/cross-agent/pi5-workloads/README.md",
+      "builds": "Automatically granted FIFO, one compile job at a time; no manager approval or 10% CPU gate.",
+      "baseload": "Robocode/Tank Royale server, including active matches, needs no reservation or routine start/end/informational notification to Pi5 manager and does not occupy or block the shared slot or compilation. Separate substantial workloads and physical bench/test permissions remain unchanged; paused work is not resumed.",
+      "routing": "Reserve Oryx for emulator runs and Pi5 for compiler work. When the required build is not possible on Pi5, compiler work may use the existing Oryx self-service FIFO without another routing approval; record the concrete architecture/toolchain limitation, not merely queue congestion. Extender schedules live-serial hardware qualification/benchmark/debug bench access; Console8/manual or semi-automated runs remain at Author discretion.",
+      "heavy": "Pi emulator exceptions need specific new Author approval; CFD/solvers and other heavy Pi work retain explicit Author authorization, manager admission, and start/end chat notices to pi5-manager. Native services are separately classified.",
+      "build_cleanup": "After owned children stop, release using --work-stopped --cleanup-complete; no manager handback or host-wide quiet test.",
+      "authorization_limit": "A supplied record documents authorization; this same-account helper cannot authenticate human authorship."
+    },
+    "author_authorization": null,
+    "manager_start_end_notice_required": false,
+    "lease": "d6ad0eaa4bde45598aa057e2d6c260fe",
+    "generation": 290,
+    "granted": "2026-11-07T04:31:18.493682+00:00",
+    "boot_id": "b6519306-0d9f-48e3-98c4-c28ab10b75de",
+    "phase": "consumer",
+    "admission": "automatic-serial-build",
+    "entry_observation": null,
+    "released": "2026-11-07T04:33:42.825276+00:00",
+    "release_observation": {
+      "observer": "wolf3dorig",
+      "lease": "d6ad0eaa4bde45598aa057e2d6c260fe",
+      "owned_work_stopped": true,
+      "cleanup_complete": true,
+      "disposition": "Owner confirms all owned build children stopped and cleanup complete; no global quiet claim"
+    },
+    "next_request": null,
+    "automatic_build_grant": null
+  },
+  "build": {
+    "steps": [
+      {
+        "label": "original-raywalk-compile",
+        "args": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-pedantic",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_original_raywalk.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/raywalk-test"
+        ],
+        "returncode": 0,
+        "seconds": 1.7530446519958787
+      },
+      {
+        "label": "original-raywalk-check",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/raywalk-test"
+        ],
+        "returncode": 0,
+        "seconds": 0.2508054630015977
+      },
+      {
+        "label": "original-renderer-compile",
+        "args": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-pedantic",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_world_mirror.cpp",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_renderer.cpp",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/test_renderer.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/renderer"
+        ],
+        "returncode": 0,
+        "seconds": 7.011256909987424
+      },
+      {
+        "label": "original-renderer-check",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/renderer",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/fixture-frame.bin",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/fixture-geometry.bin"
+        ],
+        "returncode": 0,
+        "seconds": 0.25076382298721
+      },
+      {
+        "label": "original-module-compile",
+        "args": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-pedantic",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "-DWOLF3D_HOST_TEST",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_module.cpp",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/test_module.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/module"
+        ],
+        "returncode": 0,
+        "seconds": 15.271933250012808
+      },
+      {
+        "label": "original-module-check",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/module",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/module-frame.bin",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/target-fixture"
+        ],
+        "returncode": 0,
+        "seconds": 0.2508955990197137
+      },
+      {
+        "label": "original-equivalence-compile",
+        "args": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-pedantic",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_world_mirror.cpp",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_renderer.cpp",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_equivalence.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/equivalence"
+        ],
+        "returncode": 0,
+        "seconds": 8.264576850051526
+      },
+      {
+        "label": "original-equivalence-check",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/equivalence",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/frames600.bin",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/states600.bin"
+        ],
+        "returncode": 0,
+        "seconds": 1.7529099279781803
+      },
+      {
+        "label": "original-spans-compile",
+        "args": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-pedantic",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production/wolf3d_world_mirror.cpp",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/production",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_spans.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/spans"
+        ],
+        "returncode": 0,
+        "seconds": 5.007784176035784
+      },
+      {
+        "label": "original-spans-check",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/spans",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/host-results/spans.bin"
+        ],
+        "returncode": 0,
+        "seconds": 0.7514556690002792
+      },
+      {
+        "label": "original-target-package",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/target_compile.py",
+          "--arm",
+          "original"
+        ],
+        "returncode": 0,
+        "seconds": 1.2521023560548201
+      },
+      {
+        "label": "candidate-renderer-compile",
+        "args": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-pedantic",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_world_mirror.cpp",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_renderer.cpp",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/test_renderer.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/renderer"
+        ],
+        "returncode": 0,
+        "seconds": 7.010298507055268
+      },
+      {
+        "label": "candidate-renderer-check",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/renderer",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/fixture-frame.bin",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/fixture-geometry.bin"
+        ],
+        "returncode": 0,
+        "seconds": 0.25078162702266127
+      },
+      {
+        "label": "candidate-module-compile",
+        "args": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-pedantic",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "-DWOLF3D_HOST_TEST",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_module.cpp",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/test_module.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/module"
+        ],
+        "returncode": 0,
+        "seconds": 15.271859840024263
+      },
+      {
+        "label": "candidate-module-check",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/module",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/module-frame.bin",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/target-fixture"
+        ],
+        "returncode": 0,
+        "seconds": 0.25118195597315207
+      },
+      {
+        "label": "candidate-equivalence-compile",
+        "args": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-pedantic",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_world_mirror.cpp",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_renderer.cpp",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_equivalence.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/equivalence"
+        ],
+        "returncode": 0,
+        "seconds": 8.512593146995641
+      },
+      {
+        "label": "candidate-equivalence-check",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/equivalence",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/frames600.bin",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/states600.bin"
+        ],
+        "returncode": 0,
+        "seconds": 1.7526444070390426
+      },
+      {
+        "label": "candidate-spans-compile",
+        "args": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-pedantic",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_world_mirror.cpp",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_spans.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/spans"
+        ],
+        "returncode": 0,
+        "seconds": 5.006713117007166
+      },
+      {
+        "label": "candidate-spans-check",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/spans",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/host-results/spans.bin"
+        ],
+        "returncode": 0,
+        "seconds": 0.7514654030092061
+      },
+      {
+        "label": "candidate-target-package",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/target_compile.py",
+          "--arm",
+          "candidate"
+        ],
+        "returncode": 0,
+        "seconds": 1.0017089740140364
+      },
+      {
+        "label": "original-symbols",
+        "args": [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-nm",
+          "-S",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.elf"
+        ],
+        "returncode": 0,
+        "seconds": 0.25062605598941445
+      },
+      {
+        "label": "original-disassembly",
+        "args": [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-objdump",
+          "-drC",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.elf"
+        ],
+        "returncode": 0,
+        "seconds": 0.25068831600947306
+      },
+      {
+        "label": "candidate-symbols",
+        "args": [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-nm",
+          "-S",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.elf"
+        ],
+        "returncode": 0,
+        "seconds": 0.2510278329718858
+      },
+      {
+        "label": "candidate-disassembly",
+        "args": [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-objdump",
+          "-drC",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.elf"
+        ],
+        "returncode": 0,
+        "seconds": 0.25077470403630286
+      },
+      {
+        "label": "code-resource-qualification",
+        "args": [
+          "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/code_check.py"
+        ],
+        "returncode": 0,
+        "seconds": 0.2507528160349466
+      }
+    ],
+    "guards": [
+      {
+        "epoch": 1794025908.5863378,
+        "cpu_c": 47.95,
+        "available_kib": 6701984
+      },
+      {
+        "epoch": 1794025908.5871181,
+        "cpu_c": 47.95,
+        "available_kib": 6701984
+      },
+      {
+        "epoch": 1794025908.8374822,
+        "cpu_c": 49.05,
+        "available_kib": 6798256
+      },
+      {
+        "epoch": 1794025909.0878556,
+        "cpu_c": 49.05,
+        "available_kib": 6750976
+      },
+      {
+        "epoch": 1794025909.338221,
+        "cpu_c": 49.05,
+        "available_kib": 6735904
+      },
+      {
+        "epoch": 1794025909.58856,
+        "cpu_c": 48.5,
+        "available_kib": 6740240
+      },
+      {
+        "epoch": 1794025909.8388886,
+        "cpu_c": 49.05,
+        "available_kib": 6735184
+      },
+      {
+        "epoch": 1794025910.0892606,
+        "cpu_c": 49.6,
+        "available_kib": 6788176
+      },
+      {
+        "epoch": 1794025910.4154525,
+        "cpu_c": 48.5,
+        "available_kib": 6778336
+      },
+      {
+        "epoch": 1794025910.4161048,
+        "cpu_c": 48.5,
+        "available_kib": 6777936
+      },
+      {
+        "epoch": 1794025910.793263,
+        "cpu_c": 50.15,
+        "available_kib": 6759440
+      },
+      {
+        "epoch": 1794025910.794618,
+        "cpu_c": 50.15,
+        "available_kib": 6759440
+      },
+      {
+        "epoch": 1794025911.0450358,
+        "cpu_c": 51.8,
+        "available_kib": 6774816
+      },
+      {
+        "epoch": 1794025911.295405,
+        "cpu_c": 51.25,
+        "available_kib": 6771568
+      },
+      {
+        "epoch": 1794025911.545791,
+        "cpu_c": 50.7,
+        "available_kib": 6767824
+      },
+      {
+        "epoch": 1794025911.7961442,
+        "cpu_c": 48.5,
+        "available_kib": 6770224
+      },
+      {
+        "epoch": 1794025912.0464916,
+        "cpu_c": 50.15,
+        "available_kib": 6764224
+      },
+      {
+        "epoch": 1794025912.2968202,
+        "cpu_c": 50.15,
+        "available_kib": 6763840
+      },
+      {
+        "epoch": 1794025912.547184,
+        "cpu_c": 50.15,
+        "available_kib": 6779472
+      },
+      {
+        "epoch": 1794025912.797502,
+        "cpu_c": 50.15,
+        "available_kib": 6778944
+      },
+      {
+        "epoch": 1794025913.048026,
+        "cpu_c": 51.25,
+        "available_kib": 6773360
+      },
+      {
+        "epoch": 1794025913.2983785,
+        "cpu_c": 49.6,
+        "available_kib": 6768288
+      },
+      {
+        "epoch": 1794025913.548848,
+        "cpu_c": 50.15,
+        "available_kib": 6765488
+      },
+      {
+        "epoch": 1794025913.7991629,
+        "cpu_c": 51.8,
+        "available_kib": 6759664
+      },
+      {
+        "epoch": 1794025914.0495036,
+        "cpu_c": 49.6,
+        "available_kib": 6763776
+      },
+      {
+        "epoch": 1794025914.2998292,
+        "cpu_c": 49.05,
+        "available_kib": 6760576
+      },
+      {
+        "epoch": 1794025914.5501547,
+        "cpu_c": 50.15,
+        "available_kib": 6775456
+      },
+      {
+        "epoch": 1794025914.8004904,
+        "cpu_c": 50.15,
+        "available_kib": 6739952
+      },
+      {
+        "epoch": 1794025915.0508237,
+        "cpu_c": 50.15,
+        "available_kib": 6718768
+      },
+      {
+        "epoch": 1794025915.3011565,
+        "cpu_c": 49.6,
+        "available_kib": 6720752
+      },
+      {
+        "epoch": 1794025915.5514677,
+        "cpu_c": 49.05,
+        "available_kib": 6718368
+      },
+      {
+        "epoch": 1794025915.8017957,
+        "cpu_c": 50.15,
+        "available_kib": 6718208
+      },
+      {
+        "epoch": 1794025916.0521886,
+        "cpu_c": 50.7,
+        "available_kib": 6713728
+      },
+      {
+        "epoch": 1794025916.3025148,
+        "cpu_c": 50.15,
+        "available_kib": 6696896
+      },
+      {
+        "epoch": 1794025916.5530183,
+        "cpu_c": 50.7,
+        "available_kib": 6679120
+      },
+      {
+        "epoch": 1794025916.8033412,
+        "cpu_c": 50.15,
+        "available_kib": 6679680
+      },
+      {
+        "epoch": 1794025917.0536666,
+        "cpu_c": 50.7,
+        "available_kib": 6684672
+      },
+      {
+        "epoch": 1794025917.3040063,
+        "cpu_c": 50.15,
+        "available_kib": 6683696
+      },
+      {
+        "epoch": 1794025917.5544071,
+        "cpu_c": 50.15,
+        "available_kib": 6748784
+      },
+      {
+        "epoch": 1794025917.8797815,
+        "cpu_c": 49.6,
+        "available_kib": 6753552
+      },
+      {
+        "epoch": 1794025917.8804212,
+        "cpu_c": 49.6,
+        "available_kib": 6753552
+      },
+      {
+        "epoch": 1794025918.206537,
+        "cpu_c": 51.25,
+        "available_kib": 6756816
+      },
+      {
+        "epoch": 1794025918.2072365,
+        "cpu_c": 51.25,
+        "available_kib": 6756816
+      },
+      {
+        "epoch": 1794025918.4575577,
+        "cpu_c": 51.25,
+        "available_kib": 6746016
+      },
+      {
+        "epoch": 1794025918.7079175,
+        "cpu_c": 50.15,
+        "available_kib": 6745616
+      },
+      {
+        "epoch": 1794025918.958244,
+        "cpu_c": 49.05,
+        "available_kib": 6743216
+      },
+      {
+        "epoch": 1794025919.20856,
+        "cpu_c": 50.15,
+        "available_kib": 6740416
+      },
+      {
+        "epoch": 1794025919.4589014,
+        "cpu_c": 49.6,
+        "available_kib": 6741920
+      },
+      {
+        "epoch": 1794025919.7092466,
+        "cpu_c": 50.15,
+        "available_kib": 6737120
+      },
+      {
+        "epoch": 1794025919.9595952,
+        "cpu_c": 50.15,
+        "available_kib": 6736128
+      },
+      {
+        "epoch": 1794025920.209916,
+        "cpu_c": 49.6,
+        "available_kib": 6732512
+      },
+      {
+        "epoch": 1794025920.4602234,
+        "cpu_c": 50.15,
+        "available_kib": 6732512
+      },
+      {
+        "epoch": 1794025920.7105558,
+        "cpu_c": 50.15,
+        "available_kib": 6726512
+      },
+      {
+        "epoch": 1794025920.9608662,
+        "cpu_c": 50.15,
+        "available_kib": 6729728
+      },
+      {
+        "epoch": 1794025921.2113018,
+        "cpu_c": 50.7,
+        "available_kib": 6731856
+      },
+      {
+        "epoch": 1794025921.4617505,
+        "cpu_c": 51.8,
+        "available_kib": 6728672
+      },
+      {
+        "epoch": 1794025921.712084,
+        "cpu_c": 50.15,
+        "available_kib": 6729360
+      },
+      {
+        "epoch": 1794025921.9624124,
+        "cpu_c": 51.25,
+        "available_kib": 6729984
+      },
+      {
+        "epoch": 1794025922.2127652,
+        "cpu_c": 50.7,
+        "available_kib": 6727424
+      },
+      {
+        "epoch": 1794025922.4631658,
+        "cpu_c": 50.15,
+        "available_kib": 6722960
+      },
+      {
+        "epoch": 1794025922.7135196,
+        "cpu_c": 51.25,
+        "available_kib": 6770256
+      },
+      {
+        "epoch": 1794025922.963854,
+        "cpu_c": 50.7,
+        "available_kib": 6772976
+      },
+      {
+        "epoch": 1794025923.214198,
+        "cpu_c": 50.7,
+        "available_kib": 6757216
+      },
+      {
+        "epoch": 1794025923.4645226,
+        "cpu_c": 50.7,
+        "available_kib": 6737520
+      },
+      {
+        "epoch": 1794025923.71486,
+        "cpu_c": 49.05,
+        "available_kib": 6706016
+      },
+      {
+        "epoch": 1794025923.965229,
+        "cpu_c": 50.15,
+        "available_kib": 6673504
+      },
+      {
+        "epoch": 1794025924.2155783,
+        "cpu_c": 50.15,
+        "available_kib": 6665904
+      },
+      {
+        "epoch": 1794025924.465923,
+        "cpu_c": 50.7,
+        "available_kib": 6661440
+      },
+      {
+        "epoch": 1794025924.7162452,
+        "cpu_c": 50.7,
+        "available_kib": 6662480
+      },
+      {
+        "epoch": 1794025924.9665718,
+        "cpu_c": 50.7,
+        "available_kib": 6658592
+      },
+      {
+        "epoch": 1794025925.2169065,
+        "cpu_c": 51.25,
+        "available_kib": 6649952
+      },
+      {
+        "epoch": 1794025925.4672358,
+        "cpu_c": 49.6,
+        "available_kib": 6649808
+      },
+      {
+        "epoch": 1794025925.717587,
+        "cpu_c": 49.6,
+        "available_kib": 6639376
+      },
+      {
+        "epoch": 1794025925.9679177,
+        "cpu_c": 50.7,
+        "available_kib": 6649088
+      },
+      {
+        "epoch": 1794025926.21826,
+        "cpu_c": 49.6,
+        "available_kib": 6645728
+      },
+      {
+        "epoch": 1794025926.4685788,
+        "cpu_c": 50.15,
+        "available_kib": 6626528
+      },
+      {
+        "epoch": 1794025926.7189462,
+        "cpu_c": 50.7,
+        "available_kib": 6616064
+      },
+      {
+        "epoch": 1794025926.9693172,
+        "cpu_c": 51.25,
+        "available_kib": 6615808
+      },
+      {
+        "epoch": 1794025927.2196543,
+        "cpu_c": 50.15,
+        "available_kib": 6613808
+      },
+      {
+        "epoch": 1794025927.4700096,
+        "cpu_c": 50.7,
+        "available_kib": 6608352
+      },
+      {
+        "epoch": 1794025927.7203372,
+        "cpu_c": 50.7,
+        "available_kib": 6606320
+      },
+      {
+        "epoch": 1794025927.9706702,
+        "cpu_c": 50.15,
+        "available_kib": 6604576
+      },
+      {
+        "epoch": 1794025928.2209957,
+        "cpu_c": 50.7,
+        "available_kib": 6595696
+      },
+      {
+        "epoch": 1794025928.4713252,
+        "cpu_c": 50.7,
+        "available_kib": 6590096
+      },
+      {
+        "epoch": 1794025928.7216554,
+        "cpu_c": 50.7,
+        "available_kib": 6582096
+      },
+      {
+        "epoch": 1794025928.9719756,
+        "cpu_c": 52.35,
+        "available_kib": 6575312
+      },
+      {
+        "epoch": 1794025929.222303,
+        "cpu_c": 52.35,
+        "available_kib": 6575312
+      },
+      {
+        "epoch": 1794025929.4726293,
+        "cpu_c": 51.8,
+        "available_kib": 6567264
+      },
+      {
+        "epoch": 1794025929.7230117,
+        "cpu_c": 50.7,
+        "available_kib": 6560080
+      },
+      {
+        "epoch": 1794025929.9733706,
+        "cpu_c": 50.7,
+        "available_kib": 6555168
+      },
+      {
+        "epoch": 1794025930.2237184,
+        "cpu_c": 50.7,
+        "available_kib": 6551088
+      },
+      {
+        "epoch": 1794025930.4740756,
+        "cpu_c": 51.8,
+        "available_kib": 6546848
+      },
+      {
+        "epoch": 1794025930.7243943,
+        "cpu_c": 50.7,
+        "available_kib": 6546448
+      },
+      {
+        "epoch": 1794025930.974704,
+        "cpu_c": 50.15,
+        "available_kib": 6537424
+      },
+      {
+        "epoch": 1794025931.2250397,
+        "cpu_c": 50.7,
+        "available_kib": 6537104
+      },
+      {
+        "epoch": 1794025931.4754262,
+        "cpu_c": 51.25,
+        "available_kib": 6540704
+      },
+      {
+        "epoch": 1794025931.7260344,
+        "cpu_c": 51.8,
+        "available_kib": 6531072
+      },
+      {
+        "epoch": 1794025931.9763644,
+        "cpu_c": 51.25,
+        "available_kib": 6527520
+      },
+      {
+        "epoch": 1794025932.2267048,
+        "cpu_c": 51.25,
+        "available_kib": 6516960
+      },
+      {
+        "epoch": 1794025932.4770327,
+        "cpu_c": 50.7,
+        "available_kib": 6516432
+      },
+      {
+        "epoch": 1794025932.7273805,
+        "cpu_c": 51.25,
+        "available_kib": 6522656
+      },
+      {
+        "epoch": 1794025932.9777422,
+        "cpu_c": 50.7,
+        "available_kib": 6798256
+      },
+      {
+        "epoch": 1794025933.2283502,
+        "cpu_c": 51.8,
+        "available_kib": 6755648
+      },
+      {
+        "epoch": 1794025933.5538404,
+        "cpu_c": 51.25,
+        "available_kib": 6761440
+      },
+      {
+        "epoch": 1794025933.5546126,
+        "cpu_c": 51.25,
+        "available_kib": 6761040
+      },
+      {
+        "epoch": 1794025933.8866215,
+        "cpu_c": 50.7,
+        "available_kib": 6754672
+      },
+      {
+        "epoch": 1794025933.8874145,
+        "cpu_c": 50.7,
+        "available_kib": 6754672
+      },
+      {
+        "epoch": 1794025934.137774,
+        "cpu_c": 50.7,
+        "available_kib": 6756848
+      },
+      {
+        "epoch": 1794025934.3881054,
+        "cpu_c": 51.25,
+        "available_kib": 6756848
+      },
+      {
+        "epoch": 1794025934.6385324,
+        "cpu_c": 51.25,
+        "available_kib": 6757280
+      },
+      {
+        "epoch": 1794025934.8888934,
+        "cpu_c": 51.25,
+        "available_kib": 6757216
+      },
+      {
+        "epoch": 1794025935.1392968,
+        "cpu_c": 51.8,
+        "available_kib": 6758528
+      },
+      {
+        "epoch": 1794025935.3896632,
+        "cpu_c": 50.15,
+        "available_kib": 6790256
+      },
+      {
+        "epoch": 1794025935.6399925,
+        "cpu_c": 50.7,
+        "available_kib": 6783552
+      },
+      {
+        "epoch": 1794025935.8903413,
+        "cpu_c": 51.8,
+        "available_kib": 6783216
+      },
+      {
+        "epoch": 1794025936.1408317,
+        "cpu_c": 52.35,
+        "available_kib": 6780368
+      },
+      {
+        "epoch": 1794025936.3911698,
+        "cpu_c": 51.25,
+        "available_kib": 6779808
+      },
+      {
+        "epoch": 1794025936.6415455,
+        "cpu_c": 50.15,
+        "available_kib": 6775408
+      },
+      {
+        "epoch": 1794025936.891886,
+        "cpu_c": 51.25,
+        "available_kib": 6772944
+      },
+      {
+        "epoch": 1794025937.1422184,
+        "cpu_c": 49.6,
+        "available_kib": 6769632
+      },
+      {
+        "epoch": 1794025937.3925667,
+        "cpu_c": 50.7,
+        "available_kib": 6772640
+      },
+      {
+        "epoch": 1794025937.6429217,
+        "cpu_c": 52.35,
+        "available_kib": 6784240
+      },
+      {
+        "epoch": 1794025937.8933115,
+        "cpu_c": 51.25,
+        "available_kib": 6771280
+      },
+      {
+        "epoch": 1794025938.143644,
+        "cpu_c": 49.6,
+        "available_kib": 6754176
+      },
+      {
+        "epoch": 1794025938.3939862,
+        "cpu_c": 51.8,
+        "available_kib": 6752576
+      },
+      {
+        "epoch": 1794025938.6445239,
+        "cpu_c": 50.7,
+        "available_kib": 6748912
+      },
+      {
+        "epoch": 1794025938.8948705,
+        "cpu_c": 50.15,
+        "available_kib": 6726944
+      },
+      {
+        "epoch": 1794025939.1452672,
+        "cpu_c": 50.7,
+        "available_kib": 6714560
+      },
+      {
+        "epoch": 1794025939.3956332,
+        "cpu_c": 51.8,
+        "available_kib": 6687136
+      },
+      {
+        "epoch": 1794025939.646236,
+        "cpu_c": 51.25,
+        "available_kib": 6675232
+      },
+      {
+        "epoch": 1794025939.896596,
+        "cpu_c": 50.15,
+        "available_kib": 6667856
+      },
+      {
+        "epoch": 1794025940.1469455,
+        "cpu_c": 51.8,
+        "available_kib": 6668064
+      },
+      {
+        "epoch": 1794025940.3973284,
+        "cpu_c": 51.25,
+        "available_kib": 6668176
+      },
+      {
+        "epoch": 1794025940.6477292,
+        "cpu_c": 50.7,
+        "available_kib": 6675184
+      },
+      {
+        "epoch": 1794025940.8980696,
+        "cpu_c": 51.25,
+        "available_kib": 6680320
+      },
+      {
+        "epoch": 1794025941.149965,
+        "cpu_c": 51.25,
+        "available_kib": 6663520
+      },
+      {
+        "epoch": 1794025941.4003584,
+        "cpu_c": 52.35,
+        "available_kib": 6670464
+      },
+      {
+        "epoch": 1794025941.6507063,
+        "cpu_c": 51.8,
+        "available_kib": 6670624
+      },
+      {
+        "epoch": 1794025941.9010637,
+        "cpu_c": 52.35,
+        "available_kib": 6748256
+      },
+      {
+        "epoch": 1794025942.2278118,
+        "cpu_c": 52.35,
+        "available_kib": 6726128
+      },
+      {
+        "epoch": 1794025942.2285419,
+        "cpu_c": 52.35,
+        "available_kib": 6726128
+      },
+      {
+        "epoch": 1794025942.4788814,
+        "cpu_c": 51.8,
+        "available_kib": 6725248
+      },
+      {
+        "epoch": 1794025942.7292387,
+        "cpu_c": 52.35,
+        "available_kib": 6732224
+      },
+      {
+        "epoch": 1794025942.9795687,
+        "cpu_c": 49.6,
+        "available_kib": 6737328
+      },
+      {
+        "epoch": 1794025943.2298968,
+        "cpu_c": 51.25,
+        "available_kib": 6745440
+      },
+      {
+        "epoch": 1794025943.48023,
+        "cpu_c": 52.35,
+        "available_kib": 6743744
+      },
+      {
+        "epoch": 1794025943.7305715,
+        "cpu_c": 51.25,
+        "available_kib": 6749264
+      },
+      {
+        "epoch": 1794025944.056381,
+        "cpu_c": 51.25,
+        "available_kib": 6748192
+      },
+      {
+        "epoch": 1794025944.0571778,
+        "cpu_c": 51.25,
+        "available_kib": 6748192
+      },
+      {
+        "epoch": 1794025944.3075368,
+        "cpu_c": 51.8,
+        "available_kib": 6738912
+      },
+      {
+        "epoch": 1794025944.55786,
+        "cpu_c": 51.25,
+        "available_kib": 6736272
+      },
+      {
+        "epoch": 1794025944.8082166,
+        "cpu_c": 50.7,
+        "available_kib": 6733760
+      },
+      {
+        "epoch": 1794025945.058556,
+        "cpu_c": 51.25,
+        "available_kib": 6731376
+      },
+      {
+        "epoch": 1794025945.3088949,
+        "cpu_c": 51.8,
+        "available_kib": 6725232
+      },
+      {
+        "epoch": 1794025945.5592482,
+        "cpu_c": 54.0,
+        "available_kib": 6735568
+      },
+      {
+        "epoch": 1794025945.8096151,
+        "cpu_c": 52.35,
+        "available_kib": 6715968
+      },
+      {
+        "epoch": 1794025946.0600014,
+        "cpu_c": 52.35,
+        "available_kib": 6694448
+      },
+      {
+        "epoch": 1794025946.3103273,
+        "cpu_c": 52.35,
+        "available_kib": 6676816
+      },
+      {
+        "epoch": 1794025946.560665,
+        "cpu_c": 51.8,
+        "available_kib": 6676656
+      },
+      {
+        "epoch": 1794025946.8110063,
+        "cpu_c": 52.35,
+        "available_kib": 6676064
+      },
+      {
+        "epoch": 1794025947.061397,
+        "cpu_c": 51.25,
+        "available_kib": 6667312
+      },
+      {
+        "epoch": 1794025947.311759,
+        "cpu_c": 52.35,
+        "available_kib": 6659344
+      },
+      {
+        "epoch": 1794025947.5621066,
+        "cpu_c": 51.8,
+        "available_kib": 6662384
+      },
+      {
+        "epoch": 1794025947.8126397,
+        "cpu_c": 52.35,
+        "available_kib": 6660304
+      },
+      {
+        "epoch": 1794025948.0629666,
+        "cpu_c": 50.15,
+        "available_kib": 6656976
+      },
+      {
+        "epoch": 1794025948.3133721,
+        "cpu_c": 51.25,
+        "available_kib": 6659488
+      },
+      {
+        "epoch": 1794025948.5636992,
+        "cpu_c": 52.35,
+        "available_kib": 6662896
+      },
+      {
+        "epoch": 1794025948.8140464,
+        "cpu_c": 54.0,
+        "available_kib": 6731072
+      },
+      {
+        "epoch": 1794025949.1398237,
+        "cpu_c": 52.35,
+        "available_kib": 6729504
+      },
+      {
+        "epoch": 1794025949.140463,
+        "cpu_c": 52.35,
+        "available_kib": 6729504
+      },
+      {
+        "epoch": 1794025949.3908048,
+        "cpu_c": 51.8,
+        "available_kib": 6746400
+      },
+      {
+        "epoch": 1794025949.6411552,
+        "cpu_c": 51.8,
+        "available_kib": 6758736
+      },
+      {
+        "epoch": 1794025949.966973,
+        "cpu_c": 51.8,
+        "available_kib": 6769360
+      },
+      {
+        "epoch": 1794025949.9676003,
+        "cpu_c": 51.8,
+        "available_kib": 6769360
+      },
+      {
+        "epoch": 1794025950.2179306,
+        "cpu_c": 52.35,
+        "available_kib": 6760976
+      },
+      {
+        "epoch": 1794025950.468254,
+        "cpu_c": 52.9,
+        "available_kib": 6752976
+      },
+      {
+        "epoch": 1794025950.7185965,
+        "cpu_c": 53.45,
+        "available_kib": 6747104
+      },
+      {
+        "epoch": 1794025950.9689608,
+        "cpu_c": 52.35,
+        "available_kib": 6736000
+      },
+      {
+        "epoch": 1794025951.3005848,
+        "cpu_c": 52.35,
+        "available_kib": 6739840
+      },
+      {
+        "epoch": 1794025951.3013895,
+        "cpu_c": 51.25,
+        "available_kib": 6739840
+      },
+      {
+        "epoch": 1794025951.551727,
+        "cpu_c": 51.8,
+        "available_kib": 6738144
+      },
+      {
+        "epoch": 1794025951.8020444,
+        "cpu_c": 52.9,
+        "available_kib": 6737344
+      },
+      {
+        "epoch": 1794025952.0523846,
+        "cpu_c": 52.35,
+        "available_kib": 6739344
+      },
+      {
+        "epoch": 1794025952.3027246,
+        "cpu_c": 52.9,
+        "available_kib": 6741776
+      },
+      {
+        "epoch": 1794025952.5530415,
+        "cpu_c": 52.35,
+        "available_kib": 6740576
+      },
+      {
+        "epoch": 1794025952.803628,
+        "cpu_c": 51.25,
+        "available_kib": 6754688
+      },
+      {
+        "epoch": 1794025953.0539505,
+        "cpu_c": 52.9,
+        "available_kib": 6751936
+      },
+      {
+        "epoch": 1794025953.3042772,
+        "cpu_c": 51.8,
+        "available_kib": 6746736
+      },
+      {
+        "epoch": 1794025953.5546274,
+        "cpu_c": 52.35,
+        "available_kib": 6732896
+      },
+      {
+        "epoch": 1794025953.8050447,
+        "cpu_c": 52.35,
+        "available_kib": 6728896
+      },
+      {
+        "epoch": 1794025954.0553927,
+        "cpu_c": 52.9,
+        "available_kib": 6734592
+      },
+      {
+        "epoch": 1794025954.3057146,
+        "cpu_c": 52.35,
+        "available_kib": 6729152
+      },
+      {
+        "epoch": 1794025954.556029,
+        "cpu_c": 52.9,
+        "available_kib": 6726352
+      },
+      {
+        "epoch": 1794025954.8063538,
+        "cpu_c": 51.8,
+        "available_kib": 6717952
+      },
+      {
+        "epoch": 1794025955.056742,
+        "cpu_c": 50.7,
+        "available_kib": 6750448
+      },
+      {
+        "epoch": 1794025955.307084,
+        "cpu_c": 51.25,
+        "available_kib": 6712656
+      },
+      {
+        "epoch": 1794025955.557402,
+        "cpu_c": 50.7,
+        "available_kib": 6667456
+      },
+      {
+        "epoch": 1794025955.8077164,
+        "cpu_c": 51.8,
+        "available_kib": 6655296
+      },
+      {
+        "epoch": 1794025956.0580382,
+        "cpu_c": 52.35,
+        "available_kib": 6676112
+      },
+      {
+        "epoch": 1794025956.3084044,
+        "cpu_c": 51.8,
+        "available_kib": 6671488
+      },
+      {
+        "epoch": 1794025956.5587592,
+        "cpu_c": 51.25,
+        "available_kib": 6671488
+      },
+      {
+        "epoch": 1794025956.8090987,
+        "cpu_c": 51.8,
+        "available_kib": 6667488
+      },
+      {
+        "epoch": 1794025957.0594232,
+        "cpu_c": 51.8,
+        "available_kib": 6640176
+      },
+      {
+        "epoch": 1794025957.309735,
+        "cpu_c": 51.8,
+        "available_kib": 6639776
+      },
+      {
+        "epoch": 1794025957.5600796,
+        "cpu_c": 50.7,
+        "available_kib": 6638176
+      },
+      {
+        "epoch": 1794025957.8104007,
+        "cpu_c": 51.8,
+        "available_kib": 6638208
+      },
+      {
+        "epoch": 1794025958.0607693,
+        "cpu_c": 52.9,
+        "available_kib": 6720976
+      },
+      {
+        "epoch": 1794025958.3960297,
+        "cpu_c": 50.7,
+        "available_kib": 6724032
+      },
+      {
+        "epoch": 1794025958.3966842,
+        "cpu_c": 50.7,
+        "available_kib": 6724032
+      },
+      {
+        "epoch": 1794025958.7276738,
+        "cpu_c": 52.35,
+        "available_kib": 6719120
+      },
+      {
+        "epoch": 1794025958.7283978,
+        "cpu_c": 51.25,
+        "available_kib": 6719120
+      },
+      {
+        "epoch": 1794025958.9787393,
+        "cpu_c": 52.35,
+        "available_kib": 6720128
+      },
+      {
+        "epoch": 1794025959.2290657,
+        "cpu_c": 54.0,
+        "available_kib": 6717392
+      },
+      {
+        "epoch": 1794025959.4794106,
+        "cpu_c": 52.35,
+        "available_kib": 6708992
+      },
+      {
+        "epoch": 1794025959.729749,
+        "cpu_c": 53.45,
+        "available_kib": 6706192
+      },
+      {
+        "epoch": 1794025959.980076,
+        "cpu_c": 52.9,
+        "available_kib": 6707808
+      },
+      {
+        "epoch": 1794025960.230422,
+        "cpu_c": 52.35,
+        "available_kib": 6700688
+      },
+      {
+        "epoch": 1794025960.4807563,
+        "cpu_c": 52.35,
+        "available_kib": 6692928
+      },
+      {
+        "epoch": 1794025960.7310748,
+        "cpu_c": 52.35,
+        "available_kib": 6691168
+      },
+      {
+        "epoch": 1794025960.981379,
+        "cpu_c": 52.9,
+        "available_kib": 6688016
+      },
+      {
+        "epoch": 1794025961.2317355,
+        "cpu_c": 51.8,
+        "available_kib": 6677056
+      },
+      {
+        "epoch": 1794025961.4820914,
+        "cpu_c": 52.35,
+        "available_kib": 6676656
+      },
+      {
+        "epoch": 1794025961.7324188,
+        "cpu_c": 52.9,
+        "available_kib": 6676064
+      },
+      {
+        "epoch": 1794025961.9827814,
+        "cpu_c": 51.8,
+        "available_kib": 6686576
+      },
+      {
+        "epoch": 1794025962.233167,
+        "cpu_c": 52.9,
+        "available_kib": 6685776
+      },
+      {
+        "epoch": 1794025962.4834986,
+        "cpu_c": 52.35,
+        "available_kib": 6685552
+      },
+      {
+        "epoch": 1794025962.7339098,
+        "cpu_c": 52.9,
+        "available_kib": 6683152
+      },
+      {
+        "epoch": 1794025962.9842489,
+        "cpu_c": 52.9,
+        "available_kib": 6688352
+      },
+      {
+        "epoch": 1794025963.2345748,
+        "cpu_c": 52.35,
+        "available_kib": 6686352
+      },
+      {
+        "epoch": 1794025963.4849255,
+        "cpu_c": 54.0,
+        "available_kib": 6729008
+      },
+      {
+        "epoch": 1794025963.7352762,
+        "cpu_c": 52.35,
+        "available_kib": 6707408
+      },
+      {
+        "epoch": 1794025963.9856203,
+        "cpu_c": 52.35,
+        "available_kib": 6677808
+      },
+      {
+        "epoch": 1794025964.2360406,
+        "cpu_c": 52.35,
+        "available_kib": 6649808
+      },
+      {
+        "epoch": 1794025964.4863708,
+        "cpu_c": 54.55,
+        "available_kib": 6629360
+      },
+      {
+        "epoch": 1794025964.7366955,
+        "cpu_c": 52.35,
+        "available_kib": 6626160
+      },
+      {
+        "epoch": 1794025964.987092,
+        "cpu_c": 52.9,
+        "available_kib": 6623648
+      },
+      {
+        "epoch": 1794025965.2374125,
+        "cpu_c": 53.45,
+        "available_kib": 6624480
+      },
+      {
+        "epoch": 1794025965.4877295,
+        "cpu_c": 54.55,
+        "available_kib": 6616480
+      },
+      {
+        "epoch": 1794025965.7380476,
+        "cpu_c": 52.9,
+        "available_kib": 6610480
+      },
+      {
+        "epoch": 1794025965.9883678,
+        "cpu_c": 54.55,
+        "available_kib": 6614096
+      },
+      {
+        "epoch": 1794025966.238699,
+        "cpu_c": 52.35,
+        "available_kib": 6606672
+      },
+      {
+        "epoch": 1794025966.4890065,
+        "cpu_c": 53.45,
+        "available_kib": 6590672
+      },
+      {
+        "epoch": 1794025966.7393873,
+        "cpu_c": 53.45,
+        "available_kib": 6583072
+      },
+      {
+        "epoch": 1794025966.9897795,
+        "cpu_c": 52.35,
+        "available_kib": 6580768
+      },
+      {
+        "epoch": 1794025967.2401404,
+        "cpu_c": 52.35,
+        "available_kib": 6576160
+      },
+      {
+        "epoch": 1794025967.4905038,
+        "cpu_c": 52.9,
+        "available_kib": 6576160
+      },
+      {
+        "epoch": 1794025967.7408457,
+        "cpu_c": 52.9,
+        "available_kib": 6571808
+      },
+      {
+        "epoch": 1794025967.9911587,
+        "cpu_c": 52.9,
+        "available_kib": 6576944
+      },
+      {
+        "epoch": 1794025968.241492,
+        "cpu_c": 53.45,
+        "available_kib": 6574848
+      },
+      {
+        "epoch": 1794025968.4918337,
+        "cpu_c": 52.35,
+        "available_kib": 6561248
+      },
+      {
+        "epoch": 1794025968.7422163,
+        "cpu_c": 53.45,
+        "available_kib": 6553408
+      },
+      {
+        "epoch": 1794025968.9925365,
+        "cpu_c": 53.45,
+        "available_kib": 6556320
+      },
+      {
+        "epoch": 1794025969.24289,
+        "cpu_c": 53.45,
+        "available_kib": 6543664
+      },
+      {
+        "epoch": 1794025969.4932652,
+        "cpu_c": 52.9,
+        "available_kib": 6543664
+      },
+      {
+        "epoch": 1794025969.743596,
+        "cpu_c": 53.45,
+        "available_kib": 6551008
+      },
+      {
+        "epoch": 1794025969.9939249,
+        "cpu_c": 52.9,
+        "available_kib": 6541184
+      },
+      {
+        "epoch": 1794025970.2442675,
+        "cpu_c": 53.45,
+        "available_kib": 6533584
+      },
+      {
+        "epoch": 1794025970.4945924,
+        "cpu_c": 53.45,
+        "available_kib": 6525984
+      },
+      {
+        "epoch": 1794025970.744959,
+        "cpu_c": 52.35,
+        "available_kib": 6519584
+      },
+      {
+        "epoch": 1794025970.9953153,
+        "cpu_c": 54.0,
+        "available_kib": 6521664
+      },
+      {
+        "epoch": 1794025971.245677,
+        "cpu_c": 51.25,
+        "available_kib": 6513872
+      },
+      {
+        "epoch": 1794025971.496001,
+        "cpu_c": 54.0,
+        "available_kib": 6511072
+      },
+      {
+        "epoch": 1794025971.7463381,
+        "cpu_c": 54.0,
+        "available_kib": 6511072
+      },
+      {
+        "epoch": 1794025971.9967377,
+        "cpu_c": 52.35,
+        "available_kib": 6511616
+      },
+      {
+        "epoch": 1794025972.247147,
+        "cpu_c": 52.35,
+        "available_kib": 6509936
+      },
+      {
+        "epoch": 1794025972.497528,
+        "cpu_c": 52.9,
+        "available_kib": 6502912
+      },
+      {
+        "epoch": 1794025972.7478728,
+        "cpu_c": 53.45,
+        "available_kib": 6502976
+      },
+      {
+        "epoch": 1794025972.9983258,
+        "cpu_c": 54.0,
+        "available_kib": 6503568
+      },
+      {
+        "epoch": 1794025973.2486548,
+        "cpu_c": 52.35,
+        "available_kib": 6784432
+      },
+      {
+        "epoch": 1794025973.4989996,
+        "cpu_c": 51.8,
+        "available_kib": 6739520
+      },
+      {
+        "epoch": 1794025973.7493758,
+        "cpu_c": 52.35,
+        "available_kib": 6697824
+      },
+      {
+        "epoch": 1794025974.096576,
+        "cpu_c": 52.9,
+        "available_kib": 6732960
+      },
+      {
+        "epoch": 1794025974.0976233,
+        "cpu_c": 52.9,
+        "available_kib": 6732960
+      },
+      {
+        "epoch": 1794025974.4247355,
+        "cpu_c": 52.35,
+        "available_kib": 6737168
+      },
+      {
+        "epoch": 1794025974.4255733,
+        "cpu_c": 52.35,
+        "available_kib": 6737168
+      },
+      {
+        "epoch": 1794025974.675991,
+        "cpu_c": 54.0,
+        "available_kib": 6722240
+      },
+      {
+        "epoch": 1794025974.9263256,
+        "cpu_c": 52.35,
+        "available_kib": 6722320
+      },
+      {
+        "epoch": 1794025975.176723,
+        "cpu_c": 54.55,
+        "available_kib": 6719680
+      },
+      {
+        "epoch": 1794025975.427131,
+        "cpu_c": 53.45,
+        "available_kib": 6714448
+      },
+      {
+        "epoch": 1794025975.6774561,
+        "cpu_c": 52.35,
+        "available_kib": 6708048
+      },
+      {
+        "epoch": 1794025975.9278142,
+        "cpu_c": 52.9,
+        "available_kib": 6707248
+      },
+      {
+        "epoch": 1794025976.1781507,
+        "cpu_c": 51.25,
+        "available_kib": 6720688
+      },
+      {
+        "epoch": 1794025976.4284897,
+        "cpu_c": 52.35,
+        "available_kib": 6719488
+      },
+      {
+        "epoch": 1794025976.6788354,
+        "cpu_c": 52.35,
+        "available_kib": 6714816
+      },
+      {
+        "epoch": 1794025976.929219,
+        "cpu_c": 53.45,
+        "available_kib": 6715280
+      },
+      {
+        "epoch": 1794025977.1795776,
+        "cpu_c": 52.35,
+        "available_kib": 6715312
+      },
+      {
+        "epoch": 1794025977.4299095,
+        "cpu_c": 54.55,
+        "available_kib": 6710352
+      },
+      {
+        "epoch": 1794025977.6802459,
+        "cpu_c": 52.9,
+        "available_kib": 6709952
+      },
+      {
+        "epoch": 1794025977.9308853,
+        "cpu_c": 52.35,
+        "available_kib": 6703888
+      },
+      {
+        "epoch": 1794025978.1812518,
+        "cpu_c": 53.45,
+        "available_kib": 6713472
+      },
+      {
+        "epoch": 1794025978.4315917,
+        "cpu_c": 53.45,
+        "available_kib": 6722080
+      },
+      {
+        "epoch": 1794025978.6819177,
+        "cpu_c": 51.25,
+        "available_kib": 6705920
+      },
+      {
+        "epoch": 1794025978.9322455,
+        "cpu_c": 52.35,
+        "available_kib": 6683712
+      },
+      {
+        "epoch": 1794025979.1825688,
+        "cpu_c": 52.9,
+        "available_kib": 6679152
+      },
+      {
+        "epoch": 1794025979.432908,
+        "cpu_c": 54.0,
+        "available_kib": 6673952
+      },
+      {
+        "epoch": 1794025979.6832433,
+        "cpu_c": 52.9,
+        "available_kib": 6702672
+      },
+      {
+        "epoch": 1794025979.933555,
+        "cpu_c": 52.9,
+        "available_kib": 6699552
+      },
+      {
+        "epoch": 1794025980.183879,
+        "cpu_c": 52.9,
+        "available_kib": 6676352
+      },
+      {
+        "epoch": 1794025980.4341455,
+        "cpu_c": 52.35,
+        "available_kib": 6665552
+      },
+      {
+        "epoch": 1794025980.6846228,
+        "cpu_c": 53.45,
+        "available_kib": 6655088
+      },
+      {
+        "epoch": 1794025980.9349391,
+        "cpu_c": 52.9,
+        "available_kib": 6660800
+      },
+      {
+        "epoch": 1794025981.1852996,
+        "cpu_c": 52.9,
+        "available_kib": 6660400
+      },
+      {
+        "epoch": 1794025981.435624,
+        "cpu_c": 52.9,
+        "available_kib": 6659200
+      },
+      {
+        "epoch": 1794025981.6859221,
+        "cpu_c": 52.9,
+        "available_kib": 6657200
+      },
+      {
+        "epoch": 1794025981.9362385,
+        "cpu_c": 51.8,
+        "available_kib": 6662864
+      },
+      {
+        "epoch": 1794025982.1865804,
+        "cpu_c": 52.35,
+        "available_kib": 6666960
+      },
+      {
+        "epoch": 1794025982.436875,
+        "cpu_c": 53.45,
+        "available_kib": 6667008
+      },
+      {
+        "epoch": 1794025982.6871939,
+        "cpu_c": 52.35,
+        "available_kib": 6735120
+      },
+      {
+        "epoch": 1794025983.0136633,
+        "cpu_c": 53.45,
+        "available_kib": 6743392
+      },
+      {
+        "epoch": 1794025983.0142624,
+        "cpu_c": 53.45,
+        "available_kib": 6743392
+      },
+      {
+        "epoch": 1794025983.2645845,
+        "cpu_c": 51.8,
+        "available_kib": 6745024
+      },
+      {
+        "epoch": 1794025983.5149004,
+        "cpu_c": 52.35,
+        "available_kib": 6751424
+      },
+      {
+        "epoch": 1794025983.7652552,
+        "cpu_c": 52.9,
+        "available_kib": 6757184
+      },
+      {
+        "epoch": 1794025984.0155559,
+        "cpu_c": 52.35,
+        "available_kib": 6768960
+      },
+      {
+        "epoch": 1794025984.2658696,
+        "cpu_c": 51.25,
+        "available_kib": 6774000
+      },
+      {
+        "epoch": 1794025984.516188,
+        "cpu_c": 51.8,
+        "available_kib": 6782256
+      },
+      {
+        "epoch": 1794025984.8422046,
+        "cpu_c": 51.8,
+        "available_kib": 6787968
+      },
+      {
+        "epoch": 1794025984.8428426,
+        "cpu_c": 51.8,
+        "available_kib": 6787968
+      },
+      {
+        "epoch": 1794025985.0932322,
+        "cpu_c": 53.45,
+        "available_kib": 6772112
+      },
+      {
+        "epoch": 1794025985.3435185,
+        "cpu_c": 52.35,
+        "available_kib": 6770112
+      },
+      {
+        "epoch": 1794025985.5938156,
+        "cpu_c": 52.35,
+        "available_kib": 6769312
+      },
+      {
+        "epoch": 1794025985.844144,
+        "cpu_c": 51.8,
+        "available_kib": 6765712
+      },
+      {
+        "epoch": 1794025986.0944264,
+        "cpu_c": 51.8,
+        "available_kib": 6759696
+      },
+      {
+        "epoch": 1794025986.3447988,
+        "cpu_c": 52.9,
+        "available_kib": 6792976
+      },
+      {
+        "epoch": 1794025986.5951033,
+        "cpu_c": 54.0,
+        "available_kib": 6751584
+      },
+      {
+        "epoch": 1794025986.8453963,
+        "cpu_c": 52.9,
+        "available_kib": 6724384
+      },
+      {
+        "epoch": 1794025987.095692,
+        "cpu_c": 52.35,
+        "available_kib": 6707104
+      },
+      {
+        "epoch": 1794025987.3459635,
+        "cpu_c": 52.9,
+        "available_kib": 6697504
+      },
+      {
+        "epoch": 1794025987.5962749,
+        "cpu_c": 53.45,
+        "available_kib": 6697504
+      },
+      {
+        "epoch": 1794025987.8465557,
+        "cpu_c": 54.0,
+        "available_kib": 6693264
+      },
+      {
+        "epoch": 1794025988.0968943,
+        "cpu_c": 52.9,
+        "available_kib": 6696256
+      },
+      {
+        "epoch": 1794025988.3471904,
+        "cpu_c": 51.8,
+        "available_kib": 6695056
+      },
+      {
+        "epoch": 1794025988.59749,
+        "cpu_c": 52.35,
+        "available_kib": 6689856
+      },
+      {
+        "epoch": 1794025988.8478389,
+        "cpu_c": 52.9,
+        "available_kib": 6689216
+      },
+      {
+        "epoch": 1794025989.0981593,
+        "cpu_c": 53.45,
+        "available_kib": 6687904
+      },
+      {
+        "epoch": 1794025989.3484516,
+        "cpu_c": 52.9,
+        "available_kib": 6684704
+      },
+      {
+        "epoch": 1794025989.598804,
+        "cpu_c": 51.25,
+        "available_kib": 6736304
+      },
+      {
+        "epoch": 1794025989.9246972,
+        "cpu_c": 51.8,
+        "available_kib": 6731056
+      },
+      {
+        "epoch": 1794025989.9253771,
+        "cpu_c": 51.8,
+        "available_kib": 6731056
+      },
+      {
+        "epoch": 1794025990.1757236,
+        "cpu_c": 52.9,
+        "available_kib": 6744160
+      },
+      {
+        "epoch": 1794025990.4260457,
+        "cpu_c": 52.9,
+        "available_kib": 6757936
+      },
+      {
+        "epoch": 1794025990.7504394,
+        "cpu_c": 51.8,
+        "available_kib": 6762896
+      },
+      {
+        "epoch": 1794025990.7511036,
+        "cpu_c": 51.8,
+        "available_kib": 6762896
+      },
+      {
+        "epoch": 1794025991.0014122,
+        "cpu_c": 51.25,
+        "available_kib": 6743136
+      },
+      {
+        "epoch": 1794025991.2517161,
+        "cpu_c": 51.8,
+        "available_kib": 6745600
+      },
+      {
+        "epoch": 1794025991.502028,
+        "cpu_c": 52.35,
+        "available_kib": 6742000
+      },
+      {
+        "epoch": 1794025998.7627003,
+        "cpu_c": 52.9,
+        "available_kib": 6639776
+      },
+      {
+        "epoch": 1794025998.7632341,
+        "cpu_c": 52.9,
+        "available_kib": 6639776
+      },
+      {
+        "epoch": 1794025999.0888047,
+        "cpu_c": 52.35,
+        "available_kib": 6640064
+      },
+      {
+        "epoch": 1794025999.0893936,
+        "cpu_c": 52.35,
+        "available_kib": 6640064
+      },
+      {
+        "epoch": 1794025999.4255803,
+        "cpu_c": 52.35,
+        "available_kib": 6633488
+      },
+      {
+        "epoch": 1794025999.4264855,
+        "cpu_c": 52.35,
+        "available_kib": 6633088
+      },
+      {
+        "epoch": 1794025999.754162,
+        "cpu_c": 52.9,
+        "available_kib": 6638528
+      },
+      {
+        "epoch": 1794025999.754824,
+        "cpu_c": 52.9,
+        "available_kib": 6638528
+      },
+      {
+        "epoch": 1794026000.079742,
+        "cpu_c": 52.35,
+        "available_kib": 6643120
+      },
+      {
+        "epoch": 1794026000.0803733,
+        "cpu_c": 52.35,
+        "available_kib": 6643120
+      }
+    ],
+    "passed": true,
+    "output_deltas": {
+      "fixture-frame.bin": {
+        "bytes": 460800,
+        "changed_bytes": 14296,
+        "original_sha256": "9d939640655e6317e37d85b9a446ad7984692cd480fea1efc3a8dab47a48f487",
+        "candidate_sha256": "3c2f2deac2a29851080ddc6164a987c6ef669fa7e268895305132dbed1d10a5b"
+      },
+      "fixture-geometry.bin": {
+        "bytes": 10752,
+        "changed_bytes": 1242,
+        "original_sha256": "4beb6013595a467ec0a5f659761a1164bdebccb2e1d83dbed7908e10dec22277",
+        "candidate_sha256": "3ce0603befa242be5f026d6090cae02caad72394c9733254f7c622ae251faec9"
+      },
+      "module-frame.bin": {
+        "bytes": 76800,
+        "changed_bytes": 1619,
+        "original_sha256": "a20c0387435f480ff7b551896d4cc02c0539bac40a6af3753148252fb81fdaf6",
+        "candidate_sha256": "be81eb7d2b7bd2754a2b887aed08ed22de9fbd634e5ef867ff645ddf5c8571cd"
+      },
+      "frames600.bin": {
+        "bytes": 46080000,
+        "changed_bytes": 1368184,
+        "original_sha256": "0b24c3f33a6d1987f01eb20f6fc6797891feb2a74a330e155cae7b73cb8cdca9",
+        "candidate_sha256": "8f6c99ac8ba1c67c5139df9544a6b11cfe5d7f047d5206e274c93dcaf2c66c20"
+      },
+      "states600.bin": {
+        "bytes": 1081200,
+        "changed_bytes": 100940,
+        "original_sha256": "ad29477814170b757fbda58dfefa4338572cbcfc2da2ccc56f91a59da19fe44f",
+        "candidate_sha256": "06f58af5c06a2ec718a3b6e9345eadbc5c276a97324229ab4492a645b887be86"
+      },
+      "spans.bin": {
+        "bytes": 51971104,
+        "changed_bytes": 0,
+        "original_sha256": "90899efa5dc93d5344bab43bbd7e48050de2f8673eeaea421e1a80bed79eabb8",
+        "candidate_sha256": "90899efa5dc93d5344bab43bbd7e48050de2f8673eeaea421e1a80bed79eabb8"
+      }
+    },
+    "packages": {
+      "original": {
+        "compiler": "xtensa-esp32-elf-gcc (crosstool-NG esp-2021r2-patch5) 8.4.0",
+        "abi_header_sha256": "92a6bbc403ecc51e165c103cfd16fd071f3d644ad52f83a4a7cb4fe088a5a2d6",
+        "protocol_header_sha256": "0dc8ad31e249ce58ed39435f6a8a265a9175be417ea3bee8a2cc10cde9f94b2f",
+        "services_header_sha256": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f",
+        "pcm_sink_header_sha256": "e3bf5d900105ddd87e82f5cd38301fab02ffb7a7e38f81012db0bb2e13ba963c",
+        "module": {
+          "compiler_target": {
+            "psram_cache_workaround": true,
+            "flags": [
+              "-mfix-esp32-psram-cache-issue"
+            ]
+          },
+          "link_map": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.map",
+          "name": "wolf_perf",
+          "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/wolf3d_module.cpp",
+          "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+          "policy_sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+          "declared_limits": {
+            "text": 65536,
+            "data": 16384,
+            "stack": 2048,
+            "image": 131072
+          },
+          "text_policy": {
+            "profile": "standard",
+            "maximum": 65536
+          },
+          "build_id": "0x20261104",
+          "capabilities": 257,
+          "abi_major": 1,
+          "abi_minor": 6,
+          "envelope_bytes": 64,
+          "elf_bytes": 20864,
+          "package_bytes": 20928,
+          "sha256": "cd429e2fd642ab784d024cb7d6eb48f38b00eec132285ea78222b0e77e373ceb",
+          "package": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.vdpl",
+          "elf": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.elf",
+          "entry_virtual": 15056,
+          "resident_text_bytes": 15516,
+          "resident_data_bytes": 9748,
+          "relative_relocations": 38,
+          "allocated_sections": {
+            ".text": {
+              "virtual_address": 672,
+              "bytes": 15513,
+              "type": 1
+            },
+            ".rodata": {
+              "virtual_address": 16188,
+              "bytes": 4252,
+              "type": 1
+            },
+            ".bss": {
+              "virtual_address": 24804,
+              "bytes": 5496,
+              "type": 8
+            }
+          }
+        }
+      },
+      "candidate": {
+        "compiler": "xtensa-esp32-elf-gcc (crosstool-NG esp-2021r2-patch5) 8.4.0",
+        "abi_header_sha256": "92a6bbc403ecc51e165c103cfd16fd071f3d644ad52f83a4a7cb4fe088a5a2d6",
+        "protocol_header_sha256": "0dc8ad31e249ce58ed39435f6a8a265a9175be417ea3bee8a2cc10cde9f94b2f",
+        "services_header_sha256": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f",
+        "pcm_sink_header_sha256": "e3bf5d900105ddd87e82f5cd38301fab02ffb7a7e38f81012db0bb2e13ba963c",
+        "module": {
+          "compiler_target": {
+            "psram_cache_workaround": true,
+            "flags": [
+              "-mfix-esp32-psram-cache-issue"
+            ]
+          },
+          "link_map": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.map",
+          "name": "wolf_perf",
+          "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/wolf3d_module.cpp",
+          "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+          "policy_sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+          "declared_limits": {
+            "text": 65536,
+            "data": 16384,
+            "stack": 2048,
+            "image": 131072
+          },
+          "text_policy": {
+            "profile": "standard",
+            "maximum": 65536
+          },
+          "build_id": "0x20261104",
+          "capabilities": 257,
+          "abi_major": 1,
+          "abi_minor": 6,
+          "envelope_bytes": 64,
+          "elf_bytes": 24212,
+          "package_bytes": 24276,
+          "sha256": "c8f99354bef6495e76f15201e64bdd010da6369a0b91d2fed37c0a3eb27f997d",
+          "package": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.vdpl",
+          "elf": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.elf",
+          "entry_virtual": 14804,
+          "resident_text_bytes": 15216,
+          "resident_data_bytes": 13348,
+          "relative_relocations": 42,
+          "allocated_sections": {
+            ".text": {
+              "virtual_address": 720,
+              "bytes": 15213,
+              "type": 1
+            },
+            ".rodata": {
+              "virtual_address": 15936,
+              "bytes": 7852,
+              "type": 1
+            },
+            ".bss": {
+              "virtual_address": 24716,
+              "bytes": 5496,
+              "type": 8
+            }
+          }
+        }
+      }
+    },
+    "total_seconds": 91.82169190299464
+  },
+  "code": {
+    "passed": true,
+    "arms": {
+      "original": {
+        "optimization": "-O2",
+        "package": {
+          "compiler_target": {
+            "psram_cache_workaround": true,
+            "flags": [
+              "-mfix-esp32-psram-cache-issue"
+            ]
+          },
+          "link_map": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.map",
+          "name": "wolf_perf",
+          "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/wolf3d_module.cpp",
+          "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+          "policy_sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+          "declared_limits": {
+            "text": 65536,
+            "data": 16384,
+            "stack": 2048,
+            "image": 131072
+          },
+          "text_policy": {
+            "profile": "standard",
+            "maximum": 65536
+          },
+          "build_id": "0x20261104",
+          "capabilities": 257,
+          "abi_major": 1,
+          "abi_minor": 6,
+          "envelope_bytes": 64,
+          "elf_bytes": 20864,
+          "package_bytes": 20928,
+          "sha256": "cd429e2fd642ab784d024cb7d6eb48f38b00eec132285ea78222b0e77e373ceb",
+          "package": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.vdpl",
+          "elf": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.elf",
+          "entry_virtual": 15056,
+          "resident_text_bytes": 15516,
+          "resident_data_bytes": 9748,
+          "relative_relocations": 38,
+          "allocated_sections": {
+            ".text": {
+              "virtual_address": 672,
+              "bytes": 15513,
+              "type": 1
+            },
+            ".rodata": {
+              "virtual_address": 16188,
+              "bytes": 4252,
+              "type": 1
+            },
+            ".bss": {
+              "virtual_address": 24804,
+              "bytes": 5496,
+              "type": 8
+            }
+          }
+        },
+        "commands": [
+          [
+            "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-gcc",
+            "-mfix-esp32-psram-cache-issue",
+            "-I",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/include",
+            "-O2",
+            "-fPIC",
+            "-mlongcalls",
+            "-mtext-section-literals",
+            "-fvisibility=hidden",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fno-builtin",
+            "-ffp-contract=off",
+            "-fstack-usage",
+            "-fno-common",
+            "-std=c++17",
+            "-fno-exceptions",
+            "-fno-rtti",
+            "-fno-threadsafe-statics",
+            "-DVDPL_VARIANT=1",
+            "-c",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/native-source/wolf3d_module.cpp",
+            "-o",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.o"
+          ],
+          [
+            "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-gcc",
+            "-mfix-esp32-psram-cache-issue",
+            "-nostdlib",
+            "-nostartfiles",
+            "-shared",
+            "-Wl,--gc-sections",
+            "-Wl,-e,vdplet_entry",
+            "-Wl,--no-undefined",
+            "-Xlinker",
+            "-Map",
+            "-Xlinker",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.map",
+            "-Wl,--version-script=/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/sdk/tools/module.exports",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.o",
+            "-o",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.elf"
+          ],
+          [
+            "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-strip",
+            "--strip-unneeded",
+            "--remove-section=.got.loc",
+            "--remove-section=.got",
+            "--remove-section=.dynamic",
+            "--remove-section=.comment",
+            "--remove-section=.xt.lit",
+            "--remove-section=.xt.prop",
+            "--remove-section=.xtensa.info",
+            "-o",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.upload.elf",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.elf"
+          ],
+          [
+            "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-readelf",
+            "-hSWr",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.upload.elf"
+          ],
+          [
+            "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-objdump",
+            "-drs",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.elf"
+          ]
+        ],
+        "stack": [
+          {
+            "function": "wolf3d_world_mirror.cpp:356:13:wolf3d_production::BatchDetail wolf3d_production::{anonymous}::validate_batch(const wolf3d_production::WorldMirror&, const uint8_t*, size_t, wolf3d_production::{anonymous}::BatchHeader&)",
+            "bytes": 768,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:136:9:int32_t wolf3d_production::{anonymous}::sin_fine(int32_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:287:9:uint8_t wolf3d_production::{anonymous}::tile_at(const wolf3d_production::WorldMirror&, const uint8_t*, int, int)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:613:6:bool wolf3d_production::{anonymous}::transform_point(int32_t, int32_t, const wolf3d_production::{anonymous}::ViewState&, int32_t&, int32_t&, int32_t&, uint32_t&)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:643:6:void wolf3d_production::{anonymous}::swap_sprites(wolf3d_production::{anonymous}::VisSprite&, wolf3d_production::{anonymous}::VisSprite&)",
+            "bytes": 48,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:649:6:void wolf3d_production::{anonymous}::sift_min(wolf3d_production::{anonymous}::VisSprite*, uint16_t, uint16_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:56:17:uint64_t divide_u64(uint64_t, uint64_t)",
+            "bytes": 48,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:145:6:void wolf3d_production::{anonymous}::emit_fizzle(wolf3d_production::{anonymous}::ModuleState::FizzleCursor&, uint32_t, uint8_t*, uintptr_t*, uint32_t, uint32_t, uint8_t, uint8_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:247:14:wolf3d_production::RenderDetail wolf3d_production::{anonymous}::acquire_asset(void*, uint16_t, wolf3d_production::AssetSpan&)",
+            "bytes": 64,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:263:14:wolf3d_production::RenderDetail wolf3d_production::{anonymous}::release_asset(void*, uint32_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:83:6:void wolf3d_production::{anonymous}::put_pixel(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint8_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:94:6:void wolf3d_production::{anonymous}::fill_span(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint8_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:148:6:void wolf3d_production::{anonymous}::fill_rect(const wolf3d_production::RenderTarget&, int, int, int, int, uint8_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:412:9:int32_t wolf3d_production::{anonymous}::require_published_frame(const vdplet_host_v1*, const vdplet_request_v1*)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:848:6:bool wolf3d_production::{anonymous}::append_hud_number(wolf3d_production::{anonymous}::HudDraw*, uint8_t&, int, int, int, uint32_t)",
+            "bytes": 48,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_world_mirror.cpp:468:6:void wolf3d_production::initialize_world_mirror(wolf3d_production::WorldMirror&, uint16_t, uint16_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_world_mirror.cpp:484:13:wolf3d_production::BatchDetail wolf3d_production::validate_resource_descriptor(wolf3d_production::ResourceDescriptor&, const uint8_t*, size_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:199:9:int32_t wolf3d_production::{anonymous}::copy_descriptor(const vdplet_host_v1*, const vdplet_request_v1*, wolf3d_production::ResourceDescriptor&)",
+            "bytes": 80,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:224:9:int32_t wolf3d_production::{anonymous}::require_matching_descriptor(const vdplet_host_v1*, const vdplet_request_v1*)",
+            "bytes": 48,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_world_mirror.cpp:522:13:wolf3d_production::BatchDetail wolf3d_production::apply_update_batch(wolf3d_production::WorldMirror&, const uint8_t*, size_t)",
+            "bytes": 64,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_world_mirror.cpp:544:6:void wolf3d_production::mark_mirror_presented(wolf3d_production::WorldMirror&)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_world_mirror.cpp:550:13:const char* wolf3d_production::batch_detail_name(wolf3d_production::BatchDetail)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:948:14:wolf3d_production::RenderDetail wolf3d_production::render_world_to_target(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, wolf3d_production::RenderStats*)",
+            "bytes": 368,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:998:14:wolf3d_production::RenderDetail wolf3d_production::render_world(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, wolf3d_production::RenderStats*)",
+            "bytes": 80,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:1009:14:wolf3d_production::RenderDetail wolf3d_production::render_world_direct(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, wolf3d_production::RenderStats*)",
+            "bytes": 48,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:1020:13:const char* wolf3d_production::render_detail_name(wolf3d_production::RenderDetail)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:21:18:void* memcpy(void*, const void*, unsigned int)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:28:18:void* memset(void*, int, unsigned int)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:78:21:uint64_t __udivdi3(uint64_t, uint64_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:82:20:int64_t __divdi3(int64_t, int64_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:574:9:int32_t wp_production_entry(const vdplet_host_v1*, const vdplet_request_v1*)",
+            "bytes": 304,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:613:9:int32_t vdplet_entry(const vdplet_host_v1*, const vdplet_request_v1*)",
+            "bytes": 128,
+            "kind": "static"
+          }
+        ],
+        "max_individual_stack_bytes": 768,
+        "unused_unsigned_helper_retained": false,
+        "symbols_sha256": "4a33c7848598e1172d95fee57a1b0d29de442fd243145826460f20f72e81cb02",
+        "disassembly_sha256": "cbefcd19dd747d7069a90b3d1d33ba97bc599bd35f6007f646391e9195de5086"
+      },
+      "candidate": {
+        "optimization": "-O2",
+        "package": {
+          "compiler_target": {
+            "psram_cache_workaround": true,
+            "flags": [
+              "-mfix-esp32-psram-cache-issue"
+            ]
+          },
+          "link_map": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.map",
+          "name": "wolf_perf",
+          "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/wolf3d_module.cpp",
+          "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+          "policy_sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+          "declared_limits": {
+            "text": 65536,
+            "data": 16384,
+            "stack": 2048,
+            "image": 131072
+          },
+          "text_policy": {
+            "profile": "standard",
+            "maximum": 65536
+          },
+          "build_id": "0x20261104",
+          "capabilities": 257,
+          "abi_major": 1,
+          "abi_minor": 6,
+          "envelope_bytes": 64,
+          "elf_bytes": 24212,
+          "package_bytes": 24276,
+          "sha256": "c8f99354bef6495e76f15201e64bdd010da6369a0b91d2fed37c0a3eb27f997d",
+          "package": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.vdpl",
+          "elf": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.elf",
+          "entry_virtual": 14804,
+          "resident_text_bytes": 15216,
+          "resident_data_bytes": 13348,
+          "relative_relocations": 42,
+          "allocated_sections": {
+            ".text": {
+              "virtual_address": 720,
+              "bytes": 15213,
+              "type": 1
+            },
+            ".rodata": {
+              "virtual_address": 15936,
+              "bytes": 7852,
+              "type": 1
+            },
+            ".bss": {
+              "virtual_address": 24716,
+              "bytes": 5496,
+              "type": 8
+            }
+          }
+        },
+        "commands": [
+          [
+            "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-gcc",
+            "-mfix-esp32-psram-cache-issue",
+            "-I",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/include",
+            "-O2",
+            "-fPIC",
+            "-mlongcalls",
+            "-mtext-section-literals",
+            "-fvisibility=hidden",
+            "-ffunction-sections",
+            "-fdata-sections",
+            "-fno-builtin",
+            "-ffp-contract=off",
+            "-fstack-usage",
+            "-fno-common",
+            "-std=c++17",
+            "-fno-exceptions",
+            "-fno-rtti",
+            "-fno-threadsafe-statics",
+            "-DVDPL_VARIANT=1",
+            "-c",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/native-source/wolf3d_module.cpp",
+            "-o",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.o"
+          ],
+          [
+            "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-gcc",
+            "-mfix-esp32-psram-cache-issue",
+            "-nostdlib",
+            "-nostartfiles",
+            "-shared",
+            "-Wl,--gc-sections",
+            "-Wl,-e,vdplet_entry",
+            "-Wl,--no-undefined",
+            "-Xlinker",
+            "-Map",
+            "-Xlinker",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.map",
+            "-Wl,--version-script=/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/sdk/tools/module.exports",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.o",
+            "-o",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.elf"
+          ],
+          [
+            "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-strip",
+            "--strip-unneeded",
+            "--remove-section=.got.loc",
+            "--remove-section=.got",
+            "--remove-section=.dynamic",
+            "--remove-section=.comment",
+            "--remove-section=.xt.lit",
+            "--remove-section=.xt.prop",
+            "--remove-section=.xtensa.info",
+            "-o",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.upload.elf",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.elf"
+          ],
+          [
+            "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-readelf",
+            "-hSWr",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.upload.elf"
+          ],
+          [
+            "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-objdump",
+            "-drs",
+            "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.elf"
+          ]
+        ],
+        "stack": [
+          {
+            "function": "wolf3d_world_mirror.cpp:356:13:wolf3d_production::BatchDetail wolf3d_production::{anonymous}::validate_batch(const wolf3d_production::WorldMirror&, const uint8_t*, size_t, wolf3d_production::{anonymous}::BatchHeader&)",
+            "bytes": 768,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:133:9:int32_t wolf3d_production::{anonymous}::sin_fine(int32_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:284:9:uint8_t wolf3d_production::{anonymous}::tile_at(const wolf3d_production::WorldMirror&, const uint8_t*, int, int)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:395:6:bool wolf3d_production::{anonymous}::transform_point(int32_t, int32_t, const wolf3d_production::{anonymous}::ViewState&, int32_t&, int32_t&, int32_t&, uint32_t&)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:425:6:void wolf3d_production::{anonymous}::swap_sprites(wolf3d_production::{anonymous}::VisSprite&, wolf3d_production::{anonymous}::VisSprite&)",
+            "bytes": 48,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:431:6:void wolf3d_production::{anonymous}::sift_min(wolf3d_production::{anonymous}::VisSprite*, uint16_t, uint16_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:56:17:uint64_t divide_u64(uint64_t, uint64_t)",
+            "bytes": 48,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:145:6:void wolf3d_production::{anonymous}::emit_fizzle(wolf3d_production::{anonymous}::ModuleState::FizzleCursor&, uint32_t, uint8_t*, uintptr_t*, uint32_t, uint32_t, uint8_t, uint8_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:247:14:wolf3d_production::RenderDetail wolf3d_production::{anonymous}::acquire_asset(void*, uint16_t, wolf3d_production::AssetSpan&)",
+            "bytes": 64,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:263:14:wolf3d_production::RenderDetail wolf3d_production::{anonymous}::release_asset(void*, uint32_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:84:6:void wolf3d_production::{anonymous}::put_pixel(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint8_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:95:6:void wolf3d_production::{anonymous}::fill_span(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint8_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:145:6:void wolf3d_production::{anonymous}::fill_rect(const wolf3d_production::RenderTarget&, int, int, int, int, uint8_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:412:9:int32_t wolf3d_production::{anonymous}::require_published_frame(const vdplet_host_v1*, const vdplet_request_v1*)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:630:6:bool wolf3d_production::{anonymous}::append_hud_number(wolf3d_production::{anonymous}::HudDraw*, uint8_t&, int, int, int, uint32_t)",
+            "bytes": 48,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_world_mirror.cpp:468:6:void wolf3d_production::initialize_world_mirror(wolf3d_production::WorldMirror&, uint16_t, uint16_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_world_mirror.cpp:484:13:wolf3d_production::BatchDetail wolf3d_production::validate_resource_descriptor(wolf3d_production::ResourceDescriptor&, const uint8_t*, size_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:199:9:int32_t wolf3d_production::{anonymous}::copy_descriptor(const vdplet_host_v1*, const vdplet_request_v1*, wolf3d_production::ResourceDescriptor&)",
+            "bytes": 80,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:224:9:int32_t wolf3d_production::{anonymous}::require_matching_descriptor(const vdplet_host_v1*, const vdplet_request_v1*)",
+            "bytes": 48,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_world_mirror.cpp:522:13:wolf3d_production::BatchDetail wolf3d_production::apply_update_batch(wolf3d_production::WorldMirror&, const uint8_t*, size_t)",
+            "bytes": 64,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_world_mirror.cpp:544:6:void wolf3d_production::mark_mirror_presented(wolf3d_production::WorldMirror&)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_world_mirror.cpp:550:13:const char* wolf3d_production::batch_detail_name(wolf3d_production::BatchDetail)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:730:14:wolf3d_production::RenderDetail wolf3d_production::render_world_to_target(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, wolf3d_production::RenderStats*)",
+            "bytes": 352,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:780:14:wolf3d_production::RenderDetail wolf3d_production::render_world(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, wolf3d_production::RenderStats*)",
+            "bytes": 80,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:791:14:wolf3d_production::RenderDetail wolf3d_production::render_world_direct(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, wolf3d_production::RenderStats*)",
+            "bytes": 48,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_renderer.cpp:802:13:const char* wolf3d_production::render_detail_name(wolf3d_production::RenderDetail)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:21:18:void* memcpy(void*, const void*, unsigned int)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:28:18:void* memset(void*, int, unsigned int)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:78:21:uint64_t __udivdi3(uint64_t, uint64_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:82:20:int64_t __divdi3(int64_t, int64_t)",
+            "bytes": 32,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:574:9:int32_t wp_production_entry(const vdplet_host_v1*, const vdplet_request_v1*)",
+            "bytes": 304,
+            "kind": "static"
+          },
+          {
+            "function": "wolf3d_module.cpp:613:9:int32_t vdplet_entry(const vdplet_host_v1*, const vdplet_request_v1*)",
+            "bytes": 128,
+            "kind": "static"
+          }
+        ],
+        "max_individual_stack_bytes": 768,
+        "unused_unsigned_helper_retained": false,
+        "symbols_sha256": "4beb87188b7611ab464eb9965c7c48a6b9460ca9d8610f449049fa409ec28930",
+        "disassembly_sha256": "4c5dc35f2082e07a23e83c5cfc1188e01e89d02cf16efd80b0d62b428d819f7c"
+      }
+    },
+    "limits": "Source/target flags/providers/sections and individual static frames; not execution of excluded native helpers, whole-call stack, physical pixels or timing. Actual generated pixel/counter loops require retained disassembly review."
+  },
+  "crossing_source_freeze": "7a60a03",
+  "crossing": {
+    "passed": true,
+    "steps": [
+      {
+        "argv": [
+          "g++",
+          "-std=c++17",
+          "-O2",
+          "-g",
+          "-Wall",
+          "-Wextra",
+          "-Werror",
+          "-pedantic",
+          "-fsanitize=address,undefined",
+          "-fno-sanitize-recover=all",
+          "-fno-omit-frame-pointer",
+          "-I/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_crossing_order.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/crossing02/crossing-test"
+        ],
+        "returncode": 0
+      },
+      {
+        "argv": [
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/crossing02/crossing-test"
+        ],
+        "returncode": 0
+      }
+    ],
+    "guards": [
+      {
+        "epoch": 1794026276.098078,
+        "cpu_c": 48.5,
+        "available_kib": 6839632
+      },
+      {
+        "epoch": 1794026276.1793082,
+        "cpu_c": 48.5,
+        "available_kib": 6830112
+      },
+      {
+        "epoch": 1794026276.5254636,
+        "cpu_c": 47.95,
+        "available_kib": 6776432
+      },
+      {
+        "epoch": 1794026276.858464,
+        "cpu_c": 49.6,
+        "available_kib": 6762016
+      },
+      {
+        "epoch": 1794026277.1985753,
+        "cpu_c": 48.5,
+        "available_kib": 6779152
+      },
+      {
+        "epoch": 1794026277.2729068,
+        "cpu_c": 49.6,
+        "available_kib": 6775232
+      }
+    ],
+    "inputs": {
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_crossing_order.cpp": "25b5b6600fed6b55a37f5d65ad2713c453753828a5beb89f8306098d6b91ca4e",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/QUALIFICATION-02.md": "21917d5f7c9254e13c19c678091b13f749cceeb8c053d0c4da11cb95d7edd900",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/original_raywalk.h": "72b1a70eb08fd211dde089e7f7b9379494daeb307fe34a06adb9a198291b66c7",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/original_tangents.inc": "f602ee6862cd3ccb006321907508b66158078c8a51d56c62a17a134928db2238",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/production/wolf3d_world_mirror.h": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115"
+    },
+    "seconds": 1.503706265008077
+  },
+  "crossing_compiler_generation": 291,
+  "crossing_release": {
+    "owner": "wolf3dorig",
+    "task": "WOLF-PERF-007-crossing02-check",
+    "purpose": "One focused original-source crossing transcript sanitizer compile/check on unchanged candidate header/artifacts",
+    "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/QUALIFICATION-02.md",
+    "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "workload": "build",
+    "resources": "One serial g++ sanitizer compile/check child, 80C/512MiB guards",
+    "duration": "Expected 5 seconds; 180-second whole bound",
+    "cleanup": "Join owned child, preserve logs/receipt, release compiler slot; no target access",
+    "request": "83178aa3430d",
+    "requested": "2026-11-07T04:37:25.028131+00:00",
+    "policy": {
+      "revision": "author-2026-11-05-oryx-compiler-fallback",
+      "instructions": "/Agon/mystuff/agon-dev-env/cross-agent/pi5-workloads/README.md",
+      "builds": "Automatically granted FIFO, one compile job at a time; no manager approval or 10% CPU gate.",
+      "baseload": "Robocode/Tank Royale server, including active matches, needs no reservation or routine start/end/informational notification to Pi5 manager and does not occupy or block the shared slot or compilation. Separate substantial workloads and physical bench/test permissions remain unchanged; paused work is not resumed.",
+      "routing": "Reserve Oryx for emulator runs and Pi5 for compiler work. When the required build is not possible on Pi5, compiler work may use the existing Oryx self-service FIFO without another routing approval; record the concrete architecture/toolchain limitation, not merely queue congestion. Extender schedules live-serial hardware qualification/benchmark/debug bench access; Console8/manual or semi-automated runs remain at Author discretion.",
+      "heavy": "Pi emulator exceptions need specific new Author approval; CFD/solvers and other heavy Pi work retain explicit Author authorization, manager admission, and start/end chat notices to pi5-manager. Native services are separately classified.",
+      "build_cleanup": "After owned children stop, release using --work-stopped --cleanup-complete; no manager handback or host-wide quiet test.",
+      "authorization_limit": "A supplied record documents authorization; this same-account helper cannot authenticate human authorship."
+    },
+    "author_authorization": null,
+    "manager_start_end_notice_required": false,
+    "lease": "4a6b3f18bc7043dc88e2eafa37fa6590",
+    "generation": 291,
+    "granted": "2026-11-07T04:37:25.028131+00:00",
+    "boot_id": "b6519306-0d9f-48e3-98c4-c28ab10b75de",
+    "phase": "consumer",
+    "admission": "automatic-serial-build",
+    "entry_observation": null,
+    "released": "2026-11-07T04:38:19.147307+00:00",
+    "release_observation": {
+      "observer": "wolf3dorig",
+      "lease": "4a6b3f18bc7043dc88e2eafa37fa6590",
+      "owned_work_stopped": true,
+      "cleanup_complete": true,
+      "disposition": "Owner confirms all owned build children stopped and cleanup complete; no global quiet claim"
+    },
+    "next_request": null,
+    "automatic_build_grant": null
+  },
+  "qualification": "Original-method first candidate build/check pass only. Target artifacts not executed, no physical output/FPS or historical DOS execution equivalence. Expected old-renderer geometry/image differences retained for review."
+}

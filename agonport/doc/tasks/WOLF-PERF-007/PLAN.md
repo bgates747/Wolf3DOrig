@@ -9,11 +9,11 @@ provider tuning. It is not permission to change every rendering subsystem.
 - [x] WOLF-PERF-007-01 — Record the original/current unit inventory and source
   pins before implementation. Preserve physical69 O2/cd429 as the control and
   original PC source as the method reference; identify numerical/state gaps.
-- [ ] WOLF-PERF-007-02 — Close the pre-code compatibility dispositions for
+- [x] WOLF-PERF-007-02 — Close the pre-code compatibility dispositions for
   quadrant setup, table generation, crossing order, wall/door/pushwall hits and
   world-state binding. Supported methods carry over; unresolved incompatibility
   is reported before any replacement method is invented.
-- [ ] WOLF-PERF-007-03 — Freeze source-faithful candidate design, then implement
+- [x] WOLF-PERF-007-03 — Freeze source-faithful candidate design, then implement
   in an isolated task directory: original tangent tables, integer intercept
   stepping and partial-step intersections. No reciprocal-only shortcut keeping
   the replacement distance-DDA algorithm. Keep O2/safe flags/providers fixed.

@@ -39,8 +39,11 @@ Smith selected original-method restoration ahead of division-provider tuning.
 [pre-code inventory](agonport/doc/tasks/WOLF-PERF-007/PRE-CODE.md).
 
 - [x] WOLF-PERF-007-01 — Pin original/O2 sources and original-method inventory.
-- [ ] WOLF-PERF-007-02 — Close method/state/numerical compatibility gates.
-- [ ] WOLF-PERF-007-03 — Freeze then implement original tangent/intercept path.
+- [x] WOLF-PERF-007-02 — Close method/state/numerical compatibility gates.
+- [x] WOLF-PERF-007-03 — Freeze then implement original tangent/intercept path.
+  [First build](agonport/doc/tasks/WOLF-PERF-007/BUILD-RESULT.md) passes;
+  exact O2 control reproduced, original-method candidate c8f99354 packaged.
+  Deliberate geometry/image differences retained; no speed/default claim yet.
 - [ ] WOLF-PERF-007-04 — Qualify original geometry, target code/resources/producers.
 - [ ] WOLF-PERF-007-05 — Freeze finite kit; normal fresh bench admission.
 - [ ] WOLF-PERF-007-06 — Matched run, exact restoration and clean release.
