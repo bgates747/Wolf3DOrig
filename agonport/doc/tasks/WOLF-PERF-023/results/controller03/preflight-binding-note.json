@@ -1,0 +1,8 @@
+{
+  "compiler_tests_passed": true,
+  "final_native_preflight_equal": false,
+  "changed_paths": [
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/observe.py"
+  ],
+  "reason": "Native preflight includes its own observe.py source; task/request/path rebind requires a newly frozen expected fingerprint. Historical composition03 preserved; final current fingerprint and composition04 selected, no device access."
+}

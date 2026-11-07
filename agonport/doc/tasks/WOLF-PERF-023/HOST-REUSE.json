@@ -3,7 +3,6 @@
   "unchanged_shared_files": [
     "host_observer.py",
     "launch02.py",
-    "bootstrap.py",
     "analyze.py"
   ],
   "observer_only_task_request_path_rebind": true,
@@ -11,6 +10,10 @@
   "prior_actual_physical": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/results/actual95/RESULT.json",
   "new_control_matrix_qualification_pending": false,
   "no_attachment_signal_or_device": true,
-  "new_control_matrix_qualification": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/results/controller02/receipt.json",
-  "prior_failed_attempt": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/results/controller-failed01/receipt.json"
+  "new_control_matrix_qualification": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/results/controller04/receipt.json",
+  "prior_failed_attempt": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/results/controller-failed01/receipt.json",
+  "bootstrap_delta": "Explicit six-file current donor/reset/config closure verified before any constructor publication or target access, and again before bootstrap. Donor/method/component bytes unchanged; no claim of byte-identical wrapper.",
+  "prior_cohort_failed": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/results/actual97/RESULT.json",
+  "closure_checks": "Three production-validator tests, including24 per-dependency ordinary-constructor negative subcases, plus retained27 controller/listener/observer checks; compiler416. Actual native preflight equals refreshed selected source fingerprint.",
+  "prior_passed_checks_before_fingerprint_refresh": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/results/controller03/receipt.json"
 }

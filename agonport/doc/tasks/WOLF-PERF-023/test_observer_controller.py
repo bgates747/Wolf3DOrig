@@ -70,9 +70,9 @@ class ObserverControllerTests(unittest.TestCase):
 
     def test_observer_rejoins_actual_lease_kit_and_input_bytes(self):
         with tempfile.TemporaryDirectory() as folder:
-            root = Path(folder); build = root / 'build/hardware01'; build.mkdir(parents=True)
+            root = Path(folder); build = root / 'build/hardware02'; build.mkdir(parents=True)
             source = root / 'pinned-source'; source.write_bytes(b'qualified')
-            kit = dict(task='WOLF-PERF-023-hardware01', request='098fa3fae20d', incoming_components={'rom': 'exact'},
+            kit = dict(task='WOLF-PERF-023-hardware02', request='0d70a117969f', incoming_components={'rom': 'exact'},
                        inputs={str(source): hashlib.sha256(source.read_bytes()).hexdigest()})
             manifest = build / 'kit.json'; manifest.write_text(json.dumps(kit))
             grant = root / 'grant.json'

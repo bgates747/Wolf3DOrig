@@ -1,5 +1,11 @@
 # Actual producer and prelaunch qualification
 
+This is the historical hardware01/controller02 qualification. Actual97 later
+exposed a missing late-loaded dependency closure. See [RESULT97](RESULT97.md)
+and the separately qualified [hardware02 correction](CONTROLLER-RESULT03.md).
+The original byte-identical bootstrap-wrapper statement below describes that
+historical source; it does not describe the corrected wrapper.
+
 Both actual eZ80 guests assembled and passed their BIN/listing checks under
 compiler409. Control package size22572/strict limit22573 and candidate22620/22621
 are bound at all six actual producer operands per arm. The control guest exactly

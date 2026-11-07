@@ -1,0 +1,11 @@
+test_actual_consumer_completes_six_selections_including_repeated_same_arm (__main__.Composition.test_actual_consumer_completes_six_selections_including_repeated_same_arm) ... ok
+test_backup_mismatch_preserved_after_verified_target (__main__.Composition.test_backup_mismatch_preserved_after_verified_target) ... ok
+test_existing_foreign_backup_refuses_before_put_or_retirement (__main__.Composition.test_existing_foreign_backup_refuses_before_put_or_retirement) ... ok
+test_full_target_readback_mismatch_preserves_backup (__main__.Composition.test_full_target_readback_mismatch_preserves_backup) ... ok
+test_old_repeated_replacement_reproduces_guard_without_weakening_it (__main__.Composition.test_old_repeated_replacement_reproduces_guard_without_weakening_it) ... ok
+test_real_engine_cleanup_failure_preserves_target_and_backup (__main__.Composition.test_real_engine_cleanup_failure_preserves_target_and_backup) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.317s
+
+OK

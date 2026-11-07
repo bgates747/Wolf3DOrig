@@ -6,7 +6,7 @@ import shutil
 import sys
 
 T=Path(__file__).resolve().parent
-B=T/'build/hardware01'
+B=T/'build/hardware02'
 E=Path('/Agon/mystuff/agon-extender')
 sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
@@ -16,21 +16,23 @@ def main():
     assert not B.exists(),'Preserve a frozen selection; use a new revision'
     sys.path.insert(0,str(T))
     import hardware02 as hw
+    import bootstrap
     import qualify_hardware_guests as qualifier
     qualified=qualifier.qualify();assert qualified['passed']
     old_path=T.parent/'WOLF-PERF-022/build/hardware02/kit.json'
     old=json.loads(old_path.read_text())
     prior_result=T.parent/'WOLF-PERF-022/results/actual95/RESULT.json'
     assert json.loads(prior_result.read_text())['passed']
-    latest=E/'agents/bench-scheduler/mechagon-headroom-l0-r01'
+    latest=E/'agents/bench-scheduler/mechagon-goal001-r09'
     release=json.loads((latest/'released.json').read_text())
-    assert release['generation']==96 and release['released']
+    assert release['generation']==98 and release['released']
     components=release['release_observation']['components']
     assert components==old['incoming_components']
     assert sha(latest/'owner-install/verify-rollback/ROM.bin')==components['emos_rom_sha256']
-    assert sha(T.parent/'WOLF-PERF-022/build/hardware02/evidence/flash-restore/read.bin')==sha(old['restore'])
+    restored97=T/'results/actual97/cleanup97/evidence/flash-restore/read.bin'
+    assert sha(restored97)==sha(old['restore'])
     files=[Path(p) for p in qualified['inputs']]
-    files.extend((old_path,prior_result,latest/'released.json',latest/'release-observation.json',
+    files.extend((old_path,prior_result,restored97,T/'results/actual97/RESULT.json',latest/'released.json',latest/'release-observation.json',
         latest/'final/fresh.json',latest/'owner-install/verify-rollback/ROM.bin',
         latest/'owner-install/verify-rollback/receipt.json'))
     B.mkdir()
@@ -39,12 +41,12 @@ def main():
         shutil.copyfile(old[key],B/name)
     assert sha(B/'restore.bin')=='85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de'
     assert sha(B/'install-b.bin')=='493fd0a010bedcfc5916314353f93565f7b159ac163d9bc61e7c5078140669e8'
-    remote='/test/wolf/perf023/r01'
+    remote='/test/wolf/perf023/r02'
     (B/'state.txt').write_bytes(('SAVE '+remote+'/post-mode.bin &BC349 &1\r\nSAVE '+remote+'/post-callback.bin &BC38E &3\r\nEMOS sdserve --fast /\r\n').encode())
     (B/'route.txt').write_bytes(('SAVE '+remote+'/route.bin &BCB25 &1\r\nEMOS sdserve --fast /\r\n').encode())
     binding=json.loads(Path(old['source_binding']).read_text())
     assert binding['passed'] and binding['rom_sha256']==components['emos_rom_sha256']
-    binding['provenance']='Actual96 exacta25f fullROM rollback/readback and clean release match retained d9b/a25f/5d657/ed403/0566. Actual95 full85f9 native rollback/readback unchanged. This is retained source/release provenance, not a new device read or grant; actual current admission remains mandatory.'
+    binding['provenance']='Actual98 exacta25f fullROM rollback/readback and clean release match retained d9b/a25f/5d657/ed403/0566. Actual97 full85f9 native rollback/readback independently verified. This is retained source/release provenance, not a new device read or grant; actual current admission remains mandatory.'
     (B/'source-binding.json').write_text(json.dumps(binding,indent=2)+'\n')
     (B/'guest-qualification.json').write_text(json.dumps(qualified,indent=2)+'\n')
     guests=json.loads((T/'HARDWARE-GUESTS.json').read_text())
@@ -55,11 +57,11 @@ def main():
         files.append(Path(p))
     for arm in hw.ARMS:stage[guests[arm]['room']['remote_name']]=guests[arm]['room']['guest']
     stage.update({'wolf3d.vdpl':modules['original'],'state.txt':str(B/'state.txt'),'route.txt':str(B/'route.txt')})
-    for n in ('PLAN.md','HARDWARE-PLAN.md','prepare_hardware.py','hardware02.py','launch02.py',
+    for n in ('PLAN.md','HARDWARE-PLAN.md','HARDWARE-PLAN02.md','prepare_hardware.py','hardware02.py','launch02.py',
         'host_observer.py','observe.py','OBSERVER-PREFLIGHT.json','LAUNCH-PREFLIGHT.json',
-        'bootstrap.py','guest_binding.py','analyze.py','HARDWARE-GUESTS.json','snapshot_inputs.py',
+        'bootstrap.py','test_bootstrap_closure.py','AMENDMENT-02.md','guest_binding.py','analyze.py','HARDWARE-GUESTS.json','snapshot_inputs.py',
         'test_hardware02.py','test_replacement02.py','test_observer_controller.py','run_composition.py',
-        'HOST-REUSE.json','controller-source-delta.patch','CONTROLLER-RESULT.md','report_physical.py','record_actors.py'):
+        'HOST-REUSE.json','controller-source-delta.patch','CONTROLLER-RESULT.md','CONTROLLER-RESULT03.md','report_physical.py','record_actors.py'):
         files.append(T/n)
     files.extend(T.parent/'WOLF-PERF-022/results/host01'/n for n in ('RESULT.json','SHA256.json','release.json'))
     for n,interpreter in (('LAUNCH-PREFLIGHT.json',str(E/'.venv/bin/python')),('OBSERVER-PREFLIGHT.json','/usr/bin/python3')):
@@ -71,9 +73,11 @@ def main():
     for module in tuple(sys.modules.values()):
         name=getattr(module,'__file__',None)
         if name and name.endswith(('.py','.so')) and name.startswith(('/Agon/mystuff/','/usr/')):files.append(Path(name))
+    # Dynamic imports, subprocess scripts and their configs are explicit inputs.
+    files.extend(bootstrap.REQUIRED)
     files.extend(p for p in B.iterdir()if p.is_file())
     kit={k:old[k]for k in ('native_b_sha256','flash_span','p4_boot_build')}
-    kit.update(task='WOLF-PERF-023-hardware01',request=hw.REQUEST,remote=remote,
+    kit.update(task='WOLF-PERF-023-hardware02',request=hw.REQUEST,remote=remote,
         listings={'vdplet-room':guests['original']['room']['listing']},
         incoming_components=components,modules=modules,stage=stage,guests=guests,
         retain_lease_after_test=False,restore=str(B/'restore.bin'),install_b=str(B/'install-b.bin'),

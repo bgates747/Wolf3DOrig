@@ -1,7 +1,7 @@
 """Guard one serial actual-listener host compilation and finite build checks."""
 from pathlib import Path
 import argparse,hashlib,json,os,signal,subprocess,sys,time
-T=Path(__file__).resolve().parent; B=T/'build/composition02';D=Path('/Agon/mystuff/agon-dev-env')
+T=Path(__file__).resolve().parent; B=T/'build/composition04';D=Path('/Agon/mystuff/agon-dev-env')
 
 def main(lease):
     B.mkdir(exist_ok=False)
@@ -18,7 +18,7 @@ def main(lease):
         subprocess.run([str(D/'.venv/bin/python'),str(D/'cross-agent/pi5-workloads/pi5_lease.py'),'assert-owner','--owner','wolf3dorig','--lease',lease],check=True,stdout=subprocess.DEVNULL)
         guard()
         source=Path('/Agon/mystuff/agon-extender/agents/remote009/download-r01/source')
-        files=[T/n for n in ('hardware02.py','bootstrap.py','test_replacement02.py','run_composition.py','test_hardware02.py','guest_binding.py','analyze.py','launch02.py','LAUNCH-PREFLIGHT.json','HARDWARE-GUESTS.json','PLAN.md','host_observer.py','observe.py','OBSERVER-PREFLIGHT.json','test_observer_controller.py')]
+        files=[T/n for n in ('hardware02.py','bootstrap.py','test_bootstrap_closure.py','test_replacement02.py','run_composition.py','test_hardware02.py','guest_binding.py','analyze.py','launch02.py','LAUNCH-PREFLIGHT.json','HARDWARE-GUESTS.json','PLAN.md','host_observer.py','observe.py','OBSERVER-PREFLIGHT.json','test_observer_controller.py')]
         files += [source/'projects/sdserve/src'/n for n in ('service.c','service.h','sd_wire.h')]
         files += [source/'tests/test_sdserve.py',source/'tests/sdserve_host/fs.c',source/'tests/sdserve_host/agon/mos.h']
         bindings=json.loads((T/'HARDWARE-GUESTS.json').read_text())
@@ -26,8 +26,11 @@ def main(lease):
             for guest in modes.values():
                 files += [Path(guest[n]) for n in ('module','guest','listing')]
         files += [T/'build/guests01'/n for n in ('bindings.json','inputs.json','receipt.json')]
+        import bootstrap
+        files.extend(bootstrap.REQUIRED)
+        files.append(T/'AMENDMENT-02.md')
         receipt['inputs']={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
-        for name in ('test_hardware02.py','test_replacement02.py','test_observer_controller.py'):
+        for name in ('test_hardware02.py','test_replacement02.py','test_observer_controller.py','test_bootstrap_closure.py'):
             subprocess.run([str(D/'.venv/bin/python'),str(D/'cross-agent/pi5-workloads/pi5_lease.py'),'assert-owner','--owner','wolf3dorig','--lease',lease],check=True,stdout=subprocess.DEVNULL)
             guard();begin=time.monotonic()
             with (B/(name+'.log')).open('x') as log:

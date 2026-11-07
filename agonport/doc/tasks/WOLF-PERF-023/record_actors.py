@@ -12,7 +12,7 @@ import time
 import host_observer as session
 
 T = Path(__file__).resolve().parent
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 
 
 def main(controller_tool, observer_tool):

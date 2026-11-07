@@ -2,7 +2,7 @@
 from pathlib import Path
 import hashlib, json
 T=Path(__file__).resolve().parent
-B=T/'build/hardware01'
+B=T/'build/hardware02'
 def main():
     kit=json.loads((B/'kit.json').read_text())
     root=B/'frozen-inputs';root.mkdir(exist_ok=False)

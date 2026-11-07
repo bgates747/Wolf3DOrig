@@ -3,7 +3,7 @@ from pathlib import Path
 import argparse, hashlib, importlib.util, json, statistics
 
 T = Path(__file__).resolve().parent
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 SEQUENCE = [('original', 'room'), ('candidate', 'room'),
             ('candidate', 'room'), ('original', 'room')]
 

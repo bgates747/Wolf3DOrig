@@ -1,259 +1,39 @@
---- qualified022/hardware02.py
-+++ span023/hardware02.py
-@@ -1,7 +1,7 @@
- """Finite owned physical candidate comparison. Requires frozen kit/fresh grant.
- 
- Reuse the physical54 producer/result/SDK paths; this module owns the new
--namespace, admission, module selection and six-case three-arm matrix. Import is passive.
-+namespace, admission, module selection and four-case two-arm matrix. Import is passive.
- """
- from pathlib import Path
- import argparse
-@@ -18,21 +18,21 @@
+--- actual97-preserved/hardware02.py
++++ corrected-hardware02/hardware02.py
+@@ -13,12 +13,13 @@
+ import sys
+ import time
+ import host_observer
++import bootstrap
+
+ T = Path(__file__).resolve().parent
  sys.path.insert(0, str(T))
  P3 = T.parent / 'WOLF-PERF-003'
  sys.path.insert(0, str(P3 / 'hardware'))
--B = T / 'build/hardware02'
-+B = T / 'build/hardware01'
+-B = T / 'build/hardware01'
++B = T / 'build/hardware02'
  spec = importlib.util.spec_from_file_location('wp007_physical54', P3 / 'hardware/physical09.py')
  h = importlib.util.module_from_spec(spec)
  spec.loader.exec_module(h)
- h.B = B
--decoder_spec = importlib.util.spec_from_file_location('wolf022_decoder', T/'analyze.py')
-+decoder_spec = importlib.util.spec_from_file_location('wolf023_decoder', T/'analyze.py')
- decoder = importlib.util.module_from_spec(decoder_spec); decoder_spec.loader.exec_module(decoder)
- h.analyze = decoder.analyze
- sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
- SEQUENCE = (
--    ('original', 'room'), ('cyan', 'room'), ('combined', 'room'),
--    ('combined', 'room'), ('cyan', 'room'), ('original', 'room'),
-+    ('original', 'room'), ('candidate', 'room'),
-+    ('candidate', 'room'), ('original', 'room'),
+@@ -32,7 +33,7 @@
+     ('candidate', 'room'), ('original', 'room'),
  )
--ARMS = ('original', 'cyan', 'combined')
--REQUEST = '793c29add4f8'
-+ARMS = ('original', 'candidate')
-+REQUEST = '098fa3fae20d'
+ ARMS = ('original', 'candidate')
+-REQUEST = '098fa3fae20d'
++REQUEST = '0d70a117969f'
  CLEANUP_RESERVE = 360
  GUEST_BOUND = 300
- 
-@@ -42,12 +42,11 @@
- 
- 
+
+@@ -42,8 +43,10 @@
+
+
  def verify_kit(kit):
--    assert kit['task'] == 'WOLF-PERF-022-hardware02'
--    assert kit['remote'] == '/test/wolf/perf022/r02'
-+    assert kit['task'] == 'WOLF-PERF-023-hardware01'
-+    assert kit['remote'] == '/test/wolf/perf023/r01'
+-    assert kit['task'] == 'WOLF-PERF-023-hardware01'
+-    assert kit['remote'] == '/test/wolf/perf023/r01'
++    # Must precede constructor publication, target access, staging and flash.
++    bootstrap.verify_closure(kit)
++    assert kit['task'] == 'WOLF-PERF-023-hardware02'
++    assert kit['remote'] == '/test/wolf/perf023/r02'
      assert kit['request'] == REQUEST
--    assert kit['original_module_sha256'] == 'a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656'
--    assert kit['cyan_module_sha256'] == '22ef84a767951ec03ea138b048db4cfe613d1edf02e8cbb34ee824ba535d24a1'
--    assert kit['combined_module_sha256'] == '8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b'
-+    assert kit['original_module_sha256'] == '8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b'
-+    assert kit['candidate_module_sha256'] == 'b181a8fdba5b0e0791359593e95169a99ad732e369cbb9442be1e4046baed1d4'
-     assert kit['native_b_sha256'] == '7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d'
-     assert kit['source_binding_passed'] and kit['boot_binding_passed']
-     assert kit['retain_lease_after_test'] is False
-@@ -231,9 +230,10 @@
-             assert sha(p / name) == self.components[key]
-         c = self.metadata(p, 'directories')
-         try:
--            c.make_directory('/test/wolf/perf022', parents=True)
-+            namespace_parent = self.remote.rsplit('/', 1)[0]
-+            c.make_directory(namespace_parent, parents=True)
-             assert not any(n.rstrip('/').lower() == self.remote.lower()
--                           for n, _, _ in c.entries('/test/wolf/perf022')), 'Fresh namespace collision'
-+                           for n, _, _ in c.entries(namespace_parent)), 'Fresh namespace collision'
-             c.make_directory(self.remote, parents=True)
-             c.make_directory(self.remote + '/level_00', parents=True)
-         finally:
-@@ -274,7 +274,7 @@
-         with path.open('x') as f:
-             json.dump(observation, f, indent=2); f.write('\n')
-         with (self.out / 'entry-context.json').open('x') as f:
--            json.dump(dict(schema='wolf-perf022-entry-v1', generation=self.grant['generation'],
-+            json.dump(dict(schema='wolf-perf023-entry-v1', generation=self.grant['generation'],
-                 request=self.kit['request'], lease=self.lease, original_grant=self.c['grant'],
-                 original_grant_sha256=sha(self.c['grant']), manifest=str(B / 'kit.json'),
-                 manifest_sha256=sha(B / 'kit.json'), dispatch_context=self.c,
-@@ -433,7 +433,7 @@
-             self.cleaning = True  # Restoration is never refused by dispatch cutoff.
-             self.flash('restore', self.kit['restore'])
-             self.handback()
--            h.save(self.out / 'complete.json', dict(passed=True, guests=6, resource_probes=7, restored=True))
-+            h.save(self.out / 'complete.json', dict(passed=True, guests=4, resource_probes=5, restored=True))
-             h.save(self.out / 'restored-idle.json', dict(restored=True, target_actors_stopped=True, lease=self.lease, reason='Ready for normal fresh release after driver and all owned children have exited; no further probing.', epoch=time.time()))
-         except h.SetupFailure as error:
-             h.save(self.out / 'failure.json', dict(error=repr(error), next_dispatch_stopped=True, actual_mos_return=True, epoch=time.time()))
-
-
-
---- qualified022/observe.py
-+++ span023/observe.py
-@@ -43,11 +43,11 @@
-         grant = grant['active']
-     assert grant['owner'] == 'wolf3dorig'
-     assert grant['lease'] == record['lease']
--    assert grant['task'] == kit['task'] == 'WOLF-PERF-022-hardware02'
--    assert grant['request'] == kit['request'] == '793c29add4f8'
-+    assert grant['task'] == kit['task'] == 'WOLF-PERF-023-hardware01'
-+    assert grant['request'] == kit['request'] == '098fa3fae20d'
-     assert grant['entry_observation']['components'] == kit['incoming_components']
-     assert hashlib.sha256(manifest.read_bytes()).hexdigest() == record['kit_sha256']
--    assert manifest.resolve() == Path(__file__).resolve().parent / 'build/hardware02/kit.json'
-+    assert manifest.resolve() == Path(__file__).resolve().parent / 'build/hardware01/kit.json'
-     for name, digest in kit['inputs'].items():
-         assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest, name
- 
-
-
-
---- qualified022/test_hardware02.py
-+++ span023/test_hardware02.py
-@@ -19,7 +19,7 @@
-         self.deadline = hardware.time.monotonic() + 4200
-         self.observer_folder = Path(out) / 'observer'
-         self.observer_record = {}
--        self.kit = dict(original_module_sha256='original', cyan_module_sha256='cyan', combined_module_sha256='combined',
-+        self.kit = dict(original_module_sha256='original', candidate_module_sha256='candidate',
-                         install_b='install-b.bin', restore='restore.bin')
- 
-     def entry(self): self.events.append('entry')
-@@ -82,10 +82,10 @@
-             m = Model(folder)
-             m.suite()
-             modules = [e[2] for e in m.events if isinstance(e, tuple) and e[0] == 'module']
--            self.assertEqual(modules, ['original', 'cyan', 'combined', 'combined', 'cyan', 'original'])
-+            self.assertEqual(modules, ['original', 'candidate', 'candidate', 'original'])
-             cases = [e for e in m.events if isinstance(e, tuple) and e[0] == 'case']
--            self.assertEqual([e[3] for e in cases], ['room'] * 6)
--            self.assertEqual(len([e for e in m.events if isinstance(e, tuple) and e[0] == 'probe']), 7)
-+            self.assertEqual([e[3] for e in cases], ['room'] * 4)
-+            self.assertEqual(len([e for e in m.events if isinstance(e, tuple) and e[0] == 'probe']), 5)
-             self.assertEqual(m.events[-2:], [('flash', 'restore'), 'handback'])
-             for i, (arm, mode) in enumerate(hardware.SEQUENCE, 1):
-                 saved = json.loads((Path(folder) / f'{i:02d}-vdplet-{mode}/arm.json').read_text())
-@@ -118,7 +118,7 @@
- 
-     def test_incomplete_current_binding_refused(self):
-         with self.assertRaises((KeyError, AssertionError)):
--            hardware.verify_kit(dict(task='WOLF-PERF-009-hardware-r01', remote='/test/wolf/perf022/r02'))
-+            hardware.verify_kit(dict(task='WOLF-PERF-009-hardware-r01', remote='/test/wolf/perf023/r01'))
- 
- 
- class BootstrapTests(unittest.TestCase):
-@@ -156,7 +156,7 @@
-     """Only device I/O is modeled; entry/route/stage logic is the real adapter."""
-     def __init__(self, root, collision=False):
-         self.out = Path(root)
--        self.remote = '/test/wolf/perf022/r02'
-+        self.remote = '/test/wolf/perf023/r01'
-         self.files = {'/autoexec.txt': b'SET KEYBOARD 1', '/emos/sdserve.bin': b'LISTENER'}
-         self.components = {k: hashlib.sha256(self.files[n]).hexdigest() for k,n in
-             [('startup_sha256','/autoexec.txt'),('listener_sha256','/emos/sdserve.bin')]}
-
---- qualified022/test_replacement02.py
-+++ span023/test_replacement02.py
-@@ -18,7 +18,7 @@
- SOURCE = Path('/Agon/mystuff/agon-extender/agents/remote009/download-r01/source')
- spec = importlib.util.spec_from_file_location('retained_sdserve_tests', SOURCE/'tests/test_sdserve.py')
- owner = importlib.util.module_from_spec(spec); spec.loader.exec_module(owner)
--OUT = T/'build/composition04'
-+OUT = T/'build/composition02'
- 
- 
- class Peer(owner.SdserveTests):
-@@ -29,7 +29,7 @@
-     def __init__(self, peer, output):
-         self.peer = peer; self.out = Path(output); self.cleaning = False
-         self.deadline = hardware.time.monotonic()+4200
--        self.remote = '/test/wolf/perf022/r02'
-+        self.remote = '/test/wolf/perf023/r01'
-         self.observer_folder = None; self.observer_record = {}
-         self.root = peer.disk/self.remote.lstrip('/'); self.root.mkdir(parents=True)
-         bindings=json.loads((T/'HARDWARE-GUESTS.json').read_text())
-@@ -86,7 +86,7 @@
-         b=self.b;source=b.kit['modules']['original'];p=b.folder('old-sequence')
-         b.upload(p,'original',source,b.remote+'/wolf3d.vdpl')
-         self.assertEqual(b.module_state(p,'retained'),b'\x09')
--        blob=Path(b.kit['modules']['cyan']).read_bytes()
-+        blob=Path(b.kit['modules']['candidate']).read_bytes()
-         self.peer.rpc(5,struct.pack('<III',74,len(blob),0)+owner.path(b.remote+'/wolf3d.vdpl'),status=8)
-         self.assertEqual(hardware.sha(b.root/'wolf3d.vdpl'),b.kit['original_module_sha256'])
-         self.assertEqual(b.retire_calls,0)
-@@ -98,30 +98,30 @@
-             self.assertFalse((b.root/'wolf3d.vdpl.p17bak').exists())
-             self.assertFalse((b.root/'wolf3d.vdpl.p17meta').exists())
-             self.assertFalse((b.root/'wolf3d.vdpl.p17part').exists())
--        self.assertEqual(b.retire_calls,6);self.assertEqual(b.put_calls,6)
-+        self.assertEqual(b.retire_calls,4);self.assertEqual(b.put_calls,4)
-     def test_existing_foreign_backup_refuses_before_put_or_retirement(self):
-         b=self.b;(b.root/'wolf3d.vdpl.p17bak').write_bytes(b'foreign')
--        with self.assertRaisesRegex(AssertionError,'Unknown module siblings'):b.install_module('cyan',1)
-+        with self.assertRaisesRegex(AssertionError,'Unknown module siblings'):b.install_module('candidate',1)
-         self.assertEqual((b.put_calls,b.retire_calls),(0,0))
-         self.assertEqual((b.root/'wolf3d.vdpl.p17bak').read_bytes(),b'foreign')
-     def test_full_target_readback_mismatch_preserves_backup(self):
-         b=self.b;b.corrupt_target=True
--        with self.assertRaises(AssertionError):b.install_module('cyan',1)
-+        with self.assertRaises(AssertionError):b.install_module('candidate',1)
-         self.assertEqual(b.retire_calls,0)
-         self.assertEqual(hardware.sha(b.root/'wolf3d.vdpl.p17bak'),b.kit['original_module_sha256'])
-     def test_backup_mismatch_preserved_after_verified_target(self):
-         b=self.b;b.corrupt_backup=True
--        with self.assertRaisesRegex(AssertionError,'Unexpected backup'):b.install_module('cyan',1)
-+        with self.assertRaisesRegex(AssertionError,'Unexpected backup'):b.install_module('candidate',1)
-         self.assertEqual(b.retire_calls,0)
--        self.assertEqual(hardware.sha(b.root/'wolf3d.vdpl'),b.kit['cyan_module_sha256'])
-+        self.assertEqual(hardware.sha(b.root/'wolf3d.vdpl'),b.kit['candidate_module_sha256'])
-         self.assertEqual((b.root/'wolf3d.vdpl.p17bak').read_bytes(),b'foreign-backup')
-     def test_real_engine_cleanup_failure_preserves_target_and_backup(self):
-         b=self.b;b.fail_retirement=True
--        with self.assertRaises(AssertionError):b.install_module('cyan',1)
-+        with self.assertRaises(AssertionError):b.install_module('candidate',1)
-         self.assertEqual(b.retire_calls,1)
--        self.assertEqual(hardware.sha(b.root/'wolf3d.vdpl'),b.kit['cyan_module_sha256'])
-+        self.assertEqual(hardware.sha(b.root/'wolf3d.vdpl'),b.kit['candidate_module_sha256'])
-         self.assertEqual(hardware.sha(b.root/'wolf3d.vdpl.p17bak'),b.kit['original_module_sha256'])
--        self.assertFalse((b.out/'module-01-cyan/receipt.json').exists())
-+        self.assertFalse((b.out/'module-01-candidate/receipt.json').exists())
- 
- 
- if __name__=='__main__':
-
---- qualified022/test_observer_controller.py
-+++ span023/test_observer_controller.py
-@@ -70,9 +70,9 @@
- 
-     def test_observer_rejoins_actual_lease_kit_and_input_bytes(self):
-         with tempfile.TemporaryDirectory() as folder:
--            root = Path(folder); build = root / 'build/hardware02'; build.mkdir(parents=True)
-+            root = Path(folder); build = root / 'build/hardware01'; build.mkdir(parents=True)
-             source = root / 'pinned-source'; source.write_bytes(b'qualified')
--            kit = dict(task='WOLF-PERF-022-hardware02', request='793c29add4f8', incoming_components={'rom': 'exact'},
-+            kit = dict(task='WOLF-PERF-023-hardware01', request='098fa3fae20d', incoming_components={'rom': 'exact'},
-                        inputs={str(source): hashlib.sha256(source.read_bytes()).hexdigest()})
-             manifest = build / 'kit.json'; manifest.write_text(json.dumps(kit))
-             grant = root / 'grant.json'
-
---- qualified022/run_composition.py
-+++ span023/run_composition.py
-@@ -1,7 +1,7 @@
- """Guard one serial actual-listener host compilation and finite build checks."""
- from pathlib import Path
- import argparse,hashlib,json,os,signal,subprocess,sys,time
--T=Path(__file__).resolve().parent; B=T/'build/composition04';D=Path('/Agon/mystuff/agon-dev-env')
-+T=Path(__file__).resolve().parent; B=T/'build/composition02';D=Path('/Agon/mystuff/agon-dev-env')
- 
- def main(lease):
-     B.mkdir(exist_ok=False)
-@@ -25,8 +25,7 @@
-         for modes in bindings.values():
-             for guest in modes.values():
-                 files += [Path(guest[n]) for n in ('module','guest','listing')]
--        for task in ('WOLF-PERF-021','WOLF-PERF-016'):
--            files += [T.parent/task/'build/guests01'/n for n in ('bindings.json','inputs.json','receipt.json')]
-+        files += [T/'build/guests01'/n for n in ('bindings.json','inputs.json','receipt.json')]
-         receipt['inputs']={str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in files}
-         for name in ('test_hardware02.py','test_replacement02.py','test_observer_controller.py'):
-             subprocess.run([str(D/'.venv/bin/python'),str(D/'cross-agent/pi5-workloads/pi5_lease.py'),'assert-owner','--owner','wolf3dorig','--lease',lease],check=True,stdout=subprocess.DEVNULL)
+     assert kit['original_module_sha256'] == '8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b'
+     assert kit['candidate_module_sha256'] == 'b181a8fdba5b0e0791359593e95169a99ad732e369cbb9442be1e4046baed1d4'

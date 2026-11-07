@@ -25,15 +25,15 @@ def qualify():
             files.append(Path(name))
     for rel in ('build/r01/build-receipt.json','build/r01/code-result.json',
                 'build/r01/nested-stack-source.json','build/r01/byte-loop-audit.json',
-                'build/guests01/receipt.json','build/composition02/receipt.json'):
+                'build/guests01/receipt.json','build/composition04/receipt.json'):
         p=T/rel
         assert json.loads(p.read_text())['passed'],rel
         files.append(p)
     for name,digest in json.loads((T/'build/guests01/inputs.json').read_text()).items():
         assert sha(name)==digest,name
         files.append(Path(name))
-    composition=json.loads((T/'build/composition02/receipt.json').read_text())
-    composition_saved=json.loads((T/'results/controller02/frozen-inputs/index.json').read_text())
+    composition=json.loads((T/'build/composition04/receipt.json').read_text())
+    composition_saved=json.loads((T/'results/controller04/frozen-inputs/index.json').read_text())
     for name,digest in composition['inputs'].items():
         snapshot=Path(composition_saved[name]['snapshot'])
         assert sha(snapshot)==digest
