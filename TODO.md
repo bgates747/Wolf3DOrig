@@ -5,6 +5,21 @@ unfinished work. IDs are stable references and are not reused. When an item is
 accepted, rejected, or superseded, record its ID, evidence, and rationale in
 the current dated development log, then remove it from this file.
 
+## WOLF-PERF-006 — gap priorities and O2 arm
+
+[Plan](agonport/doc/tasks/WOLF-PERF-006/PLAN.md),
+[pre-code](agonport/doc/tasks/WOLF-PERF-006/PRE-CODE.md) and
+[hardware/hold](agonport/doc/tasks/WOLF-PERF-006/HARDWARE-RUN-01.md).
+Only priorityP01 selected now; P02–P07 deferred discussion backlog.
+
+- [ ] WOLF-PERF-006-01 — Freeze task/support/finite run and reserve bench now.
+- [ ] WOLF-PERF-006-02 — Prepare identical-source Os/O2 arms/exact bf7f control.
+- [ ] WOLF-PERF-006-03 — Qualify host/actual code/provider/stack/package producers.
+- [ ] WOLF-PERF-006-04 — Freeze qualified current-context kit and obtain grant.
+- [ ] WOLF-PERF-006-05 — Execute matched sixguest/sevenprobe hardware suite.
+- [ ] WOLF-PERF-006-06 — Exact restore/idle handback; HOLD lease for Smith.
+- [ ] WOLF-PERF-006-07 — Publish/share results; release only on later direction.
+
 ## WOLF-PERF-005 — bytewise direct-span invariant hoisting
 
 [Plan](agonport/doc/tasks/WOLF-PERF-005/PLAN.md) and
