@@ -39,6 +39,7 @@ def main():
     (B / 'renderer.patch').write_text('\n'.join(changes))
     files = [p for p in B.rglob('*') if p.is_file()]
     files += [p for p in T.iterdir() if p.is_file()]
+    files += [T.parent / 'WOLF-PERF-007' / n for n in ('test_equivalence.cpp', 'test_spans.cpp')]
     (B / 'inputs.json').write_text(json.dumps({'contract': 'c0f2245', 'inputs': {str(p): sha(p) for p in files}}, indent=2) + '\n')
 
 
