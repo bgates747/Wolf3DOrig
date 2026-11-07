@@ -1,0 +1,29 @@
+..............E
+======================================================================
+ERROR: test_namespace_collision_stops_before_any_sd_file_replacement (__main__.EntryTests.test_namespace_collision_stops_before_any_sd_file_replacement)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/test_hardware02.py", line 217, in test_namespace_collision_stops_before_any_sd_file_replacement
+    with self.assertRaisesRegex(AssertionError, 'collision'): b.entry()
+                                                              ~~~~~~~^^
+  File "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/hardware02.py", line 260, in entry
+    self.save_entry(observation)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/hardware02.py", line 279, in save_entry
+    manifest_sha256=sha(B / 'kit.json'), dispatch_context=self.c,
+                    ~~~^^^^^^^^^^^^^^^^
+  File "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/hardware02.py", line 29, in <lambda>
+    sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
+                                   ~~~~~~~~~~~~~~~~~~^^
+  File "/Agon/mystuff/agon-dev-env/.local/mig001-arm64/cpython-3.14.6-linux-aarch64-gnu/lib/python3.14/pathlib/__init__.py", line 777, in read_bytes
+    with self.open(mode='rb', buffering=0) as f:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Agon/mystuff/agon-dev-env/.local/mig001-arm64/cpython-3.14.6-linux-aarch64-gnu/lib/python3.14/pathlib/__init__.py", line 771, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/hardware01/kit.json'
+
+----------------------------------------------------------------------
+Ran 15 tests in 0.017s
+
+FAILED (errors=1)
