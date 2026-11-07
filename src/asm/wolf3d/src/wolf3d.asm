@@ -1612,6 +1612,7 @@ w3d_intermission_old_next_extra:
 ; Owned package staging, disjoint from all live code/data above. The durable
 ; builder checks the linked extent and application/stack boundary before use.
 w3d_vdplet_package_storage:
+W3D_VDPLET_PACKAGE_ADDRESS:
     blkb W3D_VDPLET_PACKAGE_STORAGE_BYTES,0
 w3d_vdplet_package_storage_end:
     .endif

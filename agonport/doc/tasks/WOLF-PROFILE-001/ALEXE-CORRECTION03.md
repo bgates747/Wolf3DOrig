@@ -34,3 +34,10 @@ Same pinned runtime/firmware/module/assets/250-frame game/300s bound/guards,
 normal owned Quit/teardown/retrieve/hash/release as ALEXE-PLAN. Only the client
 storage correction differs from02. No physical access, automatic replay,
 emulator repair, renderer optimization or paused-goal resumption selected.
+
+Compiler469 first source check rejected a forward-referenced EQU in ez80asm
+pass1. Original storage03 log/guard report retained; no emulator case started.
+Use the actual storage label directly as the address symbol (ordinary forward
+instruction operands), with its identical-address descriptive label alongside.
+Separate storage04 output preserves the failed check. Same storage method,
+reserved extent, finite compiler bound and downstream test remain selected.

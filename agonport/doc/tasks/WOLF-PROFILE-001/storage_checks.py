@@ -1,6 +1,7 @@
 """Finite actual-assembly staging/layout checks; requires normal Pi compiler lease."""
 from pathlib import Path
 import importlib.util
+import argparse
 import json
 import shutil
 import subprocess
@@ -12,8 +13,9 @@ ROOT = T.parents[3]
 spec = importlib.util.spec_from_file_location('builder', ROOT/'src/asm/wolf3d/scripts/build.py')
 b = importlib.util.module_from_spec(spec); spec.loader.exec_module(b)
 
-def main():
-    out = T/'build/storage03'
+def main(revision='storage03'):
+    assert revision in ('storage03','storage04')
+    out = T/'build'/revision
     out.mkdir(exist_ok=False)
     module=ROOT/'agonport/doc/tasks/WOLF-PERF-021/results/build01/candidate/module/wolf_perf.vdpl'
     assembler=b.resolve_assembler(None)
@@ -73,4 +75,5 @@ def main():
     print(json.dumps(dict(passed=True,builds=len(results),guest_sha256=binding['guest_sha256'],storage=binding['package_storage'])))
 
 if __name__=='__main__':
-    main()
+    parser=argparse.ArgumentParser();parser.add_argument('--revision',default='storage03')
+    main(parser.parse_args().revision)

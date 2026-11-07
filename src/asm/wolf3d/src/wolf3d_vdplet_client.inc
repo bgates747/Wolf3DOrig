@@ -27,7 +27,7 @@ W3D_VDPLET_WORKSPACE_BUFFER:   equ 07100h
 W3D_VDPLET_UPDATE_BUFFER:      equ 07101h
 W3D_VDPLET_CONFIG_BUFFER:      equ 07102h
 W3D_VDPLET_ARGUMENT_BUFFER:    equ 07103h
-W3D_VDPLET_PACKAGE_ADDRESS:    equ w3d_vdplet_package_storage
+; W3D_VDPLET_PACKAGE_ADDRESS is the linked storage label at the image tail.
 W3D_VDPLET_PACKAGE_LIMIT:      equ 020000h
 W3D_VDPLET_UPLOAD_CHUNK:       equ 4096
 W3D_VDPLET_TIMEOUT_TICKS:      equ 1200 ; ten seconds at the 120 Hz MOS clock
