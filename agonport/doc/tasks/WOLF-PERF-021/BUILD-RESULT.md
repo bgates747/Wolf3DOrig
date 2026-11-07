@@ -62,6 +62,13 @@ Actual resident RAM must still join those operands in a future physical run.
 [real producer evidence](results/guests01/SHA256.json) and
 [unit composition](results/build01/unit-composition.json) preserve the result.
 Source/component facts and finite host checks do not establish optical output,
-native branch hit counts, exclusive CPU cost or a combined timing win. Complete
-running independent019 first; any useful uncapped physical021 contract requires
+native branch hit counts, exclusive CPU cost or a combined timing win. Actual019 stopped before any room/probe at startup admission and was restored/
+released; its independent timing remains unmeasured. Any useful uncapped
+physical021 contract requires
 its own current tuple/rollback/host freeze/fresh normal Mech-first admission.
+
+Supplemental compiler378: both exact source arms pass1176 independent original-
+global-layer cases with same/shifted/permuted overlapping rows, arbitrary masks,
+linear output and whole-store guards. Address/undefined sanitizers pass;51 inputs
+archived.16.835s, children joined/released, no successor. See
+[alias evidence](results/alias01/SHA256.json). It was not part of compiler374.
