@@ -26,3 +26,9 @@ FIFO: same runtime/firmware/module/assets/250frame/300s bounds/guards/cleanup,
 now require >20 distinct recorded degree headings, changing scene capture,
 valid WPF native joins and clean completion. No runtime rebuild or physical
 contact; original358 evidence/result stays unchanged.
+
+Compiler473 PASS19.52s: actual guest322539bytes SHA96d6e7d4fce6a1f357b55d862ee75ebcbe9eee1dcdf37438229c29f3d5d21d84.
+All seven checks pass, including actual poll CALL/latch operands and old-seam
+rejection. Same size/module/storage as03; shipping game source unchanged from
+its storage correction. All owned children joined, compiler released normally.
+Run04 is now selected with that exact guest and the unchanged original bound.

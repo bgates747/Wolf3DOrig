@@ -27,3 +27,18 @@ staging address060000 overlaps executable code in the actual guest. This is a
 consumer defect, with causal attribution to356 still unproved. A separately
 specified storage correction and new bounded run follow; original attempts
 remain stopped and unchanged.
+
+Actual Oryx358, corrected owned-storage guest49c9355f, finished in27.14s
+and returned normally to MOS. Original harness FAIL is preserved: all250
+records have angle0 instead of the required >20 headings. The actual collector
+output otherwise validates:16096B, WPF1 blocks115/120/15,250 native joins,
+zero discarded samples, status0/timer retired/equal entry-exit SP0BFef1,
+INFO17 margins2120/1780, frontend0/fault counters0. Exact disk-icon pixels
+appear in two captures019/025; later ordinary captures restore BJ's face.
+All47 retrieval hashes pass, archive8e695e2b; Oryx358 cleanly released with
+no next reservation. No physical framerate claim follows from emulator clocks.
+
+Source review explains this remaining test defect: the private fixture wrote
+w3d_controls before ordinary sampling overwrote it from the held-key bitmap.
+ALEXE-CORRECTION04 freezes a true held-Left latch on every ordinary poll and
+one separately qualified/run guest. Shipping controls and profiler stay as-is.
