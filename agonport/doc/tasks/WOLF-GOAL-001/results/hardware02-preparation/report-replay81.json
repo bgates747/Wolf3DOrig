@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "frames": 2400,
+  "comparison": {
+    "original_runs": [
+      1,
+      4
+    ],
+    "candidate_runs": [
+      2,
+      3
+    ],
+    "original_render_cycles": 6032845.360833334,
+    "candidate_render_cycles": 5205914.7775,
+    "original_render_ms_at_configured240MHz": 25.136855670138893,
+    "candidate_render_ms_at_configured240MHz": 21.691311572916668,
+    "render_reduction_percent": 13.707140393519179,
+    "original_presented_fps": 30.062379437332464,
+    "candidate_presented_fps": 30.062379437332464,
+    "presented_fps_change_percent": 0.0,
+    "original_run_spread_percent": 3.1244553267478103,
+    "scope": "Two runs per arm; all candidates share the same two bracketing controls. No separate independent ABBA claim."
+  },
+  "actual_module_chain_and_resource_raw": true,
+  "limits": "Offline actual81 compatibility only; no H02 target run."
+}
