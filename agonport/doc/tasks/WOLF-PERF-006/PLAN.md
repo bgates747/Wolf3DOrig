@@ -44,18 +44,20 @@ responsiveness task; this comparison does not select it.
 
 ## Immutable implementation subtasks
 
-- [ ] WOLF-PERF-006-01 — Freeze this plan, PRE-CODE and finite hardware plan,
+- [x] WOLF-PERF-006-01 — Freeze this plan, PRE-CODE and finite hardware plan,
   reserve normal Olimex FIFO immediately, notify scheduler of explicit hold.
-- [ ] WOLF-PERF-006-02 — Prepare isolated exact bf7f physical67 control and same
+- [x] WOLF-PERF-006-02 — Prepare isolated exact bf7f physical67 control and same
   source candidate. Only candidate SDK copy's optimization flag -Os→-O2 changes;
   no owner SDK/default change. Reproduce exact control binary or stop.
-- [ ] WOLF-PERF-006-03 — Serial Pi build/check: source/math/lifecycle/host output,
+- [x] WOLF-PERF-006-03 — Serial Pi build/check: source/math/lifecycle/host output,
   actual compiler flags/helpers/sections/relocations/PSRAM-safe code and whole
   resources; qualify package-dependent real eZ80 producers per arm. Preserve
   failed attempts and stop on mismatch; no relaxed guards or uncertain replay.
-- [ ] WOLF-PERF-006-04 — Qualify derived actual controller/listener lifecycle,
+- [x] WOLF-PERF-006-04 — Qualify derived actual controller/listener lifecycle,
   current ROM/map/API/bootstrap/fullspan rollback and fresh input kit. Commit/
   push concrete freeze before final scheduler preflight; actual grant required.
+  Original hardware01 admitted actual69; it stopped before guest entry and was
+  restored. AMENDMENT-02 separately freezes one same-task retained69 cohort.
 - [ ] WOLF-PERF-006-05 — Run matched control/control then four600-pose unpaced
   original/candidate/candidate/original cases, entry/after-case7INFO probes;
   unchanged E1L1(34,36)/720degrees/noenemy work and native7593/carrier/observer.

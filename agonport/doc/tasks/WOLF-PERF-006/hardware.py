@@ -17,7 +17,7 @@ T = Path(__file__).resolve().parent
 sys.path.insert(0, str(T))
 P3 = T.parent / 'WOLF-PERF-003'
 sys.path.insert(0, str(P3 / 'hardware'))
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 spec = importlib.util.spec_from_file_location('wp006_physical54', P3 / 'hardware/physical09.py')
 h = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(h)
@@ -38,7 +38,10 @@ class BudgetStop(RuntimeError):
 
 def verify_kit(kit):
     assert kit['task'] == 'WOLF-PERF-006-hardware-r01'
-    assert kit['remote'] == '/test/wolf/perf006/r01'
+    assert kit['remote'] == '/test/wolf/perf006/r02'
+    assert kit['continuation_generation'] == 69
+    assert kit['request'] == 'ab7af23bfd1a'
+    assert kit['previous_kit_sha256'] == 'a2493b75e16617fa69f892af6c77616fb4dd9a8de9d5a3ec9d0901052a76c394'
     assert kit['original_module_sha256'] == 'bf7f2bb038387698464fbb297a437ef98457638a28261dc7f9688044d9b6eb28'
     assert kit['candidate_module_sha256'] == 'cd429e2fd642ab784d024cb7d6eb48f38b00eec132285ea78222b0e77e373ceb'
     assert kit['native_b_sha256'] == '7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d'
@@ -91,6 +94,12 @@ class Bench(h.Bench):
         verify_kit(self.kit)
         assert self.grant['owner'] == 'wolf3dorig' and self.grant['task'] == self.kit['task']
         assert self.grant['request'] == self.kit['request']
+        assert self.grant['generation'] == self.kit['continuation_generation']
+        assert self.c['manifest'] == str(B / 'kit.json')
+        assert self.c['continuation'] == 'WOLF-PERF-006-A02'
+        assert self.c['original_grant_sha256'] == sha(self.c['grant'])
+        assert self.kit['inputs'][str(Path(context).resolve())] == sha(context)
+        assert self.c['retain_lease_after_test'] is True
         self.components = self.grant['entry_observation']['components']
         assert self.components == self.kit['incoming_components']
         self.lease = self.grant['lease']
@@ -196,6 +205,10 @@ class Bench(h.Bench):
     def entry(self):
         p = self.folder('entry')
         self.own()
+        self.ports_free()
+        initial = self.state()
+        h.save(p / 'initial-state.json', initial)
+        self.check_entry_idle(initial)
         raw = self.cli(p, 'entry')
         cwd = re.search(rb'Directory: ([^\r\n]+)', raw)
         assert cwd
@@ -222,10 +235,53 @@ class Bench(h.Bench):
         self.raw_state(p, 'entry-raw')
         self.verify_route(p, 'entry-route')
         h.save(p / 'receipt.json', dict(passed=True, fresh_namespace=True, mode0_callback0_route0=True))
+        self.exit(p, 'entry-offline')
+        self.line(p, 'entry-mirror-off', 'VDU 3')
+        state = self.state()
+        h.save(p / 'state.json', state)
+        self.check_entry_idle(state)
+        self.ports_free()
+        observation = dict(schema='olimex-bench-observation-v1', bench='olimex',
+            epoch=time.time(), observer='wolf3dorig', lease=self.lease,
+            components=self.components, checks=dict(cli_verified=True,
+                input_ready_neutral=True, listener_offline=True, staged_job_idle=True,
+                no_serial_readers=True, no_reset_holders=True, mode0_callback0_route0=True,
+                whole_startup_listener_unchanged=True),
+            evidence=[str(p / n) for n in ('initial-state.json', 'state.json', 'serial.bin',
+                'startup.bin', 'listener.bin', 'entry-raw-mode.bin', 'entry-raw-callback.bin', 'entry-route.bin')],
+            component_provenance='Same sole custody; original grant identities retained, exact first-cohort native/tail restoration rehashed; new whole startup/listener reads and SAVE-only mode/callback/route checks. No new firmware identity query.')
+        self.save_continuation(observation)
+
+    @staticmethod
+    def check_entry_idle(state):
+        k = state['keyboard']
+        assert k['ready'] and k['physical_neutral'] and not k['held'] and not k['pending']
+        assert not state['sd']['online'] and not state['sd']['pending'] and state['worker']['phase'] == 0
+
+    def save_continuation(self, observation):
+        assert observation['lease'] == self.lease and observation['observer'] == 'wolf3dorig'
+        assert 0 <= time.time() - observation['epoch'] < 120
+        assert observation['components'] == self.kit['incoming_components']
+        path = self.out / 'entry/observation.json'
+        with path.open('x') as f:
+            json.dump(observation, f, indent=2); f.write('\n')
+        with (self.out / 'continuation-context.json').open('x') as f:
+            json.dump(dict(schema='wolf-perf006-continuation-v1', generation=69,
+                request=self.kit['request'], lease=self.lease, original_grant=self.c['grant'],
+                original_grant_sha256=sha(self.c['grant']), manifest=str(B / 'kit.json'),
+                manifest_sha256=sha(B / 'kit.json'), dispatch_context=self.c,
+                fresh_entry_observation=str(path), fresh_entry_sha256=sha(path),
+                epoch=time.time(), retain_lease_after_test=True), f, indent=2); f.write('\n')
 
     def stage(self):
         assert json.loads((self.out / 'entry/receipt.json').read_text())['passed']
+        continuation = json.loads((self.out / 'continuation-context.json').read_text())
+        assert continuation['manifest_sha256'] == sha(B / 'kit.json')
+        assert continuation['lease'] == self.lease
+        assert 0 <= time.time() - continuation['epoch'] < 120
+        assert sha(continuation['fresh_entry_observation']) == continuation['fresh_entry_sha256']
         p = self.folder('stage')
+        self.service(p, 'listener')
         for i, (name, local) in enumerate(self.kit['stage'].items()):
             if name in ('state.txt', 'route.txt'):
                 continue  # Already PUT/GET verified before the entry RAM reads.

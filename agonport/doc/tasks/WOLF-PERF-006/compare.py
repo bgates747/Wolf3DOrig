@@ -7,7 +7,7 @@ import statistics
 import struct
 
 T = Path(__file__).resolve().parent
-OUT = T / 'build/hardware01/evidence'
+OUT = T / 'build/hardware02/evidence'
 ARMS = {'original': (3, 6), 'candidate': (4, 5)}
 EXPECTED = {'original':'bf7f2bb038387698464fbb297a437ef98457638a28261dc7f9688044d9b6eb28',
             'candidate':'cd429e2fd642ab784d024cb7d6eb48f38b00eec132285ea78222b0e77e373ceb'}

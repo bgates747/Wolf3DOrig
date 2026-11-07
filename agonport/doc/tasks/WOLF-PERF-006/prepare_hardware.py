@@ -10,7 +10,7 @@ P3 = T.parent / 'WOLF-PERF-003'
 P5 = T.parent / 'WOLF-PERF-005'
 E = Path('/Agon/mystuff/agon-extender')
 D = Path('/Agon/mystuff/agon-dev-env')
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def save(p, value):
@@ -42,7 +42,7 @@ def prepare():
     data = bytearray(restore.read_bytes()); data[:native_b.stat().st_size] = native_b.read_bytes()
     assert len(data) == 1105920
     (B / 'install-b.bin').write_bytes(data)
-    remote = '/test/wolf/perf006/r01'
+    remote = '/test/wolf/perf006/r02'
     (B / 'state.txt').write_bytes(('SAVE '+remote+'/post-mode.bin &BC349 &1\r\nSAVE '+remote+'/post-callback.bin &BC38E &3\r\nEMOS sdserve --fast /\r\n').encode())
     (B / 'route.txt').write_bytes(('SAVE '+remote+'/route.bin &BCB25 &1\r\nEMOS sdserve --fast /\r\n').encode())
     names = ['wolf3d.cfg','hud.agnb','sfx.agnb','shell.agnb'] + [n for n in old['stage'] if n.startswith('level_00/')] + ['resource-probe.bin']
@@ -90,7 +90,7 @@ def prepare():
             'Actual retained mode producer waits for matching136 reply then wp_settle_display240 MOS ticks before setup/loading. Invocation capture retains1second after final return before collection; entry0 only.',
             'No parallel networking API/carrier substitution, old54 bootstrap marker or firmware rollback permitted.'
         ])
-    composition = T / 'build/composition01/receipt.json'
+    composition = T / 'build/composition03/receipt.json'
     qualified = json.loads(composition.read_text())
     assert qualified['passed'] and qualified['inputs'][str(T/'hardware.py')] == sha(T/'hardware.py')
     service = E / 'agents/remote009/download-r01/source/projects/sdserve/src/service.c'
@@ -106,7 +106,7 @@ def prepare():
               E / '.venv/lib/python3.14/site-packages/esptool/reset.py', E / '.venv/lib/python3.14/site-packages/serial/serialposix.py']
     sources = [source / n for n in ('reset.asm','handlers.asm','serial.asm','mos_api.asm','mos.c','vdp_protocol.asm','emos.c')]
     files = list(stage.values()) + list(listings.values()) + list(modules.values()) + guest_sources + tools + sources
-    files += [T/'BUILD-RESULT.json',T/'BUILD-RESULT.md',T/'build/r01/code-result-q02.json',T/'build/r01/build-receipt.json',T/'build/r01/inputs.json',T/'build/r01/frozen-inputs/manifest.json',rom,mapfile,restore,native_app,installed,native_b,release,B/'restore.bin',B/'install-b.bin',B/'source-binding.json',T/'HARDWARE-RUN-01.md',T/'AMENDMENT-01.md',T/'BUILD-RESULT.md',T/'build/guests01/bindings.json',T/'build/guests01/binding-result.json',T/'build/guests01/compile-receipt.json',T/'build/guests01/source-freeze.json',T/'PRE-CODE.md',T/'hardware.py',T/'bootstrap.py',T/'prepare_hardware.py',T/'test_hardware.py',T/'test_guest_binding.py',T/'guest_binding.py',T/'prepare_guests.py',T/'build_guests.py',T/'test_replacement.py',T/'run_composition.py',T/'build/composition01/receipt.json',P3/'hardware/physical09.py',P3/'hardware/trace04.py',P3/'hardware/host_interrupt08.py',P3/'analyze.py',T.parent/'WOLF-PERF-001/hardware/physical.py']
+    files += [T/'BUILD-RESULT.json',T/'BUILD-RESULT.md',T/'build/r01/code-result-q02.json',T/'build/r01/build-receipt.json',T/'build/r01/inputs.json',T/'build/r01/frozen-inputs/manifest.json',rom,mapfile,restore,native_app,installed,native_b,release,B/'restore.bin',B/'install-b.bin',B/'source-binding.json',T/'HARDWARE-RUN-01.md',T/'AMENDMENT-01.md',T/'BUILD-RESULT.md',T/'build/guests01/bindings.json',T/'build/guests01/binding-result.json',T/'build/guests01/compile-receipt.json',T/'build/guests01/source-freeze.json',T/'PRE-CODE.md',T/'hardware.py',T/'bootstrap.py',T/'prepare_hardware.py',T/'test_hardware.py',T/'test_guest_binding.py',T/'guest_binding.py',T/'prepare_guests.py',T/'build_guests.py',T/'test_replacement.py',T/'run_composition.py',composition,P3/'hardware/physical09.py',P3/'hardware/trace04.py',P3/'hardware/host_interrupt08.py',P3/'analyze.py',T.parent/'WOLF-PERF-001/hardware/physical.py']
     listener_source = E / 'agents/remote009/download-r01/source'
     files += [listener_source/'projects/sdserve/src'/n for n in ('service.c','service.h','sd_wire.h')]
     files += [listener_source/'tests/test_sdserve.py',listener_source/'tests/sdserve_host/fs.c',listener_source/'tests/sdserve_host/agon/mos.h']
@@ -117,15 +117,40 @@ def prepare():
     for arm in ('original','candidate'):
         files += [T/'build/r01'/arm/'module'/n for n in ('wolf_perf.elf','wolf_perf.map','wolf_perf.su','tool-commands.json','wolf_perf.json','wolf_perf.readelf.txt')]
         files += [p for p in (T/'build/r01'/arm/'sdk').rglob('*') if p.is_file() and '__pycache__' not in p.parts]
+    previous = T / 'build/hardware01'
+    prior = json.loads((previous/'kit.json').read_text())
+    assert sha(previous/'kit.json') == 'a2493b75e16617fa69f892af6c77616fb4dd9a8de9d5a3ec9d0901052a76c394'
+    snapshots = json.loads((previous/'frozen-inputs/manifest.json').read_text())
+    assert len(snapshots['files']) == 314
+    for name, record in snapshots['files'].items():
+        assert sha(record['snapshot']) == prior['inputs'][name] == record['sha256']
+    assert json.loads((previous/'evidence/boot-stopped-restored.json').read_text())['benchmark_guests'] == 0
+    assert (previous/'evidence/flash-restore/read.bin').read_bytes() == restore.read_bytes()
+    context_source = E/'agents/bench-scheduler/wolf-perf006-r01/context.json'
+    context = json.loads(context_source.read_text())
+    grantfile = Path(context['grant'])
+    grant = json.loads(grantfile.read_text()); grant = grant.get('active',grant)
+    assert grant['generation'] == 69 and grant['request'] == 'ab7af23bfd1a'
+    assert grant['entry_observation']['components'] == components
+    context.update(manifest=str(B/'kit.json'), continuation='WOLF-PERF-006-A02',
+        original_grant_sha256=sha(grantfile), prior_restoration=str(previous/'evidence/final-checks/observation.json'))
+    save(B/'dispatch-context.json',context)
+    disposition = E/'agents/bench-scheduler/wolf-perf006-r01/continuation-source-disposition.json'
+    files += [T/'AMENDMENT-02.md',T/'HARDWARE69-STOPPED-01.md',previous/'kit.json',
+        previous/'frozen-inputs/manifest.json',previous/'evidence/failure.json',
+        previous/'evidence/boot-stopped-restored.json',previous/'evidence/author-held-idle.json',
+        previous/'evidence/final-checks/observation.json',previous/'evidence/flash-restore/receipt.json',
+        previous/'evidence/flash-restore/read.bin',context_source,grantfile,disposition,B/'dispatch-context.json']
     inputs = {str(p):sha(p) for p in files}
     request = json.loads((T / 'build/bench-request01.json').read_text())['request']
     kit = dict(task='WOLF-PERF-006-hardware-r01',request=request,remote=remote,
         incoming_components=components, incoming_release=str(release), incoming_generation=68,
+        continuation_generation=69, previous_kit_sha256=sha(previous/'kit.json'),
         original_module_sha256=sha(modules['original']),candidate_module_sha256=sha(modules['candidate']),native_b_sha256=sha(native_b),
         modules=modules,stage=stage,listings=listings,guests=guests,retain_lease_after_test=True,restore=str(B/'restore.bin'),install_b=str(B/'install-b.bin'),flash_span=len(data),
         source_binding=str(B/'source-binding.json'),source_binding_passed=True,boot_binding_passed=True,
         p4_boot_build='net-003-r02-b2026-11-06-09-03-07Z', inputs=inputs,
-        restrictions='Fresh actual grant matching exact incoming tuple required. Candidate comparison only; no default adoption, P4/EMOS writes or carrier substitution.')
+        restrictions='Retained actual69 assert-owner plus new own-entry observation/immutable continuation context required; original grant unchanged. ONE same comparison only, posttest HOLD; no default adoption, P4/EMOS writes or carrier substitution.')
     save(B / 'kit.json', kit)
     print(json.dumps(dict(files=len(inputs),stage_files=len(stage),kit_sha256=sha(B/'kit.json'),rollback=sha(B/'restore.bin'),install=sha(B/'install-b.bin'))))
 

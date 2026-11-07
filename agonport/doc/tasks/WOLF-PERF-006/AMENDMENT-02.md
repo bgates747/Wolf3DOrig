@@ -7,7 +7,7 @@ wolf-perf006-held69-continuation-disposition-five confirms the supported
 arrangement: retain the existing actual69 owner/request/token; no release,
 regrant, registry edit, peer target access or new human permission round.
 
-- [ ] WOLF-PERF-006-A02-01 — Preserve all314 first-cohort inputs/evidence;
+- [x] WOLF-PERF-006-A02-01 — Preserve all314 first-cohort inputs/evidence;
   publish this amendment and stopped report before new controller changes.
 - [ ] WOLF-PERF-006-A02-02 — Freeze distinct hardware02 and SD
   /test/wolf/perf006/r02 inputs, explicit unchanged69 binding and fresh horizon;

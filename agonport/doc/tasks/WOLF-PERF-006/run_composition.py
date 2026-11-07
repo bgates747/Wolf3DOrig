@@ -1,7 +1,7 @@
 """Guard one serial actual-listener host compilation and finite build checks."""
 from pathlib import Path
 import argparse,hashlib,json,os,signal,subprocess,sys,time
-T=Path(__file__).resolve().parent; B=T/'build/composition01';D=Path('/Agon/mystuff/agon-dev-env')
+T=Path(__file__).resolve().parent; B=T/'build/composition03';D=Path('/Agon/mystuff/agon-dev-env')
 
 def main(lease):
     B.mkdir(exist_ok=False)

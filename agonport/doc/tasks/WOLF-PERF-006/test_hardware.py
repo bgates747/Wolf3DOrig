@@ -36,6 +36,37 @@ class Model(hardware.Bench):
 
 
 class ControllerTests(unittest.TestCase):
+    def test_continuation_rejects_pending_or_unready_entry(self):
+        state = dict(keyboard=dict(ready=True, physical_neutral=True, held=0, pending=0),
+                     sd=dict(online=False, pending=0), worker=dict(phase=0))
+        hardware.Bench.check_entry_idle(state)
+        for section, key, value in (('keyboard','ready',False), ('keyboard','held',1),
+                ('keyboard','pending',1), ('keyboard','physical_neutral',False),
+                ('sd','online',True), ('sd','pending',1), ('worker','phase',1)):
+            changed = json.loads(json.dumps(state)); changed[section][key] = value
+            with self.subTest(section=section,key=key), self.assertRaises(AssertionError):
+                hardware.Bench.check_entry_idle(changed)
+
+    def test_continuation_joins_fresh_observation_without_replacing_grant(self):
+        with tempfile.TemporaryDirectory() as folder, patch.object(hardware, 'B', Path(folder)):
+            root = Path(folder); (root/'entry').mkdir()
+            grant = root/'original-grant.json'; grant.write_text('{"generation":69}')
+            (root/'kit.json').write_text('{"frozen":true}')
+            b = object.__new__(hardware.Bench); b.out=root; b.lease='actual-owner'
+            b.c=dict(grant=str(grant)); b.kit=dict(request='ab7af23bfd1a',incoming_components={'native':'unchanged'})
+            observation=dict(epoch=hardware.time.time(),observer='wolf3dorig',lease=b.lease,components=b.kit['incoming_components'])
+            b.save_continuation(observation)
+            joined=json.loads((root/'continuation-context.json').read_text())
+            self.assertEqual(joined['generation'],69)
+            self.assertEqual(joined['original_grant_sha256'],hardware.sha(grant))
+            self.assertEqual(joined['manifest_sha256'],hardware.sha(root/'kit.json'))
+            self.assertEqual(joined['fresh_entry_sha256'],hardware.sha(root/'entry/observation.json'))
+            self.assertTrue(joined['retain_lease_after_test'])
+            self.assertEqual(grant.read_text(),'{"generation":69}')
+            with self.assertRaises(FileExistsError): b.save_continuation(observation)
+            observation['epoch'] -= 121
+            with self.assertRaises(AssertionError): b.save_continuation(observation)
+
     def test_complete_order_and_module_identity(self):
         with tempfile.TemporaryDirectory() as folder:
             m = Model(folder)
@@ -115,7 +146,7 @@ class EntryModel(hardware.Bench):
     """Only device I/O is modeled; entry/route/stage logic is the real adapter."""
     def __init__(self, root, collision=False):
         self.out = Path(root)
-        self.remote = '/test/wolf/perf006/r01'
+        self.remote = '/test/wolf/perf006/r02'
         self.files = {'/autoexec.txt': b'SET KEYBOARD 1', '/emos/sdserve.bin': b'LISTENER'}
         self.components = {k: hashlib.sha256(self.files[n]).hexdigest() for k,n in
             [('startup_sha256','/autoexec.txt'),('listener_sha256','/emos/sdserve.bin')]}
@@ -125,9 +156,18 @@ class EntryModel(hardware.Bench):
         state = self.out / 'state.txt'; state.write_bytes(b'STATE')
         route = self.out / 'route.txt'; route.write_bytes(b'ROUTE')
         self.kit = {'stage': {'state.txt': str(state), 'route.txt': str(route)}}
+        self.lease = 'model-owner69'
+        grant = self.out/'original-grant.json'; grant.write_text('{"generation":69}')
+        self.c = dict(grant=str(grant))
+        self.kit.update(request='ab7af23bfd1a',incoming_components=self.components)
+        (self.out/'kit.json').write_text(json.dumps(self.kit))
         self.deadline = hardware.time.monotonic() + 3600
         self.cleaning = False
     def own(self): pass
+    def ports_free(self): self.events.append(('ports-free',))
+    def state(self):
+        return dict(keyboard=dict(ready=True,physical_neutral=True,held=0,pending=0),
+                    sd=dict(online=False,pending=0),worker=dict(phase=0))
     def cli(self, p, label): return b'Directory: /\r\n/ *'
     def service(self, *args): pass
     def metadata(self, *args): return self
@@ -142,6 +182,7 @@ class EntryModel(hardware.Bench):
     def exit(self, *args): pass
     def wait_online(self, *args): pass
     def line(self, p, label, command):
+        if command == 'VDU 3': return
         assert command == 'EXEC ' + self.remote + '/route.txt'
         assert self.remote + '/route.bin' not in self.files, 'Stale SAVE destination'
         self.files[self.remote + '/route.bin'] = b'\0'
@@ -151,12 +192,15 @@ class EntryModel(hardware.Bench):
 class EntryTests(unittest.TestCase):
     def test_fresh_namespace_entry_and_scripts_are_not_replaced_in_stage(self):
         with tempfile.TemporaryDirectory() as folder:
-            b = EntryModel(folder); b.entry(); b.stage()
+            b = EntryModel(folder)
+            with patch.object(hardware,'B',Path(folder)): b.entry(); b.stage()
             self.assertEqual([e for e in b.events if e[0] == 'upload'],
                 [('upload',b.remote + '/state.txt'),('upload',b.remote + '/route.txt')])
             b.verify_route(b.out / 'stage', 'second-route')
             self.assertIn(('remove',b.remote + '/route.bin'),b.events)
             self.assertTrue(json.loads((b.out / 'entry/receipt.json').read_text())['mode0_callback0_route0'])
+            self.assertEqual(json.loads((b.out/'entry/observation.json').read_text())['lease'],b.lease)
+            self.assertTrue((b.out/'continuation-context.json').exists())
     def test_namespace_collision_stops_before_any_sd_file_replacement(self):
         with tempfile.TemporaryDirectory() as folder:
             b = EntryModel(folder, collision=True)

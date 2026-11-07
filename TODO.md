@@ -15,9 +15,11 @@ Only priorityP01 selected now; P02–P07 deferred discussion backlog.
 - [x] WOLF-PERF-006-01 — Freeze task/support/finite run and reserve bench now.
 - [x] WOLF-PERF-006-02 — Prepare identical-source Os/O2 arms/exact bf7f control.
 - [x] WOLF-PERF-006-03 — Qualify host/actual code/provider/stack/package producers.
-- [ ] WOLF-PERF-006-04 — Freeze qualified current-context kit and obtain grant.
+- [x] WOLF-PERF-006-04 — Freeze qualified current-context kit and obtain grant.
   [Ready kit](agonport/doc/tasks/WOLF-PERF-006/HARDWARE-READINESS-01.md):314pins,
-  requestab7af23bfd1a; actual fresh scheduler grant remains pending.
+  requestab7af23bfd1a admitted actual69. First boot stopped before guest entry;
+  exact restoration/idle passed, lease held. [AMENDMENT-02](agonport/doc/tasks/WOLF-PERF-006/AMENDMENT-02.md)
+  separately freezes one same-comparison cohort under retained custody.
 - [ ] WOLF-PERF-006-05 — Execute matched sixguest/sevenprobe hardware suite.
 - [ ] WOLF-PERF-006-06 — Exact restore/idle handback; HOLD lease for Smith.
 - [ ] WOLF-PERF-006-07 — Publish/share results; release only on later direction.
