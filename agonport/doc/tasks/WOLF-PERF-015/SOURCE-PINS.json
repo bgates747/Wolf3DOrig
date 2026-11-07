@@ -1,0 +1,10 @@
+{
+  "baseline": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+  "files": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/build/r01/candidate/production/wolf3d_renderer.cpp": "167930e49e0f9e59651aae112bc402d2c96c24d37bc76a7caa5c87851b86061c",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/build/r01/candidate/native-source/wolf3d_renderer.cpp": "167930e49e0f9e59651aae112bc402d2c96c24d37bc76a7caa5c87851b86061c",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/build/r01/candidate/native-source/wolf3d_module.cpp": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/build/r01/candidate/module/wolf_perf.vdpl": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/build/r01/candidate/wolf3d_tables.inc": "6e3353cebd8d69849bbde39abd536018b1ee403f599ae45acc51fb8c64303e5d"
+  }
+}
