@@ -96,6 +96,23 @@ The custom renderer lives in the separate `agon-vdp-wolf3d` repository. A
 separately qualified integration effort combines Wolf3DOrig and Pingo in one
 VDP without merging their command spaces or persistent state.
 
+## Performance runs
+
+Smith's direction is to measure the **maximum sustainable presentation rate**.
+Future performance runs are uncapped: do not add a30Hz target, synthetic frame
+delay or pacing wait. Present every completed render and record presentation
+timestamps, frame count, elapsed time and interval distribution. Hidden drawing
+capacity and meeting a capped target do not establish that maximum.
+
+Use the latest qualified optimized renderer. For Smith's physical visual runs,
+stage and LOAD it without RUN, stop the agent's actors, retain bench custody and
+send the application's agent-has-a-question notification when it is actually
+ready. Smith starts it manually. Do not silently prepend static timer checks.
+
+The [uncapped visible fixture and result](agonport/doc/tasks/WOLF-PERF-012/RESULT.md)
+retain the current method, raw records and hardware limits. Historical paced
+and hidden-capacity records keep their original identities and qualifications.
+
 ## Repository map
 
 - `src/asm/wolf3d/` — the production eZ80 application and detailed build/run
