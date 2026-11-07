@@ -1,0 +1,87 @@
+{
+  "passed": true,
+  "guards": [
+    {
+      "epoch": 1794060640.8935666,
+      "cpu_c": 46.85,
+      "available_kib": 6405664
+    },
+    {
+      "epoch": 1794060640.9852939,
+      "cpu_c": 48.5,
+      "available_kib": 6400576
+    },
+    {
+      "epoch": 1794060640.9859457,
+      "cpu_c": 48.5,
+      "available_kib": 6400576
+    },
+    {
+      "epoch": 1794060641.3098094,
+      "cpu_c": 47.95,
+      "available_kib": 6390272
+    },
+    {
+      "epoch": 1794060641.3104613,
+      "cpu_c": 47.95,
+      "available_kib": 6390272
+    },
+    {
+      "epoch": 1794060641.5607998,
+      "cpu_c": 48.5,
+      "available_kib": 6375584
+    },
+    {
+      "epoch": 1794060641.8111563,
+      "cpu_c": 49.05,
+      "available_kib": 6363248
+    }
+  ],
+  "steps": [
+    {
+      "name": "test_hardware02.py",
+      "returncode": 0,
+      "seconds": 0.25081091100582853
+    },
+    {
+      "name": "test_replacement02.py",
+      "returncode": 0,
+      "seconds": 0.7514888380537741
+    }
+  ],
+  "inputs": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/hardware02.py": "7757b4504680baeb3edc7f9ebd239bea709b3899d2bdd1c080d34f379335d524",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/bootstrap.py": "4ffd634eb183cf4ee8aa7dfc936241303ed68f5a3c0ab3ba95934c2c1fd4d3bc",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/test_replacement02.py": "cb78bdce1b8e70e58b51aed0665cf2c679d218c1185c8bd3ada26f3817724e46",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/run_composition.py": "d267cdc5e4c693ecc5c297b139556083b5ece37a60c1a903bb12ae9341b48059",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/test_hardware02.py": "4ae071bfc9e2dbe4a89b0c41b3d1cbd3fbae1045fdd816a942e58e3d496babf6",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/guest_binding.py": "180530bbebdd4af996bbb47250cb8a866a5f86a247716fc04701e207f7e4e918",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/analyze.py": "dfcf61aba5333514f323ed9b56496a59600da753a804b28a6f3e7ab9fd4191a7",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/launch02.py": "dd5651df8aa9577ea55cfcf616e8a1428dfead539ac7b414ff514400ff4dd1ae",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/LAUNCH-PREFLIGHT.json": "71271b991e1b99c1c404520e2d25a74b7817af5f768e0c95a9112e11e12a5c12",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/HARDWARE-GUESTS.json": "e76862c3b91593ad58ca9364b83fec7338022a2bcf35a6bcf160e3653447c292",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/HARDWARE-PLAN.md": "176ef2a4e7fe4294c7b093c3d73ce08f66031f3a9cc1e68436374febf854699d",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/service.c": "4a1f205e380ffad60e836726bdd810a36c3f28330b943e14a86b68decc0fcb50",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/service.h": "826762965cfe5ffa78f3a2ae4d28829bc43d5afc8586f1554d41e9b319fa32d9",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/sd_wire.h": "8b846f3e1ed9165ae93297231fc16a0378c4162b1e996ccff2935bc444510ee1",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/test_sdserve.py": "b519724059794e4c710cc893ac2bef501693627e12b95ad326613e9173b690c5",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/sdserve_host/fs.c": "19aa45a7b1650ef37ac2ec00abc2bd2518d00482737bad39808908fa79b59562",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/sdserve_host/agon/mos.h": "b12da862811cbc53ce2860185408b9ddf00a0d070d8cbf77c5e562b864362469",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/build/r01/original/module/wolf_perf.vdpl": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/build/guests01/original/room/source/wolf3d.bin": "c43e7fe74148517c30cf9bf83854cf0cf297aeaf8c4684a4624c93849b46df58",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/build/guests01/original/room/source/wolf3d.lst": "f61b421e8c7722a7851e273de8a92a5004c647e42e59e5dd88fe176c7c145f4d",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/build/r01/candidate/module/wolf_perf.vdpl": "0e4ee86eb10c07d54933fc06c550fe1e871942d197090b20604674ec959b9f32",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/build/guests01/candidate/room/source/wolf3d.bin": "bf54fb4417e3e55333a2d72f21b41668e94e30e849ca38ba22020bb67eb4e3a7",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/build/guests01/candidate/room/source/wolf3d.lst": "26662abe64e62a263ff4bcb07fca203e67e663e4a74afcf0714b83579878c639",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/build/r01/candidate/module/wolf_perf.vdpl": "2844fda52cecd28eceeaa506ff3c6cce5af43c3b69ca5ee74fe87a50c7ea489f",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/build/guests01/candidate/room/source/wolf3d.bin": "c34a31196b250b1b092aa12f5607dcc9e782b2f597c1fd0345a30be8f9b213fc",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/build/guests01/candidate/room/source/wolf3d.lst": "5b835a1a615a45eedb7d72a3fe426321827ac19e9685cebe059ae3074f29918b",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/build/guests01/bindings.json": "454ff21207e8457a57049f585991489e57026f9f5f8715394c3105b62cee8fe0",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/build/guests01/inputs.json": "5b84725c5fcb8c938df91a66462e61b0c9cf567a6887b2597b9e77df6bb07e62",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/build/guests01/receipt.json": "f0c3ca59414ebe404f65f8a5f1518fe7613e437f80c9679c92f3aa3aaf85e4e0",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/build/guests01/bindings.json": "e7310662e3eaf9f9b434a033bfa207545ddccd54008a857d228278766b7f787a",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/build/guests01/inputs.json": "a312953367afd483fabd4b6c39731240533dfc232b33b880c90b0ceb0974459c",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/build/guests01/receipt.json": "c1af4776b655b4e433fc60715ed1710c73ee0bf239033cf27a53529b12c043be"
+  },
+  "seconds": 1.2405072950059548
+}

@@ -1,0 +1,10 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-PERF-019-hardware01",
+  "purpose": "PREPARING separate chains019 and exact-degree015 six uncapped shared-control rooms; Mech first, no preemption",
+  "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/HARDWARE-PLAN.md",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "f143aa28c766",
+  "requested": "2026-11-07T13:46:09.624836+00:00"
+}

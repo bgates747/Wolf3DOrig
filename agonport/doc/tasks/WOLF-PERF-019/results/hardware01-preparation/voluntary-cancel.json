@@ -1,0 +1,21 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-PERF-019-hardware01",
+  "purpose": "PREPARING separate chains019 and exact-degree015 six uncapped shared-control rooms; Mech first, no preemption",
+  "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/HARDWARE-PLAN.md",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "f143aa28c766",
+  "requested": "2026-11-07T13:46:09.624836+00:00",
+  "cancelled": "2026-11-07T14:03:07.770176+00:00",
+  "next_request": {
+    "owner": "mechagon",
+    "task": "GOAL-001-MAINBOARD-PHASE-R05",
+    "purpose": "PREPARING one finite serialized async mainboard phase-profile arm after active Wolf87; no eZ80PRT/baud/IRQobserver, exacta25f rollback",
+    "plan": "/Agon/mystuff/MechAgon/docs/tasks/GOAL-001/MAINBOARD-PHASE-R05.md",
+    "notify_thread": "01a1a883-630e-7b52-85d8-6fbc07cc0ccb",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "request": "43d73d6e0010",
+    "requested": "2026-11-07T13:54:11.239638+00:00"
+  }
+}

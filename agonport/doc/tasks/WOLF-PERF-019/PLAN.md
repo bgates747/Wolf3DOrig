@@ -13,7 +13,7 @@ normal serial Pi compilation and actual exclusive Extender grants only.
   oracle, empty/singleton/column255 and all-ID chain coverage, aliases, full
   renderer/module/600-pose parity and exact target control/code/stack/provider/
   resource/package/real producer qualification.
-- [ ] WOLF-PERF-019-04 — Count actual skipped membership work separately from
+- [x] WOLF-PERF-019-04 — Count actual skipped membership work separately from
   timing; select/freeze a useful finite uncapped physical comparison only after
   correctness, nested-stack and current component/host/producer checks pass.
 - [ ] WOLF-PERF-019-05 — Normal fresh grant, bounded run, first-fault/RAM
@@ -64,4 +64,5 @@ for their incompatible units/x86/VGA implementation. Those original-method
 boundaries remain explicit in WOLF-GOAL-001/WALL-POST-DESIGN.md.
 
 Qualified source/target/host/producer result: [BUILD-RESULT.md](BUILD-RESULT.md).
-No physical timing or new case selected yet; keep queued018 unchanged.
+Separate physical01 selection and qualified freeze: [HARDWARE-READINESS.md](HARDWARE-READINESS.md).
+No physical019 result yet; actual018 inputs/results remain unchanged.

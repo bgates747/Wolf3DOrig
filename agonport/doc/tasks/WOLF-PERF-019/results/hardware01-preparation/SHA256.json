@@ -1,0 +1,21 @@
+{
+  "FAILED371.md": "59487ffd56d6ad867e869ef50c67dbf215ba276df8d4ca4770b04d1cf13caf6e",
+  "composition02/listener-host.so": "1f0aa7013387fe336a925014136b437b4dfbd8269b7888664800bb80dcf0c8f4",
+  "composition02/probe.c": "1d429f30bced17ab97c091c386ceacbb37776b5f28f78eb3bc92484711e01612",
+  "composition02/receipt.json": "530c349a694b5f9bc5eafbbc1b6142da0776c4a13b1cff75c7b0463edc486706",
+  "composition02/release372.json": "14872afc0a83d10fc0f494b9f24252f298047b9ba24885dc8f491cea5c74b132",
+  "composition02/test_hardware02.py.log": "dc93e1ad8c71598c3eb66567fa8d82decd8763a2bb977499ab18ee5efdb2ed29",
+  "composition02/test_replacement02.py.log": "90d2be7f715e2a5773a25dc80d63f296cee2466064b924cd8e4ebcca506159eb",
+  "failed371/frozen-inputs-index.json": "02391960822cfdc3535cf6323872fe15a07bc8aafde953c224c69422f16f6477",
+  "failed371/receipt.json": "67882f75245e492292dfa97814c2082b79f57572a55fde3dacf6c63512cec041",
+  "failed371/release371.json": "7cc62b9c29fd24ec4fe7aae4c9e922889f16b33cfa49d8f36f7246adef55c3d3",
+  "failed371/test_hardware02.py.log": "029b75a60ec5a4a9465b227c72f0e80d7397f32680ec6c2f557ec3e317d671e1",
+  "frozen-inputs-index.json": "cadc406484fb51d443973a397d811461000f492111f32f758c05c8cb7a96300e",
+  "guest-qualification.json": "f338f8a9b0c66532163239ace9f55671fe2e239b0420cf766852188f478536ce",
+  "kit.json": "4e6612a4979a8b227c733195b7b9ad189097950daa4eba3f2bf76d6bfaacb67a",
+  "reservation-after-mech.json": "01ec210de63b6c57e3ede3d03fb551b787ff0428984b95d5fb3d4c39f1c5183e",
+  "reservation.json": "31a08336371f058f8af346ee124bfc3cdf67ff1870c47962dac74087a95090b5",
+  "source-binding.json": "9018219ac3fb05618ec2f52b88b4fad56789d0f68894b613a27886f4dce626f5",
+  "source-producer-join.json": "f338f8a9b0c66532163239ace9f55671fe2e239b0420cf766852188f478536ce",
+  "voluntary-cancel.json": "47ec9b3dce777b246eed60d5bce249d0791636081950d05cca70532da03a1f3e"
+}
