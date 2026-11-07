@@ -40,7 +40,7 @@ class BudgetStop(RuntimeError):
 
 
 def verify_kit(kit):
-    assert kit['task'] == 'WOLF-PERF-013-hardware-r01'
+    assert kit['task'] == 'WOLF-PERF-013-hardware01'
     assert kit['remote'] == '/test/wolf/perf013/r01'
     assert kit['request'] == '9a0d32a4988c'
     assert kit['original_module_sha256'] == 'a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656'
