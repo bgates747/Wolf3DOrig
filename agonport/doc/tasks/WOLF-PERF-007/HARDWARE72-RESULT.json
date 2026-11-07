@@ -1,0 +1,131 @@
+{
+  "passed": false,
+  "performance_samples": 0,
+  "benchmark_guests": 0,
+  "resource_probes": 0,
+  "root_cause": "Host controller launched with wrong project interpreter; required actual esptool import not preflighted",
+  "failure": {
+    "error": "ModuleNotFoundError(\"No module named 'esptool'\")",
+    "next_dispatch_stopped": true,
+    "custody_retained": true,
+    "epoch": 1794028978.7363229
+  },
+  "staged": {
+    "passed": true,
+    "files": 18,
+    "put_get_verified": true
+  },
+  "install_readback_sha256": "493fd0a010bedcfc5916314353f93565f7b159ac163d9bc61e7c5078140669e8",
+  "restore_readback_sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de",
+  "restoration": {
+    "restored": true,
+    "benchmark_guests": 0,
+    "resource_probes": 0,
+    "performance_claim": false,
+    "scope": "Exact incoming span restored and independently read back; matched bootstrap/full handback only, failed cohort not replayed.",
+    "epoch": 1794029199.161003
+  },
+  "release": {
+    "owner": "wolf3dorig",
+    "task": "WOLF-PERF-007-hardware-r01",
+    "purpose": "PREPARING matched original tangent/intercept ray walk versus exact O2 control, six guests seven probes, native app-only plus exact rollback",
+    "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/HARDWARE-RUN-01.md",
+    "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "request": "f60e5f0fed70",
+    "requested": "2026-11-07T04:57:40.779526+00:00",
+    "lease": "8ba3859cddcc4a07aad797a52093a05b",
+    "generation": 72,
+    "granted": "2026-11-07T05:14:42.067349+00:00",
+    "phase": "consumer",
+    "entry_observation": {
+      "schema": "olimex-bench-observation-v1",
+      "bench": "olimex",
+      "epoch": 1794028481.9254696,
+      "observer": "linux-extender",
+      "lease": null,
+      "checks": {
+        "no_workload": true,
+        "no_transfer": true,
+        "no_serial_readers": true,
+        "no_reset_holders": true,
+        "cli_verified": true,
+        "input_ready_neutral": true,
+        "listener_offline": true,
+        "staged_job_idle": true,
+        "restoration_verified": true
+      },
+      "evidence": [
+        "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf007-r01/fresh.json",
+        "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf007-r01/exchange/vars.bin",
+        "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf007-r01/exchange/callback.bin",
+        "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf007-r01/exchange/route.bin",
+        "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf007-r01/offline-preflight.json",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/HARDWARE-RUN-01.md",
+        "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-async001-r01/recovery/released.json"
+      ],
+      "components": {
+        "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+        "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+        "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+        "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+        "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+      },
+      "component_provenance": {
+        "p4_app_sha256": "Fresh independent1830912B fulltouchedspan restoration comparison, appd9bcb exact plus preserved incomingtail6f68edfe.",
+        "emos_rom_sha256": "Fresh whole131072B ROM readback equals exact incominga25f.",
+        "native_vdp_sha256": "Retained same-custody completed exact app/touched-tail restoration and full readback, rehashed before fresh release checks; no intervening flash/reset/guest, not a new flash read.",
+        "startup_sha256": "Fresh whole scheduler CLI/read/EXIT comparison; same45B setup-only file, no edit.",
+        "listener_sha256": "Fresh whole24753B canonical listener read/compare in scheduler admission; no replacement."
+      },
+      "operator_admission": {
+        "central_owner": "wolf3dorig",
+        "sole_hardware_operator": "wolf3dorig",
+        "parallel_target_access": false
+      },
+      "disposition": "Author-selected WOLF-PERF-007 original-method tangent/intercept ray walk comparison against exact physical69 O2 control. Frozen419input a1f7a867/sourcec0bc2e5, sixguests/sevenprobes, originalcd42920928B versus candidatec8f99324276B, exact per-arm producers/listings/strict bounds. Current UARTP4d9bcb/fullEMOSa25f/mainboard5d657profile8 retained after actual71 bounded collection recovery; original native result4/CLI and collectionreason6 remain separate evidence, not benchmark causes. Fresh SAVE-only mode0/callback0/Legacy0/whole startup-listener/actualCLI/readEXIT/neutral/offlineidle/freeUSB. No scheduler LOAD/RUN/reset/flash/PRT read. Only native7593 app-only then exact incoming1105920B85f9 app-tail restore/independentreadback. No P4/EMOS/startup/partition/NVS/carrier/default change. Normal pinned P4-init then Agon bootstrap after nativewrite outside timings. Newcase/probe/module/RUN >660s, ordinary newjobs >360s; original finite operations retain bounds, cleanup exempt. FirstunexpectedSTOP/no successors/replay/resubmit; preserve returned guestRAM beforeLOAD or supported monitored recovery. Wolf sole hardware operator through testing/restoration/fullcleanup then normal fresh release and actualnext notification; no human hold selected. SDmounted. No prior performance/default/gameplay/optical claim."
+    },
+    "released": "2026-11-07T05:27:02.669492+00:00",
+    "release_observation": {
+      "schema": "olimex-bench-observation-v1",
+      "bench": "olimex",
+      "epoch": 1794029199.1596375,
+      "observer": "wolf3dorig",
+      "lease": "8ba3859cddcc4a07aad797a52093a05b",
+      "checks": {
+        "no_workload": true,
+        "no_transfer": true,
+        "no_serial_readers": true,
+        "no_reset_holders": true,
+        "cli_verified": true,
+        "input_ready_neutral": true,
+        "listener_offline": true,
+        "staged_job_idle": true,
+        "restoration_verified": true
+      },
+      "evidence": [
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware01/evidence/final-checks/state.json",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware01/evidence/final-checks/serial.bin",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware01/evidence/route-handback/final-route.bin",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware01/evidence/handback/observation.json",
+        "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/build/hardware01/evidence/flash-restore/receipt.json"
+      ],
+      "components": {
+        "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+        "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+        "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+        "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+        "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+      },
+      "component_provenance": {
+        "p4_app_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+        "emos_rom_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+        "native_vdp_sha256": "Exact incoming application/touched-tail restoration and independent full-span readback",
+        "startup_sha256": "Fresh unchanged whole-file comparison in handback",
+        "listener_sha256": "Fresh unchanged whole-file comparison in handback"
+      },
+      "disposition": "New final rootCLI/input/idle/freeUSB observation; earlier same-custody route0/mode0/callback0 and exact app/tail restore/readback retained by original receipt, no intervening guest or route/mode change; startup/listener unchanged; SD mounted."
+    },
+    "next_request": null
+  }
+}
