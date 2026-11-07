@@ -1,0 +1,14 @@
+VDU 2
+/ *VDU 87 80 51 45 114 111 117 116 101 45 99 104 101 99 107 13 10
+WP3-route-check
+/ *DIR
+Volume: AGONEX
+Directory: /
+
+.Spotlight-V100     .Trash-1000         agents              bin                
+demos               emos                emos-boot           extender           
+games               MechAgon            mos                 music              
+mystuff             others              test                autoexec.bak       
+autoexec.txt        autoexec.txt.p17bak JRC2.DAT            JSPEC.DAT          
+steady_02.bin       
+/ *

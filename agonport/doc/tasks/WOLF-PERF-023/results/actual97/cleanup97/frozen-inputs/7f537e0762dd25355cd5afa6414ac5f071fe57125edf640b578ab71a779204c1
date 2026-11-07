@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "units": {
+    "production": {
+      "original_sha256": "7fde7eec5520b1e6457c78e29e47361b7784e6cbadcda070d5a96be82420fb3e",
+      "candidate_sha256": "55801de90dfe574337b0775b5375572fe2a244ab797cd365e17be55d5b007350",
+      "inverse_exact": true,
+      "count0_linear_unchanged": true
+    },
+    "native-source": {
+      "original_sha256": "7fde7eec5520b1e6457c78e29e47361b7784e6cbadcda070d5a96be82420fb3e",
+      "candidate_sha256": "55801de90dfe574337b0775b5375572fe2a244ab797cd365e17be55d5b007350",
+      "inverse_exact": true,
+      "count0_linear_unchanged": true
+    }
+  },
+  "only_span_insertion": true,
+  "helpers_modules_tables_sdk_unchanged": true,
+  "candidate_qualified": false,
+  "actual_control_package": "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b"
+}

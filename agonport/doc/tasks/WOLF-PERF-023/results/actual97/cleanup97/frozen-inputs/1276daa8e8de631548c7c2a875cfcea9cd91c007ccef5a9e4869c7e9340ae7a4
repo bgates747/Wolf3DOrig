@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "units": {
+    "original/production": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/r01/original/production/wolf3d_module.cpp",
+      "sha256": "0216803be5a0173507aafa8384c15d8e09a17083fac8e60cc0de27ec05f2ac82",
+      "body_sha256": "f6a52d2e1f5e91d5042d37bbba3529a829c20b6f92da18002fb89ea30ad72de7"
+    },
+    "original/native-source": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/r01/original/native-source/wolf3d_module.cpp",
+      "sha256": "f1a514999ed2fb249500c1b4f180d714adbaf8be785ca555b33e73abf741f9ac",
+      "body_sha256": "f6a52d2e1f5e91d5042d37bbba3529a829c20b6f92da18002fb89ea30ad72de7"
+    },
+    "candidate/production": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/r01/candidate/production/wolf3d_module.cpp",
+      "sha256": "0216803be5a0173507aafa8384c15d8e09a17083fac8e60cc0de27ec05f2ac82",
+      "body_sha256": "f6a52d2e1f5e91d5042d37bbba3529a829c20b6f92da18002fb89ea30ad72de7"
+    },
+    "candidate/native-source": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/r01/candidate/native-source/wolf3d_module.cpp",
+      "sha256": "f1a514999ed2fb249500c1b4f180d714adbaf8be785ca555b33e73abf741f9ac",
+      "body_sha256": "f6a52d2e1f5e91d5042d37bbba3529a829c20b6f92da18002fb89ea30ad72de7"
+    }
+  },
+  "fallback_and_signed_wrapper_equal": true,
+  "exact_full_modules_equal_to_qualified_combined": true,
+  "limits": "Unchanged full native sources and retained qualified numeric body; no new Xtensa execution or independent full64-domain claim."
+}

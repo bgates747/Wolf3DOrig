@@ -1,0 +1,41 @@
+--- original/production/wolf3d_renderer.cpp
++++ candidate/production/wolf3d_renderer.cpp
+@@ -104,6 +104,17 @@
+     const uint32_t pixel_xor = target.pixel_xor;
+     const uint8_t preserve_mask = target.preserve_mask;
+     const uint8_t color_bits = static_cast<uint8_t>(color & target.color_mask);
++    // Complete four-byte groups are permuted onto the same distinct bytes.
++    // All span/row order and one masked byte read/store per address remain.
++    if (pixel_xor <= 3u && ((mapped_x | count) & 3u) == 0 &&
++        count <= UINT32_MAX - mapped_x) {
++        uint8_t *pixel = row + mapped_x;
++        while (count-- != 0) {
++            *pixel = static_cast<uint8_t>((*pixel & preserve_mask) | color_bits);
++            ++pixel;
++        }
++        return;
++    }
+     while (count-- != 0) {
+         uint8_t *const pixel = row + (mapped_x++ ^ pixel_xor);
+         *pixel = static_cast<uint8_t>((*pixel & preserve_mask) | color_bits);
+
+--- original/native-source/wolf3d_renderer.cpp
++++ candidate/native-source/wolf3d_renderer.cpp
+@@ -104,6 +104,17 @@
+     const uint32_t pixel_xor = target.pixel_xor;
+     const uint8_t preserve_mask = target.preserve_mask;
+     const uint8_t color_bits = static_cast<uint8_t>(color & target.color_mask);
++    // Complete four-byte groups are permuted onto the same distinct bytes.
++    // All span/row order and one masked byte read/store per address remain.
++    if (pixel_xor <= 3u && ((mapped_x | count) & 3u) == 0 &&
++        count <= UINT32_MAX - mapped_x) {
++        uint8_t *pixel = row + mapped_x;
++        while (count-- != 0) {
++            *pixel = static_cast<uint8_t>((*pixel & preserve_mask) | color_bits);
++            ++pixel;
++        }
++        return;
++    }
+     while (count-- != 0) {
+         uint8_t *const pixel = row + (mapped_x++ ^ pixel_xor);
+         *pixel = static_cast<uint8_t>((*pixel & preserve_mask) | color_bits);

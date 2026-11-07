@@ -1,0 +1,13 @@
+{
+  "epoch": 1794075113.448717,
+  "lease": "4c9a75bf225b4eb9bd25dd130bb34c49",
+  "cleanup_only": true,
+  "original_failure_preserved": true,
+  "no_guest_or_timing_result": true,
+  "bootstrap_specific_attempts_before_cleanup": 0,
+  "original_flash_esptool_after_hard_resets": 2,
+  "no_pre_restore_reset": true,
+  "no_guest_probe_LOAD_or_replay": true,
+  "no_original_guest_RAM_claim": true,
+  "action": "Exact incoming85f9 native/tail restore and full readback FIRST; ONE maintained current matched bootstrap and full fresh handback, then STOP/normal release"
+}

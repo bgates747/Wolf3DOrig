@@ -1,0 +1,10 @@
+{
+  "original_session_id": 51124,
+  "tool_result": {
+    "chunk_id": "e875eb",
+    "wall_time_seconds": 2.545679932,
+    "exit_code": 0,
+    "original_token_count": 27,
+    "output": "FLASH VERIFIED restore\nCLEANUP97 COMPLETE: exact incoming restoration/full handback; no guest or comparison\n"
+  }
+}

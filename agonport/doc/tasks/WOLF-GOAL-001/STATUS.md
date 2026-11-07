@@ -64,10 +64,15 @@ geometry, target flags/providers/byte-loop checks and real eZ80 operands pass.
 The27 controller/listener/observer checks pass after the preserved namespace-
 parent prelaunch failure. All compiler children/leases are released.
 
-Request098fa3fae20d is READY for normal fresh admission after actual96 clean
-restoration/release. Kit1b4d2dd9 pins664 inputs/418 distinct archived byte sets;
-four uncapped original/candidate/candidate/original rooms and five INFO queries.
-Same positive exact-PID foreground observer,4200s/360s/300s/660s guards,7593 native
-app-only install and full85f9 restoration/normal release. Mech-first, no hardware
-access before actual new token/stopped handoff, no provider/carrier/default or
-sprite013 adoption. Physical candidate speed remains unmeasured.
+Actual97 stopped before any room/INFO at a missing late-loaded bootstrap-source
+manifest entry, after verified native write/readback. Four omitted dependencies
+match successful95 bytes. The original664-input kit/failure is preserved;
+separate668-input cleanup restored/read back exact85f9 FIRST, then one current
+bootstrap and full handback passed. All actors exited; normal release18:14:46UTC
+and immediate Mech-next/Extender notices completed. No lease is held.
+[Actual97 report](../WOLF-PERF-023/RESULT97.md) keeps zero-sample preparation
+failure separate from renderer correctness. Physical candidate speed remains
+unmeasured. [Amendment02](../WOLF-PERF-023/AMENDMENT-02.md) selects an explicit
+complete closure and early file-only refusal before device I/O in a separately
+qualified future kit. Same uncapped ABBA/fiveINFO, guards, components, restoration
+and Mech-first priority; no automatic replay, sprite decision or default adoption.

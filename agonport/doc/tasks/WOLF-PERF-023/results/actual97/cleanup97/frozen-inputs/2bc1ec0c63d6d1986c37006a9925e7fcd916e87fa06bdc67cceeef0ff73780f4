@@ -1,0 +1,42 @@
+// Only the actual candidate predicate is substituted. No invalid row pointer
+// is formed: this tests boundary admission separately from actual span stores.
+#include <algorithm>
+#include <cstdint>
+#include <iostream>
+#include <stdexcept>
+#include <vector>
+bool admitted(uint32_t mapped_x, uint32_t count, uint32_t pixel_xor) {
+    return pixel_xor <= 3u && ((mapped_x | count) & 3u) == 0 &&
+        count <= UINT32_MAX - mapped_x;
+}
+void require(bool ok) { if (!ok) throw std::runtime_error("unsafe span domain"); }
+int main() { try {
+    uint64_t cases=0, accepted=0;
+    const uint32_t starts[]={0,1,2,3,4,7,8,15,16,31,32,
+        UINT32_MAX-67u,UINT32_MAX-64u,UINT32_MAX-63u,
+        UINT32_MAX-7u,UINT32_MAX-4u,UINT32_MAX-3u,UINT32_MAX};
+    for(uint32_t start:starts) for(uint32_t n=1;n<=68;++n)
+        for(uint32_t mask=0;mask<=15;++mask) {
+            ++cases;
+            if(!admitted(start,n,mask)) continue;
+            ++accepted;
+            // Independent set of original logical-X destinations, represented
+            // in wide arithmetic so integer rollover cannot silently pass.
+            std::vector<uint64_t> original;
+            for(uint64_t i=0;i<n;++i) original.push_back((uint64_t(start)+i)^mask);
+            std::sort(original.begin(),original.end());
+            for(uint64_t i=0;i<n;++i) require(original[i]==uint64_t(start)+i);
+            require(uint64_t(start)+n<=UINT32_MAX);
+        }
+    // Explicit unsafe end-overflow and conservative boundary refusal. The
+    // last excludes a valid last-byte set too; that is intentional fallback.
+    require(!admitted(UINT32_MAX-3u,4,2));
+    require(!admitted(UINT32_MAX-7u,12,3));
+    require(!admitted(4,UINT32_MAX-3u,2));
+    require(!admitted(0,UINT32_MAX,2));
+    require(admitted(0,4,2));
+    require(admitted(UINT32_MAX-7u,4,3));
+    require(accepted>0);
+    std::cout<<"PASS "<<cases<<" actual-predicate boundary domains, "<<accepted
+        <<" admitted sets; no invalid-memory span execution\n";
+} catch(const std::exception &e) { std::cerr<<e.what()<<'\n';return 1; } }

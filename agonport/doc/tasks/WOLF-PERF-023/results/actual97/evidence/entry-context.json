@@ -1,0 +1,36 @@
+{
+  "schema": "wolf-perf023-entry-v1",
+  "generation": 97,
+  "request": "098fa3fae20d",
+  "lease": "4c9a75bf225b4eb9bd25dd130bb34c49",
+  "original_grant": "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf023-r01/grant.json",
+  "original_grant_sha256": "177927fba98d61a6df4e6b87525a45968f7f821e7dcf28c80a4e6184548e42b0",
+  "manifest": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/hardware01/kit.json",
+  "manifest_sha256": "1b4d2dd929827cdf00f9fa7aef4b1da3ebbfc5b3e665642db263eb8ea900d143",
+  "dispatch_context": {
+    "grant": "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf023-r01/grant.json",
+    "url": "http://192.168.0.20",
+    "port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "ports": [
+      "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+      "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_E8:F6:0A:E2:E1:FE-if00"
+    ],
+    "entry_route": "legacy",
+    "central_owner": "wolf3dorig",
+    "operator": "wolf3dorig",
+    "no_pending_extender_target_commands": true,
+    "sole_operator_handoff": true,
+    "manifest": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/hardware01/kit.json",
+    "retain_lease_after_test": false,
+    "posttest_disposition": "Exact incoming native/tail restore/full readback/full clean handback and normal release after finite cohort; no HOLD/new case",
+    "native_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "all_ports": [
+      "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+      "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_E8:F6:0A:E2:E1:FE-if00"
+    ]
+  },
+  "fresh_entry_observation": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/hardware01/evidence/entry/observation.json",
+  "fresh_entry_sha256": "2cbd4517f9e04decdf69de5a6f14821ae254b7c1adde364c5d776238551a9419",
+  "epoch": 1794074363.418507,
+  "retain_lease_after_test": false
+}

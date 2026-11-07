@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 4225376323,
+    "boot": 2846693405,
+    "operation": "put",
+    "remote": "/test/wolf/perf023/r01/b-original-room.bin",
+    "activate": true,
+    "size": 325309,
+    "destination": null,
+    "started": 1794074573.4845343,
+    "result": {
+      "protocol": 1,
+      "boot": 2846693405,
+      "id": 4225376323,
+      "phase": 4,
+      "bytes": 325309,
+      "size": 325309,
+      "records": 1539,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 687444,
+      "mainboard_us": 13155851,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 14.021021604537964,
+      "http_upload_s": 0.7115758489817381
+    },
+    "delivered": true,
+    "http_upload_s": 0.7115758489817381,
+    "finished": 1794074587.5055559
+  }
+}

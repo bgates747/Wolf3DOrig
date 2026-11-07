@@ -1,0 +1,31 @@
+{
+  "verified": true,
+  "cohort_passed": false,
+  "room_records": 0,
+  "info_records": 0,
+  "failure": {
+    "error": "KeyError('/Agon/mystuff/agon-extender/agents/net004/uart1-bootstrap-r01/bootstrap.py')",
+    "next_dispatch_stopped": true,
+    "custody_retained": true,
+    "epoch": 1794074678.6435053
+  },
+  "original_inputs": 664,
+  "cleanup_inputs": 668,
+  "missing_dependencies": {
+    "/Agon/mystuff/agon-extender/agents/net004/uart1-bootstrap-r01/bootstrap.py": "d04f18ee229b4eca6c7134f8ba1efaa91edc5aebccc6b183b6ab4656c526ea83",
+    "/Agon/mystuff/agon-extender/scripts/reset_agon_usb.py": "19fd4577cdca0e1dc8000ba3a1904f21f544cc597becd96e2592671c7f72406f",
+    "/Agon/mystuff/agon-extender/agents/bench-reset/usb-reset.local.json": "9917c14b8ea439e5db10c747ea53017b3041afe14af582b042e040e25b8aa5ca",
+    "/Agon/mystuff/agon-extender/scripts/reset_agon.py": "a34a104a8f0cc06f381b243c57f70715631ab2edb63f879b6f5da0faa5685a77"
+  },
+  "positive_observer_attached": true,
+  "sigterm_observed": false,
+  "original_controller_exit": 1,
+  "observer_exit": 0,
+  "cleanup_exit": 0,
+  "incoming_fullspan_restored": true,
+  "full_handback": true,
+  "released": "2026-11-07T18:14:46.382280+00:00",
+  "next_request": "8579d19c9832",
+  "manifest_files": 798,
+  "limits": "Known late-loaded host dependency omission; no renderer/performance verdict. Original esptool write/read hard resets occurred; no maintained bootstrap or guest before failure. Cleanup uses ONE unchanged current bootstrap after exact restoration. No new device access, replay, calibration or adoption."
+}

@@ -1,0 +1,14 @@
+{
+  "original_kit": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/hardware01/kit.json",
+  "original_kit_sha256": "1b4d2dd929827cdf00f9fa7aef4b1da3ebbfc5b3e665642db263eb8ea900d143",
+  "cleanup_kit_sha256": "569a24a4d30110d222346bf8d2c6e184f0966a7cc8e0c26ba60342792ce429f5",
+  "added_inputs": {
+    "/Agon/mystuff/agon-extender/agents/net004/uart1-bootstrap-r01/bootstrap.py": "d04f18ee229b4eca6c7134f8ba1efaa91edc5aebccc6b183b6ab4656c526ea83",
+    "/Agon/mystuff/agon-extender/scripts/reset_agon_usb.py": "19fd4577cdca0e1dc8000ba3a1904f21f544cc597becd96e2592671c7f72406f",
+    "/Agon/mystuff/agon-extender/agents/bench-reset/usb-reset.local.json": "9917c14b8ea439e5db10c747ea53017b3041afe14af582b042e040e25b8aa5ca",
+    "/Agon/mystuff/agon-extender/scripts/reset_agon.py": "a34a104a8f0cc06f381b243c57f70715631ab2edb63f879b6f5da0faa5685a77"
+  },
+  "provenance": "All additions independently match actual95 successful frozen pins and current files. Same unchanged commissioned bootstrap/reset source/config; cleanup-only, not a new benchmark selection.",
+  "existing_inputs_unmodified": true,
+  "only_missing_current_source_config_bindings_added": true
+}

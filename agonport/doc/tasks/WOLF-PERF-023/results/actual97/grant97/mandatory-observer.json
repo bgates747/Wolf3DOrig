@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/usr/bin/python3",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/observe.py",
+    "--context",
+    "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf023-r01/context.json",
+    "--folder",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/hardware01/observer",
+    "--lease",
+    "4c9a75bf225b4eb9bd25dd130bb34c49"
+  ],
+  "no_hardware_IO": true,
+  "foreground_only": true,
+  "same_actual_owner": true,
+  "no_fatal_signal_suppression": true,
+  "joined_before_release": true
+}
