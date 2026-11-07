@@ -30,6 +30,28 @@ Oryx is down. Performance runs measure maximum uncapped presentation rate.
 - [ ] WOLF-PERF-013-05 — Finite matched uncapped cases, exact restore/release.
 - [ ] WOLF-PERF-013-06 — Publish/share actual result and limits.
 
+## WOLF-PERF-014 — Wall texture-ID cache (next goal arm)
+
+[Pre-code contract](agonport/doc/tasks/WOLF-PERF-014/PLAN.md).
+
+- [ ] WOLF-PERF-014-01 — Pin predecessor after PERF013 disposition.
+- [ ] WOLF-PERF-014-02 — Implement bounded per-column ID cache only.
+- [ ] WOLF-PERF-014-03 — Output/code/resource/producer qualification.
+- [ ] WOLF-PERF-014-04 — Freeze current finite uncapped hardware kit/admission.
+- [ ] WOLF-PERF-014-05 — Matched test, exact restoration/fullcleanup/release.
+- [ ] WOLF-PERF-014-06 — Publish/share actual findings and limits.
+
+## WOLF-PERF-015 — Exact degree-table representation (lower priority)
+
+[Pre-code contract](agonport/doc/tasks/WOLF-PERF-015/PLAN.md).
+
+- [ ] WOLF-PERF-015-01 — Pin predecessor and complete actual trig caller/domain audit.
+- [ ] WOLF-PERF-015-02 — Generate/use exact360degree samples from retained quarter table.
+- [ ] WOLF-PERF-015-03 — All uint16 angles/full output and actual unused-table proof.
+- [ ] WOLF-PERF-015-04 — Target resource/producer and useful finite uncapped freeze.
+- [ ] WOLF-PERF-015-05 — Normal finite run/restore/cleanup/release.
+- [ ] WOLF-PERF-015-06 — Publish/share footprint and measured timing, including zero gain.
+
 ## WOLF-PERF-006 — gap priorities and O2 arm
 
 [Plan](agonport/doc/tasks/WOLF-PERF-006/PLAN.md),
