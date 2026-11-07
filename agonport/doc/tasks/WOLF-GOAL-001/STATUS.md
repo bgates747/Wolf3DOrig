@@ -76,3 +76,13 @@ unmeasured. [Amendment02](../WOLF-PERF-023/AMENDMENT-02.md) selects an explicit
 complete closure and early file-only refusal before device I/O in a separately
 qualified future kit. Same uncapped ABBA/fiveINFO, guards, components, restoration
 and Mech-first priority; no automatic replay, sprite decision or default adoption.
+
+The [corrected harness](../WOLF-PERF-023/CONTROLLER-RESULT03.md) is qualified and
+pushed at b54895d. Compiler416 passed30 tests, including24 bad-dependency
+ordinary-constructor subcases, in3.651s; both real interpreter preflights match.
+All children and compiler leases are released. Exact renderer/target/real guest
+bindings rejoin without rebuild. New reservation0d70a117969f is PREPARING behind
+MechAgon98. Final immutable hardware02 kit deliberately waits for actual98 clean
+full restoration/release, then normal fresh current-tuple admission. No Wolf
+hardware access or lease is held while preparing. Oryx's subsequent online notice
+does not change this already selected finite hardware comparison.
