@@ -1,0 +1,2 @@
+{"scene":"retained-room","poses":600,"objects":121,"attempted":72600,"near_rejected":36608,"divisions":35992,"narrow":35992,"wide":0,"negative":17972,"accepted":28822,"max_unsigned_numerator":221741598,"min_denominator":22609,"max_denominator":2555068}
+{"scene":"retained-eight-statics","poses":600,"objects":8,"attempted":4800,"near_rejected":2728,"divisions":2072,"narrow":2072,"wide":0,"negative":1030,"accepted":2000,"max_unsigned_numerator":7915347,"min_denominator":22849,"max_denominator":98571}
