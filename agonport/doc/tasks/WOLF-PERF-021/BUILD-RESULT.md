@@ -29,14 +29,14 @@ these precise identities, and the wrapper preserved rather than removed.
 
 The actual combined-source independent scalar oracles pass:
 
--1960 background cases: original layers/corners/guards and arbitrary disjoint/
+- 1960 background cases: original layers/corners/guards and arbitrary disjoint/
  overlapping masks, mapped rows and linear target.
--5376 scaling cases and6272 chain cases: repeated/split/extreme heights, empty/
+- 5376 scaling cases and6272 chain cases: repeated/split/extreme heights, empty/
  singleton0/singleton255/all127IDs, row/source aliases, guards, door/invalid/
  nonpositive domains, every refusal/null/short/release-error precedence and stats.
--262144 setup views: all65536 uint16 angles at four positions versus exact old
+- 262144 setup views: all65536 uint16 angles at four positions versus exact old
  quarter-wave reconstruction, including focal signs/rounding.
--1000576 unsigned+signed extracted-native-body pairs against mathematical and
+- 1000576 unsigned+signed extracted-native-body pairs against mathematical and
  original-body/exceptional-bit oracles. Native helper bodies excluded by HOST_TEST
  rejoin real source; actual final Xtensa divider has one unsigned QUOU and no
  recursive/helper calls. Wide fallback, zero guard and signed wrapper remain.
