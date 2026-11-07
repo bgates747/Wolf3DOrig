@@ -26,7 +26,9 @@ Only priorityP01 selected now; P02–P07 deferred discussion backlog.
   fixture throughput27.8390 versus24.8329frames/s. No default adoption.
 - [x] WOLF-PERF-006-06 — Exact restore/idle handback; HOLD lease for Smith.
   Full85f9 span independently matches, all actors stopped; actual69 HELD.
-- [ ] WOLF-PERF-006-07 — Publish/share results; release only on later direction.
+- [x] WOLF-PERF-006-07 — Publish/share results; release only on later direction.
+  af4d780 result delivered to Extender/VDPlet; all P01 work complete.
+  No P02–P07/default adoption selected; actual69 stays held for Smith.
 
 ## WOLF-PERF-005 — bytewise direct-span invariant hoisting
 

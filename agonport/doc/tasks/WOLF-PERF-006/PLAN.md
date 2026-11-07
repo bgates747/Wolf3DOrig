@@ -65,10 +65,18 @@ responsiveness task; this comparison does not select it.
   independent whole readback, files/mode0/callback0/route0/rootCLI/input/idle/
   freeUSB/joined actors. Retain actual lease after tests per Smith; announce
   restored-idle held custody to scheduler and user, never grant next yourself.
-- [ ] WOLF-PERF-006-07 — Decode/report/share raw matched results and limits,
+- [x] WOLF-PERF-006-07 — Decode/report/share raw matched results and limits,
   positive/negative outcome and source/provider/code/stack. No production
   adoption or second priority unless subsequently selected. Bench release
   remains held pending Smith's instruction.
+
+P01 completed in PHYSICAL69-RESULT.md/json, commit af4d780. Same-source O2
+draw32.4392ms versus Os36.7942ms (-11.84%), completed27.8390 versus24.8329
+frames/s. All6guests/7probes/2400records pass; exact native/tail85f9 restored,
+actors stopped, actual69 held. Detailed result/held-idle handback delivered to
+Extender and VDPlet in wolf-perf006-physical69-held-result-ext-nine and
+wolf-perf006-physical69-held-result-vdplet-nine. No further priority, production
+adoption, device probing or release is selected. Await Smith's bench direction.
 
 ## Build and execution boundaries
 
