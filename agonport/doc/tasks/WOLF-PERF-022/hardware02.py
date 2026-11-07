@@ -231,9 +231,9 @@ class Bench(h.Bench):
             assert sha(p / name) == self.components[key]
         c = self.metadata(p, 'directories')
         try:
-            c.make_directory('/test/wolf/perf021', parents=True)
+            c.make_directory('/test/wolf/perf022', parents=True)
             assert not any(n.rstrip('/').lower() == self.remote.lower()
-                           for n, _, _ in c.entries('/test/wolf/perf021')), 'Fresh namespace collision'
+                           for n, _, _ in c.entries('/test/wolf/perf022')), 'Fresh namespace collision'
             c.make_directory(self.remote, parents=True)
             c.make_directory(self.remote + '/level_00', parents=True)
         finally:
@@ -274,7 +274,7 @@ class Bench(h.Bench):
         with path.open('x') as f:
             json.dump(observation, f, indent=2); f.write('\n')
         with (self.out / 'entry-context.json').open('x') as f:
-            json.dump(dict(schema='wolf-perf021-entry-v1', generation=self.grant['generation'],
+            json.dump(dict(schema='wolf-perf022-entry-v1', generation=self.grant['generation'],
                 request=self.kit['request'], lease=self.lease, original_grant=self.c['grant'],
                 original_grant_sha256=sha(self.c['grant']), manifest=str(B / 'kit.json'),
                 manifest_sha256=sha(B / 'kit.json'), dispatch_context=self.c,
