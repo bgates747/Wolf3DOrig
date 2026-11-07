@@ -19,7 +19,7 @@ def once(text, old, new):
 
 
 def main(revision="hardware-guest01"):
-    assert revision in ("hardware-guest01", "hardware-guest02", "hardware-guest03")
+    assert revision in ("hardware-guest01", "hardware-guest02", "hardware-guest03", "hardware-guest04")
     out = T / "build" / revision
     src = out / "source"
     assert not out.exists(), "Preserve the frozen guest; select a new revision"
@@ -32,7 +32,12 @@ def main(revision="hardware-guest01"):
     p = src / "wolf3d.asm"
     s = p.read_text()
     s = once(s, "    call w3d_main_body\n", "    call wp_test\n")
-    s = once(s, "    call w3d_poll_keys\n", "    call w3d_poll_keys\n    call wp_test_steer\n")
+    if revision != 'hardware-guest04':
+        s = once(s, "    call w3d_poll_keys\n", "    call w3d_poll_keys\n    call wp_test_steer\n")
+    else:
+        motion = src / 'wolf3d_motion.inc'
+        motion.write_text(once(motion.read_text(), 'w3d_poll_keys:\n',
+                               'w3d_poll_keys:\n    call wp_test_steer\n'))
     s = once(s, "    W3D_PROFILE_CALL w3d_profile_finish\n", "    W3D_PROFILE_CALL w3d_profile_finish\n    call wp_test_result\n")
     s = once(s, "    W3D_PROFILE_CALL w3d_profile_game_open\n", "    W3D_PROFILE_CALL w3d_profile_game_open\n    ld de,wp_test_report+24\n    call wp_hw_stack\n")
     s = once(s, "    W3D_PROFILE_CALL w3d_profile_game_close\n", "    W3D_PROFILE_CALL w3d_profile_game_close\n    ld de,wp_test_report+28\n    call wp_hw_stack\n")
@@ -83,7 +88,11 @@ wp_hw_stack_packet_end:
 wp_hw_destination: dl 0
 '''
     p.write_text(s)
-    shutil.copyfile(T / "selftest.inc", src / "selftest.inc")
+    fixture = (T / 'selftest.inc').read_text()
+    if revision == 'hardware-guest04':
+        fixture = once(fixture, '    ld a,W3D_CONTROL_LEFT\n    ld (w3d_controls),a\n',
+                       '    ld hl,w3d_keyboard_masks+3\n    set 1,(hl)                     ; held Left before ordinary control sampling\n')
+    (src / 'selftest.inc').write_text(fixture)
     with (out / "assemble.log").open("w") as log:
         subprocess.run([str(b.resolve_assembler(None)), "wolf3d.asm", "profile.bin", "-l", "-c"], cwd=src,
                        stdout=log, stderr=subprocess.STDOUT, check=True, timeout=120)
@@ -97,6 +106,7 @@ wp_hw_destination: dl 0
                "module_sha256": b.sha256(module), "package_bytes": module.stat().st_size,
                "package_limit": 0x20000, "package_storage": storage, "frames": 250,
                "native_mock": False, "extra_cue_hold": False, "info17": 2, "info_operation": 4,
+               "steering_provider": "held-key-every-poll" if revision == 'hardware-guest04' else "overwritten-control-mask",
                "inputs": {str(p.resolve()): b.sha256(p) for p in src.iterdir() if p.suffix in (".inc", ".asm")}}
     (out / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
     print(json.dumps({k: v for k, v in receipt.items() if k != "inputs"}, indent=2))

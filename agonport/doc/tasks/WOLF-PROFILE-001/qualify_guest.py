@@ -53,7 +53,13 @@ def verify(binding):
     assert 'call wp_test_hold' not in asm
     profile=(source/'wolf3d_profile.inc').read_text()
     assert 'call wp_test_hold' not in profile and 'wp_test_read16' not in profile
-    assert 'call w3d_poll_keys\n    call wp_test_steer' in asm
+    motion=(source/'wolf3d_motion.inc').read_text()
+    assert 'w3d_poll_keys:\n    call wp_test_steer\n' in motion, 'Missing held-key poll seam'
+    poll=address(binding,'w3d_poll_keys');steer=address(binding,'wp_test_steer')+0x40000
+    assert binary[poll:poll+4]==b'\xcd'+steer.to_bytes(3,'little'), 'Actual held-key poll seam'
+    mask=address(binding,'w3d_keyboard_masks')+0x40000+3
+    at=steer-0x40000
+    assert binary[at:at+6]==b'\x21'+mask.to_bytes(3,'little')+b'\xcb\xce', 'Actual held-left latch'
     assert 'call w3d_run_gameplay_session' in (source/'selftest.inc').read_text()
     return dict(passed=True,package_bytes=size,package_storage=storage,guest_sha256=sha(binding['guest']),listing_sha256=sha(binding['listing']),operands=operands,stack_labels=stack)
 

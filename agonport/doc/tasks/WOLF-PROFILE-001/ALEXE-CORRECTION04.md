@@ -1,0 +1,28 @@
+# Correct the full-game diagnostic's held-turn seam
+
+Actual Oryx358 with corrected owned package storage completed250 real game
+submissions, normal MOS return, three valid WPF1 blocks115/120/15,250 native
+joins, zero discarded samples, timer retired, equal entry/exit SP and native
+INFO17 margins2120/1780. All47 retrieved hashes verified; normal release before
+analysis. Frontend0/fault counters0. The original harness verdict stays FAIL:
+its required changing-heading assertion correctly rejected one static heading.
+No physical performance conclusion is selected.
+
+Source finding: private wp_test_steer writes w3d_controls after the outer
+foreground poll, but ordinary w3d_sample_controls reconstructs that value from
+w3d_keyboard_masks before each physics step. Thus it never creates a held key.
+Correct only the disposable guest to latch Left-arrow bit1 at keyboard byte3
+on EVERY w3d_poll_keys entry, including fixed-step catch-up polls. Reuse actual
+keyboard sampling, normal physics, actors, renderer and profiler. Preserve
+250-submission drain-and-return, two INFO17 calls, source/module/storage pins.
+No direct pose edits, shipping input change, native mock or new pause/cap.
+
+Build a distinct hardware-guest04 under normal finite Pi FIFO. Require actual
+linked call at w3d_poll_keys and actual ldHL/memorySET sequence at wp_test_steer;
+retain original private control-mask mistake as a rejection control. Run six
+existing packet/ownership/result checks against04. Qualify once, stop children,
+release/notify next. Then ONE separately frozen Alexe04 case via normal Oryx
+FIFO: same runtime/firmware/module/assets/250frame/300s bounds/guards/cleanup,
+now require >20 distinct recorded degree headings, changing scene capture,
+valid WPF native joins and clean completion. No runtime rebuild or physical
+contact; original358 evidence/result stays unchanged.
