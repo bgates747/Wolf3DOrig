@@ -37,7 +37,19 @@ Useful entry points: [PERF021 readiness](../WOLF-PERF-021/HARDWARE-READINESS.md)
 [same-guest-clock budget](PREPRESENT-BUDGET.json).
 
 Host-signal dependency: [WOLF-HOST-001](../WOLF-HOST-001/RESULT03.md) qualifies
-separate foreground attach in controlled normal/direct/group/observer-cancel
-cases. It can record prospective PID/UID without changing target parenting or
-swallowing SIGTERM. Historical sender/cause is still unknown; no controller or
-hardware adoption/replay is selected from those disposable-child checks.
+controlled separate foreground attach. [PERF022 actual foreground checks](../WOLF-PERF-022/HOST-RESULT01.md)
+also qualify app-server-parented controller/observer pairs, the unchanged real
+interruption handler, known-sender capture, observer cancellation/refusal and15
+negative handshakes. Historical sender/cause remains unknown; simultaneous loss
+of both jobs and host tracing perturbation remain limits.
+
+Current [PERF022 hardware02 readiness](../WOLF-PERF-022/READINESS02.md) is frozen
+at808c551: full six uncapped original/cyan/combined/combined/cyan/original rooms,
+sevenINFO, unchanged renderer/guest binaries, exact dual-interpreter closures and
+822 pins/472 archived byte sets.27 adapted-controller/actual-C-listener/observer
+binding checks PASS after reservation-only revision. All compiler work is stopped
+and released. Request793c29add4f8 is queued behind Mech's owner isolationdd79 and
+consumerR08/e419, with no Wolf hardware lease or contact. Old ungranteddfe8/kit
+a07df733 was voluntarily cancelled before contact and remains preserved. Current
+real predecessor restoration/tuple and fresh Extender admission are required;
+no old token, blind interrupted-cohort replay or automatic default adoption.
