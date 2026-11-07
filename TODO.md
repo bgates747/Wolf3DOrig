@@ -49,6 +49,14 @@ Smith selected original-method restoration ahead of division-provider tuning.
 - [ ] WOLF-PERF-007-06 — Matched run, exact restoration and clean release.
 - [ ] WOLF-PERF-007-07 — Publish/share results and original-method limitations.
 
+  [Fab visual check](agonport/doc/tasks/WOLF-PERF-007/VISUAL-RESULT.md) and
+  [physical producer/controller checks](agonport/doc/tasks/WOLF-PERF-007/PRODUCER-RESULT.md)
+  pass. Frozen hardware kit c0bc2e5/a1f7a867 has419 verified inputs;
+  reservation f60e5f0fed70 is prepared behind actual MechAgon71. Source/current
+  tuple matches actual70 restoration, but a fresh matching grant is required.
+  Oryx340/compiler293 released cleanly; Wolf holds no machine/bench lease.
+  Physical timing/whole-task stack and default adoption remain unestablished.
+
 ## WOLF-PERF-005 — bytewise direct-span invariant hoisting
 
 [Plan](agonport/doc/tasks/WOLF-PERF-005/PLAN.md) and
