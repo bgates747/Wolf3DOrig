@@ -878,3 +878,11 @@ default-cutover claims.
 - [ ] WOLF-PERF-018-04 — Canonical-room work census and useful finite physical freeze.
 - [ ] WOLF-PERF-018-05 — Fresh normal grant, finite run, preservation/restoration/release.
 - [ ] WOLF-PERF-018-06 — Publish physical costs/gains/limits, no automatic adoption.
+
+## WOLF-PERF-019 — Ascending wall texture column chains
+
+[Qualified source/target result](agonport/doc/tasks/WOLF-PERF-019/BUILD-RESULT.md).
+
+- [ ] WOLF-PERF-019-04 — Useful finite physical selection/current kit freeze.
+- [ ] WOLF-PERF-019-05 — Fresh run/preservation/exact restore/release/handoff.
+- [ ] WOLF-PERF-019-06 — Actual performance/resource result and limits.

@@ -1,6 +1,7 @@
 # Remaining candidates — source dispositions during bench preparation
 
-Current baselinea926, candidate972f changes sprites only. VDPlet source advice
+Independent baselinea926; all later candidates remain separate arms unless an
+explicit combination is qualified. VDPlet source advice
 is retained at agon-vdplet/docs/tasks/VDPL-034/WOLF-ADVICE-2026-11-07.md (WAD001–003).
 These are offline dispositions, not performance measurements.
 
@@ -17,3 +18,44 @@ The full-table rejection disposes only the literal3600entry int32 expansion;
 it does not close every possible trig or post-scaling investigation. Arithmetic,
 stack and presentation observations cannot substitute for end-to-end uncapped
 completed-frame results.
+
+## Reached milestones after this initial ranking
+
+The table above preserves the original selection rationale. Current evidence
+advances several items without changing their scope:
+
+- PERF013 sprite hoisting completed actual78. Native draw differences were
+  small and scene-dependent with unchanged presented rate. Smith explicitly
+  reopened its resource-value decision in PERF013/REVISIT.md; retain the source
+  and results for that discussion, without automatic rejection or adoption.
+- PERF014's ID cache and PERF015's exact360-degree representation pass source,
+  independent host/600-pose and target/real-producer qualification. H02/actual84
+  stopped on host SIGTERM before first room LOAD/RUN. They remain unmeasured
+  physically; no result or retry is implied by the successful preparation.
+- PERF016's cyan-clear extent correction completed actual81:13.7% lower pooled
+  inclusive draw, unchanged ~30.06fps; +84B. It retains a useful measured result
+  despite the presentation threshold.
+- PERF017's guarded local32-bit helper completed actual85:2.125% lower pooled
+  draw with3.111% control drift, unchanged ~30.06fps; +4B. This qualifies the
+  local subset/fallback arm, not a generic libgcc-only provider. The44B allocated
+  metadata guard remains blocked and was not relaxed.
+- PERF018 caches identical full-height scaling setup while keeping scalar
+  texture/pixel order.5376 scalar/alias cases,600-pose parity, target/producers
+  and73.85% canonical-room host setup-reuse count pass; +60B. Hardware package
+  is frozen/ready, queued behind first-priority Mech86. No physical timing yet.
+- PERF019 is a separately frozen true membership-scan reduction: ascending
+  per-ID column chains, retaining original scalar order and leases. This goes
+  beyond PERF014's cached ID resolution; nominal local storage adds384B.
+  6272 scalar/alias cases,600-pose parity, target/producers and canonical-room
+  work count pass; +172B package, selected task path1936B. No physical timing
+  or case selection yet.
+- Presentation analysis now includes4792 existing steady intervals. Render
+  reply arrives23–30 nominal guest ms after the previous completed presentation,
+  already beyond one nominal60Hz interval before C3. This is a sequential-path
+  budget limit, not proof of an extra VBlank, hidden cap or exclusive CPU time.
+  Keep PRESENTATION-SOURCE.md's timing, source and observer limits intact.
+
+No optimization is combined into the production default by these milestones.
+Original post-height replacement, fractional/generated scaler and row-major
+aliasing boundaries remain in WALL-POST-DESIGN.md; arithmetic caching and column
+chains do not silently restore those incompatible original methods.

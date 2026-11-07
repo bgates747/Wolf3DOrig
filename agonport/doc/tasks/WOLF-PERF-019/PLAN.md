@@ -5,11 +5,11 @@ qualified arms. This contract precedes implementation. Keep actual86 MechAgon,
 queued/frozen PERF018 and every existing package/result unchanged. Oryx is down;
 normal serial Pi compilation and actual exclusive Extender grants only.
 
-- [ ] WOLF-PERF-019-01 — Freeze exact a926 baseline and pre-code supported method,
+- [x] WOLF-PERF-019-01 — Freeze exact a926 baseline and pre-code supported method,
   work, order, storage, failure and lifetime boundaries.
-- [ ] WOLF-PERF-019-02 — Implement bounded ascending column chains only, with no
+- [x] WOLF-PERF-019-02 — Implement bounded ascending column chains only, with no
   sampler, projection, metadata, asset order or row/pixel order changes.
-- [ ] WOLF-PERF-019-03 — Independent scalar pixels/guards/metadata/error/lease
+- [x] WOLF-PERF-019-03 — Independent scalar pixels/guards/metadata/error/lease
   oracle, empty/singleton/column255 and all-ID chain coverage, aliases, full
   renderer/module/600-pose parity and exact target control/code/stack/provider/
   resource/package/real producer qualification.
@@ -62,3 +62,6 @@ This is a local optimization of the already documented grouped consumer method.
 It is neither literal Carmack post widening/generated scaling nor a workaround
 for their incompatible units/x86/VGA implementation. Those original-method
 boundaries remain explicit in WOLF-GOAL-001/WALL-POST-DESIGN.md.
+
+Qualified source/target/host/producer result: [BUILD-RESULT.md](BUILD-RESULT.md).
+No physical timing or new case selected yet; keep queued018 unchanged.
