@@ -1,13 +1,11 @@
-# Reached state
+# Completed and released
 
-WOLF-PERF-011-01 through WOLF-PERF-011-04 are complete: frozen latest candidate,
-paced presentation correction, actual assembly/manual-start checks and actual77
-LOAD-only preparation with question notification. Smith manually ran the fixture
-and confirmed both turns. WOLF-PERF-011-05 data collection, independent validation,
-exact restoration/readback and full idle handback are complete; actual77 release
-is pending Smith's direction, per current checkout/HOLD boundary.
+All planned preparation, Smith’s manual run/confirmation, raw collection,
+verification and exact restoration/full idle handback are complete. Actual77
+was subsequently cleanly released on Smith’s newer MechAgon-first overnight
+instruction at2026-11-07 09:30:16.578007UTC. See
+[release receipt and disposition](../WOLF-GOAL-001/RELEASE77.md).
 
-PLAN.md remains an immutable original kit input while actual77 is retained.
-Its checkboxes will be disposed after the final held-custody release, with the
-original bytes retained in build/hardware02/frozen-inputs/. This status and
-RESULT.md record the reached state without invalidating that current kit.
+RESULT.md/RESULT.json retain the historical held-custody observation; they are
+not rewritten as new measurements. Original selected input snapshots remain
+under build/ for provenance. No Wolf hardware lease is retained.

@@ -5,6 +5,23 @@ unfinished work. IDs are stable references and are not reused. When an item is
 accepted, rejected, or superseded, record its ID, evidence, and rationale in
 the current dated development log, then remove it from this file.
 
+## WOLF-GOAL-001 — Overnight uncapped optimization goal
+
+[Goal contract](agonport/doc/tasks/WOLF-GOAL-001/PLAN.md). Smith authorizes
+unattended/non-visible testing; MechAgon has first bench priority, Wolf second.
+Oryx is down. Performance runs measure maximum uncapped presentation rate.
+
+- [ ] WOLF-GOAL-001-02 — Source/timing review and narrow candidate selection.
+- [ ] WOLF-GOAL-001-03 — Sprite-column invariant/occlusion hoisting.
+- [ ] WOLF-GOAL-001-04 — Repeated texture-group scan reduction.
+- [ ] WOLF-GOAL-001-05 — Supported faster division-provider dependency.
+- [ ] WOLF-GOAL-001-06 — Trig tables/original wall-post/scaling evaluation.
+- [ ] WOLF-GOAL-001-07 — Presentation/fence rate-ceiling investigation.
+- [ ] WOLF-GOAL-001-08 — Per-arm correctness/code/resource/producer freezes.
+- [ ] WOLF-GOAL-001-09 — Opportunistic matched uncapped hardware cohorts.
+- [ ] WOLF-GOAL-001-10 — Exact restoration, cleanup, release and handoffs.
+- [ ] WOLF-GOAL-001-11 — Publish/share final results and actual limits.
+
 ## WOLF-PERF-006 — gap priorities and O2 arm
 
 [Plan](agonport/doc/tasks/WOLF-PERF-006/PLAN.md),

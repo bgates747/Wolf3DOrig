@@ -13,7 +13,7 @@ for MechAgon and accept long waits. Arrange useful gaps between finite MechAgon
 tranches when practical, with no preemption or shared target access. Smith's new
 priority direction ends Wolf's idle HOLD77 once normal clean release is proved.
 
-- [ ] WOLF-GOAL-001-01 — Start actual goal, publish this contract and communicate
+- [x] WOLF-GOAL-001-01 — Start actual goal, publish this contract and communicate
   exact priorities/unattended authority to MechAgon and Extender immediately.
   Fresh normal release77; preserve accepted paced/uncapped results and all data.
 - [ ] WOLF-GOAL-001-02 — Review current optimized source and actual timing. Select
