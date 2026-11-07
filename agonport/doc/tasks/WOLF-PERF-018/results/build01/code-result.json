@@ -1,0 +1,592 @@
+{
+  "passed": true,
+  "arms": {
+    "original": {
+      "optimization": "-O2",
+      "package": {
+        "compiler_target": {
+          "psram_cache_workaround": true,
+          "flags": [
+            "-mfix-esp32-psram-cache-issue"
+          ]
+        },
+        "link_map": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.map",
+        "name": "wolf_perf",
+        "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/native-source/wolf3d_module.cpp",
+        "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+        "policy_sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+        "declared_limits": {
+          "text": 65536,
+          "data": 16384,
+          "stack": 2048,
+          "image": 131072
+        },
+        "text_policy": {
+          "profile": "standard",
+          "maximum": 65536
+        },
+        "build_id": "0x20261104",
+        "capabilities": 257,
+        "abi_major": 1,
+        "abi_minor": 6,
+        "envelope_bytes": 64,
+        "elf_bytes": 24356,
+        "package_bytes": 24420,
+        "sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+        "package": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.vdpl",
+        "elf": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.elf",
+        "entry_virtual": 14948,
+        "resident_text_bytes": 15360,
+        "resident_data_bytes": 13348,
+        "relative_relocations": 42,
+        "allocated_sections": {
+          ".text": {
+            "virtual_address": 720,
+            "bytes": 15357,
+            "type": 1
+          },
+          ".rodata": {
+            "virtual_address": 16080,
+            "bytes": 7852,
+            "type": 1
+          },
+          ".bss": {
+            "virtual_address": 24716,
+            "bytes": 5496,
+            "type": 8
+          }
+        }
+      },
+      "commands": [
+        [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-gcc",
+          "-mfix-esp32-psram-cache-issue",
+          "-I",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/sdk/include",
+          "-O2",
+          "-fPIC",
+          "-mlongcalls",
+          "-mtext-section-literals",
+          "-fvisibility=hidden",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fno-builtin",
+          "-ffp-contract=off",
+          "-fstack-usage",
+          "-fno-common",
+          "-std=c++17",
+          "-fno-exceptions",
+          "-fno-rtti",
+          "-fno-threadsafe-statics",
+          "-DVDPL_VARIANT=1",
+          "-c",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/native-source/wolf3d_module.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.o"
+        ],
+        [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-gcc",
+          "-mfix-esp32-psram-cache-issue",
+          "-nostdlib",
+          "-nostartfiles",
+          "-shared",
+          "-Wl,--gc-sections",
+          "-Wl,-e,vdplet_entry",
+          "-Wl,--no-undefined",
+          "-Xlinker",
+          "-Map",
+          "-Xlinker",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.map",
+          "-Wl,--version-script=/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/sdk/tools/module.exports",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.o",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.elf"
+        ],
+        [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-strip",
+          "--strip-unneeded",
+          "--remove-section=.got.loc",
+          "--remove-section=.got",
+          "--remove-section=.dynamic",
+          "--remove-section=.comment",
+          "--remove-section=.xt.lit",
+          "--remove-section=.xt.prop",
+          "--remove-section=.xtensa.info",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.upload.elf",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.elf"
+        ],
+        [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-readelf",
+          "-hSWr",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.upload.elf"
+        ],
+        [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-objdump",
+          "-drs",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.elf"
+        ]
+      ],
+      "stack": [
+        {
+          "function": "wolf3d_world_mirror.cpp:356:13:wolf3d_production::BatchDetail wolf3d_production::{anonymous}::validate_batch(const wolf3d_production::WorldMirror&, const uint8_t*, size_t, wolf3d_production::{anonymous}::BatchHeader&)",
+          "bytes": 768,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:133:9:int32_t wolf3d_production::{anonymous}::sin_fine(int32_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:284:9:uint8_t wolf3d_production::{anonymous}::tile_at(const wolf3d_production::WorldMirror&, const uint8_t*, int, int)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:424:6:bool wolf3d_production::{anonymous}::transform_point(int32_t, int32_t, const wolf3d_production::{anonymous}::ViewState&, int32_t&, int32_t&, int32_t&, uint32_t&)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:454:6:void wolf3d_production::{anonymous}::swap_sprites(wolf3d_production::{anonymous}::VisSprite&, wolf3d_production::{anonymous}::VisSprite&)",
+          "bytes": 48,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:460:6:void wolf3d_production::{anonymous}::sift_min(wolf3d_production::{anonymous}::VisSprite*, uint16_t, uint16_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:56:17:uint64_t divide_u64(uint64_t, uint64_t)",
+          "bytes": 48,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:145:6:void wolf3d_production::{anonymous}::emit_fizzle(wolf3d_production::{anonymous}::ModuleState::FizzleCursor&, uint32_t, uint8_t*, uintptr_t*, uint32_t, uint32_t, uint8_t, uint8_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:247:14:wolf3d_production::RenderDetail wolf3d_production::{anonymous}::acquire_asset(void*, uint16_t, wolf3d_production::AssetSpan&)",
+          "bytes": 64,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:263:14:wolf3d_production::RenderDetail wolf3d_production::{anonymous}::release_asset(void*, uint32_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:84:6:void wolf3d_production::{anonymous}::put_pixel(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint8_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:95:6:void wolf3d_production::{anonymous}::fill_span(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint8_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:145:6:void wolf3d_production::{anonymous}::fill_rect(const wolf3d_production::RenderTarget&, int, int, int, int, uint8_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:412:9:int32_t wolf3d_production::{anonymous}::require_published_frame(const vdplet_host_v1*, const vdplet_request_v1*)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:659:6:bool wolf3d_production::{anonymous}::append_hud_number(wolf3d_production::{anonymous}::HudDraw*, uint8_t&, int, int, int, uint32_t)",
+          "bytes": 48,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_world_mirror.cpp:468:6:void wolf3d_production::initialize_world_mirror(wolf3d_production::WorldMirror&, uint16_t, uint16_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_world_mirror.cpp:484:13:wolf3d_production::BatchDetail wolf3d_production::validate_resource_descriptor(wolf3d_production::ResourceDescriptor&, const uint8_t*, size_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:199:9:int32_t wolf3d_production::{anonymous}::copy_descriptor(const vdplet_host_v1*, const vdplet_request_v1*, wolf3d_production::ResourceDescriptor&)",
+          "bytes": 80,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:224:9:int32_t wolf3d_production::{anonymous}::require_matching_descriptor(const vdplet_host_v1*, const vdplet_request_v1*)",
+          "bytes": 48,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_world_mirror.cpp:522:13:wolf3d_production::BatchDetail wolf3d_production::apply_update_batch(wolf3d_production::WorldMirror&, const uint8_t*, size_t)",
+          "bytes": 64,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_world_mirror.cpp:544:6:void wolf3d_production::mark_mirror_presented(wolf3d_production::WorldMirror&)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_world_mirror.cpp:550:13:const char* wolf3d_production::batch_detail_name(wolf3d_production::BatchDetail)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:759:14:wolf3d_production::RenderDetail wolf3d_production::render_world_to_target(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, wolf3d_production::RenderStats*)",
+          "bytes": 352,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:809:14:wolf3d_production::RenderDetail wolf3d_production::render_world(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, wolf3d_production::RenderStats*)",
+          "bytes": 80,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:820:14:wolf3d_production::RenderDetail wolf3d_production::render_world_direct(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, wolf3d_production::RenderStats*)",
+          "bytes": 48,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:831:13:const char* wolf3d_production::render_detail_name(wolf3d_production::RenderDetail)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:21:18:void* memcpy(void*, const void*, unsigned int)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:28:18:void* memset(void*, int, unsigned int)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:78:21:uint64_t __udivdi3(uint64_t, uint64_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:82:20:int64_t __divdi3(int64_t, int64_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:574:9:int32_t wp_production_entry(const vdplet_host_v1*, const vdplet_request_v1*)",
+          "bytes": 304,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:613:9:int32_t vdplet_entry(const vdplet_host_v1*, const vdplet_request_v1*)",
+          "bytes": 128,
+          "kind": "static"
+        }
+      ],
+      "max_individual_stack_bytes": 768,
+      "unused_unsigned_helper_retained": false,
+      "symbols_sha256": "d0131d9d34d1be51b840877178591f00ebb16b9c118f43487916a9d9ad2a5842",
+      "disassembly_sha256": "a719228c2955c4a2d626cd5ca95c4a4238fac9e21901a14675c94f301f195680"
+    },
+    "candidate": {
+      "optimization": "-O2",
+      "package": {
+        "compiler_target": {
+          "psram_cache_workaround": true,
+          "flags": [
+            "-mfix-esp32-psram-cache-issue"
+          ]
+        },
+        "link_map": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.map",
+        "name": "wolf_perf",
+        "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/native-source/wolf3d_module.cpp",
+        "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+        "policy_sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+        "declared_limits": {
+          "text": 65536,
+          "data": 16384,
+          "stack": 2048,
+          "image": 131072
+        },
+        "text_policy": {
+          "profile": "standard",
+          "maximum": 65536
+        },
+        "build_id": "0x20261104",
+        "capabilities": 257,
+        "abi_major": 1,
+        "abi_minor": 6,
+        "envelope_bytes": 64,
+        "elf_bytes": 24416,
+        "package_bytes": 24480,
+        "sha256": "2a249f85e6e88559e1e32d7c9af6906a4f543a693f97f07aa5b0799a53505ed8",
+        "package": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.vdpl",
+        "elf": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.elf",
+        "entry_virtual": 15008,
+        "resident_text_bytes": 15420,
+        "resident_data_bytes": 13348,
+        "relative_relocations": 42,
+        "allocated_sections": {
+          ".text": {
+            "virtual_address": 720,
+            "bytes": 15417,
+            "type": 1
+          },
+          ".rodata": {
+            "virtual_address": 16140,
+            "bytes": 7852,
+            "type": 1
+          },
+          ".bss": {
+            "virtual_address": 24716,
+            "bytes": 5496,
+            "type": 8
+          }
+        }
+      },
+      "commands": [
+        [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-gcc",
+          "-mfix-esp32-psram-cache-issue",
+          "-I",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/sdk/include",
+          "-O2",
+          "-fPIC",
+          "-mlongcalls",
+          "-mtext-section-literals",
+          "-fvisibility=hidden",
+          "-ffunction-sections",
+          "-fdata-sections",
+          "-fno-builtin",
+          "-ffp-contract=off",
+          "-fstack-usage",
+          "-fno-common",
+          "-std=c++17",
+          "-fno-exceptions",
+          "-fno-rtti",
+          "-fno-threadsafe-statics",
+          "-DVDPL_VARIANT=1",
+          "-c",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/native-source/wolf3d_module.cpp",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.o"
+        ],
+        [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-gcc",
+          "-mfix-esp32-psram-cache-issue",
+          "-nostdlib",
+          "-nostartfiles",
+          "-shared",
+          "-Wl,--gc-sections",
+          "-Wl,-e,vdplet_entry",
+          "-Wl,--no-undefined",
+          "-Xlinker",
+          "-Map",
+          "-Xlinker",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.map",
+          "-Wl,--version-script=/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/sdk/tools/module.exports",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.o",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.elf"
+        ],
+        [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-strip",
+          "--strip-unneeded",
+          "--remove-section=.got.loc",
+          "--remove-section=.got",
+          "--remove-section=.dynamic",
+          "--remove-section=.comment",
+          "--remove-section=.xt.lit",
+          "--remove-section=.xt.prop",
+          "--remove-section=.xtensa.info",
+          "-o",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.upload.elf",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.elf"
+        ],
+        [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-readelf",
+          "-hSWr",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.upload.elf"
+        ],
+        [
+          "/home/smith/.platformio/packages/toolchain-xtensa-esp32/bin/xtensa-esp32-elf-objdump",
+          "-drs",
+          "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.elf"
+        ]
+      ],
+      "stack": [
+        {
+          "function": "wolf3d_world_mirror.cpp:356:13:wolf3d_production::BatchDetail wolf3d_production::{anonymous}::validate_batch(const wolf3d_production::WorldMirror&, const uint8_t*, size_t, wolf3d_production::{anonymous}::BatchHeader&)",
+          "bytes": 768,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:133:9:int32_t wolf3d_production::{anonymous}::sin_fine(int32_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:284:9:uint8_t wolf3d_production::{anonymous}::tile_at(const wolf3d_production::WorldMirror&, const uint8_t*, int, int)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:434:6:bool wolf3d_production::{anonymous}::transform_point(int32_t, int32_t, const wolf3d_production::{anonymous}::ViewState&, int32_t&, int32_t&, int32_t&, uint32_t&)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:464:6:void wolf3d_production::{anonymous}::swap_sprites(wolf3d_production::{anonymous}::VisSprite&, wolf3d_production::{anonymous}::VisSprite&)",
+          "bytes": 48,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:470:6:void wolf3d_production::{anonymous}::sift_min(wolf3d_production::{anonymous}::VisSprite*, uint16_t, uint16_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:56:17:uint64_t divide_u64(uint64_t, uint64_t)",
+          "bytes": 48,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:145:6:void wolf3d_production::{anonymous}::emit_fizzle(wolf3d_production::{anonymous}::ModuleState::FizzleCursor&, uint32_t, uint8_t*, uintptr_t*, uint32_t, uint32_t, uint8_t, uint8_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:247:14:wolf3d_production::RenderDetail wolf3d_production::{anonymous}::acquire_asset(void*, uint16_t, wolf3d_production::AssetSpan&)",
+          "bytes": 64,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:263:14:wolf3d_production::RenderDetail wolf3d_production::{anonymous}::release_asset(void*, uint32_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:84:6:void wolf3d_production::{anonymous}::put_pixel(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint8_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:95:6:void wolf3d_production::{anonymous}::fill_span(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint8_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:145:6:void wolf3d_production::{anonymous}::fill_rect(const wolf3d_production::RenderTarget&, int, int, int, int, uint8_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:412:9:int32_t wolf3d_production::{anonymous}::require_published_frame(const vdplet_host_v1*, const vdplet_request_v1*)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:669:6:bool wolf3d_production::{anonymous}::append_hud_number(wolf3d_production::{anonymous}::HudDraw*, uint8_t&, int, int, int, uint32_t)",
+          "bytes": 48,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_world_mirror.cpp:468:6:void wolf3d_production::initialize_world_mirror(wolf3d_production::WorldMirror&, uint16_t, uint16_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_world_mirror.cpp:484:13:wolf3d_production::BatchDetail wolf3d_production::validate_resource_descriptor(wolf3d_production::ResourceDescriptor&, const uint8_t*, size_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:199:9:int32_t wolf3d_production::{anonymous}::copy_descriptor(const vdplet_host_v1*, const vdplet_request_v1*, wolf3d_production::ResourceDescriptor&)",
+          "bytes": 80,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:224:9:int32_t wolf3d_production::{anonymous}::require_matching_descriptor(const vdplet_host_v1*, const vdplet_request_v1*)",
+          "bytes": 48,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_world_mirror.cpp:522:13:wolf3d_production::BatchDetail wolf3d_production::apply_update_batch(wolf3d_production::WorldMirror&, const uint8_t*, size_t)",
+          "bytes": 64,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_world_mirror.cpp:544:6:void wolf3d_production::mark_mirror_presented(wolf3d_production::WorldMirror&)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_world_mirror.cpp:550:13:const char* wolf3d_production::batch_detail_name(wolf3d_production::BatchDetail)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:769:14:wolf3d_production::RenderDetail wolf3d_production::render_world_to_target(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, wolf3d_production::RenderStats*)",
+          "bytes": 352,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:819:14:wolf3d_production::RenderDetail wolf3d_production::render_world(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, wolf3d_production::RenderStats*)",
+          "bytes": 80,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:830:14:wolf3d_production::RenderDetail wolf3d_production::render_world_direct(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, wolf3d_production::RenderStats*)",
+          "bytes": 48,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_renderer.cpp:841:13:const char* wolf3d_production::render_detail_name(wolf3d_production::RenderDetail)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:21:18:void* memcpy(void*, const void*, unsigned int)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:28:18:void* memset(void*, int, unsigned int)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:78:21:uint64_t __udivdi3(uint64_t, uint64_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:82:20:int64_t __divdi3(int64_t, int64_t)",
+          "bytes": 32,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:574:9:int32_t wp_production_entry(const vdplet_host_v1*, const vdplet_request_v1*)",
+          "bytes": 304,
+          "kind": "static"
+        },
+        {
+          "function": "wolf3d_module.cpp:613:9:int32_t vdplet_entry(const vdplet_host_v1*, const vdplet_request_v1*)",
+          "bytes": 128,
+          "kind": "static"
+        }
+      ],
+      "max_individual_stack_bytes": 768,
+      "unused_unsigned_helper_retained": false,
+      "symbols_sha256": "aa25b7ef8e0fe55600c44e23b19c71b73ec3b0e623b2d45c1a9931a33c3b4f2d",
+      "disassembly_sha256": "987f428968b05b38f5551a7a74a6f04be44e6320c5ef506bc8b7ac1b9042f3db"
+    }
+  },
+  "limits": "Source/target flags/providers/sections and individual static frames; not execution of excluded native helpers, whole-call stack, physical pixels or timing. Actual generated pixel/counter loops require retained disassembly review."
+}

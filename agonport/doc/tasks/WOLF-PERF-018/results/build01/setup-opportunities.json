@@ -1,0 +1,3021 @@
+{
+  "passed": true,
+  "frames": 600,
+  "valid_columns": 153600,
+  "eligible_reuses": 119190,
+  "remaining_setup_evaluations": 34410,
+  "eligible_fraction": 0.7759765625,
+  "minimum_reuses_per_frame": 151,
+  "maximum_reuses_per_frame": 249,
+  "scope": "Existing six-scenario host parity fixture; not the physical E1L1 room, native branch counters, timing or observed target speed.",
+  "inputs": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/host-results/states600.bin": "06f58af5c06a2ec718a3b6e9345eadbc5c276a97324229ab4492a645b887be86",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/host-results/states600.bin": "06f58af5c06a2ec718a3b6e9345eadbc5c276a97324229ab4492a645b887be86",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/renderer_fixture.h": "c2939c346bcb0e2df84e558cc2f2453c0b4f89fef7d505670648f88d0818a59f",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/test_renderer.cpp": "79e78c22f5763e95c1b22a2361e6263e8cedb18c68efd5e1455e20933ab6e0a9",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/original/production/wolf3d_production_contract.h": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/test_equivalence.cpp": "ad85423cadaa3aa7855fb81863106ac29ed64f80b395401eeae07182927b5aa0"
+  },
+  "per_frame": [
+    {
+      "step": 1,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 2,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 3,
+      "columns": 256,
+      "eligible_reuses": 207
+    },
+    {
+      "step": 4,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 5,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 6,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 7,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 8,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 9,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 10,
+      "columns": 256,
+      "eligible_reuses": 185
+    },
+    {
+      "step": 11,
+      "columns": 256,
+      "eligible_reuses": 184
+    },
+    {
+      "step": 12,
+      "columns": 256,
+      "eligible_reuses": 183
+    },
+    {
+      "step": 13,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 14,
+      "columns": 256,
+      "eligible_reuses": 181
+    },
+    {
+      "step": 15,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 16,
+      "columns": 256,
+      "eligible_reuses": 180
+    },
+    {
+      "step": 17,
+      "columns": 256,
+      "eligible_reuses": 178
+    },
+    {
+      "step": 18,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 19,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 20,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 21,
+      "columns": 256,
+      "eligible_reuses": 186
+    },
+    {
+      "step": 22,
+      "columns": 256,
+      "eligible_reuses": 174
+    },
+    {
+      "step": 23,
+      "columns": 256,
+      "eligible_reuses": 174
+    },
+    {
+      "step": 24,
+      "columns": 256,
+      "eligible_reuses": 174
+    },
+    {
+      "step": 25,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 26,
+      "columns": 256,
+      "eligible_reuses": 173
+    },
+    {
+      "step": 27,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 28,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 29,
+      "columns": 256,
+      "eligible_reuses": 178
+    },
+    {
+      "step": 30,
+      "columns": 256,
+      "eligible_reuses": 182
+    },
+    {
+      "step": 31,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 32,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 33,
+      "columns": 256,
+      "eligible_reuses": 170
+    },
+    {
+      "step": 34,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 35,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 36,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 37,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 38,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 39,
+      "columns": 256,
+      "eligible_reuses": 165
+    },
+    {
+      "step": 40,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 41,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 42,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 43,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 44,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 45,
+      "columns": 256,
+      "eligible_reuses": 165
+    },
+    {
+      "step": 46,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 47,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 48,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 49,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 50,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 51,
+      "columns": 256,
+      "eligible_reuses": 165
+    },
+    {
+      "step": 52,
+      "columns": 256,
+      "eligible_reuses": 205
+    },
+    {
+      "step": 53,
+      "columns": 256,
+      "eligible_reuses": 206
+    },
+    {
+      "step": 54,
+      "columns": 256,
+      "eligible_reuses": 208
+    },
+    {
+      "step": 55,
+      "columns": 256,
+      "eligible_reuses": 215
+    },
+    {
+      "step": 56,
+      "columns": 256,
+      "eligible_reuses": 213
+    },
+    {
+      "step": 57,
+      "columns": 256,
+      "eligible_reuses": 171
+    },
+    {
+      "step": 58,
+      "columns": 256,
+      "eligible_reuses": 217
+    },
+    {
+      "step": 59,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 60,
+      "columns": 256,
+      "eligible_reuses": 224
+    },
+    {
+      "step": 61,
+      "columns": 256,
+      "eligible_reuses": 218
+    },
+    {
+      "step": 62,
+      "columns": 256,
+      "eligible_reuses": 229
+    },
+    {
+      "step": 63,
+      "columns": 256,
+      "eligible_reuses": 179
+    },
+    {
+      "step": 64,
+      "columns": 256,
+      "eligible_reuses": 233
+    },
+    {
+      "step": 65,
+      "columns": 256,
+      "eligible_reuses": 236
+    },
+    {
+      "step": 66,
+      "columns": 256,
+      "eligible_reuses": 238
+    },
+    {
+      "step": 67,
+      "columns": 256,
+      "eligible_reuses": 223
+    },
+    {
+      "step": 68,
+      "columns": 256,
+      "eligible_reuses": 241
+    },
+    {
+      "step": 69,
+      "columns": 256,
+      "eligible_reuses": 184
+    },
+    {
+      "step": 70,
+      "columns": 256,
+      "eligible_reuses": 245
+    },
+    {
+      "step": 71,
+      "columns": 256,
+      "eligible_reuses": 247
+    },
+    {
+      "step": 72,
+      "columns": 256,
+      "eligible_reuses": 248
+    },
+    {
+      "step": 73,
+      "columns": 256,
+      "eligible_reuses": 226
+    },
+    {
+      "step": 74,
+      "columns": 256,
+      "eligible_reuses": 249
+    },
+    {
+      "step": 75,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 76,
+      "columns": 256,
+      "eligible_reuses": 248
+    },
+    {
+      "step": 77,
+      "columns": 256,
+      "eligible_reuses": 244
+    },
+    {
+      "step": 78,
+      "columns": 256,
+      "eligible_reuses": 242
+    },
+    {
+      "step": 79,
+      "columns": 256,
+      "eligible_reuses": 221
+    },
+    {
+      "step": 80,
+      "columns": 256,
+      "eligible_reuses": 236
+    },
+    {
+      "step": 81,
+      "columns": 256,
+      "eligible_reuses": 187
+    },
+    {
+      "step": 82,
+      "columns": 256,
+      "eligible_reuses": 232
+    },
+    {
+      "step": 83,
+      "columns": 256,
+      "eligible_reuses": 229
+    },
+    {
+      "step": 84,
+      "columns": 256,
+      "eligible_reuses": 228
+    },
+    {
+      "step": 85,
+      "columns": 256,
+      "eligible_reuses": 211
+    },
+    {
+      "step": 86,
+      "columns": 256,
+      "eligible_reuses": 223
+    },
+    {
+      "step": 87,
+      "columns": 256,
+      "eligible_reuses": 183
+    },
+    {
+      "step": 88,
+      "columns": 256,
+      "eligible_reuses": 220
+    },
+    {
+      "step": 89,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 90,
+      "columns": 256,
+      "eligible_reuses": 215
+    },
+    {
+      "step": 91,
+      "columns": 256,
+      "eligible_reuses": 205
+    },
+    {
+      "step": 92,
+      "columns": 256,
+      "eligible_reuses": 214
+    },
+    {
+      "step": 93,
+      "columns": 256,
+      "eligible_reuses": 187
+    },
+    {
+      "step": 94,
+      "columns": 256,
+      "eligible_reuses": 211
+    },
+    {
+      "step": 95,
+      "columns": 256,
+      "eligible_reuses": 210
+    },
+    {
+      "step": 96,
+      "columns": 256,
+      "eligible_reuses": 209
+    },
+    {
+      "step": 97,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 98,
+      "columns": 256,
+      "eligible_reuses": 208
+    },
+    {
+      "step": 99,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 100,
+      "columns": 256,
+      "eligible_reuses": 205
+    },
+    {
+      "step": 101,
+      "columns": 256,
+      "eligible_reuses": 204
+    },
+    {
+      "step": 102,
+      "columns": 256,
+      "eligible_reuses": 204
+    },
+    {
+      "step": 103,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 104,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 105,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 106,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 107,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 108,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 109,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 110,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 111,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 112,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 113,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 114,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 115,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 116,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 117,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 118,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 119,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 120,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 121,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 122,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 123,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 124,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 125,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 126,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 127,
+      "columns": 256,
+      "eligible_reuses": 205
+    },
+    {
+      "step": 128,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 129,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 130,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 131,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 132,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 133,
+      "columns": 256,
+      "eligible_reuses": 213
+    },
+    {
+      "step": 134,
+      "columns": 256,
+      "eligible_reuses": 204
+    },
+    {
+      "step": 135,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 136,
+      "columns": 256,
+      "eligible_reuses": 206
+    },
+    {
+      "step": 137,
+      "columns": 256,
+      "eligible_reuses": 206
+    },
+    {
+      "step": 138,
+      "columns": 256,
+      "eligible_reuses": 207
+    },
+    {
+      "step": 139,
+      "columns": 256,
+      "eligible_reuses": 223
+    },
+    {
+      "step": 140,
+      "columns": 256,
+      "eligible_reuses": 211
+    },
+    {
+      "step": 141,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 142,
+      "columns": 256,
+      "eligible_reuses": 212
+    },
+    {
+      "step": 143,
+      "columns": 256,
+      "eligible_reuses": 214
+    },
+    {
+      "step": 144,
+      "columns": 256,
+      "eligible_reuses": 214
+    },
+    {
+      "step": 145,
+      "columns": 256,
+      "eligible_reuses": 236
+    },
+    {
+      "step": 146,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 147,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 148,
+      "columns": 256,
+      "eligible_reuses": 221
+    },
+    {
+      "step": 149,
+      "columns": 256,
+      "eligible_reuses": 224
+    },
+    {
+      "step": 150,
+      "columns": 256,
+      "eligible_reuses": 226
+    },
+    {
+      "step": 151,
+      "columns": 256,
+      "eligible_reuses": 248
+    },
+    {
+      "step": 152,
+      "columns": 256,
+      "eligible_reuses": 226
+    },
+    {
+      "step": 153,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 154,
+      "columns": 256,
+      "eligible_reuses": 226
+    },
+    {
+      "step": 155,
+      "columns": 256,
+      "eligible_reuses": 227
+    },
+    {
+      "step": 156,
+      "columns": 256,
+      "eligible_reuses": 225
+    },
+    {
+      "step": 157,
+      "columns": 256,
+      "eligible_reuses": 243
+    },
+    {
+      "step": 158,
+      "columns": 256,
+      "eligible_reuses": 222
+    },
+    {
+      "step": 159,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 160,
+      "columns": 256,
+      "eligible_reuses": 221
+    },
+    {
+      "step": 161,
+      "columns": 256,
+      "eligible_reuses": 220
+    },
+    {
+      "step": 162,
+      "columns": 256,
+      "eligible_reuses": 220
+    },
+    {
+      "step": 163,
+      "columns": 256,
+      "eligible_reuses": 230
+    },
+    {
+      "step": 164,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 165,
+      "columns": 256,
+      "eligible_reuses": 181
+    },
+    {
+      "step": 166,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 167,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 168,
+      "columns": 256,
+      "eligible_reuses": 218
+    },
+    {
+      "step": 169,
+      "columns": 256,
+      "eligible_reuses": 215
+    },
+    {
+      "step": 170,
+      "columns": 256,
+      "eligible_reuses": 216
+    },
+    {
+      "step": 171,
+      "columns": 256,
+      "eligible_reuses": 174
+    },
+    {
+      "step": 172,
+      "columns": 256,
+      "eligible_reuses": 210
+    },
+    {
+      "step": 173,
+      "columns": 256,
+      "eligible_reuses": 207
+    },
+    {
+      "step": 174,
+      "columns": 256,
+      "eligible_reuses": 208
+    },
+    {
+      "step": 175,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 176,
+      "columns": 256,
+      "eligible_reuses": 206
+    },
+    {
+      "step": 177,
+      "columns": 256,
+      "eligible_reuses": 169
+    },
+    {
+      "step": 178,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 179,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 180,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 181,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 182,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 183,
+      "columns": 256,
+      "eligible_reuses": 169
+    },
+    {
+      "step": 184,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 185,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 186,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 187,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 188,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 189,
+      "columns": 256,
+      "eligible_reuses": 171
+    },
+    {
+      "step": 190,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 191,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 192,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 193,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 194,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 195,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 196,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 197,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 198,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 199,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 200,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 201,
+      "columns": 256,
+      "eligible_reuses": 183
+    },
+    {
+      "step": 202,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 203,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 204,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 205,
+      "columns": 256,
+      "eligible_reuses": 172
+    },
+    {
+      "step": 206,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 207,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 208,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 209,
+      "columns": 256,
+      "eligible_reuses": 204
+    },
+    {
+      "step": 210,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 211,
+      "columns": 256,
+      "eligible_reuses": 181
+    },
+    {
+      "step": 212,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 213,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 214,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 215,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 216,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 217,
+      "columns": 256,
+      "eligible_reuses": 186
+    },
+    {
+      "step": 218,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 219,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 220,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 221,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 222,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 223,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 224,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 225,
+      "columns": 256,
+      "eligible_reuses": 211
+    },
+    {
+      "step": 226,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 227,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 228,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 229,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 230,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 231,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 232,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 233,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 234,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 235,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 236,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 237,
+      "columns": 256,
+      "eligible_reuses": 182
+    },
+    {
+      "step": 238,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 239,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 240,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 241,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 242,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 243,
+      "columns": 256,
+      "eligible_reuses": 169
+    },
+    {
+      "step": 244,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 245,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 246,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 247,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 248,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 249,
+      "columns": 256,
+      "eligible_reuses": 159
+    },
+    {
+      "step": 250,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 251,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 252,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 253,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 254,
+      "columns": 256,
+      "eligible_reuses": 185
+    },
+    {
+      "step": 255,
+      "columns": 256,
+      "eligible_reuses": 153
+    },
+    {
+      "step": 256,
+      "columns": 256,
+      "eligible_reuses": 187
+    },
+    {
+      "step": 257,
+      "columns": 256,
+      "eligible_reuses": 185
+    },
+    {
+      "step": 258,
+      "columns": 256,
+      "eligible_reuses": 182
+    },
+    {
+      "step": 259,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 260,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 261,
+      "columns": 256,
+      "eligible_reuses": 151
+    },
+    {
+      "step": 262,
+      "columns": 256,
+      "eligible_reuses": 187
+    },
+    {
+      "step": 263,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 264,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 265,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 266,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 267,
+      "columns": 256,
+      "eligible_reuses": 152
+    },
+    {
+      "step": 268,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 269,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 270,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 271,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 272,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 273,
+      "columns": 256,
+      "eligible_reuses": 156
+    },
+    {
+      "step": 274,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 275,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 276,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 277,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 278,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 279,
+      "columns": 256,
+      "eligible_reuses": 163
+    },
+    {
+      "step": 280,
+      "columns": 256,
+      "eligible_reuses": 186
+    },
+    {
+      "step": 281,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 282,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 283,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 284,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 285,
+      "columns": 256,
+      "eligible_reuses": 174
+    },
+    {
+      "step": 286,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 287,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 288,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 289,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 290,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 291,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 292,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 293,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 294,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 295,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 296,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 297,
+      "columns": 256,
+      "eligible_reuses": 204
+    },
+    {
+      "step": 298,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 299,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 300,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 301,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 302,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 303,
+      "columns": 256,
+      "eligible_reuses": 207
+    },
+    {
+      "step": 304,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 305,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 306,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 307,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 308,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 309,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 310,
+      "columns": 256,
+      "eligible_reuses": 185
+    },
+    {
+      "step": 311,
+      "columns": 256,
+      "eligible_reuses": 184
+    },
+    {
+      "step": 312,
+      "columns": 256,
+      "eligible_reuses": 183
+    },
+    {
+      "step": 313,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 314,
+      "columns": 256,
+      "eligible_reuses": 181
+    },
+    {
+      "step": 315,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 316,
+      "columns": 256,
+      "eligible_reuses": 180
+    },
+    {
+      "step": 317,
+      "columns": 256,
+      "eligible_reuses": 178
+    },
+    {
+      "step": 318,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 319,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 320,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 321,
+      "columns": 256,
+      "eligible_reuses": 186
+    },
+    {
+      "step": 322,
+      "columns": 256,
+      "eligible_reuses": 174
+    },
+    {
+      "step": 323,
+      "columns": 256,
+      "eligible_reuses": 174
+    },
+    {
+      "step": 324,
+      "columns": 256,
+      "eligible_reuses": 174
+    },
+    {
+      "step": 325,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 326,
+      "columns": 256,
+      "eligible_reuses": 173
+    },
+    {
+      "step": 327,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 328,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 329,
+      "columns": 256,
+      "eligible_reuses": 178
+    },
+    {
+      "step": 330,
+      "columns": 256,
+      "eligible_reuses": 182
+    },
+    {
+      "step": 331,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 332,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 333,
+      "columns": 256,
+      "eligible_reuses": 170
+    },
+    {
+      "step": 334,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 335,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 336,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 337,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 338,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 339,
+      "columns": 256,
+      "eligible_reuses": 165
+    },
+    {
+      "step": 340,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 341,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 342,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 343,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 344,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 345,
+      "columns": 256,
+      "eligible_reuses": 165
+    },
+    {
+      "step": 346,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 347,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 348,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 349,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 350,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 351,
+      "columns": 256,
+      "eligible_reuses": 165
+    },
+    {
+      "step": 352,
+      "columns": 256,
+      "eligible_reuses": 205
+    },
+    {
+      "step": 353,
+      "columns": 256,
+      "eligible_reuses": 206
+    },
+    {
+      "step": 354,
+      "columns": 256,
+      "eligible_reuses": 208
+    },
+    {
+      "step": 355,
+      "columns": 256,
+      "eligible_reuses": 215
+    },
+    {
+      "step": 356,
+      "columns": 256,
+      "eligible_reuses": 213
+    },
+    {
+      "step": 357,
+      "columns": 256,
+      "eligible_reuses": 171
+    },
+    {
+      "step": 358,
+      "columns": 256,
+      "eligible_reuses": 217
+    },
+    {
+      "step": 359,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 360,
+      "columns": 256,
+      "eligible_reuses": 224
+    },
+    {
+      "step": 361,
+      "columns": 256,
+      "eligible_reuses": 218
+    },
+    {
+      "step": 362,
+      "columns": 256,
+      "eligible_reuses": 229
+    },
+    {
+      "step": 363,
+      "columns": 256,
+      "eligible_reuses": 179
+    },
+    {
+      "step": 364,
+      "columns": 256,
+      "eligible_reuses": 233
+    },
+    {
+      "step": 365,
+      "columns": 256,
+      "eligible_reuses": 236
+    },
+    {
+      "step": 366,
+      "columns": 256,
+      "eligible_reuses": 238
+    },
+    {
+      "step": 367,
+      "columns": 256,
+      "eligible_reuses": 223
+    },
+    {
+      "step": 368,
+      "columns": 256,
+      "eligible_reuses": 241
+    },
+    {
+      "step": 369,
+      "columns": 256,
+      "eligible_reuses": 184
+    },
+    {
+      "step": 370,
+      "columns": 256,
+      "eligible_reuses": 245
+    },
+    {
+      "step": 371,
+      "columns": 256,
+      "eligible_reuses": 247
+    },
+    {
+      "step": 372,
+      "columns": 256,
+      "eligible_reuses": 248
+    },
+    {
+      "step": 373,
+      "columns": 256,
+      "eligible_reuses": 226
+    },
+    {
+      "step": 374,
+      "columns": 256,
+      "eligible_reuses": 249
+    },
+    {
+      "step": 375,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 376,
+      "columns": 256,
+      "eligible_reuses": 248
+    },
+    {
+      "step": 377,
+      "columns": 256,
+      "eligible_reuses": 244
+    },
+    {
+      "step": 378,
+      "columns": 256,
+      "eligible_reuses": 242
+    },
+    {
+      "step": 379,
+      "columns": 256,
+      "eligible_reuses": 221
+    },
+    {
+      "step": 380,
+      "columns": 256,
+      "eligible_reuses": 236
+    },
+    {
+      "step": 381,
+      "columns": 256,
+      "eligible_reuses": 187
+    },
+    {
+      "step": 382,
+      "columns": 256,
+      "eligible_reuses": 232
+    },
+    {
+      "step": 383,
+      "columns": 256,
+      "eligible_reuses": 229
+    },
+    {
+      "step": 384,
+      "columns": 256,
+      "eligible_reuses": 228
+    },
+    {
+      "step": 385,
+      "columns": 256,
+      "eligible_reuses": 211
+    },
+    {
+      "step": 386,
+      "columns": 256,
+      "eligible_reuses": 223
+    },
+    {
+      "step": 387,
+      "columns": 256,
+      "eligible_reuses": 183
+    },
+    {
+      "step": 388,
+      "columns": 256,
+      "eligible_reuses": 220
+    },
+    {
+      "step": 389,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 390,
+      "columns": 256,
+      "eligible_reuses": 215
+    },
+    {
+      "step": 391,
+      "columns": 256,
+      "eligible_reuses": 205
+    },
+    {
+      "step": 392,
+      "columns": 256,
+      "eligible_reuses": 214
+    },
+    {
+      "step": 393,
+      "columns": 256,
+      "eligible_reuses": 187
+    },
+    {
+      "step": 394,
+      "columns": 256,
+      "eligible_reuses": 211
+    },
+    {
+      "step": 395,
+      "columns": 256,
+      "eligible_reuses": 210
+    },
+    {
+      "step": 396,
+      "columns": 256,
+      "eligible_reuses": 209
+    },
+    {
+      "step": 397,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 398,
+      "columns": 256,
+      "eligible_reuses": 208
+    },
+    {
+      "step": 399,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 400,
+      "columns": 256,
+      "eligible_reuses": 205
+    },
+    {
+      "step": 401,
+      "columns": 256,
+      "eligible_reuses": 204
+    },
+    {
+      "step": 402,
+      "columns": 256,
+      "eligible_reuses": 204
+    },
+    {
+      "step": 403,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 404,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 405,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 406,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 407,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 408,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 409,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 410,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 411,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 412,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 413,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 414,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 415,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 416,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 417,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 418,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 419,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 420,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 421,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 422,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 423,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 424,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 425,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 426,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 427,
+      "columns": 256,
+      "eligible_reuses": 205
+    },
+    {
+      "step": 428,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 429,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 430,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 431,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 432,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 433,
+      "columns": 256,
+      "eligible_reuses": 213
+    },
+    {
+      "step": 434,
+      "columns": 256,
+      "eligible_reuses": 204
+    },
+    {
+      "step": 435,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 436,
+      "columns": 256,
+      "eligible_reuses": 206
+    },
+    {
+      "step": 437,
+      "columns": 256,
+      "eligible_reuses": 206
+    },
+    {
+      "step": 438,
+      "columns": 256,
+      "eligible_reuses": 207
+    },
+    {
+      "step": 439,
+      "columns": 256,
+      "eligible_reuses": 223
+    },
+    {
+      "step": 440,
+      "columns": 256,
+      "eligible_reuses": 211
+    },
+    {
+      "step": 441,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 442,
+      "columns": 256,
+      "eligible_reuses": 212
+    },
+    {
+      "step": 443,
+      "columns": 256,
+      "eligible_reuses": 214
+    },
+    {
+      "step": 444,
+      "columns": 256,
+      "eligible_reuses": 214
+    },
+    {
+      "step": 445,
+      "columns": 256,
+      "eligible_reuses": 236
+    },
+    {
+      "step": 446,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 447,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 448,
+      "columns": 256,
+      "eligible_reuses": 221
+    },
+    {
+      "step": 449,
+      "columns": 256,
+      "eligible_reuses": 224
+    },
+    {
+      "step": 450,
+      "columns": 256,
+      "eligible_reuses": 226
+    },
+    {
+      "step": 451,
+      "columns": 256,
+      "eligible_reuses": 248
+    },
+    {
+      "step": 452,
+      "columns": 256,
+      "eligible_reuses": 226
+    },
+    {
+      "step": 453,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 454,
+      "columns": 256,
+      "eligible_reuses": 226
+    },
+    {
+      "step": 455,
+      "columns": 256,
+      "eligible_reuses": 227
+    },
+    {
+      "step": 456,
+      "columns": 256,
+      "eligible_reuses": 225
+    },
+    {
+      "step": 457,
+      "columns": 256,
+      "eligible_reuses": 243
+    },
+    {
+      "step": 458,
+      "columns": 256,
+      "eligible_reuses": 222
+    },
+    {
+      "step": 459,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 460,
+      "columns": 256,
+      "eligible_reuses": 221
+    },
+    {
+      "step": 461,
+      "columns": 256,
+      "eligible_reuses": 220
+    },
+    {
+      "step": 462,
+      "columns": 256,
+      "eligible_reuses": 220
+    },
+    {
+      "step": 463,
+      "columns": 256,
+      "eligible_reuses": 230
+    },
+    {
+      "step": 464,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 465,
+      "columns": 256,
+      "eligible_reuses": 181
+    },
+    {
+      "step": 466,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 467,
+      "columns": 256,
+      "eligible_reuses": 219
+    },
+    {
+      "step": 468,
+      "columns": 256,
+      "eligible_reuses": 218
+    },
+    {
+      "step": 469,
+      "columns": 256,
+      "eligible_reuses": 215
+    },
+    {
+      "step": 470,
+      "columns": 256,
+      "eligible_reuses": 216
+    },
+    {
+      "step": 471,
+      "columns": 256,
+      "eligible_reuses": 174
+    },
+    {
+      "step": 472,
+      "columns": 256,
+      "eligible_reuses": 210
+    },
+    {
+      "step": 473,
+      "columns": 256,
+      "eligible_reuses": 207
+    },
+    {
+      "step": 474,
+      "columns": 256,
+      "eligible_reuses": 208
+    },
+    {
+      "step": 475,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 476,
+      "columns": 256,
+      "eligible_reuses": 206
+    },
+    {
+      "step": 477,
+      "columns": 256,
+      "eligible_reuses": 169
+    },
+    {
+      "step": 478,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 479,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 480,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 481,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 482,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 483,
+      "columns": 256,
+      "eligible_reuses": 169
+    },
+    {
+      "step": 484,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 485,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 486,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 487,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 488,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 489,
+      "columns": 256,
+      "eligible_reuses": 171
+    },
+    {
+      "step": 490,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 491,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 492,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 493,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 494,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 495,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 496,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 497,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 498,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 499,
+      "columns": 256,
+      "eligible_reuses": 176
+    },
+    {
+      "step": 500,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 501,
+      "columns": 256,
+      "eligible_reuses": 183
+    },
+    {
+      "step": 502,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 503,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 504,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 505,
+      "columns": 256,
+      "eligible_reuses": 172
+    },
+    {
+      "step": 506,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 507,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 508,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 509,
+      "columns": 256,
+      "eligible_reuses": 204
+    },
+    {
+      "step": 510,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 511,
+      "columns": 256,
+      "eligible_reuses": 181
+    },
+    {
+      "step": 512,
+      "columns": 256,
+      "eligible_reuses": 203
+    },
+    {
+      "step": 513,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 514,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 515,
+      "columns": 256,
+      "eligible_reuses": 199
+    },
+    {
+      "step": 516,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 517,
+      "columns": 256,
+      "eligible_reuses": 186
+    },
+    {
+      "step": 518,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 519,
+      "columns": 256,
+      "eligible_reuses": 202
+    },
+    {
+      "step": 520,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 521,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 522,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 523,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 524,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 525,
+      "columns": 256,
+      "eligible_reuses": 211
+    },
+    {
+      "step": 526,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 527,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 528,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 529,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 530,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 531,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 532,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 533,
+      "columns": 256,
+      "eligible_reuses": 197
+    },
+    {
+      "step": 534,
+      "columns": 256,
+      "eligible_reuses": 201
+    },
+    {
+      "step": 535,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 536,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 537,
+      "columns": 256,
+      "eligible_reuses": 182
+    },
+    {
+      "step": 538,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 539,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 540,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 541,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 542,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 543,
+      "columns": 256,
+      "eligible_reuses": 169
+    },
+    {
+      "step": 544,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 545,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 546,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 547,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 548,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 549,
+      "columns": 256,
+      "eligible_reuses": 159
+    },
+    {
+      "step": 550,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 551,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 552,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 553,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 554,
+      "columns": 256,
+      "eligible_reuses": 185
+    },
+    {
+      "step": 555,
+      "columns": 256,
+      "eligible_reuses": 153
+    },
+    {
+      "step": 556,
+      "columns": 256,
+      "eligible_reuses": 187
+    },
+    {
+      "step": 557,
+      "columns": 256,
+      "eligible_reuses": 185
+    },
+    {
+      "step": 558,
+      "columns": 256,
+      "eligible_reuses": 182
+    },
+    {
+      "step": 559,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 560,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 561,
+      "columns": 256,
+      "eligible_reuses": 151
+    },
+    {
+      "step": 562,
+      "columns": 256,
+      "eligible_reuses": 187
+    },
+    {
+      "step": 563,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 564,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 565,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 566,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 567,
+      "columns": 256,
+      "eligible_reuses": 152
+    },
+    {
+      "step": 568,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 569,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 570,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 571,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 572,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 573,
+      "columns": 256,
+      "eligible_reuses": 156
+    },
+    {
+      "step": 574,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 575,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 576,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 577,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 578,
+      "columns": 256,
+      "eligible_reuses": 189
+    },
+    {
+      "step": 579,
+      "columns": 256,
+      "eligible_reuses": 163
+    },
+    {
+      "step": 580,
+      "columns": 256,
+      "eligible_reuses": 186
+    },
+    {
+      "step": 581,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 582,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 583,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 584,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 585,
+      "columns": 256,
+      "eligible_reuses": 174
+    },
+    {
+      "step": 586,
+      "columns": 256,
+      "eligible_reuses": 191
+    },
+    {
+      "step": 587,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 588,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 589,
+      "columns": 256,
+      "eligible_reuses": 198
+    },
+    {
+      "step": 590,
+      "columns": 256,
+      "eligible_reuses": 192
+    },
+    {
+      "step": 591,
+      "columns": 256,
+      "eligible_reuses": 188
+    },
+    {
+      "step": 592,
+      "columns": 256,
+      "eligible_reuses": 190
+    },
+    {
+      "step": 593,
+      "columns": 256,
+      "eligible_reuses": 193
+    },
+    {
+      "step": 594,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 595,
+      "columns": 256,
+      "eligible_reuses": 200
+    },
+    {
+      "step": 596,
+      "columns": 256,
+      "eligible_reuses": 194
+    },
+    {
+      "step": 597,
+      "columns": 256,
+      "eligible_reuses": 204
+    },
+    {
+      "step": 598,
+      "columns": 256,
+      "eligible_reuses": 196
+    },
+    {
+      "step": 599,
+      "columns": 256,
+      "eligible_reuses": 195
+    },
+    {
+      "step": 600,
+      "columns": 256,
+      "eligible_reuses": 196
+    }
+  ]
+}

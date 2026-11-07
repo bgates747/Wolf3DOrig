@@ -1,0 +1,4 @@
+{
+    global: vdplet_entry;
+    local: *;
+};

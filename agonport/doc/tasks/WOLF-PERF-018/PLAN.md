@@ -4,11 +4,11 @@ One later local optimization under WOLF-GOAL-001; keep the running PERF017
 cohort, all prior candidates and their evidence unchanged. This contract
 precedes candidate code. MechAgon remains first priority; Oryx is down.
 
-- [ ] WOLF-PERF-018-01 — Freeze exact a926 baseline and pre-code compatibility,
+- [x] WOLF-PERF-018-01 — Freeze exact a926 baseline and pre-code compatibility,
   work, order and lifetime boundaries.
-- [ ] WOLF-PERF-018-02 — Implement only a one-entry scaling-setup cache within
+- [x] WOLF-PERF-018-02 — Implement only a one-entry scaling-setup cache within
   each existing texture lease; no pixel sampler or write-order change.
-- [ ] WOLF-PERF-018-03 — Qualify an independent scalar wall oracle, aliased rows
+- [x] WOLF-PERF-018-03 — Qualify an independent scalar wall oracle, aliased rows
   and assets, exact call/refusal/release order, metadata, full renderer/module/
   600-pose output and target control/code/provider/stack/package bindings.
 - [ ] WOLF-PERF-018-04 — Count actual setup reuse opportunities separately from
@@ -65,3 +65,6 @@ never the cache key. No arbitrary-alias equivalence is asserted before testing.
 Exact baseline and owner advice are pinned in SOURCE-PINS.json. A hardware
 contract, if useful, must be separately frozen with actual current component,
 rollback, resource, host closure and per-arm guest length/limit operands.
+
+Source/host/target milestone: [BUILD-RESULT.md](BUILD-RESULT.md). Hardware
+qualification and default adoption remain separate; no actual85 change.

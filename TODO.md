@@ -873,3 +873,11 @@ rows, and any already-real bitmap baseline using complete render/presentation
 boundaries; report workspace and speed separately, and presume no speed benefit
 until measured. A physical gate is still required before physical or
 default-cutover claims.
+
+## WOLF-PERF-018 — Equal-height wall scaling setup cache
+
+[Contract and qualified source result](agonport/doc/tasks/WOLF-PERF-018/BUILD-RESULT.md).
+
+- [ ] WOLF-PERF-018-04 — Canonical-room work census and useful finite physical freeze.
+- [ ] WOLF-PERF-018-05 — Fresh normal grant, finite run, preservation/restoration/release.
+- [ ] WOLF-PERF-018-06 — Publish physical costs/gains/limits, no automatic adoption.

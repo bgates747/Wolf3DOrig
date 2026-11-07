@@ -1,0 +1,38 @@
+{
+  "passed": true,
+  "arms": {
+    "original": {
+      "frames": {
+        "vdplet_entry": 128,
+        "wp_production_entry": 304,
+        "render_world_direct": 48,
+        "render_world_to_target": 352,
+        "acquire_asset": 64,
+        "draw_walls_inlined": true
+      },
+      "selected_wall_acquire_module_bytes": 896,
+      "native_prefix_bytes": 384,
+      "native_acquire_bytes": 64,
+      "selected_task_chain_bytes": 1344
+    },
+    "candidate": {
+      "frames": {
+        "vdplet_entry": 128,
+        "wp_production_entry": 304,
+        "render_world_direct": 48,
+        "render_world_to_target": 352,
+        "acquire_asset": 64,
+        "draw_walls_inlined": true
+      },
+      "selected_wall_acquire_module_bytes": 896,
+      "native_prefix_bytes": 384,
+      "native_acquire_bytes": 64,
+      "selected_task_chain_bytes": 1344
+    }
+  },
+  "code_guard": {
+    "height_equal_beq": "0x2139 -> 0x2178",
+    "skipped_step_quos": "0x2166"
+  },
+  "limits": "Selected synchronous ordinary wall/acquire path, not universal ISR/error/foreign-callback peak. INFO watermark remains cumulative and runtime bound still required."
+}

@@ -1,0 +1,89 @@
+--- original/production/wolf3d_renderer.cpp
++++ candidate/production/wolf3d_renderer.cpp
+@@ -399,21 +399,31 @@
+             const RenderDetail released = release_asset(resources.assets, span.lease);
+             return released == RenderDetail::ok ? RenderDetail::bounds : released;
+         }
++        int cached_height = 0;
++        int cached_top = 0;
++        int cached_count = 0;
++        int32_t cached_step = 0;
++        int32_t cached_fraction = 0;
+         for (int col = 0; col < kViewWidth; ++col) {
+             if (heights[col] <= 0 || wall_texture_id(world, tiles[col]) != id)
+                 continue;
+             const int full_height = heights[col];
+-            const int top = kCenterY - full_height / 2;
+-            const int clipped_top = top < 0 ? 0 : top;
+-            const int bottom = top + full_height;
+-            const int clipped_bottom = bottom > kViewHeight ? kViewHeight : bottom;
+-            const int destination_height = clipped_bottom - clipped_top;
+-            if (destination_height <= 0) continue;
+-            const int32_t step = (kTextureSize << 16) / full_height;
++            if (full_height != cached_height) {
++                cached_height = full_height;
++                const int top = kCenterY - full_height / 2;
++                cached_top = top < 0 ? 0 : top;
++                const int bottom = top + full_height;
++                const int clipped_bottom = bottom > kViewHeight ? kViewHeight : bottom;
++                cached_count = clipped_bottom - cached_top;
++                cached_step = cached_count > 0
++                    ? (kTextureSize << 16) / full_height : 0;
++                cached_fraction = cached_step * (cached_top - top);
++            }
++            if (cached_count <= 0) continue;
+             draw_wall_column(frame, static_cast<uint32_t>(kViewX + col),
+-                             static_cast<uint32_t>(kViewY + clipped_top),
+-                             destination_height, span.bytes, tex_u[col],
+-                             step * (clipped_top - top), step);
++                             static_cast<uint32_t>(kViewY + cached_top),
++                             cached_count, span.bytes, tex_u[col],
++                             cached_fraction, cached_step);
+         }
+         detail = release_asset(resources.assets, span.lease);
+         if (detail != RenderDetail::ok) return detail;
+
+--- original/native-source/wolf3d_renderer.cpp
++++ candidate/native-source/wolf3d_renderer.cpp
+@@ -399,21 +399,31 @@
+             const RenderDetail released = release_asset(resources.assets, span.lease);
+             return released == RenderDetail::ok ? RenderDetail::bounds : released;
+         }
++        int cached_height = 0;
++        int cached_top = 0;
++        int cached_count = 0;
++        int32_t cached_step = 0;
++        int32_t cached_fraction = 0;
+         for (int col = 0; col < kViewWidth; ++col) {
+             if (heights[col] <= 0 || wall_texture_id(world, tiles[col]) != id)
+                 continue;
+             const int full_height = heights[col];
+-            const int top = kCenterY - full_height / 2;
+-            const int clipped_top = top < 0 ? 0 : top;
+-            const int bottom = top + full_height;
+-            const int clipped_bottom = bottom > kViewHeight ? kViewHeight : bottom;
+-            const int destination_height = clipped_bottom - clipped_top;
+-            if (destination_height <= 0) continue;
+-            const int32_t step = (kTextureSize << 16) / full_height;
++            if (full_height != cached_height) {
++                cached_height = full_height;
++                const int top = kCenterY - full_height / 2;
++                cached_top = top < 0 ? 0 : top;
++                const int bottom = top + full_height;
++                const int clipped_bottom = bottom > kViewHeight ? kViewHeight : bottom;
++                cached_count = clipped_bottom - cached_top;
++                cached_step = cached_count > 0
++                    ? (kTextureSize << 16) / full_height : 0;
++                cached_fraction = cached_step * (cached_top - top);
++            }
++            if (cached_count <= 0) continue;
+             draw_wall_column(frame, static_cast<uint32_t>(kViewX + col),
+-                             static_cast<uint32_t>(kViewY + clipped_top),
+-                             destination_height, span.bytes, tex_u[col],
+-                             step * (clipped_top - top), step);
++                             static_cast<uint32_t>(kViewY + cached_top),
++                             cached_count, span.bytes, tex_u[col],
++                             cached_fraction, cached_step);
+         }
+         detail = release_asset(resources.assets, span.lease);
+         if (detail != RenderDetail::ok) return detail;
