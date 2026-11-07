@@ -10,7 +10,7 @@ recorded for discussion, not automatically executable follow-ups.
 
 ## Prioritized work
 
-- [ ] WOLF-PERF-006-P01 — Compare exact current module under -O2 versus -Os.
+- [x] WOLF-PERF-006-P01 — Compare exact current module under -O2 versus -Os.
   Low implementation effort, uncertain potentially useful payoff. Same source,
   helpers, safety flags/runtime/scene. Close package/sections/stack/actual guest
   producer bindings before matched physical timing. Selected now.
@@ -58,10 +58,10 @@ responsiveness task; this comparison does not select it.
   push concrete freeze before final scheduler preflight; actual grant required.
   Original hardware01 admitted actual69; it stopped before guest entry and was
   restored. AMENDMENT-02 separately freezes one same-task retained69 cohort.
-- [ ] WOLF-PERF-006-05 — Run matched control/control then four600-pose unpaced
+- [x] WOLF-PERF-006-05 — Run matched control/control then four600-pose unpaced
   original/candidate/candidate/original cases, entry/after-case7INFO probes;
   unchanged E1L1(34,36)/720degrees/noenemy work and native7593/carrier/observer.
-- [ ] WOLF-PERF-006-06 — Exact incoming native app/touched-tail restoration and
+- [x] WOLF-PERF-006-06 — Exact incoming native app/touched-tail restoration and
   independent whole readback, files/mode0/callback0/route0/rootCLI/input/idle/
   freeUSB/joined actors. Retain actual lease after tests per Smith; announce
   restored-idle held custody to scheduler and user, never grant next yourself.

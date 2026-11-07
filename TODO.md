@@ -20,8 +20,12 @@ Only priorityP01 selected now; P02–P07 deferred discussion backlog.
   requestab7af23bfd1a admitted actual69. First boot stopped before guest entry;
   exact restoration/idle passed, lease held. [AMENDMENT-02](agonport/doc/tasks/WOLF-PERF-006/AMENDMENT-02.md)
   separately freezes one same-comparison cohort under retained custody.
-- [ ] WOLF-PERF-006-05 — Execute matched sixguest/sevenprobe hardware suite.
-- [ ] WOLF-PERF-006-06 — Exact restore/idle handback; HOLD lease for Smith.
+- [x] WOLF-PERF-006-05 — Execute matched sixguest/sevenprobe hardware suite.
+  [Physical69 result](agonport/doc/tasks/WOLF-PERF-006/PHYSICAL69-RESULT.md):
+  same-source O2 draws32.4392ms versus36.7942ms Os (-11.84%); completed
+  fixture throughput27.8390 versus24.8329frames/s. No default adoption.
+- [x] WOLF-PERF-006-06 — Exact restore/idle handback; HOLD lease for Smith.
+  Full85f9 span independently matches, all actors stopped; actual69 HELD.
 - [ ] WOLF-PERF-006-07 — Publish/share results; release only on later direction.
 
 ## WOLF-PERF-005 — bytewise direct-span invariant hoisting
