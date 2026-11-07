@@ -1,0 +1,109 @@
+{
+  "original": {
+    "controller": {
+      "pid": 1567557,
+      "start": 34582370,
+      "ppid": 1750,
+      "pgid": 1567557,
+      "uid": 1000,
+      "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+    },
+    "observer": {
+      "pid": 1567606,
+      "start": 34583432,
+      "ppid": 1750,
+      "pgid": 1567606,
+      "uid": 1000,
+      "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+    },
+    "tracer": {
+      "pid": 1567608,
+      "start": 34583456,
+      "ppid": 1567606,
+      "pgid": 1567608,
+      "uid": 1000,
+      "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+    },
+    "epoch": 1794087574.791331,
+    "controller_returncode": 1,
+    "observer_returncode": 0,
+    "all_original_handles_terminal": true,
+    "exact_processes_terminal": true,
+    "native_proc_observations": {
+      "controller": {
+        "original_pid_absent": true
+      },
+      "observer": {
+        "original_pid_absent": true
+      },
+      "tracer": {
+        "original_pid_absent": true
+      }
+    },
+    "handles": {
+      "controller": {
+        "original_session_id": 1035,
+        "actual_terminal_tool_exit_code": 1
+      },
+      "observer": {
+        "original_session_id": 80813,
+        "actual_terminal_tool_exit_code": 0
+      }
+    },
+    "cause": "Original controller raised Agon admission failed before LOAD/RUN; observer normal0/tracerjoined/no SIGTERM trace."
+  },
+  "cleanup_and_recovery": {
+    "cleanup": {
+      "pid": 1573684,
+      "start": 34659704,
+      "ppid": 1750,
+      "pgid": 1573684,
+      "uid": 1000,
+      "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+    },
+    "agon": {
+      "pid": 1575316,
+      "start": 34683857,
+      "ppid": 1750,
+      "pgid": 1575316,
+      "uid": 1000,
+      "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+    },
+    "paired": {
+      "pid": 1575829,
+      "start": 34694353,
+      "ppid": 1750,
+      "pgid": 1575829,
+      "uid": 1000,
+      "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+    }
+  },
+  "terminal_checks": {
+    "cleanup": {
+      "original_pid_absent": true
+    },
+    "agon": {
+      "original_pid_absent": true
+    },
+    "paired": {
+      "original_pid_absent": true
+    }
+  },
+  "original_session_handles": {
+    "controller": 1035,
+    "observer": 80813,
+    "cleanup": 17972,
+    "agon": 68597,
+    "paired": 3724
+  },
+  "actual_terminal_codes": {
+    "controller": 1,
+    "observer": 0,
+    "cleanup": 1,
+    "agon": 1,
+    "paired": 0
+  },
+  "all_handles_terminal": true,
+  "all_exact_owned_actors_terminal": true,
+  "epoch": 1794088094.9855986
+}

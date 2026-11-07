@@ -1,0 +1,46 @@
+{
+  "schema": "olimex-bench-observation-v1",
+  "bench": "olimex",
+  "epoch": 1794088064.0316153,
+  "observer": "wolf3dorig",
+  "lease": "dd0161cdd4f643739e6aed8af30a899b",
+  "checks": {
+    "no_workload": true,
+    "no_transfer": true,
+    "no_serial_readers": true,
+    "no_reset_holders": true,
+    "cli_verified": true,
+    "input_ready_neutral": true,
+    "listener_offline": true,
+    "staged_job_idle": true,
+    "restoration_verified": true
+  },
+  "evidence": [
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/recovery101-paired/evidence/final-checks/state.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/recovery101-paired/evidence/final-checks/serial.bin",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/recovery101-paired/evidence/route-handback/final-route.bin",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/recovery101-paired/evidence/handback/observation.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/recovery101-paired/evidence/flash-restore/receipt.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/all-actors-terminal.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/evidence/failure.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/cleanup101/failure.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/recovery101-agon/failure.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/recovery101-paired/complete.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/hardware01/cleanup101/evidence/flash-restore/read.bin"
+  ],
+  "components": {
+    "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+    "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+    "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+    "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+    "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+  },
+  "component_provenance": {
+    "p4_app_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+    "emos_rom_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+    "native_vdp_sha256": "Exact incoming application/touched-tail restoration and independent full-span readback",
+    "startup_sha256": "Fresh unchanged whole-file comparison in handback",
+    "listener_sha256": "Fresh unchanged whole-file comparison in handback"
+  },
+  "disposition": "Original profiling suite FAILED at boot admission after native7593 image readback, BEFORE any guestLOAD/RUN/PRT/INFO. Exact incoming85f9 full1105920B restored/readback FIRST. Restored-image ordinary bootstrap failed; ONE standingAgon-only recovery failed; ONE standing pairedcurrent recovery PASSED. New realCLI/rawmode0/callback0/route0/root/cursor/wholefiles/inputneutral/offlineidle/worker0/freebothUSB pass. All original+cleanup+recovery handles/owned actors terminal. No guest/profiling/performance result, no replay or firmware/carrier variant; SDmounted."
+}
