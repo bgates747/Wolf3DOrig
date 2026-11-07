@@ -43,11 +43,11 @@ def bind_context(context, record):
         grant = grant['active']
     assert grant['owner'] == 'wolf3dorig'
     assert grant['lease'] == record['lease']
-    assert grant['task'] == kit['task'] == 'WOLF-PROFILE-001-hardware01'
-    assert grant['request'] == kit['request'] == 'b23015b2e071'
+    assert grant['task'] == kit['task'] == 'WOLF-PROFILE-001-hardware02'
+    assert grant['request'] == kit['request'] == '47bae5199a9c'
     assert grant['entry_observation']['components'] == kit['incoming_components']
     assert hashlib.sha256(manifest.read_bytes()).hexdigest() == record['kit_sha256']
-    assert manifest.resolve() == Path(__file__).resolve().parent / 'build/hardware01/kit.json'
+    assert manifest.resolve() == Path(__file__).resolve().parent / 'build/hardware02/kit.json'
     for name, digest in kit['inputs'].items():
         assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest, name
 

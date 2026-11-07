@@ -6,7 +6,7 @@ import shutil
 import sys
 
 T = Path(__file__).resolve().parent
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 E = Path('/Agon/mystuff/agon-extender')
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
@@ -17,7 +17,7 @@ def main():
     import hardware as hw
     import bootstrap
     import qualify_guest
-    inventory_path = E / 'agents/bench-scheduler/wolf-profile001/source-bindings.json'
+    inventory_path = E / 'agents/bench-scheduler/wolf-profile001-hardware02/source-bindings.json'
     inventory = json.loads(inventory_path.read_text())
     for name, pin in inventory['pins'].items():
         assert sha(name) == pin['sha256'] and Path(name).stat().st_size == pin['bytes'], name
@@ -25,11 +25,11 @@ def main():
     old = json.loads(old_path.read_text())
     assert old['incoming_components'] == inventory['components']
     B.mkdir()
-    guest = json.loads((T / 'build/hardware-guest01/receipt.json').read_text())
+    guest = json.loads((T / 'build/hardware-guest04/receipt.json').read_text())
     guest['source'] = str(Path(guest['guest']).parent)
     qualified = qualify_guest.verify(guest)
     (B / 'guest-qualification.json').write_text(json.dumps(qualified, indent=2) + '\n')
-    remote = '/test/wolf/profile001/r01'
+    remote = '/test/wolf/profile001/r02'
     (B / 'state.txt').write_bytes((f'SAVE {remote}/post-mode.bin &BC349 &1\r\n'
         f'SAVE {remote}/post-callback.bin &BC38E &3\r\nEMOS sdserve --fast /\r\n').encode())
     (B / 'route.txt').write_bytes((f'SAVE {remote}/route.bin &BCB25 &1\r\n'
@@ -39,8 +39,8 @@ def main():
         assert sha(old[key]) == old['inputs'][old[key]]
         shutil.copyfile(old[key], B / name)
     binding = json.loads(Path(old['source_binding']).read_text())
-    binding['provenance'] = ('Retained actual99 full85f9 restoration/readback and exact current '
-        'a25f source/map from Extender source-bindings. Actual predecessor release and fresh '
+    binding['provenance'] = ('Current owner-bound full-span restoration/readback and exact current '
+        'a25f source/map from Extender source-bindings. Actual latest predecessor release and fresh '
         'grant must match this tuple before contact; no new device observation claimed here.')
     (B / 'source-binding.json').write_text(json.dumps(binding, indent=2) + '\n')
     assets = T / 'build/oryx-inputs01/assets'
@@ -51,12 +51,12 @@ def main():
                   'wolf3d.vdpl': guest['module'], 'state.txt': str(B / 'state.txt'),
                   'route.txt': str(B / 'route.txt')})
     files = [inventory_path, old_path, Path(old['source_binding']),
-             T / 'build/hardware-guest01/receipt.json', Path(guest['guest']), Path(guest['listing'])]
+             T / 'build/hardware-guest04/receipt.json', Path(guest['guest']), Path(guest['listing'])]
     files += [Path(p) for p in guest['inputs']]
     files += [Path(p) for p in stage.values()]
     files += list(bootstrap.REQUIRED)
     files += [Path(p) for p in inventory['pins']]
-    files += [T / n for n in ('PLAN.md', 'PRE-CODE.md', 'FORMAT.md', 'HARDWARE-PLAN.md',
+    files += [T / n for n in ('PLAN.md', 'PRE-CODE.md', 'FORMAT.md', 'HARDWARE02-PLAN.md',
               'build_hardware_guest.py', 'selftest.inc', 'hardware.py', 'prepare_hardware.py',
               'qualify_guest.py', 'test_hardware.py', 'bootstrap.py', 'launch02.py',
               'host_observer.py', 'observe.py', 'HOST-REUSE.md', 'HOST-RESULT.json',
@@ -77,7 +77,7 @@ def main():
     # Imported helpers do not reveal future subprocess/dynamic imports.
     files.append(T.parent / 'WOLF-PERF-003/hardware/host_interrupt08.py')
     files += [p for p in B.iterdir() if p.is_file()]
-    kit = dict(task='WOLF-PROFILE-001-hardware01', request=hw.REQUEST, remote=remote,
+    kit = dict(task='WOLF-PROFILE-001-hardware02', request=hw.REQUEST, remote=remote,
         incoming_components=inventory['components'], guest=guest, stage=stage,
         module_sha256=guest['module_sha256'], native_b_sha256=old['native_b_sha256'],
         source_binding=str(B / 'source-binding.json'), source_binding_passed=True,

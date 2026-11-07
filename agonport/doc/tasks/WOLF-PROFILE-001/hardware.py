@@ -13,7 +13,7 @@ import bootstrap
 import qualify_guest
 T = Path(__file__).resolve().parent
 ROOT = T.parents[3]
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 P3 = T.parent / 'WOLF-PERF-003'
 sys.path.insert(0, str(P3 / 'hardware'))
 spec = importlib.util.spec_from_file_location('profile_physical_transport', P3 / 'hardware/physical09.py')
@@ -24,7 +24,7 @@ spec = importlib.util.spec_from_file_location('profile_decoder', ROOT/'src/asm/w
 decoder = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(decoder)
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
-REQUEST = 'b23015b2e071'
+REQUEST = '47bae5199a9c'
 CLEANUP_RESERVE = 360
 GUEST_BOUND = 300
 
@@ -33,9 +33,9 @@ class BudgetStop(RuntimeError):
 
 def verify_kit(kit):
     bootstrap.verify_closure(kit)
-    assert kit['task'] == 'WOLF-PROFILE-001-hardware01'
+    assert kit['task'] == 'WOLF-PROFILE-001-hardware02'
     assert kit['request'] == REQUEST
-    assert kit['remote'] == '/test/wolf/profile001/r01'
+    assert kit['remote'] == '/test/wolf/profile001/r02'
     assert not kit['retain_lease_after_test']
     for name, digest in kit['inputs'].items():
         assert sha(name) == digest, name
@@ -325,7 +325,7 @@ class Bench(h.Bench):
         assert all(b['status'] == 0 for b in profile['complete_blocks'])
         frames = profile['frames']
         assert all(f['native'] and f['discarded_attempts'] == 0 for f in frames)
-        assert len({f['angle'] for f in frames}) >= 20
+        assert len({f['angle'] for f in frames}) > 20, 'Expected changing headings in the actual game'
         assert all(decoder.delta(f['callback'], f['prepare']) < 8000 for f in frames)
         h.save(folder / 'profile.json', profile)
         self.raw_state(folder, 'post')
