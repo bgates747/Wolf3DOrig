@@ -1,0 +1,8 @@
+{
+  "question": "Latest optimized visible fixture loaded, manual RUN only; did both turns appear?",
+  "answer": "Finished \u2014 both turns visible",
+  "source": "Direct human application-question reply in this chat",
+  "recorded_epoch": 1794039219.5058866,
+  "human_started": true,
+  "visible_two_turns_confirmed": true
+}

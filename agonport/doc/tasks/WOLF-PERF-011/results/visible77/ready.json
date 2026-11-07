@@ -1,0 +1,14 @@
+{
+  "ready": true,
+  "loaded_not_run": true,
+  "lease": "b0b9fc25fe0c44ff95a3db3a035ce712",
+  "generation": 77,
+  "epoch": 1794038996.7229888,
+  "kit_sha256": "5f77b86af94f5fca78a5f695be0685f3fb413e75065c4d1b98fbbcf863d20225",
+  "guest_sha256": "74ad08b4163bf094db6ebc5f142b391a911f165c8adc5026eed67b7992855e09",
+  "module_sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+  "manual_command": "RUN .",
+  "cwd": "/test/wolf/perf011/r01",
+  "actors_stopped": true,
+  "retain_lease": true
+}
