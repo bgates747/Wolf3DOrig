@@ -1,0 +1,17 @@
+{
+  "schema": "olimex-stopped-operator-handoff-v1",
+  "epoch": 1794070724.7020178,
+  "hardware_operator": "wolf3dorig",
+  "previous_operator": "linux-extender",
+  "previous_operator_stopped": true,
+  "no_pending_commands": true,
+  "owner": "wolf3dorig",
+  "generation": 95,
+  "request": "793c29add4f8",
+  "lease": "5dc88dc00f734d9dbd9790a9ba5cd514",
+  "context": "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf022-r02/context.json",
+  "evidence": [
+    "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf022-r02/fresh.json",
+    "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf022-r02/observation.json"
+  ]
+}

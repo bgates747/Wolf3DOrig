@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 3619397511,
+    "boot": 37948541,
+    "operation": "get",
+    "remote": "/test/wolf/perf022/r02/wolf3d.vdpl",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/evidence/module-03-combined/module-read.bin",
+    "started": 1794071610.587394,
+    "result": {
+      "protocol": 1,
+      "boot": 37948541,
+      "id": 3619397511,
+      "phase": 4,
+      "bytes": 22572,
+      "size": 22572,
+      "records": 107,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 13436,
+      "mainboard_us": 970692,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.03652008902281523,
+      "host_elapsed_s": 1.1055912971496582,
+      "http_upload_s": 0.036545588984154165
+    },
+    "delivered": true,
+    "http_upload_s": 0.036545588984154165,
+    "partial_owned": true,
+    "finished": 1794071611.6929853
+  }
+}

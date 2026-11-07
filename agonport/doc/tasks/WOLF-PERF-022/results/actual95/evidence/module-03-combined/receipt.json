@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "arm": "combined",
+  "sha256": "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b",
+  "outside_timing": true,
+  "previous_sha256": "22ef84a767951ec03ea138b048db4cfe613d1edf02e8cbb34ee824ba535d24a1",
+  "backup_retired": true,
+  "recovery_state": 1
+}

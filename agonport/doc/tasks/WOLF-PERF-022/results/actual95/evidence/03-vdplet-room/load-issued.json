@@ -1,0 +1,5 @@
+{
+  "command": "LOAD b-combined-room.bin",
+  "once": true,
+  "epoch": 1794071632.7087755
+}

@@ -1,0 +1,8 @@
+VDU 2
+/ *VDU 87 80 51 45 82 69 83 79 85 82 67 69 13 10
+WP3-RESOURCE
+/ *CD /test/wolf/perf022/r02
+/test/wolf/perf022/r02 *LOAD resource-probe.bin
+/test/wolf/perf022/r02 *RUN .
+WOLF RESOURCE COMPLETE
+/test/wolf/perf022/r02 *

@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 4160283901,
+    "boot": 3364827859,
+    "operation": "put",
+    "remote": "/test/wolf/perf022/r02/b-cyan-room.bin",
+    "activate": true,
+    "size": 325309,
+    "destination": null,
+    "started": 1794071078.5353305,
+    "result": {
+      "protocol": 1,
+      "boot": 3364827859,
+      "id": 4160283901,
+      "phase": 4,
+      "bytes": 325309,
+      "size": 325309,
+      "records": 1539,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 1448074,
+      "mainboard_us": 13187366,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 14.822582006454468,
+      "http_upload_s": 1.5146018720115535
+    },
+    "delivered": true,
+    "http_upload_s": 1.5146018720115535,
+    "finished": 1794071093.3579125
+  }
+}

@@ -13,7 +13,7 @@ changed; exact source/target/producer evidence remains with each task.
 |Equal-full-height setup018|Actual87 draw25.137→25.247ms, difference0.438% versus3.134% control spread; rate unchanged; image+60B|No established gain or precise regression; retain qualified arm and resource costs|
 |Column chains019|Scalar ordering preserved; host room census avoids1045504/1199104 membership checks (87.19%); image+172B, selected native path1936B versus1344B|Individual timing unavailable: actual89 failed before any guest, then exact restoration/release|
 |Exact degree table015|Exact angle/output parity; image−2240B and resident data−2164B|Individual timing unavailable after pre-guest interruptions; included in021|
-|Combined021|Five supported units above compose correctly; exact source/target/real producers and supplemental ordered row-alias checks pass; image22572B (−1848B), data11184B, selected native path1936/4096B|Actual91 host SIGTERM during first control;600 original SD samples recovered, no candidate or comparison; exact restoration/release completed|
+|Combined021|Five supported units above compose correctly; exact source/target/real producers and supplemental ordered row-alias checks pass; image22572B (−1848B), data11184B, selected native path1936/4096B|Actual95 full matched comparison completed: draw24.956→20.903ms (−16.241%); another3.740% below cyan; presentation30.062fps unchanged. Package−1848B/data−2164B. Retain measured combined reference; no automatic default adoption|
 |Sprite hoisting013|Room pooled+2.05% draw cost, actor-rich−0.8%; no rate change established|Smith explicitly requested review after sleep; no FPS-only rejection or automatic adoption|
 |Identical-post grouping020|Canonical room opportunity191864/4368126 texture reads (4.392%); all pixel stores remain, groups mostly width1|Source gate completed; defer harder implementation here, preserve near-wall/larger-view future opportunity|
 |Generic libgcc admission|Allocated44B metadata still violates existing package admission|No strip/guard workaround; supported local017 candidate is separate|
@@ -43,13 +43,18 @@ interruption handler, known-sender capture, observer cancellation/refusal and15
 negative handshakes. Historical sender/cause remains unknown; simultaneous loss
 of both jobs and host tracing perturbation remain limits.
 
-Current [PERF022 hardware02 readiness](../WOLF-PERF-022/READINESS02.md) is frozen
-at808c551: full six uncapped original/cyan/combined/combined/cyan/original rooms,
-sevenINFO, unchanged renderer/guest binaries, exact dual-interpreter closures and
-822 pins/472 archived byte sets.27 adapted-controller/actual-C-listener/observer
-binding checks PASS after reservation-only revision. All compiler work is stopped
-and released. Request793c29add4f8 is queued behind Mech's owner isolationdd79 and
-consumerR08/e419, with no Wolf hardware lease or contact. Old ungranteddfe8/kit
-a07df733 was voluntarily cancelled before contact and remains preserved. Current
-real predecessor restoration/tuple and fresh Extender admission are required;
-no old token, blind interrupted-cohort replay or automatic default adoption.
+[PERF022 actual95](../WOLF-PERF-022/RESULT95.md) completed the full six uncapped
+original/cyan/combined/combined/cyan/original rooms and seven INFO queries. All3600
+records/822 frozen inputs/real producers/module lifecycle/stack/resource/observer
+and full restoration joins passed. Both original foreground handles and tracer
+joined; no SIGTERM observed. Normal release17:28:46UTC and immediate Mech-next/
+Extender notices completed before analysis. Minimum native INFO remaining1748B.
+Control spread1.687%; other scenes, optical calibration, unit attribution and
+historical host-signal cause remain unestablished. No hardware lease is retained.
+
+[PERF023](../WOLF-PERF-023/PLAN.md) separately freezes one supported complete-quad
+constant-span byte-address specialization against exact combined8d3d. Source
+census covers98.918% of current constant-fill bytes; no speed claim. Isolated
+host/target qualification is selected under ordinary serial Pi compilation;
+new producer bindings and a separate finite physical freeze/fresh admission
+remain required. No Oryx work, wider stores, helper/provider or default change.

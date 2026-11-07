@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "input_paths": 822,
+  "published_frozen_byte_sets": 472,
+  "published_folder": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/results/hardware02-preparation/frozen-inputs",
+  "kit_sha256": "db7760ef688a12b085d9c1aa68fd0fbb0134c309ebc76cb0bbb4e91552ed7a98",
+  "all_selected_inputs_independently_rehashed": true
+}

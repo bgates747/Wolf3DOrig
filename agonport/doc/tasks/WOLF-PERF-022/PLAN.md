@@ -8,28 +8,28 @@ separate foreground exact-PID attach without blocking cancellation or changing
 target parent/group; its actual custom-handler/controller integration is still
 required. This is a new diagnostic comparison, not a repair or blind replay.
 
-- [ ] WOLF-PERF-022-01 — Freeze exact modules/producers, observer compatibility,
+- [x] WOLF-PERF-022-01 — Freeze exact modules/producers, observer compatibility,
   host identity/ownership/handshake/liveness/failure/order limits before code.
-- [ ] WOLF-PERF-022-02 — Implement separate foreground observer and controller
+- [x] WOLF-PERF-022-02 — Implement separate foreground observer and controller
   handshake with no device I/O before positive attachment. Preserve controller
   parent/group, normal signal handler and original foreground tool handles.
-- [ ] WOLF-PERF-022-03 — Qualify the actual app-server-parented disposable
+- [x] WOLF-PERF-022-03 — Qualify the actual app-server-parented disposable
   controller/observer path and original host_interrupt08 handler, normal exit,
   known SIGTERM sender, observer cancellation/actual detach, missing/stale/wrong
   handshake refusal and no new operation after observer loss. No target used.
-- [ ] WOLF-PERF-022-04 — Qualify actual adapted controller budget/first-failure/
+- [x] WOLF-PERF-022-04 — Qualify actual adapted controller budget/first-failure/
   module/producer/namespace paths plus real retained C-listener replacement
   lifecycle; no synthetic replacement for the deployed engine or weakened guard.
-- [ ] WOLF-PERF-022-05 — Rejoin exact existing source/target/producers/current
+- [x] WOLF-PERF-022-05 — Rejoin exact existing source/target/producers/current
   restored tuple/rollback and actual two-interpreter closure, archive/freeze/push
   all selected inputs; normal Mech-first fresh exclusive admission only.
-- [ ] WOLF-PERF-022-06 — One full six-guest/sevenINFO uncapped matched cohort,
+- [x] WOLF-PERF-022-06 — One full six-guest/sevenINFO uncapped matched cohort,
   both foreground host actors under the same actual ownership; first unexpected
   stops new dispatch, preserves original evidence/available RAM before LOAD.
-- [ ] WOLF-PERF-022-07 — Exact full incoming restoration/readback/full handback,
+- [x] WOLF-PERF-022-07 — Exact full incoming restoration/readback/full handback,
   both host actors and children joined, normal release/immediate next-owner
   notice. No HOLD; leave SD mounted. Recovery never authorizes benchmark replay.
-- [ ] WOLF-PERF-022-08 — Publish raw timing/producer/resource/lifecycle/trace
+- [x] WOLF-PERF-022-08 — Publish raw timing/producer/resource/lifecycle/trace
   joins, observer/clock/drift limits and costs; no automatic default adoption.
 
 Keep the ENTIRE comparison: original/cyan/combined/combined/cyan/original,
@@ -117,3 +117,12 @@ preflight; requalify guards and freeze new hardware02 kit before READY. No
 renderer/guest/firmware/SDK/provider/carrier/test-matrix/budget/cleanup axis
 changes. Current actual predecessor still must be reconciled at admission; no
 grant is conveyed by source preparation. Immutable subtask IDs above unchanged.
+
+## Completed disposition
+
+Actual95 completed the full selected six-guest/sevenINFO cohort, exact incoming
+restoration/readback/full handback and both original foreground joins. Normal
+release17:28:46UTC and immediate next-owner/scheduler notices preceded offline
+analysis. [RESULT95](RESULT95.md) retains all raw joins, draw/presentation/resource
+costs and limits. Historical interrupted failures remain separate; no default
+adoption or extra target work follows from this completed task.

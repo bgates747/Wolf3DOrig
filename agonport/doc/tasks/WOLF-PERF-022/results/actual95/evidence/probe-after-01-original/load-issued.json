@@ -1,0 +1,5 @@
+{
+  "command": "LOAD resource-probe.bin",
+  "once": true,
+  "epoch": 1794071415.0779028
+}

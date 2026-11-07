@@ -1,0 +1,5 @@
+{
+  "command": "EXEC /test/wolf/perf022/r02/state.txt",
+  "once": true,
+  "epoch": 1794071776.4404476
+}

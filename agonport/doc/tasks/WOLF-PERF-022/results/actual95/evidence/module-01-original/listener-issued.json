@@ -1,0 +1,5 @@
+{
+  "command": "EMOS sdserve --fast /",
+  "once": true,
+  "epoch": 1794071251.7265182
+}
