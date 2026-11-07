@@ -1,0 +1,10 @@
+{
+  "passive_only": true,
+  "bytes": 0,
+  "original_run_epoch": 1794064583.4257736,
+  "original_bound_epoch": 1794064883.4257736,
+  "observation_epoch": 1794064799.5979648,
+  "returned_prompt": false,
+  "no_keyboard_write_or_reset_or_replay": true,
+  "limit": "A newly opened passive serial handle can miss bytes emitted before it opened; no missing-prompt inference or invented completion."
+}

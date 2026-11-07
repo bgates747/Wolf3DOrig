@@ -1,0 +1,35 @@
+{
+  "schema": "olimex-bench-observation-v1",
+  "bench": "olimex",
+  "epoch": 1794064144.829906,
+  "observer": "wolf3dorig",
+  "lease": "3158fddf326443eaad29a533d23bfd18",
+  "components": {
+    "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+    "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+    "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+    "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+    "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+  },
+  "checks": {
+    "cli_verified": true,
+    "input_ready_neutral": true,
+    "listener_offline": true,
+    "staged_job_idle": true,
+    "no_serial_readers": true,
+    "no_reset_holders": true,
+    "mode0_callback0_route0": true,
+    "whole_startup_listener_unchanged": true
+  },
+  "evidence": [
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/evidence/entry/initial-state.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/evidence/entry/state.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/evidence/entry/serial.bin",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/evidence/entry/startup.bin",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/evidence/entry/listener.bin",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/evidence/entry/entry-raw-mode.bin",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/evidence/entry/entry-raw-callback.bin",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/evidence/entry/entry-route.bin"
+  ],
+  "component_provenance": "Actual new grant component identities retained; fresh whole startup/listener reads and SAVE-only mode/callback/route checks. Exact incoming full-span rollback is verified in the immutable kit; no new firmware identity query claimed."
+}

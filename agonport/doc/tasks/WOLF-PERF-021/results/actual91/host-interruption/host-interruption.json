@@ -1,0 +1,28 @@
+{
+  "schema": "wolf-host-interruption-v1",
+  "epoch": 1794064613.1980345,
+  "signal": 15,
+  "name": "SIGTERM",
+  "pid": 1425962,
+  "ppid": 1750,
+  "sender_unknown": true,
+  "stack": [
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/launch02.py\", line 25, in <module>\n    if __name__=='__main__':main()\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/launch02.py\", line 24, in main\n    runpy.run_path(str(T/'hardware02.py'),run_name='__main__')\n",
+    "  File \"<frozen runpy>\", line 294, in run_path\n",
+    "  File \"<frozen runpy>\", line 98, in _run_module_code\n",
+    "  File \"<frozen runpy>\", line 88, in _run_code\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/hardware02.py\", line 445, in <module>\n    Bench(args.context).suite()\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/hardware02.py\", line 421, in suite\n    self.run_cases()\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/hardware02.py\", line 376, in run_cases\n    self.case(index, 'vdplet', mode)\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/hardware02.py\", line 138, in case\n    return super().case(index, backend, mode)\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/hardware/physical09.py\", line 191, in case\n    seconds=self.invoke(p,('a'if backend=='bespoke'else'b')+'-'+mode+'.bin','WP3-'+label,mode=='control')\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/hardware02.py\", line 155, in invoke\n    return super().invoke(folder, filename, marker, control)\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/hardware/physical09.py\", line 168, in invoke\n    self.capture(serial,raw,folder,done,300)\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/hardware02.py\", line 163, in capture\n    return super().capture(serial, raw, folder, terminal_or_expected, bound)\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/hardware/physical09.py\", line 63, in capture\n    chunk=serial.read(8192)\n",
+    "  File \"/Agon/mystuff/agon-extender/.venv/lib/python3.14/site-packages/serial/serialposix.py\", line 565, in read\n    ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())\n"
+  ],
+  "continuation": false,
+  "replay": false
+}

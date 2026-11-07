@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 2269907548,
+    "boot": 2089475799,
+    "operation": "put",
+    "remote": "/test/wolf/perf021/r01/level_00/sprites.agnb",
+    "activate": true,
+    "size": 559464,
+    "destination": null,
+    "started": 1794064301.9088473,
+    "result": {
+      "protocol": 1,
+      "boot": 2089475799,
+      "id": 2269907548,
+      "phase": 4,
+      "bytes": 559464,
+      "size": 559464,
+      "records": 2643,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 1141718,
+      "mainboard_us": 22176824,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 23.419414520263672,
+      "http_upload_s": 1.165595630009193
+    },
+    "delivered": true,
+    "http_upload_s": 1.165595630009193,
+    "finished": 1794064325.3282619
+  }
+}

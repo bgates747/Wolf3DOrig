@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 3963726520,
+    "boot": 2089475799,
+    "operation": "put",
+    "remote": "/test/wolf/perf021/r01/resource-probe.bin",
+    "activate": true,
+    "size": 563,
+    "destination": null,
+    "started": 1794064353.3668456,
+    "result": {
+      "protocol": 1,
+      "boot": 2089475799,
+      "id": 3963726520,
+      "phase": 4,
+      "bytes": 563,
+      "size": 563,
+      "records": 7,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 18887,
+      "mainboard_us": 694203,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 0.8169360160827637,
+      "http_upload_s": 0.04153038398362696
+    },
+    "delivered": true,
+    "http_upload_s": 0.04153038398362696,
+    "finished": 1794064354.1837816
+  }
+}

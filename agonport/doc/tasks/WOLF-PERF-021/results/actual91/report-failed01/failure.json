@@ -1,0 +1,7 @@
+{
+  "error": "KeyError('encoded')",
+  "phase": "offline reporter only",
+  "cause": "Qualified producer presentation records contain address/target, not an encoded field; retain actual BIN/listing-derived call proof",
+  "raw_data_changed": false,
+  "target_access": false
+}

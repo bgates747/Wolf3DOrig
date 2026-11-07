@@ -1,0 +1,44 @@
+{
+  "files": {
+    "before.bin": {
+      "bytes": 305873,
+      "sha256": "ccf845c796ade46725efd48fa06749ae622518c0007960667ac64828fe72e891",
+      "collected_after_reset": true
+    },
+    "after.bin": {
+      "bytes": 305873,
+      "sha256": "ae553553dd9b609cfae2dea1cfcc2a5d6f0282c4ee2310eb73a27795ffac122a",
+      "collected_after_reset": true
+    },
+    "stack.bin": {
+      "bytes": 256,
+      "sha256": "7c4b3825003fc4a281641eadfccb631c6615a7663af3d8e21c177d6ddfff6635",
+      "collected_after_reset": true
+    },
+    "timing.bin": {
+      "bytes": 16233,
+      "sha256": "280b120e93606e2a55e7b5cfcab148e30a78753f0dd174642065337748136b16",
+      "collected_after_reset": true
+    },
+    "native.bin": {
+      "bytes": 12016,
+      "sha256": "d0becea71126b38142c18f346a960025058f6478ec91012276ca37cb4bb14219",
+      "collected_after_reset": true
+    },
+    "loading.bin": {
+      "bytes": 48,
+      "sha256": "173fcab3d2e18c3a47d50414e09a7b268c23909806a43cee9920f0c5b5103fb9",
+      "collected_after_reset": true
+    },
+    "loading3.bin": {
+      "bytes": 4288,
+      "sha256": "e56b164ae4135617de0df71f10578cc5d604ab2b48417a3492e0921460ad9370",
+      "collected_after_reset": true
+    }
+  },
+  "namespace_cleared_before_original_RUN": true,
+  "no_new_guest_since_original_RUN": true,
+  "original_live_RAM_preserved": false,
+  "comparison_passed": false,
+  "limit": "Existing original namespace SD files collected after recovery; provenance/contents require separate validation. No reset-created RAM is labelled original."
+}

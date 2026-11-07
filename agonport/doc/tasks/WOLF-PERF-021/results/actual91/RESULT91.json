@@ -1,0 +1,2175 @@
+{
+  "benchmark_comparison_passed": false,
+  "original_driver_stopped": true,
+  "original_driver_pid": 1425962,
+  "host_signal": 15,
+  "signal_sender_and_cause": "UNKNOWN",
+  "signal_after_launch_seconds": 493.7284767627716,
+  "signal_after_RUN_seconds": 29.772260904312134,
+  "candidate_runs": 0,
+  "complete_room_receipts": 0,
+  "resource_queries": 1,
+  "original_live_RAM_preserved": false,
+  "original_guest_file_bytes": 325309,
+  "recovered_original_guest_SD_dump_bytes": 305873,
+  "producer": {
+    "passed": true,
+    "package_bytes": 24420,
+    "guest_sha256": "c43e7fe74148517c30cf9bf83854cf0cf297aeaf8c4684a4624c93849b46df58",
+    "listing_sha256": "f61b421e8c7722a7851e273de8a92a5004c647e42e59e5dd88fe176c7c145f4d",
+    "operands": [
+      {
+        "address": 422779,
+        "register": "hl",
+        "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+        "value": 24420,
+        "encoded": "21645f00"
+      },
+      {
+        "address": 422792,
+        "register": "hl",
+        "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+        "value": 24420,
+        "encoded": "21645f00"
+      },
+      {
+        "address": 422796,
+        "register": "de",
+        "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+        "value": 24421,
+        "encoded": "11655f00"
+      },
+      {
+        "address": 422813,
+        "register": "bc",
+        "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+        "value": 24420,
+        "encoded": "01645f00"
+      },
+      {
+        "address": 422855,
+        "register": "de",
+        "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+        "value": 24420,
+        "encoded": "11645f00"
+      },
+      {
+        "address": 423264,
+        "register": "hl",
+        "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+        "value": 24420,
+        "encoded": "21645f00"
+      }
+    ],
+    "stack_labels": {
+      "wp_entry_sp": 551622,
+      "wp_exit_sp": 551625
+    }
+  },
+  "balanced_original_guest_stack": [
+    786289,
+    786289
+  ],
+  "original_presentation_calls": [
+    {
+      "address": 551038,
+      "target": "w3d_vdu_present",
+      "encoded": "cd1a6f06"
+    },
+    {
+      "address": 551042,
+      "target": "w3d_audio_wait_for_vdp_ingress",
+      "encoded": "cd162606"
+    },
+    {
+      "address": 551258,
+      "target": "w3d_audio_wait_for_vdp_ingress",
+      "encoded": "cd162606"
+    },
+    {
+      "address": 551368,
+      "target": "w3d_vdu_present",
+      "encoded": "cd1a6f06"
+    },
+    {
+      "address": 551372,
+      "target": "w3d_audio_wait_for_vdp_ingress",
+      "encoded": "cd162606"
+    }
+  ],
+  "original_per_frame_presentation_calls": [
+    {
+      "address": 551038,
+      "target": "w3d_vdu_present",
+      "encoded": "cd1a6f06"
+    },
+    {
+      "address": 551042,
+      "target": "w3d_audio_wait_for_vdp_ingress",
+      "encoded": "cd162606"
+    }
+  ],
+  "recovered_original_SD_validated": true,
+  "original_frames_in_SD": 600,
+  "original_render_ms_at_configured240MHz": 24.750219430555553,
+  "original_nominal_completed_fps": 30.06162633398467,
+  "original_loading": {
+    "count": 470,
+    "total": 470,
+    "fences": 952,
+    "timeouts": 0,
+    "recovered": 0,
+    "max_ticks": 4,
+    "last_ticks": 0,
+    "first_timeout_total": 0,
+    "first_timeout_ticks": 0,
+    "error": 0,
+    "phase": 2,
+    "status": 0,
+    "first_timeout_phase": 0,
+    "first_status": 0,
+    "last_passes": 1,
+    "agnb_error": 0
+  },
+  "original_trace": {
+    "schema": "wolf-query-trace04",
+    "main_returned": true,
+    "loading_error": 0,
+    "frozen": false,
+    "loading_ready": true,
+    "save_failed": false,
+    "completed_fences": 952,
+    "total_assets": 470,
+    "current": {
+      "fence": 952,
+      "phase": 2,
+      "stage_pointer": 581853,
+      "count": 470,
+      "total": 470,
+      "buffer_id": 16642,
+      "declared_bytes": 64000,
+      "stream_remaining": 0,
+      "last_block_bytes": 6656,
+      "mbase": 0,
+      "query_pointer": 582229,
+      "query_bytes": "170086",
+      "times_raw_mos": {
+        "paint_begin": 17026,
+        "paint_end": 17028,
+        "present_begin": 0,
+        "present_end": 0,
+        "clear_begin": 17028,
+        "clear_end": 17028,
+        "tx_begin": 17028,
+        "tx_end": 17028,
+        "wait_begin": 17028,
+        "wait_end": 17028
+      },
+      "durations_raw_mos": {
+        "paint": 2,
+        "present": 0,
+        "clear": 0,
+        "query_call": 0,
+        "wait_window": 0
+      },
+      "send_return": {
+        "a": 0,
+        "f": 68,
+        "carry": false,
+        "hl": 582232,
+        "bc": 0
+      },
+      "mode_flags": {
+        "before_clear": 60,
+        "after_clear": 44,
+        "after_tx": 44,
+        "after_wait": 60
+      },
+      "wait_status": 0,
+      "wait_passes": 1,
+      "returned": true,
+      "serial_flags_before": 51,
+      "serial_flags_after": 51,
+      "backend_before": 0,
+      "backend_after": 0,
+      "emos_reply_parser_nonatomic": {
+        "state_before": 0,
+        "state_after": 0,
+        "cmd": 6,
+        "length": 0,
+        "pointer": 770950,
+        "data": "4001f000281e40880000000000000000"
+      }
+    },
+    "history": [
+      {
+        "fence": 921,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 75,
+        "total": 456,
+        "buffer_id": 16517,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16566,
+          "paint_end": 16566,
+          "present_begin": 16566,
+          "present_end": 16566,
+          "clear_begin": 16566,
+          "clear_end": 16566,
+          "tx_begin": 16566,
+          "tx_end": 16566,
+          "wait_begin": 16566,
+          "wait_end": 16568
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 922,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 75,
+        "total": 456,
+        "buffer_id": 16517,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16568,
+          "paint_end": 16570,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16570,
+          "clear_end": 16570,
+          "tx_begin": 16570,
+          "tx_end": 16570,
+          "wait_begin": 16570,
+          "wait_end": 16570
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 923,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 76,
+        "total": 457,
+        "buffer_id": 16518,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16572,
+          "paint_end": 16572,
+          "present_begin": 16572,
+          "present_end": 16572,
+          "clear_begin": 16572,
+          "clear_end": 16572,
+          "tx_begin": 16572,
+          "tx_end": 16572,
+          "wait_begin": 16572,
+          "wait_end": 16574
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 924,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 76,
+        "total": 457,
+        "buffer_id": 16518,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16574,
+          "paint_end": 16576,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16576,
+          "clear_end": 16576,
+          "tx_begin": 16576,
+          "tx_end": 16576,
+          "wait_begin": 16576,
+          "wait_end": 16576
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 925,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 77,
+        "total": 458,
+        "buffer_id": 16519,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16578,
+          "paint_end": 16578,
+          "present_begin": 16578,
+          "present_end": 16578,
+          "clear_begin": 16578,
+          "clear_end": 16578,
+          "tx_begin": 16578,
+          "tx_end": 16578,
+          "wait_begin": 16578,
+          "wait_end": 16580
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 926,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 77,
+        "total": 458,
+        "buffer_id": 16519,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16580,
+          "paint_end": 16582,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16582,
+          "clear_end": 16582,
+          "tx_begin": 16582,
+          "tx_end": 16582,
+          "wait_begin": 16582,
+          "wait_end": 16582
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 927,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 78,
+        "total": 459,
+        "buffer_id": 16520,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16584,
+          "paint_end": 16584,
+          "present_begin": 16584,
+          "present_end": 16584,
+          "clear_begin": 16584,
+          "clear_end": 16584,
+          "tx_begin": 16584,
+          "tx_end": 16584,
+          "wait_begin": 16584,
+          "wait_end": 16586
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 928,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 78,
+        "total": 459,
+        "buffer_id": 16520,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16586,
+          "paint_end": 16588,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16588,
+          "clear_end": 16588,
+          "tx_begin": 16588,
+          "tx_end": 16588,
+          "wait_begin": 16588,
+          "wait_end": 16588
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 929,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 79,
+        "total": 460,
+        "buffer_id": 16521,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16590,
+          "paint_end": 16590,
+          "present_begin": 16590,
+          "present_end": 16590,
+          "clear_begin": 16590,
+          "clear_end": 16590,
+          "tx_begin": 16590,
+          "tx_end": 16590,
+          "wait_begin": 16590,
+          "wait_end": 16592
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 930,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 79,
+        "total": 460,
+        "buffer_id": 16521,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16592,
+          "paint_end": 16594,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16594,
+          "clear_end": 16594,
+          "tx_begin": 16594,
+          "tx_end": 16594,
+          "wait_begin": 16594,
+          "wait_end": 16594
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 931,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 80,
+        "total": 461,
+        "buffer_id": 16522,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16596,
+          "paint_end": 16596,
+          "present_begin": 16596,
+          "present_end": 16596,
+          "clear_begin": 16596,
+          "clear_end": 16596,
+          "tx_begin": 16596,
+          "tx_end": 16596,
+          "wait_begin": 16596,
+          "wait_end": 16598
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 932,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 80,
+        "total": 461,
+        "buffer_id": 16522,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16598,
+          "paint_end": 16600,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16600,
+          "clear_end": 16600,
+          "tx_begin": 16600,
+          "tx_end": 16600,
+          "wait_begin": 16600,
+          "wait_end": 16600
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 933,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 81,
+        "total": 462,
+        "buffer_id": 16523,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16602,
+          "paint_end": 16602,
+          "present_begin": 16602,
+          "present_end": 16602,
+          "clear_begin": 16602,
+          "clear_end": 16602,
+          "tx_begin": 16602,
+          "tx_end": 16602,
+          "wait_begin": 16602,
+          "wait_end": 16604
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 934,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 81,
+        "total": 462,
+        "buffer_id": 16523,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16604,
+          "paint_end": 16606,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16606,
+          "clear_end": 16606,
+          "tx_begin": 16606,
+          "tx_end": 16606,
+          "wait_begin": 16606,
+          "wait_end": 16606
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 935,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 82,
+        "total": 463,
+        "buffer_id": 16524,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16608,
+          "paint_end": 16608,
+          "present_begin": 16608,
+          "present_end": 16608,
+          "clear_begin": 16608,
+          "clear_end": 16608,
+          "tx_begin": 16608,
+          "tx_end": 16608,
+          "wait_begin": 16608,
+          "wait_end": 16610
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 936,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 82,
+        "total": 463,
+        "buffer_id": 16524,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16610,
+          "paint_end": 16612,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16612,
+          "clear_end": 16612,
+          "tx_begin": 16612,
+          "tx_end": 16612,
+          "wait_begin": 16612,
+          "wait_end": 16612
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 937,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 83,
+        "total": 464,
+        "buffer_id": 16525,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16614,
+          "paint_end": 16614,
+          "present_begin": 16614,
+          "present_end": 16614,
+          "clear_begin": 16614,
+          "clear_end": 16614,
+          "tx_begin": 16614,
+          "tx_end": 16614,
+          "wait_begin": 16614,
+          "wait_end": 16616
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 938,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 83,
+        "total": 464,
+        "buffer_id": 16525,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16616,
+          "paint_end": 16618,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16618,
+          "clear_end": 16618,
+          "tx_begin": 16618,
+          "tx_end": 16618,
+          "wait_begin": 16618,
+          "wait_end": 16618
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 939,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 84,
+        "total": 465,
+        "buffer_id": 16526,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16620,
+          "paint_end": 16620,
+          "present_begin": 16620,
+          "present_end": 16620,
+          "clear_begin": 16620,
+          "clear_end": 16620,
+          "tx_begin": 16620,
+          "tx_end": 16620,
+          "wait_begin": 16620,
+          "wait_end": 16622
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 940,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 84,
+        "total": 465,
+        "buffer_id": 16526,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16622,
+          "paint_end": 16624,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16624,
+          "clear_end": 16624,
+          "tx_begin": 16624,
+          "tx_end": 16624,
+          "wait_begin": 16624,
+          "wait_end": 16624
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 941,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 85,
+        "total": 466,
+        "buffer_id": 16527,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16626,
+          "paint_end": 16626,
+          "present_begin": 16626,
+          "present_end": 16626,
+          "clear_begin": 16626,
+          "clear_end": 16626,
+          "tx_begin": 16626,
+          "tx_end": 16626,
+          "wait_begin": 16626,
+          "wait_end": 16628
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 942,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 85,
+        "total": 466,
+        "buffer_id": 16527,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16628,
+          "paint_end": 16630,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16630,
+          "clear_end": 16630,
+          "tx_begin": 16630,
+          "tx_end": 16630,
+          "wait_begin": 16630,
+          "wait_end": 16630
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 943,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 86,
+        "total": 467,
+        "buffer_id": 16528,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16632,
+          "paint_end": 16632,
+          "present_begin": 16632,
+          "present_end": 16632,
+          "clear_begin": 16632,
+          "clear_end": 16632,
+          "tx_begin": 16632,
+          "tx_end": 16632,
+          "wait_begin": 16632,
+          "wait_end": 16634
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 944,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 86,
+        "total": 467,
+        "buffer_id": 16528,
+        "declared_bytes": 768,
+        "stream_remaining": 0,
+        "last_block_bytes": 768,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16634,
+          "paint_end": 16636,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16636,
+          "clear_end": 16636,
+          "tx_begin": 16636,
+          "tx_end": 16636,
+          "wait_begin": 16636,
+          "wait_end": 16636
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 945,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 87,
+        "total": 468,
+        "buffer_id": 16640,
+        "declared_bytes": 64000,
+        "stream_remaining": 0,
+        "last_block_bytes": 6656,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16738,
+          "paint_end": 16738,
+          "present_begin": 16738,
+          "present_end": 16738,
+          "clear_begin": 16738,
+          "clear_end": 16738,
+          "tx_begin": 16738,
+          "tx_end": 16738,
+          "wait_begin": 16738,
+          "wait_end": 16740
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 946,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 87,
+        "total": 468,
+        "buffer_id": 16640,
+        "declared_bytes": 64000,
+        "stream_remaining": 0,
+        "last_block_bytes": 6656,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16740,
+          "paint_end": 16742,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16742,
+          "clear_end": 16742,
+          "tx_begin": 16742,
+          "tx_end": 16742,
+          "wait_begin": 16742,
+          "wait_end": 16742
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 947,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 88,
+        "total": 469,
+        "buffer_id": 16641,
+        "declared_bytes": 64000,
+        "stream_remaining": 0,
+        "last_block_bytes": 6656,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16846,
+          "paint_end": 16846,
+          "present_begin": 16846,
+          "present_end": 16846,
+          "clear_begin": 16846,
+          "clear_end": 16846,
+          "tx_begin": 16846,
+          "tx_end": 16846,
+          "wait_begin": 16846,
+          "wait_end": 16848
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 948,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 88,
+        "total": 469,
+        "buffer_id": 16641,
+        "declared_bytes": 64000,
+        "stream_remaining": 0,
+        "last_block_bytes": 6656,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16848,
+          "paint_end": 16850,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16850,
+          "clear_end": 16850,
+          "tx_begin": 16850,
+          "tx_end": 16850,
+          "wait_begin": 16850,
+          "wait_end": 16850
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 949,
+        "phase": 1,
+        "stage_pointer": 581829,
+        "count": 89,
+        "total": 470,
+        "buffer_id": 16642,
+        "declared_bytes": 64000,
+        "stream_remaining": 0,
+        "last_block_bytes": 6656,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16954,
+          "paint_end": 16954,
+          "present_begin": 16954,
+          "present_end": 16954,
+          "clear_begin": 16954,
+          "clear_end": 16954,
+          "tx_begin": 16954,
+          "tx_end": 16954,
+          "wait_begin": 16954,
+          "wait_end": 16956
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 950,
+        "phase": 2,
+        "stage_pointer": 581829,
+        "count": 89,
+        "total": 470,
+        "buffer_id": 16642,
+        "declared_bytes": 64000,
+        "stream_remaining": 0,
+        "last_block_bytes": 6656,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 16956,
+          "paint_end": 16958,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 16958,
+          "clear_end": 16958,
+          "tx_begin": 16958,
+          "tx_end": 16958,
+          "wait_begin": 16958,
+          "wait_end": 16958
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e4088a80a000000000000"
+        }
+      },
+      {
+        "fence": 951,
+        "phase": 1,
+        "stage_pointer": 581853,
+        "count": 470,
+        "total": 470,
+        "buffer_id": 16642,
+        "declared_bytes": 64000,
+        "stream_remaining": 0,
+        "last_block_bytes": 6656,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 17024,
+          "paint_end": 17024,
+          "present_begin": 17024,
+          "present_end": 17024,
+          "clear_begin": 17024,
+          "clear_end": 17024,
+          "tx_begin": 17024,
+          "tx_end": 17024,
+          "wait_begin": 17024,
+          "wait_end": 17026
+        },
+        "durations_raw_mos": {
+          "paint": 0,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 2
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e40880000000000000000"
+        }
+      },
+      {
+        "fence": 952,
+        "phase": 2,
+        "stage_pointer": 581853,
+        "count": 470,
+        "total": 470,
+        "buffer_id": 16642,
+        "declared_bytes": 64000,
+        "stream_remaining": 0,
+        "last_block_bytes": 6656,
+        "mbase": 0,
+        "query_pointer": 582229,
+        "query_bytes": "170086",
+        "times_raw_mos": {
+          "paint_begin": 17026,
+          "paint_end": 17028,
+          "present_begin": 0,
+          "present_end": 0,
+          "clear_begin": 17028,
+          "clear_end": 17028,
+          "tx_begin": 17028,
+          "tx_end": 17028,
+          "wait_begin": 17028,
+          "wait_end": 17028
+        },
+        "durations_raw_mos": {
+          "paint": 2,
+          "present": 0,
+          "clear": 0,
+          "query_call": 0,
+          "wait_window": 0
+        },
+        "send_return": {
+          "a": 0,
+          "f": 68,
+          "carry": false,
+          "hl": 582232,
+          "bc": 0
+        },
+        "mode_flags": {
+          "before_clear": 60,
+          "after_clear": 44,
+          "after_tx": 44,
+          "after_wait": 60
+        },
+        "wait_status": 0,
+        "wait_passes": 1,
+        "returned": true,
+        "serial_flags_before": 51,
+        "serial_flags_after": 51,
+        "backend_before": 0,
+        "backend_after": 0,
+        "emos_reply_parser_nonatomic": {
+          "state_before": 0,
+          "state_after": 0,
+          "cmd": 6,
+          "length": 0,
+          "pointer": 770950,
+          "data": "4001f000281e40880000000000000000"
+        }
+      }
+    ],
+    "limits": "Nominal MOS ticks and non-atomic sender/reply-parser RAM snapshots; not per-byte UART timing, VDP grammar or a render measurement."
+  },
+  "recovery": {
+    "ordinary_agon_attempts": 1,
+    "paired_fallback_attempts": 0,
+    "actual_CLI_proved_after_reset": true,
+    "original_SD_collected_after_reset": true,
+    "no_new_guest_LOAD_RUN_getter_or_probe": true
+  },
+  "incoming_restored_and_readback": true,
+  "restore_bytes": 1105920,
+  "restore_sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de",
+  "full_handback_passed": true,
+  "bench_released": "2026-11-07T15:28:48.094530+00:00",
+  "release_observation_age_seconds": 78.04330348968506,
+  "selected_inputs": 716,
+  "limits": "Existing cleared-namespace original SD records validate one600-pose control after collection following recovery; no original pre-reset CLI/liveRAM or after-control resource state was observed. No candidate ran, no matched speedup/regression or optical/exclusiveCPU claim, no default adoption. Full selected cohort remains interrupted."
+}

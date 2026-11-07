@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 3672054641,
+    "boot": 2089475799,
+    "operation": "get",
+    "remote": "/test/wolf/perf021/r01/b-cyan-room.bin",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/evidence/stage/file-12-read.bin",
+    "started": 1794064396.5921574,
+    "result": {
+      "protocol": 1,
+      "boot": 2089475799,
+      "id": 3672054641,
+      "phase": 4,
+      "bytes": 325309,
+      "size": 325309,
+      "records": 1509,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 15910,
+      "mainboard_us": 12690769,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.39689044799888507,
+      "host_elapsed_s": 13.23857569694519,
+      "http_upload_s": 0.038519555993843824
+    },
+    "delivered": true,
+    "http_upload_s": 0.038519555993843824,
+    "partial_owned": true,
+    "finished": 1794064409.830733
+  }
+}

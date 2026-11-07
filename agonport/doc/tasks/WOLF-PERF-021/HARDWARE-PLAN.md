@@ -7,16 +7,16 @@ chain/trig inputs; this combined comparison does not replace their missing
 individual timings or claim a startup repair. Source/target/real producers and
 the supplemental ordered-background alias check are qualified in9308ea8/4df1292.
 
-- [ ] WOLF-PERF-021-H01 — Rejoin exact a926 control, best individually measured
+- [x] WOLF-PERF-021-H01 — Rejoin exact a926 control, best individually measured
   cyan016 and combined021 artifacts/independent correctness/resource evidence,
   with all actual per-arm producer operands/SP/presentation calls.
-- [ ] WOLF-PERF-021-H02 — Qualify the actual three-arm adapter and retained real
+- [x] WOLF-PERF-021-H02 — Qualify the actual three-arm adapter and retained real
   listener replacement/failure lifecycle. Freeze exact host closure, setup,
   current tuple/rollback, fresh namespace and all selected input bytes.
-- [ ] WOLF-PERF-021-H03 — Normal fresh exclusive admission after READY MechAgon,
+- [x] WOLF-PERF-021-H03 — Normal fresh exclusive admission after READY MechAgon,
   one finite cohort; stop first unexpected, RAM before following LOAD/reset,
   exact restoration/readback/fullcleanup/release/actual-next notice.
-- [ ] WOLF-PERF-021-H04 — Publish raw records, producer/SP/resource/lifecycle
+- [x] WOLF-PERF-021-H04 — Publish raw records, producer/SP/resource/lifecycle
   joins, inclusive draw, uncapped presentation, drift and costs/limits. No
   automatic production/default adoption or sum of individual timing claims.
 
@@ -91,3 +91,11 @@ then only exact selected restoration and necessary supported cleanup. Aligned
 eZ80 startup output remains a diagnostic gap, not a fabricated success receipt.
 Owner reply is retained in build/hardware-preparation01/boot-source-advice.json;
 this is a new combined experiment, never a retry/relabel of the stopped019 suite.
+
+## Actual91 disposition
+
+H01/H02 qualification complete. H03/H04 disposed with interrupted cohort and
+verified full restoration/release:600 original control records recovered from
+SD, no candidate or matched comparison. [RESULT91.md](RESULT91.md) retains all
+limits. Exact pre-disposition716 input bytes remain in the published hash archive;
+this changed checklist is not the historical selected kit or a retry instruction.

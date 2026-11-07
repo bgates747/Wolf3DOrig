@@ -1,0 +1,18 @@
+{
+  "original": {
+    "pid": 1425962,
+    "exec_session": 35512,
+    "observed_exit_code": 1
+  },
+  "passive_observation": {
+    "pid": 1429061,
+    "exec_session": 7884,
+    "observed_exit_code": 0
+  },
+  "restoration": {
+    "pid": 1430295,
+    "exec_session": 94614,
+    "observed_exit_code": 0
+  },
+  "source": "Original foreground terminal tool results; all owned actors/children joined before fresh final observation and actual release"
+}

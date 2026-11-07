@@ -1,0 +1,160 @@
+Core0 Saved PC:0x40043016
+Core1 Saved PC:0x4007b510
+SPI mode:DIO, clock div:1
+load:0x4ff33ce0,len:0x17bc
+load:0x4ff29ed0,len:0xfec
+load:0x4ff2cbd0,len:0x36bc
+entry 0x4ff29eda
+I (10) boot: ESP-IDF v5.5.5 2nd stage bootloader
+I (10) boot: compile time Oct 25 2026 01:22:20
+I (11) boot: Multicore bootloader
+I (13) boot: chip revision: v1.3
+I (13) boot: efuse block revision: v0.3
+I (14) qio_mode: Enabling QIO for flash chip WinBond
+I (14) boot.esp32p4: SPI Speed      : 80MHz
+I (15) boot.esp32p4: SPI Mode       : QIO
+I (16) boot.esp32p4: SPI Flash Size : 16MB
+I (17) boot: Enabling RNG early entropy source...
+I (18) boot: Partition Table:
+I (19) boot: ## Label            Usage          Type ST Offset   Length
+I (20) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (21) boot:  1 otadata          OTA data         01 00 0000f000 00002000
+I (22) boot:  2 coredump         Unknown data     01 03 00011000 0000f000
+I (23) boot:  3 ota_0            OTA app          00 10 00020000 00700000
+I (24) boot:  4 ota_1            OTA app          00 11 00720000 00700000
+I (25) boot:  5 reserved         Unknown data     01 40 00e20000 001e0000
+I (26) boot: End of partition table
+I (27) esp_image: segment 0: paddr=00020020 vaddr=40150020 size=45650h (284240) map
+I (65) esp_image: segment 1: paddr=00065678 vaddr=30100000 size=00090h (   144) load
+I (66) esp_image: segment 2: paddr=00065710 vaddr=4ff00000 size=0a908h ( 43272) load
+I (75) esp_image: segment 3: paddr=00070020 vaddr=40000020 size=146aech (1338092) map
+ESP-ROM:esp32p4-eco2-20240710
+Build:Jul 10 2024
+rst:0x17 (CHIP_USB_UART_RESET),boot:0x30d (SPI_FAST_FLASH_BOOT)
+Core0 Saved PC:0x4fc0420c
+Core1 Saved PC:0x4fc058e0
+SPI mode:DIO, clock div:1
+load:0x4ff33ce0,len:0x17bc
+load:0x4ff29ed0,len:0xfec
+load:0x4ff2cbd0,len:0x36bc
+entry 0x4ff29eda
+I (13) boot: ESP-IDF v5.5.5 2nd stage bootloader
+I (13) boot: compile time Oct 25 2026 01:22:20
+I (14) boot: Multicore bootloader
+I (16) boot: chip revision: v1.3
+I (16) boot: efuse block revision: v0.3
+I (17) qio_mode: Enabling QIO for flash chip WinBond
+I (18) boot.esp32p4: SPI Speed      : 80MHz
+I (19) boot.esp32p4: SPI Mode       : QIO
+I (20) boot.esp32p4: SPI Flash Size : 16MB
+I (20) boot: Enabling RNG early entropy source...
+I (21) boot: Partition Table:
+I (22) boot: ## Label            Usage          Type ST Offset   Length
+I (23) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (24) boot:  1 otadata          OTA data         01 00 0000f000 00002000
+I (25) boot:  2 coredump         Unknown data     01 03 00011000 0000f000
+I (26) boot:  3 ota_0            OTA app          00 10 00020000 00700000
+I (27) boot:  4 ota_1            OTA app          00 11 00720000 00700000
+I (28) boot:  5 reserved         Unknown data     01 40 00e20000 001e0000
+I (29) boot: End of partition table
+I (31) esp_image: segment 0: paddr=00020020 vaddr=40150020 size=45650h (284240) map
+I (68) esp_image: segment 1: paddr=00065678 vaddr=30100000 size=00090h (   144) load
+I (69) esp_image: segment 2: paddr=00065710 vaddr=4ff00000 size=0a908h ( 43272) load
+I (78) esp_image: segment 3: paddr=00070020 vaddr=40000020 size=146aech (1338092) map
+I (244) esp_image: segment 4: paddr=001b6b14 vaddr=4ff0a908 size=118fch ( 71932) load
+I (256) esp_image: segment 5: paddr=001c8418 vaddr=4ff1c280 size=0574ch ( 22348) load
+I (261) esp_image: segment 6: paddr=001cdb6c vaddr=50108080 size=00004h (     4) load
+I (268) boot: Loaded app from partition at offset 0x20000
+I (269) boot: Disabling RNG early entropy source...
+I (273) hex_psram: vendor id    : 0x0d (AP)
+I (273) hex_psram: Latency      : 0x01 (Fixed)
+I (274) hex_psram: DriveStr.    : 0x00 (25 Ohm)
+I (275) hex_psram: dev id       : 0x03 (generation 4)
+I (276) hex_psram: density      : 0x07 (256 Mbit)
+I (277) hex_psram: good-die     : 0x06 (Pass)
+I (278) hex_psram: SRF          : 0x02 (Slow Refresh)
+I (279) hex_psram: BurstType    : 0x00 ( Wrap)
+I (280) hex_psram: BurstLen     : 0x03 (2048 Byte)
+I (281) hex_psram: BitMode      : 0x01 (X16 Mode)
+I (282) hex_psram: Readlatency  : 0x04 (14 cycles@Fixed)
+I (283) hex_psram: DriveStrength: 0x00 (1/1)
+I (284) MSPI Timing: Enter psram timing tuning
+I (441) esp_psram: Found 32MB PSRAM device
+I (442) esp_psram: Speed: 200MHz
+I (442) hex_psram: psram CS IO is dedicated
+I (443) cpu_start: Multicore app
+I (1350) esp_psram: SPI SRAM memory test OK
+I (1359) cpu_start: Pro cpu start user code
+I (1359) cpu_start: cpu freq: 360000000 Hz
+I (1360) app_init: Application information:
+I (1360) app_init: Project name:     agon_extender
+I (1361) app_init: App version:      98d8f110-dirty
+I (1361) app_init: Compile time:     Nov  6 2026 04:05:58
+I (1362) app_init: ELF file SHA256:  af5f9e3ac...
+I (1362) app_init: ESP-IDF:          v5.5.5
+I (1363) efuse_init: Min chip rev:     v1.0
+I (1363) efuse_init: Max chip rev:     v1.99 
+I (1364) efuse_init: Chip rev:         v1.3
+I (1364) heap_init: Initializing. RAM available for dynamic allocation:
+I (1365) heap_init: At 4FF2AFD0 len 0000FFF0 (63 KiB): RETENT_RAM
+I (1366) heap_init: At 4FF3AFC0 len 00004BF0 (18 KiB): RAM
+I (1366) heap_init: At 4FF42D40 len 0005D2C0 (372 KiB): RAM
+I (1367) heap_init: At 50108084 len 00007F7C (31 KiB): RTCRAM
+I (1367) heap_init: At 30100090 len 00001F70 (7 KiB): SPM
+I (1368) esp_psram: Adding pool of 32768K of PSRAM memory to heap allocator
+I (1369) spi_flash: detected chip: generic
+I (1369) spi_flash: flash io: qio
+I (1371) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (1372) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (1373) esp_core_dump_flash: Init core dump to flash
+I (1373) esp_core_dump_flash: Found partition 'coredump' @ 11000 61440 bytes
+I (1403) esp_core_dump_flash: Core dump data checksum is correct
+I (1404) esp_core_dump_flash: Found core dump 31108 bytes in flash @ 0x11000
+I (1405) main_task: Started on CPU0
+I (1405) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (1406) main_task: Calling app_main()
+I (1412) main_task: Returned from app_main()
+I (1412) extender_watchdog: retained VDP IDLE watchdog subscriptions disabled
+I (1813) extender_identity: source_identity=p4-console-native
+I (1813) extender_identity: build_id=net-003-r02-b2026-11-06-09-03-07Z
+I (1814) extender_identity: artifact_status=experimental
+I (1814) extender_boot: retained VDP setup starting
+I (1911) lt8912b: Detected MIPI input. H sync: 0xff 0xff, V sync: 0x02 0xe5
+I (1938) lt8912b: LT8912 LVDS output disabled!
+I (1938) lt8912b: LT8912 HDMI output enabled!
+I (1955) ext-hdmi: 1280x720 RGB888, 60.000000MHz pixel/two 720Mbps lanes, 1350x741 total, 59.979007Hz calculated; 2 buffers/5529600 bytes
+I (1956) ext-hdmi: DSI/DMA IRQ and submission core 1; frame DMA completion is the vblank proxy on v1.3 silicon
+I (2077) p4_io_power: Shared GPIO/SD supply: ESP_OK, fixed 3300mV
+USB HOST CONFIG: FS/LS only on onboard HS controller (12 Mbit/s hub)
+USB HOST CONFIG: dual host, onboard hub + GPIO26 D-/GPIO27 D+, map=3
+USB HOST READY: attach one boot keyboard
+I (2588) uart: queue free spaces: 32
+Parallel boot pads released; awaiting EMOS
+I (3048) esp_eth.netif.netif_glue: e8:f6:0a:e2:e1:fe
+I (3099) esp_eth.netif.netif_glue: ethernet attached to netif
+USB IGNORE address=2 interface=1 subclass=0 protocol=0
+W (3683) hid-host: No HID device at USB port 3
+I (5096) extender_net: Ethernet interface started
+I (5147) extender_net: Ethernet link connected
+I (5198) extender_net: wired service starting with DHCP
+I (6650) esp_netif_handlers: eth0 ip: 192.168.0.20, mask: 255.255.255.0, gw: 192.168.0.1
+I (6651) extender_net: DHCP ip=192.168.0.20 netmask=255.255.255.0 gateway=192.168.0.1 dns=192.168.0.1
+USB DEVICE address=2 vid=04d9 pid=a088 speed=0 config_bytes=59 interfaces=2
+USB DEVICE address=3 vid=046d pid=c21d speed=1 config_bytes=48 interfaces=1
+USB F310 CONFIG data=0902300001010080fa0904000002ff5d0100102110010124811403000313020003000705810320000407050203200008
+USB F310 READY interface=0 endpoint=81 packet=32 interval=4
+USB DEVICE address=1 vid=1a40 pid=0101 speed=1 config_bytes=25 interfaces=1
+I (6661) extender_net: HTTP browser service ready
+USB F310 FIRST REPORT bytes=20 data=0014000000008000800080008000000000000000
+ExCom console net-003-r02-b2026-11-06-09-03-07Z (experimental), UART1 1152000 8N1 RTS/CTS
+Board olimex-p4-pc-revc-r01 UART1 TX=18 RX=17 RTS=20 CTS=19
+USB CONNECTED #1 vid=04d9 pid=a088 address=2 interface=0
+USB KEYBOARD READY
+ExCom native keyboard admitted
+I (11980) ext-hdmi: window 10.025s: updates 19.152/s submissions 19.152/s scanout 59.949Hz; convert wall mean/max 50.520/102.037ms cache 0.685ms wait 0.006ms swap-drops 0
+I (15506) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=0 no_new=0
+I (15558) extender_network: state=4 clients=0 refused=0 credits= protocol=0 sent=0 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=0 queue_fail=0 socket_fail=0
+I (15664) extender_provider: acquired=0 no_new=0 invalid=0 sent=0 failed=0 disconnected=0
+I (15664) extender_heap: free_8bit=25742635 minimum_8bit=2570224 free_psram=25496588 minimum_psram=25496588
+ExCom native keyboard admitted
+I (22008) ext-hdmi: window 10.028s: updates 19.047/s submissions 19.047/s scanout 59.932Hz; convert wall mean/max 50.663/53.429ms cache 0.668ms wait 0.003ms swap-drops 0

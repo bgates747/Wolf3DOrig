@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "exact_incoming_restored": true,
+  "full_handback": true,
+  "original_suite_failed": true,
+  "benchmark_comparison": false,
+  "ordinary_recovery_attempts": 1,
+  "paired_recovery_attempts": 0,
+  "original_live_RAM_preserved": false,
+  "owned_children_joined": true,
+  "epoch": 1794065250.052569
+}

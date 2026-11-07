@@ -1,0 +1,112 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-PERF-021-hardware01",
+  "purpose": "PREPARING distinct six uncapped room original/cyan/combined/combined/cyan/original comparison; pending final exact kit and source-supported post-install admission binding; Mech first",
+  "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/HARDWARE-PLAN.md",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "06d32e827da7",
+  "requested": "2026-11-07T14:58:00.439657+00:00",
+  "lease": "3158fddf326443eaad29a533d23bfd18",
+  "generation": 91,
+  "granted": "2026-11-07T15:06:46.560208+00:00",
+  "phase": "consumer",
+  "entry_observation": {
+    "schema": "olimex-bench-observation-v1",
+    "bench": "olimex",
+    "epoch": 1794064006.4347923,
+    "observer": "linux-extender",
+    "lease": null,
+    "checks": {
+      "no_workload": true,
+      "no_transfer": true,
+      "no_serial_readers": true,
+      "no_reset_holders": true,
+      "cli_verified": true,
+      "input_ready_neutral": true,
+      "listener_offline": true,
+      "staged_job_idle": true,
+      "restoration_verified": true
+    },
+    "evidence": [
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf021-r01/fresh.json",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf021-r01/exchange/vars.bin",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf021-r01/exchange/callback.bin",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf021-r01/exchange/route.bin",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf021-r01/offline-preflight.json",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/HARDWARE-PLAN.md",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-goal001-r06/released.json"
+    ],
+    "components": {
+      "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+      "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+      "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+      "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+      "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+    },
+    "component_provenance": {
+      "p4_app_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+      "emos_rom_sha256": "New independent full131072B rollback readback equals retained incominga25f",
+      "native_vdp_sha256": "Exact incoming application/touched-tail restoration and independent full-span readback",
+      "startup_sha256": "Fresh whole scheduler CLI/read/EXIT comparison; same45B setup-only file, no edit.",
+      "listener_sha256": "Fresh whole24753B canonical listener read/compare in scheduler admission; no replacement."
+    },
+    "operator_admission": {
+      "central_owner": "wolf3dorig",
+      "sole_hardware_operator": "wolf3dorig",
+      "parallel_target_access": false
+    },
+    "disposition": "Qualified finite WOLF-PERF-021 gap while Mech prepares diagnostic source; actual Mech90 clean release verified. Six uncapped ordinary-room original/cyan/combined/combined/cyan/original600-pose guests and seven INFO-only queries; exact matched7593 app-only install/current bootstrap/full1105920B85f9 restore/readback/fullcleanup/normalrelease. Frozen716input42783945 kit/actual host closure checked. No P4/EMOS/startup/listener/carrier change, timer/staticcontrol or replay. Actual Mech90 restored current baseline and fresh actualCLI/readEXIT/SAVE-only mode0/callback0/route0/wholefiles/inputneutral/offlineidle/freeUSB; no scheduler LOAD/RUN/reset/flash/PRTread. SDmounted"
+  },
+  "released": "2026-11-07T15:28:48.094530+00:00",
+  "release_observation": {
+    "schema": "olimex-bench-observation-v1",
+    "bench": "olimex",
+    "epoch": 1794065250.0512266,
+    "observer": "wolf3dorig",
+    "lease": "3158fddf326443eaad29a533d23bfd18",
+    "checks": {
+      "no_workload": true,
+      "no_transfer": true,
+      "no_serial_readers": true,
+      "no_reset_holders": true,
+      "cli_verified": true,
+      "input_ready_neutral": true,
+      "listener_offline": true,
+      "staged_job_idle": true,
+      "restoration_verified": true
+    },
+    "evidence": [
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/restore91/evidence/final-checks/state.json",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/restore91/evidence/final-checks/serial.bin",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/restore91/evidence/route-handback/final-route.bin",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/restore91/evidence/handback/observation.json",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/restore91/evidence/flash-restore/receipt.json"
+    ],
+    "components": {
+      "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+      "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+      "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+      "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+      "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+    },
+    "component_provenance": {
+      "p4_app_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+      "emos_rom_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+      "native_vdp_sha256": "Exact incoming application/touched-tail restoration and independent full-span readback",
+      "startup_sha256": "Fresh unchanged whole-file comparison in handback",
+      "listener_sha256": "Fresh unchanged whole-file comparison in handback"
+    },
+    "disposition": "New final rootCLI/input/idle/freeUSB observation; earlier same-custody route0/mode0/callback0 and exact app/tail restore/readback retained by original receipt, no intervening guest or route/mode change; startup/listener unchanged; SD mounted."
+  },
+  "next_request": {
+    "owner": "mechagon",
+    "task": "GOAL-001-IRQ-DIAG-R07",
+    "purpose": "PREPARING new exact observed IRQ case after actual90 host-guard failure; unchanged367/80fe and finitebounds; corrected collector regression/freeze pending",
+    "plan": "/Agon/mystuff/MechAgon/docs/tasks/GOAL-001/IRQ-DIAGNOSTIC-R07.md",
+    "notify_thread": "01a1a883-630e-7b52-85d8-6fbc07cc0ccb",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "request": "cbeb5e59f289",
+    "requested": "2026-11-07T15:05:10.994902+00:00"
+  }
+}

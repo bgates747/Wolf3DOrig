@@ -13,7 +13,7 @@ changed; exact source/target/producer evidence remains with each task.
 |Equal-full-height setup018|Actual87 draw25.137→25.247ms, difference0.438% versus3.134% control spread; rate unchanged; image+60B|No established gain or precise regression; retain qualified arm and resource costs|
 |Column chains019|Scalar ordering preserved; host room census avoids1045504/1199104 membership checks (87.19%); image+172B, selected native path1936B versus1344B|Individual timing unavailable: actual89 failed before any guest, then exact restoration/release|
 |Exact degree table015|Exact angle/output parity; image−2240B and resident data−2164B|Individual timing unavailable after pre-guest interruptions; included in021|
-|Combined021|Five supported units above compose correctly; exact source/target/real producers and supplemental ordered row-alias checks pass; image22572B (−1848B), data11184B, selected native path1936/4096B|Frozen six-run comparison versus original and cyan; actual91 started, result pending|
+|Combined021|Five supported units above compose correctly; exact source/target/real producers and supplemental ordered row-alias checks pass; image22572B (−1848B), data11184B, selected native path1936/4096B|Actual91 host SIGTERM during first control;600 original SD samples recovered, no candidate or comparison; exact restoration/release completed|
 |Sprite hoisting013|Room pooled+2.05% draw cost, actor-rich−0.8%; no rate change established|Smith explicitly requested review after sleep; no FPS-only rejection or automatic adoption|
 |Identical-post grouping020|Canonical room opportunity191864/4368126 texture reads (4.392%); all pixel stores remain, groups mostly width1|Source gate completed; defer harder implementation here, preserve near-wall/larger-view future opportunity|
 |Generic libgcc admission|Allocated44B metadata still violates existing package admission|No strip/guard workaround; supported local017 candidate is separate|
@@ -22,8 +22,10 @@ changed; exact source/target/producer evidence remains with each task.
 Actual89 failed input admission after exact timed-native installation, before
 any room/INFO query. Cause remains unknown; restoration85f9/readback/current
 bootstrap/full handback/release passed. Its zero-sample failure is preserved and
-never relabelled as a performance result. Actual91 is a distinct combined
-comparison, not an individual019 retry. It keeps the maintained one-shot boot
+never relabelled as a performance result. Actual91 was a distinct combined
+comparison, not an individual019 retry. Its first control SD validates24.750ms
+draw and30.0616fps; no combined speedup/regression can be inferred. The host
+signal sender/cause remains unknown, and no blind replay is selected. It keeps the maintained one-shot boot
 route, all guards, exact incoming restoration and MechAgon-first scheduling.
 
 Useful entry points: [PERF021 readiness](../WOLF-PERF-021/HARDWARE-READINESS.md),

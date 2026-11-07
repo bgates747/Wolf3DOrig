@@ -1,0 +1,32 @@
+{
+  "epoch": 1794065065.0677445,
+  "pid": 1430295,
+  "ppid": 1750,
+  "lease": "3158fddf326443eaad29a533d23bfd18",
+  "original_error": {
+    "error": "HostInterrupted(15)",
+    "next_dispatch_stopped": true,
+    "custody_retained": true,
+    "epoch": 1794064613.2023153
+  },
+  "original_run": {
+    "command": "RUN .",
+    "once": true,
+    "epoch": 1794064583.4257736
+  },
+  "original_guest_RAM": {
+    "base": 262144,
+    "bytes": 325309,
+    "end_exclusive": 587453,
+    "live_preserved": false,
+    "reason": "No actual returned CLI within original observation envelope; no SAVE/reset pretended before it."
+  },
+  "reset_ledger_before": {
+    "original_timed_image_p4_init": 1,
+    "original_timed_image_agon_reset": 1,
+    "original_timed_image_admitted": true,
+    "recovery_specific_attempts": 0
+  },
+  "no_suite_LOAD_RUN_getter_probe_or_replay": true,
+  "action": "ONE ordinary Agon recovery, actual CLI, preserve existing original SD only, exact incoming restoration/readback/fullhandback"
+}

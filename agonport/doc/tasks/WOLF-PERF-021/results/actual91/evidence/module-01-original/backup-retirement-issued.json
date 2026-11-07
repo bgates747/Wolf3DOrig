@@ -1,0 +1,8 @@
+{
+  "operation": "RECOVER3",
+  "path": "/test/wolf/perf021/r01/wolf3d.vdpl",
+  "previous_sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+  "target_sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+  "backup_sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+  "whole_target_get_verified": true
+}

@@ -18,7 +18,7 @@ No physical021 cohort or production default is selected by this source contract.
   select/freeze one useful uncapped matched physical contract/current tuple/
   exact rollback/host closure/actual producer bindings, then normal Mech-first
   admission. No blind replay, weaker guards or bench reservation from this plan.
-- [ ] WOLF-PERF-021-05 — Actual finite comparison, raw records and first-fault RAM
+- [x] WOLF-PERF-021-05 — Actual finite comparison, raw records and first-fault RAM
   preservation; exact full restoration/readback/handback/release, immediate
   actual-next notification. Report gain/zero/regression and resource costs.
 - [ ] WOLF-PERF-021-06 — Decide any later production/default change as its own
@@ -96,3 +96,9 @@ Distinct019 actual89 failed startup, restored/released with zero room samples.
 The separately selected combined-vs-cyan comparison is qualified and frozen:
 [HARDWARE-READINESS.md](HARDWARE-READINESS.md). Fresh grant remains required;
 no physical021 dispatch/result/default claim from offline readiness.
+
+Actual91 disposition: host SIGTERM during first originalRUN stopped the cohort.
+Original cleared-namespace SD validates600 control records, no candidate ran,
+no comparison/default claim. One standing recovery, exact restoration/readback/
+fullhandback and normal release completed. See [RESULT91.md](RESULT91.md).
+A later default decision remains unselected pending meaningful candidate timing.

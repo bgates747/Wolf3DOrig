@@ -1,0 +1,29 @@
+{
+  "grant": "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf021-r01/grant.json",
+  "url": "http://192.168.0.20",
+  "port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+  "ports": [
+    "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_E8:F6:0A:E2:E1:FE-if00"
+  ],
+  "entry_route": "legacy",
+  "central_owner": "wolf3dorig",
+  "operator": "wolf3dorig",
+  "no_pending_extender_target_commands": true,
+  "sole_operator_handoff": true,
+  "manifest": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/restore91/kit.json",
+  "retain_lease_after_test": false,
+  "posttest_disposition": "Exact incoming native/tail restore/full readback/full clean handback and normal release after finite cohort; no HOLD/new case",
+  "native_port": "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+  "all_ports": [
+    "/dev/serial/by-id/usb-1a86_USB_Serial-if00-port0",
+    "/dev/serial/by-id/usb-Espressif_USB_JTAG_serial_debug_unit_E8:F6:0A:E2:E1:FE-if00"
+  ],
+  "cleanup_only": {
+    "original_context": "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf021-r01/context.json",
+    "original_failure": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/hardware01/evidence/failure.json",
+    "no_suite_replay": true,
+    "original_live_RAM_unavailable": true,
+    "one_ordinary_recovery": true
+  }
+}
