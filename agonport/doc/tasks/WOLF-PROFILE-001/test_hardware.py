@@ -10,7 +10,7 @@ import qualify_guest as q
 
 class HardwareChecks(unittest.TestCase):
     def test_actual_producer_operands_and_no_mock(self):
-        binding = json.loads((h.T / 'build/hardware-guest02/receipt.json').read_text())
+        binding = json.loads((h.T / 'build/hardware-guest03/receipt.json').read_text())
         binding['source'] = str(Path(binding['guest']).parent)
         result = q.verify(binding)
         self.assertEqual(result['package_bytes'], 22572)
@@ -26,7 +26,7 @@ class HardwareChecks(unittest.TestCase):
         return b
 
     def test_wrong_info_opcode_rejected_in_actual_binary(self):
-        binding = json.loads((h.T / 'build/hardware-guest02/receipt.json').read_text())
+        binding = json.loads((h.T / 'build/hardware-guest03/receipt.json').read_text())
         binding['source'] = str(Path(binding['guest']).parent)
         raw = bytearray(Path(binding['guest']).read_bytes())
         at = q.address(binding, 'wp_hw_stack_packet')
@@ -71,7 +71,7 @@ class HardwareChecks(unittest.TestCase):
             self.assertTrue(json.loads((b.out / 'failure.json').read_text())['no_automatic_replay'])
 
     def test_result_requires_real_count_stack_timer_and_identical_resident_report(self):
-        binding = json.loads((h.T / 'build/hardware-guest02/receipt.json').read_text())
+        binding = json.loads((h.T / 'build/hardware-guest03/receipt.json').read_text())
         binding['source'] = str(Path(binding['guest']).parent)
         ram = bytearray(Path(binding['guest']).read_bytes())
         done = bytearray(32)

@@ -1607,3 +1607,11 @@ w3d_intermission_wait_started:
     dl 0
 w3d_intermission_old_next_extra:
     ds 4
+
+    .if W3D_RENDER_BACKEND
+; Owned package staging, disjoint from all live code/data above. The durable
+; builder checks the linked extent and application/stack boundary before use.
+w3d_vdplet_package_storage:
+    blkb W3D_VDPLET_PACKAGE_STORAGE_BYTES,0
+w3d_vdplet_package_storage_end:
+    .endif

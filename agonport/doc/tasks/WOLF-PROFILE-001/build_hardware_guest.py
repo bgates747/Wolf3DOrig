@@ -19,7 +19,7 @@ def once(text, old, new):
 
 
 def main(revision="hardware-guest01"):
-    assert revision in ("hardware-guest01", "hardware-guest02")
+    assert revision in ("hardware-guest01", "hardware-guest02", "hardware-guest03")
     out = T / "build" / revision
     src = out / "source"
     assert not out.exists(), "Preserve the frozen guest; select a new revision"
@@ -89,12 +89,13 @@ wp_hw_destination: dl 0
                        stdout=log, stderr=subprocess.STDOUT, check=True, timeout=120)
     binary = src / "profile.bin"
     listing = src / "wolf3d.lst"
+    storage = b.verify_package_storage(binary, listing, module.stat().st_size)
     assert 0x40000 + binary.stat().st_size < 0xa0000
     receipt = {"guest": str(binary), "guest_bytes": binary.stat().st_size,
                "guest_sha256": b.sha256(binary), "listing": str(listing),
                "listing_sha256": b.sha256(listing), "module": str(module),
                "module_sha256": b.sha256(module), "package_bytes": module.stat().st_size,
-               "package_limit": 0x20000, "frames": 250,
+               "package_limit": 0x20000, "package_storage": storage, "frames": 250,
                "native_mock": False, "extra_cue_hold": False, "info17": 2, "info_operation": 4,
                "inputs": {str(p.resolve()): b.sha256(p) for p in src.iterdir() if p.suffix in (".inc", ".asm")}}
     (out / "receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -107,7 +108,41 @@ def select_package(path: Path, size: int) -> None:
     if matches != [3]:
         raise SystemExit("wolf3d_vdplet_package.inc selector layout changed")
     lines[matches[0]] = f"W3D_VDPLET_PACKAGE_BYTES: equ {size}"
+    storage = [i for i, line in enumerate(lines)
+               if line.startswith("W3D_VDPLET_PACKAGE_STORAGE_BYTES:")]
+    if len(storage) != 1:
+        raise SystemExit("wolf3d_vdplet_package.inc storage selector changed")
+    lines[storage[0]] = f"W3D_VDPLET_PACKAGE_STORAGE_BYTES: equ {max(size, 4096)}"
     path.write_text("\n".join(lines) + "\n")
+
+
+def verify_package_storage(binary: Path, listing: Path, size: int) -> dict:
+    """Check linked staging storage and actual MOS/upload address operands."""
+    raw, text = binary.read_bytes(), listing.read_text()
+    assert 0 < size < 0x20000, "Package size outside client domain"
+    assert 0x40000 + len(raw) < 0xa0000, "Application exceeds reserved RAM domain"
+    labels = []
+    for label in ("w3d_vdplet_package_storage", "w3d_vdplet_package_storage_end"):
+        found = re.findall(r"^([0-9A-F]{6})[^\n]*\b" + label + r":", text, re.M)
+        assert len(found) == 1, "Missing owned package storage: " + label
+        labels.append(int(found[0], 16))
+    start, end = labels
+    assert 0x40000 <= start < end <= 0x40000 + len(raw)
+    capacity = max(size, 4096)  # zero-buffer construction reuses a full page.
+    assert end - start == capacity, "Package/scratch storage extent differs from producer"
+    assert raw[start-0x40000:end-0x40000] == bytes(capacity), "Storage overlaps live image"
+    pattern = (r"^([0-9A-F]{6}) ((?:[0-9A-F]{2} ){0,5}[0-9A-F]{2})\s+\d+\*?\s+"
+               r"ld (hl|de),(W3D_VDPLET_PACKAGE_ADDRESS)(\+1)?\s*$")
+    operands = []
+    for match in re.finditer(pattern, text, re.M):
+        address = int(match[1], 16)
+        value = start + bool(match[5])
+        encoded = bytes([0x21 if match[3] == "hl" else 0x11]) + value.to_bytes(3, "little")
+        assert bytes.fromhex(match[2]) == encoded, "Listing package address mismatch"
+        assert raw[address-0x40000:address-0x40000+4] == encoded, "Binary package address mismatch"
+        operands.append(dict(address=address, value=value, register=match[3]))
+    assert len(operands) == 5, "Missing package address producer operands"
+    return dict(start=start, end=end, bytes=capacity, package_bytes=size, operands=operands)
 
 
 def select_initial_level(path: Path, level: int) -> None:
@@ -271,7 +306,11 @@ def build(
         # explicitly supplied binary destination.
         listing = source / "wolf3d.lst"
         if listing.is_file():
+            if module is not None:
+                storage = verify_package_storage(temporary_output, listing, module.stat().st_size)
             shutil.copyfile(listing, output.with_suffix(".lst"))
+        elif module is not None:
+            raise SystemExit("Missing listing for package storage validation")
 
     receipt = {
         "backend": backend,
@@ -292,6 +331,7 @@ def build(
         "sha256": sha256(output),
     }
     if module is not None:
+        receipt["package_storage"] = storage
         packaged_module = TARGET / "wolf3d.vdpl"
         # A previously packaged module is a valid explicit input for a fresh
         # application build. Avoid SameFileError when source and destination

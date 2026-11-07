@@ -1,6 +1,9 @@
 """Verify the real MOS read/upload/VDPL LOAD producer against its module."""
 from pathlib import Path
-import hashlib,json,re
+import hashlib,json,re,importlib.util
+_builder_path=Path(__file__).resolve().parents[4]/'src/asm/wolf3d/scripts/build.py'
+_spec=importlib.util.spec_from_file_location('storage_builder',_builder_path)
+_builder=importlib.util.module_from_spec(_spec);_spec.loader.exec_module(_builder)
 sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 def equ(source,name):
@@ -20,6 +23,8 @@ def verify(binding):
     client=(source/'wolf3d_vdplet_client.inc').read_text()
     assert re.search(r'ld hl,W3D_VDPLET_PACKAGE_BYTES\s*\n\s*ld \(@package_bytes\),hl',client)
     assert re.search(r'xor a\s*\n\s*ld \(@package_bytes\+3\),a',client)
+    storage=_builder.verify_package_storage(Path(binding['guest']),Path(binding['listing']),size)
+    assert storage==binding['package_storage'], 'Linked package storage identity'
     listing=Path(binding['listing']).read_text();binary=Path(binding['guest']).read_bytes();operands=[]
     pattern=r'^([0-9A-F]{6}) ((?:[0-9A-F]{2} ){0,5}[0-9A-F]{2})\s+\d+\*?\s+ld (hl|bc|de),(W3D_VDPLET_PACKAGE_BYTES|W3D_VDPLET_PACKAGE_LIMIT)\b'
     for match in re.finditer(pattern,listing,re.M):
@@ -50,7 +55,7 @@ def verify(binding):
     assert 'call wp_test_hold' not in profile and 'wp_test_read16' not in profile
     assert 'call w3d_poll_keys\n    call wp_test_steer' in asm
     assert 'call w3d_run_gameplay_session' in (source/'selftest.inc').read_text()
-    return dict(passed=True,package_bytes=size,guest_sha256=sha(binding['guest']),listing_sha256=sha(binding['listing']),operands=operands,stack_labels=stack)
+    return dict(passed=True,package_bytes=size,package_storage=storage,guest_sha256=sha(binding['guest']),listing_sha256=sha(binding['listing']),operands=operands,stack_labels=stack)
 
 
 
