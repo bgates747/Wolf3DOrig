@@ -17,11 +17,11 @@ normal serial Pi compilation and actual Extender grants. No default adoption.
 - [x] WOLF-PERF-016-03 — Independent full-background byte/guard/mask oracle,
   renderer/module/failure/600pose equivalence, actual package/control/flags/
   providers/nested-stack/resource and exact real guest-size operand qualification.
-- [ ] WOLF-PERF-016-04 — Freeze useful finite uncapped matched cases/current
+- [x] WOLF-PERF-016-04 — Freeze useful finite uncapped matched cases/current
   tuple/rollback/host closure; normal opportunistic fresh bench admission.
-- [ ] WOLF-PERF-016-05 — Stop first fault, preserve RAM before LOAD, exact
+- [x] WOLF-PERF-016-05 — Stop first fault, preserve RAM before LOAD, exact
   restoration/readback/fullcleanup/release and actual-next notification.
-- [ ] WOLF-PERF-016-06 — Publish/share measured result, including no FPS change.
+- [x] WOLF-PERF-016-06 — Publish/share measured result, including no FPS change.
 
 PRE-CODE gate: existing fill_rect/fill_span support the exact needed byte writes.
 For copied linear output, overwrite removes the hidden cyan contribution. For

@@ -12,7 +12,7 @@ def main():
         archived=snapshots[p];assert archived['sha256']==d and sha(archived['snapshot'])==d,p
         # Checklists/preparation witnesses may be disposed after actual release;
         # the exact selected bytes survive independently in the hash archive.
-    release=read(T/'results/actual81/released78.json');assert release['generation']==81 and release['released']
+    release=read(T/'results/actual81/released81.json');assert release['generation']==81 and release['released']
 
     assert read(E/'complete.json')['passed'] and read(E/'complete.json')['restored']
     assert (E/'flash-restore/read.bin').read_bytes()==Path(kit['restore']).read_bytes()
@@ -63,7 +63,7 @@ def main():
     result=dict(passed=True,schema='wolf-perf016-actual81',bench_generation=81,synthetic_pacing=False,human_optical_confirmation=False,frames=2400,cases=cases,comparisons=comparisons,resource_probes=probes,
         original_native_restored=True,restore_sha256=sha(E/'flash-restore/read.bin'),final_observation=final,
         qualification='Physical per-frame ordered completion timestamps and inclusive nativeCCOUNT; nominal PRT/MOS/configured240MHz, no external oscillator/optical scanout calibration or exclusiveCPU attribution. Source/host equivalence separate; no human visual claim. Matched ordinary room ABBA only; other scenes remain unmeasured.')
-    result.update(bench_released=True,release_receipt=str((T/'results/actual81/released78.json').resolve()),decision='Retain the exact measured candidate and control; evaluate draw time, presentation cadence and resource cost separately. Unchanged FPS alone is not a rejection criterion; no silent default adoption.',input_snapshots=str((B/'frozen-inputs/index.json').resolve()))
+    result.update(bench_released=True,release_receipt=str((T/'results/actual81/released81.json').resolve()),decision='Retain the exact measured candidate and control; evaluate draw time, presentation cadence and resource cost separately. Unchanged FPS alone is not a rejection criterion; no silent default adoption.',input_snapshots=str((B/'frozen-inputs/index.json').resolve()))
     (T/'RESULT81.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(comparisons,indent=2))
 if __name__=='__main__':main()

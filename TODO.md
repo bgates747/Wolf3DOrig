@@ -26,15 +26,6 @@ Oryx is down. Performance runs measure maximum uncapped presentation rate.
   after Smith has slept, even without an FPS gain. Candidate/results retained;
   weigh draw intervals, stack/code cost and concurrent-resource limits as well.
 
-## WOLF-PERF-016 — Covered cyan-fill removal (next goal arm)
-
-[Pre-code contract](agonport/doc/tasks/WOLF-PERF-016/PLAN.md). Higher concrete
-work reduction moves this before PERF014/015; current PERF013 stays immutable.
-
-- [ ] WOLF-PERF-016-04 — Current finite uncapped kit and normal fresh admission.
-- [ ] WOLF-PERF-016-05 — Matched test, RAM preservation, exact restore/cleanup/release.
-- [ ] WOLF-PERF-016-06 — Publish/share timing and actual limits.
-
 ## WOLF-PERF-017 — Existing local divider narrow fast subset (later)
 
 [Pre-code contract](agonport/doc/tasks/WOLF-PERF-017/PLAN.md). Generic PERF008
