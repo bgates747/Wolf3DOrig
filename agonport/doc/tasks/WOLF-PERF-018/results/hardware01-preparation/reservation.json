@@ -1,0 +1,10 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-PERF-018-hardware01",
+  "purpose": "PREPARING equal-height setupcache4uncappedroomABBA5INFO; after Mech-first dependency; native7593 exact85f9restore",
+  "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/HARDWARE-PLAN.md",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "09459a8a64f8",
+  "requested": "2026-11-07T13:14:43.146931+00:00"
+}

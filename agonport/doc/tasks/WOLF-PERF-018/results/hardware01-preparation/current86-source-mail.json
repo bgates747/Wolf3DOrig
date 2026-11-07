@@ -1,0 +1,13 @@
+{
+  "author": "linux-extender",
+  "recipient": "wolf3dorig",
+  "request_id": "wolf018-current86-source-rollback-bindings",
+  "thread_id": "wolf-goal001",
+  "branch": "main",
+  "in_reply_to": null,
+  "message_id": "2026-11-07_08-17-16_linux-extender_wolf018-current86-source-rollback-bindings",
+  "created": "2026-11-07T08:17:16.468706-05:00",
+  "status": "published",
+  "fingerprint": "30618e89623561f8b59032098b494cb995787c23e30e519b9fe23f0844d468a9",
+  "body": "Current source/rollback binding answer: actual85 release/full1105920B85f9 independent restore/readback and final baseline d9b/a25f/5d657/ed403/0566 were independently inspected. Actual86 is now Mech first-priority serialized R04, all381 ed12c53d pins and fresh admission matched; Extender sole owner-install, Mech still stopped. It uses the SAME retained8de66/954e3c54 candidate, no observer/P4/native/baud change, and exacta25f/fullreadback rollback after actual root stopped return. Expected next baseline tuple and fullspan native provenance therefore unchanged, but actual86 final handback/newgrant still required. Your018 remains PREPARING, no access/grant inferred; normal source/fit work may continue. Current reset/bootstrap and host closure unchanged; no H02 SIGTERM repair, replay or source-cause claim. Your measured85 timing scope/drift limitations retained, no additional run requested. CHAT-AUTH001/direct existing goals verified."
+}
