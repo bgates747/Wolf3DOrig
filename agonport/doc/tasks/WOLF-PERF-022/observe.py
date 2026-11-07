@@ -22,7 +22,26 @@ def assert_owner(lease, resource):
                    check=True, stdout=subprocess.DEVNULL, timeout=15)
 
 
-def main(folder, lease, resource):
+def bind_context(context, record):
+    """Rejoin the same immutable kit and real grant, without device imports."""
+    c = session.load(context)
+    manifest = Path(c['manifest'])
+    kit = session.load(manifest)
+    grant = session.load(c['grant'])
+    if 'active' in grant:
+        grant = grant['active']
+    assert grant['owner'] == 'wolf3dorig'
+    assert grant['lease'] == record['lease']
+    assert grant['task'] == kit['task'] == 'WOLF-PERF-022-hardware01'
+    assert grant['request'] == kit['request'] == 'dfe8c5bda3b7'
+    assert grant['entry_observation']['components'] == kit['incoming_components']
+    assert hashlib.sha256(manifest.read_bytes()).hexdigest() == record['kit_sha256']
+    assert manifest.resolve() == Path(__file__).resolve().parent / 'build/hardware01/kit.json'
+    for name, digest in kit['inputs'].items():
+        assert hashlib.sha256(Path(name).read_bytes()).hexdigest() == digest, name
+
+
+def main(folder, lease, resource, context=None):
     assert sys.executable == '/usr/bin/python3' and hasattr(os, 'pidfd_open')
     folder = Path(folder).resolve()
     record = session.load(folder / 'session.json')
@@ -31,6 +50,9 @@ def main(folder, lease, resource):
     assert target['uid'] == os.getuid() and target['pid'] != os.getpid()
     assert session.identity(target['pid']) == target
     assert session.tracer(target['pid']) == 0, 'Controller already traced'
+    if resource == 'bench':
+        assert context is not None, 'Actual context is mandatory'
+        bind_context(context, record)
     assert_owner(lease, resource)
     # pidfd remains tied to this original process, even if its PID is reused.
     fd = os.pidfd_open(target['pid'])
@@ -98,5 +120,6 @@ if __name__ == '__main__':
     parser.add_argument('--folder', type=Path, required=True)
     parser.add_argument('--lease', required=True)
     parser.add_argument('--resource', choices=('bench', 'compiler'), default='bench')
+    parser.add_argument('--context', type=Path)
     a = parser.parse_args()
-    main(a.folder, a.lease, a.resource)
+    main(a.folder, a.lease, a.resource, a.context)
