@@ -1,0 +1,11 @@
+{
+  "arm": "candidate",
+  "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/guests01/candidate/sprites/source",
+  "guest": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/guests01/candidate/sprites/source/wolf3d.bin",
+  "listing": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/guests01/candidate/sprites/source/wolf3d.lst",
+  "module": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/module/wolf_perf.vdpl",
+  "module_sha256": "972f359742bbc92668f64fd547b85d5e55f846d4c9b089fd023769130fb67ced",
+  "package_bytes": 24620,
+  "package_limit": 24621,
+  "remote_name": "b-candidate-sprites.bin"
+}

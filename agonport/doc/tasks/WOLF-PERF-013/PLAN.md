@@ -9,14 +9,14 @@ Olimex checkout only. Oryx is down. No default adoption in this arm.
 - [x] WOLF-PERF-013-03 — Qualify independent sprite output, leases/failures,
   masks/clipping/painter ties, whole-frame/state equivalence, exact target control
   reproduction, compiler/providers/sections and complete stack/resource limits.
-- [ ] WOLF-PERF-013-04 — Bind actual per-arm producer sizes/operands; freeze a
+- [x] WOLF-PERF-013-04 — Bind actual per-arm producer sizes/operands; freeze a
   finite matched uncapped physical cohort with sprite-rich scene and original
   rotating-room control. Current incoming tuple/rollback/launcher independently
   joined before actual scheduler admission. No capped frame-rate surrogate.
-- [ ] WOLF-PERF-013-05 — Run opportunistically after MechAgon, stop first
+- [x] WOLF-PERF-013-05 — Run opportunistically after MechAgon, stop first
   unexpected result, preserve resident RAM before LOAD; exact restore/readback,
   complete cleanup/release and immediate handoff after finite tranche.
-- [ ] WOLF-PERF-013-06 — Publish and share positive/negative results and limits.
+- [x] WOLF-PERF-013-06 — Publish and share positive/negative results and limits.
 
 Baseline is PERF009/build/r01/candidate, module SHA256
 `a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656`,24420B.

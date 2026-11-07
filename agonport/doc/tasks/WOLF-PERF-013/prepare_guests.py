@@ -11,7 +11,7 @@ def main():
     kit=json.loads((T.parent/'WOLF-PERF-011/build/hardware02/kit.json').read_text())
     level=Path(kit['stage']['level_00/state_easy.w3l']).read_bytes()
     at=int.from_bytes(level[38:40],'little')
-    assert all(level[at+x*64+y]==0 for x,y in POINTS),'Sprite location not on retained floor'
+    assert all(level[at+y*64+x]==0 for x,y in POINTS),'Sprite location not on retained floor'
     so=int.from_bytes(level[28:30],'little');count=int.from_bytes(level[10:12],'little')
     assert any(int.from_bytes(level[so+i*6+2:so+i*6+4],'little',signed=True)==14 for i in range(count))
     for arm in ('original','candidate'):

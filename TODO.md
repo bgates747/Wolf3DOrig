@@ -11,7 +11,6 @@ the current dated development log, then remove it from this file.
 unattended/non-visible testing; MechAgon has first bench priority, Wolf second.
 Oryx is down. Performance runs measure maximum uncapped presentation rate.
 
-- [ ] WOLF-GOAL-001-03 — Sprite-column invariant/occlusion hoisting.
 - [ ] WOLF-GOAL-001-04 — Repeated texture-group scan reduction.
 - [ ] WOLF-GOAL-001-05 — Supported faster division-provider dependency.
 - [ ] WOLF-GOAL-001-06 — Trig tables/original wall-post/scaling evaluation.
@@ -20,15 +19,6 @@ Oryx is down. Performance runs measure maximum uncapped presentation rate.
 - [ ] WOLF-GOAL-001-09 — Opportunistic matched uncapped hardware cohorts.
 - [ ] WOLF-GOAL-001-10 — Exact restoration, cleanup, release and handoffs.
 - [ ] WOLF-GOAL-001-11 — Publish/share final results and actual limits.
-
-## WOLF-PERF-013 — Sprite-column invariant hoisting
-
-[Plan](agonport/doc/tasks/WOLF-PERF-013/PLAN.md) and
-[build result](agonport/doc/tasks/WOLF-PERF-013/BUILD-RESULT.md).
-
-- [ ] WOLF-PERF-013-04 — Final current hardware kit, producer and readiness freeze.
-- [ ] WOLF-PERF-013-05 — Finite matched uncapped cases, exact restore/release.
-- [ ] WOLF-PERF-013-06 — Publish/share actual result and limits.
 
 ## WOLF-PERF-016 — Covered cyan-fill removal (next goal arm)
 
