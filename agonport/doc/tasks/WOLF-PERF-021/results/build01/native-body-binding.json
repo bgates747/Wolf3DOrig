@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "units": {
+    "original": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/original/native-source/wolf3d_module.cpp",
+      "body_sha256": "0e1f1b84899d733ad38fc9d4b1987e07970ae3d5bb7891b7b35a88647e713d44",
+      "equal_qualified17_body": true
+    },
+    "candidate": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/native-source/wolf3d_module.cpp",
+      "body_sha256": "f6a52d2e1f5e91d5042d37bbba3529a829c20b6f92da18002fb89ea30ad72de7",
+      "equal_qualified17_body": true
+    }
+  },
+  "fallback_and_signed_wrapper_equal": true
+}

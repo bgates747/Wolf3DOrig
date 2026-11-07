@@ -1,0 +1,8 @@
+{
+  "error": "Overstrict full production/native module equality; retained native timing wrapper is an intentional baseline difference",
+  "compiler_started": false,
+  "target_access": false,
+  "renderer_equal": true,
+  "numeric_bodies_equal": true,
+  "correction": "Retain renderer equality and exact per-folder inverse helper17 proof, preserving each original timing/entry wrapper"
+}

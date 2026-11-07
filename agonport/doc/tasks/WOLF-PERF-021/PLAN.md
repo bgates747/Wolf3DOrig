@@ -5,12 +5,12 @@ correctness qualification. Prepare it offline while MechAgon88 runs. Preserve
 queued019's complete independent chain/trig cohort and all its549 input bytes.
 No physical021 cohort or production default is selected by this source contract.
 
-- [ ] WOLF-PERF-021-01 — Freeze exact baseline, contributing units, compatibility,
+- [x] WOLF-PERF-021-01 — Freeze exact baseline, contributing units, compatibility,
   alias/order/lifetime/resource limits and composition oracles before code.
-- [ ] WOLF-PERF-021-02 — Compose only the five named qualified local changes into
+- [x] WOLF-PERF-021-02 — Compose only the five named qualified local changes into
   a separate candidate, with source-unit receipts and independently reproduced
   a926 control. Retain all original and individual-arm artifacts/results.
-- [ ] WOLF-PERF-021-03 — Run meaningful combined-source scalar/alias/error/mask/
+- [x] WOLF-PERF-021-03 — Run meaningful combined-source scalar/alias/error/mask/
   numerical/trig/renderer/module/600-pose oracles; exact target safe flags/provider/
   code/sections/nested-stack/data/image and real per-arm producers. Fail closed
   on any mismatch. Do not infer combined correctness/resources by addition.
@@ -88,3 +88,6 @@ MechAgon first; offline work neither holds nor contacts the bench. A later physi
 contract requires fresh stopped sole-operator handoff and full actual component/
 rollback bindings. All performance runs are uncapped; final submission/completion
 and presentation cadence remain separate from draw and clock/source counts.
+
+Source/target/producer result: [BUILD-RESULT.md](BUILD-RESULT.md). No physical
+021 contract/default selected; running019 and its549 input bytes remain intact.

@@ -892,3 +892,7 @@ default-cutover claims.
 - [x] WOLF-PERF-020 source/domain/opportunity gate: canonical-room conditional
   wall-read opportunity4.392%, stores unchanged. Defer implementation here; retain
   near-wall/larger-viewport follow-up. See WOLF-PERF-020/CENSUS-RESULT.md.
+
+- [ ] WOLF-PERF-021 combined8d3d19 candidate qualified,22572B (-1848). Await
+  independent019 outcome, then a separately frozen useful uncapped physical
+  comparison and any later coherent default decision. No timing win claimed.
