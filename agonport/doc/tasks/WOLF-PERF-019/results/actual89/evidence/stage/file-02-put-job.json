@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 3305208093,
+    "boot": 1727053533,
+    "operation": "put",
+    "remote": "/test/wolf/perf019/r01/sfx.agnb",
+    "activate": true,
+    "size": 261956,
+    "destination": null,
+    "started": 1794061756.5046442,
+    "result": {
+      "protocol": 1,
+      "boot": 1727053533,
+      "id": 3305208093,
+      "phase": 4,
+      "bytes": 261956,
+      "size": 261956,
+      "records": 1240,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 536986,
+      "mainboard_us": 10684904,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 11.30975604057312,
+      "http_upload_s": 0.5620439869817346
+    },
+    "delivered": true,
+    "http_upload_s": 0.5620439869817346,
+    "finished": 1794061767.8144002
+  }
+}

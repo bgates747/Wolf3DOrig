@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 2520174831,
+    "boot": 1727053533,
+    "operation": "put",
+    "remote": "/test/wolf/perf019/r01/hud.agnb",
+    "activate": true,
+    "size": 269832,
+    "destination": null,
+    "started": 1794061733.5300922,
+    "result": {
+      "protocol": 1,
+      "boot": 1727053533,
+      "id": 2520174831,
+      "phase": 4,
+      "bytes": 269832,
+      "size": 269832,
+      "records": 1277,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 553556,
+      "mainboard_us": 10984031,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 11.83420729637146,
+      "http_upload_s": 0.5780393279856071
+    },
+    "delivered": true,
+    "http_upload_s": 0.5780393279856071,
+    "finished": 1794061745.3642995
+  }
+}

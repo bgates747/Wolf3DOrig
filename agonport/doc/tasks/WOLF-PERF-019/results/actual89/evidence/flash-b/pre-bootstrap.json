@@ -1,0 +1,8 @@
+{
+  "label": "b",
+  "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+  "verified_by": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/build/hardware01/evidence/entry/startup.bin",
+  "unchanged_since_entry": true,
+  "boot_source_sha256": "d04f18ee229b4eca6c7134f8ba1efaa91edc5aebccc6b183b6ab4656c526ea83",
+  "p4_build": "net-003-r02-b2026-11-06-09-03-07Z"
+}

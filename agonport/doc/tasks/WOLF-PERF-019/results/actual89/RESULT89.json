@@ -1,0 +1,42 @@
+{
+  "benchmark_passed": false,
+  "original_suite_stopped": true,
+  "frames": 0,
+  "room_guests": 0,
+  "resource_probes": 0,
+  "cause": "Agon boot/input admission deadline after exact timed-native installation and current matched P4 initialization; reason0/readyfalse does not establish a root cause",
+  "original_error": {
+    "error": "RuntimeError('Agon admission failed; no retry/RUN')",
+    "next_dispatch_stopped": true,
+    "custody_retained": true,
+    "epoch": 1794062148.6330893
+  },
+  "original_install_full_readback_verified": true,
+  "original_failure_RAM_preserved": false,
+  "RAM_limit": "No guest was loaded; original remote input unready. No original SAVE/CLI or guest RAM receipt is invented. Cleanup raw state is post-restoration/post-bootstrap.",
+  "cleanup_passed": true,
+  "restore_bytes": 1105920,
+  "restore_sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de",
+  "cleanup_context_byte_identical_kit": true,
+  "cleanup_did_not_invoke_suite": true,
+  "reset_ledger": {
+    "original_timed_image": {
+      "p4_init_resets": 1,
+      "agon_resets": 1,
+      "admission": false
+    },
+    "cleanup_incoming_image": {
+      "p4_init_resets": 1,
+      "agon_resets": 1,
+      "admission": true
+    },
+    "additional_recovery_attempts": 0
+  },
+  "bench_released": true,
+  "release": "2026-11-07T14:45:59.234980+00:00",
+  "fresh_release_seconds": 44.96961975097656,
+  "original_selected_inputs": 549,
+  "source_and_qualified_modules_retained": true,
+  "performance_claim": false,
+  "independent_chains_trig_timing_still_unmeasured": true
+}

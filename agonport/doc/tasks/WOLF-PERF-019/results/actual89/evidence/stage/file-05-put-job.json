@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 3204597148,
+    "boot": 1727053533,
+    "operation": "put",
+    "remote": "/test/wolf/perf019/r01/level_00/state_easy.w3l",
+    "activate": true,
+    "size": 13814,
+    "destination": null,
+    "started": 1794061882.3345754,
+    "result": {
+      "protocol": 1,
+      "boot": 1727053533,
+      "id": 3204597148,
+      "phase": 4,
+      "bytes": 13814,
+      "size": 13814,
+      "records": 70,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 39450,
+      "mainboard_us": 1154842,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 1.3509306907653809,
+      "http_upload_s": 0.06354971800465137
+    },
+    "delivered": true,
+    "http_upload_s": 0.06354971800465137,
+    "finished": 1794061883.685506
+  }
+}

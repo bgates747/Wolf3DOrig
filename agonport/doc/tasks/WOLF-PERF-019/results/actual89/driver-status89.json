@@ -1,0 +1,13 @@
+{
+  "original": {
+    "pid": 1415850,
+    "exec_session": 76691,
+    "observed_exit_code": 1
+  },
+  "cleanup": {
+    "pid": 1418333,
+    "exec_session": 50170,
+    "observed_exit_code": 0
+  },
+  "source": "Original foreground write_stdin terminal results; all original actor children joined before cleanup/release"
+}

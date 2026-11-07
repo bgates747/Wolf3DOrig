@@ -16,9 +16,9 @@ normal serial Pi compilation and actual exclusive Extender grants only.
 - [x] WOLF-PERF-019-04 — Count actual skipped membership work separately from
   timing; select/freeze a useful finite uncapped physical comparison only after
   correctness, nested-stack and current component/host/producer checks pass.
-- [ ] WOLF-PERF-019-05 — Normal fresh grant, bounded run, first-fault/RAM
+- [x] WOLF-PERF-019-05 — Normal fresh grant, bounded run, first-fault/RAM
   preservation, exact restoration/readback/fullcleanup/release/next-owner notice.
-- [ ] WOLF-PERF-019-06 — Publish costs/gain/zero/regression and actual limits;
+- [x] WOLF-PERF-019-06 — Publish costs/gain/zero/regression and actual limits;
   no automatic default adoption or source combination.
 
 ## Pre-code unit compatibility
@@ -65,4 +65,7 @@ boundaries remain explicit in WOLF-GOAL-001/WALL-POST-DESIGN.md.
 
 Qualified source/target/host/producer result: [BUILD-RESULT.md](BUILD-RESULT.md).
 Separate physical01 selection and qualified freeze: [HARDWARE-READINESS.md](HARDWARE-READINESS.md).
-No physical019 result yet; actual018 inputs/results remain unchanged.
+Actual89 stopped before any room/probe at startup admission. Exact restoration,
+full handback/release and the failed-cohort disposition are complete:
+[RESULT89.md](RESULT89.md). Independent chain/trig timing remains unmeasured;
+no automatic replay or performance/default claim. Actual018 is unchanged.

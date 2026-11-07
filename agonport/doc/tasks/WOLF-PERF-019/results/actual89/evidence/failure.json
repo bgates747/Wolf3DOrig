@@ -1,0 +1,6 @@
+{
+  "error": "RuntimeError('Agon admission failed; no retry/RUN')",
+  "next_dispatch_stopped": true,
+  "custody_retained": true,
+  "epoch": 1794062148.6330893
+}

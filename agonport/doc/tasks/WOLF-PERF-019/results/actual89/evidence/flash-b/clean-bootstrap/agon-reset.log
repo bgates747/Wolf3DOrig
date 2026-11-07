@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/Agon/mystuff/agon-extender/scripts/reset_agon_usb.py", line 92, in <module>
+    main()
+    ~~~~^^
+  File "/Agon/mystuff/agon-extender/scripts/reset_agon_usb.py", line 87, in main
+    after = wait_boot(args.verify_url, before["boot"], args.verify_timeout)
+  File "/Agon/mystuff/agon-extender/scripts/reset_agon.py", line 35, in wait_boot
+    raise TimeoutError(f'Agon boot/connectivity verification deadline exceeded: {last}')
+TimeoutError: Agon boot/connectivity verification deadline exceeded: {'protocol': 1, 'boot': 2876389684, 'session': 0, 'sequence': 0, 'emitted': 0, 'accepted': 0, 'discarded': 0, 'pending': 0, 'held': 0, 'locale': 1, 'ready': False, 'physical_neutral': True, 'caps': False, 'reason': 0}

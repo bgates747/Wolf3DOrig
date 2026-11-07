@@ -1,0 +1,13 @@
+{
+  "schema": "wolf-host-launch-v1",
+  "epoch": 1794061704.7301645,
+  "pid": 1415850,
+  "ppid": 1750,
+  "signals": [
+    "SIGTERM",
+    "SIGINT",
+    "SIGHUP"
+  ],
+  "target_action": false,
+  "detached": false
+}

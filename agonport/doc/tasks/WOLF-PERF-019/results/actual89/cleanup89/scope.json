@@ -1,0 +1,11 @@
+{
+  "cleanup_only": true,
+  "epoch": 1794062582.1992207,
+  "lease": "1e6055eea0224fa6b557752484206782",
+  "no_pre_restore_reset": true,
+  "no_suite_guest_probe_LOAD_or_replay": true,
+  "original_failure_preserved": true,
+  "no_guest_RAM_claim": true,
+  "startup_listener_unchanged_since_original_read": true,
+  "action": "Exact incoming native/tail restore/readback FIRST, one current matched bootstrap/fullhandback then STOP/release"
+}

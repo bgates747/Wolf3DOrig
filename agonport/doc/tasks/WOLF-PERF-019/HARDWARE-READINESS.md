@@ -57,3 +57,11 @@ Whole native/tail independent readback, rawmode0/callback0/route0/rootCLI/whole
 startup-listener/input-neutral/offline-idle/freeports/all actors joined remain
 required. Leave SD mounted and notify actual-next before offline reporting.
 No physical timing result or actual native fast-path hit count is inferred.
+
+## Actual89 disposition
+
+This historical frozen selection was attempted once under actual89 and stopped
+at native startup admission before any room or INFO probe. Exact restoration/
+readback, fresh complete handback and normal release passed. See
+[RESULT89.md](RESULT89.md). The549-input kit and its archived bytes remain
+unchanged; neither chain nor trig timing was obtained. No retry is selected.
