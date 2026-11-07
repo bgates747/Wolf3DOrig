@@ -43,6 +43,35 @@ blind removal of fences, hidden-only draw rate or a private Canvas/timer import.
 No such new physical axis is selected here. Exact renderer work reduction and
 uncapped visible output remain the current practical candidates.
 
+## Existing actual81 records: same-clock phase check
+
+The measured cyan-fill correction reduced inclusive native drawing time by
+13.7%, while completed presentation remained about30.06fps. An additional
+offline check uses only the already-retained guest-clock records: exclude the
+first phase row and compare599 successive presentations per run. There is no
+new target observer or subtraction between guest milliseconds and CCOUNT.
+
+| Run | Reply wait ms | Presentation/fence ms | Interval counts,33ms /34ms |
+|---|---:|---:|---:|
+| A first |25.411|5.142|437 /162|
+| Cyan correction first |22.528|8.037|437 /162|
+| Cyan correction second |22.339|8.162|438 /161|
+| A last |26.232|4.274|437 /162|
+
+Within each run, reply wait and presentation/fence are negatively associated
+(correlation −0.785 to −0.826; fitted descriptive slope −0.808 to −0.846).
+The unchanged33/34ms interval distribution and compensating phase movement
+strengthen the existing observation that work reductions can leave cadence
+unchanged. They do not identify a second VBlank, receiver scheduling, serial
+cost, a fence defect, exclusive CPU usage or power savings. A conditional fit
+is descriptive; no timing model or cause has been established.
+
+[Reproducible offline analysis](analyze_plateau81.py) and
+[exact input pins/output](PRESENTATION-81-PHASES.json) retain all four cases.
+The599-interval steady rate differs slightly from the whole600-frame duration
+reported for actual81 because the initial phase is excluded here. The original
+actual81 result remains unchanged.
+
 [Source pins and existing raw-report joins](PRESENTATION-SOURCE-PINS.json),
 [owner advice](/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-034/WOLF-ADVICE-2026-11-07.md),
 [reopened sprite discussion](../WOLF-PERF-013/REVISIT.md).

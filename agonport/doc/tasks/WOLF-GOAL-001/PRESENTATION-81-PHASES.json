@@ -1,0 +1,77 @@
+{
+  "passed": true,
+  "scope": "Offline actual81 same nominal1ms guest clock only; conditional association not causal/exclusive CPU attribution.",
+  "cases": [
+    {
+      "case": "01-vdplet-room",
+      "phase_rows": 599,
+      "excluded_initial_phase_row": true,
+      "wait_ms": 25.41068447412354,
+      "present_fence_ms": 5.141903171953255,
+      "active_ms": 33.26043405676127,
+      "within_run_fence_vs_wait_slope": -0.8432099063435358,
+      "within_run_correlation": -0.825528229995992,
+      "presentation_interval_histogram": {
+        "33": 437,
+        "34": 162
+      },
+      "interval_count": 599,
+      "steady_fps_nominal_prt": 30.056701289578
+    },
+    {
+      "case": "02-vdplet-room",
+      "phase_rows": 599,
+      "excluded_initial_phase_row": true,
+      "wait_ms": 22.52754590984975,
+      "present_fence_ms": 8.036727879799667,
+      "active_ms": 33.26544240400668,
+      "within_run_fence_vs_wait_slope": -0.8077475892227148,
+      "within_run_correlation": -0.8078566741632177,
+      "presentation_interval_histogram": {
+        "33": 437,
+        "34": 162
+      },
+      "interval_count": 599,
+      "steady_fps_nominal_prt": 30.056701289578
+    },
+    {
+      "case": "03-vdplet-room",
+      "phase_rows": 599,
+      "excluded_initial_phase_row": true,
+      "wait_ms": 22.33889816360601,
+      "present_fence_ms": 8.161936560934892,
+      "active_ms": 33.26043405676127,
+      "within_run_fence_vs_wait_slope": -0.8334459251980595,
+      "within_run_correlation": -0.7854454451686974,
+      "presentation_interval_histogram": {
+        "33": 438,
+        "34": 161
+      },
+      "interval_count": 599,
+      "steady_fps_nominal_prt": 30.058209554395823
+    },
+    {
+      "case": "04-vdplet-room",
+      "phase_rows": 599,
+      "excluded_initial_phase_row": true,
+      "wait_ms": 26.23205342237062,
+      "present_fence_ms": 4.273789649415693,
+      "active_ms": 33.26878130217028,
+      "within_run_fence_vs_wait_slope": -0.8462767408331061,
+      "within_run_correlation": -0.7963187768147039,
+      "presentation_interval_histogram": {
+        "33": 437,
+        "34": 162
+      },
+      "interval_count": 599,
+      "steady_fps_nominal_prt": 30.056701289578
+    }
+  ],
+  "inputs": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/results/actual81/01-vdplet-room/samples.csv": "6ab436dbc02dd6d5f5d37b99d2fca572c74529d809219c61e43025be12938849",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/results/actual81/02-vdplet-room/samples.csv": "3462059816878dec128ade152f4bcad61a17052c54184a9501db547362466d74",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/results/actual81/03-vdplet-room/samples.csv": "b6ae844695300f9d6fb7badf12ade1c742faab2891dac6e3b7ae40104e973c58",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/results/actual81/04-vdplet-room/samples.csv": "aecfbb83efccbae6bd5ab527fbc65e7d53015c8040d0199622207a4d1898bb75"
+  },
+  "limits": "Combined presentation includes C3, ordered-fence query and serial handling. Native CCOUNT is not subtracted from guest ms. No new target observer, resource, model fit to raster clock, or hardware change."
+}
