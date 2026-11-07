@@ -16,10 +16,10 @@ checkout and concrete finite run/cleanup preparation before dispatch.
 
 ## Immutable subtasks
 
-- [ ] WOLF-PROFILE-001-01 — Inspect the normal game loop, supported clocks,
+- [x] WOLF-PROFILE-001-01 — Inspect the normal game loop, supported clocks,
   renderer/reply/fence services, disk API, build options and HUD portrait path.
   Resolve unsupported timing/ownership methods before implementation.
-- [ ] WOLF-PROFILE-001-02 — Freeze the compile-time switch, binary record format,
+- [x] WOLF-PROFILE-001-02 — Freeze the compile-time switch, binary record format,
   record-buffer memory budget, flush policy, measurement boundaries and error/
   overflow/exit behavior. Preserve gameplay time and exact component identities.
 - [ ] WOLF-PROFILE-001-03 — Add optional normal-game timing and fixed-size RAM
@@ -38,6 +38,11 @@ checkout and concrete finite run/cleanup preparation before dispatch.
   and exact restoration/handback. Leave the SD card mounted after deployment.
 
 ## Measurement requirements
+
+Concrete source support/implementation selection: [PRE-CODE.md](PRE-CODE.md).
+Permanent build switches, exact record layout and timing/error limitations:
+[FORMAT.md](FORMAT.md). The task's real assembly/decoder qualification precedes
+its separately bounded [emulator correctness cases](EMULATOR-PLAN.md).
 
 First implementation targets the real maintained assembly game client and its
 supported bespoke/VDPlet backend boundaries. Inspect existing native timing
