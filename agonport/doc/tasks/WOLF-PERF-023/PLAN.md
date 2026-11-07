@@ -86,3 +86,17 @@ framerate and register/layout costs require actual later measurements.
 Pi serial compiler FIFO/assert-before-child, finite owned children,80C stop and
 512MiB available floor apply. Source census/qualification may proceed while the
 existing priority queue runs; no target contact, new lease or altered022 kit.
+
+### Census scope clarification before census code
+
+Inspection finds every fill_span call in this exact renderer is either the
+compose_background HUD-base loop or its fill_rect helper; no wall/sprite/HUD
+asset routine calls it. render_world_to_target calls compose_background once
+before casting. This actual call graph is independent of world/map/angle/assets.
+The first census therefore invokes this exact function600 times with the native
+row descriptor, records the existing600 angle sequence for matching coverage,
+and counts its actual unmodified spans through an isolated telemetry-only copy.
+It does NOT claim to execute the full canonical scene or qualify a candidate.
+Source-callgraph exhaustivity and independence explain why these are the fill
+counts for each healthy canonical pose; complete renderer/600-pose parity still
+belongs to step04, and the full physical scene comparison remains untouched.
