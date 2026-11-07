@@ -25,7 +25,9 @@ released and54568 is the explicit control, with no default adoption.
 - [x] WOLF-PERF-005-05 — Execute matched completed-work/resource physical arms.
   [Actual67](agonport/doc/tasks/WOLF-PERF-005/PHYSICAL67-RESULT.md): all6guests/7probes,
   draw68.3236→37.0105ms (-45.83%), completed13.9274→24.6949FPS; no default adoption.
-- [ ] WOLF-PERF-005-06 — Exact restore/release/report and owner evidence return.
+- [x] WOLF-PERF-005-06 — Exact restore/release/report and owner evidence return.
+  Actual67 clean release00:18:33UTC, full result7489671 delivered to VDPlet/
+  Extender; SD mounted, all target/compiler access stopped.
 - [x] WOLF-PERF-005-07 — Diagnose/preserve/restore stopped65 producer mismatch;
   [result](agonport/doc/tasks/WOLF-PERF-005/PHYSICAL65-RESULT.md), no timing claim.
 - [x] WOLF-PERF-005-08 — Correct/qualify per-arm producer lengths and terminal
