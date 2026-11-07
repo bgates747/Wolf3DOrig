@@ -24,7 +24,17 @@ PINS = {
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
 
-def prepare():
+def assert_owner(lease):
+    assert lease, 'Actual Oryx checkout token required before preparation or launch'
+    subprocess.run(['ssh', '-o', 'BatchMode=yes', 'raspberrypi',
+        '/Agon/mystuff/agon-dev-env/.venv/bin/python',
+        '/Agon/mystuff/agon-dev-env/cross-agent/vdplet-rollout/oryx_lease.py',
+        'assert-owner', '--owner', 'wolf3dorig', '--lease', lease],
+        check=True, stdout=subprocess.DEVNULL, timeout=30)
+
+
+def prepare(lease):
+    assert_owner(lease)
     old = BASE.parent / 'wolf-four01/flexe-vdplet-01'
     for name, digest in PINS.items():
         assert sha(old / name) == digest, name
@@ -72,11 +82,7 @@ def guard():
 
 
 def run(lease):
-    subprocess.run(['ssh', '-o', 'BatchMode=yes', 'raspberrypi',
-        '/Agon/mystuff/agon-dev-env/.venv/bin/python',
-        '/Agon/mystuff/agon-dev-env/cross-agent/vdplet-rollout/oryx_lease.py',
-        'assert-owner', '--owner', 'wolf3dorig', '--lease', lease],
-        check=True, stdout=subprocess.DEVNULL, timeout=30)
+    assert_owner(lease)
     manifest = json.loads((BASE / 'inputs.json').read_text())
     for name, digest in manifest.items():
         assert sha(BASE / name) == digest, name
@@ -199,7 +205,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
     BASE = BASE.with_name('wolf-profile001-alexe' + args.revision)
     if args.action == 'prepare':
-        prepare()
+        prepare(args.lease)
     else:
         assert args.lease
         raise SystemExit(run(args.lease))

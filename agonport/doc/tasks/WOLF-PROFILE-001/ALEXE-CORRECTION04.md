@@ -32,3 +32,14 @@ All seven checks pass, including actual poll CALL/latch operands and old-seam
 rejection. Same size/module/storage as03; shipping game source unchanged from
 its storage correction. All owned children joined, compiler released normally.
 Run04 is now selected with that exact guest and the unchanged original bound.
+
+Admission note: first04 checkout refused while VDPlet359 still held Oryx.
+A local shell command sequence erroneously continued copying into Wolf's own
+separate unexecuted profile and ran prepare despite that refusal. It launched
+no emulator and touched no peer profile. Subsequent dependent commands use
+fail-closed sequencing. After actual359 release, fresh whole-host idle and
+actual360 checkout/assert passed; the original runner rehashed all28 inputs
+before its first/only child. Original admission refusal is distinct from the
+actual run. Future prepare now requires/asserts the actual lease too, before
+copying runtime files. This local guard change is not applied to running360;
+its exact original pinned runner remains preserved.

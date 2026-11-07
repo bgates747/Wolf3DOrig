@@ -14,6 +14,19 @@ pipeline work is tracked separately in WOLF-PIPE-001; it is not silently resumed
 or implemented as part of profiling. Hardware/emulator use retains normal actual
 checkout and concrete finite run/cleanup preparation before dispatch.
 
+## Current qualification status — November7,17:58 Eastern
+
+Implementation and decoder are published; subtasks05/06 remain partial.
+[Agon Lexe results](ALEXE-RESULTS.md) retain complete native250-record/three-
+block output and exact disk-cue/face captures from actual358 at one heading.
+The test-only held-key seam is corrected and offline-qualified; actual360
+stopped in sprite loading before module startup. Moving-view/native physical
+qualification is not claimed. Source corrections and their separate results
+are in [STORAGE-RESULT.md](STORAGE-RESULT.md) and ALEXE-CORRECTION02–04.
+Actual101/old hardware kit is retired; no current hardware/Oryx/compiler lease
+or successor is held. Native physical readiness needs a separate fresh kit,
+current bindings and admission. The optimization goal remains paused.
+
 ## Immutable subtasks
 
 - [x] WOLF-PROFILE-001-01 — Inspect the normal game loop, supported clocks,

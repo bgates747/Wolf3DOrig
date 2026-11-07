@@ -1,5 +1,14 @@
 # Physical profiling readiness
 
+**Historical hardware01 kit: retired after actual101. Do not relaunch.**
+Actual101 failed before guest LOAD/RUN and restored/released cleanly; see
+[RESULT101.md](RESULT101.md). Subsequent Alexe work fixed the actual producer's
+INFO17 opcode, full-game package/code overlap and test-only held-key seam.
+These are not covered by the old341-pin kit below. Current emulator findings
+and remaining physical/motion qualification are in [ALEXE-RESULTS.md](ALEXE-RESULTS.md).
+Any future hardware case needs a new immutable kit/current binding/fresh grant.
+The historical commands/pins below are retained as provenance only.
+
 Frozen kit `build/hardware01/kit.json` is copied byte-for-byte to
 HARDWARE-KIT.json. SHA256 `0f774a0c138e26e0edd63aa7e89ede9ca64616afd78d163cf4c48a4757c861b5`.
 341 inputs,16 staged files. One299967-byte actual full-game guest

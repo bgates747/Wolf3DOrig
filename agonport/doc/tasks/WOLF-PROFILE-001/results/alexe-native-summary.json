@@ -1,0 +1,113 @@
+{
+  "358": {
+    "original_result": {
+      "passed": false,
+      "real_firmware": true,
+      "native_synthetic": false,
+      "hardware_P4_handshake_emulated": false,
+      "physical_timing_claim": false,
+      "pid": 46797,
+      "done_hex": "5750543100000000fa0000fff1fe0bfff1fe0bff000000ff48080000f4060000",
+      "error": "AssertionError()",
+      "returncode": 0,
+      "stats": {
+        "engine": "jit",
+        "frames": 1363,
+        "cycles": 5718457441,
+        "retired": 2530469648,
+        "uart_rx": 1017095,
+        "uart_tx": 37869,
+        "uart_delivered": 37869,
+        "isync": 270,
+        "code_invalidations": 2,
+        "keys": 0,
+        "failed": false,
+        "unhandled": 0,
+        "unregistered": 0,
+        "unmapped": 0
+      },
+      "config_output": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "8b9f6ab43a23da8f1b5b7bb1c400e2a540467df07927e68a61a3698bf21cd743",
+        "ordinary_config_save_expected": true
+      },
+      "seconds": 27.143867544997192,
+      "owned_child_joined": true,
+      "all_immutable_inputs_unchanged": true
+    },
+    "released": "2026-11-07T22:43:51.192502+00:00",
+    "archive_sha256": "8e695e2bcebfbc435b576b4ae911d668077ad9e02db236340e68883d9b403928",
+    "retrieval_files": 47,
+    "collector_validation": {
+      "completed_frame_records": 250,
+      "complete_blocks": [
+        {
+          "number": 0,
+          "frames": 115,
+          "status": 0
+        },
+        {
+          "number": 1,
+          "frames": 120,
+          "status": 0
+        },
+        {
+          "number": 2,
+          "frames": 15,
+          "status": 0
+        }
+      ],
+      "discarded_attempts": 0,
+      "sha256": "65e03ac4d884502859250e96d1b89315ec06f15b6ef6a603ce88945627bc0615"
+    },
+    "distinct_headings": 1,
+    "exact_icon_captures": [
+      "frame-019.ppm",
+      "frame-025.ppm"
+    ]
+  },
+  "360": {
+    "original_result": {
+      "passed": false,
+      "real_firmware": true,
+      "native_synthetic": false,
+      "hardware_P4_handshake_emulated": false,
+      "physical_timing_claim": false,
+      "pid": 49042,
+      "error": "TimeoutError('Original300s guest/MOS completion bound')",
+      "returncode": 0,
+      "stats": {
+        "engine": "jit",
+        "frames": 9235,
+        "cycles": 38265354425,
+        "retired": 37481711238,
+        "uart_rx": 525533,
+        "uart_tx": 399,
+        "uart_delivered": 399,
+        "isync": 11,
+        "code_invalidations": 1,
+        "keys": 0,
+        "failed": false,
+        "unhandled": 0,
+        "unregistered": 0,
+        "unmapped": 0
+      },
+      "config_output": {
+        "before": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "after": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "ordinary_config_save_expected": true
+      },
+      "seconds": 300.1305582640016,
+      "owned_child_joined": true,
+      "all_immutable_inputs_unchanged": true
+    },
+    "released": "2026-11-07T22:57:22.808206+00:00",
+    "archive_sha256": "3bdd575d7bb6a72dd4d9075c3513ea3492d5df6c55ac12fbe7d890073722a055",
+    "retrieval_files": 315
+  },
+  "remaining": [
+    "Moving-view native profiler qualification",
+    "Physical candidate readiness and full-game profiling admission"
+  ],
+  "physical_or_framerate_claim": false
+}

@@ -42,3 +42,21 @@ Source review explains this remaining test defect: the private fixture wrote
 w3d_controls before ordinary sampling overwrote it from the held-key bitmap.
 ALEXE-CORRECTION04 freezes a true held-Left latch on every ordinary poll and
 one separately qualified/run guest. Shipping controls and profiler stay as-is.
+
+Actual Oryx360 used separately qualified held-key guest96d6e7d4. Original300s
+bound expired during sprite asset loading:525533 TX bytes,399 received/delivered,
+no module LOAD/INIT log, no WPF/DONE. Normal owned Quit/frontend0/backend fault
+counters0; all immutable inputs unchanged and315 retrieved hashes verified.
+Archive3bdd575d; release22:57:22UTC, actual next VDPlet notified immediately.
+This attempt did not exercise the corrected steering seam. It is an asset-
+loading failure in headless Alexe, not a native collector failure or a proven
+emulator/transport cause. No replay or runtime repair selected. Evidence is
+shared with the Alexe owner for source/log comparison.
+
+Current conclusion: optional profiler implementation and native record joining
+have one complete actual-emulator full-game result (static heading), including
+real disk cue/face restoration and clean exit. Moving-view qualification and
+physical admission remain incomplete. Old hardware01/101 kit is retired; any
+future hardware check needs a new producer/source freeze and fresh admission.
+General ordinary bench readiness was already recovered/released, and later102
+passed; candidate7593 readiness failure must not be called a general bench fault.
