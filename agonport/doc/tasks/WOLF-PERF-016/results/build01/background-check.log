@@ -1,0 +1,1 @@
+PASS 1960 background cases: independent original layers, disjoint/overlapping masks, arbitrary initial bytes, linear/noncontiguous/permuted rows, bevel corners and full storage guards

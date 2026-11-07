@@ -1,0 +1,10 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-PERF-016-hardware01",
+  "purpose": "Uncapped background-fill A/B/B/A four600-pose room runs,5INFO queries,7593app-only install/exactrollback; behind Extender79 and READY Mech339, no preemption",
+  "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/HARDWARE-PLAN.md",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "456459d1283d",
+  "requested": "2026-11-07T10:36:06.011855+00:00"
+}

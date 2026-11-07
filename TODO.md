@@ -31,9 +31,6 @@ Oryx is down. Performance runs measure maximum uncapped presentation rate.
 [Pre-code contract](agonport/doc/tasks/WOLF-PERF-016/PLAN.md). Higher concrete
 work reduction moves this before PERF014/015; current PERF013 stays immutable.
 
-- [ ] WOLF-PERF-016-01 — Pin exact predecessor and compatibility/work ledger.
-- [ ] WOLF-PERF-016-02 — Exterior cyan rectangles with exact overlap-mask fallback.
-- [ ] WOLF-PERF-016-03 — Independent pixels/guards/masks plus full target/producer gates.
 - [ ] WOLF-PERF-016-04 — Current finite uncapped kit and normal fresh admission.
 - [ ] WOLF-PERF-016-05 — Matched test, RAM preservation, exact restore/cleanup/release.
 - [ ] WOLF-PERF-016-06 — Publish/share timing and actual limits.

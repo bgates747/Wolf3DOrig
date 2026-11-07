@@ -10,11 +10,11 @@ dark-gray writes but intentionally left this separate cyan/view overlap.
 No code changes to running PERF013/78. MechAgon first/Wolf second; Oryx down;
 normal serial Pi compilation and actual Extender grants. No default adoption.
 
-- [ ] WOLF-PERF-016-01 — Pin exact output-qualified predecessor after PERF013
+- [x] WOLF-PERF-016-01 — Pin exact output-qualified predecessor after PERF013
   disposition; freeze this compatibility/work ledger before candidate code.
-- [ ] WOLF-PERF-016-02 — Replace only the covered cyan fill with four exterior
+- [x] WOLF-PERF-016-02 — Replace only the covered cyan fill with four exterior
   rectangles where overwrite semantics permit it; retain exact fallback otherwise.
-- [ ] WOLF-PERF-016-03 — Independent full-background byte/guard/mask oracle,
+- [x] WOLF-PERF-016-03 — Independent full-background byte/guard/mask oracle,
   renderer/module/failure/600pose equivalence, actual package/control/flags/
   providers/nested-stack/resource and exact real guest-size operand qualification.
 - [ ] WOLF-PERF-016-04 — Freeze useful finite uncapped matched cases/current

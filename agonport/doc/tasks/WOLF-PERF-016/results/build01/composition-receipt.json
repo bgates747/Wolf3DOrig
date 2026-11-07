@@ -1,0 +1,69 @@
+{
+  "passed": true,
+  "guards": [
+    {
+      "epoch": 1794047891.9215891,
+      "cpu_c": 47.4,
+      "available_kib": 6534784
+    },
+    {
+      "epoch": 1794047891.999384,
+      "cpu_c": 46.85,
+      "available_kib": 6526224
+    },
+    {
+      "epoch": 1794047892.000027,
+      "cpu_c": 46.85,
+      "available_kib": 6526224
+    },
+    {
+      "epoch": 1794047892.3253167,
+      "cpu_c": 47.95,
+      "available_kib": 6507536
+    },
+    {
+      "epoch": 1794047892.3259413,
+      "cpu_c": 47.4,
+      "available_kib": 6507536
+    },
+    {
+      "epoch": 1794047892.5762768,
+      "cpu_c": 48.5,
+      "available_kib": 6481344
+    }
+  ],
+  "steps": [
+    {
+      "name": "test_hardware02.py",
+      "returncode": 0,
+      "seconds": 0.25081235403195024
+    },
+    {
+      "name": "test_replacement02.py",
+      "returncode": 0,
+      "seconds": 0.5011186169576831
+    }
+  ],
+  "inputs": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/hardware02.py": "a5d0301ecd94563076d0489fd1e0b65cf5024bf47af599b40b21fedbefbf637c",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/bootstrap.py": "4ffd634eb183cf4ee8aa7dfc936241303ed68f5a3c0ab3ba95934c2c1fd4d3bc",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/test_replacement02.py": "e9cb7c26aa3a3df7e1cebd21d9d2e8b99e186484067ce54c1fc18960ed8e1b0f",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/run_composition.py": "5cafae0ae99d4b452a64be7e0e8fbae2337782d68bc24a9c4346bbffefb051d3",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/test_hardware02.py": "165f9f5fcdd99a6e80b135cf144db361c0c2b1b5c81e87f74572068bd32448c5",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/guest_binding.py": "180530bbebdd4af996bbb47250cb8a866a5f86a247716fc04701e207f7e4e918",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/launch02.py": "dd5651df8aa9577ea55cfcf616e8a1428dfead539ac7b414ff514400ff4dd1ae",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/LAUNCH-PREFLIGHT.json": "71271b991e1b99c1c404520e2d25a74b7817af5f768e0c95a9112e11e12a5c12",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/service.c": "4a1f205e380ffad60e836726bdd810a36c3f28330b943e14a86b68decc0fcb50",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/service.h": "826762965cfe5ffa78f3a2ae4d28829bc43d5afc8586f1554d41e9b319fa32d9",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/projects/sdserve/src/sd_wire.h": "8b846f3e1ed9165ae93297231fc16a0378c4162b1e996ccff2935bc444510ee1",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/test_sdserve.py": "b519724059794e4c710cc893ac2bef501693627e12b95ad326613e9173b690c5",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/sdserve_host/fs.c": "19aa45a7b1650ef37ac2ec00abc2bd2518d00482737bad39808908fa79b59562",
+    "/Agon/mystuff/agon-extender/agents/remote009/download-r01/source/tests/sdserve_host/agon/mos.h": "b12da862811cbc53ce2860185408b9ddf00a0d070d8cbf77c5e562b864362469",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/original/module/wolf_perf.vdpl": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.vdpl": "22ef84a767951ec03ea138b048db4cfe613d1edf02e8cbb34ee824ba535d24a1",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/guests01/bindings.json": "8ba1bfba45bc2fe8abdd65da7c54db47a231975ad0a3d18f8b10cdee7036bb02",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/guests01/inputs.json": "bf59323ba674ac0cb756d86452576031cfb57e8ed4c0ccb280d861c191a7cf86",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/guests01/receipt.json": "33ca1852c778ac2708006699e2b9fe9c2a182dd11354d8a41e598aaf452443f3"
+  },
+  "seconds": 0.9816223459783942
+}

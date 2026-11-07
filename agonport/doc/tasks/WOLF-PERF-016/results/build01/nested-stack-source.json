@@ -1,0 +1,75 @@
+{
+  "passed": true,
+  "native_files": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/.pio/build/esp32dev/firmware.elf": "092bacc3bb965dc3347625e892f19006e54fbada15561b54b3689ade39d7bdb4",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/.pio/build/esp32dev/firmware.bin": "7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/vdplet_runtime.h": "84653521a9b5a647f62ad6b7e94e75e88d1925a0d2a153c20d8ed8b1c725a05e",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/video.ino": "0743e76728397c56e963baebe98c2746540195732d658d9dad2edf2e768ada27",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/buffer_stream.h": "6b57aedf9e7fee1b8fdb84660e4eaade788c185ec540f94b00f965f2024c418d"
+  },
+  "native_prefix_bytes": 384,
+  "task_stack_bytes": 4096,
+  "arms": {
+    "original": {
+      "background_path_frames": {
+        "vdplet_entry": 128,
+        "wp_production_entry": 304,
+        "render_world_direct": 48,
+        "render_world_to_target": 352,
+        "fill_rect": 32,
+        "fill_span": 32
+      },
+      "module_background_path_bytes": 896,
+      "ordinary_task_background_path_bytes": 1280,
+      "renderer_frame": 352,
+      "actual_elf_entries": {
+        "wolf3d_production::(anonymous namespace)::fill_rect(wolf3d_production::RenderTarget const&, int, int, int, int, unsigned char)": {
+          "address": "00001040",
+          "frame": 32,
+          "first": "    1040:\t004136        \tentry\ta1, 32"
+        },
+        "wolf3d_production::render_world_to_target(wolf3d_production::WorldMirror const&, wolf3d_production::RenderResources const&, wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, wolf3d_production::RenderStats*)": {
+          "address": "00001820",
+          "frame": 352,
+          "first": "    1820:\t02c136        \tentry\ta1, 0x160"
+        },
+        "wolf3d_production::(anonymous namespace)::fill_span(wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned char)": {
+          "address": "00003e24",
+          "frame": 32,
+          "first": "    3e24:\t004136        \tentry\ta1, 32"
+        }
+      }
+    },
+    "candidate": {
+      "background_path_frames": {
+        "vdplet_entry": 128,
+        "wp_production_entry": 304,
+        "render_world_direct": 48,
+        "render_world_to_target": 352,
+        "fill_rect": 32,
+        "fill_span": 32
+      },
+      "module_background_path_bytes": 896,
+      "ordinary_task_background_path_bytes": 1280,
+      "renderer_frame": 352,
+      "actual_elf_entries": {
+        "wolf3d_production::(anonymous namespace)::fill_rect(wolf3d_production::RenderTarget const&, int, int, int, int, unsigned char)": {
+          "address": "00001040",
+          "frame": 32,
+          "first": "    1040:\t004136        \tentry\ta1, 32"
+        },
+        "wolf3d_production::render_world_to_target(wolf3d_production::WorldMirror const&, wolf3d_production::RenderResources const&, wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, unsigned int, wolf3d_production::RenderStats*)": {
+          "address": "00001820",
+          "frame": 352,
+          "first": "    1820:\t02c136        \tentry\ta1, 0x160"
+        },
+        "wolf3d_production::(anonymous namespace)::fill_span(wolf3d_production::RenderTarget const&, unsigned int, unsigned int, unsigned int, unsigned char)": {
+          "address": "00003e78",
+          "frame": 32,
+          "first": "    3e78:\t004136        \tentry\ta1, 32"
+        }
+      }
+    }
+  },
+  "limits": "Selected synchronous background call path, unchanged module/native providers; not an all-branch exception/ISR/foreign-callback task-peak proof. Existing INFO resource probes retain512B minimum and first-fault stop. No new local array or reentrancy."
+}
