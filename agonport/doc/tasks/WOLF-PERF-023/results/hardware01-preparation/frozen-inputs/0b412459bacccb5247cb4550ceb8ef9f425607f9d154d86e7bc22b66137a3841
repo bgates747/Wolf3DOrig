@@ -1,0 +1,111 @@
+{
+  "owner": "mechagon",
+  "task": "GOAL-001-HEADROOM-L0",
+  "purpose": "PREPARING one finite zero-runtime-dose spare control, checked404 WAIT1 native9de7, owner47dadc, disposable inactivePRT1 quiet pre-OPEN calibration; current Wolf95 protected; full same-lease a25f rollback",
+  "plan": "/Agon/mystuff/MechAgon/docs/tasks/GOAL-001/headroom-next/L0.md",
+  "notify_thread": "01a1a883-630e-7b52-85d8-6fbc07cc0ccb",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "2d99072a33d5",
+  "requested": "2026-11-07T17:16:37.900033+00:00",
+  "lease": "8386ba20541d4235bc3b6554f83464b5",
+  "generation": 96,
+  "granted": "2026-11-07T17:33:53.867802+00:00",
+  "phase": "consumer",
+  "entry_observation": {
+    "schema": "olimex-bench-observation-v1",
+    "bench": "olimex",
+    "epoch": 1794072833.5813766,
+    "observer": "linux-extender",
+    "lease": null,
+    "checks": {
+      "no_workload": true,
+      "no_transfer": true,
+      "no_serial_readers": true,
+      "no_reset_holders": true,
+      "cli_verified": true,
+      "input_ready_neutral": true,
+      "listener_offline": true,
+      "staged_job_idle": true,
+      "restoration_verified": true
+    },
+    "evidence": [
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-headroom-l0-r01/fresh.json",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-headroom-l0-r01/consumer-offline-preflight.json",
+      "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/hardware02/released.json",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-headroom-l0-r01/exchange/vars.bin",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-headroom-l0-r01/exchange/callback.bin",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-headroom-l0-r01/exchange/backend.bin"
+    ],
+    "components": {
+      "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+      "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+      "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+      "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+      "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+    },
+    "component_provenance": {
+      "p4_app_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+      "emos_rom_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+      "native_vdp_sha256": "Exact incoming application/touched-tail restoration and independent full-span readback",
+      "startup_sha256": "Fresh whole setup-only startup read/compare.",
+      "listener_sha256": "Fresh whole canonical listener read/compare."
+    },
+    "disposition": "New selected GOAL001 L0 zero-runtime-dose low-observer finite trial, consumer-owned disposable inactivePRT1 quiet preOPEN calibration only, runtime enabled/IRQ timer refusal and stop before hook; owner APP uses noPRT and no other selected timer owner; no hardware timer observation by scheduler. Incoming fullEMOSa25f retained here. Extender alone first installs exact47dadc29/fullROM readback under owner-install, then actual stopped sole consumer handoff. MechAgon ONE observed-overlap native90s wait-enabled APP case, then stopped return for exacta25f rollback/fullcleanup/normalrelease. P4/mainboard/startup/listener unchanged; no scheduler reset/firmwarewrite/LOAD/RUN/getter/PRTread. SD mounted."
+  },
+  "released": "2026-11-07T17:47:58.935962+00:00",
+  "release_observation": {
+    "schema": "olimex-bench-observation-v1",
+    "bench": "olimex",
+    "epoch": 1794073678.7059667,
+    "observer": "mechagon",
+    "lease": "8386ba20541d4235bc3b6554f83464b5",
+    "checks": {
+      "no_workload": true,
+      "no_transfer": true,
+      "no_serial_readers": true,
+      "no_reset_holders": true,
+      "cli_verified": true,
+      "input_ready_neutral": true,
+      "listener_offline": true,
+      "staged_job_idle": true,
+      "restoration_verified": true
+    },
+    "evidence": [
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-headroom-l0-r01/final/fresh.json",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-headroom-l0-r01/owner-install/verify-rollback/receipt.json",
+      "/Agon/mystuff/agon-extender/agents/bench-scheduler/mechagon-headroom-l0-r01/consumer-stopped-handoff.json",
+      "/Agon/mystuff/MechAgon/.runtime/render001/goal001/headroom-l0-r01/run-native-r01/serial.bin",
+      "/Agon/mystuff/MechAgon/.runtime/render001/goal001/headroom-l0-r01/run-native-r01/collected.json",
+      "/Agon/mystuff/MechAgon/.runtime/render001/goal001/headroom-l0-r01/run-native-r01/profile-preservation.json",
+      "/Agon/mystuff/MechAgon/.runtime/render001/goal001/headroom-l0-r01/run-native-r01/spare-collected.json",
+      "/Agon/mystuff/MechAgon/.runtime/render001/goal001/headroom-l0-r01/host-match-r01/status.json"
+    ],
+    "components": {
+      "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+      "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+      "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+      "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+      "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+    },
+    "component_provenance": {
+      "p4_app_sha256": "Retained unchanged fresh-grant identity; this suite never writes this component",
+      "emos_rom_sha256": "New independent full131072B rollback readback equals retained incominga25f",
+      "native_vdp_sha256": "Exact incoming application/touched-tail restoration and independent full-span readback",
+      "startup_sha256": "Fresh final wholefile compare",
+      "listener_sha256": "Fresh final canonical listener compare"
+    },
+    "disposition": "Original low-observer zero-dose L0 stopped return with original bounded raw evidence and evidence retained under this actual reservation; no result beyond the consumer evidence is inferred by owner cleanup. Failure preservation beforeLOAD is governed by the matching stopped return. Exact incominga25f fullROM rollback and independent131072B comparison PASS. Fresh rootCLI/cursor/files/inputneutral/offlineidle/worker0/freeUSB and joined actors; same-custody postreboot rawmode0/callback0/route0 from new rollbackreceipt, no intervening mode/route/application change. No reset/replay/newcase/P4/native/startup/listener write. SDmounted.",
+    "physical_observer": "linux-extender",
+    "physical_observer_role": "Delegated sole owner-restore operator under matching stopped return"
+  },
+  "next_request": {
+    "owner": "wolf3dorig",
+    "task": "WOLF-PERF-023-hardware01",
+    "purpose": "PREPARING separate supported byte-span ABBA four uncapped canonical rooms and five INFO checks, exact combined8d3d control versus b181 candidate; producer/final kit qualification pending; Mech-first",
+    "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/PLAN.md",
+    "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "request": "098fa3fae20d",
+    "requested": "2026-11-07T17:37:42.151466+00:00"
+  }
+}
