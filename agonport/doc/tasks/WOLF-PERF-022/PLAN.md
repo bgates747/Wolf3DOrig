@@ -106,3 +106,14 @@ Oryx remains down; no emulator diversion to Pi. Serial ordinary build-check
 qualification uses normal Pi FIFO/assert-before-child,80C stop/512MiB available
 RAM floor, finite owned cleanup. MechAgon first; PREPARING is not target access
 or a grant, and no idle bench hold is selected by this task.
+
+## Reservation-only revision02 — voluntary Mech-first adjustment
+
+Original ungranted dfe8c5bda3b7/kit a07df733 was voluntarily cancelled before
+any device contact. Ordinary new request793c29add4f8/taskhardware02 follows
+Extenderdd79a9b28686 and Meche419abc7da11. Preserve the full original kit/source
+freeze72526a9. Rebind only reservation/task/evidence namespace and observer
+preflight; requalify guards and freeze new hardware02 kit before READY. No
+renderer/guest/firmware/SDK/provider/carrier/test-matrix/budget/cleanup axis
+changes. Current actual predecessor still must be reconciled at admission; no
+grant is conveyed by source preparation. Immutable subtask IDs above unchanged.

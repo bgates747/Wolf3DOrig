@@ -1,3 +1,7 @@
+Historical hardware01 freeze — voluntarily WITHDRAWN before any target contact.
+New request793c29add4f8/hardware02 is PREPARING behind Mech dependencies; see
+PLAN.md reservation-only revision02. All evidence below remains original.
+
 # PERF022 — qualified full comparison with host-signal observation
 
 Request **dfe8c5bda3b7**, PREPARING until actual fresh Extender admission.

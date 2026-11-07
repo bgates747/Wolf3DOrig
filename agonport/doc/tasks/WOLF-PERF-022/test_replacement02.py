@@ -18,7 +18,7 @@ T = Path(__file__).resolve().parent
 SOURCE = Path('/Agon/mystuff/agon-extender/agents/remote009/download-r01/source')
 spec = importlib.util.spec_from_file_location('retained_sdserve_tests', SOURCE/'tests/test_sdserve.py')
 owner = importlib.util.module_from_spec(spec); spec.loader.exec_module(owner)
-OUT = T/'build/composition03'
+OUT = T/'build/composition04'
 
 
 class Peer(owner.SdserveTests):
@@ -29,7 +29,7 @@ class Adapter(hardware.Bench):
     def __init__(self, peer, output):
         self.peer = peer; self.out = Path(output); self.cleaning = False
         self.deadline = hardware.time.monotonic()+4200
-        self.remote = '/test/wolf/perf022/r01'
+        self.remote = '/test/wolf/perf022/r02'
         self.observer_folder = None; self.observer_record = {}
         self.root = peer.disk/self.remote.lstrip('/'); self.root.mkdir(parents=True)
         bindings=json.loads((T/'HARDWARE-GUESTS.json').read_text())

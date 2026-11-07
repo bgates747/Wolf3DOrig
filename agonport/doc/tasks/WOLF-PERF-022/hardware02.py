@@ -18,7 +18,7 @@ T = Path(__file__).resolve().parent
 sys.path.insert(0, str(T))
 P3 = T.parent / 'WOLF-PERF-003'
 sys.path.insert(0, str(P3 / 'hardware'))
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 spec = importlib.util.spec_from_file_location('wp007_physical54', P3 / 'hardware/physical09.py')
 h = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(h)
@@ -32,7 +32,7 @@ SEQUENCE = (
     ('combined', 'room'), ('cyan', 'room'), ('original', 'room'),
 )
 ARMS = ('original', 'cyan', 'combined')
-REQUEST = 'dfe8c5bda3b7'
+REQUEST = '793c29add4f8'
 CLEANUP_RESERVE = 360
 GUEST_BOUND = 300
 
@@ -42,8 +42,8 @@ class BudgetStop(RuntimeError):
 
 
 def verify_kit(kit):
-    assert kit['task'] == 'WOLF-PERF-022-hardware01'
-    assert kit['remote'] == '/test/wolf/perf022/r01'
+    assert kit['task'] == 'WOLF-PERF-022-hardware02'
+    assert kit['remote'] == '/test/wolf/perf022/r02'
     assert kit['request'] == REQUEST
     assert kit['original_module_sha256'] == 'a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656'
     assert kit['cyan_module_sha256'] == '22ef84a767951ec03ea138b048db4cfe613d1edf02e8cbb34ee824ba535d24a1'

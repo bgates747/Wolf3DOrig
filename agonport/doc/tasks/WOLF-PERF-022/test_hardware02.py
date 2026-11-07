@@ -118,7 +118,7 @@ class ControllerTests(ObserverModelMixin, unittest.TestCase):
 
     def test_incomplete_current_binding_refused(self):
         with self.assertRaises((KeyError, AssertionError)):
-            hardware.verify_kit(dict(task='WOLF-PERF-009-hardware-r01', remote='/test/wolf/perf022/r01'))
+            hardware.verify_kit(dict(task='WOLF-PERF-009-hardware-r01', remote='/test/wolf/perf022/r02'))
 
 
 class BootstrapTests(unittest.TestCase):
@@ -156,7 +156,7 @@ class EntryModel(hardware.Bench):
     """Only device I/O is modeled; entry/route/stage logic is the real adapter."""
     def __init__(self, root, collision=False):
         self.out = Path(root)
-        self.remote = '/test/wolf/perf022/r01'
+        self.remote = '/test/wolf/perf022/r02'
         self.files = {'/autoexec.txt': b'SET KEYBOARD 1', '/emos/sdserve.bin': b'LISTENER'}
         self.components = {k: hashlib.sha256(self.files[n]).hexdigest() for k,n in
             [('startup_sha256','/autoexec.txt'),('listener_sha256','/emos/sdserve.bin')]}

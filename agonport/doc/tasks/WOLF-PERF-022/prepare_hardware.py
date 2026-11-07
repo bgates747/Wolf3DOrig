@@ -8,7 +8,7 @@ import sys
 
 T = Path(__file__).resolve().parent
 P = T.parent / 'WOLF-PERF-021'
-B = T / 'build/hardware01'
+B = T / 'build/hardware02'
 E = Path('/Agon/mystuff/agon-extender')
 sha = lambda path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
@@ -21,10 +21,10 @@ def main():
     spec = importlib.util.spec_from_file_location('qualified021_exact_producers', P / 'qualify_hardware_guests.py')
     module = importlib.util.module_from_spec(spec); spec.loader.exec_module(module)
     qualified = module.qualify()
-    old = json.loads((P / 'build/hardware01/kit.json').read_text())
+    old = json.loads((P / 'build/hardware02/kit.json').read_text())
     # Rejoin every original pin. The disposed historical plan is retained by
     # its original immutable bytes; it is not silently rehashed as new history.
-    index = json.loads((P / 'build/hardware01/frozen-inputs/index.json').read_text())
+    index = json.loads((P / 'build/hardware02/frozen-inputs/index.json').read_text())
     files = []
     for name, digest in old['inputs'].items():
         selected = Path(name)
@@ -32,7 +32,7 @@ def main():
             selected = Path(index[name]['snapshot'])
         assert sha(selected) == digest, name
         files.append(selected)
-    comp_path = T / 'build/composition03/receipt.json'
+    comp_path = T / 'build/composition04/receipt.json'
     comp = json.loads(comp_path.read_text()); assert comp['passed']
     for name, digest in comp['inputs'].items():
         assert sha(name) == digest, name
@@ -53,7 +53,7 @@ def main():
         shutil.copyfile(old[key], B / name)
     assert sha(B / 'restore.bin') == '85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de'
     assert sha(B / 'install-b.bin') == '493fd0a010bedcfc5916314353f93565f7b159ac163d9bc61e7c5078140669e8'
-    remote = '/test/wolf/perf022/r01'
+    remote = '/test/wolf/perf022/r02'
     (B / 'state.txt').write_bytes(('SAVE ' + remote + '/post-mode.bin &BC349 &1\r\nSAVE ' + remote + '/post-callback.bin &BC38E &3\r\nEMOS sdserve --fast /\r\n').encode())
     (B / 'route.txt').write_bytes(('SAVE ' + remote + '/route.bin &BCB25 &1\r\nEMOS sdserve --fast /\r\n').encode())
     binding = json.loads(Path(old['source_binding']).read_text())
@@ -86,7 +86,7 @@ def main():
             files.append(Path(name))
     files.extend(p for p in B.iterdir() if p.is_file())
     kit = {k: old[k] for k in ('native_b_sha256', 'listings', 'flash_span', 'p4_boot_build')}
-    kit.update(task='WOLF-PERF-022-hardware01', request=hw.REQUEST, remote=remote,
+    kit.update(task='WOLF-PERF-022-hardware02', request=hw.REQUEST, remote=remote,
         incoming_components=components, modules=modules, stage=stage, guests=guests,
         retain_lease_after_test=False, restore=str(B / 'restore.bin'), install_b=str(B / 'install-b.bin'),
         source_binding=str(B / 'source-binding.json'), source_binding_passed=True, boot_binding_passed=True,
