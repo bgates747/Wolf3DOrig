@@ -20,6 +20,12 @@ Oryx is down. Performance runs measure maximum uncapped presentation rate.
 - [ ] WOLF-GOAL-001-10 — Exact restoration, cleanup, release and handoffs.
 - [ ] WOLF-GOAL-001-11 — Publish/share final results and actual limits.
 
+## WOLF-PERF-013 — Revisit sprite-hoist acceptance with Smith
+
+- [ ] WOLF-PERF-013-07 — [Discuss keeping the reduced repeated work](agonport/doc/tasks/WOLF-PERF-013/REVISIT.md)
+  after Smith has slept, even without an FPS gain. Candidate/results retained;
+  weigh draw intervals, stack/code cost and concurrent-resource limits as well.
+
 ## WOLF-PERF-016 — Covered cyan-fill removal (next goal arm)
 
 [Pre-code contract](agonport/doc/tasks/WOLF-PERF-016/PLAN.md). Higher concrete

@@ -39,3 +39,7 @@ after clean release, with original selected bytes retained in frozen-inputs.
 Next priority is PERF016: eliminate40,960covered cyan background writes/frame
 using supported exterior rectangles and exact overlapping-mask fallback. It has
 more concrete avoided work than the remaining metadata cache. No gain assumed.
+
+Later Smith direction reopens the acceptance tradeoff for discussion after sleep:
+[WOLF-PERF-013-07](REVISIT.md). Original raw measurements and the initial
+no-promotion decision remain preserved; no additional run or automatic adoption.
