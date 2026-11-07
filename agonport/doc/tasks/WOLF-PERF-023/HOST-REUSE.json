@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "unchanged_shared_files": [
+    "host_observer.py",
+    "launch02.py",
+    "bootstrap.py",
+    "analyze.py"
+  ],
+  "observer_only_task_request_path_rebind": true,
+  "prior_actual_host_qualification": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/results/host01/RESULT.json",
+  "prior_actual_physical": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/results/actual95/RESULT.json",
+  "new_control_matrix_qualification_pending": true,
+  "no_attachment_signal_or_device": true
+}
