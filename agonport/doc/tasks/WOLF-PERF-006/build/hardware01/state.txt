@@ -1,3 +1,0 @@
-SAVE /test/wolf/perf006/r01/post-mode.bin &BC349 &1
-SAVE /test/wolf/perf006/r01/post-callback.bin &BC38E &3
-EMOS sdserve --fast /

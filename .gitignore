@@ -68,3 +68,6 @@ src/asm/*/tgt/
 /agonport/doc/tasks/WOLF-PERF-002/results/voice-r02/inputs.json
 /agonport/doc/tasks/WOLF-PERF-002/results/voice-r02/oryx-release.json
 /agonport/doc/tasks/WOLF-PERF-002/results/voice-r02/pi-release.json
+
+# Task-owned compiler/fixture/hardware evidence stays local.
+/agonport/doc/tasks/WOLF-PERF-006/build/

@@ -1,1 +1,0 @@
-{"passed": true, "steps": [{"name": "test_hardware.py", "returncode": 0, "seconds": 0.2507881760247983}, {"name": "test_replacement.py", "returncode": 0, "seconds": 0.5010972419986501}, {"name": "test_guest_binding.py", "returncode": 0, "seconds": 3.7547587290173396}], "seconds": 4.845751932996791}
