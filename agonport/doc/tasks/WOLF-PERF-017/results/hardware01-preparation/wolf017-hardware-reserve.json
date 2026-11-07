@@ -1,0 +1,10 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-PERF-017-hardware01",
+  "purpose": "PREPARING narrow divider4uncappedroomABBA5INFO after H02/Mechfirst; native7593/exact85f9rollback",
+  "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/HARDWARE-PLAN.md",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "580cc0eba75a",
+  "requested": "2026-11-07T12:11:11.754054+00:00"
+}
