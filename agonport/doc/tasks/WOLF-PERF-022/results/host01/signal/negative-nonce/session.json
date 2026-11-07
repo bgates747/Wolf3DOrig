@@ -1,0 +1,15 @@
+{
+  "schema": "wolf-observer-session-v1",
+  "controller": {
+    "pid": 1440087,
+    "start": 32674914,
+    "ppid": 1750,
+    "pgid": 1440087,
+    "uid": 1000,
+    "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+  },
+  "lease": "8bc48860dadd44b2b4b024fc7b1126c9",
+  "kit_sha256": "offline-fixture-not-hardware-kit",
+  "nonce": "c505e74f63c388dc1e9fdaff7495f0da1dc0b9dfacdac1eb18100ae53c08ab49",
+  "epoch": 1794067779.3893237
+}

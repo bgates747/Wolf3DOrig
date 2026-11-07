@@ -1,0 +1,15 @@
+{
+  "schema": "wolf-host-interruption-v1",
+  "epoch": 1794067799.704603,
+  "signal": 15,
+  "name": "SIGTERM",
+  "pid": 1440087,
+  "ppid": 1750,
+  "sender_unknown": true,
+  "stack": [
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/controller_fixture.py\", line 90, in <module>\n    main(a.folder, a.lease, a.case)\n",
+    "  File \"/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/controller_fixture.py\", line 58, in main\n    time.sleep(.05)\n"
+  ],
+  "continuation": false,
+  "replay": false
+}

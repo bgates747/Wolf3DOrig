@@ -1,0 +1,21 @@
+{
+  "nonce": "c505e74f63c388dc1e9fdaff7495f0da1dc0b9dfacdac1eb18100ae53c08ab49",
+  "session_sha256": "9e752c7c5453481b8ccb645dc8d617364dec6668663dfd36a37e5fa2ef193fdb",
+  "observer": {
+    "pid": 1440158,
+    "start": 32675863,
+    "ppid": 1750,
+    "pgid": 1440158,
+    "uid": 1000,
+    "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+  },
+  "tracer": {
+    "pid": 1440160,
+    "start": 32675880,
+    "ppid": 1440158,
+    "pgid": 1440160,
+    "uid": 1000,
+    "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+  },
+  "epoch": 1794067788.8729086
+}

@@ -1,0 +1,14 @@
+{
+  "case": "normal",
+  "callbacks": 1,
+  "no_device_io": true,
+  "passed": true,
+  "negative_refusals": [
+    "missing",
+    "nonce",
+    "observer-start",
+    "tracer-pid",
+    "session"
+  ],
+  "seconds": 10.2740256160032
+}

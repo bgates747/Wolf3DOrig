@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "cases": 3,
+  "negative_refusals": 15,
+  "actual_controller_and_observer_ppid": 1750,
+  "custom_handler_signal": true,
+  "observer_cancel_no_controller_signal": true,
+  "all_original_handles_terminal": true,
+  "all_owned_children_joined": true,
+  "no_device_io": true,
+  "physical_adoption": false,
+  "historical_sender": "UNKNOWN"
+}

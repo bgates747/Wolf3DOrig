@@ -1,0 +1,15 @@
+{
+  "case": "signal",
+  "callbacks": 1,
+  "no_device_io": true,
+  "passed": true,
+  "negative_refusals": [
+    "missing",
+    "nonce",
+    "observer-start",
+    "tracer-pid",
+    "session"
+  ],
+  "signal": 15,
+  "seconds": 20.318457521032542
+}

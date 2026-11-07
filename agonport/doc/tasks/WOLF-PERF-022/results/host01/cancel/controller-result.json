@@ -1,0 +1,16 @@
+{
+  "case": "cancel",
+  "callbacks": 1,
+  "no_device_io": true,
+  "passed": true,
+  "negative_refusals": [
+    "missing",
+    "nonce",
+    "observer-start",
+    "tracer-pid",
+    "session"
+  ],
+  "observer_loss_refused_successor": true,
+  "cleanup_callback": true,
+  "seconds": 19.902838534966577
+}

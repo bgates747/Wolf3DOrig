@@ -1,0 +1,37 @@
+{
+  "controller": {
+    "pid": 1440038,
+    "start": 32672880,
+    "ppid": 1750,
+    "pgid": 1440038,
+    "uid": 1000,
+    "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+  },
+  "observer": {
+    "pid": 1440074,
+    "start": 32673882,
+    "ppid": 1750,
+    "pgid": 1440074,
+    "uid": 1000,
+    "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+  },
+  "controller_signalled_by_observer": false,
+  "passed": true,
+  "argv": [
+    "/usr/bin/strace",
+    "--interruptible=1",
+    "-qq",
+    "-ttt",
+    "-e",
+    "trace=none",
+    "-e",
+    "signal=SIGTERM",
+    "-o",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/build/host01/normal/observer/signal.trace",
+    "-p",
+    "1440038"
+  ],
+  "tracer_returncode": 0,
+  "owned_tracer_joined": true,
+  "seconds": 0.36611437296960503
+}
