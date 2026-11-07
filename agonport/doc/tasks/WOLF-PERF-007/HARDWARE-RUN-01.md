@@ -43,3 +43,14 @@ Final runnable source/guest/module/cache/client/interpreter/current-binding/
 rollback/driver kit must be immutable and published before dispatch. Source-only
 preparation and ordinary finite Pi compiler checks do not contact hardware.
 No physical timing/stack/performance claim until actual raw suite evidence exists.
+
+Offline qualification tranche: copy exact physical69 cd429 real control/unpaced
+producer source, bind only module byte/strict-limit constants per arm and verify
+all24 actual operands/control reproduction. Four serial assemblies600s maximum;
+then the inherited meaningful controller/resource/budget/failure-preservation,
+actual-listener replacement lifecycle and producer-selection checks180s maximum.
+One normal Pi compiler reservation covers these serial compiler/build-check
+children; 80C/512MiB guard, no emulator/target contact. Publish the source freeze
+before compilation. Fresh grant/current tuple replace the old69 continuation
+binding; new own SAVE-only entry is joined to that immutable actual new grant.
+Normal release replaces the previous task's completed human69 hold.
