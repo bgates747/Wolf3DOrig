@@ -3,7 +3,7 @@ from pathlib import Path
 import argparse, hashlib, json, os, shutil, signal, subprocess, time
 
 T = Path(__file__).resolve().parent
-B = T / 'build/census01'
+B = T / 'build/census02'
 D = Path('/Agon/mystuff/agon-dev-env')
 P = T.parent / 'WOLF-PERF-021/build/r01/candidate'
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
@@ -19,6 +19,10 @@ def main(lease):
     B.mkdir(parents=True)
     (B / 'production').mkdir()
     files = [T / n for n in ('PLAN.md', 'PRE-CODE-PINS.json', 'count_spans.cpp', 'run_census.py')]
+    table = P / 'wolf3d_tables.inc'
+    assert sha(table) == kit['inputs'][str(table)], table
+    shutil.copyfile(table, B / 'wolf3d_tables.inc')
+    files.extend((table, B / 'wolf3d_tables.inc'))
     for path in (P / 'production').iterdir():
         if path.suffix in ('.h', '.inc') or path.name in ('wolf3d_renderer.cpp', 'wolf3d_world_mirror.cpp'):
             assert sha(path) == kit['inputs'][str(path)], path

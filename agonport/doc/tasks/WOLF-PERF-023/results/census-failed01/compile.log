@@ -1,0 +1,5 @@
+In file included from /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census01/count_spans.cpp:18:
+/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/census01/production/wolf3d_renderer.cpp:4:10: fatal error: ../wolf3d_tables.inc: No such file or directory
+    4 | #include "../wolf3d_tables.inc"
+      |          ^~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
