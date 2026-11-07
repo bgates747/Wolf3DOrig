@@ -1,0 +1,47 @@
+{
+  "parent_pid": 1750,
+  "executable": "/Agon/mystuff/agent-state/codex-runtime-0.159.3/package/vendor/aarch64-unknown-linux-musl/bin/codex",
+  "executable_sha256": "54a834b6b16d8a01ff80f7f9cee4aedec35a61c90379e088792623bf1b4c1e3d",
+  "package": {
+    "name": "@openai/codex",
+    "version": "0.159.3-linux-arm64",
+    "license": "Apache-2.0",
+    "os": [
+      "linux"
+    ],
+    "cpu": [
+      "arm64"
+    ],
+    "files": [
+      "vendor"
+    ],
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/openai/codex.git",
+      "directory": "codex-cli"
+    },
+    "engines": {
+      "node": ">=16"
+    },
+    "packageManager": "pnpm@10.34.5+sha512.a4ee05f2f73658255bd6a89859c065a45c28a57daefae2c893a168ee2b73168c37b91e83e57ea67654ad03f03031746430e8bce38e362e042605fb8abc80192e"
+  },
+  "strace": {
+    "path": "/usr/bin/strace",
+    "sha256": "e4f0c42a07574df2fc6b353f5bc24423099d8c896cee72c605671d878fedeb5a",
+    "manual_path": "/usr/share/man/man1/strace.1.gz",
+    "manual_sha256": "ff72a3887ec844cca6126ed155eb6c905f5db9df7ae5ce4a18b79ced58f49a60"
+  },
+  "official_docs": "https://learn.chatgpt.com/docs/app-server",
+  "docs_limit": "Explicit timeout/termination APIs documented; no attribution or fixed timeout for actual84/91 established.",
+  "runtime_capability_is_not_cause": true,
+  "runtime_strings": [
+    {
+      "offset": 192222013,
+      "text": "core/src/unified_exec/process_manager.rs"
+    },
+    {
+      "offset": 195122627,
+      "text": "Warning: The maximum number of unified exec processes you can keep open is"
+    }
+  ]
+}
