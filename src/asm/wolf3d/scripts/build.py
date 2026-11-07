@@ -301,7 +301,6 @@ def build(
             cwd=source,
             check=True,
         )
-        shutil.copyfile(temporary_output, output)
         # ez80asm writes the listing beside the source, regardless of the
         # explicitly supplied binary destination.
         listing = source / "wolf3d.lst"
@@ -311,6 +310,7 @@ def build(
             shutil.copyfile(listing, output.with_suffix(".lst"))
         elif module is not None:
             raise SystemExit("Missing listing for package storage validation")
+        shutil.copyfile(temporary_output, output)
 
     receipt = {
         "backend": backend,

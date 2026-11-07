@@ -59,6 +59,15 @@ def main():
             assert 'Binary package address mismatch' in str(error)
         else:
             raise AssertionError('Unsafe emitted package destination admitted')
+        # The same existing helper always writes a4096-byte zero page, even
+        # for smaller module packages. Exercise actual tiny-package assembly.
+        tiny=out/'tiny-package-layout'; shutil.copytree(b.SOURCE,tiny)
+        b.select_backend(tiny/'wolf3d_backend.inc','vdplet-direct')
+        b.select_package(tiny/'wolf3d_vdplet_package.inc',1)
+        subprocess.run([str(assembler),'wolf3d.asm','tiny.bin','-l','-c'],
+                       cwd=tiny,check=True,timeout=120)
+        small=b.verify_package_storage(tiny/'tiny.bin',tiny/'wolf3d.lst',1)
+        assert small['bytes']==4096 and small['package_bytes']==1
     result=dict(passed=True,builds=results,guest=qualified,negative_controls=2)
     (out/'result.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(dict(passed=True,builds=len(results),guest_sha256=binding['guest_sha256'],storage=binding['package_storage'])))
