@@ -84,3 +84,18 @@ behavior. These are source review findings, not new speed/correctness defects
 in a926 or an assignment to implement a workaround. An exact original-scaler
 restoration would need its own unit conversion, forward-interval oracle and
 intentional image/occlusion-difference qualification before performance work.
+
+## Owner advice: destination alias frontier
+
+VDPlet POST-001/002 confirms the existing byte-span support and exact full-height/
+ID/U/texel&63 constraints. A lease does not by itself prove source/destination
+nonaliasing or distinct destination bytes for arbitrary row tables. If row1
+begins one byte after row0, a2x2 group with row colours A/B leaves different
+values at the shared middle byte under column-major and row-major order.
+That is a concrete counterexample even without concurrent writers. Establish
+the actual framebuffer's disjoint rows and stable/nonaliasing source extent,
+or retain the old order on unproven layouts; do not claim arbitrary aliased-row
+equivalence. Overlapping colour/preserve bits alone are not a problem for this
+same-single-write grouping, unlike the covered-fill overwrite proof. This is
+source advice, not a selected fallback implementation or a new test matrix.
+[Advice and exact pins](results/source-advice-07/WOLF-PROJECTION-POST-ADVICE-2026-11-07.md).

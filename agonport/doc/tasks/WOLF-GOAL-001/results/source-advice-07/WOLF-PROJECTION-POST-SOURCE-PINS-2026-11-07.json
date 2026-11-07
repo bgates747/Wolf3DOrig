@@ -1,0 +1,69 @@
+{
+  "scope": "Source-only bound/representation/store-order advice; no host diagnostic, candidate code, benchmark or target execution.",
+  "owner_commit": "62a7853",
+  "sine_table": {
+    "count": 901,
+    "minimum": 0,
+    "maximum": 65536
+  },
+  "bounds": {
+    "M_exclusive": 4194304,
+    "F": 22272,
+    "G": 4216575,
+    "trans_y_magnitude": 8433150,
+    "trans_x_magnitude": 8449534,
+    "min_guarded_denominator": 22528,
+    "numerator_magnitude": 733684050,
+    "wide_product_magnitude": 276337459200
+  },
+  "files": [
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/PROJECTION-DOMAIN-PINS.json",
+      "sha256": "46a7d7fd80c11df922161116104c8e34c57524c7e12f5b4ef9b4b16d36590646"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/build/r01/original/production/wolf3d_world_mirror.cpp",
+      "sha256": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/build/r01/original/production/wolf3d_renderer.cpp",
+      "sha256": "167930e49e0f9e59651aae112bc402d2c96c24d37bc76a7caa5c87851b86061c"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/build/r01/original/wolf3d_tables.inc",
+      "sha256": "6e3353cebd8d69849bbde39abd536018b1ee403f599ae45acc51fb8c64303e5d"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/build/r01/original/production/wolf3d_production_contract.h",
+      "sha256": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-GOAL-001/WALL-POST-SOURCE-PINS.json",
+      "sha256": "e7a1a9c63c1c6944cc761f903359b2ed65eab82f2ce9c0369d9bf12521f89c9f"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/orig/src/WOLFSRC/WL_DRAW.C",
+      "sha256": "669af4d388fb7f1b46ef6ab5689d1c6e2d3b17d2aaf964a87fdf54b388b453fb"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/build/r01/original/production/original_raywalk.h",
+      "sha256": "72b1a70eb08fd211dde089e7f7b9379494daeb307fe34a06adb9a198291b66c7"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/orig/src/WOLFSRC/README/RELEASE.TXT",
+      "sha256": "fb8e8152ae1e601582fa627b7961d5a72363340d08c905064f62b438eeff4c70"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/PROJECTION-DOMAIN.md",
+      "sha256": "8767cbda8413a4c2e295e10306f3d65d256aef62ffd2db313d36680988ff6e71"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-017/PROJECTION-COVERAGE-PLAN.md",
+      "sha256": "8e28dc2c2cee746306fa10259a5c23b67b3a9103bbcbc795efe5e8c604176c89"
+    },
+    {
+      "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-GOAL-001/WALL-POST-DESIGN.md",
+      "sha256": "791837f2889b35b08d8b74968bb9b516c7006106d2a87b311fcedd294b787e32"
+    }
+  ]
+}

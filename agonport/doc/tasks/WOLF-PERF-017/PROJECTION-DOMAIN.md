@@ -33,3 +33,6 @@ host diagnostic checks actual input populations and exact helper output on
 these poses; it will supply observed counts/ranges, not prove native branch
 hit timing. Final ELF long-call/relative-literal joins support native use;
 physical common-input execution/timing remains a separate selected cohort.
+
+VDPlet independently confirmed this source bound and pinned-compiler rounding
+limits in PRJ-001 of the [source advice](../WOLF-GOAL-001/results/source-advice-07/WOLF-PROJECTION-POST-ADVICE-2026-11-07.md). No native branch count or measured gain follows.
