@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "kit": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/build/hardware01/kit.json",
+  "kit_sha256": "98d9397e1e362dcd60664aef756974b8f8aba06866b3086ba89286d1efcd9a81",
+  "inputs": 469,
+  "actual_interpreter": "/Agon/mystuff/agon-extender/.venv/bin/python",
+  "launch": [
+    "/Agon/mystuff/agon-extender/.venv/bin/python",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-009/launch02.py",
+    "--context",
+    "ACTUAL_NEW_CONTEXT_REQUIRED"
+  ],
+  "limits": "File-only current kit/producer and real launch dependency checks; no target access/grant, physical output or timing."
+}
