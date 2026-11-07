@@ -14,11 +14,11 @@ hands back/releases under the same actual97. No guest/probe/replay, old-kit edit
 pre-restore reset, source bypass or benchmark continuation is selected. Do not
 edit the old selected controller/bootstrap/plan while that cleanup remains live.
 
-- [ ] WOLF-PERF-023-08 — Explicitly pin the complete current role-owned
+- [x] WOLF-PERF-023-08 — Explicitly pin the complete current role-owned
   bootstrap/reset source/config closure in a separate future kit. Verify all
   required paths/hashes before any device access or native flash, including
   late-loaded subprocess scripts and their project imports, not only sys.modules.
-- [ ] WOLF-PERF-023-09 — Qualify positive binding and each missing/wrong/stale
+- [x] WOLF-PERF-023-09 — Qualify positive binding and each missing/wrong/stale
   dependency refusal against the actual file-only production checker and early
   controller path. Preserve the same27 matrix/budget/first-fault/real-listener/
   observer checks; freeze/push the corrected kit before fresh admission.
@@ -39,3 +39,10 @@ handoff; no stale97 token or automatic experimental retry. Original failure
 history remains independently inspectable. Same full85f9 restoration/readback,
 original actor joins, fresh handback/normal release/immediate next notice, no
 HOLD and SD mounted. Physical candidate speed remains unmeasured.
+
+Disposition after actual99 release: both source/closure subtasks completed in
+compiler416 and frozen683-input kitbafa9e76. Actual99 is a separate interrupted
+cohort: first control passed, original candidate returned, observer SIGTERM15
+prevented collection/successors. No candidate performance verdict. Exact RAM-
+beforeLOAD preservation/restoration/fullhandback/release passed; Smith paused
+the goal. Original selected amendment bytes remain in frozen preparation inputs.

@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 3572110384,
+    "boot": 1323396727,
+    "operation": "get",
+    "remote": "/test/wolf/perf023/r02/sfx.agnb",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/build/hardware02/evidence/stage/file-02-read.bin",
+    "started": 1794076800.581548,
+    "result": {
+      "protocol": 1,
+      "boot": 1323396727,
+      "id": 3572110384,
+      "phase": 4,
+      "bytes": 261956,
+      "size": 261956,
+      "records": 1215,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 13811,
+      "mainboard_us": 10139668,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.30835894000483677,
+      "host_elapsed_s": 10.590984582901001,
+      "http_upload_s": 0.03745544998673722
+    },
+    "delivered": true,
+    "http_upload_s": 0.03745544998673722,
+    "partial_owned": true,
+    "finished": 1794076811.1725326
+  }
+}

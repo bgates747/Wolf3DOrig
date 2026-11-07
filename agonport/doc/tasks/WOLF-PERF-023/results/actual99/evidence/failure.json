@@ -1,0 +1,6 @@
+{
+  "error": "ObserverUnavailable(\"[Errno 2] No such file or directory: '/proc/1490178/stat'\")",
+  "next_dispatch_stopped": true,
+  "custody_retained": true,
+  "epoch": 1794077444.0308192
+}

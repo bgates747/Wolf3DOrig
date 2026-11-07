@@ -81,8 +81,20 @@ The [corrected harness](../WOLF-PERF-023/CONTROLLER-RESULT03.md) is qualified an
 pushed at b54895d. Compiler416 passed30 tests, including24 bad-dependency
 ordinary-constructor subcases, in3.651s; both real interpreter preflights match.
 All children and compiler leases are released. Exact renderer/target/real guest
-bindings rejoin without rebuild. New reservation0d70a117969f is PREPARING behind
-MechAgon98. Final immutable hardware02 kit deliberately waits for actual98 clean
-full restoration/release, then normal fresh current-tuple admission. No Wolf
-hardware access or lease is held while preparing. Oryx's subsequent online notice
-does not change this already selected finite hardware comparison.
+bindings rejoin without rebuild. Corrected683-input kitbafa9e76 was frozen after
+actual98 clean release and admitted as actual99. First control passed600 poses;
+candidate02 returned COMPLETE/UNLOAD0/realCLI, but the host observer received
+SIGTERM15 and exited. Its sender/cause is unknown. The controller correctly
+refused return-listener/collection on observer loss, before any third case.
+There is no completed candidate timing comparison or gain verdict.
+
+Smith explicitly paused the goal and requested the seven-item progress summary.
+Original controller/observer exited1/1, tracer joined. Separate ordinary cleanup
+preserved325309B resident RAM before LOAD/reset, retained available original
+loading diagnostics, restored/read back full85f9 and completed fresh handback.
+Cleanup exited0; actual99 normally RELEASED18:56:35UTC, nextnull, immediate
+Extender notice, all actors/target access STOPPED, SD mounted. No successor
+reservation/replay or new optimization is selected. The goal remains PAUSED.
+[Actual99 record](../WOLF-PERF-023/results/actual99/RESULT.json) preserves683 input
+snapshots, original handles/observer failure and full restoration/release.
+Strongest completed aggregate remains actual95:20.903ms draw,30.062fps visible.

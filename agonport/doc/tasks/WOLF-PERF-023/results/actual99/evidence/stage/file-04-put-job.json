@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 1416568553,
+    "boot": 1323396727,
+    "operation": "put",
+    "remote": "/test/wolf/perf023/r02/level_00/tiles.agnb",
+    "activate": true,
+    "size": 66328,
+    "destination": null,
+    "started": 1794076908.4980998,
+    "result": {
+      "protocol": 1,
+      "boot": 1323396727,
+      "id": 1416568553,
+      "phase": 4,
+      "bytes": 66328,
+      "size": 66328,
+      "records": 317,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 136097,
+      "mainboard_us": 3193690,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 3.4964725971221924,
+      "http_upload_s": 0.16074952704366297
+    },
+    "delivered": true,
+    "http_upload_s": 0.16074952704366297,
+    "finished": 1794076911.9945724
+  }
+}

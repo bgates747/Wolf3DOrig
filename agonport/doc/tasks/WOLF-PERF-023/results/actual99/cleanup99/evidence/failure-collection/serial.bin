@@ -1,0 +1,15 @@
+VDU 2
+/test/wolf/perf023/r02 *VDU 87 80 51 45 102 97 105 108 117 114 101 45 99 111 110 102 105 114 109 45 99 108 105 13 10
+WP3-failure-confirm-cli
+/test/wolf/perf023/r02 *DIR
+Volume: AGONEX
+Directory: /test/wolf/perf023/r02
+
+level_00             after.bin            b-candidate-room.bin
+b-original-room.bin  before.bin           hud.agnb            
+loading.bin          loading3.bin         native.bin          
+post-callback.bin    post-mode.bin        resource-probe.bin  
+route.bin            route.txt            sfx.agnb            
+shell.agnb           stack.bin            state.txt           
+timing.bin           wolf3d.cfg           wolf3d.vdpl         
+/test/wolf/perf023/r02 *

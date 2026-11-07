@@ -1,0 +1,41 @@
+{
+  "passed": true,
+  "guest_rebuild_required": true,
+  "carrier": "mainboard-route0-UART0",
+  "symbols": {
+    "_vpd_protocol_flags": "0xbc326",
+    "_scrmode": "0xbc349",
+    "_serialFlags": "0xbc35a",
+    "_vdp_protocol_state": "0xbc378",
+    "_vdp_protocol_cmd": "0xbc379",
+    "_vdp_protocol_len": "0xbc37a",
+    "_vdp_protocol_ptr": "0xbc37b",
+    "_vdp_protocol_data": "0xbc37e",
+    "_user_kbvector": "0xbc38e",
+    "_emosVduBackend": "0xbcb25"
+  },
+  "rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+  "map_sha256": "55b830f8978dd7269cf2c900c33bc2a0b24a7c24be543f3194d3d62f6ff68430",
+  "provenance": "Actual98 exacta25f fullROM rollback/readback and clean release match retained d9b/a25f/5d657/ed403/0566. Actual97 full85f9 native rollback/readback independently verified. This is retained source/release provenance, not a new device read or grant; actual current admission remains mandatory.",
+  "findings": [
+    "reset.asm RST18 -> handlers.asm rst_18_handler -> serial.asm EMOS_vdu_WRITE route0 -> synchronous UART0 PUTCH loop. No async host buffer lifetime substitution.",
+    "UART0 PUTCH checks enabled/CTS then waits for each byte accepted. Source-backed behavior, not a fresh wire or receiver-timing observation.",
+    "mos_api.asm 40 clears selected existing flags;41 calls mos.c wait_VDP, polling same flag up to250000 iterations without query replay or clear.",
+    "vdp_protocol.asm KEY requires completed ten-byte body and route0, exact P3DR or VDPL tag, callback-only; guest owns token/kind/sequence validation. Not a generic completion ABI.",
+    "Current map proves retained loading observer private reads, mode/callback and route SAVE addresses. Ordinary RAM reads only; private observer literals remain identical; package byte/limit equates are explicitly bound per arm.",
+    "Actual retained mode producer waits for matching136 reply then wp_settle_display240 MOS ticks before setup/loading. Invocation capture retains1second after final return before collection; entry0 only.",
+    "No parallel networking API/carrier substitution, old54 bootstrap marker or firmware rollback permitted."
+  ],
+  "transfer_lifecycle": {
+    "listener_app_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2",
+    "retained_service_sha256": "4a1f205e380ffad60e836726bdd810a36c3f28330b943e14a86b68decc0fcb50",
+    "recovery_operation": 10,
+    "inspect_action": 0,
+    "backup_cleanup_action": 3,
+    "required_before_state": 1,
+    "required_after_put_state": 9,
+    "required_final_state": 1,
+    "host_composition_receipt_sha256": "7a8b7d48478422a754278bff45be81395c224eb024e5925b372c1089fb9377f4",
+    "qualification": "Actual consumer method plus retained real listener engine; POSIX/MOS host adapter, not physical FAT/UART qualification"
+  }
+}

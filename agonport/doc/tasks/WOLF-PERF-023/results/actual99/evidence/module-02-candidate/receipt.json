@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "arm": "candidate",
+  "sha256": "b181a8fdba5b0e0791359593e95169a99ad732e369cbb9442be1e4046baed1d4",
+  "outside_timing": true,
+  "previous_sha256": "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b",
+  "backup_retired": true,
+  "recovery_state": 1
+}

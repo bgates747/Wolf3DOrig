@@ -1,0 +1,33 @@
+{
+  "verified": true,
+  "cohort_passed": false,
+  "original_kit_sha256": "bafa9e767684710a8bef275d98da74d0ee6e872d177a25dec0a15b8e5cdc53d6",
+  "original_input_snapshots": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-023/results/hardware02-preparation/frozen-inputs/index.json",
+  "inputs": 683,
+  "first_control_passed_poses": 600,
+  "first_control_after_INFO_stack_remaining": 1748,
+  "candidate02_returned_COMPLETE_UNLOAD0_realCLI": true,
+  "candidate02_timing_collected": false,
+  "third_case_dispatched": false,
+  "observer_SIGTERM": 15,
+  "observer_sender_cause": "UNKNOWN",
+  "tracer_joined": true,
+  "controller_stopped_on_missing_observer": true,
+  "original_tool_exitcodes": {
+    "controller": 1,
+    "observer": 1,
+    "cleanup": 0
+  },
+  "RAM_preserved_before_LOAD_reset": {
+    "passed": true,
+    "size": 325309,
+    "sha256": "f254ea40a3d40450194adc2c1223de713391dfce02c52a19584a5d3c4c258b62",
+    "before_any_load": true
+  },
+  "exact_incoming_1105920_bytes_85f9_restored": true,
+  "full_fresh_handback": true,
+  "released": "2026-11-07T18:56:35.331188+00:00",
+  "next_request": null,
+  "goal_paused": true,
+  "limits": "Interrupted/incomplete original cohort, no candidate performance verdict, replay, observer restart or new guest. Available original loading diagnostics preserved; other original candidate timing/native/stack outputs remain on mounted SD, not claimed retrieved. Cleanup observer/session is ordinary constructor bookkeeping, no new tracer/observer. Historical strongest completed comparison remains actual95."
+}

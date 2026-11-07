@@ -1,0 +1,2 @@
+SAVE /test/wolf/perf023/r02/setup-ram.bin &40000 &4F6BD
+EMOS sdserve --fast /
