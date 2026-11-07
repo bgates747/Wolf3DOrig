@@ -12,10 +12,10 @@ firmware/service/provider/carrier/default or viewport change is selected.
 - [x] WOLF-PERF-023-02 — Count eligible actual constant-colour spans using the
   real combined renderer/600 existing poses, with original geometry and no
   mutated target/timing fixture. Establish a useful opportunity or dispose it.
-- [ ] WOLF-PERF-023-03 — Isolated exact8d3d19bb combined control/candidate copies;
+- [x] WOLF-PERF-023-03 — Isolated exact8d3d19bb combined control/candidate copies;
   only fill_span's direct-row branch changes under the proved predicate. Zero,
   unaligned, arbitrary-XOR and overflow cases retain the exact scalar path.
-- [ ] WOLF-PERF-023-04 — Serial host checks: independent scalar byte oracle,
+- [x] WOLF-PERF-023-04 — Serial host checks: independent scalar byte oracle,
   guarded arbitrary/noncontiguous/aliased rows, arbitrary masks/colour/bias/XOR,
   zero/boundary/overflow-refusal cases, actual renderer/module/error/lease/order
   tests and600-frame/state/geometry parity. Keep ASan/UBSan; no relaxed oracle.
@@ -100,3 +100,11 @@ It does NOT claim to execute the full canonical scene or qualify a candidate.
 Source-callgraph exhaustivity and independence explain why these are the fill
 counts for each healthy canonical pose; complete renderer/600-pose parity still
 belongs to step04, and the full physical scene comparison remains untouched.
+
+### Reached qualification
+
+[BUILD-RESULT](BUILD-RESULT.md): exact8d3d control reproduction, both independent
+74755-case private-span oracles, ordered aliases, actual renderer/module/600-frame
+parity and target byte-loop/resource checks pass. Candidate b181a8fd is22620B
+(+48B/data unchanged). Actual compiler408 is released, no hardware custody.
+Real per-arm producer bindings and separate physical readiness remain pending.

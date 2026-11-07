@@ -1,0 +1,50 @@
+{
+  "renderer": {
+    "bytes": 900496,
+    "sha256": "c4b01d0a06150b803c74a6dd28adaff1523ab792745be6fe9a8240014def5a8a"
+  },
+  "spans": {
+    "bytes": 776784,
+    "sha256": "7483c7ab71c92cfef525e9da8e8edae9257167351d24d634afb8ff867d0198a3"
+  },
+  "equivalence": {
+    "bytes": 1107296,
+    "sha256": "8ad49a0520511c44bb089ef9812adf01f023a690a4701aafbfb69cfd5fc41f0a"
+  },
+  "fixture-frame.bin": {
+    "bytes": 460800,
+    "sha256": "3c2f2deac2a29851080ddc6164a987c6ef669fa7e268895305132dbed1d10a5b"
+  },
+  "spans.bin": {
+    "bytes": 51971104,
+    "sha256": "90899efa5dc93d5344bab43bbd7e48050de2f8673eeaea421e1a80bed79eabb8"
+  },
+  "frames600.bin": {
+    "bytes": 46080000,
+    "sha256": "8f6c99ac8ba1c67c5139df9544a6b11cfe5d7f047d5206e274c93dcaf2c66c20"
+  },
+  "actual-span": {
+    "bytes": 724000,
+    "sha256": "568a487139192f6f830434bbbb607b18fa2bedae62754f78020a4ee4b0e6dc66"
+  },
+  "ordered-background": {
+    "bytes": 729728,
+    "sha256": "9f3c74875a0bfaa235eca22cb4b795f906f3a81af62be3b3347497cf1e9fc109"
+  },
+  "fixture-geometry.bin": {
+    "bytes": 10752,
+    "sha256": "3ce0603befa242be5f026d6090cae02caad72394c9733254f7c622ae251faec9"
+  },
+  "module-frame.bin": {
+    "bytes": 76800,
+    "sha256": "be81eb7d2b7bd2754a2b887aed08ed22de9fbd634e5ef867ff645ddf5c8571cd"
+  },
+  "states600.bin": {
+    "bytes": 1081200,
+    "sha256": "06f58af5c06a2ec718a3b6e9345eadbc5c276a97324229ab4492a645b887be86"
+  },
+  "module": {
+    "bytes": 2466328,
+    "sha256": "92180030b68f7302b15af25853199d46b638b6a39383b0b92d63f6b27f785709"
+  }
+}

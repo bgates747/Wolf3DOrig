@@ -1,0 +1,50 @@
+{
+  "original": {
+    "frames": {
+      "vdplet_entry": 128,
+      "wp_production_entry": 304,
+      "render_world_direct": 48,
+      "render_world_to_target": 336,
+      "draw_walls": 608,
+      "acquire_asset": 64
+    },
+    "module_selected_path_bytes": 1488,
+    "native_prefix_bytes": 384,
+    "native_acquire_frame": 64,
+    "selected_task_chain_bytes": 1936,
+    "background_frames": {
+      "vdplet_entry": 128,
+      "wp_production_entry": 304,
+      "render_world_direct": 48,
+      "render_world_to_target": 336,
+      "fill_rect": 32,
+      "fill_span": 32
+    },
+    "background_module_bytes": 880,
+    "background_task_bytes": 1264
+  },
+  "candidate": {
+    "frames": {
+      "vdplet_entry": 128,
+      "wp_production_entry": 304,
+      "render_world_direct": 48,
+      "render_world_to_target": 336,
+      "draw_walls": 608,
+      "acquire_asset": 64
+    },
+    "module_selected_path_bytes": 1488,
+    "native_prefix_bytes": 384,
+    "native_acquire_frame": 64,
+    "selected_task_chain_bytes": 1936,
+    "background_frames": {
+      "vdplet_entry": 128,
+      "wp_production_entry": 304,
+      "render_world_direct": 48,
+      "render_world_to_target": 336,
+      "fill_rect": 32,
+      "fill_span": 32
+    },
+    "background_module_bytes": 880,
+    "background_task_bytes": 1264
+  }
+}
