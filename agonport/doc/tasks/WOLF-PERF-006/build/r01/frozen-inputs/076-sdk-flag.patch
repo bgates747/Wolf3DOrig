@@ -1,0 +1,11 @@
+--- original-sdk
++++ candidate-sdk
+@@ -112,7 +112,7 @@
+     elf = output / f"{name}.elf"
+     stripped = output / f"{name}.upload.elf"
+     prefix = str(compiler).removesuffix("gcc")
+-    flags = ["-I", str(ROOT / "include"), "-Os", "-fPIC", "-mlongcalls", "-mtext-section-literals",
++    flags = ["-I", str(ROOT / "include"), "-O2", "-fPIC", "-mlongcalls", "-mtext-section-literals",
+              "-fvisibility=hidden", "-ffunction-sections", "-fdata-sections",
+              "-fno-builtin", "-ffp-contract=off", "-fstack-usage", "-fno-common"]
+     if source.suffix == ".cpp":

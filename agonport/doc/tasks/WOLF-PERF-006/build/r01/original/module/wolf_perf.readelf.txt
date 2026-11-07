@@ -1,0 +1,91 @@
+ELF Header:
+  Magic:   7f 45 4c 46 01 01 01 00 00 00 00 00 00 00 00 00 
+  Class:                             ELF32
+  Data:                              2's complement, little endian
+  Version:                           1 (current)
+  OS/ABI:                            UNIX - System V
+  ABI Version:                       0
+  Type:                              DYN (Shared object file)
+  Machine:                           Tensilica Xtensa Processor
+  Version:                           0x1
+  Entry point address:               0x3738
+  Start of program headers:          52 (bytes into file)
+  Start of section headers:          19472 (bytes into file)
+  Flags:                             0x300
+  Size of this header:               52 (bytes)
+  Size of program headers:           32 (bytes)
+  Number of program headers:         3
+  Size of section headers:           40 (bytes)
+  Number of section headers:         9
+  Section header string table index: 8
+
+Section Headers:
+  [Nr] Name              Type            Addr     Off    Size   ES Flg Lk Inf Al
+  [ 0]                   NULL            00000000 000000 000000 00      0   0  0
+  [ 1] .hash             HASH            00000094 000094 000014 04   A  2   0  4
+  [ 2] .dynsym           DYNSYM          000000a8 0000a8 000020 10   A  3   1  4
+  [ 3] .dynstr           STRTAB          000000c8 0000c8 00000e 00   A  0   0  1
+  [ 4] .rela.dyn         RELA            000000d8 0000d8 000264 0c   A  2   0  4
+  [ 5] .text             PROGBITS        0000033c 00033c 003806 00  AX  0   0  4
+  [ 6] .rodata           PROGBITS        00003b44 003b44 00108c 00   A  0   0  4
+  [ 7] .bss              NOBITS          0000508c 00508c 001578 00  WA  0   0  4
+  [ 8] .shstrtab         STRTAB          00000000 004bd0 00003e 00      0   0  1
+Key to Flags:
+  W (write), A (alloc), X (execute), M (merge), S (strings), I (info),
+  L (link order), O (extra OS processing required), G (group), T (TLS),
+  C (compressed), x (unknown), o (OS specific), E (exclude),
+  p (processor specific)
+
+Relocation section '.rela.dyn' at offset 0xd8 contains 51 entries:
+ Offset     Info    Type                Sym. Value  Symbol's Name + Addend
+00000344  00000005 R_XTENSA_RELATIVE                 0
+000004bc  00000005 R_XTENSA_RELATIVE                 0
+000005c0  00000005 R_XTENSA_RELATIVE                 0
+00000698  00000005 R_XTENSA_RELATIVE                 0
+00000804  00000005 R_XTENSA_RELATIVE                 0
+0000083c  00000005 R_XTENSA_RELATIVE                 0
+0000084c  00000005 R_XTENSA_RELATIVE                 0
+000012cc  00000005 R_XTENSA_RELATIVE                 0
+00001354  00000005 R_XTENSA_RELATIVE                 0
+00001358  00000005 R_XTENSA_RELATIVE                 0
+000013e8  00000005 R_XTENSA_RELATIVE                 0
+000013ec  00000005 R_XTENSA_RELATIVE                 0
+00001770  00000005 R_XTENSA_RELATIVE                 0
+00001774  00000005 R_XTENSA_RELATIVE                 0
+00001778  00000005 R_XTENSA_RELATIVE                 0
+00001784  00000005 R_XTENSA_RELATIVE                 0
+00001794  00000005 R_XTENSA_RELATIVE                 0
+0000179c  00000005 R_XTENSA_RELATIVE                 0
+000017a0  00000005 R_XTENSA_RELATIVE                 0
+000017a8  00000005 R_XTENSA_RELATIVE                 0
+000017ac  00000005 R_XTENSA_RELATIVE                 0
+000017bc  00000005 R_XTENSA_RELATIVE                 0
+000017c8  00000005 R_XTENSA_RELATIVE                 0
+00002c2c  00000005 R_XTENSA_RELATIVE                 0
+00002cbc  00000005 R_XTENSA_RELATIVE                 0
+00002d20  00000005 R_XTENSA_RELATIVE                 0
+00002d24  00000005 R_XTENSA_RELATIVE                 0
+00002d28  00000005 R_XTENSA_RELATIVE                 0
+00002d2c  00000005 R_XTENSA_RELATIVE                 0
+00002d30  00000005 R_XTENSA_RELATIVE                 0
+00002d34  00000005 R_XTENSA_RELATIVE                 0
+00002d38  00000005 R_XTENSA_RELATIVE                 0
+00002d40  00000005 R_XTENSA_RELATIVE                 0
+00002d44  00000005 R_XTENSA_RELATIVE                 0
+00002d48  00000005 R_XTENSA_RELATIVE                 0
+00002d4c  00000005 R_XTENSA_RELATIVE                 0
+00002d50  00000005 R_XTENSA_RELATIVE                 0
+00002d54  00000005 R_XTENSA_RELATIVE                 0
+00002d58  00000005 R_XTENSA_RELATIVE                 0
+00002d5c  00000005 R_XTENSA_RELATIVE                 0
+00002d60  00000005 R_XTENSA_RELATIVE                 0
+00002d64  00000005 R_XTENSA_RELATIVE                 0
+00002d68  00000005 R_XTENSA_RELATIVE                 0
+00002d6c  00000005 R_XTENSA_RELATIVE                 0
+00002d70  00000005 R_XTENSA_RELATIVE                 0
+00002d78  00000005 R_XTENSA_RELATIVE                 0
+00002d7c  00000005 R_XTENSA_RELATIVE                 0
+00002d80  00000005 R_XTENSA_RELATIVE                 0
+00003714  00000005 R_XTENSA_RELATIVE                 0
+0000371c  00000005 R_XTENSA_RELATIVE                 0
+00003730  00000005 R_XTENSA_RELATIVE                 0

@@ -1,0 +1,61 @@
+{
+  "compiler": "xtensa-esp32-elf-gcc (crosstool-NG esp-2021r2-patch5) 8.4.0",
+  "abi_header_sha256": "92a6bbc403ecc51e165c103cfd16fd071f3d644ad52f83a4a7cb4fe088a5a2d6",
+  "protocol_header_sha256": "0dc8ad31e249ce58ed39435f6a8a265a9175be417ea3bee8a2cc10cde9f94b2f",
+  "services_header_sha256": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f",
+  "pcm_sink_header_sha256": "e3bf5d900105ddd87e82f5cd38301fab02ffb7a7e38f81012db0bb2e13ba963c",
+  "module": {
+    "compiler_target": {
+      "psram_cache_workaround": true,
+      "flags": [
+        "-mfix-esp32-psram-cache-issue"
+      ]
+    },
+    "link_map": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/module/wolf_perf.map",
+    "name": "wolf_perf",
+    "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/native-source/wolf3d_module.cpp",
+    "source_sha256": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+    "policy_sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+    "declared_limits": {
+      "text": 65536,
+      "data": 16384,
+      "stack": 2048,
+      "image": 131072
+    },
+    "text_policy": {
+      "profile": "standard",
+      "maximum": 65536
+    },
+    "build_id": "0x20261104",
+    "capabilities": 257,
+    "abi_major": 1,
+    "abi_minor": 6,
+    "envelope_bytes": 64,
+    "elf_bytes": 20864,
+    "package_bytes": 20928,
+    "sha256": "cd429e2fd642ab784d024cb7d6eb48f38b00eec132285ea78222b0e77e373ceb",
+    "package": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/module/wolf_perf.vdpl",
+    "elf": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/module/wolf_perf.elf",
+    "entry_virtual": 15056,
+    "resident_text_bytes": 15516,
+    "resident_data_bytes": 9748,
+    "relative_relocations": 38,
+    "allocated_sections": {
+      ".text": {
+        "virtual_address": 672,
+        "bytes": 15513,
+        "type": 1
+      },
+      ".rodata": {
+        "virtual_address": 16188,
+        "bytes": 4252,
+        "type": 1
+      },
+      ".bss": {
+        "virtual_address": 24804,
+        "bytes": 5496,
+        "type": 8
+      }
+    }
+  }
+}

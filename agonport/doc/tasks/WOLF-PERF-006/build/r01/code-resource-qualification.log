@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/code_check.py", line 40, in <module>
+    if __name__=='__main__':main()
+                            ~~~~^^
+  File "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/code_check.py", line 21, in main
+    for name in ('__divdi3','__udivdi3','memcpy','memset','vdplet_entry'):assert re.search(r'\b'+name+r'$',symbols,re.M),name
+                                                                                 ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: __udivdi3

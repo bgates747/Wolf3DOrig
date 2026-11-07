@@ -12,10 +12,12 @@ the current dated development log, then remove it from this file.
 [hardware/hold](agonport/doc/tasks/WOLF-PERF-006/HARDWARE-RUN-01.md).
 Only priorityP01 selected now; P02–P07 deferred discussion backlog.
 
-- [ ] WOLF-PERF-006-01 — Freeze task/support/finite run and reserve bench now.
-- [ ] WOLF-PERF-006-02 — Prepare identical-source Os/O2 arms/exact bf7f control.
-- [ ] WOLF-PERF-006-03 — Qualify host/actual code/provider/stack/package producers.
+- [x] WOLF-PERF-006-01 — Freeze task/support/finite run and reserve bench now.
+- [x] WOLF-PERF-006-02 — Prepare identical-source Os/O2 arms/exact bf7f control.
+- [x] WOLF-PERF-006-03 — Qualify host/actual code/provider/stack/package producers.
 - [ ] WOLF-PERF-006-04 — Freeze qualified current-context kit and obtain grant.
+  [Ready kit](agonport/doc/tasks/WOLF-PERF-006/HARDWARE-READINESS-01.md):314pins,
+  requestab7af23bfd1a; actual fresh scheduler grant remains pending.
 - [ ] WOLF-PERF-006-05 — Execute matched sixguest/sevenprobe hardware suite.
 - [ ] WOLF-PERF-006-06 — Exact restore/idle handback; HOLD lease for Smith.
 - [ ] WOLF-PERF-006-07 — Publish/share results; release only on later direction.

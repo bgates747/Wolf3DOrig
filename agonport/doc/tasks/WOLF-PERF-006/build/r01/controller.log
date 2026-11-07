@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build.py", line 122, in <module>
+    main(args.lease, args.revision)
+    ~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build.py", line 109, in main
+    run('code-resource-qualification', [sys.executable, T/'code_check.py'], T)
+    ~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-006/build.py", line 61, in run
+    assert p.returncode == 0, label
+           ^^^^^^^^^^^^^^^^^
+AssertionError: code-resource-qualification

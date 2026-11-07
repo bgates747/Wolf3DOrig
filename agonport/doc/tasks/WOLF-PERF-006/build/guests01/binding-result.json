@@ -1,0 +1,264 @@
+{
+  "passed": true,
+  "arms": {
+    "original": {
+      "control": {
+        "passed": true,
+        "package_bytes": 19896,
+        "guest_sha256": "1e9e8991282fde1fac036aedde9cc69b74c60429a66e220bd9c01b6b8c063ab4",
+        "listing_sha256": "dd30bf00d8f2bea297eb40509e7bf5df453b03130fe54824a852ef807b9201ea",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 19896,
+            "encoded": "21b84d00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 19896,
+            "encoded": "21b84d00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 19897,
+            "encoded": "11b94d00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 19896,
+            "encoded": "01b84d00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 19896,
+            "encoded": "11b84d00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 19896,
+            "encoded": "21b84d00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551547,
+          "wp_exit_sp": 551550
+        }
+      },
+      "unpaced": {
+        "passed": true,
+        "package_bytes": 19896,
+        "guest_sha256": "670e7801a921786e003ec848968598d1f7433e0e38a4c329079adc1b1302b7a6",
+        "listing_sha256": "02009f58cc24cddb3d268dac83e6ef3caca0a67aab3beea77c4b7707a9be0b3c",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 19896,
+            "encoded": "21b84d00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 19896,
+            "encoded": "21b84d00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 19897,
+            "encoded": "11b94d00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 19896,
+            "encoded": "01b84d00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 19896,
+            "encoded": "11b84d00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 19896,
+            "encoded": "21b84d00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        }
+      }
+    },
+    "candidate": {
+      "control": {
+        "passed": true,
+        "package_bytes": 20928,
+        "guest_sha256": "b6441afdc424e4e0bdc2eeed343f709e76b98b65a1b78b803ed2fcbd8d1b7626",
+        "listing_sha256": "0908a1af95c863fb6d31342da866690f5e89b0bead18e04f0076c38159484827",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "21c05100"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "21c05100"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 20929,
+            "encoded": "11c15100"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "01c05100"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "11c05100"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "21c05100"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551547,
+          "wp_exit_sp": 551550
+        },
+        "changed_binary_offsets": [
+          160636,
+          160637,
+          160649,
+          160650,
+          160653,
+          160654,
+          160670,
+          160671,
+          160712,
+          160713,
+          161121,
+          161122
+        ],
+        "changed_source_files": [
+          "wolf3d_vdplet_client.inc",
+          "wolf3d_vdplet_package.inc"
+        ],
+        "stopped65_rejected": "Actual producer length/strict-limit differs from selected module"
+      },
+      "unpaced": {
+        "passed": true,
+        "package_bytes": 20928,
+        "guest_sha256": "9a7e699eb0a3425bd6ee43e8e80d79f939247f2801f59a5706161b5d3f4887a8",
+        "listing_sha256": "e9abecb7bd0c5a87199cbeb5987050028545ae043b48f2280f5ed428b4adb782",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "21c05100"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "21c05100"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 20929,
+            "encoded": "11c15100"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "01c05100"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "11c05100"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "21c05100"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551622,
+          "wp_exit_sp": 551625
+        },
+        "changed_binary_offsets": [
+          160636,
+          160637,
+          160649,
+          160650,
+          160653,
+          160654,
+          160670,
+          160671,
+          160712,
+          160713,
+          161121,
+          161122
+        ],
+        "changed_source_files": [
+          "wolf3d_vdplet_client.inc",
+          "wolf3d_vdplet_package.inc"
+        ],
+        "stopped65_rejected": "Actual producer length/strict-limit differs from selected module"
+      }
+    }
+  },
+  "limits": "Actual linked immediate operands/source/data path; not target execution, UART timing or live loader branch trace."
+}

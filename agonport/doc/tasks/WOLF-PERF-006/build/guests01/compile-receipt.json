@@ -1,0 +1,204 @@
+{
+  "passed": true,
+  "guards": [
+    {
+      "epoch": 1794019042.9466484,
+      "cpu_c": 46.85,
+      "available_kib": 6918336
+    },
+    {
+      "epoch": 1794019042.9472544,
+      "cpu_c": 46.85,
+      "available_kib": 6918336
+    },
+    {
+      "epoch": 1794019043.1210768,
+      "cpu_c": 46.85,
+      "available_kib": 6909136
+    },
+    {
+      "epoch": 1794019043.1216495,
+      "cpu_c": 46.85,
+      "available_kib": 6909136
+    },
+    {
+      "epoch": 1794019043.2219753,
+      "cpu_c": 46.85,
+      "available_kib": 6910336
+    },
+    {
+      "epoch": 1794019043.3954878,
+      "cpu_c": 46.85,
+      "available_kib": 6909024
+    },
+    {
+      "epoch": 1794019043.396018,
+      "cpu_c": 47.95,
+      "available_kib": 6909024
+    },
+    {
+      "epoch": 1794019043.4963014,
+      "cpu_c": 47.4,
+      "available_kib": 6909376
+    },
+    {
+      "epoch": 1794019043.670283,
+      "cpu_c": 47.4,
+      "available_kib": 6911744
+    },
+    {
+      "epoch": 1794019043.6708233,
+      "cpu_c": 47.4,
+      "available_kib": 6911744
+    },
+    {
+      "epoch": 1794019043.7710989,
+      "cpu_c": 47.4,
+      "available_kib": 6911504
+    },
+    {
+      "epoch": 1794019043.9526825,
+      "cpu_c": 48.5,
+      "available_kib": 6910816
+    },
+    {
+      "epoch": 1794019043.9532652,
+      "cpu_c": 48.5,
+      "available_kib": 6910816
+    },
+    {
+      "epoch": 1794019044.0535867,
+      "cpu_c": 47.4,
+      "available_kib": 6899632
+    },
+    {
+      "epoch": 1794019044.228768,
+      "cpu_c": 46.85,
+      "available_kib": 6899120
+    },
+    {
+      "epoch": 1794019044.2293487,
+      "cpu_c": 46.85,
+      "available_kib": 6899120
+    },
+    {
+      "epoch": 1794019044.3296354,
+      "cpu_c": 48.5,
+      "available_kib": 6873152
+    },
+    {
+      "epoch": 1794019044.4298563,
+      "cpu_c": 47.95,
+      "available_kib": 6873152
+    },
+    {
+      "epoch": 1794019044.5301282,
+      "cpu_c": 48.5,
+      "available_kib": 6873152
+    },
+    {
+      "epoch": 1794019044.6303747,
+      "cpu_c": 48.5,
+      "available_kib": 6873152
+    },
+    {
+      "epoch": 1794019044.7306297,
+      "cpu_c": 49.05,
+      "available_kib": 6873008
+    },
+    {
+      "epoch": 1794019044.8308778,
+      "cpu_c": 48.5,
+      "available_kib": 6873008
+    },
+    {
+      "epoch": 1794019044.9310987,
+      "cpu_c": 49.6,
+      "available_kib": 6871840
+    },
+    {
+      "epoch": 1794019045.0313585,
+      "cpu_c": 49.05,
+      "available_kib": 6872320
+    },
+    {
+      "epoch": 1794019045.1316082,
+      "cpu_c": 49.05,
+      "available_kib": 6870720
+    },
+    {
+      "epoch": 1794019045.2318573,
+      "cpu_c": 49.6,
+      "available_kib": 6870960
+    },
+    {
+      "epoch": 1794019045.3320663,
+      "cpu_c": 49.05,
+      "available_kib": 6870960
+    },
+    {
+      "epoch": 1794019045.4323034,
+      "cpu_c": 49.6,
+      "available_kib": 6870960
+    },
+    {
+      "epoch": 1794019045.532553,
+      "cpu_c": 49.05,
+      "available_kib": 6870560
+    },
+    {
+      "epoch": 1794019045.6327598,
+      "cpu_c": 49.6,
+      "available_kib": 6870560
+    },
+    {
+      "epoch": 1794019045.7330315,
+      "cpu_c": 48.5,
+      "available_kib": 6870800
+    },
+    {
+      "epoch": 1794019045.8332574,
+      "cpu_c": 49.05,
+      "available_kib": 6870800
+    },
+    {
+      "epoch": 1794019045.9334853,
+      "cpu_c": 49.6,
+      "available_kib": 6883648
+    }
+  ],
+  "steps": [
+    {
+      "name": "code-resource-q02",
+      "returncode": 0,
+      "seconds": 0.10076879704138264
+    },
+    {
+      "name": "asm-original-control",
+      "returncode": 0,
+      "seconds": 0.20101481600431725
+    },
+    {
+      "name": "asm-original-unpaced",
+      "returncode": 0,
+      "seconds": 0.2009166319621727
+    },
+    {
+      "name": "asm-candidate-control",
+      "returncode": 0,
+      "seconds": 0.20091989100910723
+    },
+    {
+      "name": "asm-candidate-unpaced",
+      "returncode": 0,
+      "seconds": 0.20102253899676725
+    },
+    {
+      "name": "producer-binding",
+      "returncode": 0,
+      "seconds": 1.8048424490261823
+    }
+  ],
+  "assembler_sha256": "784225e87305f35ffdff4b0a0a3a3030b69e9481fa8c6bc76ad57e4d3a506ec3",
+  "seconds": 3.1838948089862242
+}
