@@ -123,6 +123,33 @@ requires an explicit `--module PACKAGE.vdpl` and renders directly into scoped
 ABI 1.6 hidden-framebuffer rows. The module retains its copied RGB222 path as
 an explicit host-qualified oracle and rollback implementation.
 
+Add `--profile` to build the normal game with buffered performance recording:
+
+```bash
+.venv/bin/python src/asm/wolf3d/scripts/build.py --backend standalone --profile
+```
+
+This produces `wolf3d-p.bin`; the equivalent VDPlet build requires its explicit
+`--module` and produces `wolf3d-vdplet-direct-p.bin`. During play, profiling
+periodically replaces BJ's portrait with a disk icon while it writes a batch to
+`WOLFPROF.BIN` in the game's working directory. The current face returns on
+subsequent frames. A new run overwrites the previous recording at its first
+flush, so copy recordings you want to keep before running again.
+
+Decode a retrieved recording with:
+
+```bash
+.venv/bin/python src/asm/wolf3d/scripts/decode_profile.py WOLFPROF.BIN
+```
+
+The report separates logging-excluded intervals from wall time including disk
+hitches. Native drawing cycles additionally require `--profile-native`, the
+explicitly supported timing module and its qualified native runtime composition.
+See [the profiling interface](../../../agonport/doc/tasks/WOLF-PROFILE-001/FORMAT.md)
+for those pins, boundaries and error behavior. Ordinary builds omit all profiling
+code and recording storage; the option does not change simulation scheduling or
+implement the separately proposed asynchronous rendering pipeline.
+
 The equivalent direct standalone assembly remains supported:
 
 ```bash
