@@ -22,11 +22,11 @@ checkout and concrete finite run/cleanup preparation before dispatch.
 - [x] WOLF-PROFILE-001-02 — Freeze the compile-time switch, binary record format,
   record-buffer memory budget, flush policy, measurement boundaries and error/
   overflow/exit behavior. Preserve gameplay time and exact component identities.
-- [ ] WOLF-PROFILE-001-03 — Add optional normal-game timing and fixed-size RAM
+- [x] WOLF-PROFILE-001-03 — Add optional normal-game timing and fixed-size RAM
   recording. Link pose/frame IDs across input/physics, preparation, submission,
   remote drawing and presentation-fence completion where supported. Disabled
   builds omit instrumentation, recording storage and profiling disk operations.
-- [ ] WOLF-PROFILE-001-04 — Add bounded periodic batch logging and BJ-portrait
+- [x] WOLF-PROFILE-001-04 — Add bounded periodic batch logging and BJ-portrait
   disk cue. Present the cue before I/O, retain it during the flush, and restore
   the face appropriate to current game state afterward, across both HUD pages.
 - [ ] WOLF-PROFILE-001-05 — Qualify normal/profiling builds, record joins, clock
