@@ -4,10 +4,11 @@ import difflib
 import hashlib
 import json
 import shutil
+import re
 import caption
 
 T = Path(__file__).resolve().parent
-B = T / 'build/r01'
+B = T / 'build/r02'
 BASE = T.parent / 'WOLF-PERF-009/build/guests01'
 sha = lambda p: hashlib.sha256(Path(p).read_bytes()).hexdigest()
 
@@ -19,30 +20,33 @@ def label(source):
     assert old.count(needle) == 1
     new = old.replace(needle, '''    ld hl,wp_loading_hint
     call printString
-    .if WP_MODE = 1
+    .if WP_STATIC_TIMER
     call wp_static_caption_paint
     .endif
     ret''')
     # Preserve the unpaced machine code: the original tail jump stays intact.
-    new = new.replace('    ld hl,wp_loading_hint\n    call printString\n    .if WP_MODE = 1\n',
-        '    ld hl,wp_loading_hint\n    .if WP_MODE = 1\n    call printString\n')
+    new = new.replace('    ld hl,wp_loading_hint\n    call printString\n    .if WP_STATIC_TIMER\n',
+        '    ld hl,wp_loading_hint\n    .if WP_STATIC_TIMER\n    call printString\n')
     new = new.replace('    call wp_static_caption_paint\n    .endif\n    ret',
         '    call wp_static_caption_paint\n    ret\n    .else\n    jp printString\n    .endif')
     text = 'wp_loading_hint: db "Rotation starts after loading.",0'
     assert new.count(text) == 1
-    new = new.replace(text, '''    .if WP_MODE = 1
+    new = new.replace(text, '''    .if WP_STATIC_TIMER
 wp_loading_hint: db "NO ROTATION EXPECTED - TIMER ABORT CHECK",0
     .else
 ''' + text + '''
     .endif''')
-    new += '\n    .if WP_MODE = 1\n    include "static_caption.inc"\n    .endif\n'
+    new += '\n    .if WP_STATIC_TIMER\n    include "static_caption.inc"\n    .endif\n'
     p.write_text(new)
     p = source / 'wolf3d.asm'
     main = p.read_text()
+    found = re.findall(r'(?m)^WP_MODE:\s+equ (\d+)\s*$', main)
+    assert len(found) == 1 and found[0] in ('1', '2')
+    main = main.replace('WP_MODE: equ ' + found[0], 'WP_MODE: equ ' + found[0] + '\nWP_STATIC_TIMER: equ ' + str(int(found[0] == '1')), 1)
     needle = '@restore_screen:\n    call w3d_restore_original_screen_mode'
     assert main.count(needle) == 1
     p.write_text(main.replace(needle, '''@restore_screen:
-    .if WP_MODE = 1
+    .if WP_STATIC_TIMER
     call wp_static_caption_close
     .endif
     call w3d_restore_original_screen_mode'''))

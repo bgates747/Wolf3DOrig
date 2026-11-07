@@ -12,7 +12,7 @@ import time
 import caption
 
 T = Path(__file__).resolve().parent
-B = T / 'build/r01'
+B = T / 'build/r02'
 Q = T.parent / 'WOLF-PERF-009'
 D = Path('/Agon/mystuff/agon-dev-env')
 ASM = T.parents[3] / 'src/asm/wolf3d/tgt/.tools/ez80asm'
