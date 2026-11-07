@@ -1,0 +1,102 @@
+"""Native foreground exact-controller observer; never signals its tracee."""
+from pathlib import Path
+import argparse
+import hashlib
+import json
+import os
+import select
+import signal
+import subprocess
+import sys
+import time
+import host_observer as session
+
+D = Path('/Agon/mystuff/agon-dev-env')
+
+
+def assert_owner(lease, resource):
+    script = (D / 'cross-agent/olimex-bench/bench_lease.py' if resource == 'bench'
+              else D / 'cross-agent/pi5-workloads/pi5_lease.py')
+    subprocess.run([str(D / '.venv/bin/python'), str(script), 'assert-owner',
+                    '--owner', 'wolf3dorig', '--lease', lease],
+                   check=True, stdout=subprocess.DEVNULL, timeout=15)
+
+
+def main(folder, lease, resource):
+    assert sys.executable == '/usr/bin/python3' and hasattr(os, 'pidfd_open')
+    folder = Path(folder).resolve()
+    record = session.load(folder / 'session.json')
+    assert record['schema'] == 'wolf-observer-session-v1' and record['lease'] == lease
+    target = record['controller']
+    assert target['uid'] == os.getuid() and target['pid'] != os.getpid()
+    assert session.identity(target['pid']) == target
+    assert session.tracer(target['pid']) == 0, 'Controller already traced'
+    assert_owner(lease, resource)
+    # pidfd remains tied to this original process, even if its PID is reused.
+    fd = os.pidfd_open(target['pid'])
+    poll = select.poll()
+    poll.register(fd, select.POLLIN)
+    assert session.identity(target['pid']) == target
+    child = None
+    outcome = dict(controller=target, observer=session.identity(os.getpid()),
+                   controller_signalled_by_observer=False, passed=False)
+    def interrupted(number, _frame):
+        for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+            signal.signal(sig, signal.SIG_DFL)
+        outcome['observer_signal'] = number
+        raise InterruptedError(number)
+    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+        signal.signal(sig, interrupted)
+    started = time.monotonic()
+    try:
+        argv = ['/usr/bin/strace', '--interruptible=1', '-qq', '-ttt',
+                '-e', 'trace=none', '-e', 'signal=SIGTERM',
+                '-o', str(folder / 'signal.trace'), '-p', str(target['pid'])]
+        outcome['argv'] = argv
+        with (folder / 'observer.log').open('x') as log:
+            child = subprocess.Popen(argv, stdout=log, stderr=subprocess.STDOUT,
+                                     start_new_session=True)
+            deadline = time.monotonic() + 5
+            while session.tracer(target['pid']) != child.pid:
+                assert child.poll() is None and not poll.poll(0)
+                assert time.monotonic() < deadline, 'Attach deadline expired'
+                time.sleep(.01)
+            ack = dict(nonce=record['nonce'],
+                       session_sha256=hashlib.sha256((folder / 'session.json').read_bytes()).hexdigest(),
+                       observer=session.identity(os.getpid()), tracer=session.identity(child.pid),
+                       epoch=time.time())
+            assert ack['tracer']['pgid'] == child.pid != target['pgid']
+            session.write_once(folder / 'attached.json', ack)
+            while not poll.poll(100):
+                assert child.poll() is None, 'Tracer ended while controller was live'
+                assert time.monotonic() - started < 4250, 'Finite observer bound expired'
+            child.wait(timeout=5)
+            assert child.returncode == 0
+            outcome['passed'] = True
+    finally:
+        # Only our own tracer Popen is signalled. Cancellation detaches; it never
+        # signals, waits for, or takes cleanup custody of the controller.
+        if child is not None:
+            if child.poll() is None:
+                child.terminate()
+                try:
+                    child.wait(timeout=3)
+                except subprocess.TimeoutExpired:
+                    child.kill()
+                    child.wait(timeout=3)
+            else:
+                child.wait()
+            outcome['tracer_returncode'] = child.returncode
+            outcome['owned_tracer_joined'] = True
+        os.close(fd)
+        outcome['seconds'] = time.monotonic() - started
+        session.write_once(folder / 'observer-result.json', outcome)
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--folder', type=Path, required=True)
+    parser.add_argument('--lease', required=True)
+    parser.add_argument('--resource', choices=('bench', 'compiler'), default='bench')
+    a = parser.parse_args()
+    main(a.folder, a.lease, a.resource)
