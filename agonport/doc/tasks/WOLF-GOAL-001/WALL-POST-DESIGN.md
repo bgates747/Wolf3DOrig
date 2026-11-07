@@ -57,3 +57,30 @@ Compatibility/intended-work gates before any candidate code:
 Relevant source: retained a926 production/wolf3d_renderer.cpp cast_walls,
 sample_wall_column, draw_walls, fill_span; original WL_DRAW.C HitVertWall/
 HitHorizWall/ScalePost and RELEASE scaler caveat. Exact pins adjacent.
+
+## Further original-scaler compatibility boundaries
+
+A fresh WL_SCALE.C review adds three concrete boundaries to the later-method
+inventory. ScalePost interprets wallheight with fractional low bits, masks with
+0xfff8, halves the index and clamps maxscaleshl2 before a generated scaler
+lookup. SetupScaling builds one scaler per two pixels and shares some larger
+entries in steps of three. The current renderer treats its height as an integer
+pixel extent; copying those index operations directly would mix units.
+
+BuildCompScale forward-maps each of64 source rows into screen intervals using
+floor(src*height/64), centre placement and clipping, then emits x86 byte loads
+and repeated VGA stores. Current sample_wall_column instead inverse-maps output
+rows with its fixed texture-step accumulator. Even an implementation of the
+same physical wall height can differ at texel boundaries. Source-generated x86
+machine code and segmented VGA mapmasks are unavailable as-is on Xtensa rows;
+those incompatibilities must be marked before claiming a faithful method port.
+The original RELEASE explicitly recommends a looping texture mapper on cached
+486+ processors, rather than treating dynamic code generation as universal.
+
+The VGA post masks have four start-plane choices and widths1..8. A row-backed
+implementation must establish its own valid-width/domain contract and cannot
+silently use an arbitrary-width row loop as proof of identical original VGA
+behavior. These are source review findings, not new speed/correctness defects
+in a926 or an assignment to implement a workaround. An exact original-scaler
+restoration would need its own unit conversion, forward-interval oracle and
+intentional image/occlusion-difference qualification before performance work.
