@@ -60,3 +60,16 @@ physical admission remain incomplete. Old hardware01/101 kit is retired; any
 future hardware check needs a new producer/source freeze and fresh admission.
 General ordinary bench readiness was already recovered/released, and later102
 passed; candidate7593 readiness failure must not be called a general bench fault.
+
+## Saved-stream comparison after release
+
+Alexe's bounded independent review verified ten selected result/wire-log hashes
+and found that all525533 outgoing bytes of failed360 exactly equal the prefix
+of successful358's1017095-byte stream. Wolf independently confirmed that same
+byte-for-byte prefix with no normalization/alignment; SHA256489807040c93e1c36a09af123262e03e4f8d625833d1723ada280dc5486cfc62.
+Emitted and delivered replies also match within each individual case. This
+rules out differing captured outgoing content before the stopping point. It
+does not establish arrival timing, FIFO acceptance, firmware consumption or
+stall cause. No new run, repair or replay is selected; original verdicts remain.
+Owner evidence: mail2026-11-07_18-00-43_flexe_wolf-profile001-alexe360-exact-prefix-return-one;
+Flexe docs/tasks/FX-154/native-profiler-intake-2026-11-07.json.

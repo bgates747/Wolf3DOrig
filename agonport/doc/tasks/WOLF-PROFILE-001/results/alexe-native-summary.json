@@ -109,5 +109,17 @@
     "Moving-view native profiler qualification",
     "Physical candidate readiness and full-game profiling admission"
   ],
-  "physical_or_framerate_claim": false
+  "physical_or_framerate_claim": false,
+  "saved_stream_comparison": {
+    "successful_run": 358,
+    "failed_run": 360,
+    "successful_bytes": 1017095,
+    "failed_bytes": 525533,
+    "exact_common_prefix": true,
+    "normalization": false,
+    "prefix_sha256": "489807040c93e1c36a09af123262e03e4f8d625833d1723ada280dc5486cfc62",
+    "owner_mail": "2026-11-07_18-00-43_flexe_wolf-profile001-alexe360-exact-prefix-return-one",
+    "owner_independent_review_files": 10,
+    "limits": "Captured outgoing bytes are equal; acceptance, firmware consumption, arrival timing and stall cause remain unproved. No new execution or repair selected."
+  }
 }
