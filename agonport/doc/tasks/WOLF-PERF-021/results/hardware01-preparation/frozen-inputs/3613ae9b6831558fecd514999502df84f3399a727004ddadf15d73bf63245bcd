@@ -1,0 +1,32 @@
+wolf3d_world_mirror.cpp:356:13:wolf3d_production::BatchDetail wolf3d_production::{anonymous}::validate_batch(const wolf3d_production::WorldMirror&, const uint8_t*, size_t, wolf3d_production::{anonymous}::BatchHeader&)	768	static
+wolf3d_renderer.cpp:133:9:int32_t wolf3d_production::{anonymous}::sin_fine(int32_t)	32	static
+wolf3d_renderer.cpp:284:9:uint8_t wolf3d_production::{anonymous}::tile_at(const wolf3d_production::WorldMirror&, const uint8_t*, int, int)	32	static
+wolf3d_renderer.cpp:424:6:bool wolf3d_production::{anonymous}::transform_point(int32_t, int32_t, const wolf3d_production::{anonymous}::ViewState&, int32_t&, int32_t&, int32_t&, uint32_t&)	32	static
+wolf3d_renderer.cpp:454:6:void wolf3d_production::{anonymous}::swap_sprites(wolf3d_production::{anonymous}::VisSprite&, wolf3d_production::{anonymous}::VisSprite&)	48	static
+wolf3d_renderer.cpp:460:6:void wolf3d_production::{anonymous}::sift_min(wolf3d_production::{anonymous}::VisSprite*, uint16_t, uint16_t)	32	static
+wolf3d_module.cpp:56:17:uint64_t divide_u64(uint64_t, uint64_t)	48	static
+wolf3d_module.cpp:145:6:void wolf3d_production::{anonymous}::emit_fizzle(wolf3d_production::{anonymous}::ModuleState::FizzleCursor&, uint32_t, uint8_t*, uintptr_t*, uint32_t, uint32_t, uint8_t, uint8_t)	32	static
+wolf3d_module.cpp:247:14:wolf3d_production::RenderDetail wolf3d_production::{anonymous}::acquire_asset(void*, uint16_t, wolf3d_production::AssetSpan&)	64	static
+wolf3d_module.cpp:263:14:wolf3d_production::RenderDetail wolf3d_production::{anonymous}::release_asset(void*, uint32_t)	32	static
+wolf3d_renderer.cpp:84:6:void wolf3d_production::{anonymous}::put_pixel(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint8_t)	32	static
+wolf3d_renderer.cpp:95:6:void wolf3d_production::{anonymous}::fill_span(const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint8_t)	32	static
+wolf3d_renderer.cpp:145:6:void wolf3d_production::{anonymous}::fill_rect(const wolf3d_production::RenderTarget&, int, int, int, int, uint8_t)	32	static
+wolf3d_module.cpp:412:9:int32_t wolf3d_production::{anonymous}::require_published_frame(const vdplet_host_v1*, const vdplet_request_v1*)	32	static
+wolf3d_renderer.cpp:659:6:bool wolf3d_production::{anonymous}::append_hud_number(wolf3d_production::{anonymous}::HudDraw*, uint8_t&, int, int, int, uint32_t)	48	static
+wolf3d_world_mirror.cpp:468:6:void wolf3d_production::initialize_world_mirror(wolf3d_production::WorldMirror&, uint16_t, uint16_t)	32	static
+wolf3d_world_mirror.cpp:484:13:wolf3d_production::BatchDetail wolf3d_production::validate_resource_descriptor(wolf3d_production::ResourceDescriptor&, const uint8_t*, size_t)	32	static
+wolf3d_module.cpp:199:9:int32_t wolf3d_production::{anonymous}::copy_descriptor(const vdplet_host_v1*, const vdplet_request_v1*, wolf3d_production::ResourceDescriptor&)	80	static
+wolf3d_module.cpp:224:9:int32_t wolf3d_production::{anonymous}::require_matching_descriptor(const vdplet_host_v1*, const vdplet_request_v1*)	48	static
+wolf3d_world_mirror.cpp:522:13:wolf3d_production::BatchDetail wolf3d_production::apply_update_batch(wolf3d_production::WorldMirror&, const uint8_t*, size_t)	64	static
+wolf3d_world_mirror.cpp:544:6:void wolf3d_production::mark_mirror_presented(wolf3d_production::WorldMirror&)	32	static
+wolf3d_world_mirror.cpp:550:13:const char* wolf3d_production::batch_detail_name(wolf3d_production::BatchDetail)	32	static
+wolf3d_renderer.cpp:759:14:wolf3d_production::RenderDetail wolf3d_production::render_world_to_target(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, uint32_t, wolf3d_production::RenderStats*)	352	static
+wolf3d_renderer.cpp:809:14:wolf3d_production::RenderDetail wolf3d_production::render_world(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, wolf3d_production::RenderStats*)	80	static
+wolf3d_renderer.cpp:820:14:wolf3d_production::RenderDetail wolf3d_production::render_world_direct(const wolf3d_production::WorldMirror&, const wolf3d_production::RenderResources&, const wolf3d_production::RenderTarget&, wolf3d_production::RenderStats*)	48	static
+wolf3d_renderer.cpp:831:13:const char* wolf3d_production::render_detail_name(wolf3d_production::RenderDetail)	32	static
+wolf3d_module.cpp:21:18:void* memcpy(void*, const void*, unsigned int)	32	static
+wolf3d_module.cpp:28:18:void* memset(void*, int, unsigned int)	32	static
+wolf3d_module.cpp:78:21:uint64_t __udivdi3(uint64_t, uint64_t)	32	static
+wolf3d_module.cpp:82:20:int64_t __divdi3(int64_t, int64_t)	32	static
+wolf3d_module.cpp:574:9:int32_t wp_production_entry(const vdplet_host_v1*, const vdplet_request_v1*)	304	static
+wolf3d_module.cpp:613:9:int32_t vdplet_entry(const vdplet_host_v1*, const vdplet_request_v1*)	128	static

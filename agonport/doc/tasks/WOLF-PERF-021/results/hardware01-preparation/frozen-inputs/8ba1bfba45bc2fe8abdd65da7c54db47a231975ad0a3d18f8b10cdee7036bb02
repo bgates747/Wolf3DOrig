@@ -1,0 +1,26 @@
+{
+  "original": {
+    "room": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/guests01/original/room/source",
+      "guest": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/guests01/original/room/source/wolf3d.bin",
+      "listing": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/guests01/original/room/source/wolf3d.lst",
+      "module": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/original/module/wolf_perf.vdpl",
+      "module_sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+      "package_bytes": 24420,
+      "package_limit": 24421,
+      "remote_name": "b-original-room.bin"
+    }
+  },
+  "candidate": {
+    "room": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/guests01/candidate/room/source",
+      "guest": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/guests01/candidate/room/source/wolf3d.bin",
+      "listing": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/guests01/candidate/room/source/wolf3d.lst",
+      "module": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.vdpl",
+      "module_sha256": "22ef84a767951ec03ea138b048db4cfe613d1edf02e8cbb34ee824ba535d24a1",
+      "package_bytes": 24504,
+      "package_limit": 24505,
+      "remote_name": "b-candidate-room.bin"
+    }
+  }
+}

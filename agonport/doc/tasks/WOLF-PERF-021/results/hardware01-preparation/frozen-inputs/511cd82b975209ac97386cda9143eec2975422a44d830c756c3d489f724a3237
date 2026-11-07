@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "image_sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de",
+  "offset": 65536,
+  "span": 1105920,
+  "independent_readback": true,
+  "app_only": true
+}

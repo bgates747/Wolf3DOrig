@@ -47,7 +47,12 @@ def main():
     files += [str(native/n)for n in ('final-checks/observation.json','final-checks/state.json','flash-restore/read.bin','flash-restore/receipt.json')]
     assert sha(native/'flash-restore/read.bin')==sha(B/'restore.bin')
     files += [str(native/'final-checks/observation.json')]
-    emos=E/'agents/bench-scheduler/mechagon-goal001-r05/owner-install/verify-rollback'
+    latest=E/'agents/bench-scheduler/mechagon-goal001-r06'
+    actual90=json.loads((latest/'released.json').read_text())
+    assert actual90['generation']==90 and actual90['released']
+    assert actual90['release_observation']['components']==components
+    files += [str(latest/n)for n in ('released.json','release-observation.json','final/fresh.json')]
+    emos=latest/'owner-install/verify-rollback'
     files += [str(emos/'ROM.bin'),str(emos/'receipt.json')]
     assert sha(emos/'ROM.bin')==components['emos_rom_sha256']
     for m in tuple(sys.modules.values()):

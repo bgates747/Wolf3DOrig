@@ -14,7 +14,7 @@ No physical021 cohort or production default is selected by this source contract.
   numerical/trig/renderer/module/600-pose oracles; exact target safe flags/provider/
   code/sections/nested-stack/data/image and real per-arm producers. Fail closed
   on any mismatch. Do not infer combined correctness/resources by addition.
-- [ ] WOLF-PERF-021-04 — After qualified source/code and the distinct019 outcome,
+- [x] WOLF-PERF-021-04 — After qualified source/code and the distinct019 outcome,
   select/freeze one useful uncapped matched physical contract/current tuple/
   exact rollback/host closure/actual producer bindings, then normal Mech-first
   admission. No blind replay, weaker guards or bench reservation from this plan.
@@ -91,3 +91,8 @@ and presentation cadence remain separate from draw and clock/source counts.
 
 Source/target/producer result: [BUILD-RESULT.md](BUILD-RESULT.md). No physical
 021 contract/default selected; running019 and its549 input bytes remain intact.
+
+Distinct019 actual89 failed startup, restored/released with zero room samples.
+The separately selected combined-vs-cyan comparison is qualified and frozen:
+[HARDWARE-READINESS.md](HARDWARE-READINESS.md). Fresh grant remains required;
+no physical021 dispatch/result/default claim from offline readiness.

@@ -1,0 +1,51 @@
+--- original/production/wolf3d_renderer.cpp
++++ candidate/production/wolf3d_renderer.cpp
+@@ -160,7 +160,21 @@
+ void compose_background(const RenderTarget &frame) {
+     for (uint32_t y = kPlayHeight; y < W3P_SCREEN_HEIGHT; ++y)
+         fill_span(frame, 0, y, W3P_SCREEN_WIDTH, kDarkGray);
+-    fill_rect(frame, 0, 0, W3P_SCREEN_WIDTH - 1, kPlayHeight - 1, kDarkCyan);
++    // A later viewport fill fully replaces cyan only under overwrite masks.
++    if (frame.linear != nullptr ||
++        (frame.color_mask & frame.preserve_mask) == 0) {
++        fill_rect(frame, 0, 0, W3P_SCREEN_WIDTH - 1, kViewY - 1, kDarkCyan);
++        fill_rect(frame, 0, kViewY + kViewHeight,
++                  W3P_SCREEN_WIDTH - 1, kPlayHeight - 1, kDarkCyan);
++        fill_rect(frame, 0, kViewY, kViewX - 1,
++                  kViewY + kViewHeight - 1, kDarkCyan);
++        fill_rect(frame, kViewX + kViewWidth, kViewY,
++                  W3P_SCREEN_WIDTH - 1, kViewY + kViewHeight - 1, kDarkCyan);
++    } else {
++        // Overlapping masks can retain bits contributed by the first fill.
++        fill_rect(frame, 0, 0, W3P_SCREEN_WIDTH - 1,
++                  kPlayHeight - 1, kDarkCyan);
++    }
+     fill_rect(frame, kViewX, kViewY, kViewX + kViewWidth - 1,
+               kViewY + kCenterY - 1, kLightGray);
+     fill_rect(frame, kViewX, kViewY + kCenterY, kViewX + kViewWidth - 1,
+
+--- original/native-source/wolf3d_renderer.cpp
++++ candidate/native-source/wolf3d_renderer.cpp
+@@ -160,7 +160,21 @@
+ void compose_background(const RenderTarget &frame) {
+     for (uint32_t y = kPlayHeight; y < W3P_SCREEN_HEIGHT; ++y)
+         fill_span(frame, 0, y, W3P_SCREEN_WIDTH, kDarkGray);
+-    fill_rect(frame, 0, 0, W3P_SCREEN_WIDTH - 1, kPlayHeight - 1, kDarkCyan);
++    // A later viewport fill fully replaces cyan only under overwrite masks.
++    if (frame.linear != nullptr ||
++        (frame.color_mask & frame.preserve_mask) == 0) {
++        fill_rect(frame, 0, 0, W3P_SCREEN_WIDTH - 1, kViewY - 1, kDarkCyan);
++        fill_rect(frame, 0, kViewY + kViewHeight,
++                  W3P_SCREEN_WIDTH - 1, kPlayHeight - 1, kDarkCyan);
++        fill_rect(frame, 0, kViewY, kViewX - 1,
++                  kViewY + kViewHeight - 1, kDarkCyan);
++        fill_rect(frame, kViewX + kViewWidth, kViewY,
++                  W3P_SCREEN_WIDTH - 1, kViewY + kViewHeight - 1, kDarkCyan);
++    } else {
++        // Overlapping masks can retain bits contributed by the first fill.
++        fill_rect(frame, 0, 0, W3P_SCREEN_WIDTH - 1,
++                  kPlayHeight - 1, kDarkCyan);
++    }
+     fill_rect(frame, kViewX, kViewY, kViewX + kViewWidth - 1,
+               kViewY + kCenterY - 1, kLightGray);
+     fill_rect(frame, kViewX, kViewY + kCenterY, kViewX + kViewWidth - 1,
