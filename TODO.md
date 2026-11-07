@@ -20,6 +20,16 @@ Oryx is down. Performance runs measure maximum uncapped presentation rate.
 - [ ] WOLF-GOAL-001-10 — Exact restoration, cleanup, release and handoffs.
 - [ ] WOLF-GOAL-001-11 — Publish/share final results and actual limits.
 
+## WOLF-GOAL-001-H02 — Shared independent cache/trig comparison
+
+[Finite contract](agonport/doc/tasks/WOLF-GOAL-001/HARDWARE-02-PLAN.md), frozen012b188.
+
+- [ ] WOLF-GOAL-001-H02-01 — Reserve/freeze actual arms, producers, matrix and guards.
+- [ ] WOLF-GOAL-001-H02-02 — Qualify three-arm controller/listener/current binding kit.
+- [ ] WOLF-GOAL-001-H02-03 — Fresh grant/assert/launch once and finite execution.
+- [ ] WOLF-GOAL-001-H02-04 — First-fault preservation/exact restore/release/handoff.
+- [ ] WOLF-GOAL-001-H02-05 — Publish/share actual014/015 findings and limits.
+
 ## WOLF-PERF-013 — Revisit sprite-hoist acceptance with Smith
 
 - [ ] WOLF-PERF-013-07 — [Discuss keeping the reduced repeated work](agonport/doc/tasks/WOLF-PERF-013/REVISIT.md)

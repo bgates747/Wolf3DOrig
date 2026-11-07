@@ -1,0 +1,10 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-GOAL-001-hardware02",
+  "purpose": "PREPARING joint014cache015trig6uncappedroom7INFO; after Mech R03 priority; exact7593install85f9restore",
+  "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-GOAL-001/HARDWARE-02-PLAN.md",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "4cdb5a4f015c",
+  "requested": "2026-11-07T11:44:16.937860+00:00"
+}

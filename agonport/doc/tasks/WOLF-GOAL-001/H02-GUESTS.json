@@ -1,0 +1,38 @@
+{
+  "original": {
+    "room": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-014/build/guests01/original/room/source",
+      "guest": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-014/build/guests01/original/room/source/wolf3d.bin",
+      "listing": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-014/build/guests01/original/room/source/wolf3d.lst",
+      "module": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-014/build/r01/original/module/wolf_perf.vdpl",
+      "module_sha256": "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656",
+      "package_bytes": 24420,
+      "package_limit": 24421,
+      "remote_name": "b-original-room.bin"
+    }
+  },
+  "cache": {
+    "room": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-014/build/guests01/candidate/room/source",
+      "guest": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-014/build/guests01/candidate/room/source/wolf3d.bin",
+      "listing": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-014/build/guests01/candidate/room/source/wolf3d.lst",
+      "module": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-014/build/r01/candidate/module/wolf_perf.vdpl",
+      "module_sha256": "8c126c380ace55f4133c16d6af0f20b46aac349c82302682af1957280b8d6a11",
+      "package_bytes": 24552,
+      "package_limit": 24553,
+      "remote_name": "b-cache-room.bin"
+    }
+  },
+  "trig": {
+    "room": {
+      "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/build/guests01/candidate/room/source",
+      "guest": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/build/guests01/candidate/room/source/wolf3d.bin",
+      "listing": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/build/guests01/candidate/room/source/wolf3d.lst",
+      "module": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/build/r01/candidate/module/wolf_perf.vdpl",
+      "module_sha256": "2844fda52cecd28eceeaa506ff3c6cce5af43c3b69ca5ee74fe87a50c7ea489f",
+      "package_bytes": 22180,
+      "package_limit": 22181,
+      "remote_name": "b-trig-room.bin"
+    }
+  }
+}
