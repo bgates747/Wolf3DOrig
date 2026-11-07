@@ -889,5 +889,6 @@ default-cutover claims.
 
 - [x] WOLF-PERF-018 actual87 uncapped comparison/restoration/release: no established
   timing gain; see agonport/doc/tasks/WOLF-PERF-018/RESULT87.md. Qualified arm retained.
-- [ ] WOLF-PERF-020 conservative post-span source/domain/opportunity gate; no
-  implementation or physical test selected before the explicit predicate freeze.
+- [x] WOLF-PERF-020 source/domain/opportunity gate: canonical-room conditional
+  wall-read opportunity4.392%, stores unchanged. Defer implementation here; retain
+  near-wall/larger-viewport follow-up. See WOLF-PERF-020/CENSUS-RESULT.md.

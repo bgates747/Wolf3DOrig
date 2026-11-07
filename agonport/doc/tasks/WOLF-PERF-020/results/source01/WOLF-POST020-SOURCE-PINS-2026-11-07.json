@@ -1,0 +1,29 @@
+{
+  "scope": "Read-only exact runtime/controller and unchanged renderer/provider source assessment for frozen PERF020 proposal; no candidate audit, builds, tests, reviewer or target work.",
+  "request": "2026-11-07_09-00-55_wolf3dorig_wolf020-67c15b2-post-domain-source-question",
+  "owner_plan_commit": "67c15b2",
+  "files": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-020/PLAN.md": "baaf54cceb1343c27266244558981b8c9b5ec1055492aac9a2b1af3f41ad1b2f",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/vdplet_runtime.h": "84653521a9b5a647f62ad6b7e94e75e88d1925a0d2a153c20d8ed8b1c725a05e",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/vdplet_color_rows.h": "da302ab03d7b3bd164f55d6da5c72e4af5db64fd1990e4e8489446b6867a0b03",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/vdplet_color.h": "2a04d1597769acc7be8c0aa19819c168de3ce4c3f95e9ae58750166b0493a7ea",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/video/video.ino": "0743e76728397c56e963baebe98c2746540195732d658d9dad2edf2e768ada27",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/deps/vdp-gl/src/canvas.cpp": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/deps/vdp-gl/src/dispdrivers/vgabasecontroller.cpp": "443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/deps/vdp-gl/src/dispdrivers/vgabasecontroller.h": "b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/results/build01/original/native-source/wolf3d_module.cpp": "57926b7794bf090f3620aa89ce2a12279af5c9644923c51fb4eb876335b239ed",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-019/results/build01/original/production/wolf3d_renderer.cpp": "167930e49e0f9e59651aae112bc402d2c96c24d37bc76a7caa5c87851b86061c",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/.pio/build/esp32dev/firmware.bin": "7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-003/build/r04/native02/vdplet/.pio/build/esp32dev/firmware.elf": "092bacc3bb965dc3347625e892f19006e54fbada15561b54b3689ade39d7bdb4"
+  },
+  "source_qualified_conclusions": [
+    "BEGIN pauses/drains/re-resolves actual rows; synchronous RUN and ordinary asset buffer leases leave frame mapping unchanged until END/return.",
+    "No ABI guarantee that distinct rows occupy one contiguous allocation; controller allocates multiple pools.",
+    "Proposed checked numeric predicate is sufficient for distinct framebuffer byte addresses in supported data-address mapping, conditional on stable metadata and source for the group.",
+    "Use actual returned per-row pointers; numeric adjacency is not C++ proof of one array object."
+  ],
+  "primary_reading": [
+    "https://timsong-cpp.github.io/cppwp/n4659/expr.add",
+    "https://timsong-cpp.github.io/cppwp/n4659/expr.reinterpret.cast"
+  ]
+}

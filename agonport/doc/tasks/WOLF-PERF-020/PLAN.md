@@ -5,16 +5,16 @@ qualified easier arms. This contract precedes any implementation. Running018
 and queued019 remain immutable; MechAgon first, Oryx down and normal compilation/
 actual exclusive bench admission remain. No physical cohort is selected here.
 
-- [ ] WOLF-PERF-020-01 — Resolve the precise supported layout/source/order
+- [x] WOLF-PERF-020-01 — Resolve the precise supported layout/source/order
   domain with VDPlet source advice and independently inspect the current path.
-- [ ] WOLF-PERF-020-02 — Count exact identical-height/resolved-ID/U contiguous
+- [x] WOLF-PERF-020-02 — Count exact identical-height/resolved-ID/U contiguous
   columns and clipped wall pixels in the canonical600-pose room using unchanged
   control raycast. Report setup/check overhead and opportunity, not speed.
-- [ ] WOLF-PERF-020-03 — If source support and useful opportunity are established,
+- [x] WOLF-PERF-020-03 — If source support and useful opportunity are established,
   freeze an exact private fast-path admission predicate and independent fallback/
   alias/error/painter/resource oracle before implementing any span substitution.
   Otherwise dispose this candidate with concrete incompatibility/work evidence.
-- [ ] WOLF-PERF-020-04 — Only after that freeze, implement and qualify one bounded
+- [x] WOLF-PERF-020-04 — Only after that freeze, implement and qualify one bounded
   candidate, exact target/code/stack/providers/actual producers. A later finite
   physical contract/current tuple/fresh grant is required for timing.
 
@@ -55,3 +55,9 @@ approximation is selected.
 Before coding, count useful runs and compare their potential saved source/fraction
 work with added run discovery, layout/source checks and span-loop work. No measured
 speed, physical qualification, default adoption or source combination is claimed.
+
+Disposition: [CENSUS-RESULT.md](CENSUS-RESULT.md). Steps03/04 are disposed
+for this canonical-room tranche before implementation: limited conditional
+texture-read opportunity, unchanged pixel stores, and additional layout/source/
+metadata admission work. No speed/regression verdict or global method rejection.
+Retain near-wall/larger-viewport follow-up separately; no new physical case.

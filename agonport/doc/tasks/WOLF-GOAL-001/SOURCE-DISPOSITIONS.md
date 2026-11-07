@@ -62,3 +62,9 @@ No optimization is combined into the production default by these milestones.
 Original post-height replacement, fractional/generated scaler and row-major
 aliasing boundaries remain in WALL-POST-DESIGN.md; arithmetic caching and column
 chains do not silently restore those incompatible original methods.
+
+PERF020 source gate resolves supported conditional byte-span logic but defers
+implementation for the canonical room: only4.392% potential wall texture-read
+reduction, no pixel-store reduction, largest identical run3, additional admission
+work and unknown native strict-layout applicability. No measured speed verdict;
+retain near-wall/larger-viewport follow-up. See PERF020/CENSUS-RESULT.md.

@@ -1,0 +1,43 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-PERF-020-post-census01",
+  "purpose": "Guarded host sanitizer compile of exact control raycast opportunity census; no candidate/target/emulator",
+  "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-020/PLAN.md",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "workload": "build",
+  "resources": "one compiler child at a time;80C/512MiB",
+  "duration": "180",
+  "cleanup": "join only owned children and normal release",
+  "request": "8af6e8f38cb3",
+  "requested": "2026-11-07T14:14:14.308659+00:00",
+  "policy": {
+    "revision": "author-2026-11-05-oryx-compiler-fallback",
+    "instructions": "/Agon/mystuff/agon-dev-env/cross-agent/pi5-workloads/README.md",
+    "builds": "Automatically granted FIFO, one compile job at a time; no manager approval or 10% CPU gate.",
+    "baseload": "Robocode/Tank Royale server, including active matches, needs no reservation or routine start/end/informational notification to Pi5 manager and does not occupy or block the shared slot or compilation. Separate substantial workloads and physical bench/test permissions remain unchanged; paused work is not resumed.",
+    "routing": "Reserve Oryx for emulator runs and Pi5 for compiler work. When the required build is not possible on Pi5, compiler work may use the existing Oryx self-service FIFO without another routing approval; record the concrete architecture/toolchain limitation, not merely queue congestion. Extender schedules live-serial hardware qualification/benchmark/debug bench access; Console8/manual or semi-automated runs remain at Author discretion.",
+    "heavy": "Pi emulator exceptions need specific new Author approval; CFD/solvers and other heavy Pi work retain explicit Author authorization, manager admission, and start/end chat notices to pi5-manager. Native services are separately classified.",
+    "build_cleanup": "After owned children stop, release using --work-stopped --cleanup-complete; no manager handback or host-wide quiet test.",
+    "authorization_limit": "A supplied record documents authorization; this same-account helper cannot authenticate human authorship."
+  },
+  "author_authorization": null,
+  "manager_start_end_notice_required": false,
+  "lease": "4c3e8e9da6284b2c940e5646fa0c8d7e",
+  "generation": 373,
+  "granted": "2026-11-07T14:14:14.308659+00:00",
+  "boot_id": "b6519306-0d9f-48e3-98c4-c28ab10b75de",
+  "phase": "consumer",
+  "admission": "automatic-serial-build",
+  "entry_observation": null,
+  "released": "2026-11-07T14:15:26.231620+00:00",
+  "release_observation": {
+    "observer": "wolf3dorig",
+    "lease": "4c3e8e9da6284b2c940e5646fa0c8d7e",
+    "owned_work_stopped": true,
+    "cleanup_complete": true,
+    "disposition": "Owner confirms all owned build children stopped and cleanup complete; no global quiet claim"
+  },
+  "next_request": null,
+  "automatic_build_grant": null
+}
