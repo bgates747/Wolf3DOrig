@@ -1,0 +1,21 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-PERF-022-hardware01",
+  "purpose": "PREPARING full six uncapped original/cyan/combined comparison with separate foreground exact-controller host signal observer; actual handler/guard qualification and immutable kit pending; Mech first",
+  "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/PLAN.md",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "dfe8c5bda3b7",
+  "requested": "2026-11-07T16:03:14.794244+00:00",
+  "cancelled": "2026-11-07T16:22:42.922302+00:00",
+  "next_request": {
+    "owner": "linux-extender",
+    "task": "NET004-U1RX-PROTECT-ISOLATION",
+    "purpose": "PREPARING ONE selected 176-record/four-session exact-byte APP isolation through P4/Pi; checked47dadc ROM only, no concurrent UART0 workload; exacta25f rollback/fullreadback/fullcleanup/release",
+    "plan": "/Agon/mystuff/agon-extender/docs/tasks/NET-004/EMOS-ASYNC-RX-PROTECTION-R01.md",
+    "notify_thread": "01a13443-f921-72d1-9d3e-d05652c7a750",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "request": "dd79a9b28686",
+    "requested": "2026-11-07T16:18:39.104826+00:00"
+  }
+}

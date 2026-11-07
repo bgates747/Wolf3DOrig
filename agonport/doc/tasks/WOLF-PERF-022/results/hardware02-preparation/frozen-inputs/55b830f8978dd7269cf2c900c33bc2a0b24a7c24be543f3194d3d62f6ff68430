@@ -1,0 +1,1362 @@
+Archive member included to satisfy reference by file (symbol)
+
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(qsort.o)
+                              obj/mos.o (_qsort)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(nanoprintf.o)
+                              obj/main.o (_printf)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strtol.o)
+                              obj/mos_sysvars.o (_strtol)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmpu.o)
+                              src_fatfs/ff.o (__lcmpu)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idivu.o)
+                              src_fatfs/ff.o (__idivu)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ladd.o)
+                              src_fatfs/ff.o (__ladd)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lneg.o)
+                              src_fatfs/ff.o (__lneg)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmpzero.o)
+                              src_fatfs/ff.o (__lcmpzero)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(setflag.o)
+                              src_fatfs/ff.o (__setflag)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshl.o)
+                              src_fatfs/ff.o (__lshl)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idivs.o)
+                              obj/mos.o (__idivs)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshru.o)
+                              src_fatfs/ff.o (__lshru)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sor.o)
+                              src_umm_malloc/umm_malloc.o (__sor)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(or.o)
+                              src_fatfs/ff.o (__ior)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idvrmu.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idivu.o) (__idvrmu)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(inot.o)
+                              src_fatfs/ff.o (__inot)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(frameset0.o)
+                              src_fatfs/diskio.o (__frameset0)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(bshl.o)
+                              src_fatfs/ff.o (__bshl)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(xor.o)
+                              src_fatfs/ff.o (__lxor)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ishl.o)
+                              src_fatfs/ff.o (__ishl)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lmulu.o)
+                              src_fatfs/ff.o (__lmulu)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lsub.o)
+                              src_fatfs/ff.o (__lsub)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ishrs.o)
+                              obj/mos.o (__ishrs)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(imulu.o)
+                              src_fatfs/ff.o (__imulu)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivu.o)
+                              src_fatfs/ff.o (__ldivu)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmps.o)
+                              src_fatfs/ff.o (__lcmps)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ineg_sneg.o)
+                              obj/mos_editor.o (__ineg)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(irems.o)
+                              obj/mos_sysvars.o (__irems)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivs.o)
+                              obj/timer.o (__ldivs)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lnot.o)
+                              src_fatfs/ff.o (__lnot)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(indcall.o)
+                              obj/mos_sysvars.o (__indcall)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(bshru.o)
+                              obj/mos_file.o (__bshru)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(and.o)
+                              src_fatfs/ff.o (__land)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sand.o)
+                              src_fatfs/ff.o (__sand)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(frameset.o)
+                              src_fatfs/diskio.o (__frameset)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivs_lrems_common.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivs.o) (__ldivs_lrems_common)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sshru.o)
+                              src_fatfs/ff.o (__sshru)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sremu.o)
+                              obj/mos.o (__sremu)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldvrmu.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivu.o) (__ldvrmu)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fpcmp.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(nanoprintf.o) (__fcmp)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(indcallhl.o)
+                              obj/mos.o (__indcallhl)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isxdigit.o)
+                              obj/mos.o (_isxdigit)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isspace.o)
+                              obj/mos.o (_isspace)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memcmp.o)
+                              src_fatfs/ff.o (_memcmp)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strspn.o)
+                              obj/mos_editor.o (_strspn)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strrchr.o)
+                              obj/mos.o (_strrchr)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memset.o)
+                              src_umm_malloc/umm_malloc.o (_memset)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(putchar.o)
+                              obj/mos.o (_putchar)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memcpy.o)
+                              src_fatfs/ff.o (_memcpy)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(tolower.o)
+                              obj/strings.o (_tolower)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strncpy.o)
+                              obj/mos.o (_strncpy)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isupper.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strtol.o) (_isupper)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memchr.o)
+                              obj/mos.o (_memchr)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strlen.o)
+                              obj/mos.o (_strlen)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isalpha.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strtol.o) (_isalpha)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(toupper.o)
+                              obj/mos.o (_toupper)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isdigit.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strtol.o) (_isdigit)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcat.o)
+                              obj/mos.o (_strcat)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(puts.o)
+                              obj/mos.o (_puts)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memmove.o)
+                              src_umm_malloc/umm_malloc.o (_memmove)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strchr.o)
+                              src_fatfs/ff.o (_strchr)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcpy.o)
+                              obj/mos.o (_strcpy)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcmp.o)
+                              obj/main.o (_strcmp)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fputc.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(nanoprintf.o) (_fputc)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(mos_fputc.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fputc.o) (_mos_fputc)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idvrms.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idivs.o) (__idvrms)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshrs.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshru.o) (__lshrs.hijack_lshru)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sdvrmu.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sremu.o) (__sdvrmu)
+/Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(files.o)
+                              /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fputc.o) (_stdin)
+
+There are no discarded input sections
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+ROM              0x00000000         0x00020000         rw
+RAM              0x000bc000         0x00004000         rw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x00000000                        _has_exit_handler = 0x0
+                0x00000000                        ROM_START = 0x0
+                0x00020000                        ROM_SIZE = 0x20000
+                0x000bc000                        RAM_START = 0xbc000
+                0x00004000                        RAM_SIZE = 0x4000
+                0x00000000                        . = ROM_START
+
+.init           0x00000000      0x220
+ *(.init .init.args .init.bss .fini)
+ .init          0x00000000      0x220 obj/reset.o
+                0x00000000                _reset
+                0x00000100                __vector_table
+
+.text           0x00000220    0x1c917
+ *(.text)
+ .text          0x00000220      0x225 obj/crash.o
+                0x00000220                _on_crash
+ .text          0x00000445        0x4 obj/globals.o
+                0x00000445                _SysClkFreq
+ .text          0x00000449      0x167 obj/gpio.o
+                0x00000449                GPIOB_SETMODE
+ .text          0x000005b0       0x34 obj/handlers.o
+                0x000005b0                rst_08_handler
+                0x000005b6                rst_10_handler
+                0x000005bc                rst_18_handler
+                0x000005d9                rst_38_handler
+                0x000005dd                __default_nmi_handler
+                0x000005e0                __default_mi_handler
+ .text          0x000005e4      0x1b0 obj/init.o
+                0x000005e4                __init
+                0x0000075e                _set_vector
+ .text          0x00000794      0x192 obj/interrupts.o
+                0x00000794                _vblank_handler
+                0x000007c4                _uart0_handler
+                0x000007fd                _i2c_handler
+ .text          0x00000926      0x42f obj/keyboard.o
+                0x00000926                keyboard_handler
+                0x00000975                keyboard_lookup
+                0x00000d55                keyboard_lookup_end
+ .text          0x00000d55       0xf1 obj/misc.o
+                0x00000d55                SWITCH_A
+                0x00000d62                SET_AHL24
+                0x00000d6b                FIX_HLU24
+                0x00000d6f                FIX_HLU24_no_mb_check
+                0x00000d7e                SET_ADE24
+                0x00000d89                SET_ABC24
+                0x00000d94                SET_AIX24
+                0x00000da1                __exec24
+                0x00000da1                _exec24
+                0x00000dd1                _exec16
+                0x00000dd1                __exec16
+                0x00000e13                _wait_timer0
+                0x00000e13                __wait_timer0
+                0x00000e29                _timer0_delay
+ .text          0x00000e46      0xacd obj/mos_api.o
+                0x00000e46                mos_api
+ .text          0x00001913        0x0 obj/reset.o
+ .text          0x00001913        0x9 obj/rtc.o
+                0x00001913                _init_rtc
+                0x00001913                __init_rtc
+ .text          0x0000191c      0x351 obj/sd.o
+                0x0000191c                _SD_init
+                0x00001992                _SD_readBlocks
+                0x00001a46                _SD_writeBlocks
+ .text          0x00001c6d      0x1f5 obj/serial.o
+                0x00001c7e                UART0_serial_TX
+                0x00001c9b                UART1_serial_TX
+                0x00001cc3                UART0_serial_RX
+                0x00001cce                UART1_serial_RX
+                0x00001ce4                UART0_serial_GETCH
+                0x00001cf6                UART1_serial_GETCH
+                0x00001d11                UART0_serial_PUTCH
+                0x00001d2d                UART1_serial_PUTCH
+                0x00001d52                EMOS_vdu_PUTCH
+                0x00001d9e                EMOS_vdu_parallel_PUTCH
+                0x00001dc8                EMOS_vdu_WRITE
+                0x00001de7                EMOS_vdu_parallel_WRITE
+                0x00001e31                _putch
+                0x00001e31                putch
+                0x00001e4b                getch
+                0x00001e4b                _getch
+ .text          0x00001e62      0x10e obj/spi.o
+                0x00001e62                _init_spi
+                0x00001ed0                _spi_read_one
+                0x00001ed8                _spi_transfer
+                0x00001eec                _spi_read
+                0x00001f32                _spi_write
+ .text          0x00001f70      0x28f obj/vdp_protocol.o
+                0x00001f70                vdp_protocol
+                0x00001ffe                emos_vdp_dispatch
+                0x000020d2                emos_keyboard_payload
+ .text          0x000021ff      0x193 src_fatfs/diskio.o
+                0x000021ff                _SD_getUnlockCode
+                0x00002245                _SD_init_API
+                0x00002267                _SD_readBlocks_API
+                0x000022ae                _SD_writeBlocks_API
+                0x000022f5                _disk_status
+                0x000022fd                _disk_initialize
+                0x00002311                _disk_read
+                0x0000233e                _disk_write
+                0x0000236b                _disk_ioctl
+                0x00002375                _get_fattime
+ .text          0x00002392     0x68e1 src_fatfs/ff.o
+                0x00002392                _f_mount
+                0x00002a2c                _f_open
+                0x00004299                _f_read
+                0x00004615                _f_write
+                0x00004e25                _f_sync
+                0x000050e8                _f_close
+                0x00005121                _f_chdrive
+                0x0000515d                _f_chdir
+                0x00005225                _f_getcwd
+                0x00005ea4                _f_lseek
+                0x00006262                _f_opendir
+                0x00006367                _f_closedir
+                0x00006391                _f_readdir
+                0x0000642e                _f_findnext
+                0x00006605                _f_findfirst
+                0x00006635                _f_stat
+                0x000066c4                _f_getfree
+                0x0000691e                _f_truncate
+                0x00006a55                _f_unlink
+                0x00006d5f                _f_mkdir
+                0x00007258                _f_rename
+                0x00007503                _f_getlabel
+                0x00007653                _f_setlabel
+                0x00007950                _f_gets
+                0x000079f5                _f_putc
+                0x00007b1d                _f_puts
+                0x00007b73                _f_printf
+ .text          0x00008c73        0x0 src_fatfs/ffsystem.o
+ .text          0x00008c73      0x273 src_fatfs/ffunicode.o
+                0x00008c73                _ff_uni2oem
+                0x00008d26                _ff_oem2uni
+                0x00008d89                _ff_wtoupper
+ .text          0x00008ee6      0xcd2 src_umm_malloc/umm_malloc.o
+                0x00008ee6                _umm_multi_init_heap
+                0x00008f8d                _umm_multi_free
+                0x000090cb                _umm_multi_malloc
+                0x00009372                _umm_multi_realloc
+                0x000099e7                _umm_multi_calloc
+                0x00009a29                _umm_init_heap
+                0x00009a43                _umm_malloc
+                0x00009a59                _umm_calloc
+                0x00009a73                _umm_realloc
+                0x00009a8d                _umm_free
+                0x00009aa3                _umm_heap_stats
+ .text          0x00009bb8      0x2ff obj/clock.o
+                0x00009bb8                _rtc_update
+                0x00009bf4                _rtc_unpack
+                0x00009caf                _rtc_formatDateTime
+                0x00009d2f                _rtc_formatDate
+                0x00009dae                _rtc_formatTime
+                0x00009ddb                _rtc_monthFromName
+                0x00009e49                _rtc_dayFromName
+ .text          0x00009eb7      0x2dd obj/i2c.o
+                0x00009eb7                _I2C_setfrequency
+                0x00009ed4                _init_I2C
+                0x00009eec                _I2C_handletimeout
+                0x00009f07                _mos_I2C_OPEN
+                0x00009f39                _mos_I2C_CLOSE
+                0x00009f47                _mos_I2C_WRITE
+                0x0000a067                _mos_I2C_READ
+ .text          0x0000a194      0x402 obj/main.o
+                0x0000a194                _wait_ESP32
+                0x0000a29e                _init_interrupts
+                0x0000a2cf                _quickrand
+                0x0000a2d7                _rainbow_msg
+                0x0000a383                _bootmsg
+                0x0000a3d0                _shiftPressed
+                0x0000a3e9                _main
+ .text          0x0000a596     0x55d8 obj/mos.o
+                0x0000a596                _mos_error
+                0x0000a5cc                _mos_getkey
+                0x0000a5e1                _mos_input
+                0x0000a65d                _mos_getCommand
+                0x0000a6c2                _mos_trim
+                0x0000a76f                _mos_runBin
+                0x0000a7f8                _mos_execMode
+                0x0000a81d                _mos_runBinFile
+                0x0000a903                _mos_LOAD
+                0x0000a9d1                _mos_runOrLoadFile
+                0x0000ab62                _mos_execAlias
+                0x0000ac43                _mos_exec
+                0x0000b145                _mos_cmdDISC
+                0x0000b155                _mos_cmdDIR
+                0x0000b24e                _mos_DIR
+                0x0000b39e                _mos_cmdDO
+                0x0000b3b4                _mos_cmdTRY
+                0x0000b43d                _mos_cmdECHO
+                0x0000b4c3                _mos_cmdPRINTF
+                0x0000b61c                _mos_cmdHOTKEY
+                0x0000b839                _printEscapedString
+                0x0000b8ac                _mos_cmdIF
+                0x0000b9e3                _mos_cmdIFTHERE
+                0x0000bb09                _mos_cmdLOAD
+                0x0000bb7c                _mos_cmdEXEC
+                0x0000bbb8                _mos_EXEC
+                0x0000bcba                _mos_cmdOBEY
+                0x0000bfcb                _mos_cmdSAVE
+                0x0000c05b                _mos_SAVE
+                0x0000c10a                _mos_cmdDEL
+                0x0000c398                _mos_cmdJMP
+                0x0000c3d8                _mos_cmdLOADFILE
+                0x0000c3ef                _mos_cmdRUN
+                0x0000c487                _mos_cmdRUNBIN
+                0x0000c4dd                _mos_cmdRUNFILE
+                0x0000c4f5                _mos_cmdCD
+                0x0000c531                _mos_CD
+                0x0000c591                _mos_cmdREN
+                0x0000c5ff                _mos_REN
+                0x0000ca4a                _mos_cmdCOPY
+                0x0000cab8                _mos_COPY
+                0x0000cd4d                _mos_cmdMKDIR
+                0x0000cd89                _mos_MKDIR
+                0x0000cdd7                _mos_cmdSET
+                0x0000ce5d                _mos_cmdSETEVAL
+                0x0000cf23                _mos_cmdSETMACRO
+                0x0000cf99                _autoPageOutput
+                0x0000cfdd                _mos_cmdSHOW
+                0x0000d0e1                _mos_cmdUNSET
+                0x0000d143                _mos_cmdVDU
+                0x0000d264                _mos_cmdTIME
+                0x0000d3a5                _mos_SETRTC
+                0x0000d447                _mos_GETRTC
+                0x0000d47e                _mos_cmdMEM
+                0x0000d5a7                _mos_cmdCREDITS
+                0x0000d5d9                _mos_cmdTYPE
+                0x0000d615                _mos_TYPE
+                0x0000d778                _mos_cmdCLS
+                0x0000d78c                _mos_cmdMOUNT
+                0x0000d796                _mos_mount
+                0x0000d7ee                _printCommandInfo
+                0x0000d985                _mos_cmdHELP
+                0x0000dbdb                _mos_LOAD_API
+                0x0000dc1f                _mos_SAVE_API
+                0x0000dc63                _mos_CD_API
+                0x0000dc9d                _countDirEntries
+                0x0000de09                _mos_DIR_API
+                0x0000de49                _mos_DIRFallback
+                0x0000e139                _displayDirectory
+                0x0000ee1f                _mos_DEL
+                0x0000eeb3                _mos_REN_API
+                0x0000ef1c                _mos_COPY_API
+                0x0000ef85                _mos_MKDIR_API
+                0x0000efbf                _mos_FOPEN
+                0x0000f055                _mos_FCLOSE
+                0x0000f0f6                _mos_FGETC
+                0x0000f15f                _mos_GETFIL
+                0x0000f1a5                _fat_EOF
+                0x0000f1c7                _mos_FPUTC
+                0x0000f1e9                _mos_FREAD
+                0x0000f22e                _mos_FWRITE
+                0x0000f273                _mos_FLSEEK
+                0x0000f29e                _mos_FLSEEKP
+                0x0000f2bb                _mos_FEOF
+                0x0000f2f0                _mos_GETERROR
+                0x0000f334                _mos_OSCLI
+                0x0000f368                _mos_UNPACKRTC
+                0x0000f397                _mos_SETINTVECTOR
+                0x0000f3b1                _fat_tell
+                0x0000f3e3                _fat_size
+                0x0000f415                _fat_error
+                0x0000f422                _fat_lseek
+                0x0000f455                _fat_getfree
+                0x0000f4bc                _wait_VDP
+                0x0000f4e1                _readCWD
+                0x0000f52e                _readYear
+                0x0000f5a4                _writeYear
+                0x0000f626                _readDate
+                0x0000f693                _writeDate
+                0x0000f7e9                _readTime
+                0x0000f856                _writeTime
+                0x0000f938                _writeVDPSetting
+                0x0000f999                _writeKeyboard
+                0x0000f9e9                _writeConsole
+                0x0000f9ff                _mos_setupSystemVariables
+ .text          0x0000fb6e     0x11d1 obj/mos_editor.o
+                0x0000fb6e                _getModeInformation
+                0x0000fb9c                _readPalette
+                0x0000fbe0                _doLeftCursor
+                0x0000fbeb                _doRightCursor
+                0x0000fbf6                _insertCharacter
+                0x0000fcc8                _insertString
+                0x0000ff37                _deleteCharacter
+                0x0000ffe2                _waitKey
+                0x0000fff8                _gotoEditLineStart
+                0x00010049                _gotoEditLineEnd
+                0x0001008b                _removeEditLine
+                0x000100de                _handleHotkey
+                0x0001021b                _findTermStart
+                0x000102eb                _mos_EDITLINE
+                0x00010ac9                _emos_cli_editline
+                0x00010ae8                _editHistoryInit
+                0x00010b19                _editHistoryPush
+                0x00010bf1                _editHistoryUp
+                0x00010c34                _editHistorySet
+                0x00010cd5                _editHistoryDown
+ .text          0x00010d3f     0x1665 obj/mos_file.o
+                0x00010d3f                _isDirectory
+                0x00010e1e                _getFilepathPrefixEnd
+                0x00010e34                _getFilepathLeafname
+                0x00010e90                _getDirectoryForPath
+                0x0001109a                _checkAttribute
+                0x000110c5                _getLengthForResolvedPath
+                0x0001160d                _resolvePath
+                0x00011fb9                _resolveRelativePath
+                0x00012171                _isMoslet
+                0x00012210                _getResolvedPath
+                0x00012295                _copyFile
+ .text          0x000123a4     0x1a29 obj/mos_sysvars.o
+                0x000123a4                _getSystemVariable
+                0x00012453                _createSystemVariable
+                0x000124e0                _insertSystemVariable
+                0x00012509                _createOrUpdateSystemVariable
+                0x00012591                _updateSystemVariable
+                0x00012684                _removeSystemVariable
+                0x000126f0                _findParentSystemVariable
+                0x00012733                _setVarVal
+                0x00012945                _evaluateExpression
+                0x00012a20                _expandMacro
+                0x00012aa9                _readVarVal
+                0x00012c2b                _expandVariable
+                0x00012d8a                _gsInit
+                0x00012e37                _gsDispose
+                0x00012ebe                _gsRead
+                0x00013335                _gsPop
+                0x000133bc                _extractNumber
+                0x000135bb                _gsTrans
+                0x000136ae                _extractString
+                0x00013806                _escapeString
+                0x0001394d                _expandVariableToken
+                0x0001398a                _getArgument
+                0x00013a23                _substituteArgs
+                0x00013d5c                _substituteArguments
+ .text          0x00013dcd      0x448 obj/strings.o
+                0x00013dcd                _strcasecmp
+                0x00013e38                _strncasecmp
+                0x00013ec9                _stristr
+                0x00013f6c                _mos_strnlen
+                0x00013f92                _mos_strdup
+                0x00013fc8                _mos_strcspn
+                0x0001400e                _mos_strspn
+                0x00014054                _mos_strndup
+                0x000140a4                _pmatch
+ .text          0x00014215        0x0 obj/tests.o
+ .text          0x00014215       0xb3 obj/timer.o
+                0x00014215                _init_timer0
+                0x0001429f                _enable_timer0
+                0x000142b9                _get_timer0
+ .text          0x000142c8      0x539 obj/uart.o
+                0x000142c8                _init_UART0
+                0x000142d9                _init_UART1
+                0x000142ed                _open_UART0
+                0x000143a7                _open_UART1
+                0x00014491                _close_UART1
+                0x000144d3                _uart1_claim_rts
+                0x0001451f                _uart1_receive_ready
+                0x00014562                _uart1_try_get
+                0x000145a7                _uart1_try_put
+                0x000145f5                _uart1_keyboard_open
+                0x000146b7                _uart1_keyboard_stop
+                0x000146d4                _uart1_keyboard_close
+                0x0001471f                _uart1_keyboard_park
+                0x00014798                _uart1_keyboard_unpark
+                0x000147f0                _uart1_keyboard_irq_done
+ .text          0x00014801     0x1448 obj/emos.o
+                0x00014801                _emos_read24
+                0x0001480d                _emos_init
+                0x0001487a                _emos_gateway
+                0x00014c35                _emos_application_enter
+                0x00014ce6                _emos_application_leave
+                0x00014d0d                _emos_get_mode
+                0x00014d12                _emos_request_mode
+                0x00014f5c                _emos_admission_core
+                0x00014f79                _emos_admission_run
+                0x00015192                _emos_cmd
+                0x00015c31                _emos_application_context
+ .text          0x00015c49      0xc19 obj/emos_admission.o
+                0x00015c49                _emos_admission_packet
+                0x00015ca1                _emos_admission_reset
+                0x00015d36                _emos_admission_leave
+                0x00015fe9                _emos_admission_dispatching
+                0x00015ff7                _emos_admission_excom
+                0x00016007                _emos_admission_application
+                0x00016017                _emos_admission_idle
+                0x00016533                _emos_admission_binding
+                0x0001662a                _emos_admission_terminal
+                0x00016709                _emos_admission_dispatch
+ .text          0x00016862        0x0 obj/emos_telemetry.o
+ .text          0x00016862      0x6c3 obj/emos_sdlink.o
+                0x00016862                _emos_sdlink_reset
+                0x00016894                _emos_sdlink_packet
+                0x00016918                _emos_sdlink_gateway
+ .text          0x00016f25      0xcd4 obj/emos_console.o
+                0x00016f25                _emos_console_packet
+                0x00017288                _emos_console_prepare
+                0x0001740c                _emos_console_commit
+                0x000174f5                _emos_console_publish
+                0x00017559                _emos_console_recover
+                0x0001759d                _emos_console_write_stream
+                0x000175cd                _emos_console_write_byte
+                0x000175ec                _emos_console_notice
+                0x00017696                _emos_parallel_handover_admit
+                0x00017803                _emos_parallel_session_start
+                0x000178be                _emos_parallel_session_accept
+                0x000179c9                _emos_parallel_session_admit
+                0x00017a0d                _emos_parallel_session_cancel
+                0x00017a2c                _emos_parallel_session_negotiate
+                0x00017aa6                _emos_parallel_block_offer
+ .text          0x00017bf9      0xb75 obj/emos_keyboard.o
+                0x00017bf9                _emos_keyboard_mainboard
+                0x00017c8d                _emos_keyboard_mainboard_settings
+                0x00017ca4                _emos_keyboard_fault
+                0x00017db9                _emos_keyboard_tick
+                0x00017e42                _emos_keyboard_dispatch
+                0x00017f3b                _emos_keyboard_deadline_step
+                0x00017f8b                _emos_keyboard_select
+                0x00018277                _emos_keyboard_layout
+                0x00018396                _emos_keyboard_transport_claim
+                0x00018400                _emos_keyboard_transport_release
+                0x00018443                _emos_keyboard_parallel_reserve
+                0x000184b2                _emos_keyboard_parallel_reserved
+                0x00018508                _emos_keyboard_parallel_park
+                0x0001856b                _emos_keyboard_parallel_unpark
+                0x000185a3                _emos_keyboard_parallel_release
+                0x000185f0                _emos_keyboard_parallel_send
+                0x0001868a                _emos_keyboard_send
+ .text          0x0001876e      0x21a obj/emos_uart_flow.o
+                0x0001876e                _emos_uartdiag_reset
+                0x0001879b                _emos_uartdiag_gateway
+ .text          0x00018988      0x4e8 obj/emos_parallel.o
+                0x00018988                _emos_parallel_init
+                0x00018a18                _emos_parallel_epoch_enter
+                0x00018b8d                _emos_parallel_epoch_leave
+                0x00018bfe                _emos_parallel_write_stream
+                0x00018c97                _emos_parallel_write_byte
+                0x00018cba                _emos_parallel_last_fault
+                0x00018ce4                _emos_parallel_epoch_owned
+                0x00018ce9                _emos_parallel_route_enter
+                0x00018d2b                _emos_parallel_route_leave
+                0x00018d3e                _emos_parallel_route_write_stream
+                0x00018d58                _emos_parallel_route_write_byte
+                0x00018d6e                _emos_parallel_route_owned
+                0x00018d86                _emos_parallel_uart1_guard_acquire
+                0x00018db5                _emos_parallel_uart1_guard_release
+ .text          0x00018e70      0x56d obj/emos_parallel_engine.o
+                0x00018e70                _emos_parallel_engine_configure
+                0x00018f5a                _emos_parallel_engine_open
+                0x00018fa8                _emos_parallel_engine_close
+                0x00018ff3                _emos_parallel_engine_write
+                0x000192be                _emos_parallel_engine_fault
+                0x000192dd                _emos_parallel_generation_next
+ .text          0x000193dd      0x184 obj/emos_parallel_handover.o
+                0x000193dd                _emos_parallel_handover_init
+                0x000193f7                _emos_parallel_handover_cancel
+                0x00019409                _emos_parallel_handover_begin
+                0x00019427                _emos_parallel_handover_step
+ .text          0x00019561       0xee obj/emos_parallel_boot.o
+                0x00019561                _emos_parallel_boot_fence
+                0x000195bd                _emos_parallel_boot_poll
+ .text          0x0001964f      0x202 obj/emos_parallel_startup.o
+                0x0001964f                _emos_parallel_boot_start
+                0x0001966d                _emos_parallel_boot_uart_allowed
+                0x0001969d                _emos_parallel_boot_tick
+                0x000196c4                _emos_parallel_boot_connect
+                0x000197b7                _emos_parallel_boot_handover
+                0x000197bc                _emos_parallel_boot_block_begin
+                0x0001980a                _emos_parallel_boot_block_end
+ .text          0x00019851      0x491 obj/emos_controller.o
+                0x00019851                _emos_controller_reset
+                0x00019857                _emos_controller_tick
+                0x00019891                _emos_controller_packet
+                0x000198f7                _emos_controller_gateway
+ .text          0x00019ce2      0x320 obj/emos_net.o
+                0x00019ce2                _emos_net_reset
+                0x00019ce8                _emos_net_packet
+                0x00019d3a                _emos_net_gateway
+ .text          0x0001a002      0x403 obj/emos_parallel_upload.o
+                0x0001a002                _emos_parallel_upload_owned
+                0x0001a009                _emos_parallel_upload_abandon
+                0x0001a020                _emos_parallel_upload_begin
+                0x0001a228                _emos_parallel_upload_read
+                0x0001a372                _emos_parallel_upload_end
+ .text          0x0001a405       0x36 obj/emos_app_span.o
+                0x0001a405                _emos_application_span
+ .text          0x0001a43b       0x84 obj/emos_uart0_rfc25.o
+                0x0001a43b                _emos_rfc25_admit
+ .text          0x0001a4bf       0x3c obj/emos_console_io.o
+                0x0001a4bf                _emos_mainboard_put
+                0x0001a4c9                _emos_vdp_effect
+                0x0001a4d5                _emos_reply_callback
+ .text          0x0001a4fb      0x2fe obj/emos_keyboard_io.o
+                0x0001a4fb                _uart1_keyboard_put
+                0x0001a551                _emos_keyboard_transmit_block
+                0x0001a62b                _emos_keyboard_deadline_start
+                0x0001a644                _emos_keyboard_byte
+                0x0001a6ed                _uart1_keyboard_irq
+                0x0001a729                _emos_keyboard_lock
+                0x0001a735                _emos_keyboard_unlock
+                0x0001a73f                _emos_keyboard_clock
+                0x0001a744                _emos_keyboard_vector
+                0x0001a77a                _emos_keyboard_effect
+                0x0001a78e                _emos_keyboard_settings
+                0x0001a7a0                _emos_keyboard_mainboard_layout
+                0x0001a7bb                _emos_keyboard_irq_entry
+                0x0001a7e0                emos_keyboard_tick_entry
+ .text          0x0001a7f9      0x189 obj/emos_parallel_io.o
+                0x0001a7f9                _emos_parallel_io_write_control
+                0x0001a824                _emos_parallel_io_configure
+                0x0001a86d                _emos_parallel_io_try_lock
+                0x0001a89c                _emos_parallel_io_try_begin_entry
+                0x0001a8dd                _emos_parallel_io_try_reserve_portc
+                0x0001a912                _emos_parallel_io_read_clock
+                0x0001a93e                _emos_parallel_io_commit_epoch
+ .text          0x0001a982       0x73 obj/emos_parallel_upload_io.o
+                0x0001a982                _emos_parallel_upload_bytes
+ .text          0x0001a9f5       0xc0 obj/emos_uart0_rfc25_io.o
+                0x0001a9f5                emos_uart0_rfc25_submit
+                0x0001aa39                _emos_uart0_async_owned
+                0x0001aa56                fill_uart0_tx_fifo
+ .text          0x0001aab5      0x398 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(qsort.o)
+                0x0001aab5                _qsort
+ .text          0x0001ae4d     0x1382 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(nanoprintf.o)
+                0x0001ae4d                _npf_vpprintf
+                0x0001bf76                _npf_pprintf
+                0x0001bf9e                _npf_snprintf
+                0x0001bfc6                _npf_vsnprintf
+                0x0001c084                _vprintf
+                0x0001c0b4                _printf
+                0x0001c0d3                _fprintf
+                0x0001c0f6                _vfprintf
+                0x0001c12b                _vsprintf
+                0x0001c14a                _vsnprintf
+                0x0001c17e                _sprintf
+                0x0001c1a7                _snprintf
+ .text          0x0001c1cf      0x2b2 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strtol.o)
+                0x0001c1cf                _strtol
+ .text          0x0001c481        0x8 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmpu.o)
+                0x0001c481                __lcmpu
+ .text          0x0001c489        0x8 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idivu.o)
+                0x0001c489                __idivu
+ .text          0x0001c491        0x6 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ladd.o)
+                0x0001c491                __ladd
+ .text          0x0001c497        0xd /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lneg.o)
+                0x0001c497                __lneg
+ .text          0x0001c4a4        0xb /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmpzero.o)
+                0x0001c4a4                __lcmpzero
+ .text          0x0001c4af        0xf /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(setflag.o)
+                0x0001c4af                __setflag
+ .text          0x0001c4be        0xd /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshl.o)
+                0x0001c4be                __lshl
+ .text          0x0001c4cb        0x7 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idivs.o)
+                0x0001c4cb                __idivs
+ .text          0x0001c4d2       0x10 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshru.o)
+                0x0001c4d2                __lshru
+ .text          0x0001c4e2        0x9 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sor.o)
+                0x0001c4e2                __sor
+ .text          0x0001c4eb       0x1b /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(or.o)
+                0x0001c4eb                __lor
+                0x0001c4ef                __ior
+ .text          0x0001c506       0x18 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idvrmu.o)
+                0x0001c506                __idvrmu
+                0x0001c50a                __idvrmu.hijack_a_iters_ude_dividend
+ .text          0x0001c51e        0xa /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(inot.o)
+                0x0001c51e                __inot
+ .text          0x0001c528        0xb /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(frameset0.o)
+                0x0001c528                __frameset0
+ .text          0x0001c533        0x9 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(bshl.o)
+                0x0001c533                __bshl
+ .text          0x0001c53c       0x1b /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(xor.o)
+                0x0001c53c                __lxor
+                0x0001c540                __ixor
+ .text          0x0001c557       0x26 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ishl.o)
+                0x0001c557                __sshl
+                0x0001c557                __ishl
+ .text          0x0001c57d       0x5c /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lmulu.o)
+                0x0001c57d                __lmuls
+                0x0001c57d                __lmulu
+ .text          0x0001c5d9        0xa /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lsub.o)
+                0x0001c5d9                __lsub
+ .text          0x0001c5e3       0x41 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ishrs.o)
+                0x0001c5e3                __ishru
+                0x0001c5e8                __ishrs
+ .text          0x0001c624       0x30 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(imulu.o)
+                0x0001c624                __imuls
+                0x0001c624                __imulu
+ .text          0x0001c654       0x10 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivu.o)
+                0x0001c654                __ldivu
+ .text          0x0001c664        0xd /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmps.o)
+                0x0001c664                __lcmps
+ .text          0x0001c671        0x9 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ineg_sneg.o)
+                0x0001c671                __ineg
+                0x0001c671                __sneg
+ .text          0x0001c67a        0x8 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(irems.o)
+                0x0001c67a                __irems
+ .text          0x0001c682       0x18 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivs.o)
+                0x0001c682                __ldivs
+ .text          0x0001c69a        0xd /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lnot.o)
+                0x0001c69a                __lnot
+ .text          0x0001c6a7        0x2 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(indcall.o)
+                0x0001c6a7                __indcall
+ .text          0x0001c6a9        0xa /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(bshru.o)
+                0x0001c6a9                __bshru
+ .text          0x0001c6b3       0x1c /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(and.o)
+                0x0001c6b3                __land
+                0x0001c6b8                __iand
+                0x0001c6b9                __iand.hijack_land
+ .text          0x0001c6cf        0x9 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sand.o)
+                0x0001c6cf                __sand
+ .text          0x0001c6d8        0xe /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(frameset.o)
+                0x0001c6d8                __frameset
+ .text          0x0001c6e6       0x11 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivs_lrems_common.o)
+                0x0001c6e6                __ldivs_lrems_common
+ .text          0x0001c6f7        0xd /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sshru.o)
+                0x0001c6f7                __sshru
+ .text          0x0001c704        0x7 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sremu.o)
+                0x0001c704                __sremu
+ .text          0x0001c70b       0x24 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldvrmu.o)
+                0x0001c70b                __ldvrmu
+ .text          0x0001c72f       0x1d /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fpcmp.o)
+                0x0001c72f                __fcmp
+ .text          0x0001c74c        0x1 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(indcallhl.o)
+                0x0001c74c                __indcallhl
+ .text          0x0001c74d       0x15 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isxdigit.o)
+                0x0001c74d                _isxdigit
+ .text          0x0001c762        0xf /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isspace.o)
+                0x0001c762                _isspace
+ .text          0x0001c771       0x2a /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memcmp.o)
+                0x0001c771                _memcmp
+ .text          0x0001c79b       0x31 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strspn.o)
+                0x0001c79b                _strspn
+ .text          0x0001c7cc       0x1e /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strrchr.o)
+                0x0001c7cc                _strrchr
+ .text          0x0001c7ea       0x1f /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memset.o)
+                0x0001c7ea                _memset
+ .text          0x0001c809       0x11 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(putchar.o)
+                0x0001c809                _putchar
+ .text          0x0001c81a       0x21 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memcpy.o)
+                0x0001c81a                _memcpy
+ .text          0x0001c83b        0xc /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(tolower.o)
+                0x0001c83b                _tolower
+                0x0001c83e                _tolower.internal
+ .text          0x0001c847       0x46 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strncpy.o)
+                0x0001c847                _strncpy
+ .text          0x0001c88d        0xb /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isupper.o)
+                0x0001c88d                _isupper
+ .text          0x0001c898       0x1d /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memchr.o)
+                0x0001c898                _memchr
+ .text          0x0001c8b5       0x11 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strlen.o)
+                0x0001c8b5                _strlen
+ .text          0x0001c8c6        0xe /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isalpha.o)
+                0x0001c8c6                _isalpha
+ .text          0x0001c8d4        0xc /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(toupper.o)
+                0x0001c8d4                _toupper
+ .text          0x0001c8e0        0xb /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isdigit.o)
+                0x0001c8e0                _isdigit
+ .text          0x0001c8eb       0x1d /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcat.o)
+                0x0001c8eb                _strcat
+ .text          0x0001c908       0x2c /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(puts.o)
+                0x0001c908                _puts
+ .text          0x0001c934       0x30 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memmove.o)
+                0x0001c934                _memmove
+ .text          0x0001c964       0x1f /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strchr.o)
+                0x0001c964                _strchr
+ .text          0x0001c983       0x18 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcpy.o)
+                0x0001c983                _strcpy
+ .text          0x0001c99b       0x19 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcmp.o)
+                0x0001c99b                _strcmp
+ .text          0x0001c9b4       0xb6 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fputc.o)
+                0x0001c9b4                _fputc
+                0x0001ca44                _fput_char
+ .text          0x0001ca6a       0x16 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(mos_fputc.o)
+                0x0001ca6a                _mos_fputc
+ .text          0x0001ca80       0x2e /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idvrms.o)
+                0x0001ca80                __idvrms
+ .text          0x0001caae       0x1b /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshrs.o)
+                0x0001caae                __lshrs
+                0x0001caba                __lshrs.hijack_lshru
+ .text          0x0001cac9       0x10 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sdvrmu.o)
+                0x0001cac9                __sdvrmu
+ .text          0x0001cad9       0x5e /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(files.o)
+                0x0001cad9                __stdio_init
+
+.init_array     0x0001cb37        0x0
+ *(.init_array)
+
+.ctors          0x0001cb37        0x0
+ *(.ctors)
+
+.dtors          0x0001cb37        0x0
+ *(.dtors)
+
+.fini_array     0x0001cb37        0x0
+ *(.fini_array)
+
+.rodata         0x0001cb37     0x29fb
+ *(.rodata)
+ .rodata        0x0001cb37       0xdf src_fatfs/ff.o
+ .rodata        0x0001cc16      0x3c9 src_fatfs/ffunicode.o
+ .rodata        0x0001cfdf      0x116 obj/clock.o
+ .rodata        0x0001d0f5       0x8e obj/main.o
+ .rodata        0x0001d183     0x1e37 obj/mos.o
+ .rodata        0x0001efba       0xe2 obj/mos_editor.o
+ .rodata        0x0001f09c       0x50 obj/mos_file.o
+ .rodata        0x0001f0ec       0x2e obj/mos_sysvars.o
+ .rodata        0x0001f11a      0x2c7 obj/emos.o
+ .rodata        0x0001f3e1       0x5e obj/emos_console.o
+ .rodata        0x0001f43f        0xc obj/emos_parallel.o
+ .rodata        0x0001f44b       0x2a obj/emos_parallel_handover.o
+ .rodata        0x0001f475        0x7 obj/emos_controller.o
+ .rodata        0x0001f47c        0x8 obj/emos_net.o
+ .rodata        0x0001f484       0xa5 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(nanoprintf.o)
+ .rodata        0x0001f529        0x9 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(puts.o)
+                0x0001f529                ___null_literal_str
+                0x0001f530                ___end_of_line_str
+                0x0001f532                        rodata_end = .
+
+.data           0x000bc000      0x322 load address 0x0001f532
+                0x000bc000                        data_start = .
+ *(.data)
+ .data          0x000bc000        0x0 obj/crash.o
+ .data          0x000bc000        0x0 obj/globals.o
+ .data          0x000bc000        0x0 obj/gpio.o
+ .data          0x000bc000        0x0 obj/handlers.o
+ .data          0x000bc000        0x0 obj/init.o
+ .data          0x000bc000        0x0 obj/interrupts.o
+ .data          0x000bc000        0x0 obj/keyboard.o
+ .data          0x000bc000        0x0 obj/misc.o
+ .data          0x000bc000        0x0 obj/mos_api.o
+ .data          0x000bc000       0x20 obj/reset.o
+ .data          0x000bc020        0x0 obj/rtc.o
+ .data          0x000bc020        0x0 obj/sd.o
+ .data          0x000bc020        0x0 obj/serial.o
+ .data          0x000bc020        0x0 obj/spi.o
+ .data          0x000bc020        0x0 obj/vdp_protocol.o
+ .data          0x000bc020        0x0 src_fatfs/diskio.o
+ .data          0x000bc020        0x0 src_fatfs/ff.o
+ .data          0x000bc020        0x0 src_fatfs/ffsystem.o
+ .data          0x000bc020        0x0 src_fatfs/ffunicode.o
+ .data          0x000bc020        0x0 src_umm_malloc/umm_malloc.o
+ .data          0x000bc020       0x72 obj/clock.o
+                0x000bc020                _rtc_days
+                0x000bc04a                _rtc_months
+ .data          0x000bc092        0x0 obj/i2c.o
+ .data          0x000bc092        0x0 obj/main.o
+ .data          0x000bc092      0x27a obj/mos.o
+ .data          0x000bc30c        0x0 obj/mos_editor.o
+ .data          0x000bc30c        0x0 obj/mos_file.o
+ .data          0x000bc30c        0x0 obj/mos_sysvars.o
+ .data          0x000bc30c        0x0 obj/strings.o
+ .data          0x000bc30c        0x0 obj/tests.o
+ .data          0x000bc30c        0x0 obj/timer.o
+ .data          0x000bc30c        0x0 obj/uart.o
+ .data          0x000bc30c        0x0 obj/emos.o
+ .data          0x000bc30c        0x4 obj/emos_admission.o
+ .data          0x000bc310        0x0 obj/emos_telemetry.o
+ .data          0x000bc310        0x0 obj/emos_sdlink.o
+ .data          0x000bc310        0x0 obj/emos_console.o
+ .data          0x000bc310        0x0 obj/emos_keyboard.o
+ .data          0x000bc310        0x0 obj/emos_uart_flow.o
+ .data          0x000bc310        0x0 obj/emos_parallel.o
+ .data          0x000bc310        0x0 obj/emos_parallel_engine.o
+ .data          0x000bc310        0x0 obj/emos_parallel_handover.o
+ .data          0x000bc310        0x0 obj/emos_parallel_boot.o
+ .data          0x000bc310        0x0 obj/emos_parallel_startup.o
+ .data          0x000bc310        0x0 obj/emos_controller.o
+ .data          0x000bc310        0x0 obj/emos_net.o
+ .data          0x000bc310        0x0 obj/emos_parallel_upload.o
+ .data          0x000bc310        0x0 obj/emos_app_span.o
+ .data          0x000bc310        0x0 obj/emos_uart0_rfc25.o
+ .data          0x000bc310        0x0 obj/emos_console_io.o
+ .data          0x000bc310        0x0 obj/emos_keyboard_io.o
+ .data          0x000bc310        0x0 obj/emos_parallel_io.o
+ .data          0x000bc310        0x0 obj/emos_parallel_upload_io.o
+ .data          0x000bc310        0x0 obj/emos_uart0_rfc25_io.o
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(qsort.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(nanoprintf.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strtol.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmpu.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idivu.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ladd.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lneg.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmpzero.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(setflag.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshl.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idivs.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshru.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sor.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(or.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idvrmu.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(inot.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(frameset0.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(bshl.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(xor.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ishl.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lmulu.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lsub.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ishrs.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(imulu.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivu.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmps.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ineg_sneg.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(irems.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivs.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lnot.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(indcall.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(bshru.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(and.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sand.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(frameset.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivs_lrems_common.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sshru.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sremu.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldvrmu.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fpcmp.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(indcallhl.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isxdigit.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isspace.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memcmp.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strspn.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strrchr.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memset.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(putchar.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memcpy.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(tolower.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strncpy.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isupper.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memchr.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strlen.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isalpha.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(toupper.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isdigit.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcat.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(puts.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memmove.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strchr.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcpy.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcmp.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fputc.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(mos_fputc.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idvrms.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshrs.o)
+ .data          0x000bc310        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sdvrmu.o)
+ .data          0x000bc310       0x12 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(files.o)
+                0x000bc310                _stdin
+                0x000bc316                _stdout
+                0x000bc31c                _stderr
+                0x000bc322                        data_end = .
+
+.bss            0x000bc322      0xda2 load address 0x0001f854
+                0x000bc322                        bss_start = .
+ *(.bss .bss*)
+ .bss           0x000bc322        0x0 obj/crash.o
+ .bss           0x000bc322       0x78 obj/globals.o
+                0x000bc322                _clock
+                0x000bc322                _sysvars
+                0x000bc326                _vpd_protocol_flags
+                0x000bc327                _keyascii
+                0x000bc328                _keymods
+                0x000bc329                _cursorX
+                0x000bc32a                _cursorY
+                0x000bc32b                _scrchar
+                0x000bc32c                _scrpixel
+                0x000bc32f                _audioChannel
+                0x000bc330                _audioSuccess
+                0x000bc331                _scrwidth
+                0x000bc333                _scrheight
+                0x000bc335                _scrcols
+                0x000bc336                _scrrows
+                0x000bc337                _scrcolours
+                0x000bc338                _scrpixelIndex
+                0x000bc339                _keycode
+                0x000bc33a                _keydown
+                0x000bc33b                _keycount
+                0x000bc33c                _rtc
+                0x000bc344                _keydelay
+                0x000bc346                _keyrate
+                0x000bc348                _keyled
+                0x000bc349                _scrmode
+                0x000bc34a                _rtc_enable
+                0x000bc34b                _mouseX
+                0x000bc34d                _mouseY
+                0x000bc34f                _mouseButtons
+                0x000bc350                _mouseWheel
+                0x000bc351                _mouseXDelta
+                0x000bc353                _mouseYDelta
+                0x000bc355                _errno
+                0x000bc358                _hardReset
+                0x000bc359                _gp
+                0x000bc35a                _serialFlags
+                0x000bc35b                _callSM
+                0x000bc360                _scratchpad
+                0x000bc368                _keymap
+                0x000bc378                _vdp_protocol_state
+                0x000bc379                _vdp_protocol_cmd
+                0x000bc37a                _vdp_protocol_len
+                0x000bc37b                _vdp_protocol_ptr
+                0x000bc37e                _vdp_protocol_data
+                0x000bc38e                _user_kbvector
+                0x000bc391                _i2c_slave_rw
+                0x000bc392                _i2c_error
+                0x000bc393                _i2c_role
+                0x000bc394                _i2c_msg_ptr
+                0x000bc397                _i2c_msg_size
+                0x000bc398                _history_no
+                0x000bc399                _history_size
+ .bss           0x000bc39a        0x0 obj/gpio.o
+ .bss           0x000bc39a        0x0 obj/handlers.o
+ .bss           0x000bc39a       0xc3 obj/init.o
+                0x000bc39a                __2nd_jump_table
+ .bss           0x000bc45d        0x0 obj/interrupts.o
+ .bss           0x000bc45d        0x0 obj/keyboard.o
+ .bss           0x000bc45d        0x0 obj/misc.o
+ .bss           0x000bc45d        0x0 obj/mos_api.o
+ .bss           0x000bc45d        0x0 obj/reset.o
+ .bss           0x000bc45d        0x0 obj/rtc.o
+ .bss           0x000bc45d        0x6 obj/sd.o
+ .bss           0x000bc463        0x0 obj/serial.o
+ .bss           0x000bc463        0x0 obj/spi.o
+ .bss           0x000bc463        0x0 obj/vdp_protocol.o
+ .bss           0x000bc463        0x3 src_fatfs/diskio.o
+                0x000bc463                _unlockCode
+ .bss           0x000bc466        0x6 src_fatfs/ff.o
+ .bss           0x000bc46c        0x0 src_fatfs/ffsystem.o
+ .bss           0x000bc46c        0x0 src_fatfs/ffunicode.o
+ .bss           0x000bc46c        0x8 src_umm_malloc/umm_malloc.o
+                0x000bc46c                _umm_heap_current
+ .bss           0x000bc474        0x0 obj/clock.o
+ .bss           0x000bc474        0x0 obj/i2c.o
+ .bss           0x000bc474        0x0 obj/main.o
+ .bss           0x000bc474      0x678 obj/mos.o
+                0x000bc474                _depth
+                0x000bc475                _sdcardDelay
+                0x000bc476                _vdpSupportsTextPalette
+                0x000bc477                _emos_rfc25_application
+                0x000bc478                _cwd
+                0x000bc68e                _mosFileObjects
+                0x000bc9ec                _cmd
+ .bss           0x000bcaec       0x30 obj/mos_editor.o
+ .bss           0x000bcb1c        0x0 obj/mos_file.o
+ .bss           0x000bcb1c        0x6 obj/mos_sysvars.o
+                0x000bcb1c                _mosSystemVariables
+                0x000bcb1f                _trackedTransInfo
+ .bss           0x000bcb22        0x0 obj/strings.o
+ .bss           0x000bcb22        0x0 obj/tests.o
+ .bss           0x000bcb22        0x0 obj/timer.o
+ .bss           0x000bcb22        0x3 obj/uart.o
+                0x000bcb22                _uart1_keyboard_owned
+ .bss           0x000bcb25        0xc obj/emos.o
+                0x000bcb25                _emosVduBackend
+ .bss           0x000bcb31       0x90 obj/emos_admission.o
+ .bss           0x000bcbc1        0x0 obj/emos_telemetry.o
+ .bss           0x000bcbc1      0x2dc obj/emos_sdlink.o
+ .bss           0x000bce9d       0x27 obj/emos_console.o
+                0x000bcebe                _emos_console_owned
+                0x000bcec3                _emos_console_keep
+ .bss           0x000bcec4      0x123 obj/emos_keyboard.o
+                0x000bcec4                _emos_key_source
+                0x000bcec8                _emos_key_faulted
+                0x000bceca                _emos_key_rx
+ .bss           0x000bcfe7        0x1 obj/emos_uart_flow.o
+ .bss           0x000bcfe8       0x28 obj/emos_parallel.o
+ .bss           0x000bd010        0x0 obj/emos_parallel_engine.o
+ .bss           0x000bd010        0x0 obj/emos_parallel_handover.o
+ .bss           0x000bd010        0x0 obj/emos_parallel_boot.o
+ .bss           0x000bd010        0x6 obj/emos_parallel_startup.o
+ .bss           0x000bd016       0x66 obj/emos_controller.o
+ .bss           0x000bd07c        0x4 obj/emos_net.o
+ .bss           0x000bd080        0x8 obj/emos_parallel_upload.o
+ .bss           0x000bd088        0x0 obj/emos_app_span.o
+ .bss           0x000bd088        0x0 obj/emos_uart0_rfc25.o
+ .bss           0x000bd088        0x0 obj/emos_console_io.o
+ .bss           0x000bd088        0x0 obj/emos_keyboard_io.o
+ .bss           0x000bd088        0x0 obj/emos_parallel_io.o
+ .bss           0x000bd088        0x0 obj/emos_parallel_upload_io.o
+ .bss           0x000bd088        0xc obj/emos_uart0_rfc25_io.o
+                0x000bd093                _emos_rfc25_owned
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(qsort.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(nanoprintf.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strtol.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmpu.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idivu.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ladd.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lneg.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmpzero.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(setflag.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshl.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idivs.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshru.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sor.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(or.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idvrmu.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(inot.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(frameset0.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(bshl.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(xor.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ishl.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lmulu.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lsub.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ishrs.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(imulu.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivu.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lcmps.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ineg_sneg.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(irems.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivs.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lnot.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(indcall.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(bshru.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(and.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sand.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(frameset.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldivs_lrems_common.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sshru.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sremu.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(ldvrmu.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fpcmp.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(indcallhl.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isxdigit.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isspace.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memcmp.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strspn.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strrchr.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memset.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(putchar.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memcpy.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(tolower.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strncpy.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isupper.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memchr.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strlen.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isalpha.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(toupper.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(isdigit.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcat.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(puts.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(memmove.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strchr.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcpy.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strcmp.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fputc.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(mos_fputc.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(idvrms.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(lshrs.o)
+ .bss           0x000bd094        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(sdvrmu.o)
+ .bss           0x000bd094       0x30 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(files.o)
+                0x000bd094                __file_streams
+                0x000bd0c4                        bss_end = .
+                0x000c0000                        __stack = (RAM_START + RAM_SIZE)
+                0x0001f532                        ___rodata_end = rodata_end
+                0x000bc000                        ___data_start = data_start
+                0x00000322                        ___data_len = SIZEOF (.data)
+                0x000bc322                        ___bss_start = bss_start
+                0x00000da2                        ___bss_len = SIZEOF (.bss)
+                0x000bd0c4                        ___heapbot = bss_end
+                0x000c0000                        ___heaptop = (RAM_START + RAM_SIZE)
+                0x00000001                        ___run_clearbss = (___bss_len > 0x0)
+                0x00000000                        ___init_array_count = (SIZEOF (.init_array) / 0x3)
+                0x00000000                        ___ctors_count = (SIZEOF (.ctors) / 0x3)
+                0x00000000                        ___dtors_count = (SIZEOF (.dtors) / 0x3)
+                0x00000000                        ___fini_array_count = (SIZEOF (.fini_array) / 0x3)
+                0x00000000                        ___init_count = (___init_array_count + ___ctors_count)
+                0x00000000                        ___fini_count = (___dtors_count + ___fini_array_count)
+                0x00000000                        ___run_init = (___init_count > 0x0)
+                0x00000000                        ___run_fini = (___fini_count > 0x0)
+                0x00000100                        ___init_count_a = ((((___init_count - 0x1) >> 0x10) & 0xff) + 0x1)
+                0x00000100                        ___init_count_b = (((___init_count - 0x1) & 0xff) + 0x1)
+                0x00000100                        ___init_count_c = ((((___init_count - 0x1) >> 0x8) & 0xff) + 0x1)
+                0x00000100                        ___fini_count_a = ((((___fini_count - 0x1) >> 0x10) & 0xff) + 0x1)
+                0x00000100                        ___fini_count_b = (((___fini_count - 0x1) & 0xff) + 0x1)
+                0x00000100                        ___fini_count_c = ((((___fini_count - 0x1) >> 0x8) & 0xff) + 0x1)
+                0x0001cb37                        ___init_array_functions = (SIZEOF (.init_array) + ADDR (.init_array))
+                0x0001cb37                        ___init_ctors_functions = (SIZEOF (.ctors) + ADDR (.ctors))
+                0x0001cb37                        ___fini_dtors_functions = (SIZEOF (.dtors) + ADDR (.dtors))
+                0x0001cb37                        ___fini_array_functions = (SIZEOF (.fini_array) + ADDR (.fini_array))
+                0x00000001                        ASSERT (((LOADADDR (.data) + SIZEOF (.data)) <= (ORIGIN (ROM) + LENGTH (ROM))), EMOS initialized image exceeds physical ROM)
+LOAD obj/crash.o
+LOAD obj/globals.o
+LOAD obj/gpio.o
+LOAD obj/handlers.o
+LOAD obj/init.o
+LOAD obj/interrupts.o
+LOAD obj/keyboard.o
+LOAD obj/misc.o
+LOAD obj/mos_api.o
+LOAD obj/reset.o
+LOAD obj/rtc.o
+LOAD obj/sd.o
+LOAD obj/serial.o
+LOAD obj/spi.o
+LOAD obj/vdp_protocol.o
+LOAD src_fatfs/diskio.o
+LOAD src_fatfs/ff.o
+LOAD src_fatfs/ffsystem.o
+LOAD src_fatfs/ffunicode.o
+LOAD src_umm_malloc/umm_malloc.o
+LOAD obj/clock.o
+LOAD obj/i2c.o
+LOAD obj/main.o
+LOAD obj/mos.o
+LOAD obj/mos_editor.o
+LOAD obj/mos_file.o
+LOAD obj/mos_sysvars.o
+LOAD obj/strings.o
+LOAD obj/tests.o
+LOAD obj/timer.o
+LOAD obj/uart.o
+LOAD obj/emos.o
+LOAD obj/emos_admission.o
+LOAD obj/emos_telemetry.o
+LOAD obj/emos_sdlink.o
+LOAD obj/emos_console.o
+LOAD obj/emos_keyboard.o
+LOAD obj/emos_uart_flow.o
+LOAD obj/emos_parallel.o
+LOAD obj/emos_parallel_engine.o
+LOAD obj/emos_parallel_handover.o
+LOAD obj/emos_parallel_boot.o
+LOAD obj/emos_parallel_startup.o
+LOAD obj/emos_controller.o
+LOAD obj/emos_net.o
+LOAD obj/emos_parallel_upload.o
+LOAD obj/emos_app_span.o
+LOAD obj/emos_uart0_rfc25.o
+LOAD obj/emos_console_io.o
+LOAD obj/emos_keyboard_io.o
+LOAD obj/emos_parallel_io.o
+LOAD obj/emos_parallel_upload_io.o
+LOAD obj/emos_uart0_rfc25_io.o
+LOAD /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a
+OUTPUT(bin/mos.elf elf32-z80)
+
+.comment        0x00000000       0x76
+ .comment       0x00000000       0x76 src_fatfs/diskio.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 src_fatfs/ff.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 src_fatfs/ffsystem.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 src_fatfs/ffunicode.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 src_umm_malloc/umm_malloc.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/clock.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/i2c.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/main.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/mos.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/mos_editor.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/mos_file.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/mos_sysvars.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/strings.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/tests.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/timer.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/uart.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_admission.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_telemetry.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_sdlink.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_console.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_keyboard.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_uart_flow.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_parallel.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_parallel_engine.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_parallel_handover.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_parallel_boot.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_parallel_startup.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_controller.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_net.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_parallel_upload.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_app_span.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 obj/emos_uart0_rfc25.o
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(qsort.o)
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(nanoprintf.o)
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(strtol.o)
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(fputc.o)
+                                 0x77 (size before relaxing)
+ .comment       0x00000076        0x0 /Agon/mystuff/agon-extender/agents/pingo-callback/tools/agondev/lib/libagon.a(files.o)
+                                 0x77 (size before relaxing)

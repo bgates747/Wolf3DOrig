@@ -1,0 +1,10 @@
+{
+  "owner": "wolf3dorig",
+  "task": "WOLF-PERF-022-hardware02",
+  "purpose": "Same full uncapped three-arm observer cohort, voluntarily behind Mech owner isolation and R08; reservation-only kit rebind pending before READY",
+  "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-022/PLAN.md",
+  "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+  "notify_host": "remote-ssh-discovered:raspberrypi",
+  "request": "793c29add4f8",
+  "requested": "2026-11-07T16:22:43.000574+00:00"
+}
