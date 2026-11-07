@@ -19,7 +19,7 @@ firmware/service/provider/carrier/default or viewport change is selected.
   guarded arbitrary/noncontiguous/aliased rows, arbitrary masks/colour/bias/XOR,
   zero/boundary/overflow-refusal cases, actual renderer/module/error/lease/order
   tests and600-frame/state/geometry parity. Keep ASan/UBSan; no relaxed oracle.
-- [ ] WOLF-PERF-023-05 — Reproduce exact control package or stop; target safeO2/
+- [x] WOLF-PERF-023-05 — Reproduce exact control package or stop; target safeO2/
   PIC/fno-builtin/PSRAM flags/providers/ABI/sections/relocations/image/whole stack
   and real per-arm eZ80 package-size/strict-limit/UPLOAD/LOAD bindings. Inspect
   actual byte loads/stores/barriers/inner loops; no guessed lowering or timings.

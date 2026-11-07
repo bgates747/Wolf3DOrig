@@ -54,7 +54,29 @@
      assert kit['native_b_sha256'] == '7593b9cf9a2dc60e81221d998527d4ac0d1c3f51077348ea03e869016aa0581d'
      assert kit['source_binding_passed'] and kit['boot_binding_passed']
      assert kit['retain_lease_after_test'] is False
-@@ -433,7 +432,7 @@
+@@ -231,9 +230,10 @@
+             assert sha(p / name) == self.components[key]
+         c = self.metadata(p, 'directories')
+         try:
+-            c.make_directory('/test/wolf/perf022', parents=True)
++            namespace_parent = self.remote.rsplit('/', 1)[0]
++            c.make_directory(namespace_parent, parents=True)
+             assert not any(n.rstrip('/').lower() == self.remote.lower()
+-                           for n, _, _ in c.entries('/test/wolf/perf022')), 'Fresh namespace collision'
++                           for n, _, _ in c.entries(namespace_parent)), 'Fresh namespace collision'
+             c.make_directory(self.remote, parents=True)
+             c.make_directory(self.remote + '/level_00', parents=True)
+         finally:
+@@ -274,7 +274,7 @@
+         with path.open('x') as f:
+             json.dump(observation, f, indent=2); f.write('\n')
+         with (self.out / 'entry-context.json').open('x') as f:
+-            json.dump(dict(schema='wolf-perf022-entry-v1', generation=self.grant['generation'],
++            json.dump(dict(schema='wolf-perf023-entry-v1', generation=self.grant['generation'],
+                 request=self.kit['request'], lease=self.lease, original_grant=self.c['grant'],
+                 original_grant_sha256=sha(self.c['grant']), manifest=str(B / 'kit.json'),
+                 manifest_sha256=sha(B / 'kit.json'), dispatch_context=self.c,
+@@ -433,7 +433,7 @@
              self.cleaning = True  # Restoration is never refused by dispatch cutoff.
              self.flash('restore', self.kit['restore'])
              self.handback()
@@ -137,7 +159,7 @@
  spec = importlib.util.spec_from_file_location('retained_sdserve_tests', SOURCE/'tests/test_sdserve.py')
  owner = importlib.util.module_from_spec(spec); spec.loader.exec_module(owner)
 -OUT = T/'build/composition04'
-+OUT = T/'build/composition01'
++OUT = T/'build/composition02'
  
  
  class Peer(owner.SdserveTests):
@@ -221,7 +243,7 @@
  from pathlib import Path
  import argparse,hashlib,json,os,signal,subprocess,sys,time
 -T=Path(__file__).resolve().parent; B=T/'build/composition04';D=Path('/Agon/mystuff/agon-dev-env')
-+T=Path(__file__).resolve().parent; B=T/'build/composition01';D=Path('/Agon/mystuff/agon-dev-env')
++T=Path(__file__).resolve().parent; B=T/'build/composition02';D=Path('/Agon/mystuff/agon-dev-env')
  
  def main(lease):
      B.mkdir(exist_ok=False)
