@@ -1,0 +1,2 @@
+1434928 1794066352.827477 --- SIGTERM {si_signo=SIGTERM, si_code=SI_USER, si_pid=1434918, si_uid=1000} ---
+1434928 1794066352.828016 +++ killed by SIGTERM +++

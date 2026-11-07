@@ -1,0 +1,39 @@
+{
+  "case": "direct",
+  "argv": [
+    "/usr/bin/strace",
+    "--interruptible=1",
+    "-f",
+    "-qq",
+    "-ttt",
+    "-e",
+    "trace=none",
+    "-e",
+    "signal=SIGTERM",
+    "-o",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r02/direct/trace.log",
+    "/Agon/mystuff/agon-extender/.venv/bin/python",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/child.py",
+    "--ready",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-HOST-001/build/r02/direct/ready.json",
+    "--case",
+    "direct"
+  ],
+  "tracer_pid": 1434925,
+  "sender_pid": 1434918,
+  "sender_uid": 1000,
+  "child": {
+    "pid": 1434928,
+    "ppid": 1434925,
+    "pgid": 1434925,
+    "uid": 1000,
+    "case": "direct",
+    "epoch": 1794066352.7909503,
+    "default_signal_disposition": true
+  },
+  "signal_issued": {
+    "epoch": 1794066352.8272557,
+    "signal": 15,
+    "target": "owned-child-PID"
+  }
+}
