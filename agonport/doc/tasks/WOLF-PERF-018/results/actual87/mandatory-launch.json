@@ -1,0 +1,10 @@
+{
+  "argv": [
+    "/Agon/mystuff/agon-extender/.venv/bin/python",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/launch02.py",
+    "--context",
+    "/Agon/mystuff/agon-extender/agents/bench-scheduler/wolf-perf018-r01/context.json"
+  ],
+  "preflight": "actual60file dependency closure checked before hardware controller import or targetIO",
+  "no_direct_controller_launch": true
+}

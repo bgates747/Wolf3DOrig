@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 973607709,
+    "boot": 1727053533,
+    "operation": "get",
+    "remote": "/test/wolf/perf018/r01/post-mode.bin",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/hardware01/evidence/flash-restore/restore-raw-mode.bin",
+    "started": 1794060250.525838,
+    "result": {
+      "protocol": 1,
+      "boot": 1727053533,
+      "id": 973607709,
+      "phase": 4,
+      "bytes": 1,
+      "size": 1,
+      "records": 3,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 15506,
+      "mainboard_us": 97827,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.012494287977460772,
+      "host_elapsed_s": 0.46789121627807617,
+      "http_upload_s": 0.18983577901963145
+    },
+    "delivered": true,
+    "http_upload_s": 0.18983577901963145,
+    "partial_owned": true,
+    "finished": 1794060250.993729
+  }
+}

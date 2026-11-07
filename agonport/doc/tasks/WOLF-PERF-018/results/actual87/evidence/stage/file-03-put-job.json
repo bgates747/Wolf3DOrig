@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 1102142469,
+    "boot": 26818223,
+    "operation": "put",
+    "remote": "/test/wolf/perf018/r01/shell.agnb",
+    "activate": true,
+    "size": 1197704,
+    "destination": null,
+    "started": 1794059113.1916156,
+    "result": {
+      "protocol": 1,
+      "boot": 26818223,
+      "id": 1102142469,
+      "phase": 4,
+      "bytes": 1197704,
+      "size": 1197704,
+      "records": 5654,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 2423614,
+      "mainboard_us": 48969653,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 51.66197323799133,
+      "http_upload_s": 2.4483204790158197
+    },
+    "delivered": true,
+    "http_upload_s": 2.4483204790158197,
+    "finished": 1794059164.8535888
+  }
+}

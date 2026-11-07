@@ -1,0 +1,38 @@
+{
+  "schema": "olimex-bench-observation-v1",
+  "bench": "olimex",
+  "epoch": 1794060295.8606193,
+  "observer": "wolf3dorig",
+  "lease": "59b801180d0d4287a82ac9d9bee7bdc4",
+  "checks": {
+    "no_workload": true,
+    "no_transfer": true,
+    "no_serial_readers": true,
+    "no_reset_holders": true,
+    "cli_verified": true,
+    "input_ready_neutral": true,
+    "listener_offline": true,
+    "staged_job_idle": true,
+    "restoration_verified": true
+  },
+  "evidence": [
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/hardware01/evidence/handback/state.json",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/hardware01/evidence/handback/serial.bin",
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/hardware01/evidence/flash-restore/receipt.json"
+  ],
+  "components": {
+    "p4_app_sha256": "d9bcb1a2b277e4dcec808d46a33d53879ea4ac4f3e35d69f80345d3c9ac4043e",
+    "emos_rom_sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+    "native_vdp_sha256": "5d65797e53a70db8716cc3bc31dc936e431aea975ffad8efb76d5d7e8c1e3d07",
+    "startup_sha256": "ed403e17f90a22c634afa0de3cad65451bc52da86bde6da084abe42fac3b7c64",
+    "listener_sha256": "0566e17f18747c2e625d2450ce5324a2b1097bce323a5e4d70fad6dcb41cdff2"
+  },
+  "component_provenance": {
+    "p4_app_sha256": "Retained unchanged grant identity, no new device read",
+    "emos_rom_sha256": "Retained unchanged grant identity, no new device read",
+    "native_vdp_sha256": "Exact app-span restoration/readback",
+    "startup_sha256": "Fresh full-file comparison",
+    "listener_sha256": "Fresh full-file comparison"
+  },
+  "disposition": "Matched Wolf suite stopped; exact native application/touched tail restored, mode0/callback0/CLI/input/idle/freeports checked, startup/listener unchanged; card mounted. Cursor command only, no optical or calibrated-clock claim."
+}

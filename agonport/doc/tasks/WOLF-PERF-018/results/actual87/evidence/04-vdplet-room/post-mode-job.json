@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 199507937,
+    "boot": 129908999,
+    "operation": "get",
+    "remote": "/test/wolf/perf018/r01/post-mode.bin",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/hardware01/evidence/04-vdplet-room/post-mode.bin",
+    "started": 1794060138.3423643,
+    "result": {
+      "protocol": 1,
+      "boot": 129908999,
+      "id": 199507937,
+      "phase": 4,
+      "bytes": 1,
+      "size": 1,
+      "records": 3,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 13378,
+      "mainboard_us": 98692,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.013648802996613085,
+      "host_elapsed_s": 0.3196380138397217,
+      "http_upload_s": 0.03730651002842933
+    },
+    "delivered": true,
+    "http_upload_s": 0.03730651002842933,
+    "partial_owned": true,
+    "finished": 1794060138.6620023
+  }
+}

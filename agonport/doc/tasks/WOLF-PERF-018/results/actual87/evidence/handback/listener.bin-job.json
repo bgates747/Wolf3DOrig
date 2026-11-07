@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 1022960752,
+    "boot": 1727053533,
+    "operation": "get",
+    "remote": "/emos/sdserve.bin",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/hardware01/evidence/handback/listener.bin",
+    "started": 1794060280.058864,
+    "result": {
+      "protocol": 1,
+      "boot": 1727053533,
+      "id": 1022960752,
+      "phase": 4,
+      "bytes": 24753,
+      "size": 24753,
+      "records": 117,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 13657,
+      "mainboard_us": 971721,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.039181879023090005,
+      "host_elapsed_s": 1.1104755401611328,
+      "http_upload_s": 0.037075013970024884
+    },
+    "delivered": true,
+    "http_upload_s": 0.037075013970024884,
+    "partial_owned": true,
+    "finished": 1794060281.1693397
+  }
+}

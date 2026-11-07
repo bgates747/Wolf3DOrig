@@ -1,0 +1,187 @@
+{
+  "passed": true,
+  "backend": "vdplet",
+  "mode": "room",
+  "whole_seconds": 95.14308422798058,
+  "result": {
+    "schema": "wolf-perf003-result-v1",
+    "backend": "vdplet",
+    "mode": "uncapped-visible",
+    "completed_records": 600,
+    "scripted_steps": 600,
+    "coalesced_poses": 0,
+    "prt_ticks": 19959,
+    "mos_ticks": 2398,
+    "prt_nominal_seconds": 19.959,
+    "mos_nominal_seconds": 19.983333333333334,
+    "nominal_prt_records_per_second": 30.06162633398467,
+    "nominal_mos_records_per_second": 30.025020850708923,
+    "clock_ratio_mos_seconds_to_prt_seconds": 1.0012191659568783,
+    "empty_600_loop_prt_ticks": 0,
+    "clock_qualification": "Physical fixture; nominal PRT/MOS clocks without external calibration",
+    "tile": [
+      34,
+      36
+    ],
+    "enemies": 0,
+    "host_wall_seconds": "runner records entire process, not race window",
+    "stages_nominal_prt_ms": {
+      "pose_ms": {
+        "mean": 0.0033333333333333335,
+        "median": 0.0,
+        "p95": 0,
+        "max": 1,
+        "count": 600
+      },
+      "pack_ms": {
+        "mean": 1.1016666666666666,
+        "median": 1.0,
+        "p95": 2,
+        "max": 2,
+        "count": 600
+      },
+      "submit_ms": {
+        "mean": 1.5883333333333334,
+        "median": 2.0,
+        "p95": 2,
+        "max": 2,
+        "count": 600
+      },
+      "wait_ms": {
+        "mean": 26.275,
+        "median": 26.0,
+        "p95": 27,
+        "max": 28,
+        "count": 600
+      },
+      "present_fence_ms": {
+        "mean": 4.29,
+        "median": 4.0,
+        "p95": 6,
+        "max": 6,
+        "count": 600
+      },
+      "active_ms": {
+        "mean": 33.25833333333333,
+        "median": 33.0,
+        "p95": 34,
+        "max": 34,
+        "count": 600
+      }
+    },
+    "revolutions": {
+      "1": {
+        "records": 300,
+        "active_ms": {
+          "mean": 33.26,
+          "median": 33.0,
+          "p95": 34,
+          "max": 34,
+          "count": 300
+        },
+        "render_ccount": {
+          "mean": 6125645.393333334,
+          "median": 6119422.5,
+          "p95": 6346901,
+          "max": 6394424,
+          "count": 300
+        }
+      },
+      "2": {
+        "records": 300,
+        "active_ms": {
+          "mean": 33.25666666666667,
+          "median": 33.0,
+          "p95": 34,
+          "max": 34,
+          "count": 300
+        },
+        "render_ccount": {
+          "mean": 6126233.573333333,
+          "median": 6121243.0,
+          "p95": 6344282,
+          "max": 6386843,
+          "count": 300
+        }
+      }
+    },
+    "wire_accounting": {
+      "prepared_bytes_per_pose": 28,
+      "request_bytes_per_completed_pose": 65,
+      "derivation": "A: pose17+render7; B: clear6+write8+payload28+consolidate6+RUN17. Timed request paths only; replies and paced C3/mode-fence separate. Confirm against actual UART trace before throughput interpretation."
+    },
+    "cpu_mode_submit_bucket_note": "In CPU mode submit_ms is serializer lifecycle bookkeeping, with no UART submission.",
+    "active_over_33_333_ms": 158,
+    "vdp_core_id": 52685,
+    "native_ccount": {
+      "render_ccount": {
+        "mean": 6125939.483333333,
+        "median": 6120401.0,
+        "p95": 6346901,
+        "max": 6394424,
+        "count": 600
+      },
+      "scope_ccount": {
+        "mean": 6238968.331666667,
+        "median": 6234741.5,
+        "p95": 6456562,
+        "max": 6498178,
+        "count": 600
+      },
+      "dispatch_ccount": {
+        "mean": 6269614.725,
+        "median": 6265016.5,
+        "p95": 6488320,
+        "max": 6525733,
+        "count": 600
+      }
+    },
+    "native_ccount_note": "Local raw CCOUNT intervals; native dispatch instrumentation must be qualified before accepting dispatch_ccount; includes preemption/service calls. Not calibrated physical milliseconds or exclusive CPU work.",
+    "presentation_intervals_nominal_prt_ms": {
+      "mean": 33.270450751252085,
+      "median": 33,
+      "p95": 34,
+      "max": 34,
+      "count": 599
+    },
+    "sha256": {
+      "serial.bin": "0e947e505aa797ab84fe5060c8dfc552711f00266d8eaf8c7d3b007470fd411f",
+      "loading3.bin": "4b48bb48e9906c34a96ed4fb87d073cb904beea563f792635c7de3f99d5bdbcd",
+      "before.bin": "57902a3ecda1614659615b8f55c131a322449da5b1b17613ea13bf8a23ca19ca",
+      "config-generated.bin": "f202a9beee3a75718c69a11c63af845f66d0707472ff1ef045a6d836b59fd948",
+      "after.bin": "18e59422599c8a50a3f41c959acdf4686f00be9069f6e49ca858cd34ede8f5da",
+      "timing.bin": "c0befb87066989223b6b477948ece4be965f4f0932f563c028222cabd94fe75b",
+      "native.bin": "303b9abc7ecff1ddd63e89b78388cd1c19c11968c7cbfaee5f07cfb3e5265026",
+      "loading.bin": "173fcab3d2e18c3a47d50414e09a7b268c23909806a43cee9920f0c5b5103fb9",
+      "stack.bin": "dd7813ee34aacf6a86a756651bba1abf6ca4dd9c20baaa1e3d2a75115e158383",
+      "config-empty-read.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "loading": {
+    "count": 470,
+    "total": 470,
+    "fences": 952,
+    "timeouts": 0,
+    "recovered": 0,
+    "max_ticks": 4,
+    "last_ticks": 0,
+    "first_timeout_total": 0,
+    "first_timeout_ticks": 0,
+    "error": 0,
+    "phase": 2,
+    "status": 0,
+    "first_timeout_phase": 0,
+    "first_status": 0,
+    "last_passes": 1,
+    "agnb_error": 0
+  },
+  "sha256": {
+    "before.bin": "57902a3ecda1614659615b8f55c131a322449da5b1b17613ea13bf8a23ca19ca",
+    "after.bin": "18e59422599c8a50a3f41c959acdf4686f00be9069f6e49ca858cd34ede8f5da",
+    "stack.bin": "dd7813ee34aacf6a86a756651bba1abf6ca4dd9c20baaa1e3d2a75115e158383",
+    "timing.bin": "c0befb87066989223b6b477948ece4be965f4f0932f563c028222cabd94fe75b",
+    "native.bin": "303b9abc7ecff1ddd63e89b78388cd1c19c11968c7cbfaee5f07cfb3e5265026"
+  },
+  "actual_cli": true,
+  "mode0_callback0": true
+}

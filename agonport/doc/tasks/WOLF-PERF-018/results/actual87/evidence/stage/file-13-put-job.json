@@ -1,0 +1,40 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 1536141988,
+    "boot": 26818223,
+    "operation": "put",
+    "remote": "/test/wolf/perf018/r01/wolf3d.vdpl",
+    "activate": true,
+    "size": 24420,
+    "destination": null,
+    "started": 1794059332.8060548,
+    "result": {
+      "protocol": 1,
+      "boot": 26818223,
+      "id": 1536141988,
+      "phase": 4,
+      "bytes": 24420,
+      "size": 24420,
+      "records": 120,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 56347,
+      "mainboard_us": 1622621,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "host_elapsed_s": 1.8868606090545654,
+      "http_upload_s": 0.08128830703208223
+    },
+    "delivered": true,
+    "http_upload_s": 0.08128830703208223,
+    "finished": 1794059334.6929154
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "url": "http://192.168.0.20",
+  "job": null,
+  "last": {
+    "id": 3043827108,
+    "boot": 26818223,
+    "operation": "get",
+    "remote": "/test/wolf/perf018/r01/level_00/tiles.agnb",
+    "activate": false,
+    "size": 0,
+    "destination": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/hardware01/evidence/stage/file-04-read.bin",
+    "started": 1794059216.350011,
+    "result": {
+      "protocol": 1,
+      "boot": 26818223,
+      "id": 3043827108,
+      "phase": 4,
+      "bytes": 66328,
+      "size": 66328,
+      "records": 310,
+      "error": 0,
+      "remote_status": 0,
+      "filesystem": 0,
+      "stage_us": 13550,
+      "mainboard_us": 2701144,
+      "parallel_prepare_us": 0,
+      "parallel_active_ms": 0,
+      "parallel_handover_ms": 0,
+      "parallel_phase": 0,
+      "parallel_outcome": 0,
+      "parallel_clock_count": -1,
+      "parallel_valid_count": -1,
+      "http_download_s": 0.08674331998918205,
+      "host_elapsed_s": 2.9465689659118652,
+      "http_upload_s": 0.03682554798433557
+    },
+    "delivered": true,
+    "http_upload_s": 0.03682554798433557,
+    "partial_owned": true,
+    "finished": 1794059219.29658
+  }
+}

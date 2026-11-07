@@ -886,3 +886,8 @@ default-cutover claims.
 - [ ] WOLF-PERF-019-04 — Useful finite physical selection/current kit freeze.
 - [ ] WOLF-PERF-019-05 — Fresh run/preservation/exact restore/release/handoff.
 - [ ] WOLF-PERF-019-06 — Actual performance/resource result and limits.
+
+- [x] WOLF-PERF-018 actual87 uncapped comparison/restoration/release: no established
+  timing gain; see agonport/doc/tasks/WOLF-PERF-018/RESULT87.md. Qualified arm retained.
+- [ ] WOLF-PERF-020 conservative post-span source/domain/opportunity gate; no
+  implementation or physical test selected before the explicit predicate freeze.

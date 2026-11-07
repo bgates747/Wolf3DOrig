@@ -1,0 +1,11 @@
+{
+  "arm": "candidate",
+  "source": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/guests01/candidate/room/source",
+  "guest": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/guests01/candidate/room/source/wolf3d.bin",
+  "listing": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/guests01/candidate/room/source/wolf3d.lst",
+  "module": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.vdpl",
+  "module_sha256": "2a249f85e6e88559e1e32d7c9af6906a4f543a693f97f07aa5b0799a53505ed8",
+  "package_bytes": 24480,
+  "package_limit": 24481,
+  "remote_name": "b-candidate-room.bin"
+}

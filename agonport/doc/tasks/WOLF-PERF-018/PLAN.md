@@ -11,12 +11,12 @@ precedes candidate code. MechAgon remains first priority; Oryx is down.
 - [x] WOLF-PERF-018-03 — Qualify an independent scalar wall oracle, aliased rows
   and assets, exact call/refusal/release order, metadata, full renderer/module/
   600-pose output and target control/code/provider/stack/package bindings.
-- [ ] WOLF-PERF-018-04 — Count actual setup reuse opportunities separately from
+- [x] WOLF-PERF-018-04 — Count actual setup reuse opportunities separately from
   timing; select a useful finite uncapped hardware comparison only after code,
   resource and real producer qualification. No new test under actual85.
-- [ ] WOLF-PERF-018-05 — Normal fresh grant, finite run, first-fault preservation,
+- [x] WOLF-PERF-018-05 — Normal fresh grant, finite run, first-fault preservation,
   exact restoration/readback/fullcleanup/release and next-owner notification.
-- [ ] WOLF-PERF-018-06 — Publish timing, size, stack and work changes, including
+- [x] WOLF-PERF-018-06 — Publish timing, size, stack and work changes, including
   zero FPS improvement; no automatic default adoption or arm combination.
 
 ## Pre-code compatibility and intended work
@@ -68,3 +68,7 @@ rollback, resource, host closure and per-arm guest length/limit operands.
 
 Source/host/target milestone: [BUILD-RESULT.md](BUILD-RESULT.md). Hardware
 qualification and default adoption remain separate; no actual85 change.
+
+Actual87 completed and cleanly released; see [RESULT87.md](RESULT87.md).
+No established timing improvement: +0.438% pooled draw against3.134% control
+drift, ~30.06fps unchanged. Exact qualified arm retained; no automatic adoption.

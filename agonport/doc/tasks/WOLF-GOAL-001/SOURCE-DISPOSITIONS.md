@@ -42,13 +42,16 @@ advances several items without changing their scope:
 - PERF018 caches identical full-height scaling setup while keeping scalar
   texture/pixel order.5376 scalar/alias cases,600-pose parity, target/producers
   and73.85% canonical-room host setup-reuse count pass; +60B. Hardware package
-  is frozen/ready, queued behind first-priority Mech86. No physical timing yet.
+  completed actual87: no established gain (+0.438% pooled draw against3.134%
+  control drift), unchanged ~30.06fps; retained qualified arm, exact restoration
+  and normal release. See PERF018/RESULT87.md.
 - PERF019 is a separately frozen true membership-scan reduction: ascending
   per-ID column chains, retaining original scalar order and leases. This goes
   beyond PERF014's cached ID resolution; nominal local storage adds384B.
   6272 scalar/alias cases,600-pose parity, target/producers and canonical-room
   work count pass; +172B package, selected task path1936B. No physical timing
-  or case selection yet.
+  yet; a separate six-case contract now selects chains and exact-degree015
+  with shared controls, normal Mech-first scheduling and fresh admission.
 - Presentation analysis now includes4792 existing steady intervals. Render
   reply arrives23–30 nominal guest ms after the previous completed presentation,
   already beyond one nominal60Hz interval before C3. This is a sequential-path

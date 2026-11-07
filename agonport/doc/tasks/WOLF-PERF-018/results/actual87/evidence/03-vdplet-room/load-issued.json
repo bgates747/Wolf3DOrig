@@ -1,0 +1,5 @@
+{
+  "command": "LOAD b-candidate-room.bin",
+  "once": true,
+  "epoch": 1794059837.6074023
+}
