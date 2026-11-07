@@ -1,9 +1,12 @@
 """Actual controller refuses unobserved submissions; cleanup cannot be trapped."""
 import tempfile
+import hashlib
+import json
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 import hardware02 as h
+import observe
 from test_hardware02 import Model
 
 
@@ -64,6 +67,29 @@ class ObserverControllerTests(unittest.TestCase):
                 with self.assertRaises(h.BudgetStop): b.suite()
             self.assertEqual(b.deadline, 1660)
             self.assertNotIn(('module', 1, 'original'), b.events)
+
+    def test_observer_rejoins_actual_lease_kit_and_input_bytes(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder); build = root / 'build/hardware01'; build.mkdir(parents=True)
+            source = root / 'pinned-source'; source.write_bytes(b'qualified')
+            kit = dict(task='WOLF-PERF-022-hardware01', request='dfe8c5bda3b7', incoming_components={'rom': 'exact'},
+                       inputs={str(source): hashlib.sha256(source.read_bytes()).hexdigest()})
+            manifest = build / 'kit.json'; manifest.write_text(json.dumps(kit))
+            grant = root / 'grant.json'
+            value = dict(owner='wolf3dorig', lease='actual-owned', task=kit['task'], request=kit['request'],
+                         entry_observation=dict(components=kit['incoming_components']))
+            grant.write_text(json.dumps(value))
+            context = root / 'context.json'; context.write_text(json.dumps(dict(manifest=str(manifest), grant=str(grant))))
+            record = dict(lease='actual-owned', kit_sha256=hashlib.sha256(manifest.read_bytes()).hexdigest())
+            with patch.object(observe, '__file__', str(root / 'observe.py')):
+                observe.bind_context(context, record)
+                for bad in ('lease', 'kit', 'input'):
+                    changed = dict(record)
+                    if bad == 'lease': changed['lease'] = 'wrong'
+                    if bad == 'kit': changed['kit_sha256'] = 'wrong'
+                    if bad == 'input': source.write_bytes(b'changed')
+                    with self.subTest(bad=bad), self.assertRaises(AssertionError):
+                        observe.bind_context(context, changed)
 
 
 if __name__ == '__main__':

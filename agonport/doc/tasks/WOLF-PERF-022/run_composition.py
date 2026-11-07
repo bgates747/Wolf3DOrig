@@ -18,7 +18,7 @@ def main(lease):
         subprocess.run([str(D/'.venv/bin/python'),str(D/'cross-agent/pi5-workloads/pi5_lease.py'),'assert-owner','--owner','wolf3dorig','--lease',lease],check=True,stdout=subprocess.DEVNULL)
         guard()
         source=Path('/Agon/mystuff/agon-extender/agents/remote009/download-r01/source')
-        files=[T/n for n in ('hardware02.py','bootstrap.py','test_replacement02.py','run_composition.py','test_hardware02.py','guest_binding.py','analyze.py','launch02.py','LAUNCH-PREFLIGHT.json','HARDWARE-GUESTS.json','PLAN.md','host_observer.py','observe.py','test_observer_controller.py')]
+        files=[T/n for n in ('hardware02.py','bootstrap.py','test_replacement02.py','run_composition.py','test_hardware02.py','guest_binding.py','analyze.py','launch02.py','LAUNCH-PREFLIGHT.json','HARDWARE-GUESTS.json','PLAN.md','host_observer.py','observe.py','OBSERVER-PREFLIGHT.json','test_observer_controller.py')]
         files += [source/'projects/sdserve/src'/n for n in ('service.c','service.h','sd_wire.h')]
         files += [source/'tests/test_sdserve.py',source/'tests/sdserve_host/fs.c',source/'tests/sdserve_host/agon/mos.h']
         bindings=json.loads((T/'HARDWARE-GUESTS.json').read_text())

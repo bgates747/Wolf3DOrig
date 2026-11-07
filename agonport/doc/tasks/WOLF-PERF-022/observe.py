@@ -14,6 +14,17 @@ import host_observer as session
 D = Path('/Agon/mystuff/agon-dev-env')
 
 
+def preflight():
+    assert sys.executable == '/usr/bin/python3' and hasattr(os, 'pidfd_open')
+    files = {str(Path(sys.executable).resolve()), '/usr/bin/strace'}
+    for module in tuple(sys.modules.values()):
+        name = getattr(module, '__file__', None)
+        if name and Path(name).is_file():
+            files.add(str(Path(name).resolve()))
+    return dict(passed=True, interpreter=sys.executable, target_access=False,
+                files={n: hashlib.sha256(Path(n).read_bytes()).hexdigest() for n in sorted(files)})
+
+
 def assert_owner(lease, resource):
     script = (D / 'cross-agent/olimex-bench/bench_lease.py' if resource == 'bench'
               else D / 'cross-agent/pi5-workloads/pi5_lease.py')
@@ -52,6 +63,8 @@ def main(folder, lease, resource, context=None):
     assert session.tracer(target['pid']) == 0, 'Controller already traced'
     if resource == 'bench':
         assert context is not None, 'Actual context is mandatory'
+        expected = session.load(Path(__file__).resolve().parent / 'OBSERVER-PREFLIGHT.json')
+        assert preflight() == expected, 'Actual native observer closure differs'
         bind_context(context, record)
     assert_owner(lease, resource)
     # pidfd remains tied to this original process, even if its PID is reused.
@@ -117,9 +130,14 @@ def main(folder, lease, resource, context=None):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--folder', type=Path, required=True)
-    parser.add_argument('--lease', required=True)
+    parser.add_argument('--folder', type=Path)
+    parser.add_argument('--lease')
     parser.add_argument('--resource', choices=('bench', 'compiler'), default='bench')
     parser.add_argument('--context', type=Path)
+    parser.add_argument('--preflight-only', action='store_true')
     a = parser.parse_args()
-    main(a.folder, a.lease, a.resource, a.context)
+    if a.preflight_only:
+        print(json.dumps(preflight(), indent=2))
+    else:
+        assert a.folder is not None and a.lease is not None
+        main(a.folder, a.lease, a.resource, a.context)
