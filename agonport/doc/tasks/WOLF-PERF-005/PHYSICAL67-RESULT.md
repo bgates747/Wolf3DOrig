@@ -99,3 +99,11 @@ under ignored build/hardware02/evidence. The inherited per-case analyzer's
 generic clock text still says emulator; actual67 physical operation/identities/
 restore are documented by independent hardware receipts, not inferred from that
 stale label. All timing remains nominal/preemption-inclusive/uncalibrated.
+
+
+Independent owner verification ba09212 rechecks all2400raw records/277inputs/
+160binary pins and exact restoration/release, agreeing with every aggregate.
+See INDEPENDENT67-RETURN.md for pinned review provenance. Core checks compare
+entry/post-production raw IDs before logging; the single header retains only
+the latest c0, not per-sample history or continuous migration proof. Source/host
+zero-count coverage does not supersede the private positive-count native limit.
