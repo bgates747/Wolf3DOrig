@@ -78,6 +78,10 @@ Extender and VDPlet in wolf-perf006-physical69-held-result-ext-nine and
 wolf-perf006-physical69-held-result-vdplet-nine. No further priority, production
 adoption, device probing or release is selected. Await Smith's bench direction.
 
+Later custody update: RELEASE69.md records verified newer Smith direction and
+actual fresh clean release69 at23:16:35Eastern. The earlier held-idle result and
+all frozen inputs remain historical evidence, not current bench ownership.
+
 ## Build and execution boundaries
 
 Pi compiler FIFO, assert-before-child, serial children,15min horizon/180s

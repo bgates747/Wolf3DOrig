@@ -25,10 +25,12 @@ Only priorityP01 selected now; P02–P07 deferred discussion backlog.
   same-source O2 draws32.4392ms versus36.7942ms Os (-11.84%); completed
   fixture throughput27.8390 versus24.8329frames/s. No default adoption.
 - [x] WOLF-PERF-006-06 — Exact restore/idle handback; HOLD lease for Smith.
-  Full85f9 span independently matches, all actors stopped; actual69 HELD.
+  Full85f9 span independently matches, all actors stopped. Initially held for
+  Smith; later [released69](agonport/doc/tasks/WOLF-PERF-006/RELEASE69.md)
+  on his verified newer instruction for Extender's performance tranche.
 - [x] WOLF-PERF-006-07 — Publish/share results; release only on later direction.
   af4d780 result delivered to Extender/VDPlet; all P01 work complete.
-  No P02–P07/default adoption selected; actual69 stays held for Smith.
+  P01 production adoption remains separate. No hardware lease now held.
 
 ## WOLF-PERF-005 — bytewise direct-span invariant hoisting
 
