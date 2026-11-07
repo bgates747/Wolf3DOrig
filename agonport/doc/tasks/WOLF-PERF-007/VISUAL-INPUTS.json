@@ -1,0 +1,329 @@
+{
+  "source_commit": "fc4c7f4",
+  "cohort": "build/visual02",
+  "files": 10940,
+  "manifest_sha256": "991ec8682866bed271b4df56054d7599336d3a0d4f670baf159e82e9b9c8b47d",
+  "compile_receipt": {
+    "passed": true,
+    "guards": [
+      {
+        "epoch": 1794027066.063935,
+        "cpu_c": 48.5,
+        "available_kib": 6762576
+      },
+      {
+        "epoch": 1794027066.0646825,
+        "cpu_c": 48.5,
+        "available_kib": 6762176
+      },
+      {
+        "epoch": 1794027066.165015,
+        "cpu_c": 48.5,
+        "available_kib": 6760864
+      },
+      {
+        "epoch": 1794027066.3392017,
+        "cpu_c": 49.6,
+        "available_kib": 6756960
+      },
+      {
+        "epoch": 1794027066.339864,
+        "cpu_c": 47.95,
+        "available_kib": 6756960
+      },
+      {
+        "epoch": 1794027066.4401855,
+        "cpu_c": 48.5,
+        "available_kib": 6755696
+      },
+      {
+        "epoch": 1794027066.6213248,
+        "cpu_c": 50.15,
+        "available_kib": 6757600
+      },
+      {
+        "epoch": 1794027066.6219864,
+        "cpu_c": 50.15,
+        "available_kib": 6757600
+      },
+      {
+        "epoch": 1794027066.7222927,
+        "cpu_c": 50.15,
+        "available_kib": 6740944
+      },
+      {
+        "epoch": 1794027066.82259,
+        "cpu_c": 48.5,
+        "available_kib": 6740944
+      },
+      {
+        "epoch": 1794027066.9228988,
+        "cpu_c": 49.05,
+        "available_kib": 6741408
+      },
+      {
+        "epoch": 1794027067.0232158,
+        "cpu_c": 49.05,
+        "available_kib": 6741648
+      },
+      {
+        "epoch": 1794027067.1234958,
+        "cpu_c": 50.15,
+        "available_kib": 6740848
+      },
+      {
+        "epoch": 1794027067.2238002,
+        "cpu_c": 49.05,
+        "available_kib": 6741248
+      },
+      {
+        "epoch": 1794027067.3241096,
+        "cpu_c": 49.05,
+        "available_kib": 6742240
+      },
+      {
+        "epoch": 1794027067.4244194,
+        "cpu_c": 49.05,
+        "available_kib": 6743040
+      },
+      {
+        "epoch": 1794027067.5247238,
+        "cpu_c": 50.15,
+        "available_kib": 6747152
+      }
+    ],
+    "steps": [
+      {
+        "name": "asm-original",
+        "returncode": 0,
+        "seconds": 0.20122371899196878
+      },
+      {
+        "name": "asm-candidate",
+        "returncode": 0,
+        "seconds": 0.20110247802222148
+      },
+      {
+        "name": "producer-binding",
+        "returncode": 0,
+        "seconds": 1.0035217449767515
+      }
+    ],
+    "assembler_sha256": "784225e87305f35ffdff4b0a0a3a3030b69e9481fa8c6bc76ad57e4d3a506ec3",
+    "seconds": 2.0856821019551717
+  },
+  "binding_result": {
+    "passed": true,
+    "arms": {
+      "original": {
+        "passed": true,
+        "package_bytes": 20928,
+        "guest_sha256": "0471b7f326fff4b9330ffae7f9e012937cb95f3a465863057d42f863a1ccf88e",
+        "listing_sha256": "3de772b80f3d6d737d515742fbb162d82e5aa12f65c37c561cbc50dc17e18e8c",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "21c05100"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "21c05100"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 20929,
+            "encoded": "11c15100"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "01c05100"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "11c05100"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 20928,
+            "encoded": "21c05100"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551497,
+          "wp_exit_sp": 551500
+        }
+      },
+      "candidate": {
+        "passed": true,
+        "package_bytes": 24276,
+        "guest_sha256": "7c730908440dc702089ecaac797a3be829dc3d91d72539a824f53279e97df2e6",
+        "listing_sha256": "27bfda2d66be16d5bfdf1cca499f444b8a670ac9562804ac3d142367bd5d7f92",
+        "operands": [
+          {
+            "address": 422779,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "21d45e00"
+          },
+          {
+            "address": 422792,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "21d45e00"
+          },
+          {
+            "address": 422796,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_LIMIT",
+            "value": 24277,
+            "encoded": "11d55e00"
+          },
+          {
+            "address": 422813,
+            "register": "bc",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "01d45e00"
+          },
+          {
+            "address": 422855,
+            "register": "de",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "11d45e00"
+          },
+          {
+            "address": 423264,
+            "register": "hl",
+            "symbol": "W3D_VDPLET_PACKAGE_BYTES",
+            "value": 24276,
+            "encoded": "21d45e00"
+          }
+        ],
+        "stack_labels": {
+          "wp_entry_sp": 551497,
+          "wp_exit_sp": 551500
+        }
+      }
+    },
+    "changed_binary_offsets": [
+      160636,
+      160637,
+      160649,
+      160650,
+      160653,
+      160654,
+      160670,
+      160671,
+      160712,
+      160713,
+      161121,
+      161122
+    ]
+  },
+  "compiler_release": {
+    "owner": "wolf3dorig",
+    "task": "WOLF-PERF-007-fab-producers02",
+    "purpose": "Two frozen real Fab guest assemblies and actual producer/module length joins",
+    "plan": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-007/VISUAL-01.md",
+    "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "workload": "build",
+    "resources": "One serial assembler/check child, 80C and 512MiB guard",
+    "duration": "Expected seconds, 600s total and 120s per child",
+    "cleanup": "Join owned children, preserve receipts, release compiler slot",
+    "request": "1eb749d5964d",
+    "requested": "2026-11-07T04:50:57.164866+00:00",
+    "policy": {
+      "revision": "author-2026-11-05-oryx-compiler-fallback",
+      "instructions": "/Agon/mystuff/agon-dev-env/cross-agent/pi5-workloads/README.md",
+      "builds": "Automatically granted FIFO, one compile job at a time; no manager approval or 10% CPU gate.",
+      "baseload": "Robocode/Tank Royale server, including active matches, needs no reservation or routine start/end/informational notification to Pi5 manager and does not occupy or block the shared slot or compilation. Separate substantial workloads and physical bench/test permissions remain unchanged; paused work is not resumed.",
+      "routing": "Reserve Oryx for emulator runs and Pi5 for compiler work. When the required build is not possible on Pi5, compiler work may use the existing Oryx self-service FIFO without another routing approval; record the concrete architecture/toolchain limitation, not merely queue congestion. Extender schedules live-serial hardware qualification/benchmark/debug bench access; Console8/manual or semi-automated runs remain at Author discretion.",
+      "heavy": "Pi emulator exceptions need specific new Author approval; CFD/solvers and other heavy Pi work retain explicit Author authorization, manager admission, and start/end chat notices to pi5-manager. Native services are separately classified.",
+      "build_cleanup": "After owned children stop, release using --work-stopped --cleanup-complete; no manager handback or host-wide quiet test.",
+      "authorization_limit": "A supplied record documents authorization; this same-account helper cannot authenticate human authorship."
+    },
+    "author_authorization": null,
+    "manager_start_end_notice_required": false,
+    "lease": "7e39d6a36cf54a47ae60b47fe57da3d8",
+    "generation": 292,
+    "granted": "2026-11-07T04:50:57.164866+00:00",
+    "boot_id": "b6519306-0d9f-48e3-98c4-c28ab10b75de",
+    "phase": "consumer",
+    "admission": "automatic-serial-build",
+    "entry_observation": null,
+    "released": "2026-11-07T04:51:29.146856+00:00",
+    "release_observation": {
+      "observer": "wolf3dorig",
+      "lease": "7e39d6a36cf54a47ae60b47fe57da3d8",
+      "owned_work_stopped": true,
+      "cleanup_complete": true,
+      "disposition": "Owner confirms all owned build children stopped and cleanup complete; no global quiet claim"
+    },
+    "next_request": null,
+    "automatic_build_grant": null
+  },
+  "runtime_pins": {
+    "/home/smith/Agon/mystuff/agon-dev-env/scripts/setup_emulator.py": "229c66f63a24b4a20822810e6f771c506dff0f25a179df905ea815770277b92e",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/fab-agon-emulator": "aec5f8c266117d5bf864c6124d3c8986d042802ed5cbaaf8813e04a9fb8d0bea",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/firmware/mos_platform.bin": "d564243283972690933a4554296ad6202ca4ef54572279533a942960846bebae",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/firmware/mos_platform.map": "d69e60bbce61a7b4b3eef318ba395f11c4e1a5b585755755113992dc94edcb86",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/firmware.bin": "aa387045412ffff5b4bc063377b3a8c48204314ddf9b2100d1c83d9a77db8454",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/MOS.bin": "3b388439c2c88f7e9e260cf67d9d3f1544fafd5546e004af56da14899b752ed5",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/gunzip.bin": "aba3100e31c8898321e91fadea6e429a60abd918113eb10ac58bf182523ef141",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/unzip.bin": "498bc5681c7655c965f7a3015f4cd9fcb8a6d88394820441bac46860c6a31422",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/crc32.bin": "67f484a610499099193356dbd8f6c717e623f57856d910bc7b82b527c913d2a6",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/gpiovideodriver.bin": "667e4e05d39f12faa8c8fa2a286d26c7cfb083ec7d9ce5c125f7de9dd5646d15",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/agon-bench.bin": "771995d4d7b0dcde161ded773b6b0962dd079fdfe198352dcc749d9b74a3ecca",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/bbcbasic24.bin": "bedbb3e977a0bbea0874a58a450b6155f3a6ea65677a19a1b6f7d415ed31ca26",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/loadfont.bin": "e5629a82c7884adbf58ef5a5ee75d894925e04fa4fcd39ab7141903f948cff01",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/vi.bin": "84f20eb74515bb316be5c46ede4cf7b0a4a016f8c1795bdc8d97325605d9e864",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/bbcbasic.bin": "8a8085a7432bf69fc03c812612805feb5975a185e895c0bcdc1e99eea2cfc45e",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/sort.bin": "7c4a9b7640cda92ad12053807773642bd54f977bdf210e583ae86479b868717e",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/bin/ez80asm.bin": "95bef2b5baea52954ca84729752290f5ddccfc179de1e6e685550b74bf74162a",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/emulator_exit_failure.asm": "b3e1df9220329b09e86eaeb20bc1de089b261e139364f4ec1edf54babc52929d",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/flash.bin": "480b476703b798cf8d93294cac42d77cad93f7747003b061520b86685c75eb57",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/fbinit.bat": "8c59acdba87a0b8ee1ece9d7a3daf47899b37c7133c49f2482ed3510199178f1",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/emulator_exit_success.bin": "eb83589c7d737302be531f0bdb6a315225a86f2edfa5d5bc0c09bdb520055413",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/hexload.bin": "7951e7b5eb4b13e3fa10d7bbe97799a1af9044984b59421ccfeb5861fc50ac9a",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/more.bin": "7e3e647963553ff31644d974d92c9277de66c8fe347e31148ced6bd13362334f",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/emulator_exit_failure.bin": "fa8888f8965fd024940932cea9955f29ddd91581c5eff7acad92012ec5afcd4b",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/bootlogo.bin": "9c3a64c715781d0ff132ab3cd9c9c5ae7193b8228e6c1fcadb108a251d291890",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/cal.bin": "b0d8ca610b99478d628d960fa4d52d11e5a29c167f17f47c8003eff367361f23",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/memfill.bin": "8dbed27b8ad96a36cff4ecb933b673ba8a77d4b7917f87496ed5169bfab97646",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/matrix.bin": "a1bbefb613e8f8d1ca96f112b41c20872a333643715b7ae0b4e5a0ff9ee9c637",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/wc.bin": "575097daaf6f2af2200f33ed8bcc0328b443f2be1d828787041802cefb402810",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/playmod.bin": "855ac9a027210471f5cf3fe4b4c418b801241c5022b2032d0753e035880b2079",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/find.bin": "4fa985c5163deee25b81f9dfe0eb16b525e84499dc833f9e1697c02251b932de",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/hexload.dll": "81c553796bcdc95be75bc4fa060b8772d91af8609a47bcdb17f4f539c34a1a2e",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/nano.bin": "051fcacb92fc129c46ee235626cbef5631b5e74062dd8d5a40a03a326a6c9189",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/memdump.bin": "497497e71cbd1c3953f69ac3d503f31ceaff9d853459a1b14cd5f6671c38d654",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/concat.bin": "b624a3a83dee3c3a82e35996d9dd3e9f232299280c68ec185bb12e853564467f",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/calc24.bin": "1fa2658626537b64f06268f7ec3b69efe12a81da31b7485d41a00f5fabb7b246",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/comp.bin": "9b7c2643e956c2a46432ac550db788a557725cdbb453f8903b79331b00794768",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/fontctl.bin": "3f2943660fd6e5265fca6f0f01d8129d63f909ac12a060fe5813fb24d9836b6f",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/hexdump.bin": "bb37bf45f38cb708237a9616f4ba9667542e046b6bc90694bb8c087c1cf76237",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/strings.bin": "2ae2680652d031d0c658dca2b3ef80193f8cb0c39ca44f310137cc9ccc749cf9",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/emulator_exit_success.asm": "375d2ee3905f73b062e52fd1b4e703910d2daefede3d6b78228ca9fcc27900dd",
+    "/home/smith/Agon/mystuff/golem/.emulator/runtime/fab-1.2.5/sdcard/mos/grep.bin": "3c0e9dc95a1ebe1aef32f943423ff7b7f00e241b239681548234e71385bc29e4"
+  }
+}
