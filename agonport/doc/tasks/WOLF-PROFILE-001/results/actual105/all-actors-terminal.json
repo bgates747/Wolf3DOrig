@@ -1,0 +1,56 @@
+{
+  "all_original_handles_terminal": true,
+  "exact_processes_terminal": true,
+  "controller_returncode": 1,
+  "observer_returncode": 0,
+  "actors": {
+    "controller": {
+      "identity": {
+        "pid": 1628081,
+        "start": 35326416,
+        "ppid": 1750,
+        "pgid": 1628081,
+        "uid": 1000,
+        "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+      },
+      "terminal": true,
+      "reason": "original proc absent"
+    },
+    "observer": {
+      "identity": {
+        "pid": 1628431,
+        "start": 35327400,
+        "ppid": 1750,
+        "pgid": 1628431,
+        "uid": 1000,
+        "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+      },
+      "terminal": true,
+      "reason": "original proc absent"
+    },
+    "tracer": {
+      "identity": {
+        "pid": 1628439,
+        "start": 35327426,
+        "ppid": 1628431,
+        "pgid": 1628439,
+        "uid": 1000,
+        "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+      },
+      "terminal": true,
+      "reason": "original proc absent"
+    }
+  },
+  "epoch": 1794095445.0310285,
+  "cleanup_controller": {
+    "pid": 1640282,
+    "start": 35422794,
+    "ppid": 1750,
+    "pgid": 1640282,
+    "uid": 1000,
+    "boot": "b6519306-0d9f-48e3-98c4-c28ab10b75de"
+  },
+  "cleanup_controller_terminal": true,
+  "cleanup_returncode": 0,
+  "all_owned_actors_joined": true
+}

@@ -1,4 +1,9 @@
-# Corrected Olimex profiler — hardware02 ready for admission
+# Corrected Olimex profiler — historical hardware02 readiness
+
+**Retired after actual105. Do not relaunch this kit.** Selected game/data
+checks and separate complete restoration/release are recorded in [RESULT105.md](RESULT105.md).
+Future helper fixes change the source pins and require a new freeze/admission.
+The original readiness description below is preserved as history.
 
 Direct Smith authorization on November7,18:20Eastern; old optimization goal
 paused. Request47bae5199a9c, taskWOLF-PROFILE-001-hardware02. Frozen local

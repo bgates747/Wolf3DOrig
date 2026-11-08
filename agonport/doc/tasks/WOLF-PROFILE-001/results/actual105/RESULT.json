@@ -1,0 +1,118 @@
+{
+  "task": "WOLF-PROFILE-001",
+  "generation": 105,
+  "selected_source_commit": "86d9b37",
+  "cleanup_source_commit": "be16f9d",
+  "game_profile_checks_passed": true,
+  "original_suite_passed": false,
+  "original_failure": {
+    "error": "RemoteError('Service restarted; preserve this state, use a new state file, and inspect stage recovery')",
+    "next_dispatch_stopped": true,
+    "custody_retained": true,
+    "no_automatic_replay": true,
+    "epoch": 1794094962.8333826
+  },
+  "cleanup_passed": true,
+  "original_failure_preserved": true,
+  "extra_guest_invocations": 0,
+  "records": 250,
+  "distinct_headings": 120,
+  "recorded_positive_rotation_degrees": 819,
+  "log_batches": [
+    {
+      "number": 0,
+      "frames": 120,
+      "status": 0
+    },
+    {
+      "number": 1,
+      "frames": 120,
+      "status": 0
+    },
+    {
+      "number": 2,
+      "frames": 10,
+      "status": 0
+    }
+  ],
+  "return_checks": {
+    "passed": true,
+    "entry_sp": 786301,
+    "exit_sp": 786301,
+    "native_info17": [
+      2040,
+      1780
+    ],
+    "timer_control_restored": 0,
+    "records_expected": 250,
+    "discarded": 0
+  },
+  "native_ms": {
+    "draw": {
+      "count": 250,
+      "mean": 22.190411916666665,
+      "median": 22.296539583333335,
+      "p95": 23.291475,
+      "max": 23.604129166666667
+    },
+    "scope": {
+      "count": 250,
+      "mean": 22.646312916666666,
+      "median": 22.742666666666665,
+      "p95": 23.7552375,
+      "max": 24.0636875
+    },
+    "dispatch": {
+      "count": 250,
+      "mean": 22.781253466666666,
+      "median": 22.886910416666666,
+      "p95": 23.886029166666667,
+      "max": 24.354816666666668
+    }
+  },
+  "fence_rate_excluding_logging": 30.057661636609005,
+  "fence_intervals_excluding_logging": {
+    "count": 245,
+    "mean": 33.26938775510204,
+    "median": 33,
+    "p95": 34,
+    "max": 34
+  },
+  "closed_logging_gaps": [
+    {
+      "start": 17114,
+      "end": 18039,
+      "io_start": 17924,
+      "io_end": 18039,
+      "total_ms": 925,
+      "disk_ms": 115
+    },
+    {
+      "start": 22056,
+      "end": 22949,
+      "io_start": 22864,
+      "io_end": 22949,
+      "total_ms": 893,
+      "disk_ms": 85
+    }
+  ],
+  "native_module_sha256": "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b",
+  "guest_sha256": "96d6e7d4fce6a1f357b55d862ee75ebcbe9eee1dcdf37438229c29f3d5d21d84",
+  "profile_sha256": "464505fd03e9c340867a67f95462ee3e6df30bf7e1fe0800c816b9b518adf339",
+  "restored_fullspan_sha256": "85f9cf31219d679cffef48029d736331a3a3dfc78511d19d48a04cd2bd6a74de",
+  "restored_bytes": 1105920,
+  "independent_readback": true,
+  "all_owned_actors_terminal": true,
+  "release_time": "2026-11-07T23:50:55.967071+00:00",
+  "next_request": "8edf1c23bec0",
+  "sd_left_mounted": true,
+  "archive": {
+    "path": "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/build/actual105-evidence.tar.gz",
+    "sha256": "06d8223fac0098ec551fc59eaed5e4e957ff05444f757c1d08e6441e36b68c17",
+    "bytes": 20482823,
+    "original345inputs_verified": true
+  },
+  "limits": "Nominal 1ms interrupt clock; native cycles include preemption. Ordered fence completions, not optical frame/scanout timestamps. Instrumented throughput includes timer/hook/fence overhead. Logging-excluded rate uses only contiguous within-block intervals; logging still affects play and subsequent catch-up/cache behavior.",
+  "optical_confirmation": false,
+  "raw_game_serial_overwritten_by_cli_proof": true
+}

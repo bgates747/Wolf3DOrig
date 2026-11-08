@@ -14,18 +14,23 @@ pipeline work is tracked separately in WOLF-PIPE-001; it is not silently resumed
 or implemented as part of profiling. Hardware/emulator use retains normal actual
 checkout and concrete finite run/cleanup preparation before dispatch.
 
-## Current qualification status — November7,17:58 Eastern
+## Current qualification status — November7,19:00 Eastern
 
-Implementation and decoder are published; subtasks05/06 remain partial.
-[Agon Lexe results](ALEXE-RESULTS.md) retain complete native250-record/three-
-block output and exact disk-cue/face captures from actual358 at one heading.
-The test-only held-key seam is corrected and offline-qualified; actual360
-stopped in sprite loading before module startup. Moving-view/native physical
-qualification is not claimed. Source corrections and their separate results
-are in [STORAGE-RESULT.md](STORAGE-RESULT.md) and ALEXE-CORRECTION02–04.
-Actual101/old hardware kit is retired; no current hardware/Oryx/compiler lease
-or successor is held. Native physical readiness needs a separate fresh kit,
-current bindings and admission. The optimization goal remains paused.
+Core implementation, decoder and selected physical first-floor qualification
+are published. [Olimex105](RESULT105.md) completed250 real native-joined records,
+120 headings and three disk batches with normal profiler/timer/stack shutdown.
+The original controller then failed a cleanup journal-name collision; a separate
+samelease cleanup restored/readback/fullhandback and released normally. The
+original failure is preserved. Future harness fixes passed27 focused checks;
+all345 original inputs/evidence were snapshotted before source changes.
+
+[Agon Lexe results](ALEXE-RESULTS.md) remain separate: native collection once
+completed at one heading, then the corrected-turn attempt stalled in assets.
+Alexe owns that investigation; physical success does not identify its cause.
+Both hardware01/101 and hardware02/105 kits are retired. No hardware/Oryx/
+compiler lease or successor is held. Extended gameplay/error-state coverage
+beyond the documented finite cases is unclaimed; the old optimization goal
+remains paused.
 
 ## Immutable subtasks
 
