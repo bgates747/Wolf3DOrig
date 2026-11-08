@@ -101,7 +101,14 @@ class Bench(h.Bench):
 
     def metadata(self, folder, label):
         self.admit('new metadata session ' + label)
-        return super().metadata(folder, label)
+        self.own()
+        client = h.m.Metadata(self.url, folder / (label + '-metadata.json'), timeout=60)
+        try:
+            client.connect(require_fast=True)
+            return client
+        except BaseException:
+            client.lock.close()
+            raise
 
     def line(self, folder, label, command):
         self.admit('guest RUN' if command == 'RUN .' else 'CLI ' + label,
@@ -271,7 +278,10 @@ class Bench(h.Bench):
 
     def save_guest_ram(self, folder):
         """SAVE only, after a proved returned CLI, before any later LOAD/reset."""
-        self.cli(folder, 'preserve-cli')
+        # cli() writes serial.bin: keep the original game transcript intact.
+        proof = folder / 'preserve-cli-proof'
+        proof.mkdir(exist_ok=False)
+        self.cli(proof, 'preserve-cli')
         if not self.get('/sd/status')['online']:
             self.service(folder, 'preserve-listener')
         size = Path(self.kit['guest']['guest']).stat().st_size
@@ -330,7 +340,9 @@ class Bench(h.Bench):
         h.save(folder / 'profile.json', profile)
         self.raw_state(folder, 'post')
         self.verify_route(folder, 'post-route')
-        self.exit(folder, 'post-exit')
+        # raw_state('post') already used post-exit, before verify_route started
+        # a new listener incarnation. Never reuse its completed old journal.
+        self.exit(folder, 'profile-collection-exit')
         h.save(folder / 'receipt.json', dict(passed=True, records=250, return_checks=result,
                profile_sha256=sha(folder / 'WOLFPROF.BIN'), real_native_join=True,
                calibrated_clock=False, optical_scanout_observed=False))

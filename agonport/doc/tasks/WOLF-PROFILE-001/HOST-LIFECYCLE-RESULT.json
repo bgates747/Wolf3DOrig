@@ -1,0 +1,270 @@
+{
+  "passed": true,
+  "generation": 510,
+  "results": [
+    {
+      "name": "collection-lifecycle",
+      "rc": 0,
+      "error": null
+    },
+    {
+      "name": "producer-ownership",
+      "rc": 0,
+      "error": null
+    },
+    {
+      "name": "decoder",
+      "rc": 0,
+      "error": null
+    }
+  ],
+  "guards": [
+    {
+      "seconds": 0.0010066840332001448,
+      "temp": 51.25,
+      "mem_kib": 4036688
+    },
+    {
+      "seconds": 0.5013275280361995,
+      "temp": 52.9,
+      "mem_kib": 4028128
+    },
+    {
+      "seconds": 1.0017167429905385,
+      "temp": 52.9,
+      "mem_kib": 4036464
+    },
+    {
+      "seconds": 1.5020425490220077,
+      "temp": 54.55,
+      "mem_kib": 4037632
+    },
+    {
+      "seconds": 2.002357541001402,
+      "temp": 52.35,
+      "mem_kib": 4037840
+    },
+    {
+      "seconds": 2.502662902988959,
+      "temp": 51.8,
+      "mem_kib": 4040496
+    },
+    {
+      "seconds": 3.002973542024847,
+      "temp": 54.0,
+      "mem_kib": 4040992
+    },
+    {
+      "seconds": 3.503340866009239,
+      "temp": 55.1,
+      "mem_kib": 4061904
+    },
+    {
+      "seconds": 4.003642357012723,
+      "temp": 54.0,
+      "mem_kib": 4069904
+    },
+    {
+      "seconds": 4.503963607014157,
+      "temp": 53.45,
+      "mem_kib": 4074896
+    },
+    {
+      "seconds": 5.004282616020646,
+      "temp": 53.45,
+      "mem_kib": 4076144
+    },
+    {
+      "seconds": 5.505216198042035,
+      "temp": 52.35,
+      "mem_kib": 4104320
+    },
+    {
+      "seconds": 6.00562994700158,
+      "temp": 55.1,
+      "mem_kib": 4091248
+    },
+    {
+      "seconds": 6.505943752010353,
+      "temp": 55.1,
+      "mem_kib": 4068064
+    },
+    {
+      "seconds": 7.006370871036779,
+      "temp": 55.1,
+      "mem_kib": 4061296
+    },
+    {
+      "seconds": 7.506769192987122,
+      "temp": 56.2,
+      "mem_kib": 4053088
+    },
+    {
+      "seconds": 8.007202089997008,
+      "temp": 55.1,
+      "mem_kib": 4046352
+    },
+    {
+      "seconds": 8.507598375028465,
+      "temp": 54.0,
+      "mem_kib": 4048272
+    },
+    {
+      "seconds": 9.007967882032972,
+      "temp": 55.1,
+      "mem_kib": 4053024
+    },
+    {
+      "seconds": 9.508289500023238,
+      "temp": 53.45,
+      "mem_kib": 4064176
+    },
+    {
+      "seconds": 10.008728470013011,
+      "temp": 55.1,
+      "mem_kib": 4053664
+    },
+    {
+      "seconds": 10.509070420986973,
+      "temp": 56.2,
+      "mem_kib": 4038752
+    },
+    {
+      "seconds": 11.009387353027705,
+      "temp": 55.65,
+      "mem_kib": 4037648
+    },
+    {
+      "seconds": 11.510619136039168,
+      "temp": 56.2,
+      "mem_kib": 4035824
+    },
+    {
+      "seconds": 12.011036790034268,
+      "temp": 55.65,
+      "mem_kib": 3998208
+    },
+    {
+      "seconds": 12.511394907021895,
+      "temp": 55.65,
+      "mem_kib": 4010064
+    },
+    {
+      "seconds": 13.011713061016053,
+      "temp": 55.65,
+      "mem_kib": 4003520
+    },
+    {
+      "seconds": 13.51207830698695,
+      "temp": 56.2,
+      "mem_kib": 4005728
+    },
+    {
+      "seconds": 14.012388312024996,
+      "temp": 55.1,
+      "mem_kib": 4008848
+    },
+    {
+      "seconds": 14.512749354005791,
+      "temp": 56.75,
+      "mem_kib": 4045904
+    },
+    {
+      "seconds": 15.013100303011015,
+      "temp": 55.65,
+      "mem_kib": 3979360
+    },
+    {
+      "seconds": 15.51429395499872,
+      "temp": 54.55,
+      "mem_kib": 4036112
+    },
+    {
+      "seconds": 16.014621144044213,
+      "temp": 56.2,
+      "mem_kib": 4044592
+    },
+    {
+      "seconds": 16.51497283403296,
+      "temp": 55.65,
+      "mem_kib": 4052848
+    },
+    {
+      "seconds": 17.015357486030553,
+      "temp": 55.65,
+      "mem_kib": 4011824
+    },
+    {
+      "seconds": 17.515745286014862,
+      "temp": 56.75,
+      "mem_kib": 4015072
+    },
+    {
+      "seconds": 18.0160739000421,
+      "temp": 56.2,
+      "mem_kib": 4018928
+    },
+    {
+      "seconds": 18.516527828993276,
+      "temp": 56.75,
+      "mem_kib": 4028496
+    },
+    {
+      "seconds": 19.016934090992436,
+      "temp": 56.2,
+      "mem_kib": 4028816
+    },
+    {
+      "seconds": 19.518199760001153,
+      "temp": 57.85,
+      "mem_kib": 3976640
+    },
+    {
+      "seconds": 20.01887979998719,
+      "temp": 57.3,
+      "mem_kib": 3979040
+    },
+    {
+      "seconds": 20.519193747022655,
+      "temp": 55.1,
+      "mem_kib": 3938384
+    },
+    {
+      "seconds": 21.019504007999785,
+      "temp": 56.75,
+      "mem_kib": 3937856
+    },
+    {
+      "seconds": 21.51990958402166,
+      "temp": 55.65,
+      "mem_kib": 4020288
+    },
+    {
+      "seconds": 22.020737270999234,
+      "temp": 55.1,
+      "mem_kib": 4034320
+    },
+    {
+      "seconds": 22.521048772032373,
+      "temp": 54.55,
+      "mem_kib": 3955728
+    }
+  ],
+  "seconds": 23.02121336600976,
+  "owned_children_joined": true,
+  "affected_lifecycle_rerun": {
+    "passed": true,
+    "returncode": 0,
+    "seconds": 5.574710243032314,
+    "generation": 510,
+    "source_change": "explicit lock close on connect refusal",
+    "owned_children_joined": true
+  },
+  "unique_checks": 27,
+  "initial_negative_control_resource_warning_preserved": true,
+  "final_lifecycle_log_clean": true,
+  "final_source_sha256": {
+    "hardware.py": "e747992221a7815d3ee6a0d399ac8eecf7a3084976bb758856076409e0b63615",
+    "test_collection_lifecycle.py": "70b81704720ef424c141766c8d7c13d8fc2147b6daaa40a4ae278ecf54bb7a32"
+  }
+}
