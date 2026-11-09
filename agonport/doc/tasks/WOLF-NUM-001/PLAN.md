@@ -1,10 +1,13 @@
 # WOLF-NUM-001 — Numerical methods and wire-boundary review
 
-**Status: task prepared; review execution held for Smith’s direct discussion.**
-Only this task preparation is released. No source audit, comparison execution,
-implementation, build, test, benchmark, reservation, device/firmware action,
-adoption, peer dispatch or paused-goal resumption follows from writing it.
-No automatic continuation after task preparation or elapsed time.
+**Status: read-only review complete; stopped for Smith’s report review.**
+Preparation was frozen/pushed as `dcfef76`. Smith’s direct November 9 instruction,
+“proceed with your review and write your report. stop for me to review the
+report,” releases the preparation-only hold for source/retained-evidence review.
+It does not select implementation, experiments, builds/tests/benchmarks,
+reservations, device/firmware work, adoption or WOLF-GOAL-001 resumption.
+
+Result: [REPORT.md](REPORT.md), [read-time identities](SOURCE-PINS.json).
 
 ## Authority and shared record
 
@@ -44,29 +47,30 @@ comparison candidates, not assignments to inspect or modify their projects.
 - WOLF-GOAL-001 remains paused. Its outstanding work and the independent clean
   faithful-port work are not resumed or changed by this task.
 
-## Future review checklist — all execution held
+## Review checklist and retained future boundaries
 
 - [x] WOLF-NUM-001-01 — Read the coordinator request/survey, prepare this task
   and register it in TODO. Return path/ID and readiness, then stop.
-- [ ] WOLF-NUM-001-02 — After Smith’s direct release, inventory exact current
+- [x] WOLF-NUM-001-02 — After Smith’s direct release, inventory exact current
   Wolf caller paths and retained controls: eZ80 simulation/input/pose producer,
   serialization, VDP decoding, view setup, trig, ray stepping, projection,
   texture increments and drawing. Record active versus unused helpers,
   build selection, source identity, table origin and evidence provenance.
-- [ ] WOLF-NUM-001-03 — Reconcile existing correctness, code/data, stack,
+- [x] WOLF-NUM-001-03 — Reconcile existing correctness, code/data, stack,
   provider, hardware timing and visible-cadence records. Separate host/model
   coverage, actual native code and full hardware results; mark missing,
   interrupted, unmeasured or historical evidence explicitly.
-- [ ] WOLF-NUM-001-04 — Trace representation and conversion boundaries by
+- [x] WOLF-NUM-001-04 — Trace representation and conversion boundaries by
   domain; answer the questions below without selecting a new format/kernel.
-- [ ] WOLF-NUM-001-05 — Specify accuracy/range/overflow and generated-code
+- [x] WOLF-NUM-001-05 — Specify accuracy/range/overflow and generated-code
   evidence needed for a fair future comparison. Locate licences/attribution
   and original-method provenance before proposing any reuse/import.
-- [ ] WOLF-NUM-001-06 — Propose a bounded matched processor/wire/caller
+- [x] WOLF-NUM-001-06 — Propose a bounded matched processor/wire/caller
   measurement plan and failure controls. No run or reservation is selected
   by this checklist; freeze any later selected experiment separately.
-- [ ] WOLF-NUM-001-07 — Return the local ledger, evidence gaps and comparison
-  proposal to the VDPL-037 coordinator for the central survey. Distinguish
+- [ ] WOLF-NUM-001-07 — After Smith reviews this report, return the local
+  ledger, evidence gaps and comparison proposal to the VDPL-037 coordinator
+  for the central survey. Until then, hold the substantive return. Distinguish
   demonstrated facts, hypotheses and deferred work; no presumed winner.
 
 ## Questions and required local ledger
@@ -138,5 +142,5 @@ index, range/precision/licence constraints, unanswered questions and ranked
 comparison proposals linked to the central IDs. Any later code, import, SDK,
 wire or firmware promotion requires its own selected contract and qualification.
 
-**Preparation return now: WOLF-NUM-001, this PLAN.md, ready for Smith discussion.
-STOP here until Smith speaks with Wolf directly. No review has begun.**
+**Report is now ready for Smith’s review. STOP before implementation or further
+execution; substantive central return is held for that review.**

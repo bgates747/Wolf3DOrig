@@ -1,0 +1,460 @@
+{
+  "task": "WOLF-NUM-001",
+  "kind": "Read-only source, retained evidence and native artifact review; no new execution",
+  "created": "2026-11-09T17:45:38.788756-05:00",
+  "source_head": "dcfef76f3a7263b52a05b9ef90b4e3be09fa7d50",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 1536,
+      "sha256": "f8c74b4134d59a0a08b90cd417222fd00d92dea16141e3c780056f0dcf53d6b5"
+    },
+    {
+      "path": "FIRMWARE.md",
+      "bytes": 5338,
+      "sha256": "6c37da34cf1d29329b277059706315a91d8b133fdca6a911ab14bb03631d8533"
+    },
+    {
+      "path": "README.md",
+      "bytes": 11240,
+      "sha256": "10566002c9d5c2706352594a5ec3a37fecd9ba9fa986fdfb150fe76d3e6ee45a"
+    },
+    {
+      "path": "tools/wolf_firmware.py",
+      "bytes": 7988,
+      "sha256": "5b873fd0c7ed70340582e1ed47e9e9866a1bc7a07bcd752d0eaa885d4dea2a45"
+    },
+    {
+      "path": "tools/wolf_prepare.py",
+      "bytes": 10277,
+      "sha256": "ec79f2278ff2157cb9ddde931d2bb1b5273b135e08f459daee000424b0a7da35"
+    },
+    {
+      "path": "src/asm/wolf3d/scripts/build.py",
+      "bytes": 17383,
+      "sha256": "f014fba440f5ae04b773cbb7d33e0168c0249216c10bc956518efa25a3566a3f"
+    },
+    {
+      "path": "src/asm/wolf3d/scripts/gen_motion_table.py",
+      "bytes": 2751,
+      "sha256": "87ad4e7914b02502fdff3cdd7d2837372c5dd34f60298b70bdc8047ad107f324"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d.asm",
+      "bytes": 50192,
+      "sha256": "030cf4cd914a24389198471305fc60f64129694dff7e111523152413babf0d53"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d_backend.inc",
+      "bytes": 3896,
+      "sha256": "598e75486914dccf4c072caed4313f8ee81273a3db3f2d2fbfeaa46b98ad249f"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d_math.inc",
+      "bytes": 2905,
+      "sha256": "58d65b18b326c5ae5f96a02ce46cffa6d9e0ed6c73b4d2a30f47472758f92fbd"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d_motion.inc",
+      "bytes": 91407,
+      "sha256": "d3ed87b22c2f74d2681ef2ffd17fc48c1d61b3289270888f6cf68f1f9ce52872"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d_motion_table.inc",
+      "bytes": 20480,
+      "sha256": "c5735d1a9b5761562055235fdbb2b389e77fb6fbc56ccfb7538624c6222661d5"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d_sight.inc",
+      "bytes": 14817,
+      "sha256": "1abc457e8aa67d6820a5cd58c4e8c7c393e2858f6519619904cc3783dd0fb751"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d_actor_sim.inc",
+      "bytes": 84993,
+      "sha256": "1a3a91a57d5627f2f1324654bcaa105b3c0a16f183f752658c57ceacd5e57221"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d_vdplet_batch.inc",
+      "bytes": 21392,
+      "sha256": "cfe2ac5f1c2492149d443c10f02ee78e58fd093c0aee23aa2afd681772ecbe24"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d_vdplet_client.inc",
+      "bytes": 22985,
+      "sha256": "0cff64d1ce86ef1aa5be0895e0c2c1b7130001cd1e330612d9b92c8ff539bcc2"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d_vdplet_backend.inc",
+      "bytes": 8248,
+      "sha256": "474c13f9aec32230a388a331ae9e5b00a227cce63f1f7552d72016d53791b6a2"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d_vdplet_contract.inc",
+      "bytes": 8920,
+      "sha256": "fac9a833b086a1440af1033b8f11c397b295954b687565312f1dad8573c08d0c"
+    },
+    {
+      "path": "agonport/vdplet/generate_fixture.py",
+      "bytes": 4270,
+      "sha256": "55444ee45787cc3e813484c0b9557de50c1f215ea3054e233281faa47fe0366e"
+    },
+    {
+      "path": "agonport/vdplet/wolf3d_tables.inc",
+      "bytes": 8355,
+      "sha256": "6e3353cebd8d69849bbde39abd536018b1ee403f599ae45acc51fb8c64303e5d"
+    },
+    {
+      "path": "agonport/vdplet/production/build.py",
+      "bytes": 9679,
+      "sha256": "e7f805d27c252beda2f195254bac8007462606cf496628ee47e79d1072470ccc"
+    },
+    {
+      "path": "agonport/vdplet/production/wolf3d_renderer.cpp",
+      "bytes": 41744,
+      "sha256": "aee6ed184b0d29e090b2f869559110d1c13fa801b735b1cbd5f36f53e43a3107"
+    },
+    {
+      "path": "agonport/vdplet/production/wolf3d_renderer.h",
+      "bytes": 3136,
+      "sha256": "ca340f31a81fb3665f7bc3f8c9cd956e26254ab97ba6358d6c268c0585cb4c68"
+    },
+    {
+      "path": "agonport/vdplet/production/wolf3d_world_mirror.cpp",
+      "bytes": 21827,
+      "sha256": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404"
+    },
+    {
+      "path": "agonport/vdplet/production/wolf3d_world_mirror.h",
+      "bytes": 4063,
+      "sha256": "75067167c60c3311b975893fa45d6e8952c385cb7839d40a0ce58bb6cf3c1115"
+    },
+    {
+      "path": "agonport/vdplet/production/wolf3d_module.cpp",
+      "bytes": 24285,
+      "sha256": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243"
+    },
+    {
+      "path": "agonport/vdplet/production/wolf3d_production_contract.h",
+      "bytes": 9485,
+      "sha256": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a"
+    },
+    {
+      "path": "agonport/vdplet/production/build/receipt.json",
+      "bytes": 10830,
+      "sha256": "e8e05e6f397a8fc3e99b57c5a6a9e2f348a4fd876021e25fa69290b9a3376ae2"
+    },
+    {
+      "path": "agonport/vdplet/production/build/wolf3d_production.vdpl",
+      "bytes": 18636,
+      "sha256": "266f809ff76e56733251da202e5c4747cd9c12d247d799d486471a262c0404b7"
+    },
+    {
+      "path": "agonport/vdplet/production/build/module/wolf3d_production.disassembly.txt",
+      "bytes": 385646,
+      "sha256": "a9c80adc80cc24e6e927af8ae218cad4b33d958955ccb70f0e92c25d5fd3f8f5"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-007/PRE-CODE.md",
+      "bytes": 5201,
+      "sha256": "a06cf305dce7bcd3dc9e7db4d2c558700224abe796a33e3245c0001148c290b6"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-007/BUILD-RESULT.md",
+      "bytes": 3289,
+      "sha256": "8f33daa46afe8d015ffcf021b33dfed3da22e8f6afb63a07f804f149a090a800"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-007/generate_tables.py",
+      "bytes": 1241,
+      "sha256": "89d6946db29dd47fc606d0707107cf7b3bf8cafc8e8125352bba6c57cf6c0438"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/PLAN.md",
+      "bytes": 2600,
+      "sha256": "49fad729a6e16226e397f785190c770ba5689b8ad493a93a56601bfcb199d523"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/BUILD-RESULT.md",
+      "bytes": 2216,
+      "sha256": "30bef61350d3be7fc5686cc8db66aab8443e306b1c8b3551d36896ed8c82180d"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/test_trig.cpp",
+      "bytes": 1632,
+      "sha256": "97c51a18fc69a8ee31ee8057c0a53b98d91bda7c7b471f4d974776c41d587408"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/results/build01/code-result.json",
+      "bytes": 26265,
+      "sha256": "d4e9266b988ddf165c72fc4811baa34d191a083b7db5cd2e60c37b032a831631"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/results/build01/trig-check.log",
+      "bytes": 123,
+      "sha256": "78af1614559bdf056a02f3e316defd13fa601bad63b6a7567db5d3a7c873045c"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/results/build01/stack-source.json",
+      "bytes": 1403,
+      "sha256": "149f00f28777ab3198839f6678ef13e2f854b7e10c94c43a6aa65c445967e64a"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/build/r01/candidate/module/wolf_perf.map",
+      "bytes": 26079,
+      "sha256": "2059b47ba8dd18381412adcece0d09afdafe7a17163ccfd382c1c91d3d436f2f"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/build/r01/candidate/module/wolf_perf.readelf.txt",
+      "bytes": 4426,
+      "sha256": "797fbd1fa33a4265f99562f812346b710c8e84252606aeab6d2257281e2ae359"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/build/r01/candidate/module/wolf_perf.elf",
+      "bytes": 34148,
+      "sha256": "1fa07d2bed9130f541dbe726f72d063b83e8bf9fd5329ea2d008d729dff22557"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/build/r01/candidate/module/wolf_perf.vdpl",
+      "bytes": 22180,
+      "sha256": "2844fda52cecd28eceeaa506ff3c6cce5af43c3b69ca5ee74fe87a50c7ea489f"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/BUILD-RESULT.md",
+      "bytes": 2947,
+      "sha256": "64ebd3599a77d149d0102d65d1d213a587ac26fcc21effce380bcab1faabfe3d"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/PROJECTION-DOMAIN.md",
+      "bytes": 2493,
+      "sha256": "7a0a44cb29ba5c496c10793432722e463982a51093a1e3fc43b12c91845c2675"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/PROJECTION-RESULT.md",
+      "bytes": 2612,
+      "sha256": "e2ea1dcebd5ec0393a189e2892d7ed28019d39c3f2134a085afff6537b89069e"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/NATIVE-LOWERING.md",
+      "bytes": 1317,
+      "sha256": "92209d8ec7ff0356f3534fe937d43230950149ec3aea3285f0c05435f53338c2"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/RESULT85.md",
+      "bytes": 3513,
+      "sha256": "3e15ddcccf57e9d5b53d6eeef7ca808df0bb5d6743669a7934b07b447080f308"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/results/build01/native-body-binding.json",
+      "bytes": 794,
+      "sha256": "4ab4d832b3fcb720015c4d1678d33907cae27ba0e00a9b0501dfdbb02bc9b2c5"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/results/build01/code-result.json",
+      "bytes": 27490,
+      "sha256": "e6339833c59a236674a5e3e971f1dc901c87b9591d9b32910bb7b22a71095a98"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/build/r01/candidate/module/wolf_perf.disassembly.txt",
+      "bytes": 451225,
+      "sha256": "7b91a4929a1d06ef755e95de3d0b9cb4e6cc3ebe3a64ceb1d33c464dd4d23d4c"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/build/r01/candidate/module/wolf_perf.elf",
+      "bytes": 37128,
+      "sha256": "9a29446fe8ac16c3eaa707a2f3bc43c10aab4e4a73aee2a6fc2bdcb64a89a94b"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/build/r01/candidate/module/wolf_perf.vdpl",
+      "bytes": 24424,
+      "sha256": "12857ecfa682d3f149c0d9688e7654f7692f6bde985b0cad2b35d33cf35ebf64"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-018/BUILD-RESULT.md",
+      "bytes": 3831,
+      "sha256": "49731f156ef44d404a94b376a602ccd7b09c8ce555bb13359baf2c17d9bd7889"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-018/RESULT87.md",
+      "bytes": 3665,
+      "sha256": "ad0b19e625e353093afc6b2ed1b7e50b79d2822e6b9e5560582757868e244818"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-019/RESULT89.md",
+      "bytes": 2654,
+      "sha256": "c821ab4971138fbe7d6e847ddf0a3842eb197ccf6a8545ca5ef198c460d98de9"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/BUILD-RESULT.md",
+      "bytes": 4851,
+      "sha256": "5f776facd5866b4e16ef94d0bc7c0044ba2424b5e2bad0534066994b34768562"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/RESULT91.md",
+      "bytes": 4336,
+      "sha256": "b623edd85226823b0b8f8e97d76a6bb3709a623516ebaf5b7e78ebe76f0d3a6c"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/results/build01/code-result.json",
+      "bytes": 27557,
+      "sha256": "b104a280dc8108b52cc7463cdab620fb3d82200cdd5395470f0637256ec60804"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/results/build01/unit-composition.json",
+      "bytes": 2060,
+      "sha256": "774590e115aee1e5f395abdeab4aa9e8c6d095e37f13a6aac7c942581e4cb7de"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/results/build01/candidate/production/wolf3d_renderer.cpp",
+      "bytes": 36707,
+      "sha256": "7fde7eec5520b1e6457c78e29e47361b7784e6cbadcda070d5a96be82420fb3e"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/results/build01/candidate/production/original_raywalk.h",
+      "bytes": 6415,
+      "sha256": "72b1a70eb08fd211dde089e7f7b9379494daeb307fe34a06adb9a198291b66c7"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/results/build01/candidate/native-source/wolf3d_module.cpp",
+      "bytes": 26270,
+      "sha256": "f1a514999ed2fb249500c1b4f180d714adbaf8be785ca555b33e73abf741f9ac"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/module/wolf_perf.disassembly.txt",
+      "bytes": 450999,
+      "sha256": "b603c5be96509564b7d2b5bd49ef4d19270063690fa751189363b362381b44cd"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/module/wolf_perf.elf",
+      "bytes": 34960,
+      "sha256": "f192c542ec1b7058b1d1459fd210277830ba0aae725538ae138eb73ee06eac7d"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/module/wolf_perf.vdpl",
+      "bytes": 22572,
+      "sha256": "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-022/RESULT95.md",
+      "bytes": 4390,
+      "sha256": "0b8310e7a333b4f7e11c14afd0335ff3c803500337e04b20f5f68edd917eeac7"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-022/results/actual95/RESULT.json",
+      "bytes": 53256,
+      "sha256": "a76a7db9333e8208e71a4a0d541597b13720e16f7025c8d99d344fe8a2bed375"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/BUILD-RESULT.md",
+      "bytes": 4118,
+      "sha256": "11ee703d41063f56e2cdedf47a711c6e023a8c5faa9ff3588212f568423b59ba"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/RESULT97.md",
+      "bytes": 2514,
+      "sha256": "bc74fdc47d043a5d74e0b83150ef39ad595d652bc10ec4dc320ee185aac2b5e2"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/results/actual99/RESULT.json",
+      "bytes": 1557,
+      "sha256": "6ef3dbccc339065bbceeac82951aeaae8e765a523ed9994ee4f979c96695ec43"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/RESULT105.md",
+      "bytes": 4049,
+      "sha256": "815e0dc822c65241a410f874b422e2caa731201597b6ff1d3e096258aafb5792"
+    },
+    {
+      "path": "orig/src/WOLFSRC/README/LICENSE.DOC",
+      "bytes": 7338,
+      "sha256": "d7a4aa621e1348d8c421ed07d0430c2e1c8e80eb27aceee02a9be2d6b3c8dfde"
+    },
+    {
+      "path": "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-037/NUMERIC-METHODS-SURVEY.md",
+      "bytes": 13474,
+      "sha256": "77d97c2fc125c9adc456c00a64bd61556f53f9c2ca74d60fa6408d5b6012aaa2"
+    },
+    {
+      "path": "/Agon/mystuff/agon-vdplet/docs/tasks/VDPL-037/NUMERIC-METHODS-SOURCE-PINS.json",
+      "bytes": 3311,
+      "sha256": "0d6764ad2862ddedf6b37cb2f0d4013f7bb5091a1bc2508cf76bdbe014e03d85"
+    }
+  ],
+  "production_component_join": {
+    "wrapper": {
+      "expected": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243",
+      "actual": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243",
+      "equal": true
+    },
+    "world_mirror": {
+      "expected": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+      "actual": "5445a44a158fbf2085aad4d82dfb7cb5a71b438da02b0884bc37453da9a3f404",
+      "equal": true
+    },
+    "renderer": {
+      "expected": "aee6ed184b0d29e090b2f869559110d1c13fa801b735b1cbd5f36f53e43a3107",
+      "actual": "aee6ed184b0d29e090b2f869559110d1c13fa801b735b1cbd5f36f53e43a3107",
+      "equal": true
+    },
+    "contract": {
+      "expected": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+      "actual": "94fad4681c3158acdaf69a778faee0afb5ff7d7e0d9bc72451b4747437e8f52a",
+      "equal": true
+    },
+    "tables": {
+      "expected": "6e3353cebd8d69849bbde39abd536018b1ee403f599ae45acc51fb8c64303e5d",
+      "actual": "6e3353cebd8d69849bbde39abd536018b1ee403f599ae45acc51fb8c64303e5d",
+      "equal": true
+    }
+  },
+  "module_receipt_joins": {
+    "WOLF-PERF-015": {
+      "expected": "2844fda52cecd28eceeaa506ff3c6cce5af43c3b69ca5ee74fe87a50c7ea489f",
+      "actual": "2844fda52cecd28eceeaa506ff3c6cce5af43c3b69ca5ee74fe87a50c7ea489f",
+      "equal": true
+    },
+    "WOLF-PERF-017": {
+      "expected": "12857ecfa682d3f149c0d9688e7654f7692f6bde985b0cad2b35d33cf35ebf64",
+      "actual": "12857ecfa682d3f149c0d9688e7654f7692f6bde985b0cad2b35d33cf35ebf64",
+      "equal": true
+    },
+    "WOLF-PERF-021": {
+      "expected": "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b",
+      "actual": "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b",
+      "equal": true
+    },
+    "production": {
+      "expected": "266f809ff76e56733251da202e5c4747cd9c12d247d799d486471a262c0404b7",
+      "actual": "266f809ff76e56733251da202e5c4747cd9c12d247d799d486471a262c0404b7",
+      "equal": true
+    }
+  },
+  "central_survey_wolf_source_joins": {
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/BUILD-RESULT.md": {
+      "expected": "30bef61350d3be7fc5686cc8db66aab8443e306b1c8b3551d36896ed8c82180d",
+      "actual": "30bef61350d3be7fc5686cc8db66aab8443e306b1c8b3551d36896ed8c82180d",
+      "equal": true
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-015/test_trig.cpp": {
+      "expected": "97c51a18fc69a8ee31ee8057c0a53b98d91bda7c7b471f4d974776c41d587408",
+      "actual": "97c51a18fc69a8ee31ee8057c0a53b98d91bda7c7b471f4d974776c41d587408",
+      "equal": true
+    }
+  },
+  "language_reference": {
+    "url": "https://timsong-cpp.github.io/cppwp/n4659/expr.shift",
+    "document": "C++17 working draft N4659, expr.shift paragraphs 2 and 3",
+    "accessed": "2026-11-09"
+  },
+  "evidence_limits": [
+    "Only selected relevant units/call paths were reviewed; not a whole-game safety proof.",
+    "Historical test logs/results are retained claims inspected, not rerun or complete raw-cohort replays.",
+    "Package/source receipt joins and saved disassembly were inspected; no compiler or native instruction execution.",
+    "No new performance, stack-peak, optical or current-firmware runtime qualification."
+  ],
+  "code_changes": false,
+  "new_builds_tests_benchmarks": false,
+  "resource_reservations": false,
+  "device_actions": false,
+  "goal_resumed": false
+}
