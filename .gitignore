@@ -99,3 +99,6 @@ src/asm/*/tgt/
 /agonport/doc/tasks/WOLF-PERF-021/build/
 
 /agonport/doc/tasks/WOLF-PROFILE-001/build/
+
+# Production promotion qualification outputs and generated payload evidence.
+/agonport/doc/tasks/WOLF-PROD-001/build/

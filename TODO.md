@@ -915,3 +915,7 @@ default-cutover claims.
 - [ ] WOLF-PERF-021 combined8d3d19 candidate qualified,22572B (-1848). Await
   independent019 outcome, then a separately frozen useful uncapped physical
   comparison and any later coherent default decision. No timing win claimed.
+
+- [ ] WOLF-PROD-001: promote qualified combined021 renderer into normal game,
+  remove signed-shift defect, verify original integer-method lineage and qualify
+  current firmware preparation. Plan: agonport/doc/tasks/WOLF-PROD-001/PLAN.md.
