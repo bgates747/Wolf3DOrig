@@ -8,7 +8,8 @@ the current dated development log, then remove it from this file.
 Current test/deployment firmware instructions: [FIRMWARE.md](FIRMWARE.md).
 The completed [WOLF-FW-001 audit](agonport/doc/tasks/WOLF-FW-001/RESULT.md)
 identifies preparation gaps and inherent exceptions. The completed
-[WOLF-FW-002 migration](agonport/doc/tasks/WOLF-FW-002/RESULT.md) covers routine preparation and offline checks. New runtime pairs remain unqualified;
+[WOLF-FW-002 migration](agonport/doc/tasks/WOLF-FW-002/RESULT.md) covers routine preparation and offline checks. The [same-tag async-r1 refresh](agonport/doc/tasks/WOLF-FW-002/AMENDMENT-01-RESULT.md)
+is also complete. New runtime pairs remain unqualified;
 the optimization goal remains paused.
 
 ## WOLF-GOAL-001 — Overnight uncapped optimization goal

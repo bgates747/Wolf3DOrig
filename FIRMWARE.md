@@ -9,10 +9,12 @@ before preparing any test, emulator profile, SD payload or scheduling request.
 | Console8 | Same VDPlet release | Same Eirene release member |
 | Olimex | Same VDPlet release | Scheduler's latest approved integrated EMOS, resolved at admission |
 
-The VDP release firmware is `vdp-vdplet-0.1.2-alpha.bin`, 1100304 bytes,
-SHA256 `b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3`.
-Verify the release's `SHA256SUMS` as well as this hash. Release source commit:
-`b6c7c58331bf4cbbd54dbc4a1301c124e5963622`.
+The VDP release firmware is `vdp-vdplet-0.1.2-alpha.bin`, 1115568 bytes,
+SHA256 `dc43ecb8b1c324ffd1a032e6cc0c56d8c05dd33a355ce170c23adb35ffb533ab`.
+The tag was amended in place; select `0.1.2-alpha-async-r1`. The earlier
+`b004570b…` image is superseded despite its identical version string. Verify the
+current release's `SHA256SUMS` as well as this hash. Release source commit:
+`60e5b4ebafa3e1c8bb740e45260d78cdb6125e30`.
 
 Eirene's exact `mos-rc3.bin` is 100879 bytes, SHA256
 `d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50`,
@@ -32,11 +34,13 @@ This is a selector observation, not a live installed-state check. Resolve the
 actual current selector, installation provenance and fresh normal admission
 with the scheduler. Eirene's standalone RC3 binary is not an Olimex EMOS image.
 
-The release includes repaired UART RX recovery, pixels, text96, borrowed colour
-rows and READ_BYTES. It does **not** enable the optional async worker, counted
-return, overlap witness, quiet async polling or PCM sink. Ordinary synchronous
-Wolf modules do not require those disabled options. SDK source inclusion does
-not enable a firmware feature.
+The amended release includes repaired UART RX recovery, pixels, text96, borrowed
+colour rows, READ_BYTES and ordinary async rendering (ABI 1.7, capabilities 799).
+Counted return, private overlap witnesses, quiet async polling and PCM sink
+remain disabled. Existing synchronous Wolf modules still use their ABI 1.3/1.6
+views; enabling async in the firmware does not select a Wolf async rewrite.
+The project preparation screen deliberately admits only its qualified
+synchronous ABI/capability subset. See the [amendment result](agonport/doc/tasks/WOLF-FW-002/AMENDMENT-01-RESULT.md).
 
 ## Candidate preparation
 

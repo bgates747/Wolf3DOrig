@@ -7,15 +7,15 @@ import struct
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_CACHE = ROOT / 'agonport/doc/tasks/WOLF-FW-001/build/releases'
-VDP_SHA = 'b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3'
-SUMS_SHA = '6469f6d6717ede6acb68d9b7ce519db07a1d5a08a0ef7c765739dfe86658aa9d'
+DEFAULT_CACHE = ROOT / 'agonport/doc/tasks/WOLF-FW-002/build/releases-async-r1'
+VDP_SHA = 'dc43ecb8b1c324ffd1a032e6cc0c56d8c05dd33a355ce170c23adb35ffb533ab'
+SUMS_SHA = '52438920e70480cd1c0f0c9543fbf2e0f7771ce937b92f422ef2f6ea394f79ba'
 MOS_SHA = 'd7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50'
 ZIP_SHA = '9c8a9a28b0f597e6a9294d806491ffca3902c16cf1876b092ae8944f65368061'
-ELF_SHA = '3b471a388764e5d8da6d10cc78f46361b8aef1f884ea0f24d86369a366460a7d'
+ELF_SHA = '576b69f3a0a4fbb676b2108b06437d1ae6d0b459fa7976c8508a4815e55f0a40'
 PRODUCTION_MODULE_SHA = '266f809ff76e56733251da202e5c4747cd9c12d247d799d486471a262c0404b7'
 DEFAULT_MODULE = ROOT / 'agonport/vdplet/production/build/wolf3d_production.vdpl'
-DEFAULT_PAYLOAD = ROOT / 'tgt/wolf3d-standard'
+DEFAULT_PAYLOAD = ROOT / 'tgt/wolf3d-standard-async-r1'
 
 
 def sha(path):
@@ -45,7 +45,7 @@ def release_files(cache=DEFAULT_CACHE):
         path = vdp / safe_name(name.lstrip('*'))
         require(sha(path) == expected, 'VDPlet release asset changed: ' + name)
     firmware = vdp / 'vdp-vdplet-0.1.2-alpha.bin'
-    require(sha(firmware) == VDP_SHA and firmware.stat().st_size == 1100304,
+    require(sha(firmware) == VDP_SHA and firmware.stat().st_size == 1115568,
             'Wrong VDPlet release image')
     elf = gzip.decompress((vdp / 'vdp-vdplet-0.1.2-alpha.elf.gz').read_bytes())
     require(hashlib.sha256(elf).hexdigest() == ELF_SHA, 'Wrong release debug ELF')
@@ -56,7 +56,7 @@ def release_files(cache=DEFAULT_CACHE):
     require(len(mos) == 100879 and hashlib.sha256(mos).hexdigest() == MOS_SHA,
             'Wrong mos-rc3.bin ZIP member')
     return dict(firmware=firmware.read_bytes(), elf=elf, mos=mos, mos_map=mapping,
-        identity=dict(vdp_version='v0.1.2-alpha', vdp_sha256=VDP_SHA,
+        identity=dict(vdp_version='v0.1.2-alpha', vdp_selection='0.1.2-alpha-async-r1', vdp_sha256=VDP_SHA,
             vdp_elf_sha256=ELF_SHA, mos_version='3.1.0_uart0_rc_3',
             mos_sha256=MOS_SHA, mos_map_sha256=hashlib.sha256(mapping).hexdigest()))
 
@@ -69,7 +69,7 @@ def module_info(path):
     require((u16(4), u16(6), u32(8), u32(12)) == (1, 64, len(raw), 0x32505345),
             'Module image/header size or architecture mismatch')
     require(u16(16) == 1 and u16(18) <= 6 and u32(20) & ~287 == 0,
-            'Module requires features absent from pinned VDPlet release')
+            'Module exceeds the qualified Wolf synchronous ABI/capability subset')
     require(0 < u32(24) <= 98304 and 0 < u32(28) <= 16384 and
             u32(32) <= 2048 and len(raw) <= 131072, 'Module exceeds release policy')
     require(u32(40) == 64 and u32(44) == len(raw)-64 and u32(48) == 80400 and

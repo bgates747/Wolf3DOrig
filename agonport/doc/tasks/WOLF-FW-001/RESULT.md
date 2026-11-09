@@ -1,5 +1,8 @@
 # Pinned-firmware audit complete
 
+> Historical b004-release result. The same tag was replaced by async-r1; see
+> [the current amendment result](../WOLF-FW-002/AMENDMENT-01-RESULT.md). Original evidence below is preserved.
+
 Contract `52a1d8f` was committed and pushed before this audit. No compiler,
 emulator, device, deployment or queue operation was performed. WOLF-GOAL-001
 remains paused. The findings below describe source/static compatibility and

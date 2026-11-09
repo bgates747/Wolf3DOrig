@@ -143,4 +143,14 @@ def test_generic_deployment_manifest_includes_module_and_payload():
     manifest=tomllib.loads((ROOT/'deploy.toml').read_text())
     bundle=manifest['bundles']['wolf3d']
     assert {'wolf3d.bin','wolf3d.vdpl','payload.json'} <= set(bundle['require'])
-    assert all(i['source'].startswith('tgt/wolf3d-standard/') for i in bundle['items'])
+    assert all(i['source'].startswith('tgt/wolf3d-standard-async-r1/') for i in bundle['items'])
+
+
+def test_superseded_same_version_receipt_refused_before_output(tmp_path):
+    p=ROOT/'src/asm/wolf3d/tgt/pinned/wolf3d-vdplet-direct.json'
+    data=json.loads(p.read_text())
+    data['required_firmware']['vdp_sha256']='b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3'
+    old=tmp_path/'old.json';old.write_text(json.dumps(data))
+    with pytest.raises(ValueError,match='Stale build receipt'):
+        prep.package(old,tmp_path/'output')
+    assert not (tmp_path/'output').exists()

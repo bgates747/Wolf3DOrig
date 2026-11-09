@@ -9,7 +9,7 @@ import subprocess
 import sys
 
 from wolf_firmware import (ROOT, DEFAULT_CACHE, DEFAULT_PAYLOAD, release_files,
-    module_info, require, sha, verify_payload)
+    module_info, require, sha, verify_payload, VDP_SHA, MOS_SHA)
 
 
 def fresh_directory(path):
@@ -47,6 +47,8 @@ def package(receipt, output, cache=DEFAULT_CACHE):
     data = json.loads(receipt.read_text())
     require(data.get('backend') == 'vdplet-direct', 'Routine payload requires vdplet-direct build')
     require(data.get('firmware_policy') == 'pinned-release-v1', 'Rebuild with current pinned-firmware builder')
+    require(data.get('required_firmware') == dict(vdp_sha256=VDP_SHA,mos_sha256=MOS_SHA),
+            'Stale build receipt firmware pins; rebuild the application receipt')
     binary = ROOT / data['output']
     module = ROOT / data['module']['output']
     require(binary.stat().st_size == data['bytes'] and sha(binary) == data['sha256'], 'Application/receipt mismatch')

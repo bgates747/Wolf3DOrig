@@ -7,7 +7,13 @@ The paused optimization goal stays paused.
 
 ## Firmware cache
 
-The existing audited cache is the default. On another checkout, fetch exact
+The amended `0.1.2-alpha-async-r1` audited cache is the default. The tag was
+replaced in place: old b004 images/profiles are superseded and retained only
+as historical evidence. New preparation selects dc43ecb8 and rejects old
+checksums/build-receipt pins. Ordinary firmware async support is enabled; Wolf
+remains synchronous in these preparations.
+
+On another checkout, fetch exact
 release assets into a **fresh** cache directory, then verify them:
 
 ```bash
@@ -45,7 +51,7 @@ application, matching module and receipts) into a fresh output:
 .venv/bin/python tools/wolf_prepare.py verify-payload
 ```
 
-Default output is `tgt/wolf3d-standard`. Existing directories are refused rather
+Default output is `tgt/wolf3d-standard-async-r1`. Existing directories are refused rather
 than replaced. For a new preparation use `--output /absolute/new/payload`.
 `deploy.py plan/deploy` verifies the standard payload before entering the shared
 deployment engine. Its declared bundle now includes the module and manifest;
@@ -60,7 +66,7 @@ An explicitly selected optimized native-profiling review build remains possible:
   --module agonport/doc/tasks/WOLF-PERF-021/results/build01/candidate/module/wolf_perf.vdpl
 .venv/bin/python tools/wolf_prepare.py package \
   --receipt src/asm/wolf3d/tgt/pinned/wolf3d-vdplet-direct-pn.json \
-  --output tgt/wolf3d-optimized-profile
+  --output tgt/wolf3d-optimized-profile-async-r1
 ```
 
 That uses the qualified `8d3d` module. Its own WPN1 recording and ordinary READ16
@@ -76,7 +82,7 @@ firmware verification. No new emulator compilation/installation is attempted.
 
 ```bash
 .venv/bin/python tools/wolf_prepare.py profile \
-  --payload tgt/wolf3d-standard --output /absolute/new/profile \
+  --payload tgt/wolf3d-standard-async-r1 --output /absolute/new/profile \
   --frontend /absolute/existing/flexe-agon-emulator \
   --backend /absolute/existing/flexe-vdp.so
 ```
@@ -102,9 +108,9 @@ file, module and 4096 B zero-buffer page; the builder checks the real listing an
 binary storage extent. Original accepted fixture binaries remain separate.
 
 ```bash
-.venv/bin/python tools/wolf_prepare.py fixture --output tgt/wolf-finite-client
+.venv/bin/python tools/wolf_prepare.py fixture --output tgt/wolf-finite-client-async-r1
 .venv/bin/python tools/wolf_prepare.py profile \
-  --payload tgt/wolf-finite-client --output /absolute/new/client-profile \
+  --payload tgt/wolf-finite-client-async-r1 --output /absolute/new/client-profile \
   --frontend /absolute/existing/flexe-agon-emulator \
   --backend /absolute/existing/flexe-vdp.so
 ```

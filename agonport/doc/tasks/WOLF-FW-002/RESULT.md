@@ -1,5 +1,8 @@
 # WOLF-FW-002 — Current-release preparation migration
 
+> Historical b004-release result. The same tag was replaced by async-r1; see
+> [the current amendment result](AMENDMENT-01-RESULT.md). Original evidence below is preserved.
+
 The routine Wolf build and deployment preparation now select VDPlet
 v0.1.2-alpha and Eirene RC3 where applicable. The plan was frozen/pushed as
 `444138e` before implementation. This task changes preparation and the finite
