@@ -5,6 +5,19 @@ unfinished work. IDs are stable references and are not reused. When an item is
 accepted, rejected, or superseded, record its ID, evidence, and rationale in
 the current dated development log, then remove it from this file.
 
+## WOLF-FW-001 — Pinned production firmware compatibility audit
+
+[Audit contract](agonport/doc/tasks/WOLF-FW-001/PLAN.md). Smith selects immediate
+audit after contract commit/push: VDPlet v0.1.2-alpha on all three targets;
+Eirene MOS 3.1.0_uart0_rc_3 on Alexe/Console8, and scheduler-maintained approved
+EMOS on Olimex. Existing runtime permissions and paused optimization goal remain.
+
+- [ ] WOLF-FW-001-02 — Verify release artifacts/checksums and exact identities.
+- [ ] WOLF-FW-001-03 — Inventory production and retained test candidates.
+- [ ] WOLF-FW-001-04 — Compatibility/qualification and preparation dispositions.
+- [ ] WOLF-FW-001-05 — Explicit justified exceptions and migration gaps.
+- [ ] WOLF-FW-001-06 — Publish guidance, findings/evidence; commit and push.
+
 ## WOLF-GOAL-001 — Overnight uncapped optimization goal
 
 [Goal contract](agonport/doc/tasks/WOLF-GOAL-001/PLAN.md). Smith authorizes
