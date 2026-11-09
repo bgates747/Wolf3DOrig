@@ -1,0 +1,1055 @@
+{
+  "schema": "wolf-fw001-candidate-inventory-v1",
+  "source_head": "52a1d8f20d8ef8a96064dca32a710f86d0755166",
+  "unique_packages": {
+    "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b": {
+      "bytes": 22572,
+      "paths": [
+        "src/asm/wolf3d/tgt/wolf3d.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-021/results/build01/candidate/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-021/build/r01/candidate/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-023/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-023/results/build01/original/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 22572,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 22508,
+      "compiler": 80400,
+      "resident_text": 15676,
+      "resident_data": 11184,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15673
+        },
+        {
+          "name": ".rodata",
+          "bytes": 5688
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "57b635fc1807d9108e576cfff4c79c7f57ade48164fc5be97d75a3562e54b1be": {
+      "bytes": 7952,
+      "paths": [
+        "agonport/vdplet/review/build/package/wolf3d_scene.vdpl",
+        "agonport/vdplet/review-rows/build/gate-test-package/wolf3d_scene.vdpl",
+        "agonport/vdplet/review-rows/build/package/wolf3d_scene.vdpl",
+        "agonport/vdplet/qualification/build/module/wolf3d_scene.vdpl",
+        "agonport/vdplet/qualification/build/wolf3d_scene.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 7952,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 3,
+      "capabilities": 17,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365424,
+      "elf_offset": 64,
+      "elf_bytes": 7888,
+      "compiler": 80400,
+      "resident_text": 3024,
+      "resident_data": 4144,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 3022
+        },
+        {
+          "name": ".rodata",
+          "bytes": 4116
+        },
+        {
+          "name": ".bss",
+          "bytes": 28
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "c32381bc659b6e1fcc479eef22168a77eea22da310202da794234f172ccab670": {
+      "bytes": 8296,
+      "paths": [
+        "agonport/vdplet/review-rows/build/gate-test-package/wolf3d_scene_rows.vdpl",
+        "agonport/vdplet/review-rows/build/package/wolf3d_scene_rows.vdpl",
+        "agonport/vdplet/qualification/build/rows-module/wolf3d_scene_rows.vdpl",
+        "agonport/vdplet/qualification/build/wolf3d_scene_rows.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 8296,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 273,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365424,
+      "elf_offset": 64,
+      "elf_bytes": 8232,
+      "compiler": 80400,
+      "resident_text": 3300,
+      "resident_data": 4200,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 3298
+        },
+        {
+          "name": ".rodata",
+          "bytes": 4172
+        },
+        {
+          "name": ".bss",
+          "bytes": 28
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "27f3d39285a5b49fec8aeed35085b1916ef537154f1d1d53956b075e00174c82": {
+      "bytes": 19124,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-001/build/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-001/build/evidence/r06/cpu/app/wolf3d.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-001/build/evidence/r06/paced/app/wolf3d.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-001/build/evidence/r06/cpu-fail/app/wolf3d.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-001/build/evidence/r06/unpaced/app/wolf3d.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 19124,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 19060,
+      "compiler": 80400,
+      "resident_text": 13572,
+      "resident_data": 9732,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 13570
+        },
+        {
+          "name": ".rodata",
+          "bytes": 4236
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "1907ce1711f68676dc1c0c6eb70b8f55ae03d0934aee537329edcf77fe652610": {
+      "bytes": 19876,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-004/build/r03/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-003/build/r05/vdplet/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-003/build/r02/vdplet/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-003/build/r03/vdplet/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-003/build/r04/vdplet/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 19876,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 19812,
+      "compiler": 80400,
+      "resident_text": 14324,
+      "resident_data": 9732,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 14322
+        },
+        {
+          "name": ".rodata",
+          "bytes": 4236
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "266f809ff76e56733251da202e5c4747cd9c12d247d799d486471a262c0404b7": {
+      "bytes": 18636,
+      "paths": [
+        "agonport/vdplet/production/build/module/wolf3d_production.vdpl",
+        "agonport/vdplet/production/build/wolf3d_production.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 18636,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365425,
+      "elf_offset": 64,
+      "elf_bytes": 18572,
+      "compiler": 80400,
+      "resident_text": 13144,
+      "resident_data": 9720,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 13142
+        },
+        {
+          "name": ".rodata",
+          "bytes": 4236
+        },
+        {
+          "name": ".bss",
+          "bytes": 5484
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "54568e4534a8d8af16c4122ed086d38489668aa7270042645a68063448bb7055": {
+      "bytes": 19876,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-004/build/r03/candidate/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-005/build/r02/original/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 19876,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 19812,
+      "compiler": 80400,
+      "resident_text": 14324,
+      "resident_data": 9732,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 14322
+        },
+        {
+          "name": ".rodata",
+          "bytes": 4236
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "bf7f2bb038387698464fbb297a437ef98457638a28261dc7f9688044d9b6eb28": {
+      "bytes": 19896,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-006/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-005/build/r02/candidate/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 19896,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 19832,
+      "compiler": 80400,
+      "resident_text": 14344,
+      "resident_data": 9732,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 14342
+        },
+        {
+          "name": ".rodata",
+          "bytes": 4236
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "cd429e2fd642ab784d024cb7d6eb48f38b00eec132285ea78222b0e77e373ceb": {
+      "bytes": 20928,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-006/build/r01/candidate/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-007/build/r01/original/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 20928,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 20864,
+      "compiler": 80400,
+      "resident_text": 15516,
+      "resident_data": 9748,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15513
+        },
+        {
+          "name": ".rodata",
+          "bytes": 4252
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "c8f99354bef6495e76f15201e64bdd010da6369a0b91d2fed37c0a3eb27f997d": {
+      "bytes": 24276,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-008/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-009/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-007/build/r01/candidate/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 24276,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 24212,
+      "compiler": 80400,
+      "resident_text": 15216,
+      "resident_data": 13348,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15213
+        },
+        {
+          "name": ".rodata",
+          "bytes": 7852
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656": {
+      "bytes": 24420,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-016/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-009/build/r01/candidate/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-014/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-018/results/build01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-018/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-013/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-017/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-021/results/build01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-021/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-019/results/build01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-019/build/r01/original/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-015/build/r01/original/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 24420,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 24356,
+      "compiler": 80400,
+      "resident_text": 15360,
+      "resident_data": 13348,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15357
+        },
+        {
+          "name": ".rodata",
+          "bytes": 7852
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "22ef84a767951ec03ea138b048db4cfe613d1edf02e8cbb34ee824ba535d24a1": {
+      "bytes": 24504,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-016/build/r01/candidate/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 24504,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 24440,
+      "compiler": 80400,
+      "resident_text": 15444,
+      "resident_data": 13348,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15441
+        },
+        {
+          "name": ".rodata",
+          "bytes": 7852
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "8c126c380ace55f4133c16d6af0f20b46aac349c82302682af1957280b8d6a11": {
+      "bytes": 24552,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-014/build/r01/candidate/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 24552,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 24488,
+      "compiler": 80400,
+      "resident_text": 15480,
+      "resident_data": 13348,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15477
+        },
+        {
+          "name": ".rodata",
+          "bytes": 7852
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "2a249f85e6e88559e1e32d7c9af6906a4f543a693f97f07aa5b0799a53505ed8": {
+      "bytes": 24480,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-018/results/build01/candidate/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-018/build/r01/candidate/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 24480,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 24416,
+      "compiler": 80400,
+      "resident_text": 15420,
+      "resident_data": 13348,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15417
+        },
+        {
+          "name": ".rodata",
+          "bytes": 7852
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "972f359742bbc92668f64fd547b85d5e55f846d4c9b089fd023769130fb67ced": {
+      "bytes": 24620,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-013/build/r01/candidate/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 24620,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 24556,
+      "compiler": 80400,
+      "resident_text": 15548,
+      "resident_data": 13348,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15545
+        },
+        {
+          "name": ".rodata",
+          "bytes": 7852
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "12857ecfa682d3f149c0d9688e7654f7692f6bde985b0cad2b35d33cf35ebf64": {
+      "bytes": 24424,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-017/build/r01/candidate/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 24424,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 24360,
+      "compiler": 80400,
+      "resident_text": 15364,
+      "resident_data": 13348,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15361
+        },
+        {
+          "name": ".rodata",
+          "bytes": 7852
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "0e4ee86eb10c07d54933fc06c550fe1e871942d197090b20604674ec959b9f32": {
+      "bytes": 24592,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-019/results/build01/candidate/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-019/build/r01/candidate/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 24592,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 24528,
+      "compiler": 80400,
+      "resident_text": 15520,
+      "resident_data": 13348,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15517
+        },
+        {
+          "name": ".rodata",
+          "bytes": 7852
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "2844fda52cecd28eceeaa506ff3c6cce5af43c3b69ca5ee74fe87a50c7ea489f": {
+      "bytes": 22180,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-015/build/r01/candidate/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 22180,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 22116,
+      "compiler": 80400,
+      "resident_text": 15296,
+      "resident_data": 11184,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15293
+        },
+        {
+          "name": ".rodata",
+          "bytes": 5688
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    },
+    "b181a8fdba5b0e0791359593e95169a99ad732e369cbb9442be1e4046baed1d4": {
+      "bytes": 22620,
+      "paths": [
+        "agonport/doc/tasks/WOLF-PERF-023/build/r01/candidate/module/wolf_perf.vdpl",
+        "agonport/doc/tasks/WOLF-PERF-023/results/build01/candidate/module/wolf_perf.vdpl"
+      ],
+      "version": 1,
+      "header_bytes": 64,
+      "package_bytes": 22620,
+      "architecture": 844124997,
+      "abi_major": 1,
+      "abi_minor": 6,
+      "capabilities": 257,
+      "text_limit": 65536,
+      "data_limit": 16384,
+      "stack_limit": 2048,
+      "build_id": 539365636,
+      "elf_offset": 64,
+      "elf_bytes": 22556,
+      "compiler": 80400,
+      "resident_text": 15724,
+      "resident_data": 11184,
+      "allocated_sections": [
+        {
+          "name": ".text",
+          "bytes": 15721
+        },
+        {
+          "name": ".rodata",
+          "bytes": 5688
+        },
+        {
+          "name": ".bss",
+          "bytes": 5496
+        }
+      ],
+      "static_screen_passed": true,
+      "runtime_qualified_on_pins": false
+    }
+  },
+  "assembly_entrypoints": [
+    {
+      "path": "src/asm/agnb_abort/src/agnb_abort_regression.asm",
+      "sha256": "cb6e299ead52cc561e0ead29d3bb9e4e2cd5837b2ea3bdab073c145469cbe79e"
+    },
+    {
+      "path": "src/asm/wolf3d/src/wolf3d.asm",
+      "sha256": "030cf4cd914a24389198471305fc60f64129694dff7e111523152413babf0d53"
+    },
+    {
+      "path": "src/asm/wolf3d_actors/src/actor_regression.asm",
+      "sha256": "8755d377f72c8e5cbdffbd4b4dac42e7d8b940673479e2259a02d97af6c61e04"
+    },
+    {
+      "path": "src/asm/wolf3d_actors/src/patrol_regression.asm",
+      "sha256": "731495c211ea3cc8978104f8b2265c69683d2328d0fdaab8f3afe31c7607658c"
+    },
+    {
+      "path": "src/asm/wolf3d_ai/src/dda_regression.asm",
+      "sha256": "e763c065a4dcc2f2314af0a2adfbbc54ac6323705a371aea8a8c14431e7780fb"
+    },
+    {
+      "path": "src/asm/wolf3d_areas/src/area_regression.asm",
+      "sha256": "114b8a1d2f6ab9bfac68fef4fb027a1f9d32c35ac17815ea2a85f25c8081670a"
+    },
+    {
+      "path": "src/asm/wolf3d_audio/src/audio_regression.asm",
+      "sha256": "e3b330bd41a63a884be619014f12c45eb6826ebfe286b001776341a5c4313a6a"
+    },
+    {
+      "path": "src/asm/wolf3d_audio_spatial/src/spatial_regression.asm",
+      "sha256": "e5e48641b3c25e00086e598fbb8ba958130fbe3c5e963619ff6c1101860e3a1e"
+    },
+    {
+      "path": "src/asm/wolf3d_awareness/src/awareness_regression.asm",
+      "sha256": "62d5c4c9d1ccad8ec91075da6ac1e1f89d0f444ec5a03607e7478d5b84454fda"
+    },
+    {
+      "path": "src/asm/wolf3d_chase/src/chase_regression.asm",
+      "sha256": "a0275ba78f36255253b5f632965563d38915496028d8075d6fa32a2654a1470e"
+    },
+    {
+      "path": "src/asm/wolf3d_combat/src/combat_regression.asm",
+      "sha256": "cd0915a746322278dfcdfbfb9d3f93b3e8afb5107e810368a233307fe74d1a70"
+    },
+    {
+      "path": "src/asm/wolf3d_config/src/config_regression.asm",
+      "sha256": "4bf1c70d99291f7cdbfd8bf6f14d98e0b3969a43a5c1a1aa20689333aa5643ed"
+    },
+    {
+      "path": "src/asm/wolf3d_death/src/death_regression.asm",
+      "sha256": "2d0dc29786c7642905881351c315e0ac50a5ecf32124eb4cf222263739084e4c"
+    },
+    {
+      "path": "src/asm/wolf3d_demo/src/demo_regression.asm",
+      "sha256": "c7d072200e8a0b6fbc3dadf2378b534fcbdb00bd68c9640b388b08fed4bdf8e3"
+    },
+    {
+      "path": "src/asm/wolf3d_gameplay/src/gameplay_regression.asm",
+      "sha256": "0ed84b3e6e7b72f0c21d5d8379721f7714bd3d814a18dfb0bd48a0aeed013f93"
+    },
+    {
+      "path": "src/asm/wolf3d_gameplay/src/pickup_regression.asm",
+      "sha256": "3af9d0f5311820f33df7ffb6e9f27d1d4f7aef81d504253f6391461cb43adf08"
+    },
+    {
+      "path": "src/asm/wolf3d_gameplay/src/use_regression.asm",
+      "sha256": "9e50bfc87f1b4cb48dc6019ac85886755198a2ea8b0ebf6fc221f70f593f8f8b"
+    },
+    {
+      "path": "src/asm/wolf3d_gameplay/src/victory_regression.asm",
+      "sha256": "afeae3e202c8fce5c21f1a635cc5e293ec5627904cb0eefdd8a47736bfb6d25d"
+    },
+    {
+      "path": "src/asm/wolf3d_hello/src/wolf3d_hello.asm",
+      "sha256": "a1de1737f8399c740100eea915ac2b7987a8cb50713d8a310188dd831c4ca86c"
+    },
+    {
+      "path": "src/asm/wolf3d_highscores/src/highscores_regression.asm",
+      "sha256": "b8d97509e9e3bf1296bb79018d2d651a041df4c3c4225b1145114d4f87235a13"
+    },
+    {
+      "path": "src/asm/wolf3d_intermission/src/intermission_regression.asm",
+      "sha256": "169ace657080e0484931f0457aa833a7c8a2aa1b9a8d1e1c37e9f6e90399ec5b"
+    },
+    {
+      "path": "src/asm/wolf3d_music/src/music_regression.asm",
+      "sha256": "9830a169ca73267890cb325280eb79fbaf805268a1f7e6ce175aecee7f0b49a6"
+    },
+    {
+      "path": "src/asm/wolf3d_player_combat/src/player_combat_regression.asm",
+      "sha256": "64d98090a5dba79faea11d1fe19ab40773c6e5af13d56b729ed5df7c57160b34"
+    },
+    {
+      "path": "src/asm/wolf3d_save/src/save_regression.asm",
+      "sha256": "6f7c7a8829a172fb2e376b04f70bf235a47a0806880f25914f59885a29e1bdec"
+    },
+    {
+      "path": "src/asm/wolf3d_shell/src/shell_regression.asm",
+      "sha256": "760932276122ffef4ce51747ad61c0dc9ec2d3b47c9932b3fbadf03eae2b2c46"
+    },
+    {
+      "path": "src/asm/wolf3d_vdplet_batch/src/batch_regression.asm",
+      "sha256": "ce8d37f168727f08b462dfe547d0f28e2392e79ceeae6ea93cfe8dad6f24aeca"
+    },
+    {
+      "path": "src/asm/wolf3d_vdplet_client/src/client_regression.asm",
+      "sha256": "9987cbce02cd781f5252c6e3bbfe60e6efb2e65fa91a7646eab624707c9e89ea"
+    }
+  ],
+  "emulator_runners": [
+    {
+      "path": "src/asm/agnb_abort/scripts/run_agnb_abort_emulator_regression.py",
+      "sha256": "d8869b778d79e78fba754e3b9fa2108e9be82e3b0686e87444afd104df75ad3b",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_actors/scripts/run_actor_emulator_regression.py",
+      "sha256": "d34b140dd6fe8c89d3849b4c36fd2cf5584b03e283ebf87a04ae7df27fe47403",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_actors/scripts/run_patrol_emulator_regression.py",
+      "sha256": "aa018644c0bde063d5c31cd641dc69044bf6ac9d969a5346941a5676b406ae23",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_areas/scripts/run_area_emulator_regression.py",
+      "sha256": "acfc4c4683c5d8663bd87ee929a15b8c3dd3e6e75f3dad7843cd635a968eef9d",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_audio/scripts/run_audio_emulator_regression.py",
+      "sha256": "3e47cdd23808a050d69c1b521f94306ac16d6f5312829525b37027a90362c29d",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_audio_spatial/scripts/run_spatial_emulator_regression.py",
+      "sha256": "d73e4c4370a47be5ead4d00a78970d22f05eba089d9cb793b641a9b6a392737e",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_awareness/scripts/run_awareness_emulator_regression.py",
+      "sha256": "56da1adc3077c3b33a71918c948bc16a71faa8de2dc097ee1859b5d47d95a07d",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_chase/scripts/run_chase_emulator_regression.py",
+      "sha256": "c9e0da07eed6d8bd1777775a3ff47f4b5591f6bf5c68295eebe7387517df9f1a",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_combat/scripts/run_combat_emulator_regression.py",
+      "sha256": "68bdf2230dc8d94b074cb0b246230f40437963212222c1a13f19cbb95cf60994",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_config/scripts/run_config_emulator_regression.py",
+      "sha256": "9827f6f81ded3de348c4e3573db213594dd5b99d1a6ea9a591841bbef003fdfd",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_death/scripts/run_death_emulator_regression.py",
+      "sha256": "5b7570e252aac924da890b0126fcb445391a8acb5957f3ff03dd41979effa214",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_demo/scripts/run_demo_emulator_regression.py",
+      "sha256": "ff617c034c27f516c543f9637c8ba7f3b5f0fb9f9f114d3c1c6c059a3c191d36",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_gameplay/scripts/run_gameplay_emulator_regression.py",
+      "sha256": "9a2379f5ea60b278adc730a94cd5809133d247feac69afd6d9d0753cb3beb3ed",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_gameplay/scripts/run_level_loader_emulator_regression.py",
+      "sha256": "14f6bc0d395c2071dca4b2f38e78571d42323bee6b5524306232656798065fb3",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": true,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_gameplay/scripts/run_level_transition_emulator_regression.py",
+      "sha256": "4c838e59b2d8a3a5661900e85ab2610180b2a05e593bb52fad4ace1c6561d5d4",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": true,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_gameplay/scripts/run_pickup_emulator_regression.py",
+      "sha256": "08e6282dc56d1a63ffffde45073361ff407149e43e771035d365dc0a02498130",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_gameplay/scripts/run_use_emulator_regression.py",
+      "sha256": "0c3bff5c77e1dfdc4b11be9ebec142e91cd3c39c3f1d7396e041c0af219a97e4",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_gameplay/scripts/run_victory_emulator_regression.py",
+      "sha256": "169b63775226bd9877e4aed46ee16be1d22772b4c0c526c8ba493adab4454743",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_highscores/scripts/run_highscores_emulator_regression.py",
+      "sha256": "1471fedac6c3c8a6b927a2b3a47a9c8273282d7fe7c8fb026c7d12368a63f204",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_intermission/scripts/run_intermission_emulator_regression.py",
+      "sha256": "1c6badd89c7fbcb1e081c3152afff801000d7f00e6650470c020abda990df1ea",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_music/scripts/run_music_emulator_regression.py",
+      "sha256": "b811509c1148cae889a5816c1d33d080f7361a6c1e5d576f19670f45e3b642b7",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_parity/scripts/run_direct_emulator_regressions.py",
+      "sha256": "f9d1772bebf891d50dc1bc5ac4f1e2a0891812d0210075c56cd3ca5f14f05c5c",
+      "uses_old_mos_profile": false,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_player_combat/scripts/run_player_combat_emulator_regression.py",
+      "sha256": "f14370a7a7c59c61390b8d3985a7c12b2744efa10a1f13c6c3477781f08f268e",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_save/scripts/run_save_emulator_regression.py",
+      "sha256": "0246e332420e4088619caf113fb71415fb8479251805e1bb81d7c05593ac0810",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    },
+    {
+      "path": "src/asm/wolf3d_shell/scripts/run_shell_emulator_regression.py",
+      "sha256": "f550b831fce616967ba37a01a1251787ad37448496a570406bc3f1adf5637e5c",
+      "uses_old_mos_profile": true,
+      "references_bespoke_vdp": false,
+      "requires_new_preparation": true
+    }
+  ],
+  "screen_limit": "Static package screen only; not full loader admission, allocation, stack or runtime qualification."
+}

@@ -1,0 +1,187 @@
+{
+  "schema": "wolf-fw001-source-evidence-v1",
+  "scope": "File-only audit source and historical record identities; current file hashes, not execution evidence",
+  "files": {
+    "/Agon/mystuff/Wolf3dOrig/AGENTS.md": {
+      "bytes": 1441,
+      "sha256": "5b39c0dfe8deb49437ab23d40d862235fccd385dc8dd5ba87f57b797b9318709"
+    },
+    "/Agon/mystuff/Wolf3dOrig/deploy.toml": {
+      "bytes": 2942,
+      "sha256": "244c90bef5addcb2bdcc9219487031d83c007515c2cd4426349a1f368954f4f4"
+    },
+    "/Agon/mystuff/Wolf3dOrig/deploy.py": {
+      "bytes": 679,
+      "sha256": "c434160df2c3d8eeac1f86a3bea1c340bcdb875db429c9e11e5c69181d81e1fd"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/tools/setup_emulator.py": {
+      "bytes": 2008,
+      "sha256": "e4e94f873667a86a36ea288d519f879ed35d22652f46e76f5194b59d039f2e95"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/tools/stage_wolf3d_emulator.py": {
+      "bytes": 2608,
+      "sha256": "422311988a3c375c9be8d1072781f4053e65c9ab45c45a5a10f7a133609cdda9"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/tools/deploy_wolf3d_to_sd.py": {
+      "bytes": 6193,
+      "sha256": "5251692e9f576aa4b41a6a38879574a0c4b95f2b9b746f3e08c4ebe727bd05bf"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/production/build.py": {
+      "bytes": 9679,
+      "sha256": "e7f805d27c252beda2f195254bac8007462606cf496628ee47e79d1072470ccc"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/production/wolf3d_module.cpp": {
+      "bytes": 24285,
+      "sha256": "01c7b1e20606e713fc1310a28f6e978c810921299610539f06653b4d7eb2c243"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/production/wolf3d_renderer.cpp": {
+      "bytes": 41744,
+      "sha256": "aee6ed184b0d29e090b2f869559110d1c13fa801b735b1cbd5f36f53e43a3107"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/scripts/build.py": {
+      "bytes": 16209,
+      "sha256": "fa90bb6c3953473c57c6efa3c989ea032f2972f37b45d59c14ef48081deb91e8"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d_vdplet_client/scripts/build.py": {
+      "bytes": 5748,
+      "sha256": "05b889ee2f1243fa515b5b5a97e02464f86fc2799e0d0706e73473ec71d7c022"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d_vdplet_client/src/client_regression.asm": {
+      "bytes": 6211,
+      "sha256": "9987cbce02cd781f5252c6e3bbfe60e6efb2e65fa91a7646eab624707c9e89ea"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d_vdplet_client/scripts/prepare_profile.py": {
+      "bytes": 6542,
+      "sha256": "926456b44d56e8fae96c9e528b9f18987e77a68f9f3dfae6b9d0b339b0f560c6"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/vdplet/production/stage_target_oryx.py": {
+      "bytes": 6619,
+      "sha256": "296b13d14e65b3533b1b609b23103d7e2f636dee6bf1442f34185acd50f4c95b"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/hardware.py": {
+      "bytes": 20281,
+      "sha256": "e747992221a7815d3ee6a0d399ac8eecf7a3084976bb758856076409e0b63615"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PROFILE-001/alexe_run.py": {
+      "bytes": 11351,
+      "sha256": "0b1e8b86fbd5cea5d2c798b81b6ff534a7eaa574c9c785ce3d3eb5edc83a1274"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PIPE-001/PLAN.md": {
+      "bytes": 5272,
+      "sha256": "c8dfa3a5ab33b775a714deb44d789ebdecdcd6e74086eb3317ef75e489c15ecb"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-008/RESULT.md": {
+      "bytes": 1425,
+      "sha256": "2fb1444100a08f5046051053921e6ec3c0c010a201cf0e591011922002935eb5"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/src/wolf3d_vdplet_contract.inc": {
+      "bytes": 8920,
+      "sha256": "fac9a833b086a1440af1033b8f11c397b295954b687565312f1dad8573c08d0c"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/src/wolf3d_vdplet_client.inc": {
+      "bytes": 22985,
+      "sha256": "0cff64d1ce86ef1aa5be0895e0c2c1b7130001cd1e330612d9b92c8ff539bcc2"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/src/wolf3d_vdplet_backend.inc": {
+      "bytes": 8248,
+      "sha256": "474c13f9aec32230a388a331ae9e5b00a227cce63f1f7552d72016d53791b6a2"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/src/wolf3d_vdplet_package.inc": {
+      "bytes": 341,
+      "sha256": "7d9a63b19ec08f3bcb479c72d74d99c811ab654a75d72e1b22e2ccec87ae6073"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/src/wolf3d_vdplet_batch.inc": {
+      "bytes": 21392,
+      "sha256": "cfe2ac5f1c2492149d443c10f02ee78e58fd093c0aee23aa2afd681772ecbe24"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/src/wolf3d.asm": {
+      "bytes": 50192,
+      "sha256": "030cf4cd914a24389198471305fc60f64129694dff7e111523152413babf0d53"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/src/wolf3d_render_async.inc": {
+      "bytes": 19997,
+      "sha256": "777dc3673dcb9a99ffd9fa8450d971943bdcbdeccbc4e6c0922258c73023bb60"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/src/wolf3d_profile.inc": {
+      "bytes": 18275,
+      "sha256": "8f3baa372dd5d8a87ffbe954bd4f550805a46de8c671753b588d5f4c913601d3"
+    },
+    "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/src/wolf3d_backend.inc": {
+      "bytes": 3896,
+      "sha256": "598e75486914dccf4c072caed4313f8ee81273a3db3f2d2fbfeaa46b98ad249f"
+    },
+    "/Agon/mystuff/agon-extender/docs/olimex-firmware-standard.json": {
+      "bytes": 3326,
+      "sha256": "d703a77f28f4f956c4bb10c3f21cabf308cdfda7d49ec4dca05c3a0f2ae5fdbe"
+    },
+    "/Agon/mystuff/agon-extender/docs/olimex-emos-functions.md": {
+      "bytes": 4364,
+      "sha256": "f14bcdeff0a32235d8796dd1f67cf53783aa9bdcdc30ac390a41a014fd7ab83b"
+    },
+    "/Agon/mystuff/agon-extender/docs/procedures/olimex-firmware.md": {
+      "bytes": 8389,
+      "sha256": "df96e3cb550c7b9ed0c3af526e43163ad9e62d4b752ab44b9f2e03d6fd1f54d8"
+    },
+    "/Agon/mystuff/agon-extender/docs/operations/olimex-scheduling/README.md": {
+      "bytes": 8809,
+      "sha256": "8c694b8f0b46d410b1ebad3cd8e19007164f22cb5a9214310c1092fdecea30e6"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/releases/eirene/extracted/source/src/mos_api.inc": {
+      "bytes": 9207,
+      "sha256": "8b62c9a4af0b5747eb7218237b96750d763f3d1f03684d6a663b921234a2d2b3"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/releases/eirene/extracted/source/src/mos_api.asm": {
+      "bytes": 64975,
+      "sha256": "8dabfb7b0ef8dfa619429d84d6cbd9a0cf85f74453dda20c24d753de18c8ccbf"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/releases/eirene/extracted/source/src/vdp_protocol.asm": {
+      "bytes": 9122,
+      "sha256": "bb83bca19df4d0edefc48368875e133b3109ddfe480a52637942d9e9c081df92"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/releases/eirene/extracted/source/src/mos_sysvars.h": {
+      "bytes": 4216,
+      "sha256": "a0a6ffe97fce3b5004ce8db0d7e74f70eeeb9c34598f9f7992504bbe8d37b7ae"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/vdplet-source/include/vdplet.h": {
+      "bytes": 8053,
+      "sha256": "92a6bbc403ecc51e165c103cfd16fd071f3d644ad52f83a4a7cb4fe088a5a2d6"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/vdplet-source/include/vdplet_services.h": {
+      "bytes": 2253,
+      "sha256": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/vdplet-source/include/vdplet_protocol.h": {
+      "bytes": 2410,
+      "sha256": "28a29134cf2710e9dacaf377b602b77deefb06eeeb171191e6100028ae429e2b"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/vdplet-source/src/vdplet_runtime.h": {
+      "bytes": 44862,
+      "sha256": "ba305b3f27345a6f71a96683dceaa3832d4797e9cffe67ba11ee3ef70777c7e4"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/vdplet-source/src/vdplet_image.h": {
+      "bytes": 9614,
+      "sha256": "e01bc410b31e2b1354852c2ff0a51813465c5b0d4cd4de9e5f37bc5bb46f6aab"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/vdplet-source/src/vdplet_color_rows.h": {
+      "bytes": 3343,
+      "sha256": "dcc42474e6d3029ad0a8680ea1c98313309c58edc6839159044208a6f53db19f"
+    },
+    "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-FW-001/build/vdplet-source/src/vdplet_policy.h": {
+      "bytes": 758,
+      "sha256": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c"
+    }
+  },
+  "anchors": {
+    "eirene_callback": "vdp_protocol.asm:96-119 length/body;172-181 callback DE",
+    "eirene_MOS": "mos_api.asm:161-198 standard slots/RFC25; mos_api.inc:112-113 flags",
+    "release_ABI": "vdplet.h:34-91 immutable ABI prefix/color-row accessor",
+    "release_loader": "vdplet_image.h:57-80 ABI/capability/resource/format;107-125 sections",
+    "release_runtime": "vdplet_runtime.h:34-49 capability selection;477-497 INFO;923 READ16",
+    "normal_callback": "wolf3d_render_async.inc:544 onward copies DE to IX;VDPL dispatch",
+    "native_profile": "wolf3d_profile.inc:705-737 module RUN100 and D8 READ16",
+    "bespoke_backend": "wolf3d_render_async.inc:498-535 private4A41 notifications",
+    "module_timing": "WOLF-PERF-021/results/build01/candidate/native-source/wolf3d_module.cpp:619-632 own CCOUNT/WPN1",
+    "old_hardware_binding": "WOLF-PROFILE-001/hardware.py:47 old7593 equality; kit restoration incoming85f9",
+    "old_profile_binding": "WOLF-PROFILE-001/alexe_run.py:17-21 oldBIN/ELF/MOS/map pins"
+  }
+}

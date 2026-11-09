@@ -5,24 +5,18 @@ unfinished work. IDs are stable references and are not reused. When an item is
 accepted, rejected, or superseded, record its ID, evidence, and rationale in
 the current dated development log, then remove it from this file.
 
-## WOLF-FW-001 — Pinned production firmware compatibility audit
-
-[Audit contract](agonport/doc/tasks/WOLF-FW-001/PLAN.md). Smith selects immediate
-audit after contract commit/push: VDPlet v0.1.2-alpha on all three targets;
-Eirene MOS 3.1.0_uart0_rc_3 on Alexe/Console8, and scheduler-maintained approved
-EMOS on Olimex. Existing runtime permissions and paused optimization goal remain.
-
-- [ ] WOLF-FW-001-02 — Verify release artifacts/checksums and exact identities.
-- [ ] WOLF-FW-001-03 — Inventory production and retained test candidates.
-- [ ] WOLF-FW-001-04 — Compatibility/qualification and preparation dispositions.
-- [ ] WOLF-FW-001-05 — Explicit justified exceptions and migration gaps.
-- [ ] WOLF-FW-001-06 — Publish guidance, findings/evidence; commit and push.
+Current test/deployment firmware instructions: [FIRMWARE.md](FIRMWARE.md).
+The completed [WOLF-FW-001 audit](agonport/doc/tasks/WOLF-FW-001/RESULT.md)
+identifies preparation gaps and inherent exceptions. Audit completion does not
+select candidate migration, resume a paused goal or qualify a new runtime pair.
 
 ## WOLF-GOAL-001 — Overnight uncapped optimization goal
 
 [Goal contract](agonport/doc/tasks/WOLF-GOAL-001/PLAN.md). Smith authorizes
 unattended/non-visible testing; MechAgon has first bench priority, Wolf second.
-Oryx is down. Performance runs measure maximum uncapped presentation rate.
+**Paused by Smith; no optimization work or new performance run is selected.**
+The historical overnight routing is not current machine availability.
+Any later selected performance runs measure maximum uncapped presentation rate.
 
 - [ ] WOLF-GOAL-001-04 — Repeated texture-group scan reduction.
 - [ ] WOLF-GOAL-001-05 — Supported faster division-provider dependency.

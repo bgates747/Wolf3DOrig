@@ -1,5 +1,9 @@
 # WOLF-FW-001 — Audit the pinned production firmware compatibility
 
+Completed source/artifact audit: [RESULT.md](RESULT.md). Contract `52a1d8f`
+was pushed before the audit. No build, emulator or physical operation occurred;
+candidate migration/runtime qualification remains separate.
+
 Smith's direct instruction, November 8, 2026: use VDPlet v0.1.2-alpha release
 firmware on Alexe, Olimex and Console8, verifying its SHA256SUMS. Alexe and
 Console8 use Eirene MOS 3.1.0_uart0_rc_3, specifically the release ZIP's
@@ -35,22 +39,22 @@ and task-specific permissions; this audit does not start those workloads.
 
 ## Immutable subtasks
 
-- [ ] WOLF-FW-001-01 — Freeze/push this plan and register it in TODO.md.
-- [ ] WOLF-FW-001-02 — Retrieve exact release metadata/checksum manifests and
+- [x] WOLF-FW-001-01 — Freeze/push this plan and register it in TODO.md.
+- [x] WOLF-FW-001-02 — Retrieve exact release metadata/checksum manifests and
   selected firmware; independently verify VDP assets against SHA256SUMS and
   the Eirene ZIP member against Smith's exact filename, size and SHA256.
   Record source commit, asset identity, target variants and evidence paths.
-- [ ] WOLF-FW-001-03 — Inventory production/test candidate families and their
+- [x] WOLF-FW-001-03 — Inventory production/test candidate families and their
   exact source/artifact identities. Identify firmware ABI/capability, callback,
   package, transport, timing, memory-map and private/bespoke dependencies.
-- [ ] WOLF-FW-001-04 — Compare each family against the pinned release source
+- [x] WOLF-FW-001-04 — Compare each family against the pinned release source
   and maintained Olimex owner's defaults. Classify source-compatible,
   requires preparation repin, justified inherent exception, incompatible or
   unresolved. Keep actual runtime qualification as a separate evidence column.
-- [ ] WOLF-FW-001-05 — Record each required exception, its exact reason and
+- [x] WOLF-FW-001-05 — Record each required exception, its exact reason and
   permitted scope; identify migration blockers and owner questions. Do not
   adopt an exception, silently substitute old firmware or revive a closed kit.
-- [ ] WOLF-FW-001-06 — Update current project firmware guidance/preparation
+- [x] WOLF-FW-001-06 — Update current project firmware guidance/preparation
   status with the new defaults and audit findings, preserving historical pins.
   Publish a compatibility matrix, actionable disposition and checksum/source
   evidence. Commit/push results and report remaining unqualified boundaries.

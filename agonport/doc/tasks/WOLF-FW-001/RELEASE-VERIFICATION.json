@@ -1,0 +1,146 @@
+{
+  "vdplet": {
+    "tag": "v0.1.2-alpha",
+    "url": "https://github.com/bgates747/agon-vdplet/releases/tag/v0.1.2-alpha",
+    "release_id": 438717588,
+    "assets": {
+      "compile-results.json": {
+        "bytes": 805,
+        "sha256": "b9cf5da24aac6e99b1d8a44d1bdcecd1ebf84f2cb2e15183d176fd5308d77bf5",
+        "asset_id": 726104310
+      },
+      "firmware-source.json": {
+        "bytes": 5691,
+        "sha256": "b09188a08398c95b7dbc74b49801bd1dbca8cbdddca2371153127c449f502cee",
+        "asset_id": 726104282
+      },
+      "firmware-uart-provider.json": {
+        "bytes": 1529,
+        "sha256": "12958ed750ffc50407d3e79468260910809712072b28737e1bba06fe42d9943c",
+        "asset_id": 726104283
+      },
+      "release-manifest.json": {
+        "bytes": 3019,
+        "sha256": "63360b4151287875ed3b675140c1fc0d9fdc4bd6160894636e7266efc3281ef2",
+        "asset_id": 726104244
+      },
+      "SHA256SUMS": {
+        "bytes": 810,
+        "sha256": "6469f6d6717ede6acb68d9b7ce519db07a1d5a08a0ef7c765739dfe86658aa9d",
+        "asset_id": 726104246
+      },
+      "source-freeze.json": {
+        "bytes": 4520,
+        "sha256": "626ea5f1afe3f24a19b5d5a0a6723b0f9f533cd22fda79e5d36d51de5579240a",
+        "asset_id": 726104304
+      },
+      "vdp-vdplet-0.1.2-alpha.bin": {
+        "bytes": 1100304,
+        "sha256": "b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3",
+        "asset_id": 726104247
+      },
+      "vdp-vdplet-0.1.2-alpha.elf.gz": {
+        "bytes": 8536971,
+        "sha256": "1c1cec524439b9785f2a380ff2d859996b66ba9ea5e0ef0fd0f6674d67de4d19",
+        "asset_id": 726104245
+      },
+      "vdp-vdplet-0.1.2-alpha.map.gz": {
+        "bytes": 845536,
+        "sha256": "b4bb57e353dd452e085986ca890828391bf988855f93237d4e3a3fe094d3b376",
+        "asset_id": 726104249
+      },
+      "verification.json": {
+        "bytes": 8183,
+        "sha256": "d2c3fe4db80d77c3baa7058e94ef24be6b540bbd7adb03a1588a38075b98daf6",
+        "asset_id": 726104300
+      }
+    },
+    "source_commit": "b6c7c58331bf4cbbd54dbc4a1301c124e5963622",
+    "checksum_entries_verified": 9,
+    "features": {
+      "pixels": true,
+      "text_profile": "text96",
+      "borrow_rows": true,
+      "read_bytes": true,
+      "uart_rx_repair": true,
+      "async_worker": false,
+      "counted_return": false,
+      "pcm_sink": false
+    },
+    "release_source_files_verified": 46,
+    "verified_exported_headers_and_configuration": {
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_policy.h": "752c3be7f5aa1227ddef3821ebab8e571a8d0cf605355bc642d6a69a5016692c",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet.h": "51ca0e2d7f1fd36ec4439da99b0b3649d29e3953365b9d0aa5b7fc54c8f2f8d5",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_services.h": "00844d5220bf05d329c4f66f6fb3653d8bcca3f60eafc51c820820f1203f394f",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_pixels.h": "7f82d061e9d01fa1e29c45cdf6475be7a88daca1030699ff9ae456954e8ac705",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_color.h": "2a04d1597769acc7be8c0aa19819c168de3ce4c3f95e9ae58750166b0493a7ea",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_protocol.h": "28a29134cf2710e9dacaf377b602b77deefb06eeeb171191e6100028ae429e2b",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_vdu_validate.h": "5fd01521fb6237cf9f218d3904d440b0603bd4c65dccd8b1b20508ed4f92b06c",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_font_validate.h": "ffa6718dd28d373ed1c0a463afe2fae2cd3acf933d6bcf313ee169d5aa93a6a1",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_buffer_validate.h": "e67fdb2f48e68bae6790242dbf18b7b73602b3ada1234cc6f2ee4270eaeb5e9b",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_sprite_validate.h": "bb8ee5ffa9e707a64e1f7a529f374bc719fb2de04629f91d7ac675844ffb92bf",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_lines_validate.h": "0086167133611ec7c314cfcf2f13fef9986dae1dff540f1f653c91931bee0dff",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_image.h": "424e98440423a6e9ede5907ae3aab5cc645d6f679425b0f7597f7c621413ac1c",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_runtime.h": "2c87fd7192667be9d64ab3864647e1a7156d7b6f80a36d178c439e0f776704a6",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_pcm_sink_protocol.h": "e3bf5d900105ddd87e82f5cd38301fab02ffb7a7e38f81012db0bb2e13ba963c",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_color_rows.h": "da302ab03d7b3bd164f55d6da5c72e4af5db64fd1990e4e8489446b6867a0b03",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_readback.h": "f1ea6ac8172c589476a88947438e4f3bbd5b63a553ca75a0ccef25f77fc7ef54",
+      "/Agon/mystuff/agon-vdplet/build/vdpl041/release-012/firmware-src/video/vdplet_build.h": "1d37a76c0f13e9b4cbf6d953d32a0927fc0ad1ba9550bdd7ff530579633d7da8"
+    }
+  },
+  "eirene": {
+    "tag": "3.1.0_uart0_rc_3",
+    "url": "https://github.com/bgates747/eirene-mos/releases/tag/3.1.0_uart0_rc_3",
+    "release_id": 435977773,
+    "assets": {
+      "3.1.0_uart0_rc_3.zip": {
+        "bytes": 1887937,
+        "sha256": "9c8a9a28b0f597e6a9294d806491ffca3902c16cf1876b092ae8944f65368061",
+        "asset_id": 715496094
+      },
+      "3.1.0_uart0_rc_3.zip.sha256": {
+        "bytes": 87,
+        "sha256": "08798c311f18f7fc2ec48d4af643fd875b3c6608aa4268009f10062721c7bd24",
+        "asset_id": 715496093
+      }
+    },
+    "source_commit": "97311c437093e416342a6c836cf9914f2ced027d",
+    "member": "mos-rc3.bin",
+    "bytes": 100879,
+    "sha256": "d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50",
+    "internal_checksum_entries_verified": 360
+  },
+  "olimex_selector": {
+    "path": "/Agon/mystuff/agon-extender/docs/olimex-firmware-standard.json",
+    "sha256": "d703a77f28f4f956c4bb10c3f21cabf308cdfda7d49ec4dca05c3a0f2ae5fdbe",
+    "emos": {
+      "requirement": "Latest integrated EMOS covering merged Eirene public API slots and releasedRC3-style async output; unmerged proposals and private experimental APIs are not silently added",
+      "binding_status": "selected-retained-owner-inventory-confirmed",
+      "build_id": "agon-emos-eirene-r04-b2026-11-06-09-02-21Z",
+      "artifact": "ROM.bin",
+      "bytes": 131072,
+      "sha256": "a25f1612f4aaa542c5488cf3266d968ad3d1d61e9df3b5ce2c680650f5d7a2ca",
+      "source_commit": "2c79c6006d6bcb0c2b3f9d8d6aae3ef4b36c730a",
+      "profile": {
+        "EMOS_UART0_RFC25": 1,
+        "network_parallel": false
+      },
+      "map_sha256": "11a296f09e1d2b7125e1a40ce0aea62042f299e93ea85afc6a6459a351866d20",
+      "function_inventory": "olimex-emos-functions.md",
+      "retained_assets": "../dist/bench-standards/emos-eirene-r04",
+      "eirene_reference_tag": "3.1.0_uart0_rc_3",
+      "eirene_reference_commit": "97311c437093e416342a6c836cf9914f2ced027d",
+      "merged_upstream_observed_commit": "3a7259c58bfa6f34f58afe24087f418cef0148e0",
+      "qualification_limit": "API-slot inventory and retained build/native/consumer evidence; no claim of complete source/behavioral parity with every upstream function or a physical run paired with VDPlet0.1.2-alpha",
+      "not_included": [
+        "unmerged reset-vector setter61h",
+        "unmerged buffered keyboard event poll62h",
+        "private counted receive26h/raw90h",
+        "excluded old RC2 trial42h/43h"
+      ],
+      "update_policy": "Extender pins newer complete retained owner integration and updates function inventory when Eirene/EMOS standard advances; no per-test GitHEAD selection/rebuild"
+    },
+    "installed_state_claim": false
+  },
+  "scope": "Release/source/hash verification only; no build, loader execution, emulator, device or installed-state claim."
+}
