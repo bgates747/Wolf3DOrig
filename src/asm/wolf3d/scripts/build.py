@@ -10,6 +10,7 @@ import re
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tempfile
 
 
@@ -17,6 +18,8 @@ HERE = Path(__file__).resolve().parent
 PROJECT = HERE.parent
 SOURCE = PROJECT / "src"
 TARGET = PROJECT / "tgt"
+sys.path.insert(0, str(PROJECT.parents[2] / "tools"))
+from wolf_firmware import DEFAULT_MODULE, PRODUCTION_MODULE_SHA, VDP_SHA, MOS_SHA, module_info
 SELECTOR = "W3D_RENDER_BACKEND:"
 START_SELECTOR = "W3D_INITIAL_LEVEL:"
 INVULNERABLE_SELECTOR = "W3D_DIAGNOSTIC_INVULNERABLE:"
@@ -248,6 +251,7 @@ def build(
     startup_trace: bool = False,
     profile: bool = False,
     profile_native: bool = False,
+    output_dir: Path | None = None,
 ) -> dict[str, object]:
     if profile_native and (not profile or backend != "vdplet-direct"):
         raise SystemExit("--profile-native requires --profile --backend vdplet-direct")
@@ -261,13 +265,15 @@ def build(
             raise SystemExit(f"VDPlet package not found: {module}")
         if not 0 < module.stat().st_size < 0x20000:
             raise SystemExit("VDPlet package must be 1..131071 bytes")
+        module_info(module)
     elif module is not None:
         raise SystemExit("--module is valid only with --backend vdplet-direct")
     if profile_native and sha256(module) not in PROFILE_NATIVE_MODULES:
         raise SystemExit("--profile-native requires a qualified WPN1 timing module; "
                          "unknown module refused before assembly")
 
-    TARGET.mkdir(parents=True, exist_ok=True)
+    target = TARGET if output_dir is None else output_dir.expanduser().resolve()
+    target.mkdir(parents=True, exist_ok=True)
     if not 0 <= initial_level <= 9:
         raise SystemExit("initial level must be in 0..9")
     base_name = "wolf3d" if backend == "standalone" else f"wolf3d-{backend}"
@@ -279,7 +285,7 @@ def build(
     if profile:
         suffix += "-pn" if profile_native else "-p"
     output_name = f"{base_name}{suffix}.bin"
-    output = TARGET / output_name
+    output = target / output_name
     with tempfile.TemporaryDirectory(prefix="w3b") as name:
         temporary = Path(name)
         source = temporary / "src"
@@ -322,6 +328,8 @@ def build(
         "diagnostic_startup_trace": startup_trace,
         "profile": profile,
         "profile_native": profile_native,
+        "firmware_policy": "pinned-release-v1" if backend == "vdplet-direct" else "bespoke-exception-only",
+        "required_firmware": {"vdp_sha256": VDP_SHA, "mos_sha256": MOS_SHA} if backend == "vdplet-direct" else None,
         "profile_native_reference": (
             PROFILE_NATIVE_MODULES[sha256(module)] if profile_native else None
         ),
@@ -332,7 +340,8 @@ def build(
     }
     if module is not None:
         receipt["package_storage"] = storage
-        packaged_module = TARGET / "wolf3d.vdpl"
+        packaged_module = target / output.stem / "wolf3d.vdpl" if output_dir is not None else target / "wolf3d.vdpl"
+        packaged_module.parent.mkdir(parents=True, exist_ok=True)
         # A previously packaged module is a valid explicit input for a fresh
         # application build. Avoid SameFileError when source and destination
         # are already the canonical target artifact.
@@ -344,16 +353,18 @@ def build(
             "bytes": packaged_module.stat().st_size,
             "sha256": sha256(packaged_module),
         }
-    receipt_path = TARGET / f"{output.stem}.json"
+    receipt_path = target / f"{output.stem}.json"
     receipt_path.write_text(json.dumps(receipt, indent=2) + "\n")
     return receipt
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--backend", choices=tuple(BACKENDS), default="standalone")
+    parser.add_argument("--backend", choices=tuple(BACKENDS), default="vdplet-direct")
     parser.add_argument("--assembler", type=Path)
     parser.add_argument("--module", type=Path)
+    parser.add_argument("--output-dir", type=Path, default=TARGET / "pinned",
+                        help="separate current-release output; historical artifacts are preserved")
     parser.add_argument("--initial-level", type=int, default=0)
     parser.add_argument("--profile", action="store_true",
                         help="buffer full-game timings and periodically write WOLFPROF.BIN")
@@ -380,6 +391,10 @@ def main() -> None:
         help="hardware-diagnostic build: emit bounded USB-only startup breadcrumbs",
     )
     args = parser.parse_args()
+    if args.backend == "vdplet-direct" and args.module is None:
+        args.module = DEFAULT_MODULE
+        if not args.module.is_file() or sha256(args.module) != PRODUCTION_MODULE_SHA:
+            raise SystemExit("Maintained production module missing/changed; provide an explicit qualified --module")
     receipt = build(
         resolve_assembler(args.assembler),
         args.backend,
@@ -392,6 +407,7 @@ def main() -> None:
         args.diagnostic_startup_trace,
         args.profile,
         args.profile_native,
+        args.output_dir,
     )
     print(json.dumps(receipt, indent=2))
 

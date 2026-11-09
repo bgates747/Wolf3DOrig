@@ -1,5 +1,11 @@
 # Wolf3D eZ80 client
 
+Current-release preparation: [tools/README.md](../../../tools/README.md).
+The ordinary CLI builder now selects `vdplet-direct` with the maintained
+production module and separate `tgt/pinned/` outputs. Firmware defaults and
+explicit historical exceptions are in [FIRMWARE.md](../../../FIRMWARE.md).
+The historical standalone acceptance notes below do not override those pins.
+
 The real, permanent eZ80 game client. Distinct from its two siblings under
 `src/asm/`:
 

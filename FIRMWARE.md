@@ -51,8 +51,11 @@ original firmware pins for provenance. Their old readiness and example commands
 do not satisfy the new defaults. See the audit's family dispositions before
 reusing them. In particular, a source-modeled Fab userspace `.so` is not the
 ESP32 release binary and cannot provide qualification of its UART RX repair.
-The current general deployment bundle also lacks a VDPlet module entry; do not
-mistake an arbitrary `tgt/wolf3d.bin` plus assets for a qualified VDPlet payload.
+The migrated general deployment bundle requires a verified complete VDPlet
+payload, including its module. See [current preparation commands](tools/README.md)
+and the [migration task](agonport/doc/tasks/WOLF-FW-002/PLAN.md). The ordinary
+CLI build defaults to the maintained production VDPlet module; the tracked
+standalone assembly selector remains historical source, not deployment choice.
 
 For a necessary firmware exception, the normal scheduling request must state
 the actual purpose, exact alternate image/source/hash, missing or changed API

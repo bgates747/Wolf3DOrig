@@ -9,9 +9,12 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(PROJECT_ROOT / "tools"))
+from wolf_firmware import DEFAULT_PAYLOAD, verify_payload
 DEFAULT_MOUNT = Path("/media/smith/AGON")
 APP_DIRECTORY = "wolf3dorig"
 AUTOEXEC_KEYBOARD = "SET KEYBOARD 1"
@@ -90,6 +93,7 @@ def main() -> None:
     args = parser.parse_args()
     if args.run and not args.write_autoexec:
         parser.error("--run requires --write-autoexec")
+    payload = verify_payload(DEFAULT_PAYLOAD)
 
     mount = args.mount.resolve(strict=True)
     if not mount.is_dir() or not os.path.ismount(mount):
@@ -100,30 +104,14 @@ def main() -> None:
     if label != "AGON":
         raise RuntimeError(f"Refusing unexpected SD label at {mount}: {label!r}")
 
-    sources = {
-        "wolf3d.bin": PROJECT_ROOT / "src/asm/wolf3d/tgt/wolf3d.bin",
-        "hud.agnb": PROJECT_ROOT
-        / "agonport/assets/generated/wolf3d/hud/hud.agnb",
-        "sfx.agnb": PROJECT_ROOT
-        / "agonport/assets/generated/wolf3d/audio/sfx.agnb",
+    sources = {name: DEFAULT_PAYLOAD / name for name in payload["files"] if "/" not in name}
+    sources["payload.json"] = DEFAULT_PAYLOAD / "payload.json"
+    level_sources = {
+        f"level_{index:02d}": {
+            Path(name).name: DEFAULT_PAYLOAD / name
+            for name in payload["files"] if name.startswith(f"level_{index:02d}/")
+        } for index in range(10)
     }
-    level_sources: dict[str, dict[str, Path]] = {}
-    for index in range(10):
-        level_name = f"level_{index:02d}"
-        level_root = (
-            PROJECT_ROOT / "agonport/assets/generated/wolf3d/levels" / level_name
-        )
-        level_sources[level_name] = {
-            filename: level_root / filename
-            for filename in (
-                "tiles.agnb",
-                "sprites.agnb",
-                "state_baby.w3l",
-                "state_easy.w3l",
-                "state_medium.w3l",
-                "state_hard.w3l",
-            )
-        }
     for source in [
         *sources.values(),
         *(path for level in level_sources.values() for path in level.values()),
@@ -169,6 +157,9 @@ def main() -> None:
         print(f"Updated autoexec.txt to {action} /wolf3dorig/wolf3d.bin at boot")
 
     os.sync()
+    for name in [*payload["files"], "payload.json"]:
+        if sha256(destination / name) != sha256(DEFAULT_PAYLOAD / name):
+            raise RuntimeError(f"Deployment readback mismatch: {name}")
     print(f"Deployment synced to {source_device} ({fstype}, label {label})")
 
 

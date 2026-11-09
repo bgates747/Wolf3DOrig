@@ -86,4 +86,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    import sys as _fw_sys
+    from pathlib import Path as _FWPath
+    _fw_sys.path.insert(0, str(_FWPath(__file__).resolve().parents[4] / "tools"))
+    from wolf_firmware import legacy_exception
+    legacy_exception(_fw_sys.argv, 'src/asm/wolf3d_vdplet_client/scripts/stage_oryx.py')
+
     main()

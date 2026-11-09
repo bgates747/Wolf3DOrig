@@ -160,4 +160,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    import sys as _fw_sys
+    from pathlib import Path as _FWPath
+    _fw_sys.path.insert(0, str(_FWPath(__file__).resolve().parents[3] / "tools"))
+    from wolf_firmware import legacy_exception
+    legacy_exception(_fw_sys.argv, 'agonport/vdplet/production/stage_target_oryx.py')
+
     main()
