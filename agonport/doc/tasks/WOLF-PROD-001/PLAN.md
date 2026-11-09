@@ -66,3 +66,12 @@ Commit/push implementation and report including the new production package and
 client identities, selection chain, actual checks, signed-shift disposition,
 original-code lineage and any concrete runtime limitation. Do not describe
 historical 20.90 ms measurements as a new current-firmware speed result.
+
+## Amendment 01 — host compiler memory, before successor dispatch
+
+Attempt module01 passed mirror, signed-divider and legacy/optimized scene tests
+then stopped at516816KiB available memory during host module compilation; no
+target was contacted. Preserve that failure. Use reduced host debug information
+and more frequent GCC garbage collection (ggc-min-expand10/min-heapsize8192).
+Keep O2, ASan/UBSan, exact output checks and the512MiB guard unchanged. This is
+compiler-memory control, not a change to target algorithms or native flags.
