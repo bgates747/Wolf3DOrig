@@ -143,7 +143,7 @@ def test_generic_deployment_manifest_includes_module_and_payload():
     manifest=tomllib.loads((ROOT/'deploy.toml').read_text())
     bundle=manifest['bundles']['wolf3d']
     assert {'wolf3d.bin','wolf3d.vdpl','payload.json'} <= set(bundle['require'])
-    assert all(i['source'].startswith('tgt/wolf3d-standard-async-r1/') for i in bundle['items'])
+    assert all(i['source'].startswith('tgt/wolf3d-production-optimized-async-r1/') for i in bundle['items'])
 
 
 def test_superseded_same_version_receipt_refused_before_output(tmp_path):

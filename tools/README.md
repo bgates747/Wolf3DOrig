@@ -35,8 +35,9 @@ Under the normal compiler checkout:
 ```
 
 The default is now `vdplet-direct`, explicitly using the retained maintained
-production module `266f809f`. It does not adopt the faster experimental module as
-the production default. The application and receipt are isolated under
+production module `7490d81c`, now containing the completed combined021 renderer
+without its diagnostic timing wrapper. Build/qualify the module first with
+`.venv/bin/python agonport/vdplet/production/build.py` under the compiler lease. The application and receipt are isolated under
 `src/asm/wolf3d/tgt/pinned/`. Each application owns its matching module copy, so
 building a profiling variant cannot overwrite the normal application's module.
 The ordinary standalone source remains a separately buildable historical
@@ -51,7 +52,7 @@ application, matching module and receipts) into a fresh output:
 .venv/bin/python tools/wolf_prepare.py verify-payload
 ```
 
-Default output is `tgt/wolf3d-standard-async-r1`. Existing directories are refused rather
+Default output is `tgt/wolf3d-production-optimized-async-r1`. Existing directories are refused rather
 than replaced. For a new preparation use `--output /absolute/new/payload`.
 `deploy.py plan/deploy` verifies the standard payload before entering the shared
 deployment engine. Its declared bundle now includes the module and manifest;
@@ -82,7 +83,7 @@ firmware verification. No new emulator compilation/installation is attempted.
 
 ```bash
 .venv/bin/python tools/wolf_prepare.py profile \
-  --payload tgt/wolf3d-standard-async-r1 --output /absolute/new/profile \
+  --payload tgt/wolf3d-production-optimized-async-r1 --output /absolute/new/profile \
   --frontend /absolute/existing/flexe-agon-emulator \
   --backend /absolute/existing/flexe-vdp.so
 ```

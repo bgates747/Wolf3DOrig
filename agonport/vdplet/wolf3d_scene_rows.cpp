@@ -150,7 +150,7 @@ static int32_t fixed_mul(int32_t a, int32_t b) {
 }
 
 static int32_t fixed_div(int32_t a, int32_t b) {
-    return (int32_t)(((int64_t)a << 16) / b);
+    return (int32_t)(((int64_t)a * 65536) / b);
 }
 
 static int32_t normalize_fine(int32_t angle) {

@@ -285,3 +285,22 @@ It builds the actual package, pins its hash and components, verifies admission,
 ABI/capabilities, relocations, undefined symbols, stack receipts, and exact
 module-to-oracle pixels. These are host and package-admission results, not
 runtime-emulator, gameplay, or physical-hardware qualification.
+
+## Current production selection — WOLF-PROD-001, November 9
+
+Smith selected the completed combined021 renderer for the ordinary game. Module
+`7490d81c2f1e6aed85142d9604a0cad9a3949c03ec236cc818d1c6a339602463` is
+21852 bytes, resident text15004/data11172, ABI1.6/caps257, PSRAM workaround
+enabled. This production wrapper omits diagnostic WPN1/RUN100; its renderer
+pixels/geometry/state match qualified combined021. Original tangent stepping,
+byte-span hoisting, corrected background extent, degree trig table, narrow
+division, full-height setup reuse and texture-column chains are now maintained
+in production source. Unmeasured PERF023 and sprite013 are excluded.
+
+Older266f package/standalone parity and runtime receipts above are historical.
+The new module passed ASan/UBSan mirror/renderer/lifecycle/failure checks,600
+alternating-page frames and actual integer helper tests. Selected module-owned
+stack chains reach1360/2048 bytes; this is not a runtime/foreign-callback peak.
+Current default firmware remains dc43ecb8 async-r1; ordinary synchronous game
+scheduling remains unchanged. See `tasks/WOLF-PROD-001/RESULT.md` for actual
+full-game build and current-runtime status; old timing is not a new speed claim.

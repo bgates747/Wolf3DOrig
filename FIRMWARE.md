@@ -83,5 +83,7 @@ than automatically restoring obsolete incoming firmware. Old kits that hardcode
 the latter require a new freeze. P4, startup/listener, bootloader/partitions and
 unrelated storage are not selected for replacement. Leave the SD card mounted.
 
-The optimization goal stays paused. Static compatibility and verified release
-bytes are not a new hardware/emulator pass or production renderer adoption.
+The optimization goal stays paused. Smith separately authorized WOLF-PROD-001:
+normal production now selects combined021 rendering in module `7490d81c`.
+Static compatibility and verified release bytes are not a new hardware/emulator
+pass. See its task report for actual qualification and runtime limits.
