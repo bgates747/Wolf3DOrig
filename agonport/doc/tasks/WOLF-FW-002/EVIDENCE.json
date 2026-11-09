@@ -1,0 +1,421 @@
+{
+  "scope": "Offline pinned-firmware preparation migration; no runtime pass",
+  "plan_freeze": "444138e",
+  "tests": {
+    "preparation_and_profile": 36,
+    "finite_client_contract": 23,
+    "total": 59
+  },
+  "attempts": [
+    {
+      "attempt": "r01",
+      "generation": 713,
+      "result": {
+        "passed": false,
+        "steps": [
+          {
+            "name": "normal-client",
+            "command": [
+              "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+              "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/scripts/build.py"
+            ],
+            "exit_code": 0,
+            "elapsed_s": 3.4092760119820014
+          },
+          {
+            "name": "profile-native-client",
+            "command": [
+              "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+              "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/scripts/build.py",
+              "--profile",
+              "--profile-native",
+              "--module",
+              "/Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/results/build01/candidate/module/wolf_perf.vdpl"
+            ],
+            "exit_code": 0,
+            "elapsed_s": 2.8067150189890526
+          },
+          {
+            "name": "standalone-assembly-control",
+            "command": [
+              "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+              "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/scripts/build.py",
+              "--backend",
+              "standalone",
+              "--output-dir",
+              "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d/tgt/fw002-control"
+            ],
+            "exit_code": 0,
+            "elapsed_s": 2.20559151598718
+          },
+          {
+            "name": "finite-client",
+            "command": [
+              "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+              "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d_vdplet_client/scripts/build.py"
+            ],
+            "exit_code": 1,
+            "elapsed_s": 0.20093872002325952
+          }
+        ],
+        "no_emulator": true,
+        "no_device": true,
+        "peak_c": 52.9,
+        "error": "RuntimeError('finite-client failed; preserve original log')",
+        "elapsed_s": 9.081553436000831
+      },
+      "release": {
+        "released": "2026-11-09T04:36:36.714816+00:00",
+        "owned_work_stopped": true,
+        "cleanup_complete": true
+      },
+      "logs": {
+        "finite-client.log": "068e9832e02e637ae99b82bff00e65ec7c28250e66a408e50962f700e73e805c",
+        "normal-client.log": "8d42d3b8b35fbf7c3088048e303ec4b8bca37f7bdc3c3f9e58dc1dc584e7dbca",
+        "profile-native-client.log": "ae3c0b75efe42397e1432fec25e7dded1305b9336fd6215d086449b7499b014a",
+        "standalone-assembly-control.log": "788ffaf5906ca5248fa496e501afa130012af174a990de2a83fba3b08878e70c"
+      }
+    },
+    {
+      "attempt": "r02",
+      "generation": 715,
+      "result": {
+        "passed": false,
+        "steps": [
+          {
+            "name": "finite-client",
+            "command": [
+              "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+              "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d_vdplet_client/scripts/build.py"
+            ],
+            "exit_code": 1,
+            "elapsed_s": 0.2014131910400465
+          }
+        ],
+        "no_emulator": true,
+        "no_device": true,
+        "peak_c": 49.6,
+        "error": "RuntimeError('finite-client failed; preserve original log')",
+        "elapsed_s": 0.31582171097397804
+      },
+      "release": {
+        "released": "2026-11-09T04:40:21.776419+00:00",
+        "owned_work_stopped": true,
+        "cleanup_complete": true
+      },
+      "logs": {
+        "finite-client.log": "2cabfa78c8987eabc6470427402cca197577b4f964bcb23a2e52f59249ff3365"
+      }
+    },
+    {
+      "attempt": "r03",
+      "generation": 717,
+      "result": {
+        "passed": false,
+        "steps": [
+          {
+            "name": "finite-client",
+            "command": [
+              "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+              "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d_vdplet_client/scripts/build.py"
+            ],
+            "exit_code": 1,
+            "elapsed_s": 0.20173241302836686
+          }
+        ],
+        "no_emulator": true,
+        "no_device": true,
+        "peak_c": 50.7,
+        "error": "RuntimeError('finite-client failed; preserve original log')",
+        "elapsed_s": 0.3163038200000301
+      },
+      "release": {
+        "released": "2026-11-09T04:45:03.455392+00:00",
+        "owned_work_stopped": true,
+        "cleanup_complete": true
+      },
+      "logs": {
+        "finite-client.log": "b8cc5945b599cee7b41630c32dd0175ad6b5c21e4b8e81b4ecd1a8f049e61fdc"
+      }
+    },
+    {
+      "attempt": "r04",
+      "generation": 721,
+      "result": {
+        "passed": false,
+        "steps": [
+          {
+            "name": "finite-client",
+            "command": [
+              "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+              "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d_vdplet_client/scripts/build.py"
+            ],
+            "exit_code": 1,
+            "elapsed_s": 0.20145486801629886
+          }
+        ],
+        "no_emulator": true,
+        "no_device": true,
+        "peak_c": 49.6,
+        "error": "RuntimeError('finite-client failed; preserve original log')",
+        "elapsed_s": 0.3158073339727707
+      },
+      "release": {
+        "released": "2026-11-09T04:53:03.838080+00:00",
+        "owned_work_stopped": true,
+        "cleanup_complete": true
+      },
+      "logs": {
+        "finite-client.log": "6cf0ddec5dd2cf3d88187f1f73916825d0c1380c5401699d027bfc50a5b0c835"
+      }
+    },
+    {
+      "attempt": "r05",
+      "generation": 723,
+      "result": {
+        "passed": true,
+        "steps": [
+          {
+            "name": "finite-client",
+            "command": [
+              "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+              "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d_vdplet_client/scripts/build.py"
+            ],
+            "exit_code": 0,
+            "elapsed_s": 0.2022133690188639
+          },
+          {
+            "name": "finite-client-contract",
+            "command": [
+              "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+              "/Agon/mystuff/Wolf3dOrig/src/asm/wolf3d_vdplet_client/scripts/test_client_contract.py",
+              "-v"
+            ],
+            "exit_code": 0,
+            "elapsed_s": 0.2010851509985514
+          },
+          {
+            "name": "preparation-and-profile-checks",
+            "command": [
+              "/Agon/mystuff/Wolf3dOrig/.venv/bin/python",
+              "-m",
+              "pytest",
+              "-q",
+              "tests/test_firmware_preparation.py",
+              "tests/test_profile.py"
+            ],
+            "exit_code": 0,
+            "elapsed_s": 3.209774757968262
+          }
+        ],
+        "no_emulator": true,
+        "no_device": true,
+        "peak_c": 52.9,
+        "standalone_control_sha256": "063f7ab7b9b2df44fe1541871662ce7656c3c28d6693872de824c5bfce40a2e6",
+        "elapsed_s": 3.9607622420298867
+      },
+      "release": {
+        "released": "2026-11-09T04:54:26.081673+00:00",
+        "owned_work_stopped": true,
+        "cleanup_complete": true
+      },
+      "logs": {
+        "finite-client-contract.log": "a0bb124a9ddb716db82e8ed379abb470d79df447b25d88c9346f5b0e88e88c92",
+        "finite-client.log": "7c13243d379abb13f8bc2645dc99ab6bd4021b8887128d6756e7e61dc8d53fd8",
+        "preparation-and-profile-checks.log": "3484e0efcb0c6f5356c43fdeba2e96ad948b092babae63f5b4da37e27465a0a3"
+      }
+    }
+  ],
+  "payloads": {
+    "wolf3d-standard": {
+      "manifest_sha256": "e8972aed808c03927ac14b119bcec406fb7b74e9d1660f93ef4bbd76489d1703",
+      "entry": "wolf3d.bin",
+      "file_count": 68,
+      "entry_record": {
+        "bytes": 306880,
+        "sha256": "fc79eb3154c7c0610ef6e7becefc821cfb0e5c98bde224812a67ea013855318b"
+      },
+      "module": {
+        "bytes": 18636,
+        "sha256": "266f809ff76e56733251da202e5c4747cd9c12d247d799d486471a262c0404b7",
+        "abi_minor": 6,
+        "capabilities": 257,
+        "resident_text": 13144,
+        "resident_data": 9720,
+        "static_screen_only": true
+      },
+      "firmware": {
+        "vdp_version": "v0.1.2-alpha",
+        "vdp_sha256": "b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3",
+        "vdp_elf_sha256": "3b471a388764e5d8da6d10cc78f46361b8aef1f884ea0f24d86369a366460a7d",
+        "mos_version": "3.1.0_uart0_rc_3",
+        "mos_sha256": "d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50",
+        "mos_map_sha256": "48dae5890af7b49fe6bcb535a20e9b6432069c8d84666e3d0e8e7e1070282be9"
+      }
+    },
+    "wolf3d-optimized-profile": {
+      "manifest_sha256": "231cf9adaa601f5a7a4353d2933a47823cd78077af8334b410a0159350736503",
+      "entry": "wolf3d.bin",
+      "file_count": 68,
+      "entry_record": {
+        "bytes": 322137,
+        "sha256": "01c2819700e5792244015ca3db4aed0a9916b639fa967a78def1dd3844a1c2bf"
+      },
+      "module": {
+        "bytes": 22572,
+        "sha256": "8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b",
+        "abi_minor": 6,
+        "capabilities": 257,
+        "resident_text": 15676,
+        "resident_data": 11184,
+        "static_screen_only": true
+      },
+      "firmware": {
+        "vdp_version": "v0.1.2-alpha",
+        "vdp_sha256": "b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3",
+        "vdp_elf_sha256": "3b471a388764e5d8da6d10cc78f46361b8aef1f884ea0f24d86369a366460a7d",
+        "mos_version": "3.1.0_uart0_rc_3",
+        "mos_sha256": "d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50",
+        "mos_map_sha256": "48dae5890af7b49fe6bcb535a20e9b6432069c8d84666e3d0e8e7e1070282be9"
+      }
+    },
+    "wolf-finite-client": {
+      "manifest_sha256": "a1d292c12733cf8b63ebb96bbc0d6d9522478d34e03ff96e8af87aa764251899",
+      "entry": "client.bin",
+      "file_count": 20,
+      "entry_record": {
+        "bytes": 94704,
+        "sha256": "61e125e376a9af5eaf75e771d09d2d5050205bff64bb8027d0cd7f5f4278eba7"
+      },
+      "module": {
+        "bytes": 7952,
+        "sha256": "57b635fc1807d9108e576cfff4c79c7f57ade48164fc5be97d75a3562e54b1be",
+        "abi_minor": 3,
+        "capabilities": 17,
+        "resident_text": 3024,
+        "resident_data": 4144,
+        "static_screen_only": true
+      },
+      "firmware": {
+        "vdp_version": "v0.1.2-alpha",
+        "vdp_sha256": "b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3",
+        "vdp_elf_sha256": "3b471a388764e5d8da6d10cc78f46361b8aef1f884ea0f24d86369a366460a7d",
+        "mos_version": "3.1.0_uart0_rc_3",
+        "mos_sha256": "d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50",
+        "mos_map_sha256": "48dae5890af7b49fe6bcb535a20e9b6432069c8d84666e3d0e8e7e1070282be9"
+      }
+    }
+  },
+  "profiles": {
+    "normal-release-x86": {
+      "schema": "wolf-pinned-profile-v1",
+      "firmware": {
+        "vdp_version": "v0.1.2-alpha",
+        "vdp_sha256": "b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3",
+        "vdp_elf_sha256": "3b471a388764e5d8da6d10cc78f46361b8aef1f884ea0f24d86369a366460a7d",
+        "mos_version": "3.1.0_uart0_rc_3",
+        "mos_sha256": "d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50",
+        "mos_map_sha256": "48dae5890af7b49fe6bcb535a20e9b6432069c8d84666e3d0e8e7e1070282be9"
+      },
+      "frontend_sha256": "c987fafc9045dfeb862fc4b0252dab70845c25e87ff5961b80e85a9dcd1b7399",
+      "backend_sha256": "0866265bd6f3d73ad572f31dc1bb954f308ed9a5d857efa9414d37e1ade13374",
+      "payload_sha256": "e8972aed808c03927ac14b119bcec406fb7b74e9d1660f93ef4bbd76489d1703",
+      "stopped": true,
+      "launched": false,
+      "autoexec_runs": false,
+      "runtime_qualification": "Not executed",
+      "launcher": "/Agon/mystuff/Wolf3dOrig/tgt/profiles/normal-release-x86/flexe-agon-emulator",
+      "manifest_sha256": "20c016b9f6a7329b8f1bea9a751ce71f97baaf8235bd7ea363f9ee4341e08d23"
+    },
+    "optimized-profile-release-x86": {
+      "schema": "wolf-pinned-profile-v1",
+      "firmware": {
+        "vdp_version": "v0.1.2-alpha",
+        "vdp_sha256": "b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3",
+        "vdp_elf_sha256": "3b471a388764e5d8da6d10cc78f46361b8aef1f884ea0f24d86369a366460a7d",
+        "mos_version": "3.1.0_uart0_rc_3",
+        "mos_sha256": "d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50",
+        "mos_map_sha256": "48dae5890af7b49fe6bcb535a20e9b6432069c8d84666e3d0e8e7e1070282be9"
+      },
+      "frontend_sha256": "c987fafc9045dfeb862fc4b0252dab70845c25e87ff5961b80e85a9dcd1b7399",
+      "backend_sha256": "0866265bd6f3d73ad572f31dc1bb954f308ed9a5d857efa9414d37e1ade13374",
+      "payload_sha256": "231cf9adaa601f5a7a4353d2933a47823cd78077af8334b410a0159350736503",
+      "stopped": true,
+      "launched": false,
+      "autoexec_runs": false,
+      "runtime_qualification": "Not executed",
+      "launcher": "/Agon/mystuff/Wolf3dOrig/tgt/profiles/optimized-profile-release-x86/flexe-agon-emulator",
+      "manifest_sha256": "b9affe6fad2ddfe1e144d54196ace6aa8499183b93cd3cf3714e01190c8c8a60"
+    },
+    "finite-release-x86": {
+      "schema": "wolf-pinned-profile-v1",
+      "firmware": {
+        "vdp_version": "v0.1.2-alpha",
+        "vdp_sha256": "b004570b607b45bbd6e87a3c704b65b23d3221981db3aac6cf2578aa22d766e3",
+        "vdp_elf_sha256": "3b471a388764e5d8da6d10cc78f46361b8aef1f884ea0f24d86369a366460a7d",
+        "mos_version": "3.1.0_uart0_rc_3",
+        "mos_sha256": "d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50",
+        "mos_map_sha256": "48dae5890af7b49fe6bcb535a20e9b6432069c8d84666e3d0e8e7e1070282be9"
+      },
+      "frontend_sha256": "c987fafc9045dfeb862fc4b0252dab70845c25e87ff5961b80e85a9dcd1b7399",
+      "backend_sha256": "0866265bd6f3d73ad572f31dc1bb954f308ed9a5d857efa9414d37e1ade13374",
+      "payload_sha256": "a1d292c12733cf8b63ebb96bbc0d6d9522478d34e03ff96e8af87aa764251899",
+      "stopped": true,
+      "launched": false,
+      "autoexec_runs": false,
+      "runtime_qualification": "Not executed",
+      "launcher": "/Agon/mystuff/Wolf3dOrig/tgt/profiles/finite-release-x86/flexe-agon-emulator",
+      "manifest_sha256": "30cdf40240daa2d8573da71494371ec9339ddf06634b17a1831cb40fb8bfa618"
+    }
+  },
+  "source_sha256": {
+    "agonport/doc/tasks/WOLF-FW-002/qualify.py": "b52402d280334682c504e74e4957286f8914792907bfd390d678ee469ee249bc",
+    "agonport/tools/deploy_wolf3d_to_sd.py": "2fb3cda11223fb25199d814204c034868688edc3ec4e5ffb8fadceae8ab70133",
+    "agonport/tools/setup_emulator.py": "9a6da0343c24d03aaa852a93011d3a9c743448267a73f36796a7f2d13528da35",
+    "agonport/tools/stage_wolf3d_emulator.py": "2d592dd8a6c5e84f220b9c1d3aed6a1bdd98c7afa27d31b04c75a5692a8ef8e7",
+    "agonport/vdplet/production/stage_target_oryx.py": "07cc9ab01127115150f624d753c9db59150ad7323c9c056ae174f5877d8d3c24",
+    "agonport/vdplet/qualification/stage_errors.py": "0cfa263fb3ca6f4ce3c3fef26ff83edcd16a7164702d51f81cc535e32ae3c4f2",
+    "agonport/vdplet/qualification/stage_rows_target_oryx.py": "28510debe635a3cb3687e8914dbe0ce90df0e3d087da025e17d2e31dfb6b0182",
+    "deploy.py": "0a2b08f52e262f0b4158ec87ed3b32a3d37a4016c025d0717a1996bfb0c170da",
+    "deploy.toml": "fb069cde965ec238f8bbce2878e335e43fa25774f93600e0eb38b3df4a9eb552",
+    "src/asm/agnb_abort/scripts/run_agnb_abort_emulator_regression.py": "11252f5e7b363d7a24e57768b2365d7389cd114c977397b42e194a4e8e769725",
+    "src/asm/wolf3d/scripts/build.py": "f014fba440f5ae04b773cbb7d33e0168c0249216c10bc956518efa25a3566a3f",
+    "src/asm/wolf3d_actors/scripts/run_actor_emulator_regression.py": "caf70989d171668f7d7d83b4c2a1acd9131ce9f9bf74a4db74d411c5a5a71c68",
+    "src/asm/wolf3d_actors/scripts/run_patrol_emulator_regression.py": "34be71914729e77d603f8f47cb8b948cb6076e6c1d73741852002c6bcaffc3ed",
+    "src/asm/wolf3d_areas/scripts/run_area_emulator_regression.py": "382b8b159d1d627035b2f9e0e820c40ecf48119ae176b6915e18aff793790a96",
+    "src/asm/wolf3d_audio/scripts/run_audio_emulator_regression.py": "9cd01fdf6eeb9ded0afd81577f11fba6383bfa0a267995c768f1355ad23f0dcf",
+    "src/asm/wolf3d_audio_spatial/scripts/run_spatial_emulator_regression.py": "e2a0dc6815d6893195069fdee0d598431849a04135e21b9191a2545c6e7503ff",
+    "src/asm/wolf3d_awareness/scripts/run_awareness_emulator_regression.py": "83f5e1b29b3f0e909fa2151bd90f2f58acf925e0e2fa1979ec35e5707d462adb",
+    "src/asm/wolf3d_chase/scripts/run_chase_emulator_regression.py": "a753f0234829c256a5170597d810e8a14528bd742c6c838d986779b1abb67a60",
+    "src/asm/wolf3d_combat/scripts/run_combat_emulator_regression.py": "d9f4dba625ca61b196a3a481835fa67b6bc328818cb843c7337e74b348d9f832",
+    "src/asm/wolf3d_config/scripts/run_config_emulator_regression.py": "3c1cc5673347be1066e8d38b141dfd208674e4a1899528eeedc857e9012a265c",
+    "src/asm/wolf3d_death/scripts/run_death_emulator_regression.py": "d0f782e0823017f7e205f9de155b5b4d1bd9c5e007ab2e8241b0c935c0e58394",
+    "src/asm/wolf3d_demo/scripts/run_demo_emulator_regression.py": "b12a44c5b602fe084e2b0095f1db2d93061442350b9dd9777f25a618c26f146b",
+    "src/asm/wolf3d_gameplay/scripts/run_gameplay_emulator_regression.py": "932af2f4c7af95c9b285cbf442a607b504a944f93930ed13cac48d9c7fb179bc",
+    "src/asm/wolf3d_gameplay/scripts/run_level_loader_emulator_regression.py": "e0b6e4219b97e72ac252e25bb54707111c6ba5584c114f867d35d5fb5838d565",
+    "src/asm/wolf3d_gameplay/scripts/run_level_transition_emulator_regression.py": "2a25e332e94e0fd81576854143c73b1ae1967abe9a500b77f1bcae2870fdf561",
+    "src/asm/wolf3d_gameplay/scripts/run_pickup_emulator_regression.py": "06c83b4e4c2aee358cd43d1e23905cd6c985613e78d082730a5fc88b0afce131",
+    "src/asm/wolf3d_gameplay/scripts/run_use_emulator_regression.py": "7c9d18c14fb0ebb17a84cc9e35d492a0da8c866f521654feac69ccea989a055b",
+    "src/asm/wolf3d_gameplay/scripts/run_victory_emulator_regression.py": "80787277152b7060fe75defbed8fdaa91ec3f09fc21c3a7761c2f6664b3537d9",
+    "src/asm/wolf3d_highscores/scripts/run_highscores_emulator_regression.py": "a9c26e4e40c6c2e54a751bdf009631adf82950e94500c2567004fd6d588725b9",
+    "src/asm/wolf3d_intermission/scripts/run_intermission_emulator_regression.py": "e6af673874428c7482ad5e5275af6c16d25fddac964b8fbcc6e96415a03d71d2",
+    "src/asm/wolf3d_music/scripts/run_music_emulator_regression.py": "d2607493de39ff1d771b3f1317ab8e58fcae2fa806a48162eb1818ea40b2b8b7",
+    "src/asm/wolf3d_parity/scripts/run_direct_emulator_regressions.py": "ce4e0153fce7946eb6a3f24ecd7398fe298b8c4742ea3f820006e62452e929ec",
+    "src/asm/wolf3d_player_combat/scripts/run_player_combat_emulator_regression.py": "cbbd8845a268b8628f0d60bf41bbac4983f8d15febbac05ab90c515cca6e1dcf",
+    "src/asm/wolf3d_save/scripts/run_save_emulator_regression.py": "3eb77d3954dc8415e77b1d539be08d095d1f38efc6b61718046b49dc4a06bdb9",
+    "src/asm/wolf3d_shell/scripts/run_shell_emulator_regression.py": "cc0c5505b1e40011f3f68822f0bbfb3a26ad07465084ce2331fa499736cb5a30",
+    "src/asm/wolf3d_vdplet_client/scripts/build.py": "d02fa92758a9a1c87a6b295246dc0519d39d3ab0b60ffba7ae02a813283810f7",
+    "src/asm/wolf3d_vdplet_client/scripts/prepare_profile.py": "e07fa83215984227bc9383dfa0f60f4e0de649ba0ae06a4ffc87c2a230e060e2",
+    "src/asm/wolf3d_vdplet_client/scripts/rehearse.py": "ee2249a0963e71428a590c70ec13c3763ec4d82caa602ed41aad42ed761be6dd",
+    "src/asm/wolf3d_vdplet_client/scripts/stage_oryx.py": "ffae2963d3db6ac651d104b7f6d7aacc4fc5189b24b0bab445c85e2bbf7c6e4e",
+    "src/asm/wolf3d_vdplet_client/scripts/test_client_contract.py": "4ee948dafbbeb657bf1936e628112feb850b28a97027cdc992dc7786d3b7f399",
+    "src/asm/wolf3d_vdplet_client/src/client_regression.asm": "719044ec68d28731b6da55dc1813f840ea1ebb654d06ed2510b87a2f61e6cb14",
+    "tests/test_firmware_preparation.py": "0e12209030e7f9c9be8ebf753ec220548f3a90ce99e4c741eeeba4486377020f",
+    "tools/wolf_firmware.py": "63c8fb134b3e3b166204147b6a2e1f07255dc45cce8b89a078b2ccec643e6c53",
+    "tools/wolf_prepare.py": "053515e58a7a956e953c319049ee6c462b0efd8abb7da4b371a3bf4b40a9666b"
+  },
+  "no_device": true,
+  "no_emulator": true,
+  "no_deployment": true,
+  "optimization_goal": "paused"
+}

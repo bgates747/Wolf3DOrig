@@ -20,6 +20,11 @@ sysvar_scrMode:  equ 027h
         rst.lil 08h
     endmacro
 
+; This finite fixture does not enable the optional full-game profiler.
+    macro W3D_PROFILE_CALL target
+@disabled:
+    endmacro
+
     include "wolf3d_vdplet_package.inc"
     include "fixture_sizes.inc"
     include "wolf3d_vdplet_client.inc"
@@ -251,3 +256,13 @@ fixture_result:
     ds 10
     dw 1                    ; result schema
 fixture_result_end:
+
+; Owned storage covers the largest uploaded fixture file, the module and
+; shared client's4096-byte zero-buffer scratch. Never stage over live code.
+    .align 4
+W3D_VDPLET_PACKAGE_ADDRESS:
+fixture_package_storage:
+    ; The builder emits exactly W3D_FIXTURE_STORAGE_BYTES zero bytes.
+    ; Use explicit data: DS is omitted at EOF and otherwise filled with FF.
+    incbin "fixture_storage.bin"
+fixture_package_storage_end:

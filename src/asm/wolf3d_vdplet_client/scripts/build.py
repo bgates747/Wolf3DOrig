@@ -18,7 +18,7 @@ REPO = HERE.parents[3]
 PRODUCTION = REPO / "src/asm/wolf3d/src"
 QUALIFICATION = REPO / "agonport/vdplet/qualification/build"
 REVIEW_PACKAGE = REPO / "agonport/vdplet/review/build/package"
-TARGET = PROJECT / "tgt"
+TARGET = PROJECT / "tgt/pinned"
 
 
 def sha256(path: Path) -> str:
@@ -58,9 +58,13 @@ def main() -> None:
         (build / "wolf3d_vdplet_package.inc").write_text(
             f"W3D_VDPLET_PACKAGE_BYTES: equ {required['module'].stat().st_size}\n"
         )
+        storage_bytes = max(4096, *(required[key].stat().st_size
+                            for key in ("module", "workspace", "map", "textures", "config")))
+        (build / "fixture_storage.bin").write_bytes(bytes(storage_bytes))
         (build / "fixture_sizes.inc").write_text(
             "\n".join(
                 (
+                    f"W3D_FIXTURE_STORAGE_BYTES: equ {storage_bytes}",
                     f"W3D_FIXTURE_WORKSPACE_BYTES: equ {required['workspace'].stat().st_size}",
                     f"W3D_FIXTURE_MAP_BYTES: equ {required['map'].stat().st_size}",
                     f"W3D_FIXTURE_TEXTURE_BYTES: equ {required['textures'].stat().st_size}",
@@ -75,9 +79,26 @@ def main() -> None:
             check=True,
         )
         shutil.copyfile(output, TARGET / "client.bin")
-        listing = output.with_suffix(".lst")
+        listing = build / "client_regression.lst"
         if listing.is_file():
+            import re
+            raw = output.read_bytes()
+            labels = {}
+            for label in ('fixture_package_storage', 'fixture_package_storage_end'):
+                values = re.findall(r'^([0-9A-F]{6})[^\n]*\b'+label+r':', listing.read_text(), re.M)
+                if len(values) != 1:
+                    raise SystemExit('Missing fixture storage label: '+label)
+                labels[label] = int(values[0], 16)
+            start, end = labels.values()
+            if end-start != storage_bytes or not 0x40000 <= start < end == 0x40000+len(raw) < 0xa0000:
+                raise SystemExit(f'Fixture staging extent invalid: {start:#x}..{end:#x}, '
+                                 f'{storage_bytes} bytes, linked end {0x40000+len(raw):#x}')
+            if raw[start-0x40000:end-0x40000] != bytes(storage_bytes):
+                raise SystemExit('Fixture scratch contains live code/data')
             shutil.copyfile(listing, TARGET / "client.lst")
+            shutil.copyfile(build / "fixture_storage.bin", TARGET / "fixture_storage.bin")
+        else:
+            raise SystemExit('Fixture package storage needs an actual listing')
 
     for key in ("module", "workspace", "map", "textures", "config"):
         destination = TARGET / (
@@ -87,6 +108,7 @@ def main() -> None:
 
     receipt = {
         "scope": "stopped copied-pixel production-client integration fixture",
+        "package_storage": dict(start=start, end=end, bytes=storage_bytes),
         "client": {
             "bytes": (TARGET / "client.bin").stat().st_size,
             "sha256": sha256(TARGET / "client.bin"),
@@ -122,6 +144,7 @@ def main() -> None:
         "readiness-addendum-r4.md": PROJECT / "readiness-addendum-r4.md",
         "source/client_regression.asm": required["entry"],
         "source/wolf3d_vdplet_client.inc": required["client"],
+        "source/fixture_storage.bin": TARGET / "fixture_storage.bin",
     }
     for relative, source in package_inputs.items():
         destination = package / relative

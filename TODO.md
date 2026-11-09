@@ -7,19 +7,9 @@ the current dated development log, then remove it from this file.
 
 Current test/deployment firmware instructions: [FIRMWARE.md](FIRMWARE.md).
 The completed [WOLF-FW-001 audit](agonport/doc/tasks/WOLF-FW-001/RESULT.md)
-identifies preparation gaps and inherent exceptions. Audit completion does not
-select candidate migration, resume a paused goal or qualify a new runtime pair.
-
-## WOLF-FW-002 — Routine preparation migration
-
-[Implementation contract](agonport/doc/tasks/WOLF-FW-002/PLAN.md). Smith now
-selects the project-owned migration work, offline checks and real assembly;
-the old optimization goal remains paused and execution permissions persist.
-
-- [ ] FW002-01..05 — Verified release selection, complete deployment payload,
-  stopped current Alexe profile, finite-client correction and safe defaults.
-- [ ] FW002-06 — Normal compiler FIFO and focused actual-source qualification.
-- [ ] FW002-07 — Publish results/remaining limits, commit and push.
+identifies preparation gaps and inherent exceptions. The completed
+[WOLF-FW-002 migration](agonport/doc/tasks/WOLF-FW-002/RESULT.md) covers routine preparation and offline checks. New runtime pairs remain unqualified;
+the optimization goal remains paused.
 
 ## WOLF-GOAL-001 — Overnight uncapped optimization goal
 

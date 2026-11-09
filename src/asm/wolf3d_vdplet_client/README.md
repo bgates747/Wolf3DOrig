@@ -1,5 +1,11 @@
 # Wolf3D production VDPlet client fixture
 
+Current migrated build/profile instructions are in
+[tools/README.md](../../../tools/README.md). New fixture outputs live in
+`tgt/pinned/`, use owned linked staging storage and are prepared against the
+pinned release pair without automatic RUN. The accepted r4/human-review records
+below describe their original artifacts, not new release qualification.
+
 This finite fixture is the first production-client integration gate for TODO
 8d. It uses the accepted copied-pixel bounded renderer and exact scene, while
 issuing discovery, INFO, chunked upload/consolidation, LOAD, CONFIG RUN, RENDER

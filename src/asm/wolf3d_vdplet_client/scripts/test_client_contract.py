@@ -11,6 +11,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import importlib.util
+import json
 from pathlib import Path
 import unittest
 
@@ -18,7 +19,7 @@ import unittest
 HERE = Path(__file__).resolve().parent
 PROJECT = HERE.parent
 REPO = HERE.parents[3]
-CLIENT_BINARY = PROJECT / "tgt/client.bin"
+CLIENT_BINARY = PROJECT / "tgt/pinned/client.bin"
 CLIENT_SOURCE = REPO / "src/asm/wolf3d/src/wolf3d_vdplet_client.inc"
 FIXTURE_SOURCE = PROJECT / "src/client_regression.asm"
 REHEARSE_SOURCE = HERE / "rehearse.py"
@@ -30,7 +31,7 @@ LOADED = 2
 DONE = 3
 VALUE = 4
 ERROR = 5
-COPIED_PIXEL_CAPS = 0x0011
+REQUIRED_CAPS = 0x0101  # The current shared client also requires colour rows.
 
 
 def reply(kind: int, token: int, value: int = 0, *, protocol: int = PROTOCOL) -> bytes:
@@ -57,7 +58,7 @@ class ClientModel:
             self.expected_kind = IDENT
             self.status = "timeout"
             return False
-        if capabilities & COPIED_PIXEL_CAPS != COPIED_PIXEL_CAPS:
+        if capabilities & REQUIRED_CAPS != REQUIRED_CAPS:
             self.status = "incompatible"
             return False
         return True
@@ -148,6 +149,16 @@ class AssembledWireTests(unittest.TestCase):
     def test_operand_free_discovery_is_exact(self) -> None:
         self.assert_unique_template(bytes((23, 0, 0xD9)))
 
+    def test_owned_staging_is_materialized_after_live_image(self) -> None:
+        receipt = json.loads((CLIENT_BINARY.parent / 'receipt.json').read_text())
+        storage = receipt['package_storage']
+        start, end = storage['start'] - 0x40000, storage['end'] - 0x40000
+        self.assertGreater(start, 0)
+        self.assertEqual(end, len(self.binary))
+        self.assertEqual(end-start, storage['bytes'])
+        self.assertGreaterEqual(storage['bytes'], max(4096, *(v['bytes'] for v in receipt['inputs'].values())))
+        self.assertEqual(self.binary[start:end], bytes(storage['bytes']))
+
     def test_framed_templates_have_frozen_full_lengths(self) -> None:
         info0 = bytes((23, 0, 0xD8, 8, 0, 1, 4, 0, 0, 1, 0, 0, 0))
         load = bytes((23, 0, 0xD8, 14, 0, 1, 1, 0, 0, 1, 0, 0x77, 0xEA))
@@ -236,9 +247,9 @@ class MailboxAndOwnershipTests(unittest.TestCase):
 
     def test_capability_superset_passes_and_missing_bit_fails(self) -> None:
         self.assertTrue(ClientModel().discover(0xFFFF))
-        missing_pixels = ClientModel()
-        self.assertFalse(missing_pixels.discover(0x0001))
-        self.assertEqual(missing_pixels.status, "incompatible")
+        missing_rows = ClientModel()
+        self.assertFalse(missing_rows.discover(0x0011))
+        self.assertEqual(missing_rows.status, "incompatible")
 
     def test_load_rejection_never_publishes_handle(self) -> None:
         client = ClientModel()
