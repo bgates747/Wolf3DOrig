@@ -12,6 +12,16 @@ identifies preparation gaps and inherent exceptions. The completed
 is also complete. New runtime pairs remain unqualified;
 the optimization goal remains paused.
 
+## WOLF-NUM-001 — Numerical methods review preparation
+
+[Local review task](agonport/doc/tasks/WOLF-NUM-001/PLAN.md), linked to central
+VDPL-037 NUM-06/FUP-004/WIRE-001..005. **Prepared only; execution held until
+Smith speaks with Wolf directly.** No audit, experiment or goal resumption.
+
+- [ ] WOLF-NUM-001-02..07 — Future active-method/conversion inventory,
+  retained evidence, accuracy/code/resource constraints and comparison proposal;
+  all held for direct discussion. Reuse existing PERF015/007/017 records.
+
 ## WOLF-GOAL-001 — Overnight uncapped optimization goal
 
 [Goal contract](agonport/doc/tasks/WOLF-GOAL-001/PLAN.md). Smith authorizes
