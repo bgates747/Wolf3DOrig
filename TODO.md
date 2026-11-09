@@ -923,3 +923,9 @@ default-cutover claims.
 - [ ] WOLF-PROD-001 runtime: frozen current-release public-wire correctness leaf
   queued Oryx e341f7c6ddb4; no checkout/run yet. Historical performance remains
   separate; old optimization goal remains paused.
+
+- [ ] WOLF-VIEW-001: investigate arbitrary player-controlled viewport resizing
+  during play, including larger views, runtime projection generation, layout,
+  width/index/workspace limits and resize/per-frame costs. Task prepared only;
+  report and stop for discussion before implementation. Plan:
+  agonport/doc/tasks/WOLF-VIEW-001/PLAN.md.
