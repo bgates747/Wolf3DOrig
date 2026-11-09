@@ -1,0 +1,26 @@
+{
+  "request": {
+    "owner": "wolf3dorig",
+    "task": "WOLF-PROD-001-runtime01",
+    "purpose": "ONE frozen current dc43 release production7490 public-wire lifecycle/pixel correctness leaf; no GUI/game autoexec/replay or benchmark;720s own guard and normal release",
+    "profile": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf-prod001-runtime01",
+    "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "request": "e341f7c6ddb4",
+    "requested": "2026-11-09T23:11:23.653071+00:00"
+  },
+  "position_including_active": 3,
+  "earlier_requests": [
+    {
+      "owner": "nurples",
+      "request": "49dd20da68fb",
+      "task": "GAME-001JK-HW-OVERLAY-R02"
+    },
+    {
+      "owner": "agon-6502",
+      "request": "d74c003009e1",
+      "task": "PERF022-DENSE-R02"
+    }
+  ],
+  "status": "Queued; no checkout, host probe, transfer or native execution"
+}

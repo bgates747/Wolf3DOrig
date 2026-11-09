@@ -94,8 +94,9 @@ The new current-firmware public-wire lifecycle/pixel leaf is fully prepared as
 and exact release BIN/ELF. Its finite plan is RUNTIME-PLAN.md; no private7593,
 MOS replacement, new emulator build, benchmark or old-cohort replay is selected.
 Oryx417 and Olimex164 were held by other owners at preparation. Normal FIFO
-reservation follows this freeze; a pending run is not a failed test or a runtime
-pass. Existing held owners are not preempted.
+request `e341f7c6ddb4` is queued after the freeze (RUNTIME-QUEUE.json), initially
+third including the held checkout. A pending run is not a failed test or a
+runtime pass. Existing held owners are not preempted.
 
 The historical combined20.90ms drawing and30.06fps presentation measurements
 remain historical evidence. They are not newly measured performance for7490

@@ -916,6 +916,10 @@ default-cutover claims.
   independent019 outcome, then a separately frozen useful uncapped physical
   comparison and any later coherent default decision. No timing win claimed.
 
-- [ ] WOLF-PROD-001: promote qualified combined021 renderer into normal game,
-  remove signed-shift defect, verify original integer-method lineage and qualify
-  current firmware preparation. Plan: agonport/doc/tasks/WOLF-PROD-001/PLAN.md.
+- [x] WOLF-PROD-001: qualified combined021 renderer promoted into normal game;
+  signed-shift fixes and original integer lineage verified. Module7490d81c,
+  normal310096B client,600-frame parity and37 preparation checks pass. Report:
+  agonport/doc/tasks/WOLF-PROD-001/RESULT.md.
+- [ ] WOLF-PROD-001 runtime: frozen current-release public-wire correctness leaf
+  queued Oryx e341f7c6ddb4; no checkout/run yet. Historical performance remains
+  separate; old optimization goal remains paused.
