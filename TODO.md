@@ -920,9 +920,10 @@ default-cutover claims.
   signed-shift fixes and original integer lineage verified. Module7490d81c,
   normal310096B client,600-frame parity and37 preparation checks pass. Report:
   agonport/doc/tasks/WOLF-PROD-001/RESULT.md.
-- [ ] WOLF-PROD-001 runtime: frozen current-release public-wire correctness leaf
-  queued Oryx e341f7c6ddb4; no checkout/run yet. Historical performance remains
-  separate; old optimization goal remains paused.
+- [x] WOLF-PROD-001 runtime: actual Oryx419 current-release module lifecycle/
+  pixel/fizzle/retry/teardown PASS;21 evidence files verified, empty-host clean
+  release and next-owner handoff complete. See WOLF-PROD-001/RUNTIME-RESULT.json.
+  Historical performance remains separate; optimization goal stays paused.
 
 - [ ] WOLF-VIEW-001: investigate arbitrary player-controlled viewport resizing
   during play, including larger views, runtime projection generation, layout,

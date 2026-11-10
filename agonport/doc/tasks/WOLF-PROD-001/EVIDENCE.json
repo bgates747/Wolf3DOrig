@@ -729,5 +729,7 @@
     "tools/wolf_firmware.py": "9330b26ca637211dd6d5ecd4d94fdd217a8dc92c2d07243ed67251d0b24cce81",
     "deploy.toml": "c2620076da8aba3cbc027eae858ba67b8cf3843e15e1047e581f601bf7ab5da2"
   },
-  "runtime_status": "Prepared, not run; Oryx417 and Olimex164 held by other owners at preparation"
+  "runtime_preparation_status": "Prepared, not run; Oryx417 and Olimex164 held by other owners at preparation",
+  "runtime_status": "PASS actual Oryx419, dc43 release, production7490; clean release and next handoff completed",
+  "runtime_result": "RUNTIME-RESULT.json"
 }

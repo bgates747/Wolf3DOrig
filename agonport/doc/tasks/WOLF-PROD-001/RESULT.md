@@ -1,4 +1,4 @@
-# WOLF-PROD-001 — Production updated; current runtime leaf pending
+# WOLF-PROD-001 — Production updated; current runtime check passed
 
 Smith's direct instruction is implemented. Plan4806492 was committed/pushed
 before code; amendment7fd14c1 records the first compiler-memory stop and bounded
@@ -87,17 +87,40 @@ resolved the memory issue; target O2/PSRAM flags and algorithms were unchanged.
 stack frames and complete payload file identities. Compiler children joined and
 both successful slots released normally; no compiler lease is retained.
 
-## Remaining runtime boundary
+## Completed current-release runtime check
 
-The new current-firmware public-wire lifecycle/pixel leaf is fully prepared as
-41 immutable inputs (RUNTIME-INPUTS.json), using the existing d77a7305 backend
-and exact release BIN/ELF. Its finite plan is RUNTIME-PLAN.md; no private7593,
-MOS replacement, new emulator build, benchmark or old-cohort replay is selected.
-Oryx417 and Olimex164 were held by other owners at preparation. Normal FIFO
-request `e341f7c6ddb4` is queued after the freeze (RUNTIME-QUEUE.json), initially
-third including the held checkout. A pending run is not a failed test or a
-runtime pass. Existing held owners are not preempted.
+The frozen public-wire lifecycle/pixel leaf passed once on actual Oryx419 on
+November9 at7:20PM Eastern, using production7490d81c, dc43ecb8 firmware,
+576b69f3 ELF and the existing d77a7305 backend. All41 input identities and the
+actual backend loader/library closure matched before execution. No source,
+firmware, backend or test input changed after the freeze; there was no replay.
+
+- Public capabilities799; CONFIG/full APPLY/render and every76800-pixel frame
+  oracle matched. Hidden frames remained hidden until C3.
+- Missing-HUD refusal, altered-retry refusal, exact successful retry and the
+  second full-frame oracle passed. All five expected error cases matched.
+- The60-slice app-paced fizzle matched its five whole-frame checkpoints and
+  final surface synchronization. Overlap/after-completion errors matched.
+- RESET, FINI/unload, stale-handle rejection, reload and final empty slot passed.
+- Native execution reported no failed/unhandled/unregistered/unmapped faults.
+  INFO17's minimum reported free stack after the exercised path was2036B;
+  this is scoped runtime evidence, not a universal maximum-stack proof.
+
+The complete worker took6.727 host seconds; supervisor8.353 seconds, peak58.375C,
+boost OFF. These durations/cycle counters are emulator correctness evidence,
+not a physical framerate comparison. All native worker threads/process groups
+joined;21 returned evidence files were retrieved and hash-verified. Fresh
+canonical whole-host inspection was empty and419 released normally at7:21PM
+Eastern. The actual next TRS-80 request was immediately notified. No lease,
+process, target access or ongoing reservation is retained.
+
+[RUNTIME-RESULT.json](RUNTIME-RESULT.json) records the raw result, input/retrieval
+identities, entry/release proof and resource observations. RUNTIME-QUEUE.json
+retains the earlier queued observation as history. This backend-only test did
+not run MOS, the eZ80 client, full gameplay, a GUI or physical hardware. It adds
+current-release module qualification to the completed production build checks;
+full-game acceptance across all10 levels remains a separate scope.
 
 The historical combined20.90ms drawing and30.06fps presentation measurements
-remain historical evidence. They are not newly measured performance for7490
-on current release firmware, nor full-game acceptance across all10 levels.
+remain historical evidence, not newly measured performance for7490. The
+optimization goal stays paused; WOLF-VIEW-001 remains task preparation only.

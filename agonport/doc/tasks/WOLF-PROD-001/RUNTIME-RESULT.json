@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "scope": "ONE completed current-release production module JIT public-wire lifecycle/pixel correctness leaf; no full-game/hardware/performance claim",
+  "runtime": {
+    "scope": "exact production Xtensa package, native retry and lifecycle in runtime emulator; no gameplay or physical claim",
+    "engine": "jit",
+    "firmware_sha256": "dc43ecb8b1c324ffd1a032e6cc0c56d8c05dd33a355ce170c23adb35ffb533ab",
+    "firmware_elf_sha256": "576b69f3a0a4fbb676b2108b06437d1ae6d0b459fa7976c8508a4815e55f0a40",
+    "adapter_sha256": "d77a7305b5c180381e49a4922ffd5a8ea9f824fee29110d5a955f337a1c96f0d",
+    "module_sha256": "7490d81c2f1e6aed85142d9604a0cad9a3949c03ec236cc818d1c6a339602463",
+    "fixture_files": 31,
+    "fixture_asset_buffers": 24,
+    "checks": [
+      "exact generated workspace, descriptor, full batch, map and assets uploaded",
+      "full batch, DONE fence, hidden-before-C3 and 76800-pixel oracle parity",
+      "native missing-asset error, altered refusal, exact retry and second oracle frame",
+      "app-paced exact 17-bit fizzle: 60 visible slices, hidden-before-C3, five whole-frame oracle checkpoints and final no-swap surface sync",
+      "RESET, FINI via unload, stale-handle rejection, reload and empty slot"
+    ],
+    "expected_errors": [
+      {
+        "case": "missing HUD asset after update application",
+        "error": 2
+      },
+      {
+        "case": "altered same-generation retry",
+        "error": 1
+      },
+      {
+        "case": "overlapping fizzle begin",
+        "error": 7
+      },
+      {
+        "case": "fizzle step after completion",
+        "error": 12
+      },
+      {
+        "case": "render after RESET",
+        "error": 12
+      }
+    ],
+    "passed": true,
+    "capabilities": 799,
+    "full_frame_sha256": "be81eb7d2b7bd2754a2b887aed08ed22de9fbd634e5ef867ff645ddf5c8571cd",
+    "retry_frame_sha256": "ee2bbcadb6bec8a65b28ee85d8b5b364eb50dfaa97268d4046b1c5d4813386af",
+    "expected_error_count": 5,
+    "render_reply_seconds": 0.015187,
+    "render_vdp_cycles": 2680000,
+    "fizzle_reply_seconds": 1.085601,
+    "fizzle_vdp_cycles": 314871028,
+    "stack_free_before": 2120,
+    "stack_free_after": 2036,
+    "stack_minimum_free_bytes_after_exercised_path": 2036,
+    "slot_after_teardown": 0,
+    "execution_stats": {
+      "engine": "jit",
+      "frames": 359,
+      "cycles": 1570113068,
+      "retired": 514923096,
+      "uart_rx": 137721,
+      "uart_tx": 1095,
+      "uart_delivered": 1095,
+      "coherence": "upstream-write-watch",
+      "isync": null,
+      "code_invalidations": 5363,
+      "keys": 0,
+      "failed": false,
+      "unhandled": 0,
+      "unregistered": 0,
+      "unmapped": 0
+    },
+    "outbound_bytes": 137721,
+    "reply_bytes": 810,
+    "elapsed_seconds": 6.727
+  },
+  "supervisor": {
+    "passed": true,
+    "lease": "f842b94978ca4875a99fff06f4d8c861",
+    "guards": [
+      {
+        "cpu_c": [
+          56.0
+        ],
+        "available_kib": 18418292,
+        "seconds": 1.3172720660077175
+      },
+      {
+        "cpu_c": [
+          56.0
+        ],
+        "available_kib": 18418244,
+        "seconds": 1.342016604001401
+      },
+      {
+        "cpu_c": [
+          56.25
+        ],
+        "available_kib": 18360476,
+        "seconds": 2.3433794750017114
+      },
+      {
+        "cpu_c": [
+          57.0
+        ],
+        "available_kib": 18321548,
+        "seconds": 3.3447498159948736
+      },
+      {
+        "cpu_c": [
+          56.75
+        ],
+        "available_kib": 18314280,
+        "seconds": 4.346653732995037
+      },
+      {
+        "cpu_c": [
+          56.5
+        ],
+        "available_kib": 18310528,
+        "seconds": 5.34923182700004
+      },
+      {
+        "cpu_c": [
+          57.375
+        ],
+        "available_kib": 18264836,
+        "seconds": 6.350479587999871
+      },
+      {
+        "cpu_c": [
+          58.375
+        ],
+        "available_kib": 18238296,
+        "seconds": 7.351477980002528
+      }
+    ],
+    "worker_pid": 216178,
+    "returncode": 0,
+    "owned_group_empty": true,
+    "seconds": 8.352754820007249
+  },
+  "checkout": {
+    "owner": "wolf3dorig",
+    "task": "WOLF-PROD-001-runtime01",
+    "purpose": "ONE frozen current dc43 release production7490 public-wire lifecycle/pixel correctness leaf; no GUI/game autoexec/replay or benchmark;720s own guard and normal release",
+    "profile": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf-prod001-runtime01",
+    "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "request": "e341f7c6ddb4",
+    "requested": "2026-11-09T23:11:23.653071+00:00",
+    "lease": "f842b94978ca4875a99fff06f4d8c861",
+    "generation": 419,
+    "checked_out": "2026-11-10T00:19:24.978838+00:00",
+    "idle_observation": {
+      "machine": "oryx-linuxlite",
+      "epoch": 1794269960.3916008,
+      "emulators": []
+    }
+  },
+  "release": {
+    "owner": "wolf3dorig",
+    "task": "WOLF-PROD-001-runtime01",
+    "purpose": "ONE frozen current dc43 release production7490 public-wire lifecycle/pixel correctness leaf; no GUI/game autoexec/replay or benchmark;720s own guard and normal release",
+    "profile": "/home/smith/Agon/mystuff/Wolf3dOrig/.emulator/wolf-prod001-runtime01",
+    "notify_thread": "01a1a67f-c3b5-76a2-9eef-66047be3dea3",
+    "notify_host": "remote-ssh-discovered:raspberrypi",
+    "request": "e341f7c6ddb4",
+    "requested": "2026-11-09T23:11:23.653071+00:00",
+    "lease": "f842b94978ca4875a99fff06f4d8c861",
+    "generation": 419,
+    "checked_out": "2026-11-10T00:19:24.978838+00:00",
+    "idle_observation": {
+      "machine": "oryx-linuxlite",
+      "epoch": 1794269960.3916008,
+      "emulators": []
+    },
+    "released": "2026-11-10T00:21:37.159742+00:00",
+    "release_observation": {
+      "machine": "oryx-linuxlite",
+      "epoch": 1794270092.6911461,
+      "emulators": []
+    },
+    "next_request": {
+      "owner": "trs-80",
+      "task": "M301-headless-r01",
+      "purpose": "Two frozen M301 CPU/host-service diagnostic cells;120s per cell,80C stop,no GUI/hardware; RC3 d7a51147 and VDPlet dc43 public release",
+      "profile": "/home/smith/Agon/mystuff/trs-80/projects/model3/.emulator/m301-auto",
+      "notify_thread": "01a0c63b-cd79-70e1-a522-0cea96165f6a",
+      "notify_host": "remote-ssh-discovered:raspberrypi",
+      "request": "8ac0ee08a0be",
+      "requested": "2026-11-10T00:10:14.011467+00:00"
+    }
+  },
+  "returned_archive_sha256": "01ed33324608e4e318695e8df15ce06925f5338a22dda463545d19034d6f3955",
+  "retrieved_file_sha256": {
+    "INPUTS.json": "445144279aed6d956743d942db06b32cf67b28f94ec24fe1827999c0cffac29f",
+    "results/final.ppm": "11e03b0d920885903f0c24878be08222fbc66367f0a2934ceaf31cca5373227f",
+    "results/production-full.ppm": "a8d43f1f0f3a67a7eabe7141ae69139b2ee29931ef04aaedd8fad1f1eda3ff59",
+    "results/results.dat": "d8abcfb226adae481b734a376acd5f94b46fda31a6298e239c21fffc504c6bcd",
+    "results/stats.json": "9cdaf7f4edc483568261e9541bc7bfc87740377420658423bca0666e4ba0f993",
+    "results/production-fizzle-45.ppm": "dee009117f73bd78c1da80fb2422e79f2843b647e363ee7ab99b100fc83a505a",
+    "results/production-retry.ppm": "e77859fe194206489e879e938a59c7afdee6de25dc83231f06f42ef3633ccf8f",
+    "results/production-fizzle-15.ppm": "e3b799d9bb0aad44ad26673ba31aafada09f72ba4b3ab6e1fbacb018fac071d7",
+    "results/production-fizzle-60.ppm": "11e03b0d920885903f0c24878be08222fbc66367f0a2934ceaf31cca5373227f",
+    "results/esp32-uart0.log": "5c7578bc876a53bebf8b496b089de9f43cfeef096c73808c34600f72bfc238a5",
+    "results/vdp-to-mos-delivered.bin": "77268183f146feedb2fa6e41f2d73f94955c9b43e8b9e4fefd16615a50c728e4",
+    "results/wire-rx.dat": "77268183f146feedb2fa6e41f2d73f94955c9b43e8b9e4fefd16615a50c728e4",
+    "results/vdp-to-mos.bin": "77268183f146feedb2fa6e41f2d73f94955c9b43e8b9e4fefd16615a50c728e4",
+    "results/production-fizzle-final.ppm": "11e03b0d920885903f0c24878be08222fbc66367f0a2934ceaf31cca5373227f",
+    "results/production-fizzle-30.ppm": "8f69faf4cb7fdcc2bdb3159f8afeea1462049f7a2bbeeb6e50cbe361f4bbc9dc",
+    "results/production-fizzle-01.ppm": "9f81d3b995122fbb00f517207c7f9dbbeb2065180718ff4dc3e9f72bbe0ffd5b",
+    "results/evidence.json": "0d906a0a4b484fc91fad231e9030c84ce9d6d3cd393db80b58b98b94c5ffb562",
+    "results/mos-to-vdp.bin": "277722a9bcd935b1392250b4752c919eb7845d79c71ac8b1b44c62cd2c54bfc4",
+    "supervisor/result.json": "f72c1dd30786a94a65215144969caab50b9cfd765a01fe600d91ce23a741ce7c",
+    "supervisor/loader.txt": "e43dc9ed3084c643aed8562487fb5f67587dc7de719cf9e020e28afd62453f9b",
+    "supervisor/worker.log": "a5acee4355aa9afc92b7ab8dc4c616f9527fdebff4a17c6a4e4ce058add0c094"
+  },
+  "input_manifest_sha256": "445144279aed6d956743d942db06b32cf67b28f94ec24fe1827999c0cffac29f",
+  "next_owner_notice": {
+    "delivery_id": "wolf-prod001-oryx419-release-trs-next",
+    "recipient": "01a0c63b-cd79-70e1-a522-0cea96165f6a",
+    "accepted": true,
+    "standing_authority": "CHAT-AUTH-001 verified2026-11-10T00:21:47UTC"
+  }
+}
