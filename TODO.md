@@ -191,18 +191,9 @@ self-review, examples and advice exchange with VDPlet, with tasks written first.
 
 # Phase A — original Episode 1 shareware parity
 
-[ ] 11. Implement original pushwalls and secret discovery: preserve/count
-plane-1 marker 98 in W3L packages; prioritize facing-adjacent pushwalls in Use;
-reproduce busy/blocked rejection, cardinal fractional motion through at most
-two cells, collision/DDA ownership changes, sounds, secret count, and complete
-attempt/level reset. Implementation, host tests, 28-case direct-eZ80 behavior,
-schema-2 serialization, and all four directions are complete. Remaining close
-gate: accept the staged real E1L1 secret-wall visual/collision review and, when
-practical, repeat it on hardware.
-
-- [ ] WOLF-SECRET-001 — Locate Episode 1 pushwalls and investigate a clearly
-  marked wall and a test spawn in the same room. Task prepared for Smith’s
-  review. [Plan](agonport/doc/tasks/WOLF-SECRET-001/PLAN.md)
+- [ ] WOLF-PROD-002 — Full regular game with the High Scores, demo turn and
+  level-map fixes. [Plan](agonport/doc/tasks/WOLF-PROD-002/PLAN.md).
+  Smith will retest the full game on Console8.
 
 [ ] 12. Complete `WL_INTER.C::LevelCompleted` behavior atop the accepted
 nonblocking transition lifecycle: visible time/ratio count-up, skip-to-final,

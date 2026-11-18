@@ -1,0 +1,433 @@
+{
+  "fixture": {
+    "task": "WOLF-SECRET-001",
+    "stock_payload_sha256": "1cc1ea4a51b11b4fe56ad93f075a0afe040161e322f024b52d412498d9d27b56",
+    "wall": [
+      10,
+      13
+    ],
+    "spawn": [
+      10,
+      14
+    ],
+    "heading_degrees": 90,
+    "texture": 63,
+    "secret_locations_by_floor": {
+      "1": [
+        [
+          10,
+          13
+        ],
+        [
+          30,
+          22
+        ],
+        [
+          18,
+          49
+        ],
+        [
+          17,
+          50
+        ],
+        [
+          13,
+          53
+        ]
+      ],
+      "2": [
+        [
+          19,
+          12
+        ],
+        [
+          42,
+          27
+        ],
+        [
+          36,
+          32
+        ],
+        [
+          37,
+          61
+        ]
+      ],
+      "3": [
+        [
+          12,
+          1
+        ],
+        [
+          39,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          11,
+          12
+        ],
+        [
+          29,
+          12
+        ],
+        [
+          43,
+          45
+        ],
+        [
+          10,
+          58
+        ],
+        [
+          37,
+          60
+        ],
+        [
+          4,
+          61
+        ],
+        [
+          7,
+          61
+        ]
+      ],
+      "4": [
+        [
+          1,
+          5
+        ],
+        [
+          37,
+          8
+        ],
+        [
+          12,
+          10
+        ],
+        [
+          44,
+          11
+        ],
+        [
+          58,
+          24
+        ],
+        [
+          30,
+          45
+        ],
+        [
+          25,
+          53
+        ]
+      ],
+      "5": [
+        [
+          50,
+          8
+        ],
+        [
+          48,
+          37
+        ],
+        [
+          2,
+          43
+        ],
+        [
+          39,
+          46
+        ],
+        [
+          44,
+          59
+        ]
+      ],
+      "6": [
+        [
+          27,
+          4
+        ],
+        [
+          27,
+          12
+        ],
+        [
+          30,
+          13
+        ],
+        [
+          55,
+          22
+        ]
+      ],
+      "7": [
+        [
+          1,
+          3
+        ],
+        [
+          40,
+          11
+        ]
+      ],
+      "8": [
+        [
+          39,
+          8
+        ],
+        [
+          41,
+          11
+        ],
+        [
+          49,
+          15
+        ],
+        [
+          13,
+          28
+        ],
+        [
+          10,
+          29
+        ],
+        [
+          16,
+          29
+        ],
+        [
+          7,
+          30
+        ],
+        [
+          4,
+          31
+        ],
+        [
+          11,
+          32
+        ],
+        [
+          3,
+          33
+        ],
+        [
+          8,
+          33
+        ],
+        [
+          5,
+          34
+        ],
+        [
+          1,
+          50
+        ]
+      ],
+      "9": [
+        [
+          36,
+          14
+        ],
+        [
+          25,
+          32
+        ]
+      ],
+      "10": [
+        [
+          54,
+          2
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          16,
+          6
+        ],
+        [
+          61,
+          7
+        ],
+        [
+          33,
+          16
+        ],
+        [
+          33,
+          17
+        ],
+        [
+          57,
+          19
+        ],
+        [
+          1,
+          25
+        ],
+        [
+          38,
+          30
+        ],
+        [
+          37,
+          31
+        ],
+        [
+          43,
+          32
+        ],
+        [
+          41,
+          42
+        ],
+        [
+          44,
+          46
+        ],
+        [
+          28,
+          49
+        ],
+        [
+          59,
+          52
+        ]
+      ]
+    },
+    "embedded_tile_offset": 152756,
+    "actors_removed_for_fixture": true,
+    "stock_application_sha256": "1634f87d0ebee00e9e2ac3918c675a8e62d1b83d3755eb091690e98d793b9cb9"
+  },
+  "fixture_binary": {
+    "bytes": 310096,
+    "sha256": "026369ea429a523feb61af65849bb4f0cea0ea6b27f8ea275d4a3bf49a63b415"
+  },
+  "production_module": {
+    "bytes": 21852,
+    "sha256": "7490d81c2f1e6aed85142d9604a0cad9a3949c03ec236cc818d1c6a339602463",
+    "abi_minor": 6,
+    "capabilities": 257,
+    "resident_text": 15004,
+    "resident_data": 11172,
+    "static_screen_only": true
+  },
+  "firmware": {
+    "vdp_version": "v0.1.2-alpha",
+    "vdp_selection": "0.1.2-alpha-async-r1",
+    "vdp_sha256": "dc43ecb8b1c324ffd1a032e6cc0c56d8c05dd33a355ce170c23adb35ffb533ab",
+    "vdp_elf_sha256": "576b69f3a0a4fbb676b2108b06437d1ae6d0b459fa7976c8508a4815e55f0a40",
+    "mos_version": "3.1.0_uart0_rc_3",
+    "mos_sha256": "d7a51147f3381cd68d56f3fbe4605434a897dfae1b049269afeba09ec2b7eb50",
+    "mos_map_sha256": "48dae5890af7b49fe6bcb535a20e9b6432069c8d84666e3d0e8e7e1070282be9"
+  },
+  "frontend_sha256": "bad83f5455ab8d03436e8b7be68960110b318ef636dc60613e5215eb2dc37dda",
+  "backend_sha256": "d77a7305b5c180381e49a4922ffd5a8ea9f824fee29110d5a955f337a1c96f0d",
+  "original_pose": {
+    "generation": 1,
+    "x": 10.5,
+    "y": 14.5,
+    "heading": 90
+  },
+  "final_pose": {
+    "generation": 146,
+    "x": 10.5,
+    "y": 12.3125,
+    "heading": 90
+  },
+  "result": {
+    "passed": true,
+    "captures": {
+      "boot": 0,
+      "startup-00": 0,
+      "startup-01": 0,
+      "startup-02": 0,
+      "menu-0": 0,
+      "menu-1": 0,
+      "menu-2": 0,
+      "menu-3": 0,
+      "menu-4": 0,
+      "ready-000": 0,
+      "ready-001": 0,
+      "ready-002": 0,
+      "ready-003": 0,
+      "ready-004": 0,
+      "ready-005": 0,
+      "ready-006": 0,
+      "ready-007": 0,
+      "ready-008": 0,
+      "ready-009": 0,
+      "ready-010": 0,
+      "ready-011": 0,
+      "ready-012": 0,
+      "ready-013": 0,
+      "ready-014": 0,
+      "ready-015": 0,
+      "ready-016": 0,
+      "ready-017": 0,
+      "ready-018": 0,
+      "ready-019": 0,
+      "ready-020": 0,
+      "ready-021": 0,
+      "ready-022": 0,
+      "ready-023": 0,
+      "ready-024": 0,
+      "ready-025": 0,
+      "ready-026": 0,
+      "ready-027": 0,
+      "ready-028": 0,
+      "ready-029": 0,
+      "ready-030": 720,
+      "moving": 612,
+      "after": 77,
+      "second-use": 77,
+      "forward-held": 1181,
+      "against-wall": 1181
+    },
+    "peak_c": 62.75,
+    "seconds": 61.82466161499906
+  },
+  "last_wall_record": {
+    "generation": 111,
+    "status": 2,
+    "origin": [
+      10,
+      13
+    ],
+    "current": [
+      10,
+      11
+    ],
+    "direction": 2,
+    "fraction": 0,
+    "texture": 63,
+    "completed_count": 1
+  },
+  "stats": {
+    "engine": "jit",
+    "frames": 3087,
+    "cycles": 12819673934,
+    "retired": 6032730820,
+    "uart_rx": 2422984,
+    "uart_tx": 6239,
+    "uart_delivered": 6239,
+    "coherence": "upstream-write-watch",
+    "isync": null,
+    "code_invalidations": 5236,
+    "keys": 36,
+    "failed": false,
+    "unhandled": 0,
+    "unregistered": 0,
+    "unmapped": 0
+  },
+  "oryx_generation": 491,
+  "oryx_released": "2026-11-18T20:37:47.307350+00:00",
+  "archive_sha256": "3dac2379dde96157c68640af3f5ded6668895abfdf53de93a9353dd59d169f90"
+}
