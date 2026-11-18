@@ -193,7 +193,8 @@ self-review, examples and advice exchange with VDPlet, with tasks written first.
 
 - [ ] WOLF-PROD-002 — Full regular game with the High Scores, demo turn and
   level-map fixes. [Plan](agonport/doc/tasks/WOLF-PROD-002/PLAN.md).
-  Smith will retest the full game on Console8.
+  [Deployed and verified](agonport/doc/tasks/WOLF-PROD-002/RESULT.md).
+  Smith’s Console8 playtest is pending.
 
 [ ] 12. Complete `WL_INTER.C::LevelCompleted` behavior atop the accepted
 nonblocking transition lifecycle: visible time/ratio count-up, skip-to-final,
