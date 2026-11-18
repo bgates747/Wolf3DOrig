@@ -200,6 +200,10 @@ schema-2 serialization, and all four directions are complete. Remaining close
 gate: accept the staged real E1L1 secret-wall visual/collision review and, when
 practical, repeat it on hardware.
 
+- [ ] WOLF-SECRET-001 — Locate Episode 1 pushwalls and investigate a clearly
+  marked wall and a test spawn in the same room. Task prepared for Smith’s
+  review. [Plan](agonport/doc/tasks/WOLF-SECRET-001/PLAN.md)
+
 [ ] 12. Complete `WL_INTER.C::LevelCompleted` behavior atop the accepted
 nonblocking transition lifecycle: visible time/ratio count-up, skip-to-final,
 500-point par seconds, 10,000-point 100% awards, the secret-floor 15,000-point
