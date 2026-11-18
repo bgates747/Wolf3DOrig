@@ -1,0 +1,1164 @@
+{
+  "authority": "/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md",
+  "documents_scanned": 456,
+  "changes": [
+    {
+      "path": "AGENTS.md",
+      "before_sha256": "f8c74b4134d59a0a08b90cd417222fd00d92dea16141e3c780056f0dcf53d6b5",
+      "after_sha256": "d23c47aa743834b0814f3788d3cdb074b200264fb3afa9ddff65e866b6c7b30a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "FIRMWARE.md",
+      "before_sha256": "6895841cec324bbfa6db99f26ac3677ff1a812bcea49d0a1b3580ccd9d1b29ca",
+      "after_sha256": "1f2bf1ad4fafdfa1ed0a1482d91b4d895a91e431f70152d534118d793838ddd4",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "README.md",
+      "before_sha256": "10566002c9d5c2706352594a5ec3a37fecd9ba9fa986fdfb150fe76d3e6ee45a",
+      "after_sha256": "0e63129eadb36dda893b52e6897db7b236d22a8f61213da60ce06c6e79ceb0b7",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "TODO.md",
+      "before_sha256": "b27ff5c39aec79e925e3de27f2fcf8f355f98797a5c1e6cf7b8eda6f35263df5",
+      "after_sha256": "5eb64fceb06f4b7e5799df95b76385b3ceaa61571a7672c368834145446607bd",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/devlog_20260813.md",
+      "before_sha256": "84d428948e21fc6ec7151385124fd93fdaf4b7ef2de1a16b7818b54adc4153a1",
+      "after_sha256": "62a9db1ff6dfdb9963c55871a1c48614904c032194456deda252d8f6f830f066",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/devlog_20261030.md",
+      "before_sha256": "9820d5f61fac971272decb23bf94acb7d551bc507279d95fe57d97af1c3d6012",
+      "after_sha256": "7192b0931ad6c79be92e324eb05eddfd6545c74889b149942c526d77dc98a57f",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/devlog_20261101.md",
+      "before_sha256": "a89290da97f1d21f598d9f78f4145b23c7f82119bfe3c09f24641c87b05e6e23",
+      "after_sha256": "652a1b009b2a554add751a4d9b4139d6328e15a2080b89086151a27b429fdf75",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/devlog_20261103.md",
+      "before_sha256": "383ef82e72e837df3f72e4d0a4c4f81e598ac74c3d48a5318a35f06f4a778a35",
+      "after_sha256": "75a8b2ee391fa59836c19850eefd60e72d5483c27cb71375b65accb1012c17a3",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/devlog_20261104.md",
+      "before_sha256": "673e6a78b3535b8bbd4e3df7a7ca8a59eca463e8b0c18fc61ef82a09c46d57a9",
+      "after_sha256": "61f78dd7ed5eb68ece1819b933ba891fdbed895b59899bfe800d963ab3df410c",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/devlog_20261105.md",
+      "before_sha256": "0a270c444cd9781b0a69b9e9387e7bfe33321906b61973507bc074c654f1101c",
+      "after_sha256": "4448ce281eab18160a138bde7d2fa37bd5cce808f966b0737fc64af9ab27c8d8",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/devlog_20261106.md",
+      "before_sha256": "59eb85149bbd4cc8a2bfbe2d1e541e490d5a05aa347f78734dab2e3c1f48f640",
+      "after_sha256": "ff2cc2a6cd2bbfaf52001a23a1cccf1612516ef36d261a28b4896e42fdc57b89",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/devlog_20261107.md",
+      "before_sha256": "c289ab87651fbaaf70bbffa850e77f3209545ed611c44592f2d334f802822de2",
+      "after_sha256": "d2c277c8618f2baeed36f431e0e906f0be708a126fcb7be90a698a265809906c",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-FW-001/PLAN.md",
+      "before_sha256": "ea04ff9f5e893e4cbaa076f95051cced2299dc5668823ce31d483ea50d96deea",
+      "after_sha256": "9d62be7ed57c4de025a27563a5b0b4cfb1f9127a7565fa7a345947804b12cf21",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-FW-001/RESULT.md",
+      "before_sha256": "9101924dee1050488f9118739730c7b2751835450b8648bb1adebee5b3ee9bc6",
+      "after_sha256": "4d4538d67189ee607fd6b8314187c6a34c7b5e8ffd4038074945724787f75ded",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-FW-002/AMENDMENT-01.md",
+      "before_sha256": "387751d591ddfbeac2ffa1d2d70f613719fc4d6d2d5b0a71d8f084a55c2cb8fd",
+      "after_sha256": "918e79879d5e207ba06faf271a4cbe0917d621951d9fe1728eb60090143d5e69",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-FW-002/PLAN.md",
+      "before_sha256": "27a18283e30e95888979f6e9d650c4d7d4e7f7319e4bddb686012660b791d400",
+      "after_sha256": "77f302a9000eb60945de0f0f53ed7c4e38c0b1907f646c707113cb6b64d20e9c",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-FW-002/RESULT.md",
+      "before_sha256": "8ad90951ddfafbd469cea0c47106889b62d7f111b7a20b9547143a979cbaa731",
+      "after_sha256": "797d754217ddb1f6f0202f9c59c21824a9f713dedafc5589d25a4cd8822d6863",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-GOAL-001/HARDWARE-02-PLAN.md",
+      "before_sha256": "8609842b2c37ae0545db94d570f058e247b66fea396c3e02ac9b6ef22998548f",
+      "after_sha256": "0090bdd36c19cfda23aaf597fa129370facc7f3e6b58fad3a7c005a546f3546f",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-GOAL-001/HARDWARE-02-READINESS.md",
+      "before_sha256": "05dd15b27dbd4ff9dc82c2257904590eebebbf486e8967807737cae16d3ba8be",
+      "after_sha256": "70bb5345ce4924597a7d3ac9b9b50ab4579968f800403f7ec76789c22b1bf173",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-GOAL-001/PLAN.md",
+      "before_sha256": "3604ce2b481005d1aa3f67720ae1d183ef9e0f21a01c47756877f6261eb7a28d",
+      "after_sha256": "0e474195c0ebad1f14e57f248f7fd62d8e682790b308b9c2aab863b4a3d16b37",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-GOAL-001/RESULT84.md",
+      "before_sha256": "95c03971b0daa9c0fd32f525c81e9ad67a21e8397396cdfd762bc3e71750fc74",
+      "after_sha256": "7cfdd79a09b779033525556fb570aa6769632131bacdafd9b5aeaf6c282388a2",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-GOAL-001/STATUS.md",
+      "before_sha256": "df6a12c5d9a04340e52d47331a2abe04767ae6f80ee277259613833845076e8d",
+      "after_sha256": "43936c7cc3c951fca600eb69b83b575dd2eecb3e9f4a61af991df2f869e157e4",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-HOST-001/PLAN.md",
+      "before_sha256": "d5bc60b7ebabf4ad9941a1691347a0c7c88820258e65bfded545f9dc534b5c91",
+      "after_sha256": "bd61e939bb1e5d5701afd34ef50a483f689826e67c2828d79de72e791a7cbb99",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-HOST-001/R03.md",
+      "before_sha256": "d5dd8adbcc1a07b72a753ecd13f5296307b18eb096074f02fe1b0dbe9197f8d7",
+      "after_sha256": "9af468f644f46830346b92ba564572c51a39e1dc5e41209d83408f1511c8de0a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-HOST-001/results/failed01/PLAN.md",
+      "before_sha256": "4bb0a5b694ef9990735bfe87cb81d9020d6582baedcaef340da72d6f782f7d8f",
+      "after_sha256": "4a2d3fc65975ee980191122c420703dad7c792a03ffb5638a19cc10425a8272a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-HOST-001/results/r02/PLAN.md",
+      "before_sha256": "4bb0a5b694ef9990735bfe87cb81d9020d6582baedcaef340da72d6f782f7d8f",
+      "after_sha256": "4a2d3fc65975ee980191122c420703dad7c792a03ffb5638a19cc10425a8272a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-HOST-001/results/r03/PLAN.md",
+      "before_sha256": "4bb0a5b694ef9990735bfe87cb81d9020d6582baedcaef340da72d6f782f7d8f",
+      "after_sha256": "4a2d3fc65975ee980191122c420703dad7c792a03ffb5638a19cc10425a8272a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-HOST-001/results/r03/R03.md",
+      "before_sha256": "03f0cb4c796b73307df8148abb6315266879124c368c4cb69a5f61eb0b619a5c",
+      "after_sha256": "e90c98c3945f1a5e3f739136218c30ff6b2e4c091f0836dca7c5379fc4dc6bf1",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-NUM-001/PLAN.md",
+      "before_sha256": "7494ca0a12883222a63ac7b77fcfb062f06830a515c3de9f3249160fe289bb7c",
+      "after_sha256": "b6e5090c1956b7ca28f6a9f5552213387db383fd35f49e3619512ab31ba0559b",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-NUM-001/REPORT.md",
+      "before_sha256": "8cf25e3f6454a8f091e34a17e0438d2eaacd4ddf94e49124fb4f360581576fa5",
+      "after_sha256": "44a3e9d754e5ce49e53263d56bf2d5a44b9a3a831e46a5677e6ba638b9c34924",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-001/HARDWARE-RUNBOOK.md",
+      "before_sha256": "e0220a6077a1d5ac763614e9d32a34660ad56d89fc384032912af7091be1e9d2",
+      "after_sha256": "135830749578d2f4af6b30e6f1cd318b4bc47fb5e4668cfac354383824712bba",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-001/PLAN.md",
+      "before_sha256": "6adf4695e7e8be5de24d3f9cb922d10cdef2b986c2c7f20f7bd5d0fb72b6b18d",
+      "after_sha256": "cc26febea889f72566ac58be8e616f55012ef65d40897744fb233bb65b26ff7b",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-001/PROGRESS.md",
+      "before_sha256": "de8b905cc23d7afd586f93160ae34b7da97d553b1ba74c0b1f851704cb823dca",
+      "after_sha256": "9315d6c25215c5b1cf7edb8c422e843d0c4479b5bbfe3b9a0bd4032384347fca",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-001/RESULTS.md",
+      "before_sha256": "1f659559726045ad526726e87092a10ad49e220a212d128d47352fe8fedafa75",
+      "after_sha256": "edbc726f6621ee14ab7db29e3be817d82f3f79809c2b51d6c7043bf8e092e42d",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-001/hardware/README.md",
+      "before_sha256": "5ba1854398b02e17301c5d52d4d9412f23d42dc8e8998f3161bfe4f34613fc38",
+      "after_sha256": "882fa3beb984d64a4d112963214d8551e923fa6215ed18e884277b9550bbed29",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-002/HARDWARE-VISIBLE.md",
+      "before_sha256": "7de219d0c0d3e338a503759d9d4e5e8bd8ee79c99490a5a95ab097a54b7edc59",
+      "after_sha256": "b3d6a15b924f37f013843aa5a7c5005c46639b4761a51c95bb7cb462fec9e5f7",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-002/PLAN.md",
+      "before_sha256": "413887c9cce1fdc5ad4d08def59e48affd378c7eeaf6eb16a9f2eb55c18baf2e",
+      "after_sha256": "7e7eee77164aff00c6d29e01b787a31785ce51d430e0dd8db7bab5957a2385ca",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-002/RESULTS.md",
+      "before_sha256": "ba8c5ca43b2e8681cb628d79f676c185360d304f00c146a4cdb4d62f866238ce",
+      "after_sha256": "c8b16ce74840f0d874a04dcf83bdda81fa0eddb4b4ad78ae76cc7f0e2357794c",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-002/VOICE.md",
+      "before_sha256": "2a308c1c5b5532e7de0ca705b78dc6aea3a93ada84b979ff341fa2f360e5343a",
+      "after_sha256": "39bea3b8ae57e8f044e67511422f02012809ff05affd0902cc5c88f5d160aef6",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-002/voice/CONTEXT-20261105.md",
+      "before_sha256": "cae43d6fbb2ffd5313561f3f225a9bd31d49f2820413c9fe05d8b8db8b16e9ac",
+      "after_sha256": "65f4a9f1f09b99681ca20c126d45dbb907c941cfb9c6ace6542a56528d49746e",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-002/voice/HARDWARE.md",
+      "before_sha256": "13755b200426ac9782d86c522b636e2b5c89a98d248a944d9c7113c1251a0743",
+      "after_sha256": "5a1a4facfe0518c7861b8f621660b262e06bb573c4dad337aeaf83fb89eb7994",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-002/voice/README.md",
+      "before_sha256": "09cc0fd741f404bd9343a8ea6ebf5d98bb9ba7b1257bc3958d57c86be94f2682",
+      "after_sha256": "7a89c74419f14df09c0fd8047e7368cfac4c737e16e59f70cd3ab855be913517",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-002/voice/RESULTS.md",
+      "before_sha256": "e2cda32a0f7a6cdd187afb207c5241d508dc04018f59b7e0cf029e34986c25a2",
+      "after_sha256": "db2ad388865f8e4aab18799b5d0a8e752459fe2590f19fca5257cf06022b045d",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-LOADING-R04-RESULT.md",
+      "before_sha256": "18d4e7d682ae0c4baf81f69a82d82506ec27da13742ca5987de6b82b51c4bdd4",
+      "after_sha256": "b189b9b0bdd8fb33e0c89da82f6966f47bb73df86b8b02485bd3c0775e452964",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-LOADING-R04.md",
+      "before_sha256": "dc52177b42639d521b3b086a123fce9076b3d788d1c15aa663b445873cdb9e7b",
+      "after_sha256": "b614797fa76436fada3d91242f040f031ef5d570fc7b8323964902f538abfa8c",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-PREPARATION.md",
+      "before_sha256": "e6c4286b329fd2b51f307e6e526532ebca94c4c9bf74cb2e6e7fa57818bb1e79",
+      "after_sha256": "c36018c413c2d88a1886a02f08e563ac20336159e5122e8820f3cb9946935592",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R01-RESULT.md",
+      "before_sha256": "92917a67e9139dffd87c4668a6bf13368baa9239694224831d14ad054184a905",
+      "after_sha256": "82906b56f06f1f960b29be38e8656caf0432f372216b73a50d80f8b97c73aa68",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R02-RESULT.md",
+      "before_sha256": "039f417a32dc5c5b1efa12949e1f2c262fd8530ace2e023d48b4cb89d02abada",
+      "after_sha256": "0d4d1e314f2651c5d1ddbd7a5e167335695a9f352d3750eb6bf527809f53dbf1",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R03-RESULT.md",
+      "before_sha256": "d1d9b8c82e4f4cb295c80103769c0ef85055d68c2c9c92f8bf3ba86b2b25706c",
+      "after_sha256": "610be7e496e4fc93423c4aadbebe71142e6a0bb084963e69c6dbc4339bfa805c",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R07-RESULT.md",
+      "before_sha256": "b60c65ca4df6c9cbc5ad8f465716a2e1567ac5b8b6a4803f4b148c14bff87695",
+      "after_sha256": "2f905ddbd7108eaea5e323afe792495fc5756cfd1c84434f53d2262eb1c964e3",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R08-RESULT.md",
+      "before_sha256": "9e33a94b320f2b863983c684476a6a2e33607fee5946a54b7d1593d02426a717",
+      "after_sha256": "13af88e297bea9ec351edf9c70f33f692b14c873791637ec7ef130f750da5d98",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R09-RESULT.md",
+      "before_sha256": "f5f4c4acb7b514fb83f7aa51779859741b12b095fb36fb0c884d743a2a1a0bc5",
+      "after_sha256": "9946ee0ca568e5c6c949e4f5a68270f6519c212767f931be9ab379de8c04168d",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-RUN-01.md",
+      "before_sha256": "226787868c6bdda89ba1d38bbcd28cbddbb7556fd7e31affc93432ce386b1b52",
+      "after_sha256": "cf12e4dbac8d8dbf8c51ff8b84b99112ffe55c389f6a44d84684bce9e01c05ff",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-RUN-02.md",
+      "before_sha256": "a107be47039bc26771b0f0ad1e42b595d5b2dc018a9d17417a26241eda020c0c",
+      "after_sha256": "75756c594a58cefe5969451258d5944b8f87f7f4d733cac899446d7327a6e7fc",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-RUN-03.md",
+      "before_sha256": "342ade40fa0342370c761ec28c9412a2ad75a378758408287848c66facf46697",
+      "after_sha256": "294a0ad81dcc79ca731bfdd32145876f5734701364c2563022544166726e8414",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-RUN-05.md",
+      "before_sha256": "df448db2edf726944f64726b28a06062d80dad8570bac4138a793fbe4da883f9",
+      "after_sha256": "683c9d7bc8cd8f0905909a81ea1c09b677959316ca4a335aea063c1c17952408",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-RUN-06.md",
+      "before_sha256": "8c42845ccf3974a2e84ec47cb32a5cbbbc85ca86e1e1e60ab1d6359895c3ebd3",
+      "after_sha256": "ca9fdcfde06df68f210f6f8a9f512708f78749e8d21dafd9b8fa897e47c312a9",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-RUN-07.md",
+      "before_sha256": "d5ba4ca77e79e9915dc8959eed09aaf3802efc6b51bc06f573f8c3a03286ff08",
+      "after_sha256": "df857c3e4a8fc179f4aaa184ac1f981c85d01bd5ec4fef6bf9a70a5fbb55c7f7",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-RUN-08.md",
+      "before_sha256": "281f750543eac475473789a93ad64273fb85bbe658d4f17b5448257d5aba3743",
+      "after_sha256": "0131ccd22c125c41cddfddd0ea3f985290f5c8cc434e1377e4c9bb0a3224e7b5",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HARDWARE-RUN-09.md",
+      "before_sha256": "11487998f92325f20ade123825e9ee785f07f9908ef72f7af8d40e15a2e92108",
+      "after_sha256": "0dee79f2b20fd0ef2a2835f05497b0e1c4dcfcccf18002c1524a21ed7e03c4ec",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/HUMAN-REVIEW-01.md",
+      "before_sha256": "5ad2eed1ab8e502b12bb12f637bf40932d4c236cf814a03f6ad9833384846b2c",
+      "after_sha256": "0bf46eaa9cc3c5bf550b6565d33d9c3306b6091b30564a2c203823689028bcf8",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/LOADING-DIAGNOSTIC-DESIGN.md",
+      "before_sha256": "946e64b7ba9a15bf6e294cc17c68722555508227aa70612b755da7822e35a902",
+      "after_sha256": "a252bed59bec2db97c128b5b34b777a40a277cd675e18c662211cde93939cb96",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/NEXT-OBSERVER-COHORT.md",
+      "before_sha256": "fd4c965647ab621f747e63547be9dd2d9f4bcac647110b57f84ef2338be86f81",
+      "after_sha256": "153b6e8f831c398419eb6ccec8250a145a2584459b209164d44457704b5f4863",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/PLAN.md",
+      "before_sha256": "a9bdb1c414a1caf18e9d98288548ad1cbb946ee6c8da4b86ff9cf69f244ba30f",
+      "after_sha256": "59f9413e0d77b2cf95cd4fa88f44ecb3f10dda443129817de699a9e4b94a86b1",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/PROGRESS.md",
+      "before_sha256": "43f2c7107d64487f2ed35f2b5e6a8fda1ebf3e8f393cdccd59985038f12f9fb1",
+      "after_sha256": "cc46d333f2961e0dcd872072aca546402cc567826a02b3630aa3be308309b0e7",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/R06-RESULT.md",
+      "before_sha256": "252d25cef5495e730a6af810b2f803f8cb78bb6a9fa70dc0e9ddb16e253b1923",
+      "after_sha256": "6e56c03250f383dea689abc555946d64625a7ac6d4f8d35b20a1a899ed7fe6be",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/R07-BUILD-PLAN.md",
+      "before_sha256": "8851ff6f4065452626dc2b85c1f5a4b048146001f7008126a7508faf6014bf16",
+      "after_sha256": "0b71f689e8861377ffb8dc372d6b10bf3f434d1c28f39343c95b8b0e908cd875",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/RUN-STALL-01.md",
+      "before_sha256": "e147f9ee6779ad6a9f5622120478a78602448cb779d84073b4a9dc864a587b3d",
+      "after_sha256": "f07539a5dd1aca6ba10cda5a4c1eaf3ee90688340fc0ac6876525ecb951966d5",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/RUN-STALL-02.md",
+      "before_sha256": "9f59b0eae724d729f99f31e40bd5811165918a3a33bb738827c709bb2434383d",
+      "after_sha256": "703d02b4a100bfde020d5666ead99360d06b6759e5011bf8aff1da043ee21830",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/STALL-DIAGNOSTIC-REQUIREMENTS.md",
+      "before_sha256": "8eac2955de96b50327a91fe56698cf4476a5059eaac7d66eacc7179c3e3ac1ce",
+      "after_sha256": "aa95776c346e720176206e31ca96cfa300dc03aa9a21c5f455df6f96be7833b9",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-003/WALL-RENDER-INVESTIGATION.md",
+      "before_sha256": "091964dd3f794f464c1b2360e75e33bf491c5e2c7f7cdb5fe8a22e60a6d43344",
+      "after_sha256": "ea0940b9971fa8635bdc48caebbc3b655273ac506337f6ab919ba271c4b51540",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-004/AMENDMENT-02.md",
+      "before_sha256": "0f670e0a29feaf2feff22a42559f53751e9f837e2349fa4116eb3bb3d6294e61",
+      "after_sha256": "2089f599788c4edb1dcfe72baf2b6fda14ab995fdc225d94c270c794631e701b",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-004/HARDWARE-READINESS-01.md",
+      "before_sha256": "845641be4b208c1bbafc38a480a21c3cc343cb1f112b8df31b886becc87bdc2f",
+      "after_sha256": "c9f733ab64674665e6f12b5a093b92b6cf9263199b628a4c3906d6bdcd3c721a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-004/HARDWARE-READINESS-02.md",
+      "before_sha256": "b140d770468adccf93c0f0416ff123466c20f6e03086f99087bd80e6c50e6ed9",
+      "after_sha256": "a5db154114051ac01677c3200bbbd3795213e7c807491ea23377a3f2ccf28b0f",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-004/HARDWARE-READINESS-03.md",
+      "before_sha256": "e347b6df9c578f2c218592d29a182ae6ca2e959a6d9acc05047b003e4cc9c221",
+      "after_sha256": "b7ad7ca6d6482ce07439864f282cd6b36ed384918d2044a7357502f8d431b7b8",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-004/HARDWARE-RUN-01.md",
+      "before_sha256": "f0470a3ff6f41aa10faa8af739f49d1493ca8be3ea0f8fab2fac40b6273a88bc",
+      "after_sha256": "982df83d3abf43270ad94aa6821c3531ff374b84cbfccfc8440eb7d8d6df081f",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-004/HARDWARE-RUN-02.md",
+      "before_sha256": "71c129992a7be22e2f7aaeff0d3b32a2113c6f8f9d675cbdf7732e135872d707",
+      "after_sha256": "587675e82d54f1ecd9a971ef7ec70eb197d9261219efca9acf738d993ad13399",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-004/HARDWARE-RUN-03.md",
+      "before_sha256": "2dd1af73ee4312aeaa81f564dc28507fb996d028a395ac8d4cb863f5f3f45cab",
+      "after_sha256": "41ea161de8d5497d5dcd1c451b632ccf9c1197ec22d0bfae077fa0e59dca9097",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-004/PHYSICAL61-RESULT.md",
+      "before_sha256": "58f9037dd6c479e57ccb9a9fd6ad28e14fd15cac23466f354d1243e1ec17739c",
+      "after_sha256": "288d15a645e2297586862aa966b46cfb1edc237b849d5b00af7afad618255f6b",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-004/PLAN.md",
+      "before_sha256": "f02e12d99759674c63c417a94ca7df05ca8c28c37f4b15c411ce525267ff0a93",
+      "after_sha256": "bf3ef853dfd5dd649638bee97246bc9906dc6a42d7f70734bff3b1b1043fe70e",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-004/R03-RESULT.md",
+      "before_sha256": "202a9fcfa12dc5a9533f75f25abda8b5f8955f157919cb1d7ba192605eef5731",
+      "after_sha256": "5a60145fe0ccd640875be9c22684a25ee02df5a448eb98b4802c00a5faced4f6",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-005/AMENDMENT-01.md",
+      "before_sha256": "d329956c0cf23fe1c0b26b6f2ee4feeccfe8855bd6fa406409cec1c2ef185741",
+      "after_sha256": "08d657535f82872f90ce30dbb2b6d848974371b17820def42885175155b13bd3",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-005/HARDWARE-READINESS-01.md",
+      "before_sha256": "2d2484d17db9d9f693f9f8af74f845cbb716ba2a4fc90fd80ee46c4828e6167d",
+      "after_sha256": "430c9abfc39290b4dc4c9740bed18953f4530a516c0c3b17212b262e5f594205",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-005/HARDWARE-RUN-01.md",
+      "before_sha256": "0cb6d5cb8f2ea6a249cc85f046e3b66bf7346ca8abe2b5f7274ae6bb219491d5",
+      "after_sha256": "35df6900d73a50138bfd0b0eadcb4e8be884676b167a8d691b6266c400118793",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-005/HARDWARE-RUN-02.md",
+      "before_sha256": "826ae9371317e7950b4f37361c73f0bf311e29b66f4c8f678c501cafe9953ab0",
+      "after_sha256": "ced4961f0fd0fb792361cccc8396b77bb21d6255e36cea1b5ecded2971944348",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-005/PHYSICAL65-RESULT.md",
+      "before_sha256": "253c65d8f07d43422e63ea285e05b71aeaf404d02e5e8a07b4ea0d277f1a3bf2",
+      "after_sha256": "30898b4d3173fe2ad6f5660c45e275e7c10a0e2cca02759da589ed4f16ca7d5d",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-005/PLAN.md",
+      "before_sha256": "8dab7aad3d24edd75df8ed16c0df6d0c1f0fdabdd11f8433a8ae19a597571097",
+      "after_sha256": "d1078dc755656f9ee1a5e411764e56e2f9c075325ba6ef833bffae13379b6c2b",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-005/R02-RESULT.md",
+      "before_sha256": "974753eb7c405decdb01ba35331689df6d3b7b172abc4a7a398f48c7ba425322",
+      "after_sha256": "d78eac882771e1a7a9ba972c6d08ec3fb2e4ec9b3c7db37767a0c35ceae1a1a7",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-006/AMENDMENT-02.md",
+      "before_sha256": "6a02d2db1e232295f244614f562df92bd707b3ac5dae2665062812818e86a591",
+      "after_sha256": "19f70b007f2af242e33286ad6a478242f6af7f469265acf0d8af7851d275f209",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-006/HARDWARE-READINESS-01.md",
+      "before_sha256": "048b637283e82b3affe2e2ba66c360b8f669258168b799a9637cde9991d9008c",
+      "after_sha256": "b78d67d80241bd4d165a065962be7edf7548788ea23d66bec78605c785e8f9f4",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-006/HARDWARE-READINESS-02.md",
+      "before_sha256": "5088cb8fd5b56d91548a31d39d13bfc0e96537f4d7709447b55e2227a6de3b69",
+      "after_sha256": "f38d42496ed8f7bc428fc7bb75bbe2a0ea540bec48a58f6000f8bc76f3e060e2",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-006/HARDWARE-RUN-01.md",
+      "before_sha256": "8e64f2a43b60c2aed6054ed7833707dc15937f2910a348082d690aae37c1667e",
+      "after_sha256": "e145da8c177e0e9be24896af989c97710b9a60d956c38dca767060d6399413a4",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-006/HARDWARE69-STOPPED-01.md",
+      "before_sha256": "62ecc2cf5d1e459cceda4252f6bdd5dfdf3f88bb30b8951a0c81a33d016656e5",
+      "after_sha256": "4ee360c56f2719240f44917dcd803e74a6d68b168da94578d7d36203c706a7f2",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-006/PHYSICAL69-RESULT.md",
+      "before_sha256": "0b8bdb4432e0646f2cd9541ef0a81f00b0506a3bf8d2c0b1b165fd6e22ac6673",
+      "after_sha256": "fc50e40045f7f779fb9ee6c284e6c89fec05cc0c8694e3a7bd5026a7d8841eac",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-006/PLAN.md",
+      "before_sha256": "e1a7a2c178cfca85046608004a8ce0cc4e0943749393286f576b4fccc11e31f4",
+      "after_sha256": "46f8ce31f47be5f554edf93117114f80169d71a222187f5ac1a7c2a9cda663de",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-006/R01-RESULT.md",
+      "before_sha256": "5506fa433cdc7ec2f14b044ea655d23f14f8af3c8a915fa46b04fa5456c08618",
+      "after_sha256": "4eb85d7d886daf8b83d5a7a6b7e9723272c01c6bbbe32cb292c0c1454a571786",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-007/AMENDMENT-02.md",
+      "before_sha256": "a3068ffc0cf714b41475b12ead48381a7f944e1a2fa5d8be78923b6e456b5bf6",
+      "after_sha256": "567ada74eb2a75e51f0bdefb57305b0b04cd3235eb655fe26487a0f78125ce52",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-007/HARDWARE-RUN-01.md",
+      "before_sha256": "fad4ce0626cc323873afa67523516c54686eb3d3db6ef57f1715073c1d41d62a",
+      "after_sha256": "d1002581b3d438928d35911c959a46c37906ab448ef260318072c6dc8505199e",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-007/HARDWARE72-STOPPED.md",
+      "before_sha256": "3e775fe0a330e2ddc8c563adc2acbb520d9ddf9b840f1c84a732bff7a8b3f0d4",
+      "after_sha256": "6c7ad9dacb7d700aa1ddd5eead1edd920ba7e63b7da1fc6effca3ec7d20d76cf",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-007/HARDWARE73-STOPPED.md",
+      "before_sha256": "990c5befcba44c967e1c7a8ccd7afb0135ea629afb272ea54b94422bdfd1516e",
+      "after_sha256": "63bb226faad41bd25e7cefd7511e0b05e5c963fb48c621aa33e44470a4e8a943",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-007/PARTIAL73-RESULT.md",
+      "before_sha256": "db6fabc2bedd859d1399d2945e9c3af46400a7764ed71dbe6d0259e62a4dafba",
+      "after_sha256": "9f2bbce09e48a0520bcd2b0d8a1f30d06aac23ab89de50a6f36e6e406a177f07",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-007/PLAN.md",
+      "before_sha256": "ccb8fd94c709c68a2272f33f9a56ff011908af532691e1861b122d8c767fc3f8",
+      "after_sha256": "cc8dea9694534c809ff457b31f94ec431e888396ef75c02eb6b6dd542e0d92b4",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-007/VISUAL-01.md",
+      "before_sha256": "8dc5074b51328fa770a74a4ba660d2bd2b0fa04a6f5f3070b50689e1b7c804af",
+      "after_sha256": "c82e94b854847a8c5473f316a5a8abfebbe284e430d8b399fbd46914a4c92fdf",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-008/PLAN.md",
+      "before_sha256": "bf8add770203d8ce94b165e37f7f508fb495953a72745732cf8355401a2ef27a",
+      "after_sha256": "6761eb4cc67487e6382e32d3aefc5e5ade25b732ceb729e7efa8dfd8df56190a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-009/HARDWARE-PLAN.md",
+      "before_sha256": "d10ad82401b6f080cfcbb5ff0a6b2a23c7670e1b507f456a43d747081f4629c4",
+      "after_sha256": "6bd3580a2c4edf0da359a5c8a94a43d99dcdd5c7a789fe4ac1cc42a9c2b56088",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-009/PLAN.md",
+      "before_sha256": "cfbefef8013de14c25ddc41d3c227ea3e940c73f2596cc7bb396dd9a932164f0",
+      "after_sha256": "402b6efbed8d478df1775ba33b8a0b37cdeafdd725ad1bf6f28407a852fa3d9a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-009/PRODUCER-PLAN.md",
+      "before_sha256": "6e36accd3bbf29de8497d628cb3818c23153199039e29a1203cd22616929582d",
+      "after_sha256": "66dfcb8d4856daed5781e242fc051156575a8dab7a6a0cef6f94c18cd0b9edb3",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-010/AMENDMENT-02.md",
+      "before_sha256": "8580c5f9f9bd68f9e880f3dce62592003ae568cf220b7460f039fec70c1cfaf4",
+      "after_sha256": "3bbf35639b9ea62f8f0ccabc0be0863bd05b9354c105112c1be747004499d4c7",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-010/RESULT.md",
+      "before_sha256": "2081b8011c22652b4cd677a8a377d2f832b5819dd2f4bca5406d1126d414e5cd",
+      "after_sha256": "0674bc4d78a46b19a742f2afb984518f47098520be0ea486381d0c942b3e7f9d",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-010/VISUAL-PLAN.md",
+      "before_sha256": "0784e2d073bd5b871ca3698192b769df0c82754be8ad710c3ed78b829a63aa23",
+      "after_sha256": "0b983878b5cf0d63cde976a4d6e8602c46e6655a6a5ea0e6ac4afdb8710ddcb6",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-011/PLAN.md",
+      "before_sha256": "955448bf2f81304a1fb6a966dceb974200b894139905446eadf1647fad8e9ad6",
+      "after_sha256": "239585779b1a0485ff712b7e0db763752a2a8d2347ab9b83dd8d7d4b5575421e",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-011/PRE-CODE.md",
+      "before_sha256": "af6f0f4f3d86f485cd6f80f2e02c9bbce109951f53ac3167664ed18b11752575",
+      "after_sha256": "e258cb4938cc7692b5ac9aa403a4d38fc2158a4260f180dc649c7ad4b47cb721",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-011/QUALIFIED.md",
+      "before_sha256": "ca0bde3787661b04da037751d82455a19a2c678a61084dd865063fc457b999b3",
+      "after_sha256": "80877782084a73821826a15725dacfae0f2754ac677311d61061fe90c02b364e",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-011/RESULT.md",
+      "before_sha256": "f4398bad5c308d6590f631b712bc37060c40fb3643019f29a90fb78ee1b3415f",
+      "after_sha256": "fbc9f14ffdf7d154486924d43309425d7804b750549721d85adc985a77bc8482",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-012/PLAN.md",
+      "before_sha256": "315255ca93c7cfa63d6f44cc51423cf599b12082c11eed874d5905311f3f2588",
+      "after_sha256": "c82b2344715c32ac313ec0387dfc0bb595bfdc893ff8f66eddfe012bb025bc5a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-012/RESULT.md",
+      "before_sha256": "d43c03a4b739fb0a67a0a63e3749797efbb258832fec537cb8d6fd931825119b",
+      "after_sha256": "5fb00e91ffc91b1405a3cd79dd11c8d9eb4ba5a5d2edbd32ab164e2e75a11570",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-013/HARDWARE-PLAN.md",
+      "before_sha256": "a53bc1b2dd01e4a01fe36d6abf33047c85549f5aa0ab4d3fdf0473cfe5272228",
+      "after_sha256": "62b8e3bcbb4dd4ed127815ac7bd847e9543b0de910fc05c7b5efb3b13129e7f5",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-013/HARDWARE-READINESS.md",
+      "before_sha256": "b3cc4d120811a58afba895c15ad0e910f683e7bab34aca6b95a4e9535c7019df",
+      "after_sha256": "3cf80d0461f42eb68b7c0b87f0b01052c772e1c8efdb9d9e82d381fca0a679de",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-013/PLAN.md",
+      "before_sha256": "1566f11a2700b747f038c5f725ecb65c6a97b0fb98bfb50b7833ceb49b7379df",
+      "after_sha256": "7bc4f6527901557516a86fb0c237d0b10b27e6a889b141fb74b930dc4c22815d",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-013/RESULT78.md",
+      "before_sha256": "994425f678713c60cca4c24eb83d5bdd7ff9bf196c94ca753de338267dc448bd",
+      "after_sha256": "5aebe40ff792cf5ce767d43bf9d11bbe3861c57ed99855e059b5dd34649cefd1",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-014/BASELINE.md",
+      "before_sha256": "db2fdbbbd8f7120c897146988876e6311c541d6a5ea996885a578b8751176bcc",
+      "after_sha256": "73e663c2ba357ec8d4651deebc54fd351f11161ee92661c6d24136ff58d919a9",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-014/HARDWARE-02-AMENDMENT.md",
+      "before_sha256": "6af317d8ae9444ca39af9656b7c0a7774223bc64cae5e0f071d7e23b1e6edfeb",
+      "after_sha256": "603d08eb2ec56a149544d4ca248250347313baf7cd41e10d9dd4ef4533076a3c",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-014/PLAN.md",
+      "before_sha256": "3c8500bf5788106928f1457058dfa03dfc20d1546e28a1ec4a5f9721106c9098",
+      "after_sha256": "580be1e4a20f7fc8ec8d21d3009641e14535090f3e132c4459434a67bec088fc",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/HARDWARE-02-AMENDMENT.md",
+      "before_sha256": "6af317d8ae9444ca39af9656b7c0a7774223bc64cae5e0f071d7e23b1e6edfeb",
+      "after_sha256": "603d08eb2ec56a149544d4ca248250347313baf7cd41e10d9dd4ef4533076a3c",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-015/PLAN.md",
+      "before_sha256": "49fad729a6e16226e397f785190c770ba5689b8ad493a93a56601bfcb199d523",
+      "after_sha256": "b33ed2da8548c3aee8bd33fd699ed8e3336f8903fca054752f6f13b66391f11a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-016/BUILD-RESULT.md",
+      "before_sha256": "d0e3b950dd96fcdba086f87cc2b829fd03655ae71aeafafc0422d703ffa0dd27",
+      "after_sha256": "7a48a49c5586fe8b81aecc5f335ae6a3a162189eebebc9e3a22f5bc9b57a01f9",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-016/HARDWARE-PLAN.md",
+      "before_sha256": "c5828ba61668bfd4d05ba9a48ea80b68d5be42aa3d760ef2e5f4fea065d37db1",
+      "after_sha256": "709d75831aca092cafe5802d1f5dc6d09ebff2ea441b89ec202e7960980cfdde",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-016/HARDWARE-READINESS.md",
+      "before_sha256": "e51bf8a035fdffaf8916831785615c0db149729ff6f964e65af767f8c2ceba4c",
+      "after_sha256": "695cacf3f645ea0486ddd8f860b5a3021f57ced9450450b831885291143bc4d8",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-016/PLAN.md",
+      "before_sha256": "540462c2f81670e7783d85181e8c01f09badeafaa7a46cb18b2781366a4b0e76",
+      "after_sha256": "52360ea196161caf8ea879a017fe86135667f30563153039f3052e2c271e5a21",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/BUILD-RESULT.md",
+      "before_sha256": "64ebd3599a77d149d0102d65d1d213a587ac26fcc21effce380bcab1faabfe3d",
+      "after_sha256": "adcfd0fab5983d4a34ff279f1eea3a6042d927791274bf1ead1a0d3b221b1c69",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/HARDWARE-PLAN.md",
+      "before_sha256": "22e9cbdcb53f2c2e76fdb9511733dbe5e98f0409a22360751e9c7257a15e1178",
+      "after_sha256": "c208525db6195e8c1bf66e7c159c7b88aaa056a8e5baac9719d1d1cd3b0177e6",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/HARDWARE-READINESS.md",
+      "before_sha256": "4d745151d5db955ab125167addad8c3696399ec021e6f4103d852970c9f7937d",
+      "after_sha256": "14075843640d6cc96d3633428d9706f39a81409c84abf47f623e83044619a6cb",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-017/PLAN.md",
+      "before_sha256": "c51821bb94dbac9e716f6c085cd6ce4de2c1ab4d695e491b2a42cc327eb71cd5",
+      "after_sha256": "46feec8a7b8a40a5463630572cea26d90ede5874de4805d9e3b0a707d73f17d0",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-018/HARDWARE-PLAN.md",
+      "before_sha256": "064f8891254498abe522bbbc04685d6232bab8c041da36c8d6f6fbceca3e7100",
+      "after_sha256": "379d832b2d3a51ce7712f6fa30cebd528a8f3213e1ddb43e96a55109ed8e3342",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-018/HARDWARE-READINESS.md",
+      "before_sha256": "573b270beedfcb8e5bc7d5020a7fb66fd39807e19d032dace0cfe09fb279ea29",
+      "after_sha256": "6653bca9d20434864cbd18da83cbb4847515b268c023f851f166993ff25d315f",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-018/PLAN.md",
+      "before_sha256": "286b74c1ef05871b5a6ac780f7fa3919a3832eb49dc52d8316b6eb0940c75155",
+      "after_sha256": "bfdd312c44a1cbfdf2b5992347839e3e0f0f1522c7872262cf061fdeb40c0e2b",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-019/BUILD-RESULT.md",
+      "before_sha256": "39ca12fc7aa1cb46eb887868d93670bee121ea4bd75c17a33ad8711fa6635dad",
+      "after_sha256": "78a6bbdb0b02dccb45815684f071b1d17f76dc5f87937dedbfb996036d280b4f",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-019/HARDWARE-PLAN.md",
+      "before_sha256": "176ef2a4e7fe4294c7b093c3d73ce08f66031f3a9cc1e68436374febf854699d",
+      "after_sha256": "be38826e45728143fd95859d368308a2cbf61776102f78ea6de63c6cfd54e2d1",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-019/HARDWARE-READINESS.md",
+      "before_sha256": "5c0aad5e23b01bec0467672da94b30edd5c25c2cf0394f53bbd4aaec0c85c077",
+      "after_sha256": "c7485b5ea15760c13e2d8fd152859fecf8cd19e0857fa29cb10b188d236152f6",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-019/PLAN.md",
+      "before_sha256": "4ed56216a135e94dbbcb7c8c818c82c80099ea148ad4b9b68837ce006c79f96b",
+      "after_sha256": "f0c2e39744d24ddb5641051f28d2426cbd046f346b0cb5fc0cdd3c1be0b776cd",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-019/RESULT89.md",
+      "before_sha256": "c821ab4971138fbe7d6e847ddf0a3842eb197ccf6a8545ca5ef198c460d98de9",
+      "after_sha256": "b97f1953912ad58bbf8b57d22a723db4377ad4ca5aa8c7ac1fbf1f6257876fa1",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/BUILD-RESULT.md",
+      "before_sha256": "5f776facd5866b4e16ef94d0bc7c0044ba2424b5e2bad0534066994b34768562",
+      "after_sha256": "42fb452333df298d758887175e72daddc24889dcbb9a025c1ed80235e12d8a1d",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/HARDWARE-PLAN.md",
+      "before_sha256": "3dc30256cc32f0153f05a84371de674c7931bf4e536721fe5da8e312a6cccc20",
+      "after_sha256": "b5402cd5d70259ae81ca366345c9becd833e56b5aafb92d0dc35a37d35b7217a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/HARDWARE-READINESS.md",
+      "before_sha256": "f06cba284992509c637a567e57eb2025187adf090aef8a9172b4252bcd21fb69",
+      "after_sha256": "ae3385a736fc34aa992736b6f0833eaa4536ad8ad3898f4c9f6a2515ca926cfc",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/PLAN.md",
+      "before_sha256": "1a4e1dd00758b584e9e2e702d4ef685d6e63297dacbb2124c7a1476c76fa5ba9",
+      "after_sha256": "40db448b702c800f3f38115203fb9c07a0dfedf46df906fbc424581abc503677",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/RESULT91.md",
+      "before_sha256": "b623edd85226823b0b8f8e97d76a6bb3709a623516ebaf5b7e78ebe76f0d3a6c",
+      "after_sha256": "dcb991f492faf10b915458abfa91c69c2896457c35af492f6ad1ada98297cff4",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/results/build01/PRE-CODE-PLAN.md",
+      "before_sha256": "fd2760166fc6a18cd2a25dc12318c4d3e4776560fce194ec69c1d5997ff6c990",
+      "after_sha256": "39722e290498052bb163bfbf9393b08d7294b66275bd8e11837fd33a69f99262",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/results/hardware01-preparation/HARDWARE-PLAN.md",
+      "before_sha256": "a189626becee042688c01b9cd778b9030e3e117f9dc55c3d87c3ffebd3ac1fce",
+      "after_sha256": "8e69a2fcdafbc25ffcd2f844cbd6ecfabd797f9b19f894fa60d4f66651a9fdc1",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-021/results/hardware01-preparation/PERF016-PRE-CODE-PLAN.md",
+      "before_sha256": "a382e7b7285610a7143b1a1e2904f471bb86e744fd2e7c1f489f922db13b0e53",
+      "after_sha256": "52360ea196161caf8ea879a017fe86135667f30563153039f3052e2c271e5a21",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-022/PLAN.md",
+      "before_sha256": "894e4021e9378cac0a1d5d413360c5dadee82020707c15a72f3f5f59c9e2fd10",
+      "after_sha256": "303c5dc2edef1bd5b4b9f8d235241eaa2e46ea127bb14e986bea7fc9e3dbfedb",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-022/READINESS.md",
+      "before_sha256": "829eb63e6cadfdea319e8ffe8493018021bcfa2d5d6a7117afb8cdcba3661805",
+      "after_sha256": "aa5a1d23053ab7e913088f1a040de92532e4abf06d4db815d026eed5b00356fa",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-022/READINESS02.md",
+      "before_sha256": "0ff0e1b5a9e603fc8b1a21626650db5ddff29341c8b1630bf493d60342b6c047",
+      "after_sha256": "adce0c116b1f3fb08f64bb010f701a4581ff4794ce010e8bde0d72ab030c6ec1",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-022/results/host01/sources/PLAN.md",
+      "before_sha256": "cc4ec43d1ced4cd9939f8271b6897d2327b227ad7bb8f0a791c6d7142541b6f2",
+      "after_sha256": "07e5479f55e108e889d36ba74c3551d2e2a29e28ae9667ab6fccb123f35922b4",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/AMENDMENT-02.md",
+      "before_sha256": "04b77dbce32d77c6f6565dc2f7512a31ae27ccc481e0964d29101fe896240f7f",
+      "after_sha256": "318a39992d42b881b4c1dd343a6915d2400df74df837e2a39193c565170eee7c",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/BUILD-RESULT.md",
+      "before_sha256": "11ee703d41063f56e2cdedf47a711c6e023a8c5faa9ff3588212f568423b59ba",
+      "after_sha256": "863dc22b6b2d2aa2e36b9aebda0ff884de1cdea88fc665d95077131c24c5c2e1",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/CONTROLLER-RESULT.md",
+      "before_sha256": "d72751f5f392731d4de83d811bcad45d924712e086cf0f2952acdb93f82f3773",
+      "after_sha256": "e0fbdaee91307ca6dfea95825306fc6e746fbea31fa4e51dc9acfdef36f2c0bc",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/CONTROLLER-RESULT03.md",
+      "before_sha256": "9add0002a388f3ddb23e9dbbadd10b96f822f482f8902583b19b937e0b9131eb",
+      "after_sha256": "422d616b05fc2096f75031601554755ac318612bc73af5559b3507cf5b17a5c4",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/HARDWARE-PLAN.md",
+      "before_sha256": "5aa4109be6a5aa5cfefdfc18d355ceab1f3a360f2694978bbbf215385ad49b5f",
+      "after_sha256": "b9ffe4f5bee0000f124a54b76023319404f616a39c9f488e1e49a4967b95c4d3",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/HARDWARE-PLAN02.md",
+      "before_sha256": "2152a1a7cc65b3bb6c796b314da8ec9e75f73f707349d5e5740e59a3c0fab528",
+      "after_sha256": "b9ffe4f5bee0000f124a54b76023319404f616a39c9f488e1e49a4967b95c4d3",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/PLAN.md",
+      "before_sha256": "95c18490a2c1c52b0f8d7ce6d15bce065f40be2aa3e5b8ab9b4aaa09bea52f8d",
+      "after_sha256": "5af9b04d104bb984f113461e96d90a3b5968656a7d769a4baac17d38f4eae7d2",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/READINESS01.md",
+      "before_sha256": "a03bec7aac55a3f67d6631e83d1b0f3d39f6aed2719083b2db942371ffe73fc7",
+      "after_sha256": "0a2c9dd20050bdefef8e2a372391ffb38464a166ed19c26fbbda8dc45cd6d614",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/READINESS02.md",
+      "before_sha256": "eaee8e069a5d547f77747eb12c3ff7d559c219d0ac9ea1d0f7c5d9af6d38304c",
+      "after_sha256": "58471b4a37092c3b6cef7c9257eae639fc6108f5e3dca411851ef581c8cb956a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/RESULT97.md",
+      "before_sha256": "bc74fdc47d043a5d74e0b83150ef39ad595d652bc10ec4dc320ee185aac2b5e2",
+      "after_sha256": "f86fa0020a16cb27c78e22ec26a734bc4f930cf46883b94066e30ad77dd4ed7d",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/results/actual97/cleanup-source-return.md",
+      "before_sha256": "486122391a0bb602f92428881b201d727b946c165031d7df6280b0591f5b37e9",
+      "after_sha256": "8493f4211b634546b0a27160026faee638ea0217abf661beade75e32b43a72d2",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PERF-023/results/build01/PRE-CODE-PLAN.md",
+      "before_sha256": "0f1650e04675ef98f9da7b812ee6cf28e7f920ea51291377d27003c76fec0c26",
+      "after_sha256": "c7ff420518d22e411e33390c0f917a9c54f39b2e944a84a26117a737f133394a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PIPE-001/PLAN.md",
+      "before_sha256": "c8dfa3a5ab33b775a714deb44d789ebdecdcd6e74086eb3317ef75e489c15ecb",
+      "after_sha256": "b0f7495e694391ea0e017654a103a52f5eb5c36db5235a8e9eab383d358f7dd3",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROD-001/PLAN.md",
+      "before_sha256": "b730beef4c26f343903eb9bd60c0d0e2b3b1c58181ebd613a62ab1ce70dadca7",
+      "after_sha256": "cf80df3ffe9e240d88246b348f4638d41e243e17b45f3d1b610557caebbd66e7",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROD-001/RUNTIME-PLAN.md",
+      "before_sha256": "8a74e2eb257831f44117a976a9c11cc5caa79a976ca94508049c7feaebd975f3",
+      "after_sha256": "6d4a276a90784c0b9e92b33ada97197264dd27bf3424527324deea2b9ff0e548",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/ALEXE-PLAN.md",
+      "before_sha256": "88fe6ee65150f34ecb786aa4f3c65225e896f1b46eada63f640fc2e998a26f82",
+      "after_sha256": "23308436517c0107adbb78db8f81da6a5175c51de0d082b223b2becb4c6f17dc",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/ALEXE-RESULTS.md",
+      "before_sha256": "0f27319601106049ad7b53197131c2704541338547374aa2835a844039f4f067",
+      "after_sha256": "d438c6f309e77a52293d61c7a789a3bb2972a113f85a96003fece790b44f2a7a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/CLEANUP105-PLAN.md",
+      "before_sha256": "81d6587be06440fdbff6eed16d94cb619a11a60ef2581758d77177fdf8f1fa49",
+      "after_sha256": "945eebf4109bcc9123563feceac7d85804239a858c0812c9a31c682e46707183",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/EMULATOR-PLAN.md",
+      "before_sha256": "407df508efcdb860c9cb394c0627a6740dabafb78bc066b0c29b68db81cbaa7d",
+      "after_sha256": "db458a3f779cc0a3859163211997c98bbe69b1171c9889d821e311755180df18",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/HARDWARE-PLAN.md",
+      "before_sha256": "a6858b07601be82afcb96268559495a608df9b2c96c251c3bcb7a99d12c7a47f",
+      "after_sha256": "8912e392aceaa768bd85a1d554f66544fc16b81493d55877926a37b6569a197d",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/HARDWARE02-PLAN.md",
+      "before_sha256": "f7bdfcc068d206d4a1dd3d11b6a3ce66fb9c3f31c8f73d2b7c1c301f4038a16f",
+      "after_sha256": "4ffc57edb541c7a7cf79dfdb968027c2a0a8f41527cd2ce96ba54a913023705a",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/HARDWARE02-READINESS.md",
+      "before_sha256": "8a4c57ba76dc9468d63f3b88c1a7e3b318bf465dbb3f65ab3bc2815c825aeca5",
+      "after_sha256": "3665d7496258cafe267994fc1022fb573f0e21fdcb0f9bbf57689bdb7a26ed40",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/HOST-REUSE.md",
+      "before_sha256": "0f3af398c63b217609020f18098fd462572f7ff5bc38aa060b05e8b01b770e8a",
+      "after_sha256": "d1a92acd38114f4f661f4abc558a5c92bdaae874a73707f5cb0deca193e5948b",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/READINESS.md",
+      "before_sha256": "c4b9f86746309f19af07409d6bf439d8964dbf357d2d6141ce8ee37c282d69c9",
+      "after_sha256": "9e0d902edbd8008315ed95260e63b9a1b5172fade3e0c4ec13155f4b57dd2990",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-PROFILE-001/RESULT101.md",
+      "before_sha256": "6845a45d5b22b781c3a7e7142b5db34bf694063648c8cec8b5b800b299383628",
+      "after_sha256": "c3006a3205ace75004ee06dc9bc0907fd04c7887fe8c87ca89821850db0abcae",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-REVIEW-001/ADVICE-RETURN.md",
+      "before_sha256": "92d0329d8fc77cc46f296dab7cb182bef146f5b1960e60ecd610c39038b9cd14",
+      "after_sha256": "17d25068e165e3d6a98d228d9c803c84c0bfecaa9200f1548672cd5f5dddbcbd",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-REVIEW-001/FINDINGS.md",
+      "before_sha256": "d062e5a87e1a3f91fd65ec78c14df43aac0a74e64626ae1a978f1546353a5903",
+      "after_sha256": "1dbab2ca75fe88b09c45a41dec25bd3586d402a1bc98cf16835c51f3928010dc",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/tasks/WOLF-REVIEW-001/PLAN.md",
+      "before_sha256": "918c476f75d5f48fdbaa944cd0dba787a5300dd96059c007a0b160ddf720df1a",
+      "after_sha256": "1c52449da6ea2bfa686b334390b4cae1e24e05dbaa80a1328c3780d17023b2c4",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/wolf3d-application-shell-precis.md",
+      "before_sha256": "1749b117b23b96583ba2dcc0b59ce2294706cd7feda2558bed1a289d8e97a94e",
+      "after_sha256": "fb4dab71783c0ddf806c697c8e4ba2c168395578b0538a9f2b0e6b57e8564cfd",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/wolf3d-console8-startup-diagnostic-plan.md",
+      "before_sha256": "65c9c6a8e88ade432d36de96f93daa3d0598a64ec4db8e383226b4241c6b0f40",
+      "after_sha256": "584eeb750dae1150d04384e0b5ba7a7845dee8d3dc67a3b791e6f374a9609e7d",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/wolf3d-shareware-parity-checklist.md",
+      "before_sha256": "6f926d8253ea8a22daca9b957ece9ca746d1253e5f97a9f462110e9e03a59268",
+      "after_sha256": "861b8094fccc88036237b9f3c26a532f1f6a83bf1883b61e297ffad43f3321ec",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/wolf3d-vdplet-color-rows-target-plan.md",
+      "before_sha256": "6e551213ece4090de3ff02cbbb2daa0c04727ad2de42a10e4a0a637261882bf1",
+      "after_sha256": "8c94c54da439336712220ac9ec2622b0fdb37527651709291210fcf0ae409d04",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/doc/wolf3d-vdplet-migration.md",
+      "before_sha256": "27640622a33982fe8409b0da5664fdceeac27d7a24363f9796172ef8529d4e22",
+      "after_sha256": "fb4aa101f97a492563e1062572451c8c0ebcb009ec302b26960b2eb18b9cfb4c",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/vdplet/audio-ring-late-corrected/results/generation-78-prelaunch-failure/host-context-before.txt",
+      "before_sha256": "937273a4faeef6af854d59e18900161eef24310fe4c4a5cdb304a1ea44d4faac",
+      "after_sha256": "7818dcb8d5fd49ada6b12c130eb7cdd3d626f59f21c99a02da12f966725ce7ca",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/vdplet/audio-ring-startup/results/generation-75-r01/host-context-after.txt",
+      "before_sha256": "cf90a68fcfce6fa74bed834c8f67a06ffdaee700d33efe16b6c5cb65614380ca",
+      "after_sha256": "7818dcb8d5fd49ada6b12c130eb7cdd3d626f59f21c99a02da12f966725ce7ca",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/vdplet/audio-ring-startup/results/generation-75-r01/host-context-before.txt",
+      "before_sha256": "f2ad8d6cad930632a63c32be0c0db8126f7e98990da46f8a8857b4d39479991e",
+      "after_sha256": "7818dcb8d5fd49ada6b12c130eb7cdd3d626f59f21c99a02da12f966725ce7ca",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/vdplet/audio-ring/results/generation-71-r02/host-context-after.txt",
+      "before_sha256": "acf138cf6d03f0227ab6ef5c8298871688fa2de78e16b47beafd07442e30bd8e",
+      "after_sha256": "7818dcb8d5fd49ada6b12c130eb7cdd3d626f59f21c99a02da12f966725ce7ca",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "agonport/vdplet/audio-ring/results/generation-71-r02/host-context-before.txt",
+      "before_sha256": "eaae74ab5252aaddaed3cd9181846128299407a5b4614c3a42b811f2d6ca939a",
+      "after_sha256": "7818dcb8d5fd49ada6b12c130eb7cdd3d626f59f21c99a02da12f966725ce7ca",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "src/asm/wolf3d/README.md",
+      "before_sha256": "e643e3c2fd42c162bc54c61d269b6b26e7a94205d35215a3316f4fce71c15bc7",
+      "after_sha256": "41cb161790d7041763c6313667ccbdce16b718308a59ae0682984e75ed310e23",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    },
+    {
+      "path": "tools/README.md",
+      "before_sha256": "4e561a04157c5ae071d0765ad2fe12b7235fb4082cdfe3fd71150abba3fa91a4",
+      "after_sha256": "1b9ca3f3e7cba214374d5b83d8cc42423b6610acf220f2afb90cb92a49afbc75",
+      "disposition": "Removed competing procedural content or redirected authority; remaining factual/application context retained"
+    }
+  ]
+}

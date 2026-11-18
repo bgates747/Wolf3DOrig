@@ -7,11 +7,6 @@ the normal 3D viewport and HUD. Both loading pages are reconstructed with it.
 
 ![Actual Fab capture at fifth asset](CAPTION.png)
 
-The static fixture deliberately aborts after timer initialization. It checks
-timer/vector/interrupt cleanup; it does not exercise a rotating renderer. Its
-timer/abort bench body remains unchanged. Routine visual rotation reviews should
-use an explicitly presenting rotation fixture, with a clear start announcement.
-
 Four actual eZ80 guest assemblies passed in r02. Both unpaced timing binaries
 are byte-identical to their PERF009 predecessors, including their package-size
 operands; only the two static controls change output. The caption uses an owned
@@ -63,3 +58,5 @@ PERF009 PRESENTATION-CORRECTION.md separately explains the earlier stationary
 room: the unpaced fixture draws600 changing poses into a hidden buffer and
 presents once after timing ends. These results measure hidden draw capacity,
 not visible/gameplay FPS. This caption change does not alter that fixture.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

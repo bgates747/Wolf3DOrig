@@ -5,13 +5,6 @@ artifact exists and its source/host/release evidence is reviewed. It is not an
 input freeze, reservation or execution selection. Current blocker is compiler
 routing; no artifact SHA is invented and no profile is ready to run.
 
-Use the same two unchanged case inputs as s01: r05 bespoke CPU first, original
-r04 VDPlet paced second only conditional on normal completion of the first.
-The first observed stasis window or unexpected failure ends the tranche. The
-purpose is stalled TX-state observation with reduced repeated publication,
-not to collect or replace benchmark speed results. Original q01/q02/control
-failures and625d zero-sample passes remain separate.
-
 Retain all native firmware/ELF, backend0866265b, MOS, assets, guest bytes,
 wrapper, input shim and setup history; replace only a new private profile's
 frontend with the reviewed FX-153 artifact and record the changed compiler/
@@ -34,3 +27,5 @@ or bounds need an explicit identified revision. Use fresh normal Oryx FIFO/
 whole-host idle checkout and successful sequential assert before each child.
 Retrieve/hash, join only owned trees, fresh idle, release and immediately notify
 the actual successor. No firmware/hardware, repair, adoption or public release.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

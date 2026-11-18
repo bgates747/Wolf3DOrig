@@ -32,11 +32,6 @@ make -j1 -C /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-002/voice/play
   AGONDEV_TOOLCHAIN=/Agon/agondev/release
 ```
 
-This creates `voice/player/bin/playwav.bin`. Use the normal compile reservation
-when required on your host. Deployment/invocation requires actual current bench
-custody and the maintained Extender transport procedure. The following is MOS
-syntax after the caller deploys to its own approved task directory:
-
 ```text
 LOAD /test/your-task/playwav.bin
 RUN . /test/your-task/example-review.wav
@@ -92,3 +87,5 @@ The historical donor is Extender's `examples/network-hello/src/main.c` audio
 portion. Its demo/autoexec/service wrappers must not be revived. AgonJukebox's
 maintained converter supplies the WAV contract; Wolf's AGNB writer/loader is
 used only by the integrated assembly cue, not by the generic CLI player.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

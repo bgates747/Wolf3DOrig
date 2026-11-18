@@ -10,6 +10,6 @@ All target .su frames equal the control: divider48B, signed wrapper32B, projecto
 
 Four actual room/sprite uncapped producers assemble with exact per-arm six read/upload/LOAD/strict-limit operands, balanced SP labels and per-frame C3/fence behavior. Original room guest reproducesc43e7fe7. Compiler340 released11:20:45UTC/allchildrenjoined; automatic341 granted toMech and immediately notified.
 
-**Not yet established:** full64domain execution on Xtensa, actual benchmark fast/fallback hit counts, physical pixel equality or timing benefit. Next contract must bind real projection inputs and native-use coverage, preserve observer distinction and choose a finite matched room/sprite cohort/current tuple/normal admission. Do not relabel host arithmetic as native execution or promote this arm solely from source counts. Existing16 has independently completed; no current physical input is changed.
-
 [Actual body and target proof](results/build01/code-result.json), [numeric cases](results/build01/numeric-check.log), [source join](results/build01/native-body-binding.json), [producer](results/build01/guests-receipt.json), [selected stack](results/build01/stack-source.json).
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

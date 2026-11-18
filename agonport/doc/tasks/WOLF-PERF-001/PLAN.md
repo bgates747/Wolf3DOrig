@@ -79,13 +79,6 @@ translation. Explicit defaults: start east (0 degrees), turn counterclockwise
 at 36 degrees/second. Tile-center placement, heading and direction are stated
 defaults; tile, two revolutions and duration are direct Author selections.
 
-**Suppress all enemy spawns** in this fixture. Retain canonical geometry,
-doors and static scenery, with door states pinned. No enemy AI, attacks,
-movement or enemy sprite drawing may contaminate the rendering baseline.
-Report zero active enemies and assert it in the fixture. This is a rendering
-isolation workload, not a claim of full populated-game CPU capacity. Any later
-populated gameplay benchmark requires a separately identified workload.
-
 Use 600 fixed quanta at the normal 30 Hz simulation cadence. Derive integer
 headings cumulatively, e.g. `floor(720*n/600) mod 360`, n=0..600, retaining the
 revolution count. This prevents rounding drift and proves full-turn closure.
@@ -97,12 +90,6 @@ separately reported warm-up and final drain. CPU and unpaced arms replay the
 same indexed workload without intentional twenty-second waiting; report actual
 elapsed time and throughput. Any additional cycles for timer resolution must
 be explicit. Do not confuse the scripted cadence with measured capacity.
-
-Freeze map/assets, adjacent door IDs/states, static population, RNG seed,
-HUD/weapon/palette/audio settings, and frame-indexed pose/state digests in a
-manifest. Keep production maps and spawn data unchanged: apply placement and
-enemy suppression only in task-owned fixture code. Historical fixture recovery
-is superseded by the Author's concrete selection and is no longer a blocker.
 
 Use the current production VDPlet direct-row renderer as the primary subject.
 Identify its firmware, SDK, module and application hashes; keep standalone or
@@ -165,13 +152,6 @@ mode/resolution, instrumentation and pacing semantics where possible when
 comparing Rally and Wolf; disclose scene, pixel count and architecture
 differences. This compares measured workloads, not equal visual complexity.
 
-Real Agon hardware owns the final speed conclusion. A physical runbook must
-identify required diagnostic firmware, rollback, exact commands, expected
-duration and output. Follow canonical bench and SD procedures. Pi heavy work,
-Oryx custody, firmware flashing and physical invocation retain their applicable
-authorization gates. Never launch the Author's GUI or commit emulator-related
-changes before the required human acceptance and explicit publication approval.
-
 Deliver a concise results report answering: eZ80 pose/full-state capacity;
 ESP32 render and broader completion costs; unpaced completed throughput;
 normal presentation regularity; limiting stage; and qualified Rally comparison.
@@ -181,7 +161,6 @@ later decision; this task first establishes a trustworthy baseline.
 **Execution boundary:** implement and qualify the selected fixture headlessly
 on Oryx under the shared FIFO; preserve results and release after owned cleanup.
 The Author also explicitly authorized scheduling notifications to queued agents.
-
 
 ## Initial implementation decision
 
@@ -193,3 +172,5 @@ colour-row scope and full module call separately; log readout occurs afterward.
 The workload is 600 indexed poses: first revolution indices 1..300, second
 301..600. Report both, never silently discard the first. Audio is disabled for
 render isolation; geometry, authored doors and statics are retained.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

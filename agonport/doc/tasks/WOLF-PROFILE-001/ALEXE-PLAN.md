@@ -1,10 +1,5 @@
 # Agon Lexe native-profiler check
 
-Smith directly selects Oryx/Alexe after the blocked101 hardware attempt.
-Alexe means Agon Lexe, formerly Flexe; local executable names remain `flexe`
-until its cutover completes. This run does not rename or rebuild the emulator,
-resume the old optimization goal, or contact Olimex/P4 hardware.
-
 One fresh isolated headless profile, one original300s completion bound, stop on
 first failure with no automatic replay. Use the previously qualified FX153
 frontend c987fafc and backend0866265b through the real `flexe-agon-emulator`
@@ -40,3 +35,5 @@ if necessary; all owned children join. Retrieve/hash evidence and take fresh
 whole-host idle proof, then normalrelease/immediateactualnext notification
 before offline analysis. No installation, shared profile mutation, physical
 firmware operation or new emulator repair follows a failure automatically.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -9,14 +9,6 @@ with exit1 before any resource probe, guest LOAD/RUN, module INIT or timing.
 The reason for that boot-admission failure remains unknown. It establishes no
 Os-versus-O2 performance result. No test or uncertain operation was replayed.
 
-Under Extender's source-only restoration disposition, a separate cleanup-only
-controller restored the exact incoming1105920-byte profile8/tail85f9cf31 span,
-independently read it back, then performed the single selected current bootstrap
-for that restored image. Bootstrap, root CLI/read/EXIT, mode0/callback0/route0,
-unchanged whole startup/listener, neutral input, offline listener/idle worker,
-free USB ports and joined actors passed. Cleanup exited0 at1794020426.56.
-Generation69 remains held for Smith; no release or successor grant occurred.
-
 Local evidence is build/hardware01/evidence/failure.json, flash-b/read.bin,
 flash-b/clean-bootstrap, flash-restore/receipt.json and read.bin,
 boot-stopped-restored.json, final-checks/observation.json and
@@ -26,3 +18,5 @@ controller changes. Original receipts and epochs remain unchanged.
 
 Implementation/build qualification remains successful; physical P01 testing is
 unfinished. A separately frozen same-task attempt is selected in AMENDMENT-02.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

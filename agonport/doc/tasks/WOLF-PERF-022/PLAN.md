@@ -8,30 +8,6 @@ separate foreground exact-PID attach without blocking cancellation or changing
 target parent/group; its actual custom-handler/controller integration is still
 required. This is a new diagnostic comparison, not a repair or blind replay.
 
-- [x] WOLF-PERF-022-01 — Freeze exact modules/producers, observer compatibility,
-  host identity/ownership/handshake/liveness/failure/order limits before code.
-- [x] WOLF-PERF-022-02 — Implement separate foreground observer and controller
-  handshake with no device I/O before positive attachment. Preserve controller
-  parent/group, normal signal handler and original foreground tool handles.
-- [x] WOLF-PERF-022-03 — Qualify the actual app-server-parented disposable
-  controller/observer path and original host_interrupt08 handler, normal exit,
-  known SIGTERM sender, observer cancellation/actual detach, missing/stale/wrong
-  handshake refusal and no new operation after observer loss. No target used.
-- [x] WOLF-PERF-022-04 — Qualify actual adapted controller budget/first-failure/
-  module/producer/namespace paths plus real retained C-listener replacement
-  lifecycle; no synthetic replacement for the deployed engine or weakened guard.
-- [x] WOLF-PERF-022-05 — Rejoin exact existing source/target/producers/current
-  restored tuple/rollback and actual two-interpreter closure, archive/freeze/push
-  all selected inputs; normal Mech-first fresh exclusive admission only.
-- [x] WOLF-PERF-022-06 — One full six-guest/sevenINFO uncapped matched cohort,
-  both foreground host actors under the same actual ownership; first unexpected
-  stops new dispatch, preserves original evidence/available RAM before LOAD.
-- [x] WOLF-PERF-022-07 — Exact full incoming restoration/readback/full handback,
-  both host actors and children joined, normal release/immediate next-owner
-  notice. No HOLD; leave SD mounted. Recovery never authorizes benchmark replay.
-- [x] WOLF-PERF-022-08 — Publish raw timing/producer/resource/lifecycle/trace
-  joins, observer/clock/drift limits and costs; no automatic default adoption.
-
 Keep the ENTIRE comparison: original/cyan/combined/combined/cyan/original,
 600 uncapped ordinary-room poses each, E1L1(34,36), zero enemies,121 statics,
 two turns, original C3 and ordered ingress fence per pose, seven INFO-only
@@ -88,25 +64,6 @@ and do not claim zero perturbation, optical calibration or exclusive CPU cost.
 
 ## Physical preservation and resource boundary
 
-Expected retained d9b/a25f/5d657/ed403/0566 requires actual predecessor handback
-and fresh current admission. Existing app-only7593/install493f, full1105920B85f9
-rollback, exact SAVE-only/current ROM/map/host closure and ONE maintained d9b
-P4-init/pad-release→commissioned Agon reset stay unchanged. No alternate boot
-route, added native reader/reset loop or host-signal remedy is inferred.
-
-Stop the first unexpected result; preserve original journals/guest extent and
-available original RAM before any following LOAD/reset. Unknown CLI/return is
-not fabricated from inputready or pendingnull. Use only standing bounded cleanup
-recovery when necessary, honestly distinguishing live and post-reset evidence.
-Exact full restoration/independent readback, rootCLI/rawmode0/callback0/route0/
-whole startup-listener/input-neutral/offline listener/idle worker/free both USB,
-all actors joined, normal release and immediate actual-next notice remain.
-
-Oryx remains down; no emulator diversion to Pi. Serial ordinary build-check
-qualification uses normal Pi FIFO/assert-before-child,80C stop/512MiB available
-RAM floor, finite owned cleanup. MechAgon first; PREPARING is not target access
-or a grant, and no idle bench hold is selected by this task.
-
 ## Reservation-only revision02 — voluntary Mech-first adjustment
 
 Original ungranted dfe8c5bda3b7/kit a07df733 was voluntarily cancelled before
@@ -126,3 +83,5 @@ release17:28:46UTC and immediate next-owner/scheduler notices preceded offline
 analysis. [RESULT95](RESULT95.md) retains all raw joins, draw/presentation/resource
 costs and limits. Historical interrupted failures remain separate; no default
 adoption or extra target work follows from this completed task.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

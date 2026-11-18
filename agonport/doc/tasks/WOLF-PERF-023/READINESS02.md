@@ -49,10 +49,4 @@ handoff. Wolf asserts canonical ownership before contact. Return real actor
 PIDs/original tool handles immediately; no alternate/direct launcher or parent,
 signal swallowing, detached job or duplicate original controller.
 
-App7593/install493f only. Exact incoming85f9 app/tail restoration/readback, ONE
-maintained current bootstrap/full handback, all original jobs/tracer joined,
-fresh final observation/normal release/immediate next notice before analysis.
-No HOLD; leave SD mounted. First unexpected stops successors; preserve actual
-journals and original Wolf guest RAM before LOAD/reset if a guest was dispatched.
-No P4/EMOS/carrier/provider/startup/listener/default/scene/sprite013 change or
-claimed candidate speed. Simultaneous host cancellation remains a limit.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

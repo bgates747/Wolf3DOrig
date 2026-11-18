@@ -1,26 +1,5 @@
 # WOLF-PERF-019 — Visit only the columns in each wall texture group
 
-Next local scan-reduction candidate under WOLF-GOAL-001, after the easier
-qualified arms. This contract precedes implementation. Keep actual86 MechAgon,
-queued/frozen PERF018 and every existing package/result unchanged. Oryx is down;
-normal serial Pi compilation and actual exclusive Extender grants only.
-
-- [x] WOLF-PERF-019-01 — Freeze exact a926 baseline and pre-code supported method,
-  work, order, storage, failure and lifetime boundaries.
-- [x] WOLF-PERF-019-02 — Implement bounded ascending column chains only, with no
-  sampler, projection, metadata, asset order or row/pixel order changes.
-- [x] WOLF-PERF-019-03 — Independent scalar pixels/guards/metadata/error/lease
-  oracle, empty/singleton/column255 and all-ID chain coverage, aliases, full
-  renderer/module/600-pose parity and exact target control/code/stack/provider/
-  resource/package/real producer qualification.
-- [x] WOLF-PERF-019-04 — Count actual skipped membership work separately from
-  timing; select/freeze a useful finite uncapped physical comparison only after
-  correctness, nested-stack and current component/host/producer checks pass.
-- [x] WOLF-PERF-019-05 — Normal fresh grant, bounded run, first-fault/RAM
-  preservation, exact restoration/readback/fullcleanup/release/next-owner notice.
-- [x] WOLF-PERF-019-06 — Publish costs/gain/zero/regression and actual limits;
-  no automatic default adoption or source combination.
-
 ## Pre-code unit compatibility
 
 Current draw_walls discovers needed IDs, acquires them ascending, then scans all
@@ -69,3 +48,5 @@ Actual89 stopped before any room/probe at startup admission. Exact restoration,
 full handback/release and the failed-cohort disposition are complete:
 [RESULT89.md](RESULT89.md). Independent chain/trig timing remains unmeasured;
 no automatic replay or performance/default claim. Actual018 is unchanged.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

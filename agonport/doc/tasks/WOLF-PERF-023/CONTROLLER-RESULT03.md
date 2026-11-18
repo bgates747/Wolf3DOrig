@@ -15,12 +15,6 @@ before observer publication, evidence-directory creation, entry, flash or donor
 import. The unchanged failed97 kit also refuses immediately. Isolated copies
 permit stale-byte tests without modifying the owner's files.
 
-The final preparation explicitly adds this six-file closure; imported-module
-discovery is supplemental. The production kit validator calls the file-only
-checker before constructor publication or device I/O; bootstrap checks it again
-before invoking the unchanged current owner method. No guard relaxation, helper
-substitution, reset recipe or firmware/component change is involved.
-
 The observer core, launcher and decoder remain byte-identical to completed022.
 The observer changes only the new hardware02 task/request/path literals. Its
 actual foreground attach/interruption lifecycle is reused from022, including
@@ -32,9 +26,4 @@ in observe.py itself. That earlier fingerprint/source selection remains in
 controller03; refreshed exact native fingerprint and all checks pass in04. No new controlled
 signal experiment or live device access occurred.
 
-Exact module8d3d/b181 and real producer6180/bff1 source/BIN/listings/SP/size/
-presentation operands rejoin without a rebuild. The prospective kit uses new
-namespace /test/wolf/perf023/r02 and request0d70a117969f, same four uncapped ABBA
-rooms/five INFO and original4200/360/300/>660s guards. Actual98 clean restoration,
-current tuple and fresh Extender grant/stopped handoff remain prerequisites.
-Original97 is preserved as a zero-sample failure, never replayed or relabelled.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

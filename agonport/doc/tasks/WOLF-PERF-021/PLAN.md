@@ -5,26 +5,6 @@ correctness qualification. Prepare it offline while MechAgon88 runs. Preserve
 queued019's complete independent chain/trig cohort and all its549 input bytes.
 No physical021 cohort or production default is selected by this source contract.
 
-- [x] WOLF-PERF-021-01 — Freeze exact baseline, contributing units, compatibility,
-  alias/order/lifetime/resource limits and composition oracles before code.
-- [x] WOLF-PERF-021-02 — Compose only the five named qualified local changes into
-  a separate candidate, with source-unit receipts and independently reproduced
-  a926 control. Retain all original and individual-arm artifacts/results.
-- [x] WOLF-PERF-021-03 — Run meaningful combined-source scalar/alias/error/mask/
-  numerical/trig/renderer/module/600-pose oracles; exact target safe flags/provider/
-  code/sections/nested-stack/data/image and real per-arm producers. Fail closed
-  on any mismatch. Do not infer combined correctness/resources by addition.
-- [x] WOLF-PERF-021-04 — After qualified source/code and the distinct019 outcome,
-  select/freeze one useful uncapped matched physical contract/current tuple/
-  exact rollback/host closure/actual producer bindings, then normal Mech-first
-  admission. No blind replay, weaker guards or bench reservation from this plan.
-- [x] WOLF-PERF-021-05 — Actual finite comparison, raw records and first-fault RAM
-  preservation; exact full restoration/readback/handback/release, immediate
-  actual-next notification. Report gain/zero/regression and resource costs.
-- [ ] WOLF-PERF-021-06 — Decide any later production/default change as its own
-  coherent, qualified change. Preserve qualified work savings and review costs
-  even with unchanged FPS; no automatic "fastest" claim from source counts.
-
 ## Pre-code unit compatibility and selection
 
 Control is exact a926b48ab3207b59773cc8283d59cc687f274ef2af00017451567449a4c69656,
@@ -83,12 +63,6 @@ resource, actual per-arm six load/upload/image-size/strict-limit operands, commo
 SP and presentation calls must be requalified for the new image, never inherited
 from an individual arm's package length. No Oryx execution or Pi emulator.
 
-Normal serial Pi compiler FIFO/assert-before-child/bounds/owned cleanup applies.
-MechAgon first; offline work neither holds nor contacts the bench. A later physical
-contract requires fresh stopped sole-operator handoff and full actual component/
-rollback bindings. All performance runs are uncapped; final submission/completion
-and presentation cadence remain separate from draw and clock/source counts.
-
 Source/target/producer result: [BUILD-RESULT.md](BUILD-RESULT.md). No physical
 021 contract/default selected; running019 and its549 input bytes remain intact.
 
@@ -97,8 +71,4 @@ The separately selected combined-vs-cyan comparison is qualified and frozen:
 [HARDWARE-READINESS.md](HARDWARE-READINESS.md). Fresh grant remains required;
 no physical021 dispatch/result/default claim from offline readiness.
 
-Actual91 disposition: host SIGTERM during first originalRUN stopped the cohort.
-Original cleared-namespace SD validates600 control records, no candidate ran,
-no comparison/default claim. One standing recovery, exact restoration/readback/
-fullhandback and normal release completed. See [RESULT91.md](RESULT91.md).
-A later default decision remains unselected pending meaningful candidate timing.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

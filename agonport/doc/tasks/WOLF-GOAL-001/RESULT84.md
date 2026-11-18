@@ -48,13 +48,10 @@ All cleanup children joined; normal release84 completed at
 Extender received the immediate actual-release/current-state notification.
 The SD card remains mounted.
 
-[Retained evidence](results/actual84/verification.json) contains409 pinned files,
-including original failure/signal/session journals, cleanup source/receipt/RAM,
-exact restoration readback, fresh final observation and release. Original516
-selected bytes were archived before checklist changes; their index is retained.
-
 The H02 execution leaf is disposed as interrupted, not completed. PERF014 and015
 physical performance steps remain open. They require a separately selected and
 frozen future cohort; this result does not authorize replay. Qualified PERF017
 remains a distinct pending four-room divider comparison through its own normal
 fresh admission and MechAgon-first priority.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

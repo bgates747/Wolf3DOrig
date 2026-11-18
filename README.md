@@ -104,11 +104,6 @@ delay or pacing wait. Present every completed render and record presentation
 timestamps, frame count, elapsed time and interval distribution. Hidden drawing
 capacity and meeting a capped target do not establish that maximum.
 
-Use the latest qualified optimized renderer. For Smith's physical visual runs,
-stage and LOAD it without RUN, stop the agent's actors, retain bench custody and
-send the application's agent-has-a-question notification when it is actually
-ready. Smith starts it manually. Do not silently prepend static timer checks.
-
 The [uncapped visible fixture and result](agonport/doc/tasks/WOLF-PERF-012/RESULT.md)
 retain the current method, raw records and hardware limits. Historical paced
 and hidden-capacity records keep their original identities and qualifications.
@@ -218,3 +213,9 @@ project. You use it entirely at your own risk.
 
 This repository exists because understanding old machines—and making them do
 something delightfully unreasonable—is worthwhile in its own right.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).
+
+## Olimex bench procedures
+
+The sole authoritative reference is the [Olimex bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

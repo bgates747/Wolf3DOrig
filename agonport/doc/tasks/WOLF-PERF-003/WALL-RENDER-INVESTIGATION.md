@@ -44,15 +44,6 @@ this source difference is not a measured A/B speedup or pure dispatch comparison
 
 ## Proposed staged investigation
 
-First use a separately identified diagnostic copy, preserving the original
-matched A/B benchmark inputs. Count DDA cell visits, valid wall columns and
-summed visible wall pixels. Record disjoint CCOUNT phase totals for raycasting,
-scratch allocation/release, texture sampling, drawBitmap execution and explicit
-completion calls, plus the existing full-render interval. Drawing already runs
-inside drawBitmap in this mode, so do not count it again as queue-wait time.
-Report profiling overhead and compare an uninstrumented baseline; do not print
-inside these brackets. Retain same-core/wrap bounds and raw counters.
-
 Use fixed poses from the existing rotation to start. A separately identified
 near/far-wall fixture can test wall-area versus ray-step cost later; geometry,
 visible sprites and other changes must be recorded. Do not silently change the
@@ -77,14 +68,6 @@ need the per-column scratch optimization described for A.
 
 ## Qualification and status
 
-Require exact geometry/low-six-bit frame parity against baseline at separated
-headings, doors/statics/HUD/weapon and near-wall clipping; exercise repeated
-frames and failure cleanup. Use Fab for visual correctness, not ESP32 timing.
-Only a fresh admitted hardware run can establish speed/cost here. Current
-loading-query blocker003-16 and changed bench components still need resolution/
-reconciliation; do not replay the failed suite or borrow another owner's slot.
-Keep original A/B comparison and optimization results separately identified.
-
 No candidate is implemented or selected for physical deployment by this note.
 The next concrete deliverable is a frozen profiling/candidate plan after the
 source findings and current component context are reconciled.
@@ -105,3 +88,5 @@ was inspected, not a new build or runtime qualification.
 | `build/hardware03/native-a/deps/vdp-gl/src/displaycontroller.h` | `603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23` |
 | `build/hardware03/native-a/deps/vdp-gl/src/dispdrivers/vgacontroller.cpp` | `77cbb352a896c7d1464fba8dbc1cd4cc33dab6d513d818742aa582868a66b541` |
 | `build/r04/vdplet/native-source/wolf3d_renderer.cpp` | `aee6ed184b0d29e090b2f869559110d1c13fa801b735b1cbd5f36f53e43a3107` |
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

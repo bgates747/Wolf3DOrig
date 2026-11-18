@@ -1,13 +1,5 @@
 # WOLF-PIPE-001 — Independent simulation and newest-pose rendering
 
-Draft source/design task, 2026-11-07. Smith wants Wolf to try Fsim's approach:
-the eZ80 services input and advances physics independently, while the VDP draws
-the newest complete state whenever it can. Maximum-rate presentation must be
-available; an optional even 30 Hz presentation policy must not pace input or
-physics. This task records that direction before implementation. The earlier
-WOLF-GOAL-001 optimization goal remains paused; no build, run or bench reservation
-is selected by this draft.
-
 ## Immutable subtasks
 
 - [x] WOLF-PIPE-001-01 — Consult Fsim and verify its exact current Agon source:
@@ -35,14 +27,6 @@ is selected by this draft.
   bindings, actual checkout, exact restoration and clean handback.
 
 ## Required behavior and design questions
-
-The current benchmark performs pose preparation, submission, RUN completion,
-C3 swap and an ordered INFO fence sequentially before the next pose. Removing
-that eZ80 wait is only one part of the requested change: a VDP render worker
-also needs an available drawing destination while a finished image awaits
-presentation. Two VGA pages alone do not establish that freedom. Inspect Fsim's
-actual separate render-output buffers and copy/presentation ownership before
-choosing a Wolf design; extra memory/copy work must be counted.
 
 Service input promptly even while drawing or waiting for presentation. Advance
 movement, collisions and game time using defined elapsed-time/fixed-step
@@ -81,3 +65,5 @@ Independent source reading and all five supplied SHA-256 pins match. See
 [FSIM-SOURCE.md](FSIM-SOURCE.md) for the verified ownership/scheduling precedent
 and explicit VDPlet gaps. Wolf's own unit-by-unit target-support review remains
 pending; Fsim's bespoke worker is not a drop-in generic VDPlet service.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

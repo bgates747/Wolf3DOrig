@@ -25,13 +25,6 @@ milliseconds/FPS must not be presented as physical Agon speed.
 | Inner ESP32 renderer, mean local CCOUNT interval | **10,053,962 counts/render** |
 | Complete production module dispatch, mean local CCOUNT interval | 10,104,318 counts/render |
 
-The CPU result covers scripted pose assignment, dirty-state preparation,
-packing and serializer retirement. It excludes enemy AI, movement/collision,
-doors, pickups, weapon animation and populated-world simulation. Pose assignment
-itself is mostly below the 1 ms timer resolution; its 0.013 nominal-ms average
-is quantized and must not be advertised as a precise microsecond benchmark.
-The broader CPU lifecycle averages **2.163 nominal PRT ms**, p95/max 3 ms.
-
 The native brackets surround the real production `render_world_direct` call,
 its colour-row scope, and production module dispatch. The inner renderer
 accounts for about 99.50% of the measured dispatch interval. That locates work
@@ -114,15 +107,6 @@ Exact donor hashes are retained with this result.
 
 ## Qualification, repairs and evidence
 
-Four focused host checks pass: exact two-turn arithmetic and unchanged level
-sections; corrupt completion/output refusal; unchanged production assembly;
-and partial paced-buffer/native-identity validation. Target qualification
-requires matching native counts/angles, zero unused rows, restored timer,
-normal UNLOAD/farewell/MOS return and zero backend fault counters. Before/after
-audio code matches the application, and entry/exit stack pointers agree in
-all three benchmark arms. The intentional abort produces no performance result;
-it verifies timer-vector restoration and normal owned emulator shutdown.
-
 Two recorder prerequisites were repaired only in task-owned copies. The
 client's fixed module staging at 0x060000 overwrote executable audio code;
 memory snapshots proved the exact Xtensa bytes and balanced stack. The task
@@ -152,3 +136,5 @@ The [physical runbook](HARDWARE-RUNBOOK.md) and local hardware kit are prepared.
 Hardware execution/calibration and Author acceptance remain open under
 WOLF-PERF-001-06 and -08. This closes the authorized first headless baseline,
 with physical speed and full populated-game CPU capacity explicitly unresolved.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

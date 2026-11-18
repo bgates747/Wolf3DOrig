@@ -36,22 +36,9 @@ reader, alternate reset or automatic setup repeat. Actual89's failed input
 admission and absent aligned eZ80 startup evidence remain unresolved; successful
 restored-image cleanup is not a causal repair claim.
 
-Actual89 cleanup revalidates exact85f9 full1105920B native/tail restoration and
-complete fresh handback/release. Actual90 clean release15:00:52.632573UTC and
-fresh full131072B a25f readback independently join expected d9b/a25f/5d657/ed403/
-0566. No diagnostic80fe remains in that observed handback. These are retained
-preparation facts, not a future device grant. Actual predecessor/current tuple,
-fresh rootCLI/files/raw/input/idle and stopped sole-operator grant must match.
-
-Mandatory future launch ONLY:
-`/Agon/mystuff/agon-extender/.venv/bin/python /Agon/mystuff/Wolf3dOrig/agonport/doc/tasks/WOLF-PERF-021/launch02.py --context ACTUAL_NEW_CONTEXT`.
-Use its actual new token and return PID/original handle; no direct controller.
-After the finite cohort, exact full85f9 restore/readback/current matched bootstrap/
-fresh full handback, all actors joined, normal release and immediate actual-next
-notice. No HOLD; SD stays mounted. First failure preserves original journals and
-available RAM before LOAD/reset, then selected restoration/necessary cleanup.
-
 [Exact preparation/source/input archive](results/hardware01-preparation/SHA256.json)
 retains all716 selected paths and389 unique input bytesets. It neither makes a
 physical speed/optical claim nor admits a production default. Cyan's measured
 draw saving and any extra combined saving must be evaluated separately.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

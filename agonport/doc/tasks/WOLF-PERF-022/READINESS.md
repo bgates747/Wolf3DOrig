@@ -4,17 +4,6 @@ PLAN.md reservation-only revision02. All evidence below remains original.
 
 # PERF022 — qualified full comparison with host-signal observation
 
-Request **dfe8c5bda3b7**, PREPARING until actual fresh Extender admission.
-MechAgon first. No target call or grant is inferred from this source freeze.
-
-Kit **a07df73374af4795ea6c8d3d6ab397a0efb08e656f902bbf3197003e9e367c41**
-contains **822 input paths,471 distinct archived byte sets,17 stage files**.
-Original/cyan/combined packages and all three real guest binaries/listings are
-unchanged from qualified021. Exact three-arm producer/geometry/resource joins
-and every original716 pin were rechecked; the disposed old plan uses its
-original archived bytes. Actual92 fulla25f rollback/readback and clean release
-match retained d9b/a25f/5d657/ed403/0566. A later actual handback/grant must match.
-
 Controller source checks: **27 PASS** (15 controller/namespace/budget, six actual
 retained C-listener lifecycle cases, six observer/controller/binding checks),
 1.332s in compiler398. All owned groups joined; released with no next request.
@@ -49,10 +38,4 @@ The native observer asserts the SAME owner, validates kit/grant/identities,
 attaches only the exact controller, and never opens hardware. Both handles and
 all owned tracers must be terminal/joined before normal release.
 
-First unexpected result stops successors. Preserve original available guest RAM
-before LOAD/reset, exact full1105920B85f9 restore/readback and maintained one-shot
-bootstrap/full handback/SD mounted/normal release/immediate next-owner notice.
-Observer loss never grants a replay, changes a reset ledger or blocks cleanup.
-No HOLD or automatic adoption. Simultaneous loss of both foreground jobs remains
-a limit; ptrace can perturb host setup/collection. Historical84/91 sender/cause
-is still UNKNOWN and this is no claimed signal repair or speed result.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

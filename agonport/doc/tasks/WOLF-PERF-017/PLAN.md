@@ -1,26 +1,5 @@
 # WOLF-PERF-017 — Narrow fast subset in the existing local divider
 
-Consumer-local optimization under WOLF-GOAL-001, after the current fill and
-qualified metadata/trig arms. Source design/compatibility before code. Oryx down;
-MechAgon first, ordinary Pi serial builds and normal fresh Olimex admission.
-Never change active81/016 inputs or re-run its cases for this arm.
-
-- [x] WOLF-PERF-017-01 — Freeze exact baseline/source/native ISA and owner
-  advice, compatibility/numeric/resource/work ledger before implementation.
-- [x] WOLF-PERF-017-02 — Add only a guarded unsigned32 subset after the
-  existing denominator-zero guard; preserve signed wrapper and exact64 fallback.
-- [x] WOLF-PERF-017-03 — Independently qualify actual extracted native bodies,
-  mathematical/old-body/boundary/seeded tests, unchanged renderer outputs and
-  actual target lowering/providers/sections/call nesting/resource/real producers.
-- [x] WOLF-PERF-017-04 — Establish actual projection-input/path coverage and
-  freeze a useful finite uncapped matched physical contract/current bindings.
-  Native arithmetic execution evidence must be distinguished from host tests;
-  select any separate numeric probe explicitly before compiling or dispatching.
-- [x] WOLF-PERF-017-05 — Normal grant, first-fault stop/RAM beforeLOAD, exact
-  restoration/readback/fullcleanup/release and actual-next handoff.
-- [x] WOLF-PERF-017-06 — Publish raw gain/zero/regression, fast/fallback coverage
-  and actual clock/resource limits; no automatic default or library adoption.
-
 ## Pre-code support boundary
 
 Exact independent a926 control remains separate from sprite972f/cyan22ef/
@@ -71,3 +50,5 @@ Actual85 completed and released; see [RESULT85.md](RESULT85.md). Pooled draw
 change2.125% with3.111% control drift, no demonstrated presented-rate gain.
 Qualified local candidate retained; generic libgcc gate and default adoption
 remain separate.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -37,10 +37,4 @@ artifact outside the admitted private callers. Compiler caller specialization
 is an inference, not a separately retained optimizer trace. The actual module/
 frame contract remains the qualification domain.
 
-Compiler271 asserted before every child; all gates pass in60.05s, peak54.55C.
-Owned children joined and271released22:55:02UTC,nextnone. R01 test-formatting
-compile failure remains retained, without warning suppression. Source/package
-checks do not establish physical speed, pixel scanout or a newly supported ABI
-mode. No hardware/emulator/default deployment occurred. Exact current owner
-context/normal reservation, frozen fresh cohort and independent restore/readback
-remain before physical timing. R02-BUILD.json retains exact hashes/code/stack.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

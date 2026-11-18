@@ -193,19 +193,6 @@ of the authoritative saved simulation state. Oryx generation 171 passes all
 618 direct eZ80 checks. The measured real-E1L1 patrol route remains 0.217 ms
 per fixed frame because this correction runs only during attempt seeding.
 
-Quit-flow correction, 2026-11-03: `WL_MENU.C::CP_Quit` does not immediately
-terminate. It selects one of nine original prompts using two shared `US_RndT`
-draws and the exact source expression `first & (7 + (second & 1))`, then exits
-only for Y/y. N/n or Escape cancels with `ESCPRESSEDSND`; acceptance uses
-`SHOOTSND`. Main-menu Escape and Quit, the in-game Quit row, and F10 now share
-that contract. F10 preserves the source's temporary `WindowH=160` placement by
-moving the composed prompt twenty pixels upward. The same audit corrected the
-startup RNG seed and the main-menu Episode cancellation path, which returns
-locally rather than setting the application exit latch. The follow-up audit
-restores Difficulty cancellation to Episode selection, matching `firstpart`.
-Oryx generation 172 passes all 559 direct production-shell checks, and the
-nine composed prompt assets pass their exact source-string/geometry contract.
-
 New-game-flow correction, 2026-11-03: the in-game control panel now preserves
 `CP_NewGame`'s warning that the current game will be erased. The exact
 three-line `CURGAME` message is composed from the original WL1 font and window
@@ -820,3 +807,5 @@ This is TODO 20.
 TODO 8, 8e, and 8g retain the VDPlet migration, production contract, and
 direct-row physical/default-cutover gates.  They affect deployment and
 performance, not the definition of Wolfenstein shareware behavior above.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

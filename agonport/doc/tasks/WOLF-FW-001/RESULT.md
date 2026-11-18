@@ -114,29 +114,6 @@ fit on each target remain untested in this audit.
 
 ## Required exceptions and gaps
 
-1. **Bespoke compatibility comparison:** justify exact alternate A firmware,
-   private4A/notification services and the comparison purpose in its scheduling
-   request. Bind restoration to the scheduler's current standard. A's private
-   timer recorder can be part of this same explicitly selected exception.
-2. **Fab userspace visual model:** name the source adapter/version, why it
-   cannot execute ESP32 release firmware and the visual-only scope. This does
-   not authorize substituting the model for Alexe/Olimex/Console8 release runs.
-3. **Historical exact-version diagnosis:** preserving an old failure is not a
-   new test. A specifically selected reproduction would need its exact-version
-   purpose, explicit alternate tuple and current-standard cleanup in the request.
-4. **No B timing exception:** do not keep7593 merely because old host code
-   asserts its hash. B's timing is module-owned. Migrate that host binding instead.
-5. **Preparation gap:** legacy profiles, callback/observer private-map literals,
-   transitive reset/bootstrap files and fixed restore extents need current
-   explicit pins before declaring a new kit READY. Binary-equal a25f does not
-   justify ignoring the owner's current map/provenance. No old lease is revived.
-6. **Standard reuse/handback:** old controllers unconditionally install7593 and
-   restore incoming85f9. That sequence is obsolete for routine work. Reuse
-   verified standard firmware, skip unchanged backup/reflash, and restore any
-   authorized nonstandard write to current standards. The new standard's
-   application length1100304 differs from old full touched span1105920; actual
-   write/tail/cleanup extent must be owner-bound, never assumed from BIN size.
-
 No exception, deployment, new package build or test is selected by this audit.
 Future selected migration can reuse the 19 screened images while preparing
 fresh current pairs and finite qualification. Existing workload/resource and
@@ -158,3 +135,5 @@ RX fix nor relabels those results as release0.1.2 measurements. No Console8
 runtime case is claimed. The audit is complete; candidate migration and first
 release-pair execution are explicit future work rather than missing checksum
 or compatibility analysis.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

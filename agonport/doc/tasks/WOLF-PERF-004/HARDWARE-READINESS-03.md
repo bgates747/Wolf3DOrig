@@ -5,14 +5,6 @@ no measured rendering comparison. Amendment02 was frozen/pushed e68e6d5 before
 this supported consumer correction. Original target/native/guest/mechanism bytes
 and the six-guest/seven-probe matrix are unchanged.
 
-The actual selection method now verifies target-only recovery state1 and the
-known previous module through a whole-file GET, then uses the existing PUT/GET
-helper for the selected module. It requires target+backup state9, GET-verifies
-that backup against the previous full target, explicitly invokes supported
-RECOVER3, and requires state1 before proceeding. It records all recovery
-responses and identities. Unknown siblings, target/backup mismatch or cleanup
-failure stop without guest dispatch, abandon or direct sibling deletion.
-
 Under actual Pi compiler268, the13 runner regressions and six composition checks
 passed in1.30s total; the compiler and all owned children were released at
 2026-11-06T21:58:16.905590UTC. COMPOSITION-01.json retains input hashes, commands/
@@ -35,3 +27,5 @@ with the full incoming tuple before fresh admission. Preserve this kit unchanged
 through scheduler preflight. No61token, failed-cohort continuation or benchmark
 result is inferred. Corrected phase/RUN/collection admission guards and finite
 in-flight overrun limits remain as specified by HARDWARE-RUN-03.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

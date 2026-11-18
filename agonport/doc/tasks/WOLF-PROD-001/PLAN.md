@@ -50,16 +50,6 @@ PSRAM/relocations/resource limits and actual nested stack frames. Assemble the
 normal full game and native-profile control, verify all embedded package-length
 operands and production hash joins, and exercise current preparation tests.
 
-Use verified dc43ecb8 async-r1 release and current MOS defaults from FIRMWARE.md.
-Current release compatibility must be distinguished from historical performance.
-For a runtime check use a new finite current-firmware preparation through normal
-Oryx or Olimex scheduling, with exact payload/input freeze before dispatch. Do
-not reuse old private7593 installers/controllers. No firmware exception is
-inherently required. Any performance fixture is uncapped. User-visible fixtures
-are loaded without agent RUN and announced through the application question UI.
-Restore changed components to current standards, stop owned actors, leave SD
-mounted, and release normally. Do not resume unrelated optimization axes.
-
 ## Completion evidence
 
 Commit/push implementation and report including the new production package and
@@ -75,3 +65,5 @@ target was contacted. Preserve that failure. Use reduced host debug information
 and more frequent GCC garbage collection (ggc-min-expand10/min-heapsize8192).
 Keep O2, ASan/UBSan, exact output checks and the512MiB guard unchanged. This is
 compiler-memory control, not a change to target algorithms or native flags.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -28,11 +28,4 @@ End early after a completed stasis series or actual guest/MOS return. Preserve
 raw null/late/interrupted/no-sample results without diagnosing from them or
 forcing a sample. No observed timings enter the matched speed comparison.
 
-Freeze scripts/plan/reader/audit plus exact two profile manifests before launch.
-Normal fresh Oryx FIFO/whole-host-idle checkout, successful sequential ownership
-assert before each child. Ordinary Quit/join first, bounded owned-group cleanup
-only as fallback. Retrieve/hash raw JSONL/reader/console/wire/delivery/stats/
-events, verify owned workers gone, fresh whole-host idle, release/notify actual
-successor before extended analysis. First failure remains retained; no blind
-replay. FX-153's build approval is not used as test authorization: execution
-belongs to the earlier authorized Wolf fixture/benchmark investigation.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

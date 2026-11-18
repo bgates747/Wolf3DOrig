@@ -41,12 +41,7 @@ owner review2026-11-05_15-36-50_vdplet_wolf-perf003-fab-visual-advice-return-one
 explicitly confirms that gap. This work neither substitutes a fake module nor
 claims a new B Fab/runtime/hardware qualification. No generic runtime changes.
 
-Fresh STOPPED review fixtures on Oryx:
-.emulator/wolf-perf003-fixed-review/bespoke-fab (Fab visual-only),
-bespoke-flexe and vdplet-flexe (corrected native benchmark guests). Previous
-human01 runs preserved. To review Fab from Wolf root:
-.venv/bin/python agonport/doc/tasks/WOLF-PERF-003/fab_visual.py run --visible --profile .emulator/wolf-perf003-fixed-review/bespoke-fab
-Do not reuse the already-consumed automatic r06a profile without preserving outputs.
-
 Oryx312 remains held at Smith's explicit instruction. No GUI launched on his
 behalf, no lease release, host changes, hardware/flash or publication performed.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -18,13 +18,6 @@ Use existing FX224 x86 backend d77a7305b5c180381e49a4922ffd5a8ea9f824fee29110d5a
 1668088B, with retained dependency closure and current loader verification.
 Do not substitute observer variants or the old086 donor. No new backend build.
 
-One Target instance in one fresh child process, JIT, CTS-aware wire send, GP
-readiness, public CONFIG/APPLY/render/missing-asset refusal/exact retry/fizzle/
-RESET/FINI/stale-handle/reload/empty-slot checks and full RGB222 pixel oracles.
-Run100/WPN1, private firmware7593, GUI/game autoexec, test replay, benchmark,
-clock/provider/default changes are not selected. The existing fizzle sequence
-is correctness testing, not a paced-FPS measurement. Stop first unexpected.
-
 Bind immutable inputs in a local task-owned build/runtime-inputs01 directory
 and hash manifest before remote staging; verify every received byte on Oryx.
 The worker handles constructor/setup failures by stopping/joining its own native
@@ -39,3 +32,5 @@ fresh canonical Oryx inspection, release and notify actual next. If an input or
 native worker fails, retain the failure and stop; no automatic retry. If waiting
 behind a human hold, report queued status honestly without claiming runtime
 qualification. No new human approval gate or unrelated task resumption.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

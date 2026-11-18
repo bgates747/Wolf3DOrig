@@ -39,15 +39,10 @@ New actual Extender/native interpreter dependency preflights are retained.
 No signal swallowing, detach, altered parent/group, timeout increase or new
 device/firmware/carrier/provider/boot route is selected.
 
-Historical build/controller plan bytes remain under frozen-input manifests
-when completed checkboxes are disposed. Exact current renderer, module, SDK,
-producer and runtime sources are independently rejoined by
-qualify_hardware_guests.py. This is readiness evidence, not a fresh bench grant
-or a claim of physical candidate speed. Actual Mech96 restoration/release/current
-tuple and fresh Extender admission are still required before any contact.
-
 [Real producer receipt](results/guests01/receipt.json),
 [27-check receipt](results/controller02/receipt.json),
 [preserved failed attempt](results/controller-failed01/receipt.json),
 [host reuse proof](HOST-REUSE.json),
 [exact controller delta](controller-source-delta.patch).
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

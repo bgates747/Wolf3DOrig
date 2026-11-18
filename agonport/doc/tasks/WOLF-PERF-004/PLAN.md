@@ -23,38 +23,6 @@ PRE-CODE.md are frozen before implementation. Later exact build/run freezes
 and results are separate files; keep old snapshots/failed witnesses untouched.
 No extra Wolf-owner approval pause is inserted in this selected tranche.
 
-1. **-01 — Review and freeze.** Register this task, map the existing source
-   operation to the exact target row interface, record intended work and gaps,
-   and commit/push the plan before changes.
-2. **-02 — Candidate and correctness harness.** Copy the measured production
-   source into this task's ignored build tree. Change only the initial clear
-   to rows 200–239; retain the existing span writer, divider, compiler policy,
-   row transaction, command/client paths and measured counter boundaries.
-   Prepare a bounded exact-source original/candidate comparison and meaningful
-   existing lifecycle/error regressions. Keep production defaults untouched.
-3. **-03 — Serial Pi build/qualification.** Use the Pi compiler FIFO for serial
-   host compile/link and ordinary bounded correctness checks plus the candidate
-   Xtensa module. Keep commands, source/flags, linked providers, text/data/image,
-   relocations and stack receipts; quantify the one source/code delta. No new
-   firmware build is selected. Reject unexpected differences or failed gates.
-4. **-04 — Hardware readiness.** Reconcile current components, operations and
-   custody with Extender. Prepare and freeze exact candidate/control inputs,
-   fresh paths, finite driver and independent restore/readback. Reserve Olimex
-   normally; no target access before actual fresh grant and token assertion.
-5. **-05 — Finite matched hardware comparison.** After correctness succeeds,
-   run original/control and candidate/control, then four unpaced 600-pose arms
-   in original/candidate/candidate/original order using the PERF-003 corrected
-   E1L1 fixture and two warm-up frames per guest. No paced GUI/human review is
-   selected while Smith is away. Read whole-command stack/resource probes
-   outside timing and use original completion/counter/teardown checks. Stop on
-   the first unexpected failure, retain partial evidence, no uncertain replay.
-6. **-06 — Restore, report and share.** Restore exact incoming native app/touched
-   tail and all scoped contents, verify readback/normal CLI/input/services/
-   idle/free ports, leave SD mounted, release and notify before analysis. Report
-   correctness, raw timings, overhead/clock/resource limits and negative results.
-   Send substantive results/gaps to VDPlet and Extender as appropriate without
-   exposing the independent cold reviewer to new candidate findings.
-
 ## Correctness and build scope
 
 Retain module1907/native7593 and physical54's 600-pose source/asset control.
@@ -87,17 +55,10 @@ boundaries. No per-frame printing/SD output in timing. Raw CCOUNT, PRID/core,
 wrap bounds and guest PRT/MOS checks remain. Keep drawing, broader command,
 submission/wait and optical scanout claims distinct.
 
-Budget at most 60 minutes of bench dispatch with at least six minutes reserved
-for normal restoration/cleanup, 300 seconds per guest. Estimate preparation,
-loading, measurement, retrieval and native write/readback separately in the
-exact run freeze. No new firmware service, P4/EMOS/carrier change, default repin,
-divider replacement, span rewrite, cache-policy relaxation, audio cue or
-unrelated game change is selected. Exact mainboard app-only installation and
-restoration, if required, must use current owner-approved procedures/pins and
-be listed in the actual admission. This plan grants no live device access.
-
 Unsupported or unresolved target mechanisms stop that affected part for an
 explicit disposition; do not invent a workaround. A carrier failure remains
 Extender-owned and a rendering result must name the carrier actually used.
 This finite tranche ends with a qualified candidate or an honest retained
 failure/report. Production adoption and further mechanisms are separate choices.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

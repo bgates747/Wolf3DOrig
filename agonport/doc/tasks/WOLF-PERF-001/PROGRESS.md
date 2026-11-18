@@ -23,25 +23,6 @@ Earlier failures are retained below; none is silently promoted to a baseline.
 
 ## Rejected target cohorts
 
-1. Oryx generation 270 / r01: old frontend 28f50e87…, backend 0866265b…,
-   firmware 8d980025…, interpreter. Stream stalled at 36,513 eZ80-to-VDP bytes
-   during shell upload. No benchmark output or timing interval was reached.
-   Ordinary SDL Quit stopped the frontend. Fault counters were zero, which
-   does not establish transport correctness. Original artifacts remain in
-   ignored `build/evidence/r01-cpu/` and the original Oryx profile.
-2. Oryx generation 271 / r02: exact Rally direct-row comparison snapshots,
-   frontend 7e7d0e1b…, backend 0866265b…, firmware a50eb23a…, JIT. Startup and
-   two warm-up frames passed; CPU wrote 600 valid indexed pose samples and
-   marked timer-vector restoration. Application teardown then reached RST38
-   panic, so the run is rejected as a qualification result. Native/render and
-   paced arms were not launched. Artifacts remain in
-   `build/evidence/r02-cpu/` and the original Oryx profile. Raw decoding alone
-   is not accepted success and must not be advertised as a baseline.
-3. Fresh idle inspections released both generations. The second release
-   returned 6502 as successor; its scheduling notification was delivered.
-   The initial notification denial was resolved by direct Author permission;
-   no alternate transport was used to bypass it.
-
 ## Third cohort outcome and fourth diagnostic
 
 R03 adds IX/IY preservation around timer-vector API and the fixture entry,
@@ -87,14 +68,6 @@ All three original profiles and raw evidence remain in build/evidence/r05-*.
 Fresh idle release completed with no successor.
 
 ## Corrected R06 cohort
-
-R06 explicitly clears all 600 sample slots before the timed interval. It also
-stops owned PRT1 on failure and verifies installation of the old vector using
-an idempotent exchange. A separate cpu-fail build deliberately aborts immediately
-after acquiring PRT1; it produces no performance result. The runner accepts
-that control only with its specific timer-restored failure marker and clean
-owned emulator shutdown. Ordinary benchmark arms still require complete output
-and a normal MOS return. Pi compile generation 63 completed and was released.
 
 The fourth profile initially lacked its remote parent directory; staging failed
 before execution. Completed, stopped profiles were hash-verified and retained;
@@ -163,3 +136,5 @@ mode restoration passed. Diagnostic firmware and uncalibrated clocks limit the
 claims as detailed in HARDWARE-RESULTS.md. Lease released 15:40:12 UTC after
 clean handback; Extender and queued 6502 chat notified. No active reservation
 or device custody remains. Frozen hardware readiness inputs were preserved.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -16,14 +16,6 @@ CLI. A separate joined-control passive observation within the original bound
 captured no further bytes or prompt; no Escape/sentinel/listener/SAVE was typed
 into the uncertain guest. Silence is not a hang or completion verdict.
 
-After the original observation bound expired, ONE standing ordinary Agon
-recovery passed, then a fresh actual CLI response was proved. Original live RAM
-was inaccessible and was **not** saved before reset. The exact original325309B
-guest BIN/map were retained; no MechAgon64KiB extent or post-reset RAM was
-substituted. No paired fallback recovery, new guest, getter, LOAD/RUN or probe
-followed. Existing files in the original cleared namespace were collected after
-recovery and independently validated offline.
-
 Those original SD files contain **600 ordered uncapped control poses** with
 matching native counts/angles, successful470-asset loading/main-return trace,
 all actual linked package-size operands, both per-frame presentation calls and
@@ -56,11 +48,4 @@ analysis; old91 token is invalid. No P4/EMOS/startup/listener/carrier/provider
 change, host lifetime change, detaching, signal workaround or new replay was
 selected. Any future trial needs a separate concrete selection and fresh grant.
 
-[Verified interrupted result](results/actual91/RESULT91.json),
-[raw original/cleanup/input/source evidence pins](results/actual91/SHA256.json),
-[offline verifier](report91.py),
-[bounded passive observation](observe91.py) and
-[frozen necessary recovery/restoration](cleanup91.py) preserve the evidence.
-Source/target/producer qualification of8d3d19bb remains its own result. Combined
-performance, native branch counts and optical/exclusive CPU timing remain
-unmeasured; useful work savings are not rejected merely for unchanged FPS.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -34,9 +34,3 @@ rectangle and subsequent live-face restoration where supported by capture.
 Injected disk failure must not retry indefinitely or silently report valid
 complete output. Native WPN1 join logic requires an independent actual-assembly
 data test; physical cycles remain for the real profiled module/runtime case.
-
-Final exact input closure, selected case argv and results will be retained
-under this task's ignored build directory and summarized in a tracked result.
-Do not take an idle emulator as proof of device/renderer performance or human
-visual acceptance. Full-game native timing needs its separately prepared current
-hardware bindings/normal Extender admission, not an emulator timing extrapolation.

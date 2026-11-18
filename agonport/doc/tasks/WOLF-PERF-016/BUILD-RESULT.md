@@ -8,6 +8,6 @@ Final native .su and ELF entries keep renderer352B, fill_rect32B and fill_span32
 
 Both actual uncapped room producers assemble and independently bind all six encoded read/upload/LOAD/strict-limit operands to each real package. Original guest reproducesc43e7fe7 exactly. Candidate only changes the six relevant length immediates; SP labels, per-frame presentation/fence, two turns and600 poses unchanged. Focused actual controller tests and retained deployed-listener host-engine replacement/refusal/retirement checks pass, no target access.
 
-Compilers330 and332 released after all children joined. MechAgon automatically received331 and was immediately notified. Reservation456459d1283d is PREPARING behind first-priority Extender/Mech work; no Wolf hardware lease. Retained current-source packet requires real predecessor rollback/current tuple reconciliation and fresh admission before dispatch.
-
 [Target/build/guest/controller evidence](results/build01/build-r01-code-result.json), [background check](results/build01/background-check.log), [selected nesting](results/build01/nested-stack-source.json). Remaining hardware scope: four uncapped ordinary-room A/B/B/A guests and five INFO-only queries, exact app-only7593 install/current fullspan rollback and cleanup/release. Native draw and presented throughput will be reported separately; no physical gain claimed yet.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

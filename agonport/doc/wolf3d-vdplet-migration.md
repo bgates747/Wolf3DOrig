@@ -349,24 +349,6 @@ duration. It does not justify a new presentation service in the shared runtime.
 
 ## Compatibility and failure behavior
 
-- A non-VDPlet or insufficient runtime must fail discovery/capability checking
-  with a readable message before assets or gameplay begin.
-- Package admission verifies ABI, capabilities, code/data/stack declarations,
-  and package integrity. The application additionally verifies its own update
-  schema and module build identity.
-- All buffer IDs, sizes, viewport bounds, texture availability, update lengths,
-  and record values must be checked before use.
-- Missing or invalid buffers return `VDPL_E_BUFFER`; the application must not
-  swap a failed frame.
-- The module stores copied state only. No leased pointer survives RUN return.
-- The module sends no raw serial packets. Runtime DONE/ERROR is the only native
-  completion path.
-- App-owned asset buffers may outlive module unload, but module staging,
-  workspace, argument, and update buffers are cleared during orderly exit.
-- The accepted standalone renderer and current client protocol remain
-  buildable behind an explicit legacy option until visual, timing, and hardware
-  acceptance is complete. They are the rollback path and comparison oracle.
-
 ## Feasibility gates
 
 The recommendation becomes an unconditional go only after all four gates pass:
@@ -743,11 +725,6 @@ hardware rather than extrapolating from the emulator.
 
 ### Stage 13 — cut over with rollback
 
-After all gates and Author acceptance, make VDPlet loading the default, update
-release/version/deployment documentation, and retain the tagged standalone
-firmware/client path for at least the first VDPlet release as an explicit
-rollback and diagnostic oracle.
-
 ## Review-gate disposition
 
 The feasibility stop was observed. On 2026-10-30 the Author explicitly
@@ -806,3 +783,5 @@ not invalidate the accepted first run. Generation 29 was released after raw
 evidence retrieval, profile reset, and an empty-host check. This closes the
 optional bounded direct-row gate while leaving production game integration,
 physical qualification, and default selection open under TODO 8.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

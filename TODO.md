@@ -167,42 +167,6 @@ released and54568 is the explicit control, with no default adoption.
 [pre-code review](agonport/doc/tasks/WOLF-PERF-004/PRE-CODE.md). Smith selected
 practical Wolf work while Oryx is down; preserve the independent audit baseline.
 
-- [x] WOLF-PERF-004-01 — Freeze task and target compatibility/intended-work review.
-  Published b9a7062 before candidate work; frozen text preserved.
-- [x] WOLF-PERF-004-02 — Prepare the single clear-extent candidate and exact
-  original/candidate pixel/state/page/lifetime correctness comparison.
-- [x] WOLF-PERF-004-03 — Qualify host checks and safe Xtensa module/resource
-  receipts under actual serial Pi compiler custody.
-  r01 original control stopped at negative signed-shift UBSan finding before
-  candidate execution; Pi259 released. [Failure](agonport/doc/tasks/WOLF-PERF-004/R01-RESULT.md)
-  and [separate prerequisite](agonport/doc/tasks/WOLF-PERF-004/AMENDMENT-01.md)
-  retained; no sanitizer suppression or changed physical control accepted.
-  [r03 passes](agonport/doc/tasks/WOLF-PERF-004/R03-RESULT.md): exact600frames/
-  300headings/page/guard/geometry/service counts, unchanged original1907 target;
-  candidate54568e45, same text/data/package/stack envelopes. Pi261 released.
-- [x] WOLF-PERF-004-04 — Reconcile current Extender context and freeze the finite
-  physical input/run/restoration package before actual fresh admission.
-  Corrected [hardware02 readiness](agonport/doc/tasks/WOLF-PERF-004/HARDWARE-READINESS-02.md)
-  frozen/pushed99b8385;155 input pins verify. Actual60 restored tuple matches
-  frozen incoming identities. Fresh scheduler grant remains required.
-- [x] WOLF-PERF-004-05 — Execute original/candidate reversed-order600pose hardware
-  arms with resource/counter/return checks and first-failure stop.
-  [Actual63 passes](agonport/doc/tasks/WOLF-PERF-004/PHYSICAL63-RESULT.md):6guests/
-  7probes,1200samples per arm; draw91.5588→68.5399ms, completed fixture
-  10.5230→13.8823FPS on nominal clocks. Exact restoration/release complete.
-- [x] WOLF-PERF-004-06 — Restore/release, report raw comparison/limits and share
-  substantive results/gaps with owners; no default adoption in this tranche.
-  Actual63 released22:44:20UTC; report0baa1cf delivered to Extender/VDPlet via
-  durable result mail and steering. SD mounted; production defaults unchanged.
-  [Actual61 stopped](agonport/doc/tasks/WOLF-PERF-004/PHYSICAL61-RESULT.md) before
-  candidate execution; exact restoration/release complete, no measured comparison.
-- [x] WOLF-PERF-004-07 — Correct documented repeated-replacement backup lifecycle
-  under [Amendment02](agonport/doc/tasks/WOLF-PERF-004/AMENDMENT-02.md), qualify
-  actual-consumer/real-listener composition and freeze a fresh cohort package.
-  [Readiness03](agonport/doc/tasks/WOLF-PERF-004/HARDWARE-READINESS-03.md):13runner/
-  6real-engine checks PASS; compiler268 released,167pins/new namespace. Actual
-  next handback/current tuple and fresh physical grant remain required.
-
 ## WOLF-REVIEW-001 — bespoke-to-VDPlet conversion self-review
 
 [Task plan](agonport/doc/tasks/WOLF-REVIEW-001/PLAN.md). Smith requested a
@@ -267,22 +231,6 @@ VGAGRAPH.WL1 chunk 155: original frame art, proportional font, embedded BJ
 picture, wrapping, colors, `pg N of 2` footer, and ShowArticle navigation are
 carried in a reclaimable two-page `end.agnb`. The project's explicit global
 Escape-to-MOS policy remains the one intentional navigation difference.
-
-[ ] 7. Implement the original seven-entry high-score table, qualification and
-name entry, score/floor display, control-panel view, game-over/victory handoff,
-and a versioned, corruption-safe Agon persistence file. The table, ordering,
-name editor, timed non-qualifying path, screen, handoffs, and transactional
-482-byte persistence image pass direct-target checks. A residual source audit
-found that the mutable rows were incorrectly rendered with MOS's fixed 8x8
-font. They now use the exact STARTFONT proportional name glyphs and original
-fixed-width numeric glyphs. The editor now uses the 57-character store and a
-proportional 100-pixel bound instead of twelve fixed cells. Remaining work is
-to reproduce `US_LineInput`'s cursor-aware insertion, Left/Right/Home/End and
-Delete semantics (including its pre-insertion width quirk), then run the direct
-eZ80 target and visually accept qualifying and non-qualifying flows. Two
-disposable acceptance builds enter those exact production paths immediately
-after the real shell/SFX bootstrap, supplying only a guaranteed candidate
-score. The prepared Oryx request was relinquished on 2026-11-04 before launch.
 
 [ ] 14. Restore the original in-game control-panel and pause flow in place of
 temporary gameplay-Escape-to-MOS behavior. Support resume, end game, and an
@@ -394,227 +342,6 @@ offline at 7 kHz. The production container now has zero generic fallback
 records and 259,674 resident PCM bytes; audible hardware acceptance remains
 part of this gate.
 
-[ ] 18. Perform a source-linked, end-to-end Episode 1 residual parity sweep
-after items 11-17 and 6: scoring, inventory, difficulty, actors, secrets,
-transitions, death/game-over, menus, audio, and ending. Record every intentional
-Agon difference and require emulator plus hardware acceptance. The sweep has
-already corrected a silently static HUD face: production now reproduces
-`WL_AGENT.C::UpdateFace`, including its shared `US_RndT` consumption, strict
-threshold, three-frame selection, save persistence, and VDPlet wire byte. The
-follow-up sweep also restored `GOTGATLINGPIC`: every chaingun pickup now sends
-a dedicated wire sentinel, holds it for the generated duration of the selected
-resident `GETGATLINGSND` sample, resumes the ordinary random face transition,
-and cancels it immediately on damage or successful healing. The special state
-is attempt-local, while the ordinary `faceframe` remains the saved value.
-The residual sweep also restored `WL_PLAY.C`'s transient palette feedback:
-successful pickups start the original three-level white flash, scaled damage
-accumulates through the six red levels with red priority, and both counters
-decay on the exact 2,2,3 source-tic cadence. Reserved HUD byte 11 carries the
-effect schema-compatibly; the RGB222 VDPlet renderer preserves direct-row sync
-bits and uses a 64-color lookup for the source palette formula. The same
-end-to-end gate fixed the packaged module's stale rejection of face sentinel
-3. Oryx generation 160 passes 549 player-combat/palette checks, all 32 pickup
-cases, and byte-exact serialization; the six-scene renderer/oracle gate is
-exact.
-The same source pass corrected `WL_AGENT.C::GiveExtraMan`: every award now
-requests `BONUS1UPSND`, including score awards and awards suppressed by the
-nine-life cap. Full heal routes through that one owner so the Agon multi-stream
-backend does not double the effect. Direct eZ80 coverage pins four thresholds
-crossed in one score addition and the capped-life case; Oryx generation 163
-passes all 33/33 pickup/state/sound records. Both application backends rebuild.
-`WL_AGENT.C::Cmd_Use` no longer falls silent when no operable object is found:
-ordinary walls, wrong-face elevators, malformed door references, and unmarked
-walls request the source's `DONOTHINGSND` once per press. Its authentic 140 Hz
-PC-speaker stream is rendered offline at 7 kHz. Oryx generations 164-165 pass
-29/29 direct use/pushwall cases and all 287 production-audio checks.
-The reachable `WL_MENU.C::HandleMenu` audio contract is restored as well:
-cursor motion preserves `MOVEGUN1SND` -> eight source tics -> `MOVEGUN2SND`,
-accept uses `SHOOTSND`, cancel uses `ESCPRESSEDSND`, and an unavailable paid
-episode adds `NOWAYSND`. The four newly admitted effects use their authentic
-AUDIOT PC-speaker streams. SFX are now loaded once beside the application-global
-shell assets; gameplay teardown stops channels but preserves resident samples,
-while final application shutdown clears them. The completed shell proof,
-including SFX-off then SFX-on behavior, passes 526/526 checks on Oryx
-generation 168; generation 167 passes 306/306 audio/lifecycle checks.
-`WL_AGENT.C::ClipMove` now restores the missing `HITWALLSND` request whenever
-the complete X/Y probe collides, including a successful X-only or Y-only
-slide. Its authentic 57 ms PC-speaker stream uses a generated two-quantum
-self-retrigger guard while Agon's independent sound channels remain available
-to unrelated events. Oryx generation 169 passes all 10,030 production
-ClipMove/sound/cooldown records; both application backends rebuild.
-`WL_MAIN.C::ReadConfig/WriteConfig` also exposed a stale claim: the translated
-Sound page retained SFX/music selections only until return to MOS. Production
-now loads and saves a versioned, exact-length, Fletcher-guarded `wolf3d.cfg`
-containing those two meaningful Agon preferences, with on/on fallback for
-missing, truncated, trailing, corrupt, or future-version files. Unavailable
-DOS devices, fixed Agon controls, and the accepted fixed viewport are not
-serialized as fictitious choices. Oryx generation 170 passes all 30/30 direct
-eZ80 format and real-MOS-file checks; both application backends rebuild.
-The actor audit found and corrected a subtler deterministic-port artifact in
-`WL_GAME.C::SetupGameLevel`: package generation had baked the seed-zero demo
-actor phases and production reused them for every ordinary level entry and
-death restart. Production now preserves that exact path for the four original
-demos, but seeds ordinary play from MOS time and rebuilds every timed actor's
-initial ticcount in the original row-major spawn order. Oryx generation 171
-passes 618/618 direct eZ80 checks, pinning deterministic demos, ordinary seeded
-starts, zero-duration states, and the resulting shared RNG position; both
-application backends rebuild.
-The follow-up Episode 1 actor-state audit compared every reachable spawn,
-scheduler, stand/path/chase, dog/ghost, ranged/melee, pain/death, score/drop,
-and boss-audio path to `WL_GAME.C`, `WL_PLAY.C`, `WL_ACT2.C`, and `WL_STATE.C`.
-The all-floor marker census and actor/package host targets pass 27 tests, while
-the existing direct chase/combat/death targets already pin the runtime edges.
-Victory correctly bypasses all hostile simulation at the fixed-step dispatcher.
-No additional actor parity defect or missing test boundary was found.
-The inventory/pickup audit likewise found no state defect. All reachable WL1
-items preserve the source refusal, mutation, score/life, sound, flash, HUD, and
-removal rules; host static/gameplay/combat targets pass 8/8, 55/55, and 48/48,
-with the existing direct pickup proof at 33/33. Two intentional Agon differences
-are retained and recorded: fixed-step square-overlap pickup contact replaces
-the DOS renderer's `TransformTile` side effect, and full heal emits one audible
-one-up instead of issuing the same monophonic sample twice into Agon's
-independent streams.
-The player-weapon audit found one source-order defect: Use was processed during
-an active weapon animation, whereas `WL_AGENT.C::T_Attack` suppresses a newly
-pressed Use button until the attack returns to `T_Player`. Production now
-defers that unarmed edge and operates exactly once on the first idle quantum if
-the key remains held. Oryx generation 251 passes 30/30 direct production
-use/pushwall cases; the independent player-combat and gameplay host oracles
-pass 48/48 and 55/55. Weapon selection, tap/automatic timelines, release/repress,
-ammo fallback, movement, RNG, damage and sound ordering otherwise match. The
-accepted 16-pixel aiming cone, reduced-Q8 target depth, and synchronous CPU
-projection plus `CheckLine` replacement for renderer-owned `FL_VISABLE` remain
-explicit Agon policies.
-The difficulty audit found no defect. Shell choices map source-order Baby,
-Easy, Medium, Hard to values 0..3 with Medium as the original default. All 40
-level/difficulty packages retain identical geometry while applying the exact
-base/Medium/Hard plane-1 population fallthrough, source hit pools, filtered
-kill totals, and difficulty identity. Baby alone quarters incoming damage;
-difficulty survives floor transitions, death reseeds, and save/load. The
-ten-map actor/package/shell group passes 34/34 host checks, the combat oracle
-passes 39/39, and the acceptance-package contract passes 10/10. Existing
-direct shell, combat, death, transition, and save proofs already pin the
-corresponding target boundaries; no new implementation or target case was
-warranted.
-The scoring audit also found no reachable Episode 1 defect. Kill and treasure
-awards, 40,000-point extra lives (including the nine-life sound), ordinary and
-secret intermission bonuses, six-digit HUD truncation, full-width high-score
-handoff, successful-floor checkpointing, failed-attempt score rollback, and
-save/load persistence preserve the source lifecycle. In particular, a failed
-attempt retains lives already earned and the advanced next-extra threshold
-while restoring only score, matching `WL_GAME.C` rather than treating the
-attempt as a transaction. The port uses an unsigned 32-bit score internally;
-the original Borland `long` is signed, but every score reachable in the finite
-shareware episode is far below that boundary. The maintained host score/build
-group passes 105 tests and 10,157 subtests; existing direct pickup,
-intermission, death, save, and high-score targets already pin the target-side
-boundaries, so no new implementation or emulator run was warranted.
-The death/game-over audit found one visible ordering defect at the boundary
-between the death turn and red fizzle. Original `Died()` calls
-`FinishPaletteShifts()` before drawing the final source page; DOS can restore
-the VGA palette without rewriting indexed pixels, while the RGB222 port had
-baked the lethal red shift into both final target surfaces. Production now
-clears the palette wire and marks the palette field dirty before either final
-target render, while deliberately preserving the source counters until the
-next attempt. Oryx generation 253 passes 248/248 direct death-state checks,
-including rotating and already-aligned deaths. The rest of the path remains
-source-correct: shortest turn toward a valid killer, one-second exact-LFSR red
-fizzle, translated 100/70-second hold, signed-life semantics, score-only
-attempt rollback, canonical pistol/eight-ammo respawn, and final-attempt game
-over. The 60-slice/60-Hz presentation of the source's 70-frame/70-Hz fizzle,
-global clean Escape, and invalid/coincident-killer guard remain intentional
-Agon timing and safety policies.
-The secret/pushwall and floor-routing audit found no reachable Episode 1 state
-defect. All ten W3L packages preserve the exact source marker census
-`5,4,10,7,5,4,2,13,2,15`; the renderer's 16-completion history therefore has
-one entry of headroom. Activation, one-/two-cell travel, blocked continuation,
-secret counting, floor-area inheritance, save/restore, ordinary `0 -> 1`,
-secret `0 -> 9`, secret return `9 -> 1`, and E1L9 victory routing preserve the
-source lifecycle. The retained immutable pushwall trigger while a wall is
-active is an intentional safety substitution: the original clears plane 1 but
-can then misread the moving wall's `0xc0` tile bits as an out-of-range door on
-a rapid second Use press; the port safely ignores that press. The focused
-level/package/gameplay/acceptance/backend host group passes 93 tests and 10,144
-subtests, while the existing direct transition matrix and 30-case Use target
-already pin the target-side routes. Visual pushwall and ordinary/secret tally
-acceptance remain folded into the existing Phase-A human gate.
-The shell audit then restored `WL_MENU.C::CP_Quit` and F10's randomized
-confirmation instead of exiting immediately. Production consumes the same two
-shared `US_RndT` bytes and preserves the source expression
-`first & (7 + (second & 1))`, selecting all nine original humorous prompts.
-Main-menu Escape, Quit, pause-menu Quit, and F10 now require Y/N confirmation;
-F10 reproduces the source's 160-pixel control-panel window by shifting its
-prompt twenty pixels upward. Episode cancellation now returns to its parent;
-the follow-up audit restores Difficulty cancellation to the Episode page.
-Oryx generation 172 passes
-559/559 shell checks, including exact prompt selection/coordinates, Y/N/Escape
-semantics, sound feedback, and exit-latch ownership; both application backends
-rebuild.
-The next source pass restored `CP_NewGame`'s in-progress-game warning and its
-nested cancellation contract. The exact original `CURGAME` window appears
-only from the in-game panel; cancel returns to that panel, accept enters
-Difficulty, and cancelling Difficulty returns through Episode selection and
-the warning again. F7's source `WindowH=160` prompt placement is now covered
-separately. Oryx generation 175 passes all 581/581 production-shell checks;
-both application backends rebuild.
-The actor-visibility pass now restores the important persistent half of
-`WL_DRAW.C::DrawScaleds`: at actual render-submission boundaries, a dormant
-actor in a connected area is permanently promoted after its drawable center
-passes the same CPU projection used by gameplay and an unobstructed
-`CheckLine`. Sound, actor-facing sight, walls, behind-player actors, and
-disconnected areas cannot cause false promotion. Oryx generation 178 passes
-624/624 direct eZ80 checks and measures the deliberately pessimistic visible
-case at 158 ms for 1,000 complete passes (0.158 ms per render boundary). Both
-application backends rebuild. The follow-up closes the remaining source edge:
-if the actor center fails, production now probes the eight bounded open
-neighbors around its cached tile with the same projection and authoritative
-wall/door trace, reproducing `spotvis` corner wake-up without VDP read-back.
-Predicate order is adaptive: trace-first after a projected-but-occluded center,
-projection-first after an off-screen center. Oryx generation 191 passes 629/629
-checks and measures 0.533 ms per fully occluded scan and 0.421 ms per line-clear
-behind-player scan; the WL1 starting-area census has at most five dormant
-actors even on Death Incarnate.
-The remembered-slot F8/F9 presentation difference recorded in item 14 is
-closed.
-The residual death/game-over gate no longer requires repeatedly losing normal
-games: two disposable, compile-time acceptance profiles begin the real E1L1
-encounter on one health with either one displayed life or the source's final
-zero-life attempt. They preserve the production death, fizzle, respawn,
-score-checkpoint, high-score, and menu paths; only the initial health/lives are
-overridden. Visual acceptance remains part of the Phase-A batch.
-The source-to-producer audio sweep also corrected the asset inventory for
-Hans's three native effects: `GUTENTAGSND`, `BOSSFIRESND`, and `MUTTISND` were
-already requested and audible, but were falsely marked unrequired. All 48
-reachable production effects are now required and available, preventing a
-future trim from silently removing the boss audio contract.
-The startup sweep restored `WL_MAIN.C::DemoLoop`'s call to
-`WL_INTER.C::PG13`: the bundled `PG13PIC` now appears
-once per process at its original `(216,110)` anchor on the source blue field,
-waits seven seconds, and accepts one fresh key only to dismiss that page before
-the title/attract loop. Exact VGA fade timing remains an intentional platform
-difference. The fixed Agon W/S/A/D plus arrows control scheme, fixed movement
-rates, and absence of DOS mouse/joystick/run-modifier configuration are also
-explicit platform substitutions rather than hidden Phase-A work. Host asset
-contracts pass, both application backends rebuild, and Oryx generation 185
-passes all 683 direct production-shell checks. One staged visual startup review
-remains the close gate for this correction.
-The follow-up audit restored the preceding executable-linked sign-on as well:
-a strict OMF extractor reconstructs the exact 64,000-byte `SIGNON.OBJ` image,
-the shell presents `FinishSignon`'s fresh-key prompt, and `INTROSONG` now begins
-before PG13 and continues into the title. DOS-only memory/device overlays remain
-at their linked defaults as an explicit platform substitution. Host contracts,
-both backends, and the corrected 683/683 direct shell rerun pass; the same
-batched visual startup review remains the close gate.
-The current residual pass corrected one stale scope decision in this ledger:
-`WL_PLAY.C::CheckKeys` tests M+L+I and B+A+T unconditionally in ordinary WL1,
-outside the separately command-line-gated `goobers` block. The implementation
-and deterministic direct-target proof for those two shipped chords are
-complete: M+L+I reproduces the source inventory, score, ten-minute penalty,
-and message; B+A+T reproduces its separate Commander Keen message; both use a
-fresh modal acknowledgment and are suppressed during demo playback. Oryx
-generation 198 passes 578/578 player/input and 699/699 shell checks. The
-command-line-gated `goobers` block itself remains outside the player contract.
-
 # Phase B — Agon identity and legal presentation
 
 [ ] 3b. Add the reserved Agon-specific splash and presentation hook without
@@ -638,45 +365,6 @@ Episode 1 immutable.
 [Task plan](agonport/doc/tasks/WOLF-PERF-003/PLAN.md). Smith authorizes the plan
 freeze/commit/push and implementation on 2026-11-05. Use the same enemy-free
 E1L1 (34,36), 720-degree/20-second fixture on both backends.
-
-- [x] WOLF-PERF-003-01 — Inventory and freeze matched production sources,
-  renderer/runtime identities, workload and timing boundaries.
-  Plan5599f43, r04 input/native manifests and q01 harness freeze retained.
-- [x] WOLF-PERF-003-02 — Adapt the fixture to the standalone backend and add
-  bounded VDP draw/completion instrumentation without timed logging.
-  r04/r05 actual production command capture, native recorder and completed
-  CPU/unpaced/paced paths retained; reliability/paired qualification below.
-- [x] WOLF-PERF-003-03 — Prepare a matched quiet VDPlet control from the same
-  game source, assets, pose sequence and measurement contract.
-  Safe-SDK1907ce17, quiet native7593b9cf and identical canonical assets;
-  completed hidden/paced paths retained, original setup stalls unresolved.
-- [x] WOLF-PERF-003-04 — Qualify scene/sequence parity, recorder integrity,
-  failure paths and timer/vector restoration on the host.
-  Host parity and timer controls pass, but old A runtime omitted map binding.
-  r06 fixes it and passes Fab visuals; actual54 now completes the corrected
-  14-guest/8-probe physical cohort, including full600-to-next-warmup recorder
-  lifetime and clean timer/stack return. No new optical pixel review claimed.
-  [Physical result](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R09-RESULT.md).
-- [ ] WOLF-PERF-003-05 — Build and qualify both backends headlessly on Oryx;
-  collect the frozen reversed-order matched emulator cohort.
-  Earlier four-way functional completion passes remain separate from corrected
-  matched emulator timing. Physical54 comparison completed; this arm stays open.
-- [x] WOLF-PERF-003-06 — Prepare the matched physical package/restoration plan,
-  coordinate firmware and obtain the actual Extender grant before execution.
-  Actual54 completed all14guests/8probes and exact app/tail restoration; released
-  2026-11-06 09:31:19UTC, scheduler/actual successor notified. Prior stops retained.
-- [x] WOLF-PERF-003-07 — Report draw time, submission/completion costs,
-  throughput, pacing and concrete comparison limitations with raw evidence.
-  [Physical report](agonport/doc/tasks/WOLF-PERF-003/HARDWARE-R09-RESULT.md):
-  draw30.701/91.560ms, paced24.409/10.004frames/s A/B; raw CCOUNT/sample CSVs,
-  source-clock limits, scriptedCPU/serial accounting and aggregate-gap caveats.
-- [ ] WOLF-PERF-003-08 — Obtain Smith's acceptance and record each disposition
-  in the dated development log under its immutable ID.
-- [x] WOLF-PERF-003-09 — Coordinate a less intrusive setup-stall diagnostic
-  design with Flexe before selecting further qualification runs.
-  [Consumer requirements](agonport/doc/tasks/WOLF-PERF-003/STALL-DIAGNOSTIC-REQUIREMENTS.md);
-  FX153 source/57host checks/release/static audit and two-case runtime delivery
-  complete; original failures and zero-sample passes remain separate/unresolved.
 
 - [x] WOLF-PERF-003-10 — Run Smith-requested Fab asset-loading comparison on
   reserved Oryx; same guest/assets reach fixture entry in24.846s.
@@ -755,25 +443,6 @@ E1L1 (34,36), 720-degree/20-second fixture on both backends.
 rotation; the unchanged visible-only repeat now passes both turns on hardware.
 Ordinary-game spin comparison remains pending.
 
-- [x] WOLF-PERF-002-01 — Trace camera, serialization, renderer and presentation.
-- [x] WOLF-PERF-002-02 — Reproduce paced output with Oryx framebuffer evidence.
-- [x] WOLF-PERF-002-03 — Disposed: no fixture correction required; unchanged
-  source rotates on Oryx and in the accepted native-VGA repeat.
-- [x] WOLF-PERF-002-04 — Qualify changing views, sequence and clean teardown.
-  Oryx captures and generation28 hardware repeat/normal handback pass.
-- [x] WOLF-PERF-002-05 — Report disposition and obtain Author visual acceptance.
-  Author confirms correct room and both native-VGA turns; live-game comparison
-  remains pending.
-- [x] WOLF-PERF-002-06 — Add and qualify the audio-only spoken start cue,
-  after setup and immediately before the visible rotation; no BBC BASIC.
-  Implemented;18 actual-C host checks, revised generic Oryx checks and
-  original integrated-cue Oryx check pass. Native player Olimex37 passes;
-  Smith confirms clear speech. Integrated rotation hardware cue was not run.
-- [ ] WOLF-PERF-002-07 — Qualify and document a reusable native WAV player
-  and hand off its adoption to Extender for other agents.
-  Extender closes R02 source-review findings; native hardware/clear-speech
-  proof and qualified package handed off. Shared adoption remains pending.
-
 ## WOLF-PERF-001 — deterministic frame-performance baseline
 
 Requirements and evidence sources: [task plan](agonport/doc/tasks/WOLF-PERF-001/PLAN.md).
@@ -832,64 +501,6 @@ migration are now implemented under item 8e; default cutover and physical
 qualification remain gated work. See
 `agonport/doc/wolf3d-vdplet-migration.md`.
 
-[ ] 8e. Replace the bounded static scene with the production render contract.
-Schema 2, synchronized C++/assembly constants, the 5,448-byte compact mirror,
-validated atomic full/dirty batches (including live/completed pushwalls),
-complete pure renderer, real ABI 1.6
-CONFIG/APPLY_AND_RENDER/FIZZLE/RESET wrapper, host lifecycle/retry matrix, and linked
-Xtensa package admission are complete. The exact package also passes its real
-runtime-emulator gate with two oracle-exact frames, native error/retry,
-INFO17, timing, teardown, stale-handle, reload, and empty-slot evidence.
-The production eZ80 descriptor/full/dirty serializer passes its direct MOS
-target regression: byte-identical frozen retry, in-flight dirty-state
-preservation, exact generation-2 delta, dirty consumption, and empty-batch
-refusal. CONFIG, update-buffer upload, requested RUN completion, C3
-presentation, exact retry, app-paced fizzle, and the production direct-row
-renderer are integrated in the app while retaining the copied-pixel oracle.
-The earlier “app-paced fizzle” claim was audited and found stale because the
-production module still returned UNSUPPORTED. Release 1.2.0 now implements the
-exact original 17-bit LFSR over 60 app-presented slices plus one unpresented
-second-surface synchronization step. Host exact-retry/lifecycle tests and the
-finite Oryx generation-161 ABI 1.6 gate compare five whole-frame transition
-checkpoints, preserve the HUD/surround, leave INFO17 at 2,136 free bytes, and
-finish with an empty module slot.
-Complete performance/physical gates and removal of rollback paths remain later
-work. The first Console8 run under stock MOS Arthur
-loaded the complete level/assets but intermittently returned to MOS before the
-first frame; the same exact cohort was playable in Flexe. A no-protocol-change
-diagnostic build reproduced the failure on the Olimex bench and localized it to
-application ordering: asynchronous mode 136 had completed in the VDP, but the
-first discovery command was issued before MOS had consumed the corresponding
-mode packet, never reached the VDP, and left later VDU bytes stranded while the
-eZ80 and MOS remained alive. The application now clears and waits on MOS's
-canonical mode-reply flag around VDU 22 before discovery. Five consecutive
-physical starts reached the production runtime and unloaded cleanly; four
-complete startup traces measured 12 ms from VDP mode completion to discovery,
-while the capture boundary retained the fifth run's live-runtime/unload evidence.
-Focused tests pass. A final Console8 stock-MOS Arthur acceptance remains required
-before default-cutover or physical-release claims.
-
-[ ] 8g. Replace production Wolf3D's copied full-frame publication with true
-ABI 1.6 scoped direct-row rendering. The production implementation and its
-generation-79 human visual gate now pass: the complete renderer—not merely the
-bounded proof scene—uses `BEGIN / ROW / END` access to the hidden native drawing
-surface, the former wall-edge black-pixel noise is absent, and the target
-workspace fell from 92,160 to 11,552 bytes. The copied 76,800-byte RGB222 path
-remains explicitly named as a host-qualified fallback/oracle.
-Write each final background, wall, sprite, weapon, and HUD pixel directly to
-its native scanline while retaining only necessary mirror, DDA, depth, texture,
-and sprite scratch state. Preserve native lane ordering and sync bits, bound
-all row access, discard every row pointer before ending the surface lease or
-swapping, and never publish a partial frame after any render or asset failure.
-Exact host regressions cover complete-frame parity, direct/copied equivalence,
-lease and mid-row failure cleanup, pointer destruction, sync-bit preservation,
-hidden-buffer mapping, retry behavior, and repeated-frame operation. Benchmark the
-same production fixture across copied workspace + `pixels_write`, true direct
-rows, and any already-real bitmap baseline using complete render/presentation
-boundaries; report workspace and speed separately, and presume no speed benefit
-until measured. A physical gate is still required before physical or
-default-cutover claims.
-
 ## WOLF-PERF-018 — Equal-height wall scaling setup cache
 
 [Contract and qualified source result](agonport/doc/tasks/WOLF-PERF-018/BUILD-RESULT.md).
@@ -930,3 +541,9 @@ default-cutover claims.
   width/index/workspace limits and resize/per-frame costs. Task prepared only;
   report and stop for discussion before implementation. Plan:
   agonport/doc/tasks/WOLF-VIEW-001/PLAN.md.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).
+
+- [x] WOLF-BENCH-DOC-001: consolidated bench procedure authority; removed
+  competing local/historical procedural text. Task and audit report:
+  agonport/doc/tasks/WOLF-BENCH-DOC-001/REPORT.md.

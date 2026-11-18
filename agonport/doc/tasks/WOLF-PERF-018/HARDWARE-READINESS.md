@@ -27,10 +27,4 @@ exacta25f ROM readback/map/private SAVE symbols, reset/bootstrap source and
 original rollback/install images. No P4/EMOS/startup/listener/carrier/provider/
 PSRAM/default change; SD stays mounted. No H02 replay or SIGTERM repair claim.
 
-Extender's current86 source return says expected rollback tuple remains the
-same; it is not a substitute for actual86 restoration/release. Reconcile real
-predecessor handback/current d9b/a25f/5d657/ed403/0566, normal fresh grant/stopped
-handoff and assert actual ownership before the mandatory Extender interpreter
-launch02 --context. First unexpected stop/RAM before LOAD, exact native/tail
-restoration/full readback/fullcleanup/normal release/immediate next contact
-remain. MechAgon first priority; no target access while this request waits.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

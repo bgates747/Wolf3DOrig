@@ -25,11 +25,6 @@ and all actors stopped passed. **Actual78 cleanly released10:24:54UTC**;
 Extender84aff actualnext and MechAgon first-priority chain immediately notified.
 SD remains mounted. No Wolf hardware access remains.
 
-[Full result](RESULT78.json), [portable raw data](results/actual78/complete.json),
-[release](results/actual78/released78.json). Complete resident RAM, full source
-snapshots of all507selected inputs and flash readbacks remain under build/.
-Original selected-kit input bytes are retained before checklist disposition.
-
 A preparation witness initially indexed the tile map transposed; the renderer’s
 actual y*64+x order independently confirms all eight same selected tiles are
 floor ([proof](results/build01/row-major-floor-confirmation.json)). No running
@@ -43,3 +38,5 @@ more concrete avoided work than the remaining metadata cache. No gain assumed.
 Later Smith direction reopens the acceptance tradeoff for discussion after sleep:
 [WOLF-PERF-013-07](REVISIT.md). Original raw measurements and the initial
 no-promotion decision remain preserved; no additional run or automatic adoption.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

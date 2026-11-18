@@ -18,18 +18,4 @@ final step600, native-count equality, timer/vector restoration and computes
 presentation intervals. Coalescing can reduce visible updates without changing
 the twenty-second two-turn motion schedule. No hidden throughput/FPS substitution.
 
-Existing public present/fence APIs already support this method. No compatibility
-gap or firmware/helper workaround is required. Select the already qualified
-native7593 diagnostic application-only/touched-tail install with full independent
-readback and incoming85f9 exact restoration/readback after review. Current76 full
-EMOSa25f rollback and unchanged P4/mainboard context supplied by Extender. No
-P4/EMOS/carrier/startup/listener changes. Source-only comparison plus actual linked
-producer/presentation verification qualifies the known paced method; no additional
-emulator run is required before this explicitly human-started physical selection.
-
-Host preparation must have a terminal LOAD-only branch: stage/readback, install
-and setup, actual CLI CD/LOAD then ready receipt, close all owned input/readers,
-and STOP. No probe or guest RUN precedes readiness. A separate collection mode
-does not dispatch RUN either; it observes Smith's execution and collects after
-an actual return. Human wait retains lease without reset/restore/automatic release.
-The application question is sent only after this ready receipt exists.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

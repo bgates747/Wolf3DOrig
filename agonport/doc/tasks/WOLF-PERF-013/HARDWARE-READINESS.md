@@ -19,12 +19,6 @@ strings were joined to the existing actual reservation before publishing;
 pre-publication draft preserved, actual kit revalidated. No operational method,
 guard, matrix, producer or module changes accompany that label correction.
 
-Native app7593 temporary install and1105920B exact incoming85f9 restoration/
-readback; full current EMOSa25f/P4d9bcb/profile8native5d657/startup/listener tuple
-from actual77 release is pinned. Final scheduler admission must independently
-reconcile the actual predecessor/current tuple and match every input. No change
-to EMOS/P4/startup/listener or carrier; normal matched bootstrap is pinned.
-
 Use **/Agon/mystuff/agon-extender/.venv/bin/python** and task launch02.py
 **--context ACTUAL_NEW_CONTEXT**. Preflight/import closure verified before I/O;
 actual new assert-owner/stopped exclusive handoff required. All automated runs
@@ -32,3 +26,5 @@ are within Smith’s unattended goal release; no waiting for a human question.
 First unexpected result stops further dispatch. Preserve resident RAM before a
 new LOAD, exact restore/fullcleanup/normal release and actual-next notification.
 No idle HOLD, blind replay or concurrent target access. Leave SD mounted.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

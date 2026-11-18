@@ -44,14 +44,11 @@ mounted. No broad device backup/reread, P4/EMOS/partition/NVS/other-slot write o
 automatic replay occurred. Extender received substantive failure and clean
 release mail; next_request was null.
 
-Evidence: `build/hardware01/evidence/{01-bespoke-control,failure-collection,
-flash-a1,flash-restore,handback}` and `release-complete.json`. The first release
-attempt's relative evidence path was rejected before mutation; status confirmed
-custody, and the absolute fresh path then released normally.
-
 Next owner correction: keep both-page breadcrumbs and their parser ordering,
 but diagnose and finitely continue waiting for the SAME already-issued setup
 fence instead of aborting on the first approximate wait-loop expiry. Record
 timeouts/elapsed/phase outside timing; never resend a timed render or silently
 extend its deadline. Recognize early setup failure immediately in the controller.
 Preserve this failed tranche; identify changed guests and a new finite reservation.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

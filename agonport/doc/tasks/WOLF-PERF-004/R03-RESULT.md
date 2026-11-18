@@ -45,15 +45,6 @@ the only physical candidate mechanism is the initial fill extent.
 
 ## Hardware/transport preparation boundary
 
-Extender's current source return records different incoming P4/EMOS/native
-components from54, including deliberately retained mainboard profile8, and
-provides the current EMOS source/map. Inspection finds the existing parser,
-sysvar/callback and backend labels still map to the old ordinary-RAM addresses;
-that is new source evidence, not permission to carry an old context forward.
-Record exact source/map hashes, callback/query behavior and incoming rollback
-span in the actual finite package before fresh admission. Do not reuse54tokens,
-bootstrap markers or original20029942restoration bytes.
-
 The existing network-parallel OPEN/SUBMIT/TAKE/RELEASE interface is not a
 drop-in replacement for the mainboard VDPlet byte stream. That owner-reported
 gap is retained with no consumer workaround or hidden fallback. This fill
@@ -73,3 +64,5 @@ but exported colour comparisons cover the selected page only. Provider/world/
 workspace are reconstructed per scripted frame; module update/retry/lifecycle
 checks form a separate exercised set. No additional hardware cases or claims
 follow from that review.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

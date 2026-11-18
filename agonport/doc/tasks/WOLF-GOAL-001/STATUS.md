@@ -21,15 +21,6 @@ changed; exact source/target/producer evidence remains with each task.
 |Generic libgcc admission|Allocated44B metadata still violates existing package admission|No strip/guard workaround; supported local017 candidate is separate|
 |Presentation/fence|Actual81/85 steady pre-presentation work23–30ms, none within one nominal60Hz refresh; draw savings trade against fence wait|No attributed hidden cap, second-VBlank defect or exclusive CPU claim; future pipeline changes require their own owner/component qualification|
 
-Actual89 failed input admission after exact timed-native installation, before
-any room/INFO query. Cause remains unknown; restoration85f9/readback/current
-bootstrap/full handback/release passed. Its zero-sample failure is preserved and
-never relabelled as a performance result. Actual91 was a distinct combined
-comparison, not an individual019 retry. Its first control SD validates24.750ms
-draw and30.0616fps; no combined speedup/regression can be inferred. The host
-signal sender/cause remains unknown, and no blind replay is selected. It keeps the maintained one-shot boot
-route, all guards, exact incoming restoration and MechAgon-first scheduling.
-
 Useful entry points: [PERF021 readiness](../WOLF-PERF-021/HARDWARE-READINESS.md),
 [actual89 failed-cohort report](../WOLF-PERF-019/RESULT89.md),
 [actual87 scaling result](../WOLF-PERF-018/RESULT87.md),
@@ -64,19 +55,6 @@ geometry, target flags/providers/byte-loop checks and real eZ80 operands pass.
 The27 controller/listener/observer checks pass after the preserved namespace-
 parent prelaunch failure. All compiler children/leases are released.
 
-Actual97 stopped before any room/INFO at a missing late-loaded bootstrap-source
-manifest entry, after verified native write/readback. Four omitted dependencies
-match successful95 bytes. The original664-input kit/failure is preserved;
-separate668-input cleanup restored/read back exact85f9 FIRST, then one current
-bootstrap and full handback passed. All actors exited; normal release18:14:46UTC
-and immediate Mech-next/Extender notices completed. No lease is held.
-[Actual97 report](../WOLF-PERF-023/RESULT97.md) keeps zero-sample preparation
-failure separate from renderer correctness. Physical candidate speed remains
-unmeasured. [Amendment02](../WOLF-PERF-023/AMENDMENT-02.md) selects an explicit
-complete closure and early file-only refusal before device I/O in a separately
-qualified future kit. Same uncapped ABBA/fiveINFO, guards, components, restoration
-and Mech-first priority; no automatic replay, sprite decision or default adoption.
-
 The [corrected harness](../WOLF-PERF-023/CONTROLLER-RESULT03.md) is qualified and
 pushed at b54895d. Compiler416 passed30 tests, including24 bad-dependency
 ordinary-constructor subcases, in3.651s; both real interpreter preflights match.
@@ -98,3 +76,5 @@ reservation/replay or new optimization is selected. The goal remains PAUSED.
 [Actual99 record](../WOLF-PERF-023/results/actual99/RESULT.json) preserves683 input
 snapshots, original handles/observer failure and full restoration/release.
 Strongest completed aggregate remains actual95:20.903ms draw,30.062fps visible.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

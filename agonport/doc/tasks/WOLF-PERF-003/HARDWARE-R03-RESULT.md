@@ -62,15 +62,6 @@ These are source possibilities, not a demonstrated timeout/byte-loss path.
 
 ## Preservation and release
 
-The failed guest returned normally; no reset was needed. Host stopped further
-dispatch, saved complete app RAM before any LOAD and retrieved loading.bin.
-Original native20029942 app/tail restored exactly and independently read back.
-Fresh mode0/callbackzero/CLI/startup+listener fullcompare/neutralinput/idleworker/
-offlinelistener/freebothUSB checks passed. Olimex42 released00:50:55UTC Nov6
-(19:50:55EST Nov5). Next actual requester MechAgon52187060d50a and Extender were
-immediately notified; a new scheduler grant is required for successor access.
-No Wolf target custody or actors remain. SD card stays mounted.
-
 Evidence: build/hardware03/{kit.json,compile-receipt.json,host-lifetime.log,
 source-checks.json,physical-summary.json,release.json}; evidence per-case
 receipts/rawCSV;04-bespoke-paced/serial.bin;failure-collection/{ram.bin,loading.bin,
@@ -122,7 +113,6 @@ not newly selected tests. Do not replace the native parser, change clocks or
 replay a render to disguise this setup failure. Installed-source advice from
 Extender is reconciled below. No hardware access or new reservation initiated.
 
-
 ## Source-owner disposition — installed EMOS and next evidence
 
 Extender return `2026-11-05_20-19-16_linux-extender_wolf-installed-query-source-return-one`
@@ -148,9 +138,4 @@ upload completion, paint/C3 and query send/wait. Whole-call timestamps cannot
 prove per-byte arrival or receiver grammar state. No implementation, compile,
 new reservation or run was selected by this source review.
 
-Bench43 is independently held by Extender under MechAgon ownership. Its newly
-installed EMOS ROMb5a1f4aa/sourcec9c8b6b and P4app512d3591 differ from42; a generic
-127-byte carrier fault remains under investigation. Those prefixes are context,
-not qualified full pins. Future Wolf work must obtain the full current component
-binding and fresh admission, including current rollback, addresses and public
-API semantics. Generation42 artifacts/tokens cannot supply that admission.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

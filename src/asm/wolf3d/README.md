@@ -123,12 +123,6 @@ tracked selector always remains on the accepted standalone default:
 .venv/bin/python src/asm/wolf3d/scripts/build.py --backend standalone
 ```
 
-This writes the compatibility output `src/asm/wolf3d/tgt/wolf3d.bin` plus an
-ignored JSON receipt and assembler listing. The `vdplet-direct` selection
-requires an explicit `--module PACKAGE.vdpl` and renders directly into scoped
-ABI 1.6 hidden-framebuffer rows. The module retains its copied RGB222 path as
-an explicit host-qualified oracle and rollback implementation.
-
 Add `--profile` to build the normal game with buffered performance recording:
 
 ```bash
@@ -191,16 +185,6 @@ sends one `set_door` per real door (all closed -- the level's actual state at
 first spawn), one `set_static` per real decoration/pickup, sets the player's
 real start tile/facing, selects 320x240x64 double-buffered mode 8+128,
 clears the draw surface, and issues one `render_frame`.
-
-Ordinary and secret exits first drain render ownership and draw the completed
-floor's original-style 320x200 tally over the retained status bar. Destination
-loading starts immediately rather than waiting at that screen. Each finalized
-destination bitmap supplies a deterministic input/animation tick for BJ's
-two-frame breathing portrait; a fresh non-Escape acknowledgment is latched
-during the load and must also be released before gameplay resumes. If no such
-acknowledgment arrives, the completed screen waits only after loading finishes.
-Escape instead aborts cleanly at the next boundary and shares the same outer
-mode-restoration/farewell route as title, menus, bootstrap loading, and play.
 
 After that first frame, held-key input advances the persistent player pose at
 an exact 30 Hz fixed step. Collision uses the accepted square `0x4800` player
@@ -433,3 +417,5 @@ firmware build/flash is out of this project's scope (separate repo).
 
 The first fully correct emulator and hardware rendering milestone is recorded
 in [the success story](../../../agonport/doc/first_correct_render_success_story.md).
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -22,22 +22,11 @@ compared b-cpu.bin with the frozen bytes, then retired the transaction. It did
 not submit a new UART/Agon transfer. Only selected generated config normalization
 had written fixture input; other staged assets and all firmware were untouched.
 
-Normal cleanup retrieved/compared complete startup/listener files, saved raw
-mode0/callback0 without LOAD, verified actualCLI/readEXIT/neutralinput/offlineidle/
-freeUSB and joined all actors. Exact native20029942 app/tail, P4diag02addd/EMOS8270
-and feature absence were retained unchanged from grant51; no flash/reset was
-needed and no new firmware readback is claimed. The generic donor handback's
-inapplicable restoration metadata was preserved separately, then corrected to
-this unchanged-firmware disposition using the same actual observation timestamp.
-SD remains mounted. Actual51 released2026-11-06T07:58:18.224049UTC, nextnull;
-Extender immediately notified. All Wolf device access stopped.
-
 A bounded read-only source/log consultation was sent to Pi5 manager about known
 supervisor or Codex-host restart evidence in this interval. No reproduction,
 service change, compiler job, device action or later reservation was selected.
 Review host disposition before selecting another hardware attempt. Original
 matched comparison and003-16 remain open; no new CPU/rendering measurements.
-
 
 ## Read-only source/log disposition
 
@@ -55,3 +44,5 @@ Sender remains unknown unless separate evidence identifies it. A separately
 identified finite08 package under fresh normal admission can complete the
 existing comparison or leave better interruption evidence; this is not a repair
 claim. Compiled applications/renderers/module and timed work remain unchanged.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

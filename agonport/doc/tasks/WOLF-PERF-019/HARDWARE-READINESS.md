@@ -10,12 +10,6 @@ New request **1fec8fdf3f1b** voluntarily follows Mech43d73d6e0010. Earlier
 PREPARING f143aa28c766 was canceled normally before any grant. Mech-first remains;
 no target contact or Wolf hardware lease is claimed by this readiness.
 
-Kit **4e6612a4979a8b227c733195b7b9ad189097950daa4eba3f2bf76d6bfaacb67a**,
-**549 selected inputs,370 unique archived bytesets,17 stage files**. Absolute
-4200s,360s cleanup reserve,300s guest bound; >660s before every new module/guest.
-Actual Extender interpreter and60-file passive launcher closure match. Current
-ROM/map/bootstrap/restore/helper inputs are rehashed, not copied as labels.
-
 |Arm|Module prefix|Package|Resident data|Selected native task path|
 |---|---|---:|---:|---:|
 |Original|a926b48a|24420B|13348B|1344B|
@@ -44,20 +38,6 @@ all15 actual-controller and6 real retained C-listener lifecycle/failure cases
 in1.241s; owned children joined and normal release recorded. No guard weakened.
 See results/hardware01-preparation/FAILED371.md and composition02 evidence.
 
-Actual87 clean release14:05:05.729274UTC supplies fresh exact85f9 full1105920B
-native/tail restoration/readback and current d9b/a25f/5d657/ed403/0566 tuple;
-actual86 retained full a25f ROM readback independently joins its source binding.
-These are preparation facts, not future admission. Actual Mech predecessor
-handback/current tuple and a fresh Extender stopped sole-operator grant must
-match before mandatory launch02. No old87 token, guessed entry or HOLD.
-
-First unexpected stops successors, preserves original journals/RAM before LOAD
-or recovery, then supported exact restoration/full handback and normal release.
-Whole native/tail independent readback, rawmode0/callback0/route0/rootCLI/whole
-startup-listener/input-neutral/offline-idle/freeports/all actors joined remain
-required. Leave SD mounted and notify actual-next before offline reporting.
-No physical timing result or actual native fast-path hit count is inferred.
-
 ## Actual89 disposition
 
 This historical frozen selection was attempted once under actual89 and stopped
@@ -65,3 +45,5 @@ at native startup admission before any room or INFO probe. Exact restoration/
 readback, fresh complete handback and normal release passed. See
 [RESULT89.md](RESULT89.md). The549-input kit and its archived bytes remain
 unchanged; neither chain nor trig timing was obtained. No retry is selected.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

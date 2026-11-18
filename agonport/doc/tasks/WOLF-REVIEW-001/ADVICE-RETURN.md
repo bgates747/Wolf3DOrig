@@ -53,12 +53,6 @@ providers/flags and available placement evidence; report missing evidence.
 Keep all poses/order/warmup/allocation history equivalent. Phase costs include
 their asset services and current divider; no isolated helper share follows.
 
-Bound record storage, counters/core/wrap and stack, keep records out of live
-framebuffer/scratch and expired leases, use stopped readback and verify cleanup
-through next use. No per-pixel or per-division timing or UART logging in the
-primary arm. Helper and placement experiments are later independent axes,
-not prerequisites added to the first observation proposal.
-
 ## Disposition
 
 Advice is received and retained; the finite self-review and exchange are
@@ -67,3 +61,5 @@ claiming a qualified fast span or replacement divider exists. No build,
 benchmark, reservation, renderer change, SDK feature or protocol adoption is
 selected. Individual drawing costs and the historical loading cause remain
 unresolved. No acknowledgment-only reply is sent.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -8,12 +8,6 @@ Exact kit SHA256:
 
     1b4d2dd929827cdf00f9fa7aef4b1da3ebbfc5b3e665642db263eb8ea900d143
 
-All664 selected input paths rejoin418 archived distinct byte sets. There are16
-staged files. Current expected restored tuple d9b/a25f/5d657/ed403/0566 matches
-actual96's independent fulla25f rollback/readback and actual95's unchanged full
-native85f9 restoration/readback. Extender still must observe a fresh actual
-entry and return the new token/context/stopped sole handoff before any contact.
-
 |Arm|Exact package|Bytes|Strict producer limit|
 |---|---|---:|---:|
 |Measured combined control|8d3d19bb74e1f2ea862b2154c038dfd23de2fd741fd1831d1880d849b5ad838b|22572|22573|
@@ -50,13 +44,8 @@ new module/guest/INFO/immediate-RUN guards remain. In-flight jobs finish safely;
 cleanup is exempt from diagnostic liveness/cutoff. No detach, signal suppression,
 reparent, daemon, alternate controller or repeated suite launch.
 
-First unexpected stops successors and preserves original evidence/available
-Wolf RAM before LOAD/reset. Exact app-only7593 install and incoming1105920B85f9
-restore/fullreadback, fresh full state/files/CLI/input/idle/freeUSB handback,
-both original handles and owned tracer joined, normal release and immediate
-actual-next notice remain mandatory. No HOLD or automatic replay; SD stays mounted.
-Physical speed remains unmeasured. Unchanged presentation alone is not rejection.
-
 [Frozen preparation](results/hardware01-preparation/kit.json),
 [input archive](results/hardware01-preparation/frozen-inputs/index.json),
 [finite contract](HARDWARE-PLAN.md).
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

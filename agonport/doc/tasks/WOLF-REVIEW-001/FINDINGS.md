@@ -126,16 +126,6 @@ compresses full trig tables into a quarter-wave representation to meet the
 static-data ceiling. These are substantive organization/representation changes,
 even when the projected geometry and final pixels match.
 
-**Review failure.** We emphasized module fit, reduced frame workspace, balanced
-leases and removal of copied publication without a corresponding accounting
-of extra scans, table reconstruction, per-pixel work or cache behavior. Those
-resource gains are real; they do not establish a frame-time gain. The bounded
-copied/direct comparison already recorded about **32.93% higher modeled median
-transaction cost for direct rows**, alongside an 80,608-byte workspace saving.
-It was accurately labeled an emulator result, not a physical or full-game
-benchmark. We should have kept that warning visible when discussing migration
-performance, rather than treating direct output as inherently faster.
-
 **Detection/correction example.** Keep resource and operation deltas side by
 side: work per visible texture, scans, spans, source samples, helper calls,
 copies and peak lifetimes. Measure the relevant phases before selecting a
@@ -215,25 +205,8 @@ Wolf examples, not a request to expand that task or impose a universal dossier.
 
 ## Advice requested from VDPlet
 
-- **Q-001 — Row/span adaptation.** Is there an already qualified direct-row span
-  pattern we should reuse for x-XOR, arbitrary preserved sync bits and safe
-  stores? Which descriptor guarantees can be hoisted per span, and which must
-  remain per pixel? Advice/reference only; no new helper implementation asked.
-- **Q-002 — Arithmetic support.** What supported narrow static-library route
-  should Wolf assess after the old broad-link failure? Which existing signed
-  edge-case, relocation, stack and policy evidence can be reused, and what
-  remains consumer-owned? No ROM import or SDK default change requested.
-- **Q-003 — Conversion evidence.** Do these examples expose gaps in VDPL-032's
-  proposed distinction between required adaptation and optional rewrite? In
-  particular, how should we record host-only helper substitutions and an oracle
-  that preserves output but repeats the converted pass structure? Advice within
-  existing scope, not protocol drafting/adoption or new task assignment.
-- **Q-004 — First measurement design.** Does the proposed B-only phase observer
-  need an additional placement/helper-control dimension to interpret background
-  versus cast costs, given the existing whole-frame A/B baseline? Flag any
-  missing correctness/lifetime constraints before a future concrete selection.
-  This asks for review, not a new build, benchmark or board operation.
-
 No renderer change is implemented or adopted by this report. Individual timing
 shares, the historical intermittent loading fault and ordinary-game versus
 fixture performance remain unresolved. Hardware remains the primary target.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -13,15 +13,6 @@ specifies their requirements without a second actionable checklist. Record
 completion or other disposition with evidence in the dated development log;
 never renumber or reuse IDs.
 
-Keep new fixture adapters, diagnostic renderer wrappers, builders, manifests,
-profiles, analysis and retained evidence in this directory. Generated output
-belongs under ignored build/. Preserve PERF-001/002 source and results, the
-accepted production game and renderer, and other agents' runtime trees. Reuse
-production owners through copied source or explicit task-only inclusion; never
-replace a renderer with a simplified benchmark implementation. Cross-project
-source changes, if actually necessary, require coordination with that owner.
-The queued WOLF-AUDIO-001 test retains its separate reservation and scope.
-
 ## Matched fixture
 
 Use canonical Episode 1 floor 1, zero-based tile (34,36), centered at
@@ -122,15 +113,6 @@ normal guest teardown, restored timer/vector, actual MOS return, ordinary host
 Quit and zero backend faults. Retrieve/hash results, prove whole-host idle,
 release Oryx and notify its actual successor before extended analysis.
 
-Emulator results establish correctness and emulator-relative behavior. Final
-physical performance requires the same board, exact component/build identities,
-fresh Extender checkout and a concrete firmware/staging/restoration runbook.
-Prepare that finite matched A/B/B/A hardware matrix after headless qualification;
-coordinate any required diagnostic firmware with its owner and Extender before
-installation. The audio-only slot authorizes no benchmark or firmware change.
-Preserve incoming firmware/startup/card contents and leave SD mounted. Record
-restoration and a fresh clean release before any physical speed conclusion.
-
 ## Deliverable and acceptance
 
 Deliver reproducible task-owned preparation, source/artifact manifests, matched
@@ -141,3 +123,5 @@ from emulator and capacity from paced presentation. Retain failures and unknowns
 Do not infer a universal VDPlet penalty from this one Wolf workload. Record
 Smith's acceptance/disposition by immutable ID. This task-plan publication does
 not promote unreviewed runtime binaries, profiles or later implementation.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

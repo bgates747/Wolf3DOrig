@@ -7,32 +7,6 @@ cohort/restoration/release normally before any023 physical selection. Oryx is
 unavailable; no emulator diversion. No new goal, peer/reviewer assignment,
 firmware/service/provider/carrier/default or viewport change is selected.
 
-- [x] WOLF-PERF-023-01 — Freeze this pre-code support/work/order gate; source
-  advice resolves any concrete ABI/byte-order gap before the affected code.
-- [x] WOLF-PERF-023-02 — Count eligible actual constant-colour spans using the
-  real combined renderer/600 existing poses, with original geometry and no
-  mutated target/timing fixture. Establish a useful opportunity or dispose it.
-- [x] WOLF-PERF-023-03 — Isolated exact8d3d19bb combined control/candidate copies;
-  only fill_span's direct-row branch changes under the proved predicate. Zero,
-  unaligned, arbitrary-XOR and overflow cases retain the exact scalar path.
-- [x] WOLF-PERF-023-04 — Serial host checks: independent scalar byte oracle,
-  guarded arbitrary/noncontiguous/aliased rows, arbitrary masks/colour/bias/XOR,
-  zero/boundary/overflow-refusal cases, actual renderer/module/error/lease/order
-  tests and600-frame/state/geometry parity. Keep ASan/UBSan; no relaxed oracle.
-- [x] WOLF-PERF-023-05 — Reproduce exact control package or stop; target safeO2/
-  PIC/fno-builtin/PSRAM flags/providers/ABI/sections/relocations/image/whole stack
-  and real per-arm eZ80 package-size/strict-limit/UPLOAD/LOAD bindings. Inspect
-  actual byte loads/stores/barriers/inner loops; no guessed lowering or timings.
-- [ ] WOLF-PERF-023-06 — Only after022 finishes and offline qualification passes,
-  freeze a separate finite uncapped canonical-room control/candidate/candidate/
-  control comparison/five INFO queries. Current tuple/rollback/host closure,
-  actual fresh Mech-first Extender admission, first-fault/no replay/RAM-beforeLOAD,
-  unchanged C3/ingress fence and all original resource/dispatch/cleanup guards.
-- [ ] WOLF-PERF-023-07 — Exact incoming restoration/readback/full handback/actors
-  joined/SD mounted/normal release/immediate actual-next notice, then independent
-  raw report of draw/presentation/resource costs and limits. No FPS-only reject
-  or silent default adoption; preserve negative results and incomplete cohorts.
-
 ## Pre-code compatibility and work gate
 
 Exact proposed control is combined021 package8d3d19bb74e1f2ea862b2154c038dfd23
@@ -108,3 +82,5 @@ belongs to step04, and the full physical scene comparison remains untouched.
 parity and target byte-loop/resource checks pass. Candidate b181a8fd is22620B
 (+48B/data unchanged). Actual compiler408 is released, no hardware custody.
 Real per-arm producer bindings and separate physical readiness remain pending.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

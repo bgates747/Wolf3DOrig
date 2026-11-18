@@ -13,8 +13,4 @@ counterevidence to that checker assumption. All prior steps passed; original
 failed checker/log/source hash/argv/modules preserved in ignored build/r01 and
 frozen-inputs. No module/source/SDK/safety/correctness change is selected.
 
-All children stopped; compiler277 released2026-11-07T02:35:21.604825UTC (Nov6
-21:35EST),nextnone. Total85.996s/peak56.75C. Bench reservation remains PREPARING,
-no token/contact/test. A separately recorded checker-contract correction must
-verify actual live provider closure and permit GC of unused definitions; target
-bytes remain pinned and need no rebuild merely to repeat identical compilation.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

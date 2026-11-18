@@ -22,19 +22,4 @@ The complete prior body/provider/section/stack/source archives and current real
 projection source/helper/target-literal proof are included, not substituted by
 renderer HOST_TEST. The generic44B libgcc metadata gap remains unresolved.
 
-Actual Extender interpreter/passive60file launch closure, exact retained ROM/
-map/private SAVE addresses/current bootstrap/reset helper and app-only7593/
-install493f/full85f9 rollback rehash. Actual82 a25f fullROM restore/readback and
-current tuple join retained actual81 full native/tail readback. These are
-expected retained bindings, not a fresh entry observation. Actual successor
-handback/currenttuple equality/new normal grant/stoppedhandoff still required.
-No carrier/P4/EMOS/startup/listener/provider/default change; actual current owner
-trial/restoration precedes our access. SD remains mounted.
-
-First unexpected result stops; exact original-job identity and supported
-verified-backup retirement, RAM beforeLOAD, nativeapp/tail restore/readback,
-complete state/rootCLI/files/input/offlineidle/freeUSB/all actors stopped and
-normal release/next-owner notice remain. No sampled native branch count,
-external clock, exclusive CPU, optical output or speed claim before the finite
-physical result. Host coverage found35992 room helper inputs/600poses, all
-narrow; this justifies the selected room population, not an observed FPS gain.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

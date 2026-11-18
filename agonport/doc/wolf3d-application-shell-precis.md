@@ -10,21 +10,6 @@ an aborted game, and a clean quit.
 The original first-slice plan below is retained as design history. Production
 has since grown into the complete Phase-A shell tracked by the root TODO.
 
-1. Retain a hook for a future Agon-specific splash, then present the original
-   executable-linked sign-on and one-time PG-13 notice before the title
-   carrying the Wolf3DOrig version.
-2. Enter a main menu with **New Game** and **Quit**.
-3. Reproduce the original shareware episode menu: Episode 1 is selectable and
-   Episodes 2-6 remain visibly disabled. Then offer the original four
-   difficulty levels.
-4. Load and start level 00 using the selected difficulty; the selection occurs
-   before W3L loading and therefore governs the real difficulty-filtered world.
-5. For now, make Escape during play exit the application cleanly rather than
-   returning to the menu. Restore the caller's original video mode first,
-   print a plain-text thanks-for-playing message terminated by a line feed so
-   the MOS prompt appears beneath it, and return to MOS. Menu **Quit** uses the
-   same exit path.
-
 This preserves room for later **High Scores**, **Sound**, **Controls**,
 **Load Game**, **Save Game**, **Change View**, **Read This**, and the original
 attract/demo loop without making them prerequisites for a usable shell.
@@ -250,3 +235,5 @@ documented platform differences.
    so the MOS prompt appears on the following line.
 4. Preserve the original shareware episode menu exactly: Episode 1 is active
    and Episodes 2-6 are disabled. Custom maps may eventually replace them.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

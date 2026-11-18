@@ -94,15 +94,6 @@ After349e669 publication, a new own-entry CLI/read/EXIT/SAVE-only observation at
 new kit and fresh entry bytes. The original grant observation stayed unchanged.
 No extra hardware operator or device contact occurred.
 
-After the completed suite, exact incoming1105920B profile8 native app/touched
-tail85f9 was restored and independently read back. Unchanged P4d9bcb/EMOSa25f/
-startuped403/listener0566 and rawmode0/callback0/route0/files/rootCLI/cursor/
-inputneutral/offlineidle/worker0/freebothUSB checks passed. All controller,
-compiler, flash and reader children exited. Final held-idle epoch1794022834.0448785
-is2026-11-07T03:40:34UTC. Actual69 remains HELD for Smith, even if queued;
-there has been no central release, successor grant or further probing. SD stays
-mounted. No production/default adoption was performed.
-
 PHYSICAL69-RESULT.json retains the aggregate, all six case/actual producer/
 lifecycle receipts, seven probes,160binary hashes, new entry/context, exact
 restoration and final held-idle observation. All328 frozen input files were
@@ -115,3 +106,5 @@ Continuation subtask dispositions: WOLF-PERF-006-A02-01 through -05 are complete
 for this cohort. The pinned amendment retains its predispatch checkbox state;
 its immutable contents remain part of the328-input evidence. This result is
 the completion record, not a rewrite of the frozen entry conditions.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -54,20 +54,6 @@ production wire path.  Preserve the uninstrumented candidate for A/B testing.
 
 After an explicit Olimex lease grant and fresh Extender handoff:
 
-1. preserve the incoming firmware, startup file, current directory, modes,
-   listener state, and resource ownership exactly as the bench grant records;
-2. install the diagnostic native VDP and standard-map diagnostic application;
-3. open one VDP serial reader before launch and retain its raw timestamped log;
-4. perform at most six cold application starts, covering both unattended
-   attract advance and direct key-through to Episode/Difficulty;
-5. stop on the first reproduced unexpected exit, lockup, parser fault, or
-   incomplete asset load; do not retry an uncertain operation;
-6. if no fault reproduces, run one music-disabled-during-asset-load A/B only
-   after freezing that derivative and its exact hashes;
-7. exit listeners/readers, restore or explicitly adopt the agreed native VDP,
-   restore normal CLI/input and every preserved component, collect fresh idle
-   evidence, release the lease, and notify Extender plus the next waiter.
-
 No graphical emulator is launched by this task.  The SD card is never
 unmounted.  No startup file is changed.
 
@@ -170,3 +156,5 @@ is still required before claiming the retained-page presentation accepted.
   last observed ownership boundary proves otherwise.
 - A successful warm retry does not clear the defect and must not replace the
   first failing trace.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

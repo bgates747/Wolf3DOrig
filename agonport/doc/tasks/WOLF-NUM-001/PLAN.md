@@ -1,12 +1,5 @@
 # WOLF-NUM-001 — Numerical methods and wire-boundary review
 
-**Status: read-only review complete; stopped for Smith’s report review.**
-Preparation was frozen/pushed as `dcfef76`. Smith’s direct November 9 instruction,
-“proceed with your review and write your report. stop for me to review the
-report,” releases the preparation-only hold for source/retained-evidence review.
-It does not select implementation, experiments, builds/tests/benchmarks,
-reservations, device/firmware work, adoption or WOLF-GOAL-001 resumption.
-
 Result: [REPORT.md](REPORT.md), [read-time identities](SOURCE-PINS.json).
 
 ## Authority and shared record
@@ -144,3 +137,5 @@ wire or firmware promotion requires its own selected contract and qualification.
 
 **Report is now ready for Smith’s review. STOP before implementation or further
 execution; substantive central return is held for that review.**
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

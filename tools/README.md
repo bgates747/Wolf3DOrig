@@ -52,14 +52,6 @@ application, matching module and receipts) into a fresh output:
 .venv/bin/python tools/wolf_prepare.py verify-payload
 ```
 
-Default output is `tgt/wolf3d-production-optimized-async-r1`. Existing directories are refused rather
-than replaced. For a new preparation use `--output /absolute/new/payload`.
-`deploy.py plan/deploy` verifies the standard payload before entering the shared
-deployment engine. Its declared bundle now includes the module and manifest;
-the SD-specific tool uses the same verified payload and compares readback after
-sync. Actual deployment and any autoexec selection retain their existing
-permissions. The card is left mounted.
-
 An explicitly selected optimized native-profiling review build remains possible:
 
 ```bash
@@ -138,3 +130,13 @@ and exact identities in its existing scheduling request. This flag supplies
 neither workload approval nor a resource checkout. `--help` explains the
 exception path without entering the old program. Frozen task archives remain
 unchanged; do not treat them as new routine launchers.
+
+Default output is `tgt/wolf3d-production-optimized-async-r1`. Existing directories are refused rather
+than replaced. For a new preparation use `--output /absolute/new/payload`.
+`deploy.py plan/deploy` verifies the standard payload before entering the shared
+deployment engine. Its declared bundle now includes the module and manifest;
+the SD-specific tool uses the same verified payload and compares readback after
+sync. Actual deployment and any autoexec selection retain their existing
+permissions. The card is left mounted.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

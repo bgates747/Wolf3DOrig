@@ -1,22 +1,5 @@
 # WOLF-PERF-014 — Cache wall texture IDs across grouped scans
 
-Next local candidate under WOLF-GOAL-001. This contract precedes implementation;
-PERF013 actual78 remains immutable and must finish restoration/release first.
-MechAgon first/Wolf second, Oryx down; Pi serial builds and actual Olimex grants.
-
-- [x] WOLF-PERF-014-01 — Select/pin exact output-qualified baseline after the
-  PERF013 physical disposition; freeze its actual package/source/provider pins.
-- [x] WOLF-PERF-014-02 — Implement one bounded per-column texture-ID cache only.
-- [x] WOLF-PERF-014-03 — Qualify actual kernel pixels/order/refusal/release,
-  existing renderer/module/600pose equivalence, exact target control and
-  compiler/provider/sections/nested-stack/resource/producer identities.
-- [ ] WOLF-PERF-014-04 — Freeze finite uncapped matched run with current owner
-  tuple/rollback/host closure, obtain normal opportunistic fresh admission.
-- [ ] WOLF-PERF-014-05 — First-unexpected stop, preserve RAM before LOAD,
-  exact restoration/readback/fullcleanup/release and next-owner notification.
-- [ ] WOLF-PERF-014-06 — Publish/share measured gain, zero or regression;
-  distinguish hidden draw capacity from end-to-end presented performance.
-
 PRE-CODE: existing draw_walls first discovers required texture IDs, then scans
 all256columns per required texture and calls wall_texture_id again. Both the
 original/bespoke and selected module references are in VDPL034 LIN-F005. Keep
@@ -36,3 +19,5 @@ This reduces repeated metadata/helper work; it does **not** remove the repeated
 nonpositive-height behavior and all failure/refusal paths. New local storage
 must fit the actual nested target stack before dispatch. No assumption that
 helper source calls were all retained by the compiler or that the gain is large.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

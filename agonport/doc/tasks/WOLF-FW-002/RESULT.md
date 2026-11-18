@@ -10,26 +10,6 @@ client fixture; the optimization goal remains paused.
 
 ## Changes
 
-- One release verifier checks the pinned VDP SHA256SUMS and every listed asset,
-  the exact VDP BIN/decompressed ELF, and the Eirene ZIP/exact MOS member.
-- The game CLI defaults to `vdplet-direct` with the retained maintained
-  production module `266f809f`. A separately selected native-profiling build
-  uses optimized module `8d3d`; it is not a production-default promotion.
-- Each assembled application has its own module copy and receipt. Complete
-  payloads include all ten levels, shared assets, module and build identities.
-  Generic and SD deployment paths require the verified standard payload.
-- New Alexe profiles include the actual release BIN/ELF and MOS BIN/map and
-  record the explicit existing frontend/backend hashes. Startup loads the
-  application without RUN. Preparation never executes the emulator.
-- The finite copied-client fixture supports the current profiling include and
-  owns staging sized for its module, largest uploaded file and zero-buffer
-  scratch. The builder checks actual linked addresses and materialized bytes.
-- Thirty-two maintained historical Fab/stage/rehearsal entrypoints require an
-  explicit firmware/model exception reason. Existing scope and normal scheduling
-  remain required; the flag itself grants no workload. Frozen cohorts are intact.
-- The Olimex selector helper reads the owner's current desired selection and
-  explicitly does not claim installed state, admission or a grant.
-
 ## Verification
 
 The final r05 tranche passed: actual finite-client assembly, 23 finite-client
@@ -69,14 +49,7 @@ local/ignored; compact identities and results are published with this task.
 
 ## Remaining boundaries
 
-No firmware was flashed, emulator run, SD written or hardware contacted. The
-new combinations still need an actually selected runtime test on the target,
-normal current-state/resource admission and existing human-start boundaries.
-Static ELF checks do not prove allocator fit, whole-task stack or runtime
-controller compatibility. Olimex resolves its approved integrated EMOS at
-admission and reuses verified standard firmware; historical private7593 and
-incoming85f9 controllers are not revived. No async feature or new optimization
-is selected. SD remains unchanged and mounted as found.
-
 Use [the current preparation commands](../../../../tools/README.md) for later
 preparation. Never infer a run or deployment authorization from these outputs.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

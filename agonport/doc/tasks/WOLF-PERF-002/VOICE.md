@@ -27,14 +27,6 @@ uses the same gTTS2.5.4 English/co.uk selection. No gender choice is claimed.
 The normal Wolf AGNB container writer packages the validated PCM at dedicated
 buffer0xf100; playback is on channel0 and completes before timed rendering.
 
-Finite preparation: generate one short clip; compile one task-owned paced
-application under a normal Pi build lease; qualify one bounded headless Oryx
-run under its own FIFO custody, retaining native/guest completion and audio
-command receipts. Automated playback success cannot establish human hearing.
-Physical deployment/playback uses normal actual bench grant and is not part
-of a host-side synthesis or build command. A later visible-only physical run
-must preserve startup/listener/firmware and use a fresh finite run plan.
-
 Preparation checkpoint: exact sentence synthesized as5.64seconds at16000Hz,
 validated by Jukebox and packaged to AGNB. Audio-only assembly and build source
 are retained. The Author selected an immediate unchanged hardware run instead;
@@ -52,14 +44,6 @@ its resources. It does not change video mode, clear the screen, read keyboard,
 start an SD service, change startup or reset hardware. Caller must own channel0
 and buffer0xf100 and be at a safe MOS CLI. Human hearing remains a separate gate.
 
-Revised finite checks: one serial Pi build tranche (one C compile/link and one
-assembly, each compiler bounded180s), meaningful host parser/protocol checks,
-then at most three bounded300s Oryx headless runs: valid generic playback,
-malformed-WAV refusal, and integrated cue plus rotation. Preserve unexpected
-failure and stop that cohort. No physical run follows from those host tools;
-bench scheduling and a current finite sound-review plan remain required.
-Cross-agent adoption/location is coordinated with Extender, which owns its tree.
-
 ## Focused r02 review follow-up
 
 Extender's source review requested explicit reply-timeout/refusal/wrong-channel
@@ -72,3 +56,5 @@ checks in one serial Pi tranche, then at most two300s Oryx processes for valid
 and malformed-file cases. Wolf's assembly integration is unchanged, so do not
 repeat that already-passing case. No physical reservation/playback is authorized
 by this follow-up; the explicit review denial remains in force.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

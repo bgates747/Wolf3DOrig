@@ -32,32 +32,6 @@ qualified pin. The initial preparation targets the supplied x86 Oryx backend.
 Each engine (`jit`, `interp`) runs in a fresh process under one central Oryx
 lease. The runner will:
 
-1. verify every file pin before starting the backend, discover capabilities,
-   record INFO17 and heap/task resource values, select physical double-buffered
-   320x240 RGB222, and capture a known visible baseline;
-2. run the byte-identical copied package with its 92,160-byte workspace, then
-   the primary direct package with its 11,552-byte workspace, using identical
-   map, textures, CONFIG, mode, fences, and oracle;
-3. for each arm prove hidden output before host C3, exact 76,800 decoded pixels
-   after C3, and exact 1,792 DDA bytes read from the arm's workspace only after
-   RUN completion;
-4. exercise a finite identical failure set for both packages: render before
-   CONFIG, short workspace, short map, short textures, recovery to an exact
-   frame, invalid reconfigure preserving the prior valid state, and unsupported
-   entry; verify no failed frame is presented;
-5. unload, reject the stale handle, reload and unload again, verify an empty
-   slot, and record final resources and backend failed/unhandled/unregistered/
-   unmapped counters;
-6. record that the production images expose no intentional forgotten-END
-   entry. Runtime automatic forgotten-lease cleanup remains covered by the
-   generic VDPL-012 qualifier rather than changing either accepted control;
-7. perform six bounded alternating copied/direct rounds, five same-scene
-   RENDER RUNs per arm per round, with load, CONFIG, decoded-frame capture, C3,
-   and teardown outside every timed interval; DDA READ16 extraction occurs in
-   the separate correctness arm rather than being repeated in timing; and
-8. retain every first-failure receipt and shut down only the owned backend by
-   its normal close path.
-
 The reported timing is host foreground submit-to-requested-RUN-reply duration
 and corresponding emulated VDP-cycle delta. It includes wire transport and
 runtime dispatch/completion, is not isolated renderer time or native CCOUNT,
@@ -89,3 +63,5 @@ contact Oryx to mutate a profile, request a lease, or start an emulator. Return
 the exact runner, packages, firmware/backend pins, expected duration, proposed
 profile path, and remaining architecture/lease gates to Golem. Stop pending a
 fresh execution grant.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

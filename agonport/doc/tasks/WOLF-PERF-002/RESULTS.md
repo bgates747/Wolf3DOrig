@@ -124,11 +124,4 @@ original epoch. Card left mounted. Central release11:37:11EST; Extender and
 next FSIM request14afe4eae07d were immediately notified, with FSIM still needing
 its own fresh grant. No Wolf hardware custody remains.
 
-Portable raw records/reports/receipts are in `results/visible01/`; the report
-reproduces exactly from archived binaries. Complete transport journals remain
-in ignored PERF-001/build/olimex01/evidence/physical-r02-visible/ under the
-original coordinator's guard. WOLF-PERF-002-01..-05 are disposed by this source,
-emulator and accepted hardware evidence; -03 required no correction. -06 voice
-preparation remains deferred after the Author selected the immediate unchanged
-run. Speech was generated and audio-only source prepared, but no voice build,
-emulator test or hardware playback is claimed.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

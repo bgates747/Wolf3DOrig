@@ -31,16 +31,6 @@ it does not establish performance for every gameplay scene. PRT/MOS use nominal
 clock assumptions and agree within0.13%; no external oscillator or frame-by-frame
 optical calibration is claimed.
 
-Independent report.py verifies the64 extension pins and163 original kit pins,
-actual package operands in resident before/after/full RAM, actual loop C3/fence
-call bytes, fresh guest/module SD readbacks, all600 guest/native pose records,
-timer restoration, balanced stack, no agent RUN receipts and direct human visual
-confirmation. The first build assembled correctly but its check mistakenly
-included the legitimate final clock stamp in the pacing-free loop condition;
-the failed receipt/script remain preserved, and check_uncapped.py qualified the
-unchanged actual assembly with the correctly bounded loop check. No reassembly
-or failed guest dispatch was hidden by that disposition.
-
 Previous SD outputs/config were preserved using supported metadata MOVE into
 /test/wolf/perf011/r01/paced77-results before active output names were reused.
 All previous host binary hashes still match. The immutable original fixture and
@@ -48,15 +38,9 @@ All previous host binary hashes still match. The immutable original fixture and
 were not replayed. The new LOAD-only controller exited with all actors closed;
 Smith received the application-question notification and issued RUN . himself.
 
-After confirmation, existing data and resident RAM were retrieved before any
-new LOAD. Native incoming1105920B85f9 was restored and independently read back.
-Matched startup, raw mode0/callback0/route0, actual root CLI/cursor, whole unchanged
-startup/listener, neutral input, offline/idle service state, joined actors and
-free USB checks passed. P4/EMOS/startup/listener were not changed. SD stays mounted.
-**Actual77 remains restored, idle and held for Smith; no automatic release or
-additional run.**
-
 RESULT.json contains raw-file hashes, source/runtime joins, comparison and final
 observation. Small raw outputs, CSV and original decoder/collection/handback
 receipts are in results/uncapped77/. Complete serial/transport/flash/RAM evidence
 remains in build/hardware01/evidence/.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

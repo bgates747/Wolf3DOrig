@@ -33,15 +33,6 @@ Capture actual room/motion and normal MOS return. Verify600pose records,
 loaded/busy/frame false. Classify captures against original-method expectations;
 do not require identical old-port pixels or treat host return as human approval.
 
-Boost remains OFF, existing80C/512MiB guard and finite owned child cleanup.
-Keep no outer destructive timeout across unsafe writes (this tranche has no
-hardware/firmware writes). Retrieve all evidence with hashes, join owned
-emulator/build/collector children, fresh whole-host idle proof, normal Oryx
-release/notify actual next. No Olimex contact or old69 token. Report native
-source execution explicitly: not Xtensa runtime/provider/PIC/cache/timing or
-physical framebuffer qualification. A failed visual/source boundary must be
-resolved before physical timing is claimed.
-
 Preparation amendment before any new build/run: the first file-only copy into
 build/visual01 stopped at a Pi-local shim path that exists only on Oryx. Preserve
 that partial directory and preparation-error.json. Corrected preparation uses
@@ -63,3 +54,5 @@ build/visual02/dispatch-inputs.json before any Oryx build/emulator child. Each
 bridge build and each frontend launch asserts the actual Oryx token sequentially.
 The fixed two-bridge/two-run tranche is bounded by600s per bridge and300s per
 frontend plus owned cleanup; stop successors on the first unexpected result.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

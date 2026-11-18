@@ -48,13 +48,6 @@ is `6755f39175989ad93901d915de48e100c20b4f43`; its initial source/ELF findings
 and finite measurement proposals are supporting evidence, not causal timing.
 Record content hashes for any evolving source/advice documents actually used.
 
-The review may read history/source/manifests/disassembly and perform bounded
-device-free counts on existing artifacts. No compilation, emulator/hardware
-run, reservation, firmware change, consumer optimization, ABI change or shared
-policy adoption is part of this task. Do not mutate retained raw evidence or
-make benchmark comparisons from newly selected workloads. Proposed safeguards
-are review recommendations, not new standing policies or automatic gates.
-
 Preserve scoped row lifetimes, x-XOR mapping, sync bits, fixed-point semantics,
 compiler PSRAM correctness safeguards, canonical pixels/state and resource
 limits in every correction proposal. Do not hardcode firmware ROM addresses
@@ -67,3 +60,5 @@ Deliver a concise findings report and a provenance ledger here. The report must
 include Wolf-owned review failures and concrete examples useful beyond Wolf,
 with advice requests that respect VDPL-032's actual scope. No peer build,
 implementation, run or protocol adoption is commissioned by sharing the review.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

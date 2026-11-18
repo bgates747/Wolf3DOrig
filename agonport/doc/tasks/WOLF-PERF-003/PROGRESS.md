@@ -98,105 +98,6 @@ Disposition sent as
 2026-11-05_13-17-46_wolf3dorig_wolf-perf003-fx153-host-implementation-one with
 immediate accepted Pi steer. Await the component host/artifact or tooling return.
 
-FX-153 native host return13:23:56 independently audited: all228source hashes,
-eight evidence hashes, exact one-file diff and strict reader verify.57 checks
-pass (15observer/28UART-library-machine/14reader); no x86_64 executable exists.
-FX153-HOST-REVIEW.md accepts technical source/host results with original
-pre-assert sequencing defect retained and a required sequential successful
-assert before any future launch. No rerun is selected to replace that history.
-Pi149 released,nextnull. Missing qualified x86 target/linker route is the next
-blocker; offline Oryx build preparation and environment-owner route advice are
-requested before any compiler routing exception or new execution.
-Offline package request sent to Flexe as
-2026-11-05_13-27-22_wolf3dorig_wolf-perf003-fx153-offline-build-prep-one;
-existing-route/policy-evidence question sent to environment owner as
-2026-11-05_13-27-39_wolf3dorig_wolf-fx153-x86-route-question-one. Both received
-immediate accepted Pi steers. No compiler/emulator/bench work or lease selected.
-Environment owner's13:28:41reply finds no existing qualified Pi x86 Rust/SDL
-route or standing human Oryx compiler fallback. Actual Nov5 routing remains;
-a concrete one-build exception must be presented to Smith after offline build
-preparation. NEXT-OBSERVER-COHORT.md records intended later consumer cases only;
-it invents no artifact hash and selects no reservation/execution.
-Flexe's stopped one-build package returned13:30:09. Archivecc8fc6e1 and all228
-archived source/script/runbook/manifest hashes independently verify. Guarded
-one-off native Oryx build is concrete and statically reviewed; no compiler/test
-or emulator executed. Await Smith's one-build routing exception decision
-(normal FIFO,one serial offline release build,max20minutes). No resource held.
-Smith directly approved "oryx compile approved." in this chat on2026-11-05.
-The concrete one-build/max20minute routing exception is now approved; Flexe
-may obtain its own fresh normal FIFO checkout and execute the reviewed package
-once. General routing and separate emulator/bench/adoption gates remain intact.
-Original human message01a1ad0a-8b2d-7683-91b8-e12baaaaf935 verified by
-read_thread. Approval/scope sent to Flexe at13:49:13EST by durable mail plus
-immediate accepted Pi steer. Await the component's actual build/cleanup return;
-Wolf does not reserve a competing slot or execute peer-owned compiler work.
-Prepared syntax-checked but unexecuted batch_probe.py/batch_probe_prepare.py
-and copied exact strict FX-153 reader691e2b98 under ignored consumer preparation.
-Frontend path/SHA and x86_64 ELF identity are mandatory inputs; no artifact hash
-is invented and no profile/tranche is frozen or launched by this preparation.
-Environment owner's13:53:15standing-policy update supersedes the earlier
-no-fallback answer: compiler work may use Oryx when the required build cannot
-be performed on Pi, with the documented limitation and normal FIFO/guards.
-No further per-build routing question is needed for that case. The existing
-specific one-build approval remains valid; scope/target gates are unchanged.
-Approved Oryx306build passes39.037s; artifactc987fafc/1968256B and all8returned
-evidence hashes independently verify. Peak70.875C,boost1unchanged,normal release
-18:52:25UTC,nextnull. Recursive cache-only dependency audit stops on private
-PulseAudio lookup; postbuild source rehash not reached, so not target-qualified.
-Passive review finds the helper exists and parent RUNPATH names its directory.
-Wolf wrapper also selects HOME/.local SDL3.2.18 before system build SDL3.4.2.
-Selected bounded read-only audit-r02(max5min/128ELFs), actual wrapper resolution/
-symbol evidence plus postbuild228source rehash; preserve original failed audit.
-Sent13:55:12mail plus immediate accepted Pi steer. No rebuild/target selected.
-Audit-r02 returned13:57:48; graph22e5e262 and all8evidence hashes verify.
-Actual wrapper closure6ELFs/11edges/448strong imports available; local SDL3.2.18
-selected, dynamic plugins/runtime still unqualified. All228actual postbuild
-source files match and artifactc987fafc unchanged. Selected/froze s02 two-case
-consumer diagnostic in RUN-STALL-02.md and build/s02 manifests; static libraries
-pinned before each launch, unchanged input shim explicit. Fresh request16c92a5baa94
-receives Oryx307 after empty-host checkout; sequential asserts precede children.
-Observer results remain diagnostic only. No hardware or performance cohort.
-Both s02cases complete29.743/55.652s,normal MOS return/Quit0/zero final faults.
-Both observers finalize/shutdown with zero samples/incomplete window: no live
-stall diagnosis or repair.32raw hashes verified and actual307release19:02:04UTC,
-nextnull after fresh whole-host idle. Returned substantive evidence to Flexe
-14:03:03EST plus accepted immediate Pi steer. WOLF-PERF-003-09 coordination/
-diagnostic delivery complete; -04/-05 main qualification remains unfinished.
-Next matrix explicitly repins both arms to privatec987 with observation disabled,
-preserving all previous failures and excluding observer timings from comparison.
-Fresh q03 matrix now frozen in RUN-QUALIFY-03.md/build/q03 and owns Oryx308,
-request5fea56be8147. Same privatec987 on both backends with observation disabled;
-corrected timer/register/MOS-return controls first, then CPU/unpaced/paced arms.
-Eightcases,max300s each,firstfailure stop,initial/1s80C/RAM guards. No new build,
-native/module/guest changes,shared runtime adoption or physical qualification.
-All8q03cases pass, including both corrected actual-MOS-return controls,
-both600-pose CPU/hidden arms and both closed720degree paced arms.259retrieval
-hashes verify; positive entry/exit stacks balance; actual render wire packets
-match all completed pose rows (24bytesA/65bytesB,6bytepacedpresent/fence).
-Literal q03 harness retained. Actual308release19:13:02UTC,nextnull after joined
-workers/fresh idle. WOLF-PERF-003-04 complete; separately frozen p01 comparison
-may now proceed under a fresh lease. No physical/general-game speed claim.
-Saved-SP verification uses listing-addressed fields in after.bin; stack.bin
-is a256-byte memory window, not a6-byte pair. Initial inspection's incorrect
-assumption is retained in verification-correction.json; corrected all6positive
-SP checks and all4render wire checks pass. No guest failure was inferred.
-Fresh p01 freezes12capture-free A/B/B/A cases across CPU/hidden/paced with
-identical q03private composition; actual Oryx309 requestfe4e061f9570 owns it.
-No observer/capture timings pooled; first failure stops the matrix. Source,
-firmware,SDK,guest and assets stay unchanged; no physical contact.
-HARDWARE-PREPARATION.md records candidate exact images/proposed14guest suite
-and required scope/clock/restoration questions. Existing-evidence-only advice
-requested from Extender at14:17:12EST plus immediate accepted Pi steer. No
-bench reservation/access/live inspection/flash/run selected by this preparation.
-p01stops on first A CPU case: Tctl82.625C at30.077s exceeds frozen80C guard;
-initial56.75C/ampleRAM,console still shell assets before benchmark. No matched
-results or later cases. Ordinary Quit/join,23retrieval hashes verify, actual309
-release19:18:22UTC,nextnull with fresh idle. Boost1 preserved; no raised bound
-or automatic replay. q03's full functional pass remains valid (peaks<=79.625C).
-Retained thermal/policy/passive-state advice requested from Oryx-manager in
-14:19:11ESTmail plus immediate accepted Pi steer. No host change/newload given.
-Comparison -05 remains open; hardware preparation awaits Extender advice.
-
 The separate spoken notification hardware test passed Olimex37; Smith confirms
 clear speech. Full handback/release completed and Extender notified. Its sources,
 package and scope are independent of this benchmark; no hardware slot remains
@@ -263,20 +164,6 @@ paced/review-history/attempt01-interrupted; same profile reset/verified for
 Smith's rerun. Explicit human instruction: retain Oryx312 until Smith tells
 us to release, even if emulator windows close.
 
-Root cause found for human A/B scene discrepancy: A task warmup replay omitted
-INIT_LEVEL, leaving native m_world.tilemapBufferId0. GetTile missing-buffer
-fallback returns solidwall. Correct camera packets did not qualify scene.
-Previous A runtime timing/visual claims therefore do NOT establish intended
-canonical workload; keep raw evidence but exclude from matched comparison.
-r06 changes firstAsetup to ordinary submit_level_reset+completion/present fence,
-then secondnormalwarmup. Future standalone_bench generator corrected too.
-Bothapps' existing finalizedimage/audio dotcallbacks now present/fence hidden
-page during setup; timerbrackets remain unchanged. Sevenassemblies pass under
-Pi153, released20:35:36UTC,nextnull. Initialprepare anchor mismatch and wrong
-x86assembler invocation preserved; reused existing native ARM assembler, no
-toolinstallation. FabA visual-only variant omits unsupported taskCCOUNT dump;
-no timingclaim. HeadlessFab r06a underheldOryx312 nowcapturesloading/rotation.
-
 WOLF-PERF-003-11/-12 implemented/verified: A mapbindingfixed via first
 submit_level_reset; both finalizedassetcallbacks present/fence visible dots
 outside timing. Fab correctedA600poses/twoturns/normalQuit0,peak63.875C,
@@ -337,37 +224,6 @@ Substantive result returns published to Flexe/VDPlet16:44:26EST as
 wolf-four01-results-{flexe,vdplet}-one; immediate chat notifications accepted,
 not read-confirmed. No acknowledgement or additional owner work requested.
 
-Smith next explicitly orders Oryxrelease/Olimexreserve/executewhenavailable.
-Actual312 released22:45:31UTC after freshidle; Jukeboxadb522f22a0b notified.
-Olimex753d29504ecf first/only, no grant yet. HARDWARE-RUN-01.md supersedes old
-no-booking/no-run selection; finite14fixture/8INFO observations, ABBA per mode,
-four app-only writes including exact incoming/touched-tail restoration.
-
-Exact installed EMOS5735812 source review caught old A W3DR/W3DT reply rejection:
-only ten-byte P3DR/VDPL accepted. Extender confirmed task-owned P3DR render1/2,
-control80/81 adaptation. NewnativeA85c520a1/1090400B, allA callback/foreground
-validators fixed; source delta only replyglue, renderer/world and six timed
-loops unchanged. B7593b9cf/module1907ce retained. Eight guests plus563Bresource
-observer compile; native121.35s, Pi163peak58.95C then released23:00:01UTC,
-MechAgon164 notified. Prelaunchx86assembler and observerfilename/branch errors
-preserved before successful nativeARMbuild. Device-free controller order/stop
-checks pass.402pins/20files/1105920Bflashspan bound inbuild/hardware01/kit.json;
-source-review.json retains callback/nominalclock/whole-task stack limits.
-READY sent18:04:51EST; awaiting Extender fresh physical admission/newtoken.
-No target contact yet, no native source substitution under old qualification.
-
-ACTUAL Olimex40 granted23:06:29UTC/request753d29504ecf/token
-18d3babcf0c348d9af60909d1538634f. Extender stopped alltargetaccess and handed
-exclusive direct operation toWolf; grant copiedbuild/hardware01/grant.json,
-current ignoredcontext.json bound to maintained URL/port config. Selected suite
-running in retained toolsession69059 via hardware/physical.py. Own entrypassed
-actualCLI/mode0/callback0/startup/listener;20files stage/GETcompare proceeds.
-No concurrent root/other-agent target calls while this controller ownswork.
-All subsequent phase receipts underbuild/hardware01/evidence. It stops first
-unexpectedfailure, retains custody and never auto-replays. Normal success must
-restoreexactincoming1105920Bspan, rawmode0/callback0/CLI/input/idle/freeports,
-then release40with fresh handbackproof and notifyExtender/nextqueue agent.
-
 Hardware01 firstcontrol failsbeforewp_run: HUD28/total409, explicitAGNBerror/MOS
 return. Stopownedcontroller725782/SIGINT; readerjoined, no subsequentdispatch.
 NoLOAD RAMpreserved308506B, agnb_error14/wp_loading_error1/owned0/abort0;
@@ -389,13 +245,6 @@ invocation bound. Both-page reconstruction remains. New48B loading.bin is writte
 only after main returns, outside AGNB callbacks/timing. The native images,
 module, all timed harness/audio/render source remain unchanged.
 
-Pi build requestbe322a5a3aa1 is queued normally; new Olimex reservation524c52a90a76
-is PREPARING under HARDWARE-RUN-02.md, not granted. Extender notified with finite
-scope and no preemption request. The new controller recognizes early AGNB return
-only after the actual post-RUN MOS prompt, preserves RAM before any LOAD, reuses
-known assets with independent reads and resets only task-owned generated config
-between independent guests. Old generation40 token remains invalid.
-
 Hardware02 READY: eight serial Pi assemblies and actual delayed-MOS-return
 controller fake-serial check pass, all eight compiled48B layouts match and
 all timed sources equal hardware01. Peak50.7C. Pi168 released23:40:07UTC and
@@ -413,20 +262,6 @@ unpaced19794/2380 (~30.31 completed renders/s), mean native draw7361728.2CCOUNT
 wait timeouts in each of four invocations. Old loading fault did not recur;
 continuation was not exercised and root cause remains unproved.
 
-Fourth guest A paced failed its FIRST map-binding warmup completion wait before
-sampling (n0/count0/PRTstart0/inflight1/ready0/callbackerror0/sequenceuninitialized,
-PRT2026ms). Existing failure loop held after reporting timer restored. Runner
-stopped; no B or successor. One standing Agon reset recovered CLI after exact
-startup/init review; saved309014B app RAM before any LOAD and verified codeprefix.
-Retrieved available failure files, restored/read back incoming app/tail and
-freshly verified normal handback. Clean41 release00:04:56UTC Nov6, nextnull;
-Extender substantive release notice accepted. No hardware custody remains.
-HARDWARE-R02-RESULT.md and build/hardware02/physical-summary.json retain partial
-results/limits. New immutable003-17 tracks warmup completion localization before
-another identified selection. Do not conflate it with an in-timed-loop paced
-failure or old Flexe asset stall. Central ESP32 digest invitation read; owner-only
-mailbox contribution policy retained, no shared digest edit or new audit begun.
-
 ### Hardware03: concrete recorder lifetime defect
 
 Source resolves003-17's first-warmup signature: nativeA recorder pointer/count
@@ -435,26 +270,6 @@ returnsfalse before completion publication. Previous CPU0 instead leaves a stale
 borrowed pointer capable of writing freed/reused storage. Treat hardware02
 unpaced speed as provisional until repeated after defined lifetime. This is our
 task instrumentation, not an EMOS/production renderer defect or Flexe asset stall.
-
-Prepared hardware03: private acknowledged242/offset0 disarm before log replacement
-and before deletion, pointer/count/error released; strict overflow checks and
-native drawing/brackets/measured waits unchanged. Four A guests/new nativeA,
-unchanged B after per-call acquire/release+INIT counter review. Exact native
-control method extracted for sanitizer CPU0/full600/paced-subset lifecycle tests.
-Pi buildc3d46fdf6534 queued; Olimex8c05f263c2b5 PREPARING under HARDWARE-RUN-03.md,
-not granted. Extender notified. No target custody or contact after clean41 release.
-
-Hardware03 build READY: Pi177 actual checkout/assert, exact native-control
-ASan/UBSan regression reproduces full-recorder refusal then passes six repeated
-CPU0/full600/subset/release-before-free lifecycles, invalid offset/stale read/
-failed arm/overflow/reply binding. Four A assemblies and native compile109.10s
-pass. New nativec5cfaaed91a0d294bbe30811ca57ff36a585d070946f0813a469412f57d77fcc.
-Source check proves measured instructions, renderer/draw brackets and overflow
-guard unchanged. B artifacts retained after per-call view/INIT review. Kit1052pins
-frozen. Pi177 released00:31:58UTC Nov6, actual automatic Jukebox178 notified.
-Extender received final readiness for Olimex8c05f263c2b5; fresh grant pending.
-No target access/held lease. Source localization003-17 complete; physical
-qualification/comparison still open. Retained old timing remains provisional.
 
 Hardware03 actual Olimex42 received/asserted for8c05f263c2b5; Extender stopped
 exclusive operator handoff, same incoming6565/ad1e/20029942/ed403/0566 and noNET004
@@ -465,15 +280,6 @@ active under hardware/physical03.py (host session91753); custody retained throug
 restoration. No B result or completed paired comparison yet.
 
 ### Hardware03 stopped; recurring physical setup fault diagnosed further
-
-Acontrol/CPU600/unpaced600 pass. Clean-lifetime A unpaced30.2755renders/s,
-native draw mean30.714ms/p9532.846/max33.146 at240MHz; full frame cycle mean33.023,
-p9535/max36ms, no steady30Hz presentation claim. CPU887.57poses/s, pose+pack1.113ms.
-Fourthguest A paced fails BEFOREwp_run atHUD37/total418, same phase1 postC3
-mode-query fence. Ten wait-only calls all return15, zero recovery, first28MOS
-ticks/whole294ticks (~2.45nomsec). ExactlyONE nonASCII byte0x86 atserialoffset99474;
-saved query170086@0x8b6c3 intact. Loss/parser/receiver layer remains unseparated.
-No B/probes/successors; no reset/replay. Sourceonly advice to Extender andVDPlet.
 
 RAM saved beforeanyLOAD; exact incoming app/tail restored/readback and fresh
 normal handback passed. Clean42 RELEASE00:50:55UTC Nov6; actualnextMechAgon52187060d50a
@@ -492,7 +298,6 @@ no simplistic single-TX-timeout-drop or runtime-pointer claim. Need actualTX/RX/
 parser-state discriminants. Extender installed-source reply received and reconciled below; no new build/test/
 reservation selected. Details appended to HARDWARE-R03-RESULT.md.
 
-
 Extender20:19:16EST exact5735812 source review confirms wait41 iteration bound,
 flag-only semantics/no query identity, unsolicited same-type reply possibility,
 and synchronous PUTCH retry contract. Raw USB mirroring does not establish UART
@@ -503,7 +308,6 @@ proposal under003-16, not an implemented or selected run. Bench43 has independen
 changed EMOS/P4 under Extender/MechAgon; generic carrier repair ongoing. Need full
 fresh context/rollback/API binding and grant before future Wolf target work.
 No Wolf lease, reservation, compiler job or target actor remains.
-
 
 ### Wall-column optimization investigation003-18
 
@@ -519,7 +323,6 @@ pins nine inspected sources and proposes disjoint phase/count profiling, then
 separate scratch-reuse and mode-specific flush candidates. No claimed speedup,
 implementation/build/run/deployment.003-18 open; preserve matched baseline and
 current003-16 loading blocker/component reconciliation before physical work.
-
 
 ### Loading04 prepared after pushed checkpoint9e52f7f
 
@@ -543,18 +346,6 @@ I/O/VDU or UART status ports. Paint/C3 stamps live separately until fence entry;
 blocked query/wait leaves current incomplete. Nominal full-call time/non-atomic
 reverse-reply state cannot establish native parse/inter-byte arrival.
 
-Pi193 actual checkout/assert: one assembly0.202s and decoder/source/layout checks
-pass; guest314228B SHA9c07b14240835e121089455bf17809ec7eea8a643d89cd7550f6943b4c67baf5.
-Released21:18:50EST Nov5 nextnull; no child/compiler custody. Three schema checks
-and two actual-controller return/failure checks pass; no emulator/physical proof.
-Finite HARDWARE-LOADING-R04.md selects up to4 loading-only invocations, first
-failure stop, fresh load04 namespace and exact actual incoming native/tail restore.
-FIFOc5c0fb2067e2 PREPARING; Extender substantive mail/steer delivered.
-Candidate-kit ready=false until actual MechAgon release/native/tail reconciliation;
-physical04 refuses unbound input. No grant/firmware/native write or new timing.
-Wall-column003-18 remains parked.
-
-
 ### Actual43 release and loading04 offline binding
 
 MechAgon43 actually released23:29:03EST after incoming20029942 app/tail restored
@@ -568,7 +359,6 @@ Bound rollback to actual owner app/tail readback instead of assumed historical
 state. kit04 now selects exact8270/map pins with rebind43 receipt; plan READY for
 fresh scheduler grant, same finite four loading-only runs/no timed renders.
 
-
 ### Loading04 hardware44 completed and released
 
 Actual44 granted/asserted after exact immutable107-pin reconciliation. All four
@@ -579,17 +369,6 @@ deltas0rawMOS ticks are below resolution, not zero time. No stray0x86 serial.
 No render/warmup/PRT/performance run. Loading-only history/observer/newROM differ
 from prior failed render-bearing history;003-16 unresolved, no transport fix.
 
-NativeA write and exact incoming20029942 app/tail restoration/readback pass.
-Actual minimal selected span1101824B, not earlier prose1105920B retained Mech
-span; larger span's last4096B never touched. Keep original frozen evidence and
-post-release correction in HARDWARE-LOADING-R04-RESULT.md. Fresh mode0/callback0/
-CLI/startup/listener/input/idle/freeUSB and joinedactors pass. Released44 at
-23:51:00EST Nov5 (04:51:00UTC Nov6), queueempty; immediate Extender handback mail
-and steering delivered. No Wolf custody/targetactor remains; SD mounted.
-Next preparation: retain observer across actual benchmark/render history with
-measured loops unchanged, rather than replay without the missing evidence.
-
-
 Hardware05 preparation selects observed real benchmark/render history after44's
 loading-only non-reproduction.8clients preserve exact measured/backends/asset-send
 code and original loading text; add same setup observer/final-fence failclosed.
@@ -597,7 +376,6 @@ Pi215 assembled8/source/layout/decoder pass and released05:00:28UTC nextnull;
 actual-controller barrier/14case8probe/full-firstfailure tests pass. NativeA/B/
 module unchanged; full rollback span1105920 bound to actual44/Mech43 evidence.
 No hardware/renderer optimization; freeze normal package before fresh admission.
-
 
 ### Actual47 host entry stop and corrected06 preparation
 
@@ -613,7 +391,6 @@ existing prompt/full14case8probe/first-failure checks. All8clients/assets/module
 native images unchanged; no rebuild. Separately identified HARDWARE-RUN-06.md
 retains exact finite comparison scope; freeze before fresh admission.003-16
 and paired comparison remain open; no automatic replay or oldtoken use.
-
 
 ### Actual49 control/CPU return and host listing-path stop
 
@@ -635,7 +412,6 @@ threshold/handback, invocation and complete14/8/first-failure sequence. Syntheti
 render records only qualify host code, not target timing.1502inputpins including
 all listings verified. Same finite HARDWARE-RUN-07 scope needs fresh admission.
 
-
 ### Actual51 terminated during verification; exact original GET reconciled
 
 Frozen090cfee entry passed,14retained files verified; host session72475 returned
@@ -648,7 +424,6 @@ all firmware/app/tail/featureabsence retained unchanged, noflash needed.
 Released51 at07:58:18UTC nextnull; scheduler notified. Originalcode/frozenkit/
 log/journal retained; HARDWARE-R07-RESULT.md. Read-only Pi manager source/log
 consult requested; no new reservation/reproduction before host disposition.
-
 
 ### Existing host logs exhausted; signal-stop receipt qualified offline
 
@@ -664,9 +439,6 @@ change. Fresh HARDWARE-RUN-08 identifies same14/8 finite suite with usefulhost
 interruption evidence if it recurs, not a repair claim; source disposition
 complete but originalcause remains unknown. Freeze before normal fresh grant.
 
-
-### Actual52 input-admission stop after verified A image; recovery/release pass
-
 All20retained inputs verified, A full written span readbackmatched, then45s
 boot inputready bound failed before any guest. No hostsignal interruption.
 Status P4alive/neutralreadyfalse/offlineidle and empty2s nativeUSB retained.
@@ -678,21 +450,7 @@ Released52 at08:26:06UTC; nextVDPlet25f6e811c787 notified. Source-only bootstrap
 review requested from Extender before concrete continuation, no newrun selected.
 HARDWARE-R08-RESULT.md retains honest lack of newrender/assetmeasurements.
 
-
 ### Source disposition and explicit clean-bootstrap preparation09
-
-Exact715/e14 supports reciprocal mainboard-reset prefix; readyfalse alone does
-not locate52's cause or prove a universal P4reset requirement. Owner source
-review and actual52 recovery permit deliberate clean current P4-init then Agon
-bootstrap outside timing after each selected native install, including restore.
-09 selects exactly4such pairs, no timeout stretching/repeated uncertain flash/
-reset/guest. Exactcurrent build/PAD+healthy display precedes Agon; neutralinput/
-currentconsole/actualCLI/files/rawstate precede any guest. Compiled inputs and
-frame timing unchanged; no compiler. Run via maintained Extender interpreter
-for existing esptool; interpreter/helper/reset sources pinned. Two bootstrap
-ordering/failure-stop test methods plus six controller and3signal child checks
-pass.1537pins verified; HARDWARE-RUN-09 concrete finite scope ready for fresh
-admission/currentrelease reconciliation, not a repair claim or replay of52.
 
 ### Actual54 complete physical comparison and clean release
 
@@ -723,3 +481,5 @@ results/hardware09 retain curated samples/reports/rawhashes; build/hardware09
 retains private full evidence. No renderer optimization included.003-04/-06/-07
 complete; human acceptance003-08, corrected matched emulator timing003-05,
 historical loading cause003-16 and parked column investigation003-18 remain open.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

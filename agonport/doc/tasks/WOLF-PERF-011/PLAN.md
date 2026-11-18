@@ -1,16 +1,5 @@
 # WOLF-PERF-011 — Latest optimized visible rotation, started by Smith
 
-Smith explicitly selects the latest optimized renderer on native Olimex VGA:
-E1L1(34,36), no enemies, two complete turns over twenty nominal seconds. Every
-completed pose must be presented during the loop. Collect presentation timing
-to report actual displayed-update cadence rather than hidden draw capacity.
-
-The newest steering controls launch: stage and LOAD the qualified guest, DO NOT
-RUN it. Keep the bench and actual loaded state. Use the application's agent-has-
-a-question feature to notify Smith that it is ready, with the exact manual RUN
-command. Smith starts it himself. No timer-abort/static prelude or hidden-only
-arm. No automatic RUN, timeout-triggered launch, or keyboard Enter injection.
-
 - [x] WOLF-PERF-011-01 — Freeze source/support and selected candidate identity.
   Use PERF009 a926b48a module24420B (latest completed optimized renderer), actual
   current-ROM physical guest bindings and proven paced-loop method. Preserve
@@ -36,15 +25,4 @@ arm. No automatic RUN, timeout-triggered launch, or keyboard Enter injection.
   replay or unsolicited extra cases. Restore/readback exact incoming native
   image/tail if changed, normal full handback and release after review.
 
-Reserve PREPARING immediately. MechAgon76 currently owns the bench: no preemption
-or Wolf device contact while it owns custody. Extender supplies actual release,
-current components and normal fresh admission. Existing UART/P4/EMOS/startup and
-listener stay fixed; no firmware/carrier workaround. First unexpected stops
-dispatch; supported owned cleanup only. Leave SD mounted. No expiry on Smith's
-manual-start wait; host collection observers may stop without RUN or reset.
-
-Prepare/run/collection work is finite (one guest,300s execution observation,
-ordinary transfer limits, explicit restoration budget). Human wait is separate
-from execution/thermal deadlines. Do not reset or restore beneath a loaded guest
-while Smith is about to start it. No bench release or new workload at the ready
-prompt without Smith's direction or a necessary explicit recovery handoff.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

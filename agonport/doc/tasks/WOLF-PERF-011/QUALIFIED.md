@@ -26,10 +26,4 @@ files, one guest,163 pinned inputs. A draft kit before final action-specific hos
 receipt paths is retained alongside the final published kit. No target call or
 test occurred in these offline checks.
 
-Runtime uses actual Extender interpreter and exact launcher import closure.
-Final kit is build/hardware02/kit.json; no target until Extender's actual new
-grant/current entry context. Human wait is outside execution deadlines. LOAD-only
-ready state retains exclusive custody, does not dispatch RUN, and must be
-announced using request_user_input_async. Smith's exact command is RUN . at the
-native MOS prompt, from /test/wolf/perf011/r01. The program will then load assets,
-show loading progress and rotate the room twice in twenty nominal seconds.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

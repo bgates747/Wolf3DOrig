@@ -173,9 +173,4 @@ An independent fresh decode of all twelve measured raw guest/native outputs
 matches all 6,180 exported samples exactly; pooled means/p95 and all retained
 raw-file hashes also match. `git diff --check` passes.
 
-Full unmodified raw output, RAM/stack dumps, source/kit pins, bootstrap,
-write/readback, retrieval and release journals remain locally under
-`build/hardware09` (ignored; no lease token or raw RAM is published). The generic
-analyzer's original per-case clock label says "emulator"; originals remain
-unchanged, and the curated copies explicitly identify this actual physical
-execution and preserve that inherited label in a separate field.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

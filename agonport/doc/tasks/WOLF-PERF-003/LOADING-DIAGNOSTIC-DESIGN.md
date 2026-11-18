@@ -38,20 +38,7 @@ observations to a transport diagnosis or performance result.
 
 ## Evidence and admission needed before implementation/run selection
 
-- Reconcile Extender's current generic carrier investigation first. Obtain full
-  current EMOS/P4/native/startup/listener pins, supported API contracts, read-only
-  state definitions and addresses. Old5735812 addresses/contracts are historical.
-- Bind any candidate to the current task-owned loader and exact A native image;
-  demonstrate source diff leaves asset sends/draw/timed paths unchanged. Review
-  current rollback and storage/stack/resource fit before a fresh grant.
-- Select a finite loading-only tranche with explicit invocation/time bounds and
-  no timed renders. Stop on first failure, preserve evidence before LOAD, then
-  restore the actual incoming native app/tail and perform normal handback.
-  Success would be bounded observation, not proof the intermittent fault is fixed.
-- If sender observations cannot separate the possibilities, request a separately
-  reviewed receiver trace design from its owner: command-entry/parameter-wait/
-  payload-remaining/C3 transitions and receive timestamps, without logging on
-  the measured/shared transport. No shared firmware patch is selected here.
-
 Remain within003-16; do not mark it resolved or restart the paired cohort from
 this design. Hardware is the main target. The old Flexe loading issue is separate.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

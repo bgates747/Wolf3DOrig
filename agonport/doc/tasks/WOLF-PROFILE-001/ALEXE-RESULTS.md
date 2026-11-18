@@ -53,14 +53,6 @@ loading failure in headless Alexe, not a native collector failure or a proven
 emulator/transport cause. No replay or runtime repair selected. Evidence is
 shared with the Alexe owner for source/log comparison.
 
-Current conclusion: optional profiler implementation and native record joining
-have one complete actual-emulator full-game result (static heading), including
-real disk cue/face restoration and clean exit. Moving-view qualification and
-physical admission remain incomplete. Old hardware01/101 kit is retired; any
-future hardware check needs a new producer/source freeze and fresh admission.
-General ordinary bench readiness was already recovered/released, and later102
-passed; candidate7593 readiness failure must not be called a general bench fault.
-
 ## Saved-stream comparison after release
 
 Alexe's bounded independent review verified ten selected result/wire-log hashes
@@ -73,3 +65,5 @@ does not establish arrival timing, FIFO acceptance, firmware consumption or
 stall cause. No new run, repair or replay is selected; original verdicts remain.
 Owner evidence: mail2026-11-07_18-00-43_flexe_wolf-profile001-alexe360-exact-prefix-return-one;
 Flexe docs/tasks/FX-154/native-profiler-intake-2026-11-07.json.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

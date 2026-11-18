@@ -17,16 +17,6 @@ colour, XOR0..3, aligned start/count, conservative nonwrapping end. Source early
 zero return, entire linear path, scalar fallback, per-span/row/call painter order,
 asset lease/callback ordering, masks and PSRAM policy remain unchanged.
 
-Each arm passed74755 independent actual-private-span oracle cases, including
-all65536 mask pairs, partial quads, arbitrary XOR/bias, safe initial uint32 wrap,
-zero before row fetch, destination-row aliases and overwritten target-metadata
-aliasing. Each also passed1176 original globally ordered background/alias cases,
-the retained98727 span/rectangle cases, renderer error matrix and module lifecycle/
-retry/recovery/direct-copy parity. All600 host-fixture frames, states, geometry,
-module frame and span outputs match the exact control and prior combined output.
-These600 host frames cover300 scripted degree headings in the retained host
-fixture, not an independently executed canonical hardware map or all360 headings.
-
 The extracted actual candidate predicate passed19584 boundary-domain cases,
 including468 admitted original-address sets. End-overflow controls refused the
 fast path without ever constructing invalid row pointers. This is separate from
@@ -62,3 +52,5 @@ No default adoption, sprite013 decision or firmware/helper/provider change.
 [archive manifest](results/build01/SHA256.json).
 Large host executables/frame streams remain in build/r01; their actual hashes,
 pairwise output equality and unchanged source inputs are retained in the archive.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

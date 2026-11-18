@@ -40,14 +40,6 @@ verified native7593 and LOADed rotate.bin. The load-only controller exited and
 all actors stopped before the application-question notification. Smith then
 typed RUN .; no static/probe/unpaced prelude or agent-started guest occurred.
 
-After Smith confirmed completion, the collector preserved existing RAM before
-any new LOAD, retrieved all original outputs, verified the run and restored the
-exact incoming1105920B native/tail85f9. Independent full readback, current matched
-bootstrap, raw mode0/callback0/route0, actual root CLI/cursor, unchanged whole
-startup/listener, neutral input, offline/idle services, joined actors and free
-USB checks passed. P4/EMOS/startup/listener were not changed. SD remains mounted.
-**Actual77 remains owned and idle for Smith; no automatic release or next run.**
-
 RESULT.json and report.py independently join163 frozen inputs, actual producer/
 resident operands and call bytes,600 guest/native records, human confirmation,
 restoration and final handback. Portable small raw outputs/CSV/original decoder
@@ -56,3 +48,5 @@ flash/RAM evidence remains under build/hardware02/evidence/. The generic decoder
 retains its historical emulator wording in clock_qualification; this task's
 physical/nominal-clock qualification above supersedes that prose without editing
 the original decoder output.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

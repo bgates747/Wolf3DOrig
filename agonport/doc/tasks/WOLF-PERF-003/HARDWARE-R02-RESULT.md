@@ -54,12 +54,6 @@ Saved state narrows the failure to the FIRST map-binding warmup completion wait:
 | completion_record / snapshot | Ten0xff bytes each |
 | task control cookie | 0 |
 
-No completion was captured before the existing240-MOS-tick wait expired.
-Paced sampling and its presentation loop never began. This does not identify
-whether the render request, renderer, return transport, EMOS admission or
-callback capture failed; no native-side trace survived the recovery reset.
-Do not turn it into evidence that paced drawing itself is slow or broken.
-
 Evidence is under `build/hardware02`: frozen792-pin kit, eight build/layout
 checks, individual passed case receipts/rawCSV/native counters, fourth guest
 serial/failure record, `paced-failure-collection/{ram.bin,decoded-fields.json,
@@ -89,3 +83,5 @@ defined lifetime; record correctness alone does not prove prior heap ownership.
 HARDWARE-RUN-03.md selects explicit acknowledged release before log replacement
 and deletion, with repeated real-control-method sanitizer regressions before
 qualification. No new hardware result or completed fix claim yet.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

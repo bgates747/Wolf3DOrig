@@ -20,18 +20,6 @@ results/controller03 and results/hardware02-preparation. Three prior real
 app-server-parented observer/handler cases and15 negative handshakes remain
 qualified; only admission metadata changed afterward.
 
-Same4200s absolute INCLUDING45s pre-I/O observer handshake,360s cleanup reserve,
-300s guest and >660s before new module/guest/INFO/immediate RUN. Safe in-flight
-completion, first-fault/RAM-beforeLOAD, exact1105920B85f9 restoration/readback,
-maintained one-shot bootstrap/full handback/SD mounted/normal release/immediate
-next-owner notice remain. Both original foreground handles and owned tracer
-must be terminal before release. No automatic production adoption or HOLD.
-
-Expected tuple rejoined actual92 release/fulla25f readback. Current Mech owner
-isolation/R08 must actually finish/restore/release; reconcile that real handback
-and obtain fresh Extender grant/stopped handoff before contact. No existing token
-or retained source identity substitutes for admission.
-
 Mandatory launch: pinned Extender Python, this task's launch02.py --context NEW.
 Second normal foreground job: native /usr/bin/python3, this task's observe.py
 --context NEW --folder this-task/build/hardware02/observer --lease NEW. Controller
@@ -39,3 +27,5 @@ waits before any target I/O; observer asserts SAME owner/kit/PID-start, never
 opens hardware and never signals controller. No parent/group/lifetime or fatal
 signal suppression. Simultaneous loss of both jobs remains a limit; ptrace can
 perturb host setup/collection. Historical SIGTERM causes stay unknown.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

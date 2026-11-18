@@ -21,17 +21,8 @@ return toMOS and close automatically. If startup stalls,300s stops it; a closed
 window or timeout is not benchmark success. No native hardware operations.
 Boost0 stays standing baseline. Smith reports completion before clean release.
 
-Smith explicitly requires custody held until he says release. First bespoke
-attempt ended during HUD loading at30.873s; preserved under profile review-
-history/attempt01-interrupted and reset on request. Second bespoke run completes
-600paced records and normalMOSreturn/automaticQuit. VDPlet completes433paced
-records/normalunload/MOSreturn. Actual wire checks pass both; A602posecommands
-includingwarmups all have x0x228000/y0x248000, B433timedposeframes sameposition.
-Smith reports screenshot is not expected location; this is an OPEN visual
-scene discrepancy despite correct submitted coordinates, not resolved by header
-identity/wire checks. No change, new run or release selected. Screenshot source:
-/Agon/mystuff/agent-state/codex/attachments/9880eba0-6620-48fa-9f9d-d8af2198c2fc/codex-clipboard-23511e49-35cf-4624-b51d-a356ad0f26da.png.
-
 r07 refines bothpage loadinglabels/counts. Fresh stopped profiles in
 .emulator/wolf-perf003-loading-review; previousfixed-review profiles preserved.
 Fab validation complete/ownedemulatorsstopped. ExplicitOryx312holdunchanged.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

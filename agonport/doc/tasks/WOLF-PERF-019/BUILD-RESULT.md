@@ -47,7 +47,4 @@ in2.443s, children joined, release **13:37:43.212856UTC**, no next.
 [nested-stack proof](results/build01/nested-stack-source.json) and
 [real producer receipt](results/guests01/receipt.json) retain the evidence.
 
-No hardware case, new firmware/API/helper, production default or arm combination
-is selected by this result. Keep queued PERF018 immutable and MechAgon first.
-A useful matched physical contract requires its own current tuple, exact rollback,
-host/controller/listener lifecycle freeze and normal fresh admission.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

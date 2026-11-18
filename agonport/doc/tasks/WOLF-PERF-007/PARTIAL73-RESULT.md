@@ -43,18 +43,6 @@ retained source plus counters narrows rejection to READ reply body length or
 advertised file size; rejected raw response is absent, so cause remains unknown.
 No renderer, media, UART corruption or filesystem cause is established.
 
-Extender source-guided cleanup preserves original job/state evidence, retires
-only that identified terminalfailedGET through existing explicit discard and
-records phase0. The partial P4 spool is not deliverable and is not claimed
-preserved; mainboard after.bin stays in place. Previously unfetched timing/
-native/stack originals are retrieved once, yielding the600repeat observations
-above. Their step/angle/sequence/stamp/counter/wrap/player-only identities pass
-raw decoding; repeat before-RAM producer operands also match the actual candidate.
-The postguest after.bin/SP/resource checks remain unavailable, so the repeat is
-salvaged evidence, not a fully qualified case. A fresh325300BcurrentRAM SAVE on
-SD precedes any LOAD; metadata size is verified, local byte readback not claimed.
-This current snapshot is distinguished from the pristine original after.bin.
-
 The strict complete-cohort decoder still rejects missing complete.json. No
 completed ABBA/pass marker is manufactured. Actual72's earlier host-interpreter
 import failure is preserved separately and contributes no rendering timings.
@@ -74,15 +62,9 @@ status, metadata and raw serial receipts are retained under build/hardware02.
 PARTIAL73-RESULT.json and report_partial73.py recheck the raw1800records,
 producer/module/lifecycle/guard/resource/source joins and full restoration.
 
-Exact incoming1105920B85f9 native application/touched-tail restoration and
-independent full readback pass, followed by current matched bootstrap and fresh
-mode0/callback0/route0/whole startup+listener/rootCLI/cursor/inputneutral/offlineidle/
-worker0/freeUSB checks. All owned actors/readers stopped. Actual73 cleanly
-released2026-11-07T06:01:57.999671UTC; MechAgonf2aa036f2cf6 notified as actualnext,
-requiring its own fresh Extender grant. SD stays mounted. No P4/EMOS/startup/
-partition/NVS/carrier/default changes or new hold. Wolf has no hardware custody.
-
 The implementation and offline/visual boundaries pass; physical observations
 support a useful improvement. Full balanced confirmation remains unresolved by
 the collection failure. Preserve that dependency with Extender before selecting
 any further target cohort; no blind full replay or default adoption is inferred.
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

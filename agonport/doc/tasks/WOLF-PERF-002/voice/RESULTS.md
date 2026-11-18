@@ -5,11 +5,6 @@ pending with Extender. Historical preparation/denial evidence below is preserved
 
 # Audio enhancement: implementation and automated qualification
 
-2026-11-05 update: Smith explicitly authorized an Olimex slot for the spoken
-notification test. Request7f60ca35b2f7 is reserved through the normal FIFO; actual
-fresh Extender grant and physical hearing remain pending. The earlier booking
-denial below is historical and was not bypassed.
-
 The native audio-only player, arbitrary-text speech generator and Wolf start
 cue are implemented. The reviewed r02 player passes18 actual-C checks and
 two generic Oryx checks; the unchanged Wolf integration retains its prior pass.

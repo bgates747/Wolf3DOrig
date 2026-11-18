@@ -23,13 +23,6 @@ That extra atomic work could affect scheduling; it has not been shown to cause
 nonreproduction or fix a race. No performance-equivalence or repair claim follows.
 The latest control never reached PRT initialization, so restoration is untested.
 
-Source of this finding and proposed next boundary:
-2026-11-05_13-08-36_flexe_wolf-perf003-prefix-source-advice-107 and
-flexe-agon-emulator/docs/tasks/FX-152/WOLF-PERF003-ADVICE.md. No already-qualified
-transport repair is established for the exact composition. HALT and MOS-clock
-changes are separate. Historical firmware UART recovery work needs exact source/
-driver ordering review by the relevant firmware/UART owners before applicability.
-
 ## Requested design review
 
 Return a concrete source/contract proposal for publishing retained TX state only
@@ -55,8 +48,4 @@ disabled forwarding/status parity. Specify exact source base, intended schema
 and reader compatibility/versioning, footprint and proposed transformation pins.
 Design review alone supplies neither host-test results nor a candidate identity.
 
-Return the proposal for consumer disposition. This request selects no compiler
-reservation, executable build, emulator replay, firmware change, hardware slot,
-runtime adoption or publication. A later selected consumer cohort requires its
-own finite schedule, exact freeze and normal fresh FIFO checkout. Original setup
-failures remain failures; benchmark ranking and physical performance stay pending.
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).

@@ -34,14 +34,6 @@ This is a selector observation, not a live installed-state check. Resolve the
 actual current selector, installation provenance and fresh normal admission
 with the scheduler. Eirene's standalone RC3 binary is not an Olimex EMOS image.
 
-The amended release includes repaired UART RX recovery, pixels, text96, borrowed
-colour rows, READ_BYTES and ordinary async rendering (ABI 1.7, capabilities 799).
-Counted return, private overlap witnesses, quiet async polling and PCM sink
-remain disabled. Existing synchronous Wolf modules still use their ABI 1.3/1.6
-views; enabling async in the firmware does not select a Wolf async rewrite.
-The project preparation screen deliberately admits only its qualified
-synchronous ABI/capability subset. See the [amendment result](agonport/doc/tasks/WOLF-FW-002/AMENDMENT-01-RESULT.md).
-
 ## Candidate preparation
 
 The tracked `standalone` backend depends on bespoke Wolf firmware. It remains
@@ -61,13 +53,6 @@ and the [migration task](agonport/doc/tasks/WOLF-FW-002/PLAN.md). The ordinary
 CLI build defaults to the maintained production VDPlet module; the tracked
 standalone assembly selector remains historical source, not deployment choice.
 
-For a necessary firmware exception, the normal scheduling request must state
-the actual purpose, exact alternate image/source/hash, missing or changed API
-or layout, target and finite authorized scope, and cleanup to current standards.
-Examples are a bespoke-versus-VDPlet compatibility comparison or a specifically
-selected Fab source-model visual check. Frozen old hashes alone are not a reason
-for an exception. No exception or new workload is selected by this document.
-
 Native timing in combined021 is module-owned WPN1 data, ordinary READ16 and
 RUN100; it does not inherently require the old private `7593…` VDP image.
 Replace that historical harness binding through a new preparation, rather than
@@ -75,15 +60,17 @@ requesting an unnecessary firmware exception.
 
 ## Custody and cleanup
 
-Existing resource, test, deployment and human-start permissions remain.
-Reuse verified installed standard firmware; no routine unchanged-device backup,
-readback or reflash. A nonstandard test restores affected components to the
-**current standard**, with appropriate verification and normal handback, rather
-than automatically restoring obsolete incoming firmware. Old kits that hardcode
-the latter require a new freeze. P4, startup/listener, bootloader/partitions and
-unrelated storage are not selected for replacement. Leave the SD card mounted.
-
 The optimization goal stays paused. Smith separately authorized WOLF-PROD-001:
 normal production now selects combined021 rendering in module `7490d81c`.
 Static compatibility and verified release bytes are not a new hardware/emulator
 pass. See its task report for actual qualification and runtime limits.
+
+The amended release includes repaired UART RX recovery, pixels, text96, borrowed
+colour rows, READ_BYTES and ordinary async rendering (ABI 1.7, capabilities 799).
+Counted return, private overlap witnesses, quiet async polling and PCM sink
+remain disabled. Existing synchronous Wolf modules still use their ABI 1.3/1.6
+views; enabling async in the firmware does not select a Wolf async rewrite.
+The project preparation screen deliberately admits only its qualified
+synchronous ABI/capability subset. See the [amendment result](agonport/doc/tasks/WOLF-FW-002/AMENDMENT-01-RESULT.md).
+
+For all Olimex bench procedures, use the sole authoritative [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md).
