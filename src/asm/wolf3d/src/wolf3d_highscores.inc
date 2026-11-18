@@ -23,7 +23,8 @@ W3D_HIGHSCORE_FILE_PAYLOAD_SIZE:  equ 462
 W3D_HIGHSCORE_FILE_FOOTER:        equ 478
 W3D_HIGHSCORE_FILE_SIZE:          equ 482
 W3D_HIGHSCORE_INPUT_WIDTH:         equ 100
-W3D_HIGHSCORE_ROW_FIRST_Y:         equ 76
+; The backdrop's proportional column headers extend through y=78.
+W3D_HIGHSCORE_ROW_FIRST_Y:         equ 84
 W3D_HIGHSCORE_ROW_STEP_Y:          equ 16
 W3D_HIGHSCORE_NAME_X:              equ 32
 W3D_HIGHSCORE_LEVEL_END_X:         equ 176
@@ -193,59 +194,21 @@ w3d_highscores_draw:
     push ix
     lea hl,ix+W3D_HIGHSCORE_COMPLETED
     call w3d_highscores_format_u16
-    call w3d_highscores_string_length
-    ld a,e
-    add a,a
-    add a,a
-    add a,a
-    ld c,a
-    ld b,0
-    inc bc
-    dec.s bc
-    ld hl,W3D_HIGHSCORE_LEVEL_END_X
-    or a
-    sbc.s hl,bc
-    push hl
-    pop bc
-    pop ix
-    push ix
-    lea hl,ix+W3D_HIGHSCORE_COMPLETED
-    call w3d_highscores_format_u16
+    ld bc,W3D_HIGHSCORE_LEVEL_END_X
     ld a,(w3d_highscores_row_y)
+    ld de,0
     ld e,a
-    ld d,0
-    inc de
-    dec.s de
-    call w3d_highscores_plot_number
+    call w3d_highscores_plot_right_aligned_number
     pop ix
 
     push ix
     lea hl,ix+W3D_HIGHSCORE_SCORE
     call w3d_highscores_format_u32
-    call w3d_highscores_string_length
-    ld a,e
-    add a,a
-    add a,a
-    add a,a
-    ld c,a
-    ld b,0
-    inc bc
-    dec.s bc
-    ld hl,W3D_HIGHSCORE_SCORE_END_X
-    or a
-    sbc.s hl,bc
-    push hl
-    pop bc
-    pop ix
-    push ix
-    lea hl,ix+W3D_HIGHSCORE_SCORE
-    call w3d_highscores_format_u32
+    ld bc,W3D_HIGHSCORE_SCORE_END_X
     ld a,(w3d_highscores_row_y)
+    ld de,0
     ld e,a
-    ld d,0
-    inc de
-    dec.s de
-    call w3d_highscores_plot_number
+    call w3d_highscores_plot_right_aligned_number
     pop ix
     pop bc
     ld a,(w3d_highscores_row_y)
@@ -272,6 +235,26 @@ w3d_highscores_plot_string:
     call w3d_highscores_plot_glyph
     jr @next
 
+; Format the decimal text before setting BC; the formatter uses BC as scratch.
+; HL=decimal text, BC=right edge, DE=y.
+w3d_highscores_plot_right_aligned_number:
+    push de
+    push hl
+    call w3d_highscores_string_length
+    ld a,e
+    add a,a
+    add a,a
+    add a,a
+    ld de,0
+    ld e,a
+    push bc
+    pop hl
+    or a
+    sbc hl,de
+    push hl
+    pop bc
+    pop hl
+    pop de
 ; Translate ASCII digits to STARTFONT's fixed-width 129..138 range, matching
 ; the original `*str += 129-'0'` loop.
 w3d_highscores_plot_number:

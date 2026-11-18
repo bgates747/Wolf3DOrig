@@ -240,14 +240,11 @@ w3d_demo_apply_turn_step:
     ld a,b
     or a
     ret z
+    ; The rotator adds a signed ADL-width DE. Sign-extend the negative
+    ; quotient just as the normal keyboard right-turn path does.
+    ld de,-1
+    neg
     ld e,a
-    ld d,0
-    xor a
-    sub e
-    ld e,a
-    ld a,0
-    sbc a,d
-    ld d,a
     jp w3d_rotate_player
 
 @negative:
@@ -277,8 +274,8 @@ w3d_demo_apply_turn_step:
     ld a,b
     or a
     ret z
+    ld de,0
     ld e,a
-    ld d,0
     jp w3d_rotate_player
 
 w3d_demo_store_turn_fraction:

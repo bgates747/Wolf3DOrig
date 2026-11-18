@@ -46,10 +46,7 @@ w3d_player_thrustspeed: dw 0
 ; These seams record the exact signed turn and unsigned-distance requests
 ; published by the production demo state machine.
 w3d_rotate_player:
-    ld a,e
-    ld (test_turn_delta+0),a
-    ld a,d
-    ld (test_turn_delta+1),a
+    ld (test_turn_delta),de
     ret
 
 w3d_move_at_heading_offset_scaled:
@@ -219,6 +216,7 @@ case_analog_motion:
     call w3d_demo_apply_turn_step
     CHECK_MEM8 test_turn_delta+0,11,REASON_CONTROLS
     CHECK_MEM8 test_turn_delta+1,0,REASON_CONTROLS
+    CHECK_MEM8 test_turn_delta+2,0,REASON_CONTROLS
     CHECK_MEM8 w3d_demo_turn_fraction+0,0d8h,REASON_CONTROLS
     CHECK_MEM8 w3d_demo_turn_fraction+1,0ffh,REASON_CONTROLS
 
@@ -232,6 +230,7 @@ case_analog_motion:
     call w3d_demo_apply_turn_step
     CHECK_MEM8 test_turn_delta+0,0f5h,REASON_CONTROLS
     CHECK_MEM8 test_turn_delta+1,0ffh,REASON_CONTROLS
+    CHECK_MEM8 test_turn_delta+2,0ffh,REASON_CONTROLS
     CHECK_MEM8 w3d_demo_turn_fraction+0,40,REASON_CONTROLS
     CHECK_MEM8 w3d_demo_turn_fraction+1,0,REASON_CONTROLS
 
@@ -375,7 +374,7 @@ test_cadence_records:            db 0,0,0,0,0,0
 test_cadence_records_end:
 test_terminal_record:            db 0,0,0
 test_terminal_record_end:
-test_turn_delta: dw 0
+test_turn_delta: dl 0
 test_move_offset: dw 0
 test_move_distance: dw 0
 test_move_count: db 0
