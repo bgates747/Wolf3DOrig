@@ -195,6 +195,9 @@ self-review, examples and advice exchange with VDPlet, with tasks written first.
   attract playback. [Plan](agonport/doc/tasks/WOLF-DEMO-001/PLAN.md).
   Implementation awaits Smith’s direction.
 
+- [ ] WOLF-SCALE-001 — Investigate whether Rally’s bitmap sampler can improve
+  Wolf’s actor and weapon drawing. [Plan](agonport/doc/tasks/WOLF-SCALE-001/PLAN.md).
+
 - [ ] WOLF-PROD-002 — Full regular game with the High Scores, demo turn and
   level-map fixes. [Plan](agonport/doc/tasks/WOLF-PROD-002/PLAN.md).
   [Deployed and verified](agonport/doc/tasks/WOLF-PROD-002/RESULT.md).
