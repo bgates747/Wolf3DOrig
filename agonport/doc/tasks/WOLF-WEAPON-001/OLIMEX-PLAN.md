@@ -11,7 +11,8 @@ and resident asset memory match. The experimental module omits the normal
 weapon draw for these shapes when the palette is unshifted. It selects and
 plots the appropriate bitmap only after releasing the hidden color rows.
 Keep the current weapon draw during damage and bonus flashes. Retain normal
-game entry in a separately named interactive build.
+game entry in a separately named interactive build with the same uncapped
+render admission.
 
 Build two full-game timing arms with the same test entry. Each runs the first
 stock E1L1 attract recording once and exits after it drains. Remove the
@@ -29,3 +30,24 @@ pair in separate test directories. Run each arm once in baseline then candidate
 order. Keep the physical run bounded to the first demo and collect the profile
 from each arm. Use the [bench guide](/Agon/mystuff/agon-extender/docs/operations/olimex-bench/README.md)
 for scheduling, staging, execution and check-in.
+
+## Prepared builds
+
+| Build | Executable SHA-256 prefix | Module SHA-256 prefix |
+| --- | --- | --- |
+| Baseline timing | `3b2a65de` | `7490d81c` |
+| Cropped timing | `c69a8113` | `8a269d08` |
+| Cropped interactive | `83dc6c70` | `8a269d08` |
+
+The timing arms share the same asset bytes, including the cropped frames.
+Both timing executables reproduced byte for byte in the subsequent build.
+The bench packet stores the full hashes and uses `/test/wolfweapon01`.
+The scheduler confirmed the reservation in the Olimex FIFO. Alexe parity
+request `bac7feccde32` is next after the current Oryx owner. The bench
+dispatch requires the resulting parity evidence and the normal slot-open
+notification.
+
+Run `compare_profiles.py` with baseline then cropped `WOLFPROF.BIN`. Take the
+reported ordered presentation rate and interval distribution as the matched
+comparison. The camera pose change rate identifies how often the displayed
+camera moved. Weapon and actor animation can change on the same camera pose.

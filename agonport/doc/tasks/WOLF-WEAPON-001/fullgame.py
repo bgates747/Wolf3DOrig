@@ -89,6 +89,14 @@ def build_module(output, rectangles):
     return module
 
 
+def patch_uncapped(path):
+    replace_once(path, "@ordinary_render:\n    ld a,(w3d_world_dirty)\n    or a\n    jp z,mainloop\n",
+                 "@ordinary_render:\n    ld a,1\n    ld (w3d_player_dirty),a\n")
+    replace_once(path, "    call w3d_submit_dirty_world_render\n    jp mainloop\n\n; Gameplay Escape",
+                 "    call w3d_submit_dirty_world_render\n    jp c,w3d_gameplay_fatal_shutdown\n"
+                 "    jp mainloop\n\n; Gameplay Escape")
+
+
 def patch_benchmark(path):
     shutil.copyfile(HERE / "weapon_bench.inc", path.parent / "weapon_bench.inc")
     replace_once(path, '    include "wolf3d_profile.inc"\n',
@@ -98,12 +106,6 @@ def patch_benchmark(path):
     replace_once(path, "    call w3d_shell_reset_quick_slot\n    .if W3D_DIAGNOSTIC_HIGHSCORE_MODE",
                  "    call w3d_shell_reset_quick_slot\n    jp w3d_weapon_bench_demo\n"
                  "    .if W3D_DIAGNOSTIC_HIGHSCORE_MODE")
-    replace_once(path, "@ordinary_render:\n    ld a,(w3d_world_dirty)\n    or a\n    jp z,mainloop\n",
-                 "@ordinary_render:\n    ld a,1\n    ld (w3d_player_dirty),a\n")
-    # During the cap-free path a failure should terminate with the ordinary diagnostics.
-    replace_once(path, "    call w3d_submit_dirty_world_render\n    jp mainloop\n\n; Gameplay Escape",
-                 "    call w3d_submit_dirty_world_render\n    jp c,w3d_gameplay_fatal_shutdown\n"
-                 "    jp mainloop\n\n; Gameplay Escape")
 
 
 def build_client(output, module, benchmark):
@@ -111,8 +113,9 @@ def build_client(output, module, benchmark):
     builder = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(builder)
     output.mkdir()
+    builder.SOURCE = Path(shutil.copytree(builder.SOURCE, output / "game-source"))
+    patch_uncapped(builder.SOURCE / "wolf3d.asm")
     if benchmark:
-        builder.SOURCE = Path(shutil.copytree(builder.SOURCE, output / "game-source"))
         patch_benchmark(builder.SOURCE / "wolf3d.asm")
     return builder.build(builder.resolve_assembler(None), "vdplet-direct", module,
                          profile=True, output_dir=output)
