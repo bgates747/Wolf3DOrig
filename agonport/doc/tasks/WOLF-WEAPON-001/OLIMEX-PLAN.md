@@ -42,10 +42,16 @@ for scheduling, staging, execution and check-in.
 The timing arms share the same asset bytes, including the cropped frames.
 Both timing executables reproduced byte for byte in the subsequent build.
 The bench packet stores the full hashes and uses `/test/wolfweapon01`.
-The scheduler confirmed the reservation in the Olimex FIFO. Alexe parity
-request `bac7feccde32` is next after the current Oryx owner. The bench
-dispatch requires the resulting parity evidence and the normal slot-open
-notification.
+The scheduler confirmed the reservation in the Olimex FIFO. The job passed
+offline preflight and awaits the normal slot-open notification.
+
+Alexe full-frame parity passed at Oryx checkout 510. The accepted module and
+candidate matched all five 320×240 captures on the pinned release. Unshifted
+pistol and chaingun frames took the prepared-bitmap path. Red and bonus shift
+frames matched with their prepared assets removed, exercising the original
+draw. The hidden-weapon case matched as well. Alexe joined cleanly and Oryx was
+released. The earlier checkout 509 had five matching pairs and stopped on a
+test assertion that expected the quantized bonus shift to change the colors.
 
 Run `compare_profiles.py` with baseline then cropped `WOLFPROF.BIN`. Take the
 reported ordered presentation rate and interval distribution as the matched
