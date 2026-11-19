@@ -6,10 +6,11 @@ missing attract-mode label. This task is recorded for later execution.
 1. Use the stock `SPR_DEMO` graphic from sprite 0 in `VSWAP.WL1` and match
    the position, apparent size and transparency of the DOSBox reference.
    The original draws it over the weapon and scales it with the viewport.
-2. Verify hardware-sprite support in Wolf’s double-buffered mode 136 on the
-   pinned firmware for the selected target. Check the scanline clipping,
-   ordering and size limits with the actual bitmap extent. Prepare the
-   bitmap at the needed size once. Use the scanout overlay for the trial.
+2. Use the VDP hardware sprite as a scanout overlay above both framebuffer
+   pages in Wolf’s double-buffered mode 136. Prepare and upload the bitmap
+   at the needed size once so the same sprite stays visible across page flips.
+   Check clipping, layering and scanline load with the actual bitmap on the
+   pinned firmware.
 3. Own one sprite and keep its backing valid throughout playback. Show it
    with the first demo frame. Hide and retire it on demo completion, key
    abort and fatal exit, before exposing the next shell screen or MOS.
