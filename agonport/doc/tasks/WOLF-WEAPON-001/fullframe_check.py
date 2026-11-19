@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import struct
 
-from qualification.target import Target, sha, upload, word
+from qualification.target import Target, command, sha, upload, word
 
 ROOT = Path(__file__).resolve().parent
 FIXTURE = ROOT / "fixture"
@@ -60,6 +60,9 @@ def main():
             send_prepared(target, shape)
         matched = ((421, 0), (433, 0), (421, 3), (433, 131), (-1, 0))
         for shape, shift in matched:
+            if shift:
+                # A successful shifted render must use the original 64x64 art.
+                target.send(command(0x5700 + shape - 416, 2))
             images = []
             for module in ("baseline", "cropped"):
                 handle = target.load(ROOT / (module + ".vdpl"))
@@ -76,8 +79,10 @@ def main():
                 raise AssertionError(f"Shape {shape}, shift {shift}, mismatch at pixel {pixel}")
             result["matched"].append({"shape": shape, "shift": shift,
                                       "hash": hashlib.sha256(images[0]).hexdigest()})
-        # Show that the distinct opaque weapon actually changed the composited output.
-        assert len({m["hash"] for m in result["matched"]}) == len(matched)
+        pistol, chaingun, damage, bonus, hidden = (m["hash"] for m in result["matched"])
+        assert len({pistol, chaingun, damage, hidden}) == 4
+        # Bonus shift 3 never crosses a two-bit rounding threshold for this palette.
+        assert bonus == chaingun
         result["passed"] = True
     except BaseException as error:
         result["error"] = repr(error)
