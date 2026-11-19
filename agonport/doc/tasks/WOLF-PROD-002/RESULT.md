@@ -38,3 +38,42 @@ RUN .
 For the idle check, dismiss sign-on and wait through High Scores and the four
 recorded demos on E1L1, E1L3, E1L5 and E1L7. For ordinary play, start a new game
 from the menu. Physical acceptance is pending Smith’s playtest.
+
+## Console8 playtest observations
+
+Smith confirmed that the High Scores display errors are fixed. He heard a
+brief music skip as the attract loop entered High Scores. The opening demo
+rendered without the previously reported wall clipping. During the E1L1 and
+E1L3 demos, he saw movement blocked around doors and noticed that gun aim
+looked off.
+
+The recordings contain player inputs. The original applies each record for
+four 70 Hz ticks. The port samples the records on its 30 Hz simulation clock,
+which preserves average duration while changing individual movement steps.
+The port also uses a sliding collision plane for doors, while the original
+keeps a door tile blocked until fully open.
+
+One definite replay defect is independent of collision. The port computes an
+unsigned forward or strafe distance but passes it to signed multiplication.
+A full forward input requests 35,000 units per port step, interpreted as
+−30,536 by the multiplier. E1L1 has 14 records with movement above the signed
+limit, first at about 5.1 seconds. E1L3 has 29, first at 3.6 seconds. The
+original also applies strafe before forward or backward motion. The port
+reverses that order. Eight E1L1 records combine both axes, while E1L3 has zero
+combined-axis records. The exact first door or shot divergence has yet to be
+isolated.
+
+### Stock DOSBox comparison
+
+Smith confirmed that the original replay lines up shots and kills guards
+more reliably than the Console8 port. In the first-floor demo, the original
+replay opens a secret pushwall, enters the room and collects loot. The
+Console8 replay never reaches that room. These are observed differences in
+the replay. The exact input where the paths first diverge remains unknown.
+
+The DOS reference also displays the stylized Demo overlay during playback.
+The original draws `SPR_DEMO` over the weapon. The stock WL1 asset is present
+as sprite 0 in VSWAP chunk 106, but the four demo levels' sprite packages omit
+it. No planned deferral was found in the demo lifecycle work. The next trial
+will display it over the weapon using a hardware sprite.
+[WOLF-DEMO-001](../WOLF-DEMO-001/PLAN.md)
