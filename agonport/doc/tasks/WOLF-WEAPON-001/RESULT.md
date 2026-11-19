@@ -11,10 +11,10 @@ compared a full 161×160 prepared image and the same image cropped to its opaque
 bounds, with the plot origin adjusted accordingly.
 
 The two arms passed 800 whole-surface comparisons per build, in both the
-ordinary and ASan/UBSan builds. These cover all 20 frames, two patterned backgrounds, and all
-ten accepted color states (no shift, six red and three bonus shifts). For the
-shifted cases, the probe simulated plotting after the renderer’s palette pass
-by applying that same remap to opaque pixels in the prepared bitmap.
+ordinary and ASan/UBSan builds. These cover all 20 frames, two patterned
+backgrounds, and all ten accepted color states (no shift, six red and three
+bonus shifts). For the shifted cases, the probe applied the renderer’s palette
+remap to opaque pixels in the prepared bitmap before plotting it.
 
 | Path | Median Pi CPU time per draw | Prepared RGBA2222 bytes, all 20 |
 | --- | ---: | ---: |
@@ -32,15 +32,24 @@ and extra shift variants. The separate host prep-and-crop sample was about
 kernel with warm buffers. Native VDU dispatch, ESP32 memory behavior, scanout,
 and visible frame cadence remain unmeasured.
 
-## Alexe preflight
+## Alexe ordinary plot
 
 Oryx checkout 505 refused the November 9 backend dependency record before
 starting Alexe. The current host has `libc6:amd64` version `2.43-2ubuntu2.7`.
 The libc, libm and loader digests changed, while `ldd` resolved the same paths
 and the other four library digests matched. The three changed files verified
 against the installed package. Checkout 505 was released with an empty host.
-The successor keeps the same backend, release firmware, asset bytes and test
-sequence and binds the new dependency hashes before execution.
+Checkout 506 bound the current libraries before running the same backend,
+firmware, assets and test sequence. [Library identities](ORYX-CLOSURE.json)
+
+All 20 cropped plots stayed off the visible page until C3. All 20 then
+matched the RGB oracle pixel for pixel on alternating colored backgrounds.
+The worker used the ordinary public VDU bitmap commands in mode 136. Backend
+`d77a7305` ran firmware `dc43ecb8` with ELF `576b69f3`. The supervisor completed
+in 9.35 seconds at 55.625 °C peak, with boost off. Alexe reported zero unhandled,
+unregistered, or unmapped events. The worker exited and Oryx was released with
+fresh idle evidence. This run exercised the ordinary unshifted plot command.
+Color shifts were checked in the host comparison.
 
 ## Runtime and hardware-sprite considerations
 
@@ -59,16 +68,25 @@ sequence and binds the new dependency hashes before execution.
   visible page. The hardware overlay checks every source pixel across the
   clipped bitmap width on each affected row, including transparent ones.
   The largest cropped source is 131×84 (shape 433). The tallest is 113×94
-  (shape 434). Report both maxima alongside the Demo overlap once the Demo
-  fixture is measured. Crop origins vary by frame, so a single moving/cropped
-  sprite must match the frame’s new origin when the animation changes. If the
-  selected interface cannot update both together at the intended presentation
-  boundary, measure the common-origin bounds and timing as a separate arm.
+  (shape 434). At the planned stock center and the current scale, the cropped
+  Demo label is 138×52 at (91, 26). It occupies rows 26–77, while the highest
+  cropped weapon frame starts at row 86. The two sprites would occupy
+  separate rows with at least eight rows between them. That is an estimate
+  from the asset bounds at this viewport. The scanout routine checks every
+  active sprite on every line, so disjoint coverage still incurs extra work.
+- Crop origins vary by frame, so a tightly cropped weapon sprite needs both a
+  new bitmap and a new origin when the animation changes. One fixed origin at
+  (98, 86) avoids moving the sprite on frame changes. Padding each frame only
+  on its top and left to use this origin takes 190,068 pixel bytes for all
+  20. This keeps the same eight-row minimum gap while adding transparent
+  pixels to process. Treat it as a separate trial if frame and origin updates
+  cannot be synchronized.
 - Scanout may see a hardware-sprite change independently of the framebuffer
   flip. Check whether animation and position stay aligned with the game page,
   and measure whole-screen output and renderer time with Demo and weapon
   together. An emulator color comparison cannot establish that scanout budget.
 
-The cropped ordinary plot is the first candidate for a native comparison.
-The 75,010 B figure is a pixel budget, not a measured device-resident cost.
-The production game still uses the current renderer.
+The cropped ordinary plot is the first candidate for a full-game native
+comparison. Measure the real plot after the row lease ends and include its
+dispatch cost. The 75,010 B figure counts pixel data only. Full-game timing,
+device memory, and physical scanout with both overlays remain open.
