@@ -1,0 +1,68 @@
+{
+  "changed": {
+    "/usr/lib/x86_64-linux-gnu/libm.so.6": {
+      "previous": "1c488db6f4fe8cecb72456bc018de000b7a9b539c2994864b0416b5e8371b3d8",
+      "current": "37b9e6c977b2a0b02a110d93eb8f01b643c9848653f18bd51682c5279ac88f54",
+      "package": "libc6:amd64\t2.43-2ubuntu2.7"
+    },
+    "/usr/lib/x86_64-linux-gnu/libc.so.6": {
+      "previous": "85e64f97e348786a8fb4d9f3d52fec289e2fb86bba20f0731dfe61990525e0f7",
+      "current": "9941dc28e68bc5fd788d9cd024c69e68c791d63799e7538a97b6040dd9f50fb6",
+      "package": "libc6:amd64\t2.43-2ubuntu2.7"
+    },
+    "/lib64/ld-linux-x86-64.so.2": {
+      "previous": "bda779ea9e9ad234f60315477d7cfd0bdde861cd8ddd9df8cdaf62f18c4cec14",
+      "current": "c0b20d6e1ced12abfe0b1ef2b5b68017950beaaea3df69eb6949d73e0ecf7b40",
+      "package": "libc6:amd64\t2.43-2ubuntu2.7"
+    }
+  },
+  "closure": {
+    "backend_sha256": "d77a7305b5c180381e49a4922ffd5a8ea9f824fee29110d5a955f337a1c96f0d",
+    "bytes": 1668088,
+    "retained_dependency_closure": {
+      "/usr/lib/x86_64-linux-gnu/libssl.so.3": {
+        "realpath": "/usr/lib/x86_64-linux-gnu/libssl.so.3",
+        "sha256": "63b47f444efa588e291e9b650a5ba2ab02f856356f2d50f13a2e477db9119e09"
+      },
+      "/usr/lib/x86_64-linux-gnu/libcrypto.so.3": {
+        "realpath": "/usr/lib/x86_64-linux-gnu/libcrypto.so.3",
+        "sha256": "5385f0436ac2e284ba8c5fb1488874057c29c04be72dea32add832694f381e28"
+      },
+      "/usr/lib/x86_64-linux-gnu/libz.so.1": {
+        "realpath": "/usr/lib/x86_64-linux-gnu/libz.so.1.3.1",
+        "sha256": "27fa6c6cb94fb5b099ead61758a300dbc392d1dbf307fff6c16a9b8e57fdc9de"
+      },
+      "/usr/lib/x86_64-linux-gnu/libm.so.6": {
+        "realpath": "/usr/lib/x86_64-linux-gnu/libm.so.6",
+        "sha256": "37b9e6c977b2a0b02a110d93eb8f01b643c9848653f18bd51682c5279ac88f54"
+      },
+      "/usr/lib/x86_64-linux-gnu/libc.so.6": {
+        "realpath": "/usr/lib/x86_64-linux-gnu/libc.so.6",
+        "sha256": "9941dc28e68bc5fd788d9cd024c69e68c791d63799e7538a97b6040dd9f50fb6"
+      },
+      "/usr/lib/x86_64-linux-gnu/libzstd.so.1": {
+        "realpath": "/usr/lib/x86_64-linux-gnu/libzstd.so.1.5.7",
+        "sha256": "060eeb79531d435306665fd78329d8a9dd579f95876c5960bb67937825362a80"
+      },
+      "/lib64/ld-linux-x86-64.so.2": {
+        "realpath": "/usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2",
+        "sha256": "c0b20d6e1ced12abfe0b1ef2b5b68017950beaaea3df69eb6949d73e0ecf7b40"
+      }
+    },
+    "required_exports": [
+      "vdp_setup",
+      "vdp_loop",
+      "vdp_shutdown",
+      "z80_uart0_is_cts",
+      "z80_send_to_vdp",
+      "z80_recv_from_vdp",
+      "copyVgaFramebuffer",
+      "flexe_vdp_cycles",
+      "flexe_vdp_frames",
+      "flexe_vdp_failed"
+    ],
+    "exports_present": true,
+    "host_libraries_freshly_probed": false,
+    "qualification_scope": "Existing build/ABI and consumer evidence only; Wolf current module lifecycle/pixel leaf remains unqualified"
+  }
+}

@@ -10,8 +10,8 @@ extracted graphics commit `ac2dd598` matches the pinned release. The fixture
 compared a full 161×160 prepared image and the same image cropped to its opaque
 bounds, with the plot origin adjusted accordingly.
 
-Both arms matched all 800 whole-surface comparisons in the ordinary and
-ASan/UBSan builds. These cover all 20 frames, two patterned backgrounds, and all
+The two arms passed 800 whole-surface comparisons per build, in both the
+ordinary and ASan/UBSan builds. These cover all 20 frames, two patterned backgrounds, and all
 ten accepted color states (no shift, six red and three bonus shifts). For the
 shifted cases, the probe simulated plotting after the renderer’s palette pass
 by applying that same remap to opaque pixels in the prepared bitmap.
@@ -31,6 +31,16 @@ and extra shift variants. The separate host prep-and-crop sample was about
 2.40 ms for all 20 frames together. The measurements are for an isolated Pi CPU
 kernel with warm buffers. Native VDU dispatch, ESP32 memory behavior, scanout,
 and visible frame cadence remain unmeasured.
+
+## Alexe preflight
+
+Oryx checkout 505 refused the November 9 backend dependency record before
+starting Alexe. The current host has `libc6:amd64` version `2.43-2ubuntu2.7`.
+The libc, libm and loader digests changed, while `ldd` resolved the same paths
+and the other four library digests matched. The three changed files verified
+against the installed package. Checkout 505 was released with an empty host.
+The successor keeps the same backend, release firmware, asset bytes and test
+sequence and binds the new dependency hashes before execution.
 
 ## Runtime and hardware-sprite considerations
 
