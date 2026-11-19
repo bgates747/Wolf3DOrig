@@ -195,6 +195,10 @@ self-review, examples and advice exchange with VDPlet, with tasks written first.
   attract playback. [Plan](agonport/doc/tasks/WOLF-DEMO-001/PLAN.md).
   Implementation awaits Smith’s direction.
 
+- [ ] WOLF-WEAPON-001 — Investigate pre-scaled first-person weapon and hand
+  frames. Try ordinary bitmap plotting first, then compare a hardware sprite
+  using the Demo trial’s scanout findings. [Plan](agonport/doc/tasks/WOLF-WEAPON-001/PLAN.md).
+
 - [ ] WOLF-SCALE-001 — Investigate whether Rally’s bitmap sampler can improve
   Wolf’s actor and weapon drawing. [Plan](agonport/doc/tasks/WOLF-SCALE-001/PLAN.md).
 
