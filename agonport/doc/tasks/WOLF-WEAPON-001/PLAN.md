@@ -27,6 +27,16 @@ combined weapon and hand artwork where a frame contains both.
    viewport. Account for palette fades and damage flashes, and for hiding the
    sprite on transitions out of gameplay or attract playback.
 
+## Ordinary plot correctness on Alexe
+
+Use one headless backend-only run on Oryx with the pinned VDPlet release and
+the existing Wolf wire driver. For each of the 20 cropped frames, clear the
+draw page, upload and plot the RGBA2222 bitmap with the ordinary VDU command,
+check the full visible page before C3, and compare every pixel after C3.
+Alternate two backgrounds so transparency and page changes are observable.
+Keep the worker bounded at 120 seconds, stop at the first failure, and release
+Oryx after joining the worker. This check covers plotting and page ordering.
+
 ## Native trial if selected
 
 Use matched scenes and animation sequences in mode 136. Compare the current
@@ -49,4 +59,5 @@ see whether scanout composition saves more time or slows other rendering.
 Report memory cost and any visible scanout failure alongside the timings.
 Recommend which path is worth pursuing and document the tested scanline load.
 
-This task records an investigation. Implementation and testing await selection.
+The ordinary bitmap and sprite trials are investigation candidates. Production
+adoption and the physical scanout comparison are separate decisions.
