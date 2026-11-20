@@ -155,18 +155,22 @@ def make_bench_job(builds, output, namespace, preserve):
     def pinned(path):
         return {"path": str(path), "bytes": path.stat().st_size, "sha256": sha(path)}
 
+    # The timing builds enter the first stock demo directly, at hard difficulty.
+    demo_inputs = ("wolf3d.vdpl", "shell.agnb", "sfx.agnb", "hud.agnb",
+                   "level_00/state_hard.w3l", "level_00/tiles.agnb", "level_00/sprites.agnb")
     arms = []
     for arm in ("baseline", "cropped"):
         payload_root = builds / arm
         manifest = verify_payload(payload_root)
+        if not set(demo_inputs).issubset(manifest["files"]):
+            raise ValueError(f"Incomplete E1L1 demo inputs for {arm}")
         cwd = f"/test/{namespace}/{arm}"
         arms.append({"id": arm, "cwd": cwd, "agon": pinned(payload_root / "wolf3d.bin"),
                      "sd_program": cwd + "/wolf3d.bin", "address": "040000", "seconds": 240,
                      "success": "WOLFWEAPON PASS", "failure": "WOLFWEAPON FAIL",
                      "results": [cwd + "/WOLFPROF.BIN"],
                      "inputs": [{"sd_path": f"{cwd}/{name}", "source": pinned(payload_root / name)}
-                                for name in manifest["files"]
-                                if name not in ("wolf3d.bin", "build-receipt.json")]})
+                                for name in demo_inputs]})
     job = {"schema": 3, "namespace": namespace, "fixtures": arms, "firmware": {},
            "preserve": preserve}
     with output.open("x") as stream:

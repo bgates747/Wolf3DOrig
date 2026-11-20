@@ -41,9 +41,17 @@ for scheduling, staging, execution and check-in.
 
 The timing arms share the same asset bytes, including the cropped frames.
 Both timing executables reproduced byte for byte in the subsequent build.
-The bench packet stores the full hashes and uses `/test/wolfweapon01`.
-The scheduler confirmed the reservation in the Olimex FIFO. The job passed
-offline preflight and awaits the normal slot-open notification.
+The first bench packet used `/test/wolfweapon01`. Its five-minute staging
+limit expired after 69 of 134 transfers had receipts. Neither timing arm ran.
+The last upload completed on the bench after the host stopped. The authorized
+recovery collected its PARLIO receipt, closed the listener, and verified an
+idle transfer service, working MOS CLI, neutral keyboard, and free serial
+handles before check-in.
+
+The smaller packet uses `/test/wolfweapon02`. It stages eight files per arm,
+about 5.6 MB in total. It uses the same executable, module, and asset bytes
+for E1L1. The full-game builds remain available separately. The new packet
+passed offline preflight and the scheduler confirmed its FIFO reservation.
 
 Alexe full-frame parity passed at Oryx checkout 510. The accepted module and
 candidate matched all five 320×240 captures on the pinned release. Unshifted
